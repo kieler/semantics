@@ -1,0 +1,102 @@
+/* KEXT Test File for comparisons
+ * 
+ * @author ssm
+ * @date 2015-06-12
+ */
+bool A, B;
+int I, J;
+
+@check "comparison.equals.literals.true"
+expression 5 == 5
+
+@check "comparison.equals.literals.false"
+expression 5 == 2
+
+@check "comparison.equals.literal.VO"
+expression 2 == I
+
+@check "comparison.equals.VO.literal"
+expression I == 2
+
+@check "comparison.equals.VOs"
+expression I == J
+
+
+@check "comparison.greater.literals.true"
+expression 5 > 2
+
+@check "comparison.greater.literals.false"
+expression 5 > 5
+
+@check "comparison.greater.literal.VO"
+expression 2 > I
+
+@check "comparison.greater.VO.literal"
+expression I > 2
+
+@check "comparison.greater.VOs"
+expression I > J
+
+
+@check "comparison.less.literals.true"
+expression 2 < 5
+
+@check "comparison.less.literals.false"
+expression 5 < 5
+
+@check "comparison.less.literal.VO"
+expression 2 < I
+
+@check "comparison.less.VO.literal"
+expression I < 2
+
+@check "comparison.less.VOs"
+expression I < J
+
+
+@check "comparison.greaterEquals.literals.true"
+expression 5 >= 5
+
+@check "comparison.greaterEquals.literals.false"
+expression 5 >= 6
+
+@check "comparison.greaterEquals.literal.VO"
+expression 2 >= I
+
+@check "comparison.greaterEquals.VO.literal"
+expression I >= 2
+
+@check "comparison.greaterEquals.VOs"
+expression I >= J
+
+
+@check "comparison.lessEquals.literals.true"
+expression 2 < 5
+
+@check "comparison.lessEquals.literals.false"
+expression 5 < 5
+
+@check "comparison.lessEquals.literal.VO"
+expression 2 < I
+
+@check "comparison.lessEquals.VO.literal"
+expression I < 2
+
+@check "comparison.lessEquals.VOs"
+expression I < J
+
+
+@check "comparison.notEquals.literals.true"
+expression 2 != 5
+
+@check "comparison.notEquals.literals.false"
+expression 5 != 5
+
+@check "comparison.notEquals.literal.VO"
+expression 2 != I
+
+@check "comparison.notEquals.VO.literal"
+expression I != 2
+
+@check "comparison.notEquals.VOs"
+expression I != J

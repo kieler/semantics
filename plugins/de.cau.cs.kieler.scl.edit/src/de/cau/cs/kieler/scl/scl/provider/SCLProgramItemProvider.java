@@ -90,7 +90,6 @@ public class SCLProgramItemProvider extends StatementSequenceItemProvider {
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS);
 			childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS);
 		}
 		return childrenFeatures;
@@ -150,7 +149,6 @@ public class SCLProgramItemProvider extends StatementSequenceItemProvider {
 			case SclPackage.SCL_PROGRAM__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case SclPackage.SCL_PROGRAM__ANNOTATIONS:
 			case SclPackage.SCL_PROGRAM__DECLARATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -168,51 +166,6 @@ public class SCLProgramItemProvider extends StatementSequenceItemProvider {
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
 
 		newChildDescriptors.add
 			(createChildParameter

@@ -20,11 +20,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getTick <em>Tick</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

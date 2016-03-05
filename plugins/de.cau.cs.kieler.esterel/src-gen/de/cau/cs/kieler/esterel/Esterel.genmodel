@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.esterel/src-gen" editDirectory="/de.cau.cs.kieler.esterel.edit/src"
     editorDirectory="/de.cau.cs.kieler.esterel.editor/src" modelPluginID="de.cau.cs.kieler.esterel"
     forceOverwrite="true" modelName="Esterel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
-    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
+    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.11" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
       ecorePackage="Esterel.ecore#/">
     <genClasses ecoreClass="Esterel.ecore#//Program">

@@ -13,11 +13,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.FunctionExpression#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.FunctionExpression#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionExpression()
  * @model

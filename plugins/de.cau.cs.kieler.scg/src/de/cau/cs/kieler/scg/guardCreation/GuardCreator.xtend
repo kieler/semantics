@@ -21,8 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
@@ -49,6 +48,8 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -124,7 +125,10 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     extension SCGControlFlowExtensions
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
+
+    @Inject
+    extension KExpressionsCreateExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -133,7 +137,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     extension SynchronizerSelector
 
     @Inject
-    extension KExpressionsSerializeExtension
+    extension KEffectsSerializeExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -173,9 +177,9 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
+//            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+//        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
@@ -528,7 +532,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
 
             // Create OR operator expression via kexpressions factory.
             val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expr.setOperator(OperatorType::OR)
+            expr.setOperator(OperatorType::LOGICAL_OR)
 
             // For each predecessor add its expression to the sub expressions list of the operator expression.
             relevantPredecessors.forEach [
@@ -590,7 +594,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
 
@@ -605,13 +609,13 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             }
             predecessorTwinMark.add(schedulingBlock)
 
-            return expression.fix
+            return expression
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the negated condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            expression.setOperator(OperatorType::AND)
+            expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
 
@@ -626,7 +630,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
             }
             predecessorTwinMark.add(schedulingBlock)
 
-            return expression.fix
+            return expression
         }
 
         throw new UnsupportedSCGException(

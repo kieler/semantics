@@ -18,7 +18,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
@@ -99,6 +98,20 @@ class SCGCoreExtensions {
         }
         myBlock
     }
+    
+    /** 
+     * Retrieves the scheduling block containing a given node.
+     * 
+     * @param node
+     *          an arbitrary node
+     * @return Returns the scheduling block containing the node. May return null.
+     */
+    def SchedulingBlock schedulingBlock(Node node, List<SchedulingBlock> schedulingBlocks) {
+        for (sb : schedulingBlocks ) {
+            if (sb.nodes.contains(node)) { return sb }
+        }
+        return null
+    }    
    
     /**
      * Retrieves the basic block of a scheduling block.

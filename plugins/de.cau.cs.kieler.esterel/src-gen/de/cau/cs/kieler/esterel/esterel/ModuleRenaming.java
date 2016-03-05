@@ -11,11 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ModuleRenaming#getModule <em>Module</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ModuleRenaming#getNewName <em>New Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleRenaming()
  * @model

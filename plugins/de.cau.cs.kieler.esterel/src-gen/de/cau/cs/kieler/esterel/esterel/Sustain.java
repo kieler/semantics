@@ -12,12 +12,12 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Sustain#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Sustain#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Sustain#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain()
  * @model

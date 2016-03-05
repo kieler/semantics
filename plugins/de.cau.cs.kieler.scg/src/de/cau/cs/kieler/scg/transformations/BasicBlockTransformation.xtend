@@ -113,6 +113,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     
     protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
+    protected val basicBlockGuardCache = new HashMap<ValuedObject, BasicBlock>
     
     
     // -------------------------------------------------------------------------
@@ -141,6 +142,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
         basicBlockNodeMapping.clear
+        basicBlockGuardCache.clear
         
         // Timestamp for performance information. Should be moved to the KiCo interface globally.
         System.out.println("Nodes: " + scg.nodes.size)  
@@ -150,16 +152,20 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         // It is expected that this node is an entry node.
         if (!(scg.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
         
-        val basicBlockCache = <BasicBlock> newLinkedList
+        val basicBlockCache = <BasicBlock> newArrayList
         var index = 0
         for(node : scg.nodes) {
             if (!processedNodes.contains(node)) {
                 index = scg.createBasicBlocks(node, index, basicBlockCache)
             }
         }
-        /** Remove the dead block flag if the block is a go block or if it has at least one predecessor
+        
+        /** 
+         * Remove the dead block flag if the block is a go block or if it has at least one predecessor
          *  that is not dead. In the case of join blocks, all predecessors have to be active.
          */
+        System.out.println("Processing dead blocks...");  
+        val timestamp2 = System.currentTimeMillis  
         for(bb : basicBlockCache) {
             if (bb.goBlock) {
                 bb.deadBlock = false
@@ -167,13 +173,16 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
                 if (bb.synchronizerBlock) {
                     bb.deadBlock = bb.predecessors.map[basicBlock].filter[deadBlock].size > 0
                 } else if (bb.depthBlock) {
-                    bb.deadBlock = basicBlockCache.getSchedulingBlock(bb.preGuard).basicBlock.deadBlock
+//                    bb.deadBlock = basicBlockCache.getSchedulingBlock(bb.preGuard).basicBlock.deadBlock
+                    bb.deadBlock = basicBlockGuardCache.get(bb.preGuard).deadBlock
                 } else {
                     bb.deadBlock = bb.predecessors.map[basicBlock].filter[!deadBlock].size == 0
                 }
             }
         }
         scg.basicBlocks += basicBlockCache
+        val time2 = (System.currentTimeMillis - timestamp2) as float
+        System.out.println("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).")            
         
         //KITT
         if (isTracingActive()) {
@@ -189,7 +198,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             }
         }
 
-        scg.addAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
+        scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
@@ -441,6 +450,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
 //        basicBlock.guard = guard
         // Add all scheduling blocks as described in the introduction of this function.
         basicBlock.schedulingBlocks += scg.createSchedulingBlocks(nodeList, basicBlock, guard)
+        for (sb : basicBlock.schedulingBlocks) {
+            basicBlockGuardCache.put(sb.guard.valuedObject, basicBlock)
+        }
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         // Add the newly created basic block to the SCG...

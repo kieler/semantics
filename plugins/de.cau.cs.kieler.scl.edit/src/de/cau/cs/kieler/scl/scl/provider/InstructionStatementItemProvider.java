@@ -136,11 +136,6 @@ public class InstructionStatementItemProvider extends StatementItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(SclPackage.Literals.INSTRUCTION_STATEMENT__INSTRUCTION,
-				 SclFactory.eINSTANCE.createInstruction()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.INSTRUCTION_STATEMENT__INSTRUCTION,
 				 SclFactory.eINSTANCE.createAssignment()));
 
 		newChildDescriptors.add

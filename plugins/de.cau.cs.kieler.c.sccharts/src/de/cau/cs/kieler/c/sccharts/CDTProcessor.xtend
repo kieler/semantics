@@ -194,6 +194,7 @@ class CDTProcessor extends AbstractProductionTransformation {
         val model = scc.createState => [ root |
             root.label = declarator.children.head.toString
             root.id = root.label
+            
             root.declarations += returnDeclaration
             scc.createControlflowRegion => [
                 id = "_main"
@@ -1131,6 +1132,8 @@ class CDTProcessor extends AbstractProductionTransformation {
 
 //    private createExpression    
 }
+
+
 /*
  org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDefinition@6c704a9e
  org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@403302b0

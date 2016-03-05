@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenPart <em>Then Part</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -21,11 +21,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RunImpl#getModule <em>Module</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RunImpl#getList <em>List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

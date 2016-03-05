@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}</li>
@@ -20,7 +21,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest()
  * @model

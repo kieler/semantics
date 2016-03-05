@@ -11,11 +11,11 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getTick <em>Tick</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getUnEmit()
  * @model

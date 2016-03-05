@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.scl.scl.provider;
 
 
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
@@ -33,13 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class StatementSequenceItemProvider 
-    extends ItemProviderAdapter
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends AnnotatableItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->

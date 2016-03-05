@@ -11,12 +11,12 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#isPositive <em>Positive</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRepeat()
  * @model

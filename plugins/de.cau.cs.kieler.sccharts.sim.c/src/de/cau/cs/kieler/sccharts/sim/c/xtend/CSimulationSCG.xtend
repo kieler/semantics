@@ -14,7 +14,7 @@
  package de.cau.cs.kieler.sccharts.sim.c.xtend
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.SCGraph
 
 /**
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scg.SCGraph
 class CSimulationSCG { 
 
     @Inject
-    extension KExpressionsExtension    
+    extension KExpressionsValuedObjectExtensions    
 
     // General method to create the c simulation interface.
 	def transform (SCGraph scg, String bufferSize) {
@@ -92,7 +92,7 @@ void readInputs() {
 
     object = cJSON_Parse(buffer);
     
-    «FOR valuedObject : scg.getValuedObjects().filter(e|e.isInput)» 
+    «FOR valuedObject : scg.getValuedObjects().filter[ isInput ]» 
     child = cJSON_GetObjectItem(object, "«valuedObject.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -118,7 +118,7 @@ void readInputs() {
    	'''
 void writeOutputs() {
     cJSON* value;;
-	«FOR output : scg.getValuedObjects().filter(e|!e.isInput)»
+	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
 	cJSON_AddItemToObject(output, "«output.name»", value);

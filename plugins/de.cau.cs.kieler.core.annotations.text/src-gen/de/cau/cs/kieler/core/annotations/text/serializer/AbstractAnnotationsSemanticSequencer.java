@@ -8,8 +8,8 @@ import com.google.inject.Provider;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.core.annotations.CommentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
@@ -38,67 +38,57 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 			case AnnotationsPackage.BOOLEAN_ANNOTATION:
 				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
 				return; 
+			case AnnotationsPackage.COMMENT_ANNOTATION:
+				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+				return; 
 			case AnnotationsPackage.FLOAT_ANNOTATION:
 				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.IMPORT_ANNOTATION:
-				sequence_ImportAnnotation(context, (ImportAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.INT_ANNOTATION:
 				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
 				   context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getCommentAnnotationRule()) {
-					sequence_CommentAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getKeyStringValueAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getQuotedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule()) {
+					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
-				return; 
+				if(context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getRestrictedAnnotationRule()) {
+					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
 	/**
 	 * Constraint:
-	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
+	 *     values+=COMMENT_ANNOTATION
 	 */
-	protected void sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
+	protected void sequence_CommentAnnotation(EObject context, CommentAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     value=COMMENT_ANNOTATION
-	 */
-	protected void sequence_CommentAnnotation(EObject context, StringAnnotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     importURI=STRING
-	 */
-	protected void sequence_ImportAnnotation(EObject context, ImportAnnotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (name=ExtendedID value=BOOLEAN annotations+=Annotation*)
+	 *     (name=ExtendedID value=BOOLEAN)
 	 */
 	protected void sequence_KeyBooleanValueAnnotation(EObject context, BooleanAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -107,7 +97,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=FLOAT annotations+=Annotation*)
+	 *     (name=ExtendedID value=Floateger)
 	 */
 	protected void sequence_KeyFloatValueAnnotation(EObject context, FloatAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -116,7 +106,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=INT annotations+=Annotation*)
+	 *     (name=ExtendedID value=Integer)
 	 */
 	protected void sequence_KeyIntValueAnnotation(EObject context, IntAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -125,7 +115,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=EString annotations+=Annotation*)
+	 *     (name=ExtendedID values+=EString values+=EString*)
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -134,7 +124,25 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID annotations+=Annotation*)
+	 *     (name=ExtendedID values+=STRING values+=STRING*)
+	 */
+	protected void sequence_QuotedKeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ExtendedID type=ExtendedID values+=STRING values+=STRING*)
+	 */
+	protected void sequence_QuotedTypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     name=ExtendedID
 	 */
 	protected void sequence_TagAnnotation(EObject context, Annotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -143,7 +151,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID type=ExtendedID value=EString annotations+=Annotation*)
+	 *     (name=ExtendedID type=ExtendedID values+=EStringBoolean values+=EStringBoolean*)
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

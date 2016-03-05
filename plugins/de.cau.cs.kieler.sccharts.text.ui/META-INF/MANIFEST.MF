@@ -5,7 +5,7 @@ Bundle-Vendor: Kiel University
 Bundle-Version: 0.1.1.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
+Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder,
  org.eclipse.ui.editors;bundle-version="3.5.0",
@@ -17,7 +17,13 @@ Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.core.kexpressions.ui,
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.core.annotations.text.ui,
- de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.kico.ui,
+ de.cau.cs.kieler.kico.klighd,
+ de.cau.cs.kieler.core.kexpressions.keffects.ui,
+ de.cau.cs.kieler.core.kexpressions.text.ui,
+ de.cau.cs.kieler.core.kexpressions.keffects,
+ de.cau.cs.kieler.core.kexpressions.text,
+ org.eclipse.xtext.generator;bundle-version="2.8.3",
  org.eclipse.xtext.xtext.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

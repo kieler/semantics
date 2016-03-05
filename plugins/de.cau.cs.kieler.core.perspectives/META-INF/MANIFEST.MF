@@ -8,6 +8,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.swt,
  org.eclipse.ui.workbench,
  org.eclipse.debug.ui,
- org.eclipse.ui.ide.application;bundle-version="1.0.400"
+ org.eclipse.ui.ide.application;bundle-version="1.0.400",
+ org.eclipse.ui.console;bundle-version="3.5.300",
+ org.eclipse.ui;bundle-version="3.104.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

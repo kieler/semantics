@@ -96,17 +96,17 @@
         <details key="documentation" value="Pre operator, returns the previous state of a Signal referenced by a SignalReference."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="NE" value="14" literal="&lt;>">
+    <eLiterals name="NE" value="14" literal="!=">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Not Equal operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="AND" value="4" literal="&amp;">
+    <eLiterals name="LOGICAL_AND" value="4" literal="&amp;&amp;">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical AND operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="OR" value="5" literal="|">
+    <eLiterals name="LOGICAL_OR" value="5" literal="||">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical OR operator."/>
       </eAnnotations>
@@ -131,11 +131,15 @@
         <details key="documentation" value="Aithmetic division operator. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="MOD" value="13" literal="mod">
+    <eLiterals name="MOD" value="13" literal="%">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Arithmetic modulo operation. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
+    <eLiterals name="BITWISE_OR" value="17" literal="|"/>
+    <eLiterals name="BITWISE_AND" value="16" literal="&amp;"/>
+    <eLiterals name="POSTFIX_ADD" value="18"/>
+    <eLiterals name="POSTFIX_SUB" value="19"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -241,6 +245,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="callByReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pureOutput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
   </eClassifiers>

@@ -14,12 +14,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getProc <em>Proc</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getVarList <em>Var List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcCall()
  * @model

@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class StatementScopeItemProvider extends InstructionItemProvider {
+public class StatementScopeItemProvider extends StatementSequenceItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -64,7 +64,6 @@ public class StatementScopeItemProvider extends InstructionItemProvider {
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS);
 			childrenFeatures.add(SclPackage.Literals.STATEMENT_SCOPE__DECLARATIONS);
 		}
 		return childrenFeatures;
@@ -118,7 +117,6 @@ public class StatementScopeItemProvider extends InstructionItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(StatementScope.class)) {
-			case SclPackage.STATEMENT_SCOPE__STATEMENTS:
 			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -136,21 +134,6 @@ public class StatementScopeItemProvider extends InstructionItemProvider {
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createStatement()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createEmptyStatement()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createInstructionStatement()));
 
 		newChildDescriptors.add
 			(createChildParameter

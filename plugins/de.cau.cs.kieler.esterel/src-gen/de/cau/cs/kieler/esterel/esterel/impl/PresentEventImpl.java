@@ -22,13 +22,13 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getFB <em>FB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getEB <em>EB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getTick <em>Tick</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

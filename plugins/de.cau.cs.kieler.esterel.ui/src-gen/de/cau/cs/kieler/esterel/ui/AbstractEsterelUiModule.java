@@ -4,14 +4,13 @@
  */
 package de.cau.cs.kieler.esterel.ui;
 
-import org.eclipse.xtext.ui.DefaultUiModule;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Manual modifications go to {de.cau.cs.kieler.esterel.ui.EsterelUiModule}
  */
 @SuppressWarnings("all")
-public abstract class AbstractEsterelUiModule extends DefaultUiModule {
+public abstract class AbstractEsterelUiModule extends org.eclipse.xtext.ui.DefaultUiModule {
 	
 	public AbstractEsterelUiModule(AbstractUIPlugin plugin) {
 		super(plugin);

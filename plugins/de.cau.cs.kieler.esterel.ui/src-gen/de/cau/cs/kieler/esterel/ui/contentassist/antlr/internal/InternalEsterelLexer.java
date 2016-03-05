@@ -12,66 +12,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalEsterelLexer extends Lexer {
-    public static final int RULE_ID=7;
-    public static final int T__29=29;
-    public static final int T__28=28;
-    public static final int T__27=27;
-    public static final int T__26=26;
-    public static final int T__25=25;
-    public static final int T__24=24;
-    public static final int T__23=23;
-    public static final int T__22=22;
-    public static final int RULE_ANY_OTHER=17;
-    public static final int T__21=21;
-    public static final int T__20=20;
-    public static final int EOF=-1;
-    public static final int T__93=93;
-    public static final int T__19=19;
-    public static final int T__94=94;
-    public static final int T__91=91;
-    public static final int T__92=92;
-    public static final int T__90=90;
-    public static final int T__18=18;
-    public static final int RULE_COMMENT_ANNOTATION=10;
-    public static final int T__99=99;
-    public static final int T__98=98;
-    public static final int RULE_ESTEREL_ML_COMMENT=12;
-    public static final int T__97=97;
-    public static final int T__96=96;
-    public static final int T__95=95;
-    public static final int T__80=80;
-    public static final int T__81=81;
-    public static final int T__82=82;
-    public static final int T__83=83;
-    public static final int T__85=85;
-    public static final int T__84=84;
-    public static final int T__87=87;
-    public static final int T__86=86;
-    public static final int T__89=89;
-    public static final int T__88=88;
-    public static final int RULE_ML_COMMENT=13;
-    public static final int RULE_STRING=8;
-    public static final int T__71=71;
-    public static final int T__72=72;
-    public static final int T__70=70;
-    public static final int T__76=76;
-    public static final int T__75=75;
-    public static final int T__74=74;
-    public static final int T__73=73;
-    public static final int T__79=79;
-    public static final int T__78=78;
-    public static final int T__77=77;
-    public static final int T__68=68;
-    public static final int RULE_BOOLEAN=6;
-    public static final int T__69=69;
-    public static final int T__66=66;
-    public static final int T__67=67;
-    public static final int T__64=64;
-    public static final int T__65=65;
-    public static final int T__62=62;
-    public static final int T__63=63;
-    public static final int T__61=61;
-    public static final int T__60=60;
+    public static final int T__50=50;
+    public static final int T__59=59;
     public static final int T__55=55;
     public static final int T__56=56;
     public static final int T__57=57;
@@ -80,49 +22,107 @@ public class InternalEsterelLexer extends Lexer {
     public static final int T__52=52;
     public static final int T__53=53;
     public static final int T__54=54;
-    public static final int RULE_NUMBER=14;
-    public static final int T__107=107;
-    public static final int T__108=108;
-    public static final int T__109=109;
-    public static final int T__59=59;
-    public static final int T__103=103;
-    public static final int T__104=104;
-    public static final int T__105=105;
-    public static final int T__106=106;
-    public static final int T__111=111;
-    public static final int T__110=110;
+    public static final int T__60=60;
+    public static final int T__61=61;
+    public static final int RULE_ID=7;
     public static final int RULE_INT=4;
-    public static final int T__113=113;
-    public static final int T__112=112;
-    public static final int T__50=50;
-    public static final int RULE_ESTEREL_SL_COMMENT=11;
-    public static final int T__42=42;
-    public static final int T__43=43;
-    public static final int T__40=40;
-    public static final int T__41=41;
-    public static final int T__46=46;
-    public static final int T__47=47;
-    public static final int T__44=44;
-    public static final int T__45=45;
-    public static final int T__48=48;
-    public static final int T__49=49;
-    public static final int T__102=102;
-    public static final int T__101=101;
-    public static final int T__100=100;
-    public static final int RULE_FLOAT=5;
-    public static final int RULE_SL_COMMENT=15;
-    public static final int RULE_HOSTCODE=9;
-    public static final int T__30=30;
-    public static final int T__31=31;
-    public static final int T__32=32;
+    public static final int T__66=66;
+    public static final int RULE_ML_COMMENT=13;
+    public static final int T__67=67;
+    public static final int T__68=68;
+    public static final int T__69=69;
+    public static final int T__62=62;
+    public static final int T__63=63;
+    public static final int T__64=64;
+    public static final int T__65=65;
+    public static final int RULE_COMMENT_ANNOTATION=10;
+    public static final int T__37=37;
+    public static final int T__38=38;
+    public static final int T__39=39;
     public static final int T__33=33;
     public static final int T__34=34;
     public static final int T__35=35;
     public static final int T__36=36;
-    public static final int T__37=37;
-    public static final int T__38=38;
-    public static final int T__39=39;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int RULE_ESTEREL_SL_COMMENT=11;
+    public static final int T__48=48;
+    public static final int T__49=49;
+    public static final int T__44=44;
+    public static final int T__45=45;
+    public static final int RULE_FLOAT=5;
+    public static final int T__46=46;
+    public static final int T__47=47;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__42=42;
+    public static final int T__43=43;
+    public static final int T__91=91;
+    public static final int T__100=100;
+    public static final int T__92=92;
+    public static final int T__93=93;
+    public static final int T__102=102;
+    public static final int T__94=94;
+    public static final int T__101=101;
+    public static final int T__90=90;
+    public static final int RULE_BOOLEAN=6;
+    public static final int T__19=19;
+    public static final int T__18=18;
+    public static final int T__99=99;
+    public static final int T__95=95;
+    public static final int T__96=96;
+    public static final int T__97=97;
+    public static final int T__98=98;
+    public static final int T__26=26;
+    public static final int RULE_HOSTCODE=9;
+    public static final int T__27=27;
+    public static final int T__28=28;
+    public static final int T__29=29;
+    public static final int T__22=22;
+    public static final int T__23=23;
+    public static final int T__24=24;
+    public static final int T__25=25;
+    public static final int T__20=20;
+    public static final int T__21=21;
+    public static final int T__70=70;
+    public static final int T__71=71;
+    public static final int T__72=72;
+    public static final int RULE_STRING=8;
+    public static final int RULE_SL_COMMENT=15;
+    public static final int T__77=77;
+    public static final int T__78=78;
+    public static final int T__79=79;
+    public static final int T__73=73;
+    public static final int EOF=-1;
+    public static final int T__74=74;
+    public static final int T__75=75;
+    public static final int T__76=76;
+    public static final int T__80=80;
+    public static final int T__111=111;
+    public static final int T__81=81;
+    public static final int T__110=110;
+    public static final int T__82=82;
+    public static final int T__113=113;
+    public static final int T__83=83;
+    public static final int T__112=112;
     public static final int RULE_WS=16;
+    public static final int RULE_ANY_OTHER=17;
+    public static final int RULE_NUMBER=14;
+    public static final int RULE_ESTEREL_ML_COMMENT=12;
+    public static final int T__88=88;
+    public static final int T__108=108;
+    public static final int T__89=89;
+    public static final int T__107=107;
+    public static final int T__109=109;
+    public static final int T__84=84;
+    public static final int T__104=104;
+    public static final int T__85=85;
+    public static final int T__103=103;
+    public static final int T__86=86;
+    public static final int T__106=106;
+    public static final int T__87=87;
+    public static final int T__105=105;
 
     // delegates
     // delegators
@@ -2140,11 +2140,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ESTEREL_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('%'); 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop1:
             do {
                 int alt1=2;
@@ -2157,7 +2157,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2177,7 +2177,7 @@ public class InternalEsterelLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:47: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:47: ( ( '\\r' )? '\\n' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -2186,9 +2186,9 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:48: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:48: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:48: ( '\\r' )?
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:48: ( '\\r' )?
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
@@ -2197,7 +2197,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt2) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33066:48: '\\r'
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33320:48: '\\r'
                             {
                             match('\r'); 
 
@@ -2229,12 +2229,12 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ESTEREL_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33068:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33068:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33322:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33322:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
             {
             match('%'); 
             match('{'); 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33068:35: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33322:35: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -2259,7 +2259,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33068:63: .
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33322:63: .
             	    {
             	    matchAny(); 
 
@@ -2289,11 +2289,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33070:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33070:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33324:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33324:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33070:19: (~ ( '\"' ) | '\"' '\"' )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33324:19: (~ ( '\"' ) | '\"' '\"' )*
             loop5:
             do {
                 int alt5=3;
@@ -2315,7 +2315,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33070:20: ~ ( '\"' )
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33324:20: ~ ( '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2330,7 +2330,7 @@ public class InternalEsterelLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33070:27: '\"' '\"'
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33324:27: '\"' '\"'
             	    {
             	    match('\"'); 
             	    match('\"'); 
@@ -2360,11 +2360,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33072:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33072:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33326:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33326:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33072:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33326:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop6:
             do {
                 int alt6=3;
@@ -2380,7 +2380,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33072:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33326:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2396,7 +2396,7 @@ public class InternalEsterelLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33072:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33326:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2433,12 +2433,12 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33074:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33074:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33328:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33328:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33074:33: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33328:33: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -2463,7 +2463,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33074:61: .
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33328:61: .
             	    {
             	    matchAny(); 
 
@@ -2493,8 +2493,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33076:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33076:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33330:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33330:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -2507,7 +2507,7 @@ public class InternalEsterelLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33076:31: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33330:31: ( options {greedy=false; } : . )*
             loop8:
             do {
                 int alt8=2;
@@ -2532,7 +2532,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33076:59: .
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33330:59: .
             	    {
             	    matchAny(); 
 
@@ -2560,8 +2560,8 @@ public class InternalEsterelLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33078:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33078:24: '0' .. '9'
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33332:22: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33332:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2578,42 +2578,24 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:10: ( ( '-' )? ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:12: ( '-' )? ( RULE_NUMBER )+
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33334:10: ( ( RULE_NUMBER )+ )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33334:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:12: ( '-' )?
-            int alt9=2;
-            int LA9_0 = input.LA(1);
-
-            if ( (LA9_0=='-') ) {
-                alt9=1;
-            }
-            switch (alt9) {
-                case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:12: '-'
-                    {
-                    match('-'); 
-
-                    }
-                    break;
-
-            }
-
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:17: ( RULE_NUMBER )+
-            int cnt10=0;
-            loop10:
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33334:12: ( RULE_NUMBER )+
+            int cnt9=0;
+            loop9:
             do {
-                int alt10=2;
-                int LA10_0 = input.LA(1);
+                int alt9=2;
+                int LA9_0 = input.LA(1);
 
-                if ( ((LA10_0>='0' && LA10_0<='9')) ) {
-                    alt10=1;
+                if ( ((LA9_0>='0' && LA9_0<='9')) ) {
+                    alt9=1;
                 }
 
 
-                switch (alt10) {
+                switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33080:17: RULE_NUMBER
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33334:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2621,12 +2603,12 @@ public class InternalEsterelLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt10 >= 1 ) break loop10;
+            	    if ( cnt9 >= 1 ) break loop9;
                         EarlyExitException eee =
-                            new EarlyExitException(10, input);
+                            new EarlyExitException(9, input);
                         throw eee;
                 }
-                cnt10++;
+                cnt9++;
             } while (true);
 
 
@@ -2645,49 +2627,31 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:12: ( ( ( '-' )? ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( '-' )? ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:14: ( ( '-' )? ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( '-' )? ( RULE_NUMBER )+ 'f' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:14: ( ( '-' )? ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( '-' )? ( RULE_NUMBER )+ 'f' )
-            int alt20=2;
-            alt20 = dfa20.predict(input);
-            switch (alt20) {
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            int alt17=2;
+            alt17 = dfa17.predict(input);
+            switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:15: ( '-' )? ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:15: ( '-' )?
-                    int alt11=2;
-                    int LA11_0 = input.LA(1);
-
-                    if ( (LA11_0=='-') ) {
-                        alt11=1;
-                    }
-                    switch (alt11) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:15: '-'
-                            {
-                            match('-'); 
-
-                            }
-                            break;
-
-                    }
-
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:20: ( RULE_NUMBER )+
-                    int cnt12=0;
-                    loop12:
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:15: ( RULE_NUMBER )+
+                    int cnt10=0;
+                    loop10:
                     do {
-                        int alt12=2;
-                        int LA12_0 = input.LA(1);
+                        int alt10=2;
+                        int LA10_0 = input.LA(1);
 
-                        if ( ((LA12_0>='0' && LA12_0<='9')) ) {
-                            alt12=1;
+                        if ( ((LA10_0>='0' && LA10_0<='9')) ) {
+                            alt10=1;
                         }
 
 
-                        switch (alt12) {
+                        switch (alt10) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:20: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2695,29 +2659,29 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt12 >= 1 ) break loop12;
+                    	    if ( cnt10 >= 1 ) break loop10;
                                 EarlyExitException eee =
-                                    new EarlyExitException(12, input);
+                                    new EarlyExitException(10, input);
                                 throw eee;
                         }
-                        cnt12++;
+                        cnt10++;
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:37: ( RULE_NUMBER )*
-                    loop13:
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:32: ( RULE_NUMBER )*
+                    loop11:
                     do {
-                        int alt13=2;
-                        int LA13_0 = input.LA(1);
+                        int alt11=2;
+                        int LA11_0 = input.LA(1);
 
-                        if ( ((LA13_0>='0' && LA13_0<='9')) ) {
-                            alt13=1;
+                        if ( ((LA11_0>='0' && LA11_0<='9')) ) {
+                            alt11=1;
                         }
 
 
-                        switch (alt13) {
+                        switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:37: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2725,20 +2689,20 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop13;
+                    	    break loop11;
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:50: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
-                    int alt16=2;
-                    int LA16_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    int alt14=2;
+                    int LA14_0 = input.LA(1);
 
-                    if ( (LA16_0=='E'||LA16_0=='e') ) {
-                        alt16=1;
+                    if ( (LA14_0=='E'||LA14_0=='e') ) {
+                        alt14=1;
                     }
-                    switch (alt16) {
+                    switch (alt14) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:51: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2749,14 +2713,14 @@ public class InternalEsterelLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:61: ( '+' | '-' )?
-                            int alt14=2;
-                            int LA14_0 = input.LA(1);
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:56: ( '+' | '-' )?
+                            int alt12=2;
+                            int LA12_0 = input.LA(1);
 
-                            if ( (LA14_0=='+'||LA14_0=='-') ) {
-                                alt14=1;
+                            if ( (LA12_0=='+'||LA12_0=='-') ) {
+                                alt12=1;
                             }
-                            switch (alt14) {
+                            switch (alt12) {
                                 case 1 :
                                     // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:
                                     {
@@ -2775,21 +2739,21 @@ public class InternalEsterelLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:72: ( RULE_NUMBER )+
-                            int cnt15=0;
-                            loop15:
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:67: ( RULE_NUMBER )+
+                            int cnt13=0;
+                            loop13:
                             do {
-                                int alt15=2;
-                                int LA15_0 = input.LA(1);
+                                int alt13=2;
+                                int LA13_0 = input.LA(1);
 
-                                if ( ((LA15_0>='0' && LA15_0<='9')) ) {
-                                    alt15=1;
+                                if ( ((LA13_0>='0' && LA13_0<='9')) ) {
+                                    alt13=1;
                                 }
 
 
-                                switch (alt15) {
+                                switch (alt13) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:72: RULE_NUMBER
+                            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2797,12 +2761,12 @@ public class InternalEsterelLexer extends Lexer {
                             	    break;
 
                             	default :
-                            	    if ( cnt15 >= 1 ) break loop15;
+                            	    if ( cnt13 >= 1 ) break loop13;
                                         EarlyExitException eee =
-                                            new EarlyExitException(15, input);
+                                            new EarlyExitException(13, input);
                                         throw eee;
                                 }
-                                cnt15++;
+                                cnt13++;
                             } while (true);
 
 
@@ -2811,16 +2775,16 @@ public class InternalEsterelLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:87: ( 'f' )?
-                    int alt17=2;
-                    int LA17_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:82: ( 'f' )?
+                    int alt15=2;
+                    int LA15_0 = input.LA(1);
 
-                    if ( (LA17_0=='f') ) {
-                        alt17=1;
+                    if ( (LA15_0=='f') ) {
+                        alt15=1;
                     }
-                    switch (alt17) {
+                    switch (alt15) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:87: 'f'
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:82: 'f'
                             {
                             match('f'); 
 
@@ -2833,41 +2797,23 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:92: ( '-' )? ( RULE_NUMBER )+ 'f'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:92: ( '-' )?
-                    int alt18=2;
-                    int LA18_0 = input.LA(1);
-
-                    if ( (LA18_0=='-') ) {
-                        alt18=1;
-                    }
-                    switch (alt18) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:92: '-'
-                            {
-                            match('-'); 
-
-                            }
-                            break;
-
-                    }
-
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:97: ( RULE_NUMBER )+
-                    int cnt19=0;
-                    loop19:
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:87: ( RULE_NUMBER )+
+                    int cnt16=0;
+                    loop16:
                     do {
-                        int alt19=2;
-                        int LA19_0 = input.LA(1);
+                        int alt16=2;
+                        int LA16_0 = input.LA(1);
 
-                        if ( ((LA19_0>='0' && LA19_0<='9')) ) {
-                            alt19=1;
+                        if ( ((LA16_0>='0' && LA16_0<='9')) ) {
+                            alt16=1;
                         }
 
 
-                        switch (alt19) {
+                        switch (alt16) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33082:97: RULE_NUMBER
+                    	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33336:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2875,12 +2821,12 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt19 >= 1 ) break loop19;
+                    	    if ( cnt16 >= 1 ) break loop16;
                                 EarlyExitException eee =
-                                    new EarlyExitException(19, input);
+                                    new EarlyExitException(16, input);
                                 throw eee;
                         }
-                        cnt19++;
+                        cnt16++;
                     } while (true);
 
                     match('f'); 
@@ -2906,28 +2852,28 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33084:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33084:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33338:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33338:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33084:16: ( 'true' | 'false' )
-            int alt21=2;
-            int LA21_0 = input.LA(1);
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33338:16: ( 'true' | 'false' )
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( (LA21_0=='t') ) {
-                alt21=1;
+            if ( (LA18_0=='t') ) {
+                alt18=1;
             }
-            else if ( (LA21_0=='f') ) {
-                alt21=2;
+            else if ( (LA18_0=='f') ) {
+                alt18=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("", 21, 0, input);
+                    new NoViableAltException("", 18, 0, input);
 
                 throw nvae;
             }
-            switch (alt21) {
+            switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33084:17: 'true'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33338:17: 'true'
                     {
                     match("true"); 
 
@@ -2935,7 +2881,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33084:24: 'false'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33338:24: 'false'
                     {
                     match("false"); 
 
@@ -2961,19 +2907,19 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33086:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33086:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33340:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33340:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33086:11: ( '^' )?
-            int alt22=2;
-            int LA22_0 = input.LA(1);
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33340:11: ( '^' )?
+            int alt19=2;
+            int LA19_0 = input.LA(1);
 
-            if ( (LA22_0=='^') ) {
-                alt22=1;
+            if ( (LA19_0=='^') ) {
+                alt19=1;
             }
-            switch (alt22) {
+            switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33086:11: '^'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33340:11: '^'
                     {
                     match('^'); 
 
@@ -2991,18 +2937,18 @@ public class InternalEsterelLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33086:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
-            loop23:
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33340:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            loop20:
             do {
-                int alt23=2;
-                int LA23_0 = input.LA(1);
+                int alt20=2;
+                int LA20_0 = input.LA(1);
 
-                if ( ((LA23_0>='0' && LA23_0<='9')||(LA23_0>='A' && LA23_0<='Z')||LA23_0=='_'||(LA23_0>='a' && LA23_0<='z')) ) {
-                    alt23=1;
+                if ( ((LA20_0>='0' && LA20_0<='9')||(LA20_0>='A' && LA20_0<='Z')||LA20_0=='_'||(LA20_0>='a' && LA20_0<='z')) ) {
+                    alt20=1;
                 }
 
 
-                switch (alt23) {
+                switch (alt20) {
             	case 1 :
             	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:
             	    {
@@ -3020,7 +2966,7 @@ public class InternalEsterelLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop23;
+            	    break loop20;
                 }
             } while (true);
 
@@ -3040,25 +2986,25 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:24: (~ ( ( '\\n' | '\\r' ) ) )*
-            loop24:
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            loop21:
             do {
-                int alt24=2;
-                int LA24_0 = input.LA(1);
+                int alt21=2;
+                int LA21_0 = input.LA(1);
 
-                if ( ((LA24_0>='\u0000' && LA24_0<='\t')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\uFFFF')) ) {
-                    alt24=1;
+                if ( ((LA21_0>='\u0000' && LA21_0<='\t')||(LA21_0>='\u000B' && LA21_0<='\f')||(LA21_0>='\u000E' && LA21_0<='\uFFFF')) ) {
+                    alt21=1;
                 }
 
 
-                switch (alt24) {
+                switch (alt21) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -3074,31 +3020,31 @@ public class InternalEsterelLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop24;
+            	    break loop21;
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:40: ( ( '\\r' )? '\\n' )?
-            int alt26=2;
-            int LA26_0 = input.LA(1);
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:40: ( ( '\\r' )? '\\n' )?
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
-            if ( (LA26_0=='\n'||LA26_0=='\r') ) {
-                alt26=1;
+            if ( (LA23_0=='\n'||LA23_0=='\r') ) {
+                alt23=1;
             }
-            switch (alt26) {
+            switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:41: ( '\\r' )?
-                    int alt25=2;
-                    int LA25_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:41: ( '\\r' )?
+                    int alt22=2;
+                    int LA22_0 = input.LA(1);
 
-                    if ( (LA25_0=='\r') ) {
-                        alt25=1;
+                    if ( (LA22_0=='\r') ) {
+                        alt22=1;
                     }
-                    switch (alt25) {
+                    switch (alt22) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33088:41: '\\r'
+                            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33342:41: '\\r'
                             {
                             match('\r'); 
 
@@ -3130,22 +3076,22 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33090:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33090:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33344:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33344:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33090:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
-            int cnt27=0;
-            loop27:
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33344:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            int cnt24=0;
+            loop24:
             do {
-                int alt27=2;
-                int LA27_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( ((LA27_0>='\t' && LA27_0<='\n')||LA27_0=='\r'||LA27_0==' ') ) {
-                    alt27=1;
+                if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {
+                    alt24=1;
                 }
 
 
-                switch (alt27) {
+                switch (alt24) {
             	case 1 :
             	    // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:
             	    {
@@ -3163,12 +3109,12 @@ public class InternalEsterelLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt27 >= 1 ) break loop27;
+            	    if ( cnt24 >= 1 ) break loop24;
                         EarlyExitException eee =
-                            new EarlyExitException(27, input);
+                            new EarlyExitException(24, input);
                         throw eee;
                 }
-                cnt27++;
+                cnt24++;
             } while (true);
 
 
@@ -3187,8 +3133,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33092:16: ( . )
-            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33092:18: .
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33346:16: ( . )
+            // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:33346:18: .
             {
             matchAny(); 
 
@@ -3204,9 +3150,9 @@ public class InternalEsterelLexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:1:8: ( T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt28=109;
-        alt28 = dfa28.predict(input);
-        switch (alt28) {
+        int alt25=109;
+        alt25 = dfa25.predict(input);
+        switch (alt25) {
             case 1 :
                 // ../de.cau.cs.kieler.esterel.ui/src-gen/de/cau/cs/kieler/esterel/ui/contentassist/antlr/internal/InternalEsterel.g:1:10: T__18
                 {
@@ -3976,137 +3922,136 @@ public class InternalEsterelLexer extends Lexer {
     }
 
 
-    protected DFA20 dfa20 = new DFA20(this);
-    protected DFA28 dfa28 = new DFA28(this);
-    static final String DFA20_eotS =
-        "\5\uffff";
-    static final String DFA20_eofS =
-        "\5\uffff";
-    static final String DFA20_minS =
-        "\1\55\1\60\1\56\2\uffff";
-    static final String DFA20_maxS =
-        "\2\71\1\146\2\uffff";
-    static final String DFA20_acceptS =
-        "\3\uffff\1\1\1\2";
-    static final String DFA20_specialS =
-        "\5\uffff}>";
-    static final String[] DFA20_transitionS = {
-            "\1\1\2\uffff\12\2",
-            "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+    protected DFA17 dfa17 = new DFA17(this);
+    protected DFA25 dfa25 = new DFA25(this);
+    static final String DFA17_eotS =
+        "\4\uffff";
+    static final String DFA17_eofS =
+        "\4\uffff";
+    static final String DFA17_minS =
+        "\1\60\1\56\2\uffff";
+    static final String DFA17_maxS =
+        "\1\71\1\146\2\uffff";
+    static final String DFA17_acceptS =
+        "\2\uffff\1\2\1\1";
+    static final String DFA17_specialS =
+        "\4\uffff}>";
+    static final String[] DFA17_transitionS = {
+            "\12\1",
+            "\1\3\1\uffff\12\1\54\uffff\1\2",
             "",
             ""
     };
 
-    static final short[] DFA20_eot = DFA.unpackEncodedString(DFA20_eotS);
-    static final short[] DFA20_eof = DFA.unpackEncodedString(DFA20_eofS);
-    static final char[] DFA20_min = DFA.unpackEncodedStringToUnsignedChars(DFA20_minS);
-    static final char[] DFA20_max = DFA.unpackEncodedStringToUnsignedChars(DFA20_maxS);
-    static final short[] DFA20_accept = DFA.unpackEncodedString(DFA20_acceptS);
-    static final short[] DFA20_special = DFA.unpackEncodedString(DFA20_specialS);
-    static final short[][] DFA20_transition;
+    static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
+    static final short[] DFA17_eof = DFA.unpackEncodedString(DFA17_eofS);
+    static final char[] DFA17_min = DFA.unpackEncodedStringToUnsignedChars(DFA17_minS);
+    static final char[] DFA17_max = DFA.unpackEncodedStringToUnsignedChars(DFA17_maxS);
+    static final short[] DFA17_accept = DFA.unpackEncodedString(DFA17_acceptS);
+    static final short[] DFA17_special = DFA.unpackEncodedString(DFA17_specialS);
+    static final short[][] DFA17_transition;
 
     static {
-        int numStates = DFA20_transitionS.length;
-        DFA20_transition = new short[numStates][];
+        int numStates = DFA17_transitionS.length;
+        DFA17_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA20_transition[i] = DFA.unpackEncodedString(DFA20_transitionS[i]);
+            DFA17_transition[i] = DFA.unpackEncodedString(DFA17_transitionS[i]);
         }
     }
 
-    class DFA20 extends DFA {
+    class DFA17 extends DFA {
 
-        public DFA20(BaseRecognizer recognizer) {
+        public DFA17(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 20;
-            this.eot = DFA20_eot;
-            this.eof = DFA20_eof;
-            this.min = DFA20_min;
-            this.max = DFA20_max;
-            this.accept = DFA20_accept;
-            this.special = DFA20_special;
-            this.transition = DFA20_transition;
+            this.decisionNumber = 17;
+            this.eot = DFA17_eot;
+            this.eof = DFA17_eof;
+            this.min = DFA17_min;
+            this.max = DFA17_max;
+            this.accept = DFA17_accept;
+            this.special = DFA17_special;
+            this.transition = DFA17_transition;
         }
         public String getDescription() {
-            return "33082:14: ( ( '-' )? ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( '-' )? ( RULE_NUMBER )+ 'f' )";
+            return "33336:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )";
         }
     }
-    static final String DFA28_eotS =
-        "\1\uffff\5\64\1\uffff\1\101\1\uffff\1\64\1\110\1\112\1\uffff\1"+
-        "\115\1\120\1\122\7\64\1\144\1\64\2\uffff\2\64\2\uffff\1\64\1\uffff"+
-        "\1\56\2\uffff\2\64\1\uffff\1\177\2\56\1\u0082\1\56\3\uffff\5\64"+
-        "\1\uffff\4\64\1\u0091\5\64\1\uffff\1\u0082\2\uffff\3\64\15\uffff"+
-        "\3\64\1\u00a3\1\u00a4\4\64\1\u00aa\6\64\2\uffff\6\64\2\uffff\6\64"+
-        "\2\uffff\2\64\4\uffff\2\64\1\uffff\1\177\6\uffff\7\64\1\u00d5\4"+
-        "\64\1\uffff\1\64\1\u00db\2\64\1\u00df\1\64\1\u00e2\1\u00e3\1\u00e4"+
-        "\2\uffff\6\64\2\uffff\5\64\1\uffff\7\64\1\u00f8\23\64\1\u010d\1"+
-        "\64\1\u010f\1\uffff\3\177\1\u0112\1\64\1\u0115\1\u0116\1\u0117\1"+
-        "\u0118\1\u0119\1\64\1\uffff\1\64\1\u011c\3\64\1\uffff\3\64\1\uffff"+
-        "\1\u0123\1\64\3\uffff\3\64\1\u0128\14\64\1\u0135\1\u0136\1\64\1"+
-        "\uffff\1\u0138\1\64\1\u013a\1\u013b\1\64\1\u013d\1\u013e\3\64\1"+
-        "\u0142\1\u0143\1\u0144\1\u0145\1\u0146\5\64\1\uffff\1\u014c\2\uffff"+
-        "\1\177\1\uffff\1\64\1\u014e\5\uffff\2\64\1\uffff\1\u0151\2\64\1"+
-        "\u0154\1\u0155\1\64\1\uffff\4\64\1\uffff\1\64\1\u015d\1\64\1\u015f"+
-        "\1\64\1\u0119\6\64\2\uffff\1\64\1\uffff\1\u0168\2\uffff\1\u0169"+
-        "\2\uffff\3\64\5\uffff\2\64\1\u016f\2\64\1\uffff\1\64\1\uffff\2\64"+
-        "\1\uffff\1\64\1\u0176\2\uffff\1\64\1\u0178\2\64\1\u017b\2\64\1\uffff"+
-        "\1\64\1\uffff\1\64\1\u0180\1\u0181\1\u0182\1\u0183\2\64\1\u0186"+
-        "\2\uffff\5\64\1\uffff\1\u018c\1\u018d\1\u018e\1\u018f\2\64\1\uffff"+
-        "\1\u0192\1\uffff\1\u0193\1\64\1\uffff\1\u0195\3\64\4\uffff\1\u0199"+
-        "\1\u019a\1\uffff\1\u019b\4\64\4\uffff\1\64\1\u01a1\2\uffff\1\u01a2"+
-        "\1\uffff\2\64\1\u01a5\3\uffff\1\u01a6\1\64\1\u01a8\1\u01a9\1\u01aa"+
-        "\2\uffff\1\64\1\u01ac\2\uffff\1\64\3\uffff\1\64\1\uffff\1\u01af"+
-        "\1\u01b0\2\uffff";
-    static final String DFA28_eofS =
+    static final String DFA25_eotS =
+        "\1\uffff\5\64\3\uffff\1\64\1\107\1\111\1\uffff\1\114\1\117\1\121"+
+        "\7\64\1\143\1\64\2\uffff\2\64\2\uffff\1\64\1\uffff\1\56\2\uffff"+
+        "\2\64\1\uffff\1\176\2\56\1\u0081\1\56\3\uffff\5\64\1\uffff\4\64"+
+        "\1\u0091\5\64\3\uffff\3\64\15\uffff\3\64\1\u00a3\1\u00a4\4\64\1"+
+        "\u00aa\6\64\2\uffff\6\64\2\uffff\6\64\2\uffff\2\64\4\uffff\2\64"+
+        "\1\uffff\1\176\5\uffff\1\u0081\1\uffff\7\64\1\u00d5\4\64\1\uffff"+
+        "\1\64\1\u00db\2\64\1\u00df\1\64\1\u00e2\1\u00e3\1\u00e4\2\uffff"+
+        "\6\64\2\uffff\5\64\1\uffff\7\64\1\u00f8\23\64\1\u010d\1\64\1\u010f"+
+        "\1\uffff\3\176\1\u0112\1\64\1\u0115\1\u0116\1\u0117\1\u0118\1\u0119"+
+        "\1\64\1\uffff\1\64\1\u011c\3\64\1\uffff\3\64\1\uffff\1\u0123\1\64"+
+        "\3\uffff\3\64\1\u0128\14\64\1\u0135\1\u0136\1\64\1\uffff\1\u0138"+
+        "\1\64\1\u013a\1\u013b\1\64\1\u013d\1\u013e\3\64\1\u0142\1\u0143"+
+        "\1\u0144\1\u0145\1\u0146\5\64\1\uffff\1\u014c\2\uffff\1\176\1\uffff"+
+        "\1\64\1\u014e\5\uffff\2\64\1\uffff\1\u0151\2\64\1\u0154\1\u0155"+
+        "\1\64\1\uffff\4\64\1\uffff\1\64\1\u015d\1\64\1\u015f\1\64\1\u0119"+
+        "\6\64\2\uffff\1\64\1\uffff\1\u0168\2\uffff\1\u0169\2\uffff\3\64"+
+        "\5\uffff\2\64\1\u016f\2\64\1\uffff\1\64\1\uffff\2\64\1\uffff\1\64"+
+        "\1\u0176\2\uffff\1\64\1\u0178\2\64\1\u017b\2\64\1\uffff\1\64\1\uffff"+
+        "\1\64\1\u0180\1\u0181\1\u0182\1\u0183\2\64\1\u0186\2\uffff\5\64"+
+        "\1\uffff\1\u018c\1\u018d\1\u018e\1\u018f\2\64\1\uffff\1\u0192\1"+
+        "\uffff\1\u0193\1\64\1\uffff\1\u0195\3\64\4\uffff\1\u0199\1\u019a"+
+        "\1\uffff\1\u019b\4\64\4\uffff\1\64\1\u01a1\2\uffff\1\u01a2\1\uffff"+
+        "\2\64\1\u01a5\3\uffff\1\u01a6\1\64\1\u01a8\1\u01a9\1\u01aa\2\uffff"+
+        "\1\64\1\u01ac\2\uffff\1\64\3\uffff\1\64\1\uffff\1\u01af\1\u01b0"+
+        "\2\uffff";
+    static final String DFA25_eofS =
         "\u01b1\uffff";
-    static final String DFA28_minS =
-        "\1\0\2\141\1\162\1\142\1\157\1\uffff\1\60\1\uffff\1\141\1\52\1"+
-        "\77\1\uffff\1\76\2\75\1\157\1\156\1\146\1\141\1\157\1\145\1\141"+
-        "\1\75\1\141\2\uffff\2\141\2\uffff\1\145\1\uffff\1\174\2\uffff\1"+
-        "\157\1\141\1\uffff\1\173\2\0\1\56\1\101\3\uffff\1\143\1\160\1\163"+
-        "\1\145\1\141\1\uffff\1\145\1\162\1\165\1\163\1\60\1\164\1\144\1"+
-        "\157\1\141\1\156\1\uffff\1\56\2\uffff\1\144\1\170\1\156\1\0\14\uffff"+
-        "\1\157\1\145\1\164\2\60\1\155\1\157\1\156\1\154\1\60\1\162\1\147"+
-        "\1\156\2\163\1\154\2\uffff\1\144\1\151\2\145\1\163\1\143\2\uffff"+
-        "\1\155\1\154\1\164\1\145\1\141\1\164\2\uffff\1\154\1\156\4\uffff"+
-        "\1\157\1\162\1\uffff\1\0\6\uffff\1\153\2\145\1\153\1\156\1\160\1"+
-        "\145\1\60\1\143\1\145\1\163\1\151\1\uffff\1\160\1\60\1\162\1\151"+
-        "\1\60\1\145\3\60\2\uffff\1\154\1\151\1\155\1\157\1\145\1\165\2\uffff"+
-        "\1\145\1\141\1\143\1\163\1\142\1\uffff\1\151\1\156\1\163\1\160\2"+
-        "\164\1\144\1\60\1\164\1\162\1\164\1\143\1\145\1\150\1\142\1\163"+
-        "\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\141\2\145\1\165\1\60"+
-        "\1\160\1\60\4\0\1\60\1\157\5\60\1\145\1\uffff\1\145\1\60\1\145\1"+
-        "\164\1\165\1\uffff\2\164\1\151\1\uffff\1\60\1\154\3\uffff\1\145"+
-        "\1\147\1\151\1\60\1\147\1\164\1\144\2\164\1\145\1\154\1\156\1\141"+
-        "\1\157\1\145\1\141\2\60\1\154\1\uffff\1\60\1\171\2\60\1\146\2\60"+
-        "\1\151\1\164\1\155\5\60\1\150\2\164\1\141\1\162\1\uffff\1\60\2\uffff"+
-        "\1\0\1\uffff\1\165\1\60\5\uffff\1\156\1\144\1\uffff\1\60\1\151\1"+
-        "\164\2\60\1\156\1\uffff\1\145\1\141\1\156\1\164\1\uffff\1\145\1"+
-        "\60\1\151\1\60\1\151\1\60\1\145\1\147\1\154\1\162\1\156\1\151\2"+
-        "\uffff\1\145\1\uffff\1\60\2\uffff\1\60\2\uffff\1\156\1\141\1\157"+
-        "\5\uffff\2\151\1\60\1\164\1\156\1\uffff\1\164\1\uffff\1\164\1\165"+
-        "\1\uffff\1\166\1\60\2\uffff\1\147\1\60\1\156\1\145\1\60\1\162\1"+
-        "\165\1\uffff\1\141\1\uffff\1\157\4\60\1\144\1\156\1\60\2\uffff\1"+
-        "\145\1\156\1\144\1\156\1\157\1\uffff\4\60\1\162\1\145\1\uffff\1"+
-        "\60\1\uffff\1\60\1\144\1\uffff\1\60\2\164\1\156\4\uffff\2\60\1\uffff"+
-        "\1\60\1\164\1\165\1\147\1\156\4\uffff\1\145\1\60\2\uffff\1\60\1"+
-        "\uffff\1\160\1\145\1\60\3\uffff\1\60\1\154\3\60\2\uffff\1\165\1"+
-        "\60\2\uffff\1\145\3\uffff\1\164\1\uffff\2\60\2\uffff";
-    static final String DFA28_maxS =
-        "\1\uffff\1\171\2\165\1\167\1\157\1\uffff\1\71\1\uffff\1\157\1\57"+
-        "\1\77\1\uffff\2\76\1\75\1\157\1\160\1\156\1\165\1\157\1\165\1\157"+
-        "\1\75\1\170\2\uffff\1\157\1\151\2\uffff\1\165\1\uffff\1\174\2\uffff"+
-        "\1\157\1\141\1\uffff\1\173\2\uffff\1\146\1\172\3\uffff\1\155\1\160"+
-        "\1\163\1\145\1\165\1\uffff\1\157\1\162\1\165\1\163\1\172\1\164\1"+
-        "\144\1\157\1\141\1\164\1\uffff\1\146\2\uffff\1\144\1\170\1\156\1"+
-        "\uffff\14\uffff\1\157\1\163\1\164\2\172\1\155\1\157\1\156\1\154"+
-        "\1\172\1\162\1\147\1\156\2\163\1\156\2\uffff\1\144\1\151\1\145\1"+
-        "\151\1\163\1\143\2\uffff\1\160\1\163\1\164\1\145\1\141\1\164\2\uffff"+
-        "\1\164\1\156\4\uffff\1\157\1\162\1\uffff\1\uffff\6\uffff\1\153\2"+
-        "\145\1\153\1\156\1\160\1\145\1\172\1\143\1\145\1\163\1\151\1\uffff"+
-        "\1\160\1\172\1\162\1\151\1\172\1\145\3\172\2\uffff\1\154\1\151\1"+
-        "\155\1\157\1\145\1\165\2\uffff\1\145\1\141\1\143\1\163\1\142\1\uffff"+
-        "\1\151\1\156\1\163\3\164\1\144\1\172\1\164\1\162\1\164\1\143\1\151"+
+    static final String DFA25_minS =
+        "\1\0\2\141\1\162\1\142\1\157\3\uffff\1\141\1\52\1\77\1\uffff\1"+
+        "\76\2\75\1\157\1\156\1\146\1\141\1\157\1\145\1\141\1\75\1\141\2"+
+        "\uffff\2\141\2\uffff\1\145\1\uffff\1\174\2\uffff\1\157\1\141\1\uffff"+
+        "\1\173\2\0\1\56\1\101\3\uffff\1\143\1\160\1\163\1\145\1\141\1\uffff"+
+        "\1\145\1\162\1\165\1\163\1\60\1\164\1\144\1\157\1\141\1\156\3\uffff"+
+        "\1\144\1\170\1\156\1\0\14\uffff\1\157\1\145\1\164\2\60\1\155\1\157"+
+        "\1\156\1\154\1\60\1\162\1\147\1\156\2\163\1\154\2\uffff\1\144\1"+
+        "\151\2\145\1\163\1\143\2\uffff\1\155\1\154\1\164\1\145\1\141\1\164"+
+        "\2\uffff\1\154\1\156\4\uffff\1\157\1\162\1\uffff\1\0\5\uffff\1\56"+
+        "\1\uffff\1\153\2\145\1\153\1\156\1\160\1\145\1\60\1\143\1\145\1"+
+        "\163\1\151\1\uffff\1\160\1\60\1\162\1\151\1\60\1\145\3\60\2\uffff"+
+        "\1\154\1\151\1\155\1\157\1\145\1\165\2\uffff\1\145\1\141\1\143\1"+
+        "\163\1\142\1\uffff\1\151\1\156\1\163\1\160\2\164\1\144\1\60\1\164"+
+        "\1\162\1\164\1\143\1\145\1\150\1\142\1\163\1\171\1\145\1\154\1\150"+
+        "\1\156\1\153\1\143\1\141\2\145\1\165\1\60\1\160\1\60\4\0\1\60\1"+
+        "\157\5\60\1\145\1\uffff\1\145\1\60\1\145\1\164\1\165\1\uffff\2\164"+
+        "\1\151\1\uffff\1\60\1\154\3\uffff\1\145\1\147\1\151\1\60\1\147\1"+
+        "\164\1\144\2\164\1\145\1\154\1\156\1\141\1\157\1\145\1\141\2\60"+
+        "\1\154\1\uffff\1\60\1\171\2\60\1\146\2\60\1\151\1\164\1\155\5\60"+
+        "\1\150\2\164\1\141\1\162\1\uffff\1\60\2\uffff\1\0\1\uffff\1\165"+
+        "\1\60\5\uffff\1\156\1\144\1\uffff\1\60\1\151\1\164\2\60\1\156\1"+
+        "\uffff\1\145\1\141\1\156\1\164\1\uffff\1\145\1\60\1\151\1\60\1\151"+
+        "\1\60\1\145\1\147\1\154\1\162\1\156\1\151\2\uffff\1\145\1\uffff"+
+        "\1\60\2\uffff\1\60\2\uffff\1\156\1\141\1\157\5\uffff\2\151\1\60"+
+        "\1\164\1\156\1\uffff\1\164\1\uffff\1\164\1\165\1\uffff\1\166\1\60"+
+        "\2\uffff\1\147\1\60\1\156\1\145\1\60\1\162\1\165\1\uffff\1\141\1"+
+        "\uffff\1\157\4\60\1\144\1\156\1\60\2\uffff\1\145\1\156\1\144\1\156"+
+        "\1\157\1\uffff\4\60\1\162\1\145\1\uffff\1\60\1\uffff\1\60\1\144"+
+        "\1\uffff\1\60\2\164\1\156\4\uffff\2\60\1\uffff\1\60\1\164\1\165"+
+        "\1\147\1\156\4\uffff\1\145\1\60\2\uffff\1\60\1\uffff\1\160\1\145"+
+        "\1\60\3\uffff\1\60\1\154\3\60\2\uffff\1\165\1\60\2\uffff\1\145\3"+
+        "\uffff\1\164\1\uffff\2\60\2\uffff";
+    static final String DFA25_maxS =
+        "\1\uffff\1\171\2\165\1\167\1\157\3\uffff\1\157\1\57\1\77\1\uffff"+
+        "\2\76\1\75\1\157\1\160\1\156\1\165\1\157\1\165\1\157\1\75\1\170"+
+        "\2\uffff\1\157\1\151\2\uffff\1\165\1\uffff\1\174\2\uffff\1\157\1"+
+        "\141\1\uffff\1\173\2\uffff\1\146\1\172\3\uffff\1\155\1\160\1\163"+
+        "\1\145\1\165\1\uffff\1\157\1\162\1\165\1\163\1\172\1\164\1\144\1"+
+        "\157\1\141\1\164\3\uffff\1\144\1\170\1\156\1\uffff\14\uffff\1\157"+
+        "\1\163\1\164\2\172\1\155\1\157\1\156\1\154\1\172\1\162\1\147\1\156"+
+        "\2\163\1\156\2\uffff\1\144\1\151\1\145\1\151\1\163\1\143\2\uffff"+
+        "\1\160\1\163\1\164\1\145\1\141\1\164\2\uffff\1\164\1\156\4\uffff"+
+        "\1\157\1\162\1\uffff\1\uffff\5\uffff\1\146\1\uffff\1\153\2\145\1"+
+        "\153\1\156\1\160\1\145\1\172\1\143\1\145\1\163\1\151\1\uffff\1\160"+
+        "\1\172\1\162\1\151\1\172\1\145\3\172\2\uffff\1\154\1\151\1\155\1"+
+        "\157\1\145\1\165\2\uffff\1\145\1\141\1\143\1\163\1\142\1\uffff\1"+
+        "\151\1\156\1\163\3\164\1\144\1\172\1\164\1\162\1\164\1\143\1\151"+
         "\1\150\1\142\1\163\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\141"+
         "\2\145\1\165\1\172\1\160\1\172\4\uffff\1\172\1\163\5\172\1\145\1"+
         "\uffff\1\145\1\172\1\145\1\164\1\165\1\uffff\2\164\1\151\1\uffff"+
@@ -4126,14 +4071,14 @@ public class InternalEsterelLexer extends Lexer {
         "\1\165\1\147\1\156\4\uffff\1\145\1\172\2\uffff\1\172\1\uffff\1\160"+
         "\1\145\1\172\3\uffff\1\172\1\154\3\172\2\uffff\1\165\1\172\2\uffff"+
         "\1\145\3\uffff\1\164\1\uffff\2\172\2\uffff";
-    static final String DFA28_acceptS =
-        "\6\uffff\1\6\1\uffff\1\10\3\uffff\1\14\14\uffff\1\41\1\42\2\uffff"+
-        "\1\50\1\52\1\uffff\1\54\1\uffff\1\63\1\64\2\uffff\1\135\5\uffff"+
-        "\1\152\1\154\1\155\5\uffff\1\152\12\uffff\1\6\1\uffff\1\7\1\10\4"+
-        "\uffff\1\153\1\12\1\126\1\13\1\14\1\136\1\15\1\16\1\21\1\20\1\22"+
-        "\1\17\20\uffff\1\43\1\37\6\uffff\1\41\1\42\6\uffff\1\50\1\52\2\uffff"+
-        "\1\54\1\62\1\63\1\64\2\uffff\1\135\1\uffff\1\141\1\143\1\144\1\147"+
-        "\1\150\1\154\14\uffff\1\3\11\uffff\1\145\1\146\6\uffff\1\47\1\105"+
+    static final String DFA25_acceptS =
+        "\6\uffff\1\6\1\7\1\10\3\uffff\1\14\14\uffff\1\41\1\42\2\uffff\1"+
+        "\50\1\52\1\uffff\1\54\1\uffff\1\63\1\64\2\uffff\1\135\5\uffff\1"+
+        "\152\1\154\1\155\5\uffff\1\152\12\uffff\1\6\1\7\1\10\4\uffff\1\153"+
+        "\1\12\1\126\1\13\1\14\1\136\1\15\1\16\1\21\1\20\1\22\1\17\20\uffff"+
+        "\1\43\1\37\6\uffff\1\41\1\42\6\uffff\1\50\1\52\2\uffff\1\54\1\62"+
+        "\1\63\1\64\2\uffff\1\135\1\uffff\1\141\1\143\1\144\1\147\1\150\1"+
+        "\uffff\1\154\14\uffff\1\3\11\uffff\1\145\1\146\6\uffff\1\47\1\105"+
         "\5\uffff\1\67\52\uffff\1\2\5\uffff\1\4\3\uffff\1\5\2\uffff\1\11"+
         "\1\34\1\35\23\uffff\1\40\24\uffff\1\120\1\uffff\1\134\1\142\1\uffff"+
         "\1\1\2\uffff\1\55\1\61\1\107\1\124\1\151\2\uffff\1\23\6\uffff\1"+
@@ -4145,10 +4090,10 @@ public class InternalEsterelLexer extends Lexer {
         "\125\5\uffff\1\116\1\130\1\76\1\115\2\uffff\1\113\1\24\1\uffff\1"+
         "\26\3\uffff\1\122\1\123\1\44\5\uffff\1\137\1\25\2\uffff\1\57\1\56"+
         "\1\uffff\1\75\1\53\1\60\1\uffff\1\140\2\uffff\1\121\1\133";
-    static final String DFA28_specialS =
-        "\1\3\47\uffff\1\2\1\10\34\uffff\1\6\67\uffff\1\5\112\uffff\1\1"+
-        "\1\0\1\11\1\7\104\uffff\1\4\u009f\uffff}>";
-    static final String[] DFA28_transitionS = {
+    static final String DFA25_specialS =
+        "\1\1\47\uffff\1\7\1\0\33\uffff\1\11\67\uffff\1\3\113\uffff\1\2"+
+        "\1\4\1\5\1\6\104\uffff\1\10\u009f\uffff}>";
+    static final String[] DFA25_transitionS = {
             "\11\56\2\55\2\56\1\55\22\56\1\55\1\56\1\50\1\40\1\56\1\47\1"+
             "\56\1\51\1\31\1\32\1\10\1\6\1\35\1\7\1\14\1\12\12\52\1\27\1"+
             "\36\1\16\1\15\1\17\1\13\1\46\32\54\1\42\1\56\1\43\1\53\1\54"+
@@ -4161,43 +4106,43 @@ public class InternalEsterelLexer extends Lexer {
             "\1\74\13\uffff\1\73\10\uffff\1\75",
             "\1\76",
             "",
-            "\12\100",
-            "",
-            "\1\104\7\uffff\1\105\5\uffff\1\103",
-            "\1\106\4\uffff\1\107",
-            "\1\111",
-            "",
-            "\1\114",
-            "\1\117\1\116",
-            "\1\121",
-            "\1\123",
-            "\1\124\1\uffff\1\125",
-            "\1\127\6\uffff\1\130\1\126",
-            "\1\133\12\uffff\1\131\10\uffff\1\132",
-            "\1\134",
-            "\1\137\3\uffff\1\136\12\uffff\1\135\1\140",
-            "\1\142\15\uffff\1\141",
-            "\1\143",
-            "\1\152\12\uffff\1\151\1\146\1\145\7\uffff\1\147\1\uffff\1"+
-            "\150",
             "",
             "",
-            "\1\156\15\uffff\1\155",
-            "\1\162\3\uffff\1\161\2\uffff\1\160\1\157",
+            "\1\103\7\uffff\1\104\5\uffff\1\102",
+            "\1\105\4\uffff\1\106",
+            "\1\110",
+            "",
+            "\1\113",
+            "\1\116\1\115",
+            "\1\120",
+            "\1\122",
+            "\1\123\1\uffff\1\124",
+            "\1\126\6\uffff\1\127\1\125",
+            "\1\132\12\uffff\1\130\10\uffff\1\131",
+            "\1\133",
+            "\1\136\3\uffff\1\135\12\uffff\1\134\1\137",
+            "\1\141\15\uffff\1\140",
+            "\1\142",
+            "\1\151\12\uffff\1\150\1\145\1\144\7\uffff\1\146\1\uffff\1"+
+            "\147",
             "",
             "",
-            "\1\165\17\uffff\1\166",
+            "\1\155\15\uffff\1\154",
+            "\1\161\3\uffff\1\160\2\uffff\1\157\1\156",
             "",
-            "\1\170",
+            "",
+            "\1\164\17\uffff\1\165",
+            "",
+            "\1\167",
             "",
             "",
+            "\1\172",
             "\1\173",
-            "\1\174",
             "",
-            "\1\176",
+            "\1\175",
+            "\0\177",
             "\0\u0080",
-            "\0\u0081",
-            "\1\u0083\1\uffff\12\100\54\uffff\1\u0083",
+            "\1\u0082\1\uffff\12\u0083\54\uffff\1\u0082",
             "\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
             "",
@@ -4219,7 +4164,6 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0095",
             "\1\u0097\5\uffff\1\u0096",
             "",
-            "\1\u0083\1\uffff\12\100\54\uffff\1\u0083",
             "",
             "",
             "\1\u0098",
@@ -4290,6 +4234,7 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "",
             "",
+            "\1\u0082\1\uffff\12\u0083\54\uffff\1\u0082",
             "",
             "\1\u00cd",
             "\1\u00ce",
@@ -4600,34 +4545,34 @@ public class InternalEsterelLexer extends Lexer {
             ""
     };
 
-    static final short[] DFA28_eot = DFA.unpackEncodedString(DFA28_eotS);
-    static final short[] DFA28_eof = DFA.unpackEncodedString(DFA28_eofS);
-    static final char[] DFA28_min = DFA.unpackEncodedStringToUnsignedChars(DFA28_minS);
-    static final char[] DFA28_max = DFA.unpackEncodedStringToUnsignedChars(DFA28_maxS);
-    static final short[] DFA28_accept = DFA.unpackEncodedString(DFA28_acceptS);
-    static final short[] DFA28_special = DFA.unpackEncodedString(DFA28_specialS);
-    static final short[][] DFA28_transition;
+    static final short[] DFA25_eot = DFA.unpackEncodedString(DFA25_eotS);
+    static final short[] DFA25_eof = DFA.unpackEncodedString(DFA25_eofS);
+    static final char[] DFA25_min = DFA.unpackEncodedStringToUnsignedChars(DFA25_minS);
+    static final char[] DFA25_max = DFA.unpackEncodedStringToUnsignedChars(DFA25_maxS);
+    static final short[] DFA25_accept = DFA.unpackEncodedString(DFA25_acceptS);
+    static final short[] DFA25_special = DFA.unpackEncodedString(DFA25_specialS);
+    static final short[][] DFA25_transition;
 
     static {
-        int numStates = DFA28_transitionS.length;
-        DFA28_transition = new short[numStates][];
+        int numStates = DFA25_transitionS.length;
+        DFA25_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA28_transition[i] = DFA.unpackEncodedString(DFA28_transitionS[i]);
+            DFA25_transition[i] = DFA.unpackEncodedString(DFA25_transitionS[i]);
         }
     }
 
-    class DFA28 extends DFA {
+    class DFA25 extends DFA {
 
-        public DFA28(BaseRecognizer recognizer) {
+        public DFA25(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 28;
-            this.eot = DFA28_eot;
-            this.eof = DFA28_eof;
-            this.min = DFA28_min;
-            this.max = DFA28_max;
-            this.accept = DFA28_accept;
-            this.special = DFA28_special;
-            this.transition = DFA28_transition;
+            this.decisionNumber = 25;
+            this.eot = DFA25_eot;
+            this.eof = DFA25_eof;
+            this.min = DFA25_min;
+            this.max = DFA25_max;
+            this.accept = DFA25_accept;
+            this.special = DFA25_special;
+            this.transition = DFA25_transition;
         }
         public String getDescription() {
             return "1:1: Tokens : ( T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
@@ -4637,222 +4582,222 @@ public class InternalEsterelLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA28_202 = input.LA(1);
+                        int LA25_41 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA28_202>='\u0000' && LA28_202<='\uFFFF')) ) {s = 272;}
+                        if ( ((LA25_41>='\u0000' && LA25_41<='\uFFFF')) ) {s = 128;}
 
-                        else s = 127;
+                        else s = 46;
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA28_201 = input.LA(1);
+                        int LA25_0 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA28_201>='\u0000' && LA28_201<='\t')||(LA28_201>='\u000B' && LA28_201<='\uFFFF')) ) {s = 272;}
+                        if ( (LA25_0=='t') ) {s = 1;}
 
-                        else if ( (LA28_201=='\n') ) {s = 202;}
+                        else if ( (LA25_0=='p') ) {s = 2;}
+
+                        else if ( (LA25_0=='o') ) {s = 3;}
+
+                        else if ( (LA25_0=='a') ) {s = 4;}
+
+                        else if ( (LA25_0=='n') ) {s = 5;}
+
+                        else if ( (LA25_0=='+') ) {s = 6;}
+
+                        else if ( (LA25_0=='-') ) {s = 7;}
+
+                        else if ( (LA25_0=='*') ) {s = 8;}
+
+                        else if ( (LA25_0=='m') ) {s = 9;}
+
+                        else if ( (LA25_0=='/') ) {s = 10;}
+
+                        else if ( (LA25_0=='?') ) {s = 11;}
+
+                        else if ( (LA25_0=='.') ) {s = 12;}
+
+                        else if ( (LA25_0=='=') ) {s = 13;}
+
+                        else if ( (LA25_0=='<') ) {s = 14;}
+
+                        else if ( (LA25_0=='>') ) {s = 15;}
+
+                        else if ( (LA25_0=='b') ) {s = 16;}
+
+                        else if ( (LA25_0=='u') ) {s = 17;}
+
+                        else if ( (LA25_0=='i') ) {s = 18;}
+
+                        else if ( (LA25_0=='f') ) {s = 19;}
+
+                        else if ( (LA25_0=='d') ) {s = 20;}
+
+                        else if ( (LA25_0=='s') ) {s = 21;}
+
+                        else if ( (LA25_0=='h') ) {s = 22;}
+
+                        else if ( (LA25_0==':') ) {s = 23;}
+
+                        else if ( (LA25_0=='e') ) {s = 24;}
+
+                        else if ( (LA25_0=='(') ) {s = 25;}
+
+                        else if ( (LA25_0==')') ) {s = 26;}
+
+                        else if ( (LA25_0=='c') ) {s = 27;}
+
+                        else if ( (LA25_0=='w') ) {s = 28;}
+
+                        else if ( (LA25_0==',') ) {s = 29;}
+
+                        else if ( (LA25_0==';') ) {s = 30;}
+
+                        else if ( (LA25_0=='r') ) {s = 31;}
+
+                        else if ( (LA25_0=='#') ) {s = 32;}
+
+                        else if ( (LA25_0=='|') ) {s = 33;}
+
+                        else if ( (LA25_0=='[') ) {s = 34;}
+
+                        else if ( (LA25_0==']') ) {s = 35;}
+
+                        else if ( (LA25_0=='l') ) {s = 36;}
+
+                        else if ( (LA25_0=='v') ) {s = 37;}
+
+                        else if ( (LA25_0=='@') ) {s = 38;}
+
+                        else if ( (LA25_0=='%') ) {s = 39;}
+
+                        else if ( (LA25_0=='\"') ) {s = 40;}
+
+                        else if ( (LA25_0=='\'') ) {s = 41;}
+
+                        else if ( ((LA25_0>='0' && LA25_0<='9')) ) {s = 42;}
+
+                        else if ( (LA25_0=='^') ) {s = 43;}
+
+                        else if ( ((LA25_0>='A' && LA25_0<='Z')||LA25_0=='_'||LA25_0=='g'||(LA25_0>='j' && LA25_0<='k')||LA25_0=='q'||(LA25_0>='x' && LA25_0<='z')) ) {s = 44;}
+
+                        else if ( ((LA25_0>='\t' && LA25_0<='\n')||LA25_0=='\r'||LA25_0==' ') ) {s = 45;}
+
+                        else if ( ((LA25_0>='\u0000' && LA25_0<='\b')||(LA25_0>='\u000B' && LA25_0<='\f')||(LA25_0>='\u000E' && LA25_0<='\u001F')||LA25_0=='!'||LA25_0=='$'||LA25_0=='&'||LA25_0=='\\'||LA25_0=='`'||LA25_0=='{'||(LA25_0>='}' && LA25_0<='\uFFFF')) ) {s = 46;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA28_40 = input.LA(1);
+                        int LA25_201 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA28_40>='\u0000' && LA28_40<='\uFFFF')) ) {s = 128;}
+                        if ( (LA25_201=='\n') ) {s = 202;}
 
-                        else s = 46;
+                        else if ( ((LA25_201>='\u0000' && LA25_201<='\t')||(LA25_201>='\u000B' && LA25_201<='\uFFFF')) ) {s = 272;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA28_0 = input.LA(1);
+                        int LA25_125 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_0=='t') ) {s = 1;}
+                        if ( (LA25_125=='\r') ) {s = 201;}
 
-                        else if ( (LA28_0=='p') ) {s = 2;}
+                        else if ( (LA25_125=='\n') ) {s = 202;}
 
-                        else if ( (LA28_0=='o') ) {s = 3;}
+                        else if ( (LA25_125=='}') ) {s = 203;}
 
-                        else if ( (LA28_0=='a') ) {s = 4;}
+                        else if ( ((LA25_125>='\u0000' && LA25_125<='\t')||(LA25_125>='\u000B' && LA25_125<='\f')||(LA25_125>='\u000E' && LA25_125<='|')||(LA25_125>='~' && LA25_125<='\uFFFF')) ) {s = 204;}
 
-                        else if ( (LA28_0=='n') ) {s = 5;}
-
-                        else if ( (LA28_0=='+') ) {s = 6;}
-
-                        else if ( (LA28_0=='-') ) {s = 7;}
-
-                        else if ( (LA28_0=='*') ) {s = 8;}
-
-                        else if ( (LA28_0=='m') ) {s = 9;}
-
-                        else if ( (LA28_0=='/') ) {s = 10;}
-
-                        else if ( (LA28_0=='?') ) {s = 11;}
-
-                        else if ( (LA28_0=='.') ) {s = 12;}
-
-                        else if ( (LA28_0=='=') ) {s = 13;}
-
-                        else if ( (LA28_0=='<') ) {s = 14;}
-
-                        else if ( (LA28_0=='>') ) {s = 15;}
-
-                        else if ( (LA28_0=='b') ) {s = 16;}
-
-                        else if ( (LA28_0=='u') ) {s = 17;}
-
-                        else if ( (LA28_0=='i') ) {s = 18;}
-
-                        else if ( (LA28_0=='f') ) {s = 19;}
-
-                        else if ( (LA28_0=='d') ) {s = 20;}
-
-                        else if ( (LA28_0=='s') ) {s = 21;}
-
-                        else if ( (LA28_0=='h') ) {s = 22;}
-
-                        else if ( (LA28_0==':') ) {s = 23;}
-
-                        else if ( (LA28_0=='e') ) {s = 24;}
-
-                        else if ( (LA28_0=='(') ) {s = 25;}
-
-                        else if ( (LA28_0==')') ) {s = 26;}
-
-                        else if ( (LA28_0=='c') ) {s = 27;}
-
-                        else if ( (LA28_0=='w') ) {s = 28;}
-
-                        else if ( (LA28_0==',') ) {s = 29;}
-
-                        else if ( (LA28_0==';') ) {s = 30;}
-
-                        else if ( (LA28_0=='r') ) {s = 31;}
-
-                        else if ( (LA28_0=='#') ) {s = 32;}
-
-                        else if ( (LA28_0=='|') ) {s = 33;}
-
-                        else if ( (LA28_0=='[') ) {s = 34;}
-
-                        else if ( (LA28_0==']') ) {s = 35;}
-
-                        else if ( (LA28_0=='l') ) {s = 36;}
-
-                        else if ( (LA28_0=='v') ) {s = 37;}
-
-                        else if ( (LA28_0=='@') ) {s = 38;}
-
-                        else if ( (LA28_0=='%') ) {s = 39;}
-
-                        else if ( (LA28_0=='\"') ) {s = 40;}
-
-                        else if ( (LA28_0=='\'') ) {s = 41;}
-
-                        else if ( ((LA28_0>='0' && LA28_0<='9')) ) {s = 42;}
-
-                        else if ( (LA28_0=='^') ) {s = 43;}
-
-                        else if ( ((LA28_0>='A' && LA28_0<='Z')||LA28_0=='_'||LA28_0=='g'||(LA28_0>='j' && LA28_0<='k')||LA28_0=='q'||(LA28_0>='x' && LA28_0<='z')) ) {s = 44;}
-
-                        else if ( ((LA28_0>='\t' && LA28_0<='\n')||LA28_0=='\r'||LA28_0==' ') ) {s = 45;}
-
-                        else if ( ((LA28_0>='\u0000' && LA28_0<='\b')||(LA28_0>='\u000B' && LA28_0<='\f')||(LA28_0>='\u000E' && LA28_0<='\u001F')||LA28_0=='!'||LA28_0=='$'||LA28_0=='&'||LA28_0=='\\'||LA28_0=='`'||LA28_0=='{'||(LA28_0>='}' && LA28_0<='\uFFFF')) ) {s = 46;}
+                        else s = 126;
 
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA28_273 = input.LA(1);
+                        int LA25_202 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_273=='}') ) {s = 203;}
+                        if ( ((LA25_202>='\u0000' && LA25_202<='\uFFFF')) ) {s = 272;}
 
-                        else if ( (LA28_273=='\r') ) {s = 201;}
-
-                        else if ( (LA28_273=='\n') ) {s = 202;}
-
-                        else if ( ((LA28_273>='\u0000' && LA28_273<='\t')||(LA28_273>='\u000B' && LA28_273<='\f')||(LA28_273>='\u000E' && LA28_273<='|')||(LA28_273>='~' && LA28_273<='\uFFFF')) ) {s = 204;}
-
-                        else s = 127;
+                        else s = 126;
 
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA28_126 = input.LA(1);
+                        int LA25_203 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_126=='\r') ) {s = 201;}
+                        if ( (LA25_203=='%') ) {s = 273;}
 
-                        else if ( (LA28_126=='\n') ) {s = 202;}
+                        else if ( (LA25_203=='\r') ) {s = 201;}
 
-                        else if ( (LA28_126=='}') ) {s = 203;}
+                        else if ( (LA25_203=='\n') ) {s = 202;}
 
-                        else if ( ((LA28_126>='\u0000' && LA28_126<='\t')||(LA28_126>='\u000B' && LA28_126<='\f')||(LA28_126>='\u000E' && LA28_126<='|')||(LA28_126>='~' && LA28_126<='\uFFFF')) ) {s = 204;}
+                        else if ( (LA25_203=='}') ) {s = 203;}
 
-                        else s = 127;
+                        else if ( ((LA25_203>='\u0000' && LA25_203<='\t')||(LA25_203>='\u000B' && LA25_203<='\f')||(LA25_203>='\u000E' && LA25_203<='$')||(LA25_203>='&' && LA25_203<='|')||(LA25_203>='~' && LA25_203<='\uFFFF')) ) {s = 204;}
+
+                        else s = 126;
 
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA28_70 = input.LA(1);
+                        int LA25_204 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_70=='*') ) {s = 155;}
+                        if ( (LA25_204=='\r') ) {s = 201;}
 
-                        else if ( ((LA28_70>='\u0000' && LA28_70<=')')||(LA28_70>='+' && LA28_70<='\uFFFF')) ) {s = 156;}
+                        else if ( (LA25_204=='\n') ) {s = 202;}
+
+                        else if ( (LA25_204=='}') ) {s = 203;}
+
+                        else if ( ((LA25_204>='\u0000' && LA25_204<='\t')||(LA25_204>='\u000B' && LA25_204<='\f')||(LA25_204>='\u000E' && LA25_204<='|')||(LA25_204>='~' && LA25_204<='\uFFFF')) ) {s = 204;}
+
+                        else s = 126;
 
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA28_204 = input.LA(1);
+                        int LA25_40 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_204=='}') ) {s = 203;}
-
-                        else if ( (LA28_204=='\r') ) {s = 201;}
-
-                        else if ( (LA28_204=='\n') ) {s = 202;}
-
-                        else if ( ((LA28_204>='\u0000' && LA28_204<='\t')||(LA28_204>='\u000B' && LA28_204<='\f')||(LA28_204>='\u000E' && LA28_204<='|')||(LA28_204>='~' && LA28_204<='\uFFFF')) ) {s = 204;}
-
-                        else s = 127;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 8 : 
-                        int LA28_41 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA28_41>='\u0000' && LA28_41<='\uFFFF')) ) {s = 129;}
+                        if ( ((LA25_40>='\u0000' && LA25_40<='\uFFFF')) ) {s = 127;}
 
                         else s = 46;
 
                         if ( s>=0 ) return s;
                         break;
-                    case 9 : 
-                        int LA28_203 = input.LA(1);
+                    case 8 : 
+                        int LA25_273 = input.LA(1);
 
                         s = -1;
-                        if ( (LA28_203=='%') ) {s = 273;}
+                        if ( (LA25_273=='\r') ) {s = 201;}
 
-                        else if ( (LA28_203=='}') ) {s = 203;}
+                        else if ( (LA25_273=='\n') ) {s = 202;}
 
-                        else if ( (LA28_203=='\r') ) {s = 201;}
+                        else if ( (LA25_273=='}') ) {s = 203;}
 
-                        else if ( (LA28_203=='\n') ) {s = 202;}
+                        else if ( ((LA25_273>='\u0000' && LA25_273<='\t')||(LA25_273>='\u000B' && LA25_273<='\f')||(LA25_273>='\u000E' && LA25_273<='|')||(LA25_273>='~' && LA25_273<='\uFFFF')) ) {s = 204;}
 
-                        else if ( ((LA28_203>='\u0000' && LA28_203<='\t')||(LA28_203>='\u000B' && LA28_203<='\f')||(LA28_203>='\u000E' && LA28_203<='$')||(LA28_203>='&' && LA28_203<='|')||(LA28_203>='~' && LA28_203<='\uFFFF')) ) {s = 204;}
+                        else s = 126;
 
-                        else s = 127;
+                        if ( s>=0 ) return s;
+                        break;
+                    case 9 : 
+                        int LA25_69 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA25_69=='*') ) {s = 155;}
+
+                        else if ( ((LA25_69>='\u0000' && LA25_69<=')')||(LA25_69>='+' && LA25_69<='\uFFFF')) ) {s = 156;}
 
                         if ( s>=0 ) return s;
                         break;
             }
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 28, _s, input);
+                new NoViableAltException(getDescription(), 25, _s, input);
             error(nvae);
             throw nvae;
         }

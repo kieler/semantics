@@ -13,11 +13,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantWithValue#getConstant <em>Constant</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantWithValue#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantWithValue()
  * @model

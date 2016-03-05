@@ -164,29 +164,6 @@ public class SclItemProviderAdapterFactory extends SclAdapterFactory implements 
 	}
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Instruction} instances.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected InstructionItemProvider instructionItemProvider;
-
-    /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scl.scl.Instruction}.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Adapter createInstructionAdapter() {
-		if (instructionItemProvider == null) {
-			instructionItemProvider = new InstructionItemProvider(this);
-		}
-
-		return instructionItemProvider;
-	}
-
-    /**
 	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scl.scl.Assignment} instances.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -473,7 +450,6 @@ public class SclItemProviderAdapterFactory extends SclAdapterFactory implements 
 		if (statementItemProvider != null) statementItemProvider.dispose();
 		if (emptyStatementItemProvider != null) emptyStatementItemProvider.dispose();
 		if (instructionStatementItemProvider != null) instructionStatementItemProvider.dispose();
-		if (instructionItemProvider != null) instructionItemProvider.dispose();
 		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
 		if (conditionalItemProvider != null) conditionalItemProvider.dispose();
 		if (gotoItemProvider != null) gotoItemProvider.dispose();

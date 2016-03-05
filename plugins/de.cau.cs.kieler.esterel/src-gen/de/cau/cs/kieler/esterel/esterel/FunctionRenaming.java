@@ -11,12 +11,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.FunctionRenaming#getNewName <em>New Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.FunctionRenaming#getNewFunc <em>New Func</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.FunctionRenaming#getOldName <em>Old Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionRenaming()
  * @model

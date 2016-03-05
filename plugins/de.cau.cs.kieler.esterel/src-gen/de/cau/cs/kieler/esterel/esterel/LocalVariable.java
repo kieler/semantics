@@ -11,11 +11,11 @@ import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getVar <em>Var</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalVariable()
  * @model

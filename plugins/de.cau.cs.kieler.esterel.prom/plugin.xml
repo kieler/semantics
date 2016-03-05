@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            category="de.cau.cs.kieler.esterel"
+            class="de.cau.cs.kieler.esterel.prom.EsterelFileWizard"
+            finalPerspective="de.cau.cs.kieler.Modeling"
+            hasPages="true"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.esterel.prom.filewizard"
+            name="Esterel File"
+            project="false">
+         <description>
+            Create a new Esterel file.
+         </description>
+      </wizard>
+      <wizard
+            category="de.cau.cs.kieler.esterel"
+            class="de.cau.cs.kieler.esterel.prom.EsterelProjectWizard"
+            finalPerspective="de.cau.cs.kieler.Modeling"
+            hasPages="true"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.esterel.prom.projectwizard"
+            name="Esterel Project"
+            project="true">
+         <description>
+            Create a new Esterel project.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.esterel.prom.launchShortcut"
+            label="KiCo Compilation"
+            modes="run, debug">
+         <contextualLaunch>
+            <enablement>
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <or>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.debug.ui.matchesPattern"
+                              value="*.strl">
+                        </test>
+                     </or>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer">
+      <analyzer
+            class="de.cau.cs.kieler.esterel.prom.EsterelWrapperCodeAnnotationAnalyzer">
+      </analyzer>
+   </extension>
+
+</plugin>

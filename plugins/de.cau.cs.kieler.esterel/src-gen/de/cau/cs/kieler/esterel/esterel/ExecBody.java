@@ -16,11 +16,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ExecBody#getVars <em>Vars</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ExecBody#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExecBody()
  * @model

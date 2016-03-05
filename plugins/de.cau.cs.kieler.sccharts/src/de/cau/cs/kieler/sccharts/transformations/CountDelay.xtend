@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -25,6 +24,11 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
 
 /**
  * SCCharts CountDelay Transformation.
@@ -60,7 +64,19 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsCompareExtensions
 
     @Inject
     extension SCChartsExtension
@@ -90,7 +106,8 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
 
-            val counter = parentState.createVariable(GENERATED_PREFIX + "counter").setTypeInt.uniqueName
+			
+            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
 
             //Add entry action
             val entryAction = sourceState.createEntryAction
@@ -106,7 +123,7 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
 
             // Modify original trigger
             // trigger := (counter == delay)
-            val trigger = counter.reference.isEqual(transition.delay.createIntValue)
+            val trigger = counter.reference.createEQExpression(transition.delay.createIntValue)
             transition.setTrigger(trigger)
             transition.setDelay(1)
         }

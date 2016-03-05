@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en" class="page-type-section">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<title>list, else, items, sep, break - FreeMarker Manual</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta property="og:site_name" content="FreeMarker Manual">
+<meta property="og:title" content="list, else, items, sep, break">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="http://freemarker.org/docs/ref_directive_list.html">
+<link rel="canoical" href="http://freemarker.org/docs/ref_directive_list.html">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="stylesheet" type="text/css" href="docgen-resources/docgen.min.css">
+</head>
+<body itemscope itemtype="http://schema.org/Article">
+  <!--[if lte IE 9]>
+  <div style="background-color: #C00; color: #fff; padding: 12px 24px;">Please use a modern browser to view this website.</div>
+  <![endif]--><div class="header-top-bg"><div class="site-width header-top"><a class="logo" href="http://freemarker.org" role="banner">            <img src="logo.png" alt="FreeMarker">
+</a><ul class="tabs"><li><a href="http://freemarker.org/">Home</a></li><li class="current"><a href="index.html">Manual</a></li><li><a class="external" href="api/index.html">Java API</a></li></ul><ul class="secondary-tabs"><li><a class="tab icon-heart" href="http://freemarker.org/contribute.html" title="Contribute"><span>Contribute</span></a></li><li><a class="tab icon-bug" href="https://sourceforge.net/p/freemarker/bugs/new/" title="Report a Bug"><span>Report a Bug</span></a></li><li><a class="tab icon-download" href="http://freemarker.org/freemarkerdownload.html" title="Download"><span>Download</span></a></li></ul></div></div><div class="header-bottom-bg"><div class="site-width search-row"><a href="toc.html" class="navigationHeader">Manual</a><div class="navigationHeader"></div></div><div class="site-width breadcrumb-row"><ul class="breadcrumb"><li class="step-0" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="toc.html"><span itemprop="title">FreeMarker Manual</span></a></li><li class="step-1" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="ref.html"><span itemprop="title">Template Language Reference</span></a></li><li class="step-2" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="ref_directives.html"><span itemprop="title">Directive Reference</span></a></li><li class="step-3" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a class="label" itemprop="url" href="ref_directive_list.html"><span itemprop="title">list, else, items, sep, break</span></a></li></ul><div class="bookmarks" title="Bookmarks"><span class="sr-only">Bookmarks:</span><ul class="bookmark-list"><li><a href="alphaidx.html">Alpha. index</a></li><li><a href="gloss.html">Glossary</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions</a></li><li><a href="ref_builtins_alphaidx.html">?builtins</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_specvar.html">.spec_vars</a></li><li><a href="app_faq.html">FAQ</a></li></ul></div></div></div>    <div class="main-content site-width">
+      <div class="content-wrapper">
+  <div id="table-of-contents-wrapper" class="col-left">
+      <script>var breadcrumb = ["FreeMarker Manual","Template Language Reference","Directive Reference","list, else, items, sep, break"];</script>
+      <script src="toc.js"></script>
+      <script src="docgen-resources/main.min.js"></script>
+  </div>
+<div class="col-right"><div class="page-content"><div class="page-title"><div class="pagers top"><a class="paging-arrow previous" href="ref_directive_include.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_local.html"><span>Next</span></a></div><div class="title-wrapper">
+<h1 class="content-header header-section1" id="ref_directive_list" itemprop="name">list, else, items, sep, break</h1>
+</div></div><div class="page-menu">
+<div class="page-menu-title">Page Contents</div>
+<ul><li><a class="page-menu-link" href="#autoid_90" data-menu-target="autoid_90">Synopsis</a></li><li><a class="page-menu-link" href="#autoid_91" data-menu-target="autoid_91">Description</a><ul><li><a class="page-menu-link" href="#autoid_92" data-menu-target="autoid_92">Simplest form</a></li><li><a class="page-menu-link" href="#autoid_93" data-menu-target="autoid_93">else directive</a></li><li><a class="page-menu-link" href="#autoid_94" data-menu-target="autoid_94">items directive</a></li><li><a class="page-menu-link" href="#autoid_95" data-menu-target="autoid_95">sep directive</a></li><li><a class="page-menu-link" href="#autoid_96" data-menu-target="autoid_96">break directive</a></li><li><a class="page-menu-link" href="#autoid_97" data-menu-target="autoid_97">Accessing iteration state</a></li><li><a class="page-menu-link" href="#autoid_98" data-menu-target="autoid_98">Nesting loops into each other</a></li><li><a class="page-menu-link" href="#autoid_99" data-menu-target="autoid_99">Notes for Java programmers</a></li></ul></li></ul> </div><a name="ref.directive.list"></a>
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_90">Synopsis</h2>
+
+
+          <p>Form 1:</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#list <em class="code-color">sequence</em> as <em class="code-color">item</em>&gt;
+    <em class="code-color">Part repeated for each item</em>
+&lt;#else&gt;
+    <em class="code-color">Part executed when there are 0 items</em>
+&lt;/#list&gt;</code></pre>
+
+
+          <p>Where:</p>
+
+          <ul>
+            <li>
+              The <code class="inline-code">else</code> part is optional, and is only
+              supported since FreeMarker 2.3.23.
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">sequence</em></code>:
+              Expressions evaluates to a sequence or collection of the items
+              we want to iterate through
+            </li>
+
+            <li>
+              <code class="inline-code"><em class="code-color">item</em></code>: Name
+              of the <a href="dgui_misc_var.html">loop variable</a> (not
+              an expression)
+            </li>
+
+            <li>
+              The various "parts" between the tags can
+              contain arbitrary FTL (including nested
+              <code class="inline-code">list</code>-s)
+            </li>
+          </ul>
+
+          <p>Form 2 (since FreeMarker 2.3.23):</p>
+
+          
+<pre class="metaTemplate"><code class="inline-code">&lt;#list <em class="code-color">sequence</em>&gt;
+    <em class="code-color">Part executed once if we have more than 0 items</em>
+    &lt;#items as <em class="code-color">item</em>&gt;
+    <em class="code-color">    Part repeated for each item</em>
+    &lt;/#items&gt;
+    <em class="code-color">Part executed once if we have more than 0 items</em>
+&lt;#else&gt;
+    <em class="code-color">Part executed when there are 0 items</em>
+&lt;/#list&gt;</code></pre>
+
+
+          <p>Where: Same as the "Where" section of Form 1
+          above.</p>
+        
+          
+
+
+
+<h2 class="content-header header-section2" id="autoid_91">Description</h2>
+
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_92">Simplest form</h3>
+
+
+            <p>Assuming <code class="inline-code">users</code> contains the
+            <code class="inline-code">[&#39;Joe&#39;, &#39;Kate&#39;, &#39;Fred&#39;]</code> sequence:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;p&gt;${user}
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;Joe
+  &lt;p&gt;Kate
+  &lt;p&gt;Fred</pre></div>
+
+            <p>The <code class="inline-code">list</code> directive executes the code
+            between the <code class="inline-code">list</code> start-tag and
+            <code class="inline-code">list</code> end-tag (the body of
+            <code class="inline-code">list</code> from now on) for each value in the
+            sequence (or collection) specified as its first parameter. For
+            each such iteration the loop variable (<code class="inline-code">user</code> in
+            this example) will store the value of the current item.</p>
+
+            <p>The loop variable (<code class="inline-code">user</code>) only exists
+            inside the <code class="inline-code">list</code> body. Also, macros/functions
+            called from within the loop won&#39;t see it (as if it were a local
+            variable).</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_93">else directive</h3>
+
+
+            <a name="ref.directive.list.else"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p><code class="inline-code">else</code> inside <code class="inline-code">list</code> is
+              only supported since FreeMarker 2.3.23</p>
+              </div>
+
+
+            <p>The <code class="inline-code">else</code> directive is used if when there
+            are 0 items, you have to print something special instead of just
+            printing nothing:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;p&gt;${user}
+&lt;#else&gt;
+  &lt;p&gt;No users
+&lt;/#list&gt;</pre></div>
+
+            <p>This outputs the same as the earlier example, except when
+            <code class="inline-code">users</code> contains 0 items:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;p&gt;No users</pre></div>
+
+            <p>Note that the loop variable (<code class="inline-code">user</code>)
+            doesn&#39;t exist between the <code class="inline-code">else</code> tag and the
+            <code class="inline-code">list</code> end-tag, since that part is not part of
+            the loop.</p>
+
+            <p><code class="inline-code">else</code> must be literally (means, in the
+            source code) inside the body of the <code class="inline-code">list</code>
+            directive. That is, you can&#39;t moved it out into a macro or
+            included template.</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_94">items directive</h3>
+
+
+            <a name="ref.directive.items"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p><code class="inline-code">items</code> exists since FreeMarker
+              2.3.23</p>
+              </div>
+
+
+            <p>The <code class="inline-code">items</code> directive is used if you have
+            to print (or do) something before the first list item, and after
+            the last list item, as far as there&#39;s at least 1 item. A typical
+            example:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;ul&gt;
+    &lt;#items as user&gt;
+      &lt;li&gt;${user}&lt;/li&gt;
+    &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;ul&gt;
+      &lt;li&gt;Joe&lt;/li&gt;
+      &lt;li&gt;Kate&lt;/li&gt;
+      &lt;li&gt;Fred&lt;/li&gt;
+  &lt;/ul&gt;</pre></div>
+
+            <p>If there are 0 items, the above won&#39;t print anything, thus
+            you don&#39;t end up with an empty
+            <code class="inline-code">&lt;ul&gt;&lt;/ul&gt;</code>.</p>
+
+            <p>That is, when the <code class="inline-code">list</code> directive has no
+            <code class="inline-code">as <em class="code-color">item</em></code> parameter,
+            the body of its is executed exactly once if there&#39;s at least one
+            item, or not at all otherwise. It&#39;s the body of the mandatory
+            nested <code class="inline-code">items</code> directive that will be run for
+            each item, and hence it&#39;s also the <code class="inline-code">items</code>
+            directive that defines the loop variable with <code class="inline-code">as
+            <em class="code-color">item</em></code>, not
+            <code class="inline-code">list</code>.</p>
+
+            <p>A <code class="inline-code">list</code> directive with
+            <code class="inline-code">items</code> also can have an <code class="inline-code">else</code>
+            directive:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;ul&gt;
+    &lt;#items as user&gt;
+      &lt;li&gt;${user}&lt;/li&gt;
+    &lt;/#items&gt;
+  &lt;/ul&gt;
+&lt;#else&gt;
+  &lt;p&gt;No users
+&lt;/#list&gt;</pre></div>
+
+            <p>Some further details:</p>
+
+            <ul>
+              <li>
+                <p>The parser will check that a <code class="inline-code">list</code>
+                without <code class="inline-code">as <em class="code-color">item</em></code>
+                parameter always has a nested <code class="inline-code">items</code>
+                directive, and that an <code class="inline-code">items</code> directive
+                always has an enclosing <code class="inline-code">list</code> which has no
+                <code class="inline-code">as <em class="code-color">item</em></code>
+                parameter. This is checked when the template is parsed, not
+                when the template is executed. Thus, these rules apply on the
+                FTL source code itself, so you can&#39;t move
+                <code class="inline-code">items</code> out into a macro or included
+                template.</p>
+              </li>
+
+              <li>
+                <p>A <code class="inline-code">list</code> can have multiple
+                <code class="inline-code">items</code> directives, but only one of them will
+                be allowed to run (as far as you don&#39;t leave and re-enter the
+                enclosing <code class="inline-code">list</code> directive); and further
+                attempts to call <code class="inline-code">items</code> will cause error. So
+                multiple <code class="inline-code">items</code> can be utilized on different
+                <code class="inline-code">if</code>-<code class="inline-code">else</code> branches for
+                example, but not for iterating twice.</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code">items</code> directive can&#39;t have its own
+                nested <code class="inline-code">else</code> directive, only the enclosing
+                <code class="inline-code">list</code> can have</p>
+              </li>
+
+              <li>
+                <p>The loop variable (<code class="inline-code">user</code>) only exists
+                inside the body of the <code class="inline-code">items</code>
+                directive.</p>
+              </li>
+            </ul>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_95">sep directive</h3>
+
+
+            <a name="ref.directive.sep"></a>
+
+            
+
+              <div class="callout note">
+    <strong class="callout-label">Note:</strong>
+
+              <p><code class="inline-code">sep</code> exists since FreeMarker
+              2.3.23</p>
+              </div>
+
+
+            <p><code class="inline-code">sep</code> is used when you have to display
+            something between each item (but not before the first item or
+            after the last item). For example:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;${user}<strong>&lt;#sep&gt;, </strong>&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">Joe, Kate, Fred</pre></div>
+
+            <p>Above, <code class="inline-code">&lt;#sep&gt;, &lt;/#list&gt;</code> is a
+            shorthand for <code class="inline-code">&lt;#sep&gt;,
+            &lt;/#sep&gt;&lt;/#list&gt;</code>; the <code class="inline-code">sep</code>
+            end-tag can be omitted if you would put it where the enclosing
+            directive is closed anyway. In the next example, you couldn&#39;t use
+            such abbreviation (HTML tags close nothing, as they are just raw
+            text to output for FreeMarker):</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users as user&gt;
+  &lt;div&gt;
+    ${user}<strong>&lt;#sep&gt;, &lt;/#sep&gt;</strong>
+  &lt;/div&gt;
+&lt;/#list&gt;</pre></div>
+
+            <p>As <code class="inline-code">sep</code> is just a convenient way of
+            writing <code class="inline-code">&lt;#if
+            <em class="code-color">item</em>?has_next&gt;...&lt;/#if&gt;</code>,
+            it can be used anywhere where there&#39;s a <code class="inline-code">list</code> or
+            <code class="inline-code">items</code> loop variable is available, and for
+            unlimited times. Also, it can have arbitrary FTL as nested
+            content.</p>
+
+            <p>The parser will check that <code class="inline-code">sep</code> is used
+            inside <code class="inline-code">list <em class="code-color">...</em> as
+            item</code> or an <code class="inline-code">items</code> directive, so you
+            can&#39;t move <code class="inline-code">sep</code> out from the repeated part into
+            a macro or included template.</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_96">break directive</h3>
+
+
+            <a name="ref.directive.list.break"></a>
+
+            
+
+            <p>You can exit the iteration at any point with the
+            <code class="inline-code">break</code> directive. For example:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..10 as x&gt;
+  ${x}
+  &lt;#if x == 3&gt;
+    <strong>&lt;#break&gt;</strong>
+  &lt;/#if&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  1
+  2
+  3</pre></div>
+
+            <p>The <code class="inline-code">break</code> directives can be placed
+            anywhere inside <code class="inline-code">list</code> as far as it has
+            <code class="inline-code">as <em class="code-color">item</em></code> parameter,
+            otherwise it can be placed anywhere inside the
+            <code class="inline-code">items</code> directive. If the
+            <code class="inline-code">break</code> is inside <code class="inline-code">items</code>, it
+            will only exit from <code class="inline-code">items</code>, not from
+            <code class="inline-code">list</code>. In general, <code class="inline-code">break</code> will
+            only exit from the directive whose body is called for each item,
+            and can only be placed inside such directive. So for example can&#39;t
+            use <code class="inline-code">break</code> inside <code class="inline-code">list</code>&#39;s
+            <code class="inline-code">else</code> section, unless there&#39;s the
+            <code class="inline-code">list</code> is nested into another
+            <code class="inline-code">break</code>-able directive.</p>
+
+            <p>Just like <code class="inline-code">else</code> and
+            <code class="inline-code">items</code>, <code class="inline-code">break</code> must be
+            literally inside body of the directive to break out from, and
+            can&#39;t be moved out into a macro or included template.</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_97">Accessing iteration state</h3>
+
+
+            
+
+            
+
+            <p>Starting from 2.3.23, <a href="ref_builtins_loop_var.html">loop variable built-ins</a> is
+            the preferred way of accessing current state of the iteration. For
+            example, here we use the <code class="inline-code">counter</code> and
+            <code class="inline-code">item_parity</code> loop variable built-ins (see all of
+            them <a href="ref_builtins_loop_var.html">in the
+            Reference</a>):</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list users&gt;
+  &lt;table&gt;
+    &lt;#items as user&gt;
+      &lt;tr class=&quot;${user<strong>?item_parity</strong>}Row&quot;&gt;
+        &lt;td&gt;${user<strong>?counter</strong>}
+        &lt;td&gt;${user}
+    &lt;/#items&gt;
+  &lt;/table&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  &lt;table&gt;
+      &lt;tr class=&quot;<strong>odd</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>1</strong>
+        &lt;td&gt;Joe
+      &lt;tr class=&quot;<strong>even</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>2</strong>
+        &lt;td&gt;Kate
+      &lt;tr class=&quot;<strong>odd</strong>Row&quot;&gt;
+        &lt;td&gt;<strong>3</strong>
+        &lt;td&gt;Fred
+  &lt;/table&gt;</pre></div>
+
+            <p>In 2.3.22 and earlier, there were two extra loop variables
+            to retrieve the iteration state instead (and they still exist for
+            backward compatibility):</p>
+
+            <ul>
+              <li>
+                <p><code class="inline-code"><em class="code-color">item</em>_index</code>
+                (<em>deprecated</em> by
+                <code class="inline-code"><em class="code-color">item</em>?index</code>): The
+                index (0-based number) of the current item in the loop.</p>
+              </li>
+
+              <li>
+                <p><code class="inline-code"><em class="code-color">item</em>_has_next</code>
+                (<em>deprecated</em> by
+                <code class="inline-code"><em class="code-color">item</em>?has_next</code>):
+                Boolean value that tells if the current item is the last in
+                the sequence or not.</p>
+              </li>
+            </ul>
+
+            <p>so in the above example, you could replace
+            <code class="inline-code">${user?counter}</code> with <code class="inline-code">${user_index +
+            1}</code>.</p>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_98">Nesting loops into each other</h3>
+
+
+            <p>Naturally, <code class="inline-code">list</code> or
+            <code class="inline-code">items</code> can contain further
+            <code class="inline-code">list</code>-s:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..2 as i&gt;
+  &lt;#list 1..3 as j&gt;
+    i = ${i}, j = ${j}
+  &lt;/#list&gt;
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">    i = 1, j = 1
+    i = 1, j = 2
+    i = 1, j = 3
+    i = 2, j = 1
+    i = 2, j = 2
+    i = 2, j = 3</pre></div>
+
+            <p>It&#39;s also allowed to use clashing loop variable names
+            like:</p>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-template">&lt;#list 1..2 as i&gt;
+  Outer: ${i}
+  &lt;#list 10..12 as i&gt;
+    Inner: ${i}
+  &lt;/#list&gt;
+  Outer again: ${i}
+&lt;/#list&gt;</pre></div>
+
+            
+
+<div class="code-wrapper"><pre class="code-block code-output">  Outer: 1
+    Inner: 10
+    Inner: 11
+    Inner: 12
+  Outer again: 1
+  Outer: 2
+    Inner: 10
+    Inner: 11
+    Inner: 12
+  Outer again: 2</pre></div>
+          
+
+          
+            
+
+
+
+<h3 class="content-header header-section3" id="autoid_99">Notes for Java programmers</h3>
+
+
+            <p><span class="marked-for-programmers">If classic compatible mode
+            <code class="inline-code">list</code> accepts a scalar too and treats it as a
+            single-element sequence.</span></p>
+
+            <p><span class="marked-for-programmers">If you pass an collection that
+            wraps an <code class="inline-code">java.util.Iterator</code> to the
+            <code class="inline-code">list</code>, you can iterate over its elements only
+            once, since <code class="inline-code">Iterator</code>s are by their nature
+            one-off objects. When you try to list a such collection variable
+            for the second time, an error will abort template
+            processing.</span></p>
+          
+        <div class="bottom-pagers-wrapper"><div class="pagers bottom"><a class="paging-arrow previous" href="ref_directive_include.html"><span>Previous</span></a><a class="paging-arrow next" href="ref_directive_local.html"><span>Next</span></a></div></div></div></div>      </div>
+    </div>
+<div class="site-footer"><div class="site-width"><div class="footer-top"><div class="col-left sitemap"><div class="column"><h3 class="column-header">Overview</h3><ul><li><a href="http://freemarker.org/index.html">What is FreeMarker?</a></li><li><a href="http://freemarker.org/freemarkerdownload.html">Download</a></li><li><a href="app_versions.html">Version history</a></li><li><a href="http://freemarker.org/history.html">About us</a></li><li><a href="app_license.html">License</a></li></ul></div><div class="column"><h3 class="column-header">Handy stuff</h3><ul><li><a href="http://freemarker-online.kenshoo.com/">Try template online</a></li><li><a href="dgui_template_exp.html#exp_cheatsheet">Expressions cheatsheet</a></li><li><a href="ref_directive_alphaidx.html">#directives</a></li><li><a href="ref_builtins_alphaidx.html">?built_ins</a></li><li><a href="ref_specvar.html">.special_vars</a></li></ul></div><div class="column"><h3 class="column-header">Community</h3><ul><li><a href="https://github.com/freemarker/freemarker">FreeMarker on Github</a></li><li><a href="https://twitter.com/freemarker">Follow us on Twitter</a></li><li><a href="https://sourceforge.net/p/freemarker/bugs/new/">Report a bug</a></li><li><a href="http://stackoverflow.com/questions/ask?tags=freemarker">Ask a question</a></li><li><a href="http://freemarker.org/mailing-lists.html">Mailing lists</a></li></ul></div></div><div class="col-right"><ul class="social-icons"><li><a class="github" href="https://github.com/freemarker/freemarker">Github</a></li><li><a class="twitter" href="https://twitter.com/freemarker">Twitter</a></li><li><a class="stack-overflow" href="http://stackoverflow.com/questions/ask?tags=freemarker">Stack Overflow</a></li></ul><a class="xxe" href="http://www.xmlmind.com/xmleditor/" rel="nofollow" title="Edited with XMLMind XML Editor"><span>Edited with XMLMind XML Editor</span></a></div></div><div class="footer-bottom"><p><span class="generated-for-product">Generated for: Freemarker 2.3.23</span><span class="last-updated"> Last generated:
+<time itemprop="dateModified" datetime="2015-07-05T14:47:00Z" title="Sunday, July 5, 2015 2:47:00 PM GMT">2015-07-05 14:47:00 GMT</time></span></p> <p class="copyright">
+© <span itemprop="copyrightYear">1999</span>–2015
+<a itemtype="http://schema.org/Person" itemprop="copyrightHolder" href="http://freemarker.org">The FreeMarker Project</a>. All rights reserved. </p>
+</div></div></div></body>
+</html>

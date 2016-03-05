@@ -13,31 +13,21 @@
  */
  package de.cau.cs.kieler.scg.synchronizer
 
-import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import java.util.List
-import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.SCGraph
@@ -45,8 +35,8 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -100,9 +90,6 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension KExpressionsExtension
-    
-    @Inject
     extension SCGCoreExtensions    
     
     @Inject
@@ -118,7 +105,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     extension AnnotationsExtensions
     
     @Inject
-    extension KExpressionsSerializeExtension    
+    extension KEffectsSerializeExtensions   
     
     public var Declaration schizophrenicDeclaration = null
    
@@ -135,7 +122,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+    override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
         var synchronizable = false
 
 		if ((!threadPathTypes.filter[ it == ThreadPathType::DELAYED ].empty) &&
@@ -168,13 +155,13 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         // At first this simple scheduler assumes that the fork node spawns more than one thread.
         // Hence, we create an or-operator expression. 
         val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => 
-            [ setOperator(OperatorType::OR) ]
+            [ setOperator(OperatorType::LOGICAL_OR) ]
         
         data.createEmptyExpressions(terminationExpression)
         data.createGuardExpression(terminationExpression)
         data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression, pilData) 
         
-        data.fixEmptyExpressions.fixSynchronizerExpression
+//        data.fixEmptyExpressions.fixSynchronizerExpression
         
 		guard.expression = data.guardExpression.expression
 		for(emptyExp : data.guardExpression.emptyExpressions) {

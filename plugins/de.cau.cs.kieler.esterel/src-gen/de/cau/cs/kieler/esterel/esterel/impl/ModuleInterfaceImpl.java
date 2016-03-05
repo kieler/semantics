@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntTypeDecls <em>Int Type Decls</em>}</li>
@@ -44,7 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntFunctionDecls <em>Int Function Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

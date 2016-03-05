@@ -1,9 +1,13 @@
 package de.cau.cs.kieler.c.sccharts.handler;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ITranslationUnit;
@@ -129,6 +133,9 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
                 if (doOpenEditor(transformedModel, event, selection)) {
 	            openEditorSync((Object) transformedModel);
 	        }
+//                File test = new File("../file.txt");
+//                Files.write("../file.txt", saveRes);
+               
                 postProcess(transformedObject);
 	    } catch (IOException e2) {
 	        throw new ExecutionException("Cannot write output SCChart file: " + e2.getMessage());

@@ -1,0 +1,13 @@
+@Transformation DURING
+scchart DuringAction {
+	output bool O;
+
+    initial state A{ 
+      during / O = true;
+      
+      initial state A0
+      --> A1;
+      
+      final state A1;
+    };
+}

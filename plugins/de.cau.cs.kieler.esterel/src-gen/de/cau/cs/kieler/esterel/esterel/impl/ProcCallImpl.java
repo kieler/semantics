@@ -31,12 +31,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getProc <em>Proc</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getVarList <em>Var List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -12,10 +12,10 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.TrapExpression#getTrap <em>Trap</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrapExpression()
  * @model

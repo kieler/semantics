@@ -11,11 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DoWatching#getDelay <em>Delay</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DoWatching#getEnd <em>End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDoWatching()
  * @model

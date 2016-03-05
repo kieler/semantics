@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ExecCaseImpl#getRetSignal <em>Ret Signal</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

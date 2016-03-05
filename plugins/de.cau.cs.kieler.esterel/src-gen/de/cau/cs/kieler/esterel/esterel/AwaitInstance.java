@@ -10,10 +10,10 @@ package de.cau.cs.kieler.esterel.esterel;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.AwaitInstance#getDelay <em>Delay</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAwaitInstance()
  * @model

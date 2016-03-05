@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scl.scl.provider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclFactory;
 import de.cau.cs.kieler.scl.scl.SclPackage;
@@ -26,7 +27,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ConditionalItemProvider extends InstructionItemProvider {
+public class ConditionalItemProvider extends StatementSequenceItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -64,7 +65,6 @@ public class ConditionalItemProvider extends InstructionItemProvider {
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS);
 			childrenFeatures.add(SclPackage.Literals.CONDITIONAL__EXPRESSION);
 			childrenFeatures.add(SclPackage.Literals.CONDITIONAL__DECLARATIONS);
 			childrenFeatures.add(SclPackage.Literals.CONDITIONAL__ELSE_STATEMENTS);
@@ -120,7 +120,6 @@ public class ConditionalItemProvider extends InstructionItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Conditional.class)) {
-			case SclPackage.CONDITIONAL__STATEMENTS:
 			case SclPackage.CONDITIONAL__EXPRESSION:
 			case SclPackage.CONDITIONAL__DECLARATIONS:
 			case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
@@ -143,18 +142,13 @@ public class ConditionalItemProvider extends InstructionItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createStatement()));
+				(SclPackage.Literals.CONDITIONAL__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createHostcodeEffect()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createEmptyStatement()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SclPackage.Literals.STATEMENT_SEQUENCE__STATEMENTS,
-				 SclFactory.eINSTANCE.createInstructionStatement()));
+				(SclPackage.Literals.CONDITIONAL__EXPRESSION,
+				 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
 
 		newChildDescriptors.add
 			(createChildParameter

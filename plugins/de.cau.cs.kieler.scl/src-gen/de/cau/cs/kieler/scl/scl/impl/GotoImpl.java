@@ -10,6 +10,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,80 +25,74 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class GotoImpl extends InstructionImpl implements Goto
-{
-  /**
+public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
+    /**
      * The default value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getTargetLabel()
      * @generated
      * @ordered
      */
-  protected static final String TARGET_LABEL_EDEFAULT = null;
+    protected static final String TARGET_LABEL_EDEFAULT = null;
 
-  /**
+    /**
      * The cached value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getTargetLabel()
      * @generated
      * @ordered
      */
-  protected String targetLabel = TARGET_LABEL_EDEFAULT;
+    protected String targetLabel = TARGET_LABEL_EDEFAULT;
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected GotoImpl()
-  {
+    protected GotoImpl() {
         super();
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  protected EClass eStaticClass()
-  {
+    @Override
+    protected EClass eStaticClass() {
         return SclPackage.Literals.GOTO;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public String getTargetLabel()
-  {
+    public String getTargetLabel() {
         return targetLabel;
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public void setTargetLabel(String newTargetLabel)
-  {
+    public void setTargetLabel(String newTargetLabel) {
         String oldTargetLabel = targetLabel;
         targetLabel = newTargetLabel;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET_LABEL, oldTargetLabel, targetLabel));
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SclPackage.GOTO__TARGET_LABEL:
                 return getTargetLabel();
@@ -105,14 +100,13 @@ public class GotoImpl extends InstructionImpl implements Goto
         return super.eGet(featureID, resolve, coreType);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SclPackage.GOTO__TARGET_LABEL:
                 setTargetLabel((String)newValue);
@@ -121,14 +115,13 @@ public class GotoImpl extends InstructionImpl implements Goto
         super.eSet(featureID, newValue);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public void eUnset(int featureID)
-  {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case SclPackage.GOTO__TARGET_LABEL:
                 setTargetLabel(TARGET_LABEL_EDEFAULT);
@@ -137,14 +130,13 @@ public class GotoImpl extends InstructionImpl implements Goto
         super.eUnset(featureID);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case SclPackage.GOTO__TARGET_LABEL:
                 return TARGET_LABEL_EDEFAULT == null ? targetLabel != null : !TARGET_LABEL_EDEFAULT.equals(targetLabel);
@@ -152,14 +144,13 @@ public class GotoImpl extends InstructionImpl implements Goto
         return super.eIsSet(featureID);
     }
 
-  /**
+    /**
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  @Override
-  public String toString()
-  {
+    @Override
+    public String toString() {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());

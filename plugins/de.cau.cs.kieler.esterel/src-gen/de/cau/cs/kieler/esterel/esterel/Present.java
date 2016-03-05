@@ -10,12 +10,12 @@ package de.cau.cs.kieler.esterel.esterel;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getElsePart <em>Else Part</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent()
  * @model

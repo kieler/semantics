@@ -48,6 +48,8 @@ class SynchronizerSelector {
 
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
         typeof(InstantaneousSynchronizer),
+        typeof(DepthSynchronizer),
+        typeof(SurfaceSynchronizer),
         typeof(DepthJoinSynchronizer),
         typeof(SurfaceSynchronizer)
     )
@@ -70,7 +72,7 @@ class SynchronizerSelector {
         val threadPathTypes = join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].
         map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ].toList
         for(synchronizer : synchronizerInstances) {
-            if (synchronizer.isSynchronizable(threadPathTypes)) {
+            if (synchronizer.isSynchronizable(join.fork, threadPathTypes, false)) {
                 return synchronizer
             }
         }
@@ -83,7 +85,7 @@ class SynchronizerSelector {
     }   
     
     public def AbstractSynchronizer annotate(AbstractSynchronizer synchronizer, Join join) {
-        join.addAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
+        join.createStringAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
         synchronizer
     } 
     

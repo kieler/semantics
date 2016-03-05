@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RelationIncompatibilityImpl#getIncomp <em>Incomp</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

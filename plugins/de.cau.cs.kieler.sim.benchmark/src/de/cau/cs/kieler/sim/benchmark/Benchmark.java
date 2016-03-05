@@ -256,4 +256,16 @@ public class Benchmark {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Checks whether the system is based on Mac OSX.
+     * 
+     * @return true, if is Max OSX
+     */
+    public static boolean isMac() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("mac") >= 0);
+    }
+
+    // -------------------------------------------------------------------------
+
 }

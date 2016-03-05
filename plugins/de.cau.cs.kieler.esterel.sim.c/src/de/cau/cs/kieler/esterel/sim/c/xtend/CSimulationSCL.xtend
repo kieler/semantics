@@ -13,8 +13,6 @@
  */
  package de.cau.cs.kieler.esterel.sim.c.xtend
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
@@ -25,9 +23,6 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
  * @kieler.rating 2014-11-26 proposed yellow
  */
 class CSimulationSCL { 
-
-    @Inject
-    extension KExpressionsExtension    
 
     // General method to create the c simulation interface.
 	def transform (SCLProgram model, String bufferSize) {

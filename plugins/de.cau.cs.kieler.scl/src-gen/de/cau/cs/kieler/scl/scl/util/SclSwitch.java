@@ -3,6 +3,9 @@
 package de.cau.cs.kieler.scl.scl.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -35,53 +38,49 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see de.cau.cs.kieler.scl.scl.SclPackage
  * @generated
  */
-public class SclSwitch<T> extends Switch<T>
-{
-  /**
+public class SclSwitch<T> extends Switch<T> {
+    /**
      * The cached model package
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  protected static SclPackage modelPackage;
+    protected static SclPackage modelPackage;
 
-  /**
+    /**
      * Creates an instance of the switch.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-  public SclSwitch()
-  {
+    public SclSwitch() {
         if (modelPackage == null) {
             modelPackage = SclPackage.eINSTANCE;
         }
     }
 
-  /**
+    /**
      * Checks whether this is a switch for the given package.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @parameter ePackage the package in question.
      * @return whether this is a switch for the given package.
      * @generated
      */
-  @Override
-  protected boolean isSwitchFor(EPackage ePackage)
-  {
+    @Override
+    protected boolean isSwitchFor(EPackage ePackage) {
         return ePackage == modelPackage;
     }
 
-  /**
+    /**
      * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
      * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the first non-null result returned by a <code>caseXXX</code> call.
      * @generated
      */
-  @Override
-  protected T doSwitch(int classifierID, EObject theEObject)
-  {
+    @Override
+    protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
             case SclPackage.SCL_PROGRAM: {
                 SCLProgram sclProgram = (SCLProgram)theEObject;
@@ -120,15 +119,18 @@ public class SclSwitch<T> extends Switch<T>
             case SclPackage.ASSIGNMENT: {
                 Assignment assignment = (Assignment)theEObject;
                 T result = caseAssignment(assignment);
+                if (result == null) result = caseKEffects_Assignment(assignment);
                 if (result == null) result = caseInstruction(assignment);
+                if (result == null) result = caseEffect(assignment);
+                if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case SclPackage.CONDITIONAL: {
                 Conditional conditional = (Conditional)theEObject;
                 T result = caseConditional(conditional);
-                if (result == null) result = caseInstruction(conditional);
                 if (result == null) result = caseStatementSequence(conditional);
+                if (result == null) result = caseInstruction(conditional);
                 if (result == null) result = caseAnnotatable(conditional);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -172,8 +174,8 @@ public class SclSwitch<T> extends Switch<T>
             case SclPackage.STATEMENT_SCOPE: {
                 StatementScope statementScope = (StatementScope)theEObject;
                 T result = caseStatementScope(statementScope);
-                if (result == null) result = caseInstruction(statementScope);
                 if (result == null) result = caseStatementSequence(statementScope);
+                if (result == null) result = caseInstruction(statementScope);
                 if (result == null) result = caseAnnotatable(statementScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -182,215 +184,202 @@ public class SclSwitch<T> extends Switch<T>
         }
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>SCL Program</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>SCL Program</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseSCLProgram(SCLProgram object)
-  {
+    public T caseSCLProgram(SCLProgram object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Statement</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Statement</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseStatement(Statement object)
-  {
+    public T caseStatement(Statement object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Empty Statement</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Empty Statement</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseEmptyStatement(EmptyStatement object)
-  {
+    public T caseEmptyStatement(EmptyStatement object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Instruction Statement</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Instruction Statement</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseInstructionStatement(InstructionStatement object)
-  {
+    public T caseInstructionStatement(InstructionStatement object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Instruction</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Instruction</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseInstruction(Instruction object)
-  {
+    public T caseInstruction(Instruction object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseAssignment(Assignment object)
-  {
+    public T caseAssignment(Assignment object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Conditional</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Conditional</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseConditional(Conditional object)
-  {
+    public T caseConditional(Conditional object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Goto</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Goto</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseGoto(Goto object)
-  {
+    public T caseGoto(Goto object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Statement Sequence</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Statement Sequence</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseStatementSequence(StatementSequence object)
-  {
+    public T caseStatementSequence(StatementSequence object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Thread</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Thread</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseThread(de.cau.cs.kieler.scl.scl.Thread object)
-  {
+    public T caseThread(de.cau.cs.kieler.scl.scl.Thread object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Parallel</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Parallel</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseParallel(Parallel object)
-  {
+    public T caseParallel(Parallel object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Pause</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Pause</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T casePause(Pause object)
-  {
+    public T casePause(Pause object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Statement Scope</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Statement Scope</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-  public T caseStatementScope(StatementScope object)
-  {
+    public T caseStatementScope(StatementScope object) {
         return null;
     }
 
-  /**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -405,20 +394,49 @@ public class SclSwitch<T> extends Switch<T>
         return null;
     }
 
-/**
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEffect(Effect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch, but this is the last case anyway.
-   * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch, but this is the last case anyway.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)
      * @generated
      */
-  @Override
-  public T defaultCase(EObject object)
-  {
+    @Override
+    public T defaultCase(EObject object) {
         return null;
     }
 

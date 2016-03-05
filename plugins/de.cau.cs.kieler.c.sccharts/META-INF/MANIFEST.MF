@@ -23,6 +23,8 @@ Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.cdt.ui;bundle-version="5.9.0",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.ui,
- org.eclipse.ui.editors;bundle-version="3.8.200"
+ org.eclipse.ui.editors;bundle-version="3.8.200",
+ de.cau.cs.kieler.core.kexpressions
 Export-Package: de.cau.cs.kieler.c.sccharts
+Import-Package: de.cau.cs.kieler.esterel.kexpressions
 

@@ -193,6 +193,11 @@ public class StatementItemProvider
 			(createChildParameter
 				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
 				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.STATEMENT__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createCommentAnnotation()));
 	}
 
     /**

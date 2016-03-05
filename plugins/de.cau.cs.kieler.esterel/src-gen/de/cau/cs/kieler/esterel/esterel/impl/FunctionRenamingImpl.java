@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionRenamingImpl#getNewName <em>New Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionRenamingImpl#getNewFunc <em>New Func</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionRenamingImpl#getOldName <em>Old Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

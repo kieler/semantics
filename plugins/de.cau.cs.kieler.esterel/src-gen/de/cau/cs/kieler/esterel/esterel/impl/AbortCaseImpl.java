@@ -27,11 +27,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortCaseImpl#getCases <em>Cases</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortCaseImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

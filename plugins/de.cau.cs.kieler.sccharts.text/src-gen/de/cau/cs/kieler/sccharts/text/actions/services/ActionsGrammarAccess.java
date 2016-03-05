@@ -12,6 +12,8 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
+import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
+import de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
@@ -471,250 +473,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//";"?
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
-
-	public class EffectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Effect");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cTextEffectParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cFunctionCallEffectParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		
-		//Effect returns sccharts::Effect:
-		//	Emission | Assignment | TextEffect | FunctionCallEffect;
-		@Override public ParserRule getRule() { return rule; }
-
-		//Emission | Assignment | TextEffect | FunctionCallEffect
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Emission
-		public RuleCall getEmissionParserRuleCall_0() { return cEmissionParserRuleCall_0; }
-
-		//Assignment
-		public RuleCall getAssignmentParserRuleCall_1() { return cAssignmentParserRuleCall_1; }
-
-		//TextEffect
-		public RuleCall getTextEffectParserRuleCall_2() { return cTextEffectParserRuleCall_2; }
-
-		//FunctionCallEffect
-		public RuleCall getFunctionCallEffectParserRuleCall_3() { return cFunctionCallEffectParserRuleCall_3; }
-	}
-
-	public class EmissionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Emission");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValueExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		
-		//Emission returns sccharts::Emission:
-		//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
-		@Override public ParserRule getRule() { return rule; }
-
-		//valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
-		public Group getGroup() { return cGroup; }
-
-		//valuedObject=[kexpressions::ValuedObject]
-		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
-
-		//[kexpressions::ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
-
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
-
-		//("(" newValue=Expression ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-
-		//newValue=Expression
-		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
-
-		//Expression
-		public RuleCall getNewValueExpressionParserRuleCall_1_1_0() { return cNewValueExpressionParserRuleCall_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class AssignmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cIndicesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cIndicesExpressionParserRuleCall_1_1_0 = (RuleCall)cIndicesAssignment_1_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
-		
-		//Assignment returns sccharts::Assignment:
-		//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
-		@Override public ParserRule getRule() { return rule; }
-
-		//valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression
-		public Group getGroup() { return cGroup; }
-
-		//valuedObject=[kexpressions::ValuedObject]
-		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
-
-		//[kexpressions::ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
-
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
-
-		//("[" indices+=Expression "]")*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
-
-		//indices+=Expression
-		public Assignment getIndicesAssignment_1_1() { return cIndicesAssignment_1_1; }
-
-		//Expression
-		public RuleCall getIndicesExpressionParserRuleCall_1_1_0() { return cIndicesExpressionParserRuleCall_1_1_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
-
-		//"="
-		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
-	}
-
-	public class TextEffectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TextEffect");
-		private final Assignment cTextAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cTextHOSTCODETerminalRuleCall_0 = (RuleCall)cTextAssignment.eContents().get(0);
-		
-		//TextEffect returns sccharts::TextEffect:
-		//	text=HOSTCODE;
-		@Override public ParserRule getRule() { return rule; }
-
-		//text=HOSTCODE
-		public Assignment getTextAssignment() { return cTextAssignment; }
-
-		//HOSTCODE
-		public RuleCall getTextHOSTCODETerminalRuleCall_0() { return cTextHOSTCODETerminalRuleCall_0; }
-	}
-
-	public class FunctionCallEffectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionCallEffect");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLessThanSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cFunctionNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cFunctionNameExtendedIDParserRuleCall_1_0 = (RuleCall)cFunctionNameAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
-		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
-		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//FunctionCallEffect returns sccharts::FunctionCallEffect:
-		//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
-		@Override public ParserRule getRule() { return rule; }
-
-		//"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">"
-		public Group getGroup() { return cGroup; }
-
-		//"<"
-		public Keyword getLessThanSignKeyword_0() { return cLessThanSignKeyword_0; }
-
-		//functionName=ExtendedID
-		public Assignment getFunctionNameAssignment_1() { return cFunctionNameAssignment_1; }
-
-		//ExtendedID
-		public RuleCall getFunctionNameExtendedIDParserRuleCall_1_0() { return cFunctionNameExtendedIDParserRuleCall_1_0; }
-
-		//("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")?
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
-		//"(" parameters+=Parameter ("," parameters+=Parameter)* ")"
-		public Group getGroup_2_0() { return cGroup_2_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
-
-		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
-
-		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
-
-		//("," parameters+=Parameter)*
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
-
-		//","
-		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
-
-		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
-
-		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
-
-		//"()"
-		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
-
-		//">"
-		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
-	}
-
-	public class ParameterElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Parameter");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cCallByReferenceAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cCallByReferenceAmpersandKeyword_0_0 = (Keyword)cCallByReferenceAssignment_0.eContents().get(0);
-		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cExpressionExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
-		
-		//Parameter returns kexpressions::Parameter:
-		//	callByReference?="&"? expression=Expression;
-		@Override public ParserRule getRule() { return rule; }
-
-		//callByReference?="&"? expression=Expression
-		public Group getGroup() { return cGroup; }
-
-		//callByReference?="&"?
-		public Assignment getCallByReferenceAssignment_0() { return cCallByReferenceAssignment_0; }
-
-		//"&"
-		public Keyword getCallByReferenceAmpersandKeyword_0_0() { return cCallByReferenceAmpersandKeyword_0_0; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_1_0() { return cExpressionExpressionParserRuleCall_1_0; }
-	}
 	
 	
 	public class DivOperatorElements extends AbstractEnumRuleElementFinder {
@@ -775,36 +533,24 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ExitActionElements pExitAction;
 	private final SuspendActionElements pSuspendAction;
 	private final IterateActionElements pIterateAction;
-	private final EffectElements pEffect;
-	private final EmissionElements pEmission;
-	private final AssignmentElements pAssignment;
-	private final TextEffectElements pTextEffect;
-	private final FunctionCallEffectElements pFunctionCallEffect;
-	private final ParameterElements pParameter;
 	private final DivOperatorElements unknownRuleDivOperator;
 	private final HistoryTypeElements unknownRuleHistoryType;
 	
 	private final Grammar grammar;
 
-	private final KExpressionsGrammarAccess gaKExpressions;
+	private final KEXTGrammarAccess gaKEXT;
 
 	@Inject
 	public ActionsGrammarAccess(GrammarProvider grammarProvider,
-		KExpressionsGrammarAccess gaKExpressions) {
+		KEXTGrammarAccess gaKEXT) {
 		this.grammar = internalFindGrammar(grammarProvider);
-		this.gaKExpressions = gaKExpressions;
+		this.gaKEXT = gaKEXT;
 		this.pTransition = new TransitionElements();
 		this.pEntryAction = new EntryActionElements();
 		this.pDuringAction = new DuringActionElements();
 		this.pExitAction = new ExitActionElements();
 		this.pSuspendAction = new SuspendActionElements();
 		this.pIterateAction = new IterateActionElements();
-		this.pEffect = new EffectElements();
-		this.pEmission = new EmissionElements();
-		this.pAssignment = new AssignmentElements();
-		this.pTextEffect = new TextEffectElements();
-		this.pFunctionCallEffect = new FunctionCallEffectElements();
-		this.pParameter = new ParameterElements();
 		this.unknownRuleDivOperator = new DivOperatorElements();
 		this.unknownRuleHistoryType = new HistoryTypeElements();
 	}
@@ -831,8 +577,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 
-	public KExpressionsGrammarAccess getKExpressionsGrammarAccess() {
-		return gaKExpressions;
+	public KEXTGrammarAccess getKEXTGrammarAccess() {
+		return gaKEXT;
 	}
 
 	
@@ -921,66 +667,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getIterateActionAccess().getRule();
 	}
 
-	//Effect returns sccharts::Effect:
-	//	Emission | Assignment | TextEffect | FunctionCallEffect;
-	public EffectElements getEffectAccess() {
-		return pEffect;
-	}
-	
-	public ParserRule getEffectRule() {
-		return getEffectAccess().getRule();
-	}
-
-	//Emission returns sccharts::Emission:
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
-	public EmissionElements getEmissionAccess() {
-		return pEmission;
-	}
-	
-	public ParserRule getEmissionRule() {
-		return getEmissionAccess().getRule();
-	}
-
-	//Assignment returns sccharts::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
-	public AssignmentElements getAssignmentAccess() {
-		return pAssignment;
-	}
-	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
-	}
-
-	//TextEffect returns sccharts::TextEffect:
-	//	text=HOSTCODE;
-	public TextEffectElements getTextEffectAccess() {
-		return pTextEffect;
-	}
-	
-	public ParserRule getTextEffectRule() {
-		return getTextEffectAccess().getRule();
-	}
-
-	//FunctionCallEffect returns sccharts::FunctionCallEffect:
-	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
-	public FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return pFunctionCallEffect;
-	}
-	
-	public ParserRule getFunctionCallEffectRule() {
-		return getFunctionCallEffectAccess().getRule();
-	}
-
-	//Parameter returns kexpressions::Parameter:
-	//	callByReference?="&"? expression=Expression;
-	public ParameterElements getParameterAccess() {
-		return pParameter;
-	}
-	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
-	}
-
 	//enum DivOperator returns kexpressions::OperatorType:
 	//	DIV=":";
 	public DivOperatorElements getDivOperatorAccess() {
@@ -1001,664 +687,1157 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getHistoryTypeAccess().getRule();
 	}
 
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// * / / *
+	// * KEXT (KText) provides a general stub for subsequent grammars that will use kexpressions, keffects
+	// * and need some kind of declaration mechanism. It is also used to generate the textual KEXT language 
+	// * that is used for testing kexpressions and keffects.  
+	// * / // ------------ //
+	////  KEXT Rules  // 
+	//// ------------ //
+	//// KEXT Rule
+	//// The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
+	//// test entities may follow.
+	//Kext returns kext::Kext:
+	//	declarations+=Declaration* entities+=TestEntity*;
+	public KEXTGrammarAccess.KextElements getKextAccess() {
+		return gaKEXT.getKextAccess();
+	}
+	
+	public ParserRule getKextRule() {
+		return getKextAccess().getRule();
+	}
+
+	//// Test Entity Rule
+	//// A test entity is either an annotation expression or an effect.
+	//TestEntity returns kext::TestEntity:
+	//	expression=AnnotatedExpression | effect=Effect;
+	public KEXTGrammarAccess.TestEntityElements getTestEntityAccess() {
+		return gaKEXT.getTestEntityAccess();
+	}
+	
+	public ParserRule getTestEntityRule() {
+		return getTestEntityAccess().getRule();
+	}
+
+	//// Annotated Expression Rule
+	//// An annotated expression is declared with the keyword "expression". It may be preceded by a list
+	//// of annotations. The expression itself follows the keyword.
+	//AnnotatedExpression returns kext::AnnotatedExpression:
+	//	annotations+=Annotation* "expression" expression=Expression;
+	public KEXTGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
+		return gaKEXT.getAnnotatedExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedExpressionRule() {
+		return getAnnotatedExpressionAccess().getRule();
+	}
+
+	//// Declaration Rule
+	//// A declaration follows the general KIELER pattern for variable declaration. More specific:
+	//// this centralized declaration rule should replace any other declaration in drived grammars.
+	//// It may start with arbitrary many declarations followed by keywords affecting the type of the
+	//// valued objects that follow.
+	//// Examples: const float pi = 3.14, input signal I, output bool z  
+	//Declaration returns kexpressions::Declaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
+	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
+		return gaKEXT.getDeclarationAccess();
+	}
+	
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
+	}
+
+	//// Valued Object Rule
+	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
+	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
+	//// Examples: array[10], initial = false, z = 0 combine max
+	//ValuedObject returns kexpressions::ValuedObject:
+	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
+	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKEXT.getValuedObjectAccess();
+	}
+	
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
+	}
+
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-23 proposed 
+	// * @kieler.rating 2015-08-23 proposed yellow
+	// * / / *
+	// * KEffects allow deriving grammars to use a range of different effects, namely assignments,
+	// * postfix effects, esterel like emissions, host code and function call effects.
+	// * Of course other grammars may extend this list.
+	// * / // ---------------- //
+	////  KEffects Rules  // 
+	//// ---------------- //
+	//// Effect Rule
+	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
+	//// function call effect.
+	//Effect returns keffects::Effect:
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect;
+	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
+		return gaKEXT.getEffectAccess();
+	}
+	
+	public ParserRule getEffectRule() {
+		return getEffectAccess().getRule();
+	}
+
+	//// Emission Rule
+	//// An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
+	//// an emission for a specific signal to emit it. Additionally, emission may include a parameter part for
+	//// a new value in the case of valued signals. 
+	//// Example: A, B(2)
+	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
+	//// annotations defined in the annotations grammar.		
+	//Emission returns keffects::Emission:
+	//	annotations+=RestrictedAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
+		return gaKEXT.getEmissionAccess();
+	}
+	
+	public ParserRule getEmissionRule() {
+		return getEmissionAccess().getRule();
+	}
+
+	//// Assignment Rule
+	//// An assignment may start with a list of arbitrary annotatations.
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// indices part. The type of assignment is determined by the type of the operator.
+	//// Example: A = true, I[0] = I[1], I += 1     
+	//Assignment returns keffects::Assignment:
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=AssignOperator expression=Expression;
+	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
+		return gaKEXT.getAssignmentAccess();
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+
+	//// Postfix Effect
+	//// A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
+	//// must be a postfix operator.
+	//// Example: I++, I-- 
+	//PostfixEffect returns keffects::Assignment:
+	//	annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")*
+	//	operator=PostfixOperator;
+	public KEffectsGrammarAccess.PostfixEffectElements getPostfixEffectAccess() {
+		return gaKEXT.getPostfixEffectAccess();
+	}
+	
+	public ParserRule getPostfixEffectRule() {
+		return getPostfixEffectAccess().getRule();
+	}
+
+	//// Hostcode Effect Rule
+	//// A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
+	//HostcodeEffect returns keffects::HostcodeEffect:
+	//	annotations+=Annotation* text=HOSTCODE;
+	public KEffectsGrammarAccess.HostcodeEffectElements getHostcodeEffectAccess() {
+		return gaKEXT.getHostcodeEffectAccess();
+	}
+	
+	public ParserRule getHostcodeEffectRule() {
+		return getHostcodeEffectAccess().getRule();
+	}
+
+	//// Function Call Effect Rule
+	//// A function call effect works similar to the function call expression. Additionally, it may be
+	//// preceded by a list of annotations.
+	//FunctionCallEffect returns keffects::FunctionCallEffect:
+	//	annotations+=Annotation* "<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" |
+	//	"()")? ">";
+	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
+		return gaKEXT.getFunctionCallEffectAccess();
+	}
+	
+	public ParserRule getFunctionCallEffectRule() {
+		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//// ---------------- //
+	////  KEffects Enums  // 
+	//// ---------------- //
+	//// Assign Operator Enum    
+	//enum AssignOperator returns keffects::AssignOperator:
+	//	ASSIGN="=" | ASSIGNADD="+=" | ASSIGNSUB="-=" | ASSIGNMUL="*=" | ASSIGNDIV="/=";
+	public KEffectsGrammarAccess.AssignOperatorElements getAssignOperatorAccess() {
+		return gaKEXT.getAssignOperatorAccess();
+	}
+	
+	public EnumRule getAssignOperatorRule() {
+		return getAssignOperatorAccess().getRule();
+	}
+
+	//// Postfix Operator Enum    
+	//enum PostfixOperator returns keffects::AssignOperator:
+	//	POSTFIXADD="++" | POSTFIXSUB="--";
+	public KEffectsGrammarAccess.PostfixOperatorElements getPostfixOperatorAccess() {
+		return gaKEXT.getPostfixOperatorAccess();
+	}
+	
+	public EnumRule getPostfixOperatorRule() {
+		return getPostfixOperatorAccess().getRule();
+	}
+
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.rating 2015-08-21 proposed yellow
+	// * / // -------------------- //
+	////  KExpressions Rules  // 
+	//// -------------------- //
+	/// * Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
+	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
+	// * can be created. This also implies an order of precedence.
+	// *
+	// * Expression
+	// * + BooleanExpression
+	// *   + LogicalOrExpression
+	// *     + LogicalAndExpression
+	// *       + BitwiseOrExpression
+	// *         + BitwiseAndExpression
+	// *           + CompareExpression
+	// *             + NotOrValuedExpression
+	// *               + ValuedExpression (see valued expression below)
+	// *               + NotExpression *
+	// *                 + AtomicExpression *
+	// *                   + BoolValue
+	// *                   + ValuedObjectTestExpression
+	// *                     + ValuedObjectReference
+	// *                   + FunctionCall
+	// *                   + TextExpression
+	// * + ValuedExpression
+	// *   + AddExpression
+	// *     + SubExpression
+	// *       + MultExpression
+	// *         + DivExpression
+	// *           + ModExpression
+	// *             + NegExpression *
+	// *               + AtomicValuedExpression *
+	// *                 + IntValue
+	// *                 + FloatValue
+	// *                 + StringValue
+	// *                 + AtomicExpression
+	// * / // Root Rule
+	//// Always return an expression.
 	//Root returns ecore::EObject:
 	//	Expression;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
-		return gaKExpressions.getRootAccess();
+		return gaKEXT.getRootAccess();
 	}
 	
 	public ParserRule getRootRule() {
 		return getRootAccess().getRule();
 	}
 
+	//// Expression Rule
+	//// An expression is either a boolean expression or a valued expression.
 	//Expression:
 	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
-		return gaKExpressions.getExpressionAccess();
+		return gaKEXT.getExpressionAccess();
 	}
 	
 	public ParserRule getExpressionRule() {
 		return getExpressionAccess().getRule();
 	}
 
+	//// Boolean Expression Rule
+	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
+	//// One could skip directly to the next rule.
 	//BoolExpression returns Expression:
-	//	OrAndExpression;
+	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
-		return gaKExpressions.getBoolExpressionAccess();
+		return gaKEXT.getBoolExpressionAccess();
 	}
 	
 	public ParserRule getBoolExpressionRule() {
 		return getBoolExpressionAccess().getRule();
 	}
 
-	//OrAndExpression returns Expression:
-	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
-	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
-	//	LogicalAndOperator) subExpressions+=CompareOperation)*);
-	public KExpressionsGrammarAccess.OrAndExpressionElements getOrAndExpressionAccess() {
-		return gaKExpressions.getOrAndExpressionAccess();
+	//// Logical Or Expression Rule
+	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//LogicalOrExpression returns Expression:
+	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
+	//	subExpressions+=LogicalAndExpression)+)?;
+	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
+		return gaKEXT.getLogicalOrExpressionAccess();
 	}
 	
-	public ParserRule getOrAndExpressionRule() {
-		return getOrAndExpressionAccess().getRule();
+	public ParserRule getLogicalOrExpressionRule() {
+		return getLogicalOrExpressionAccess().getRule();
 	}
 
-	////OrExpression returns Expression:
-	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
-	//////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
-	////
-	////AndExpression returns Expression:
-	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+	//// Logical And Expression Rule
+	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//LogicalAndExpression returns Expression:
+	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
+	//	subExpressions+=BitwiseOrExpression)+)?;
+	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
+		return gaKEXT.getLogicalAndExpressionAccess();
+	}
+	
+	public ParserRule getLogicalAndExpressionRule() {
+		return getLogicalAndExpressionAccess().getRule();
+	}
+
+	//// Bitwiese Or Expression Rule
+	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//BitwiseOrExpression returns Expression:
+	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+	//	subExpressions+=BitwiseAndExpression)+)?;
+	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
+		return gaKEXT.getBitwiseOrExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseOrExpressionRule() {
+		return getBitwiseOrExpressionAccess().getRule();
+	}
+
+	//// Bitwise And Expression Rule
+	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
+	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
+	//BitwiseAndExpression returns Expression:
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=CompareOperation)+)?;
+	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
+		return gaKEXT.getBitwiseAndExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseAndExpressionRule() {
+		return getBitwiseAndExpressionAccess().getRule();
+	}
+
+	//// Compare Operation Rule
+	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
 	//// Example: 42 <= val(A)
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression) | NotExpression;
+	//	subExpressions+=NotOrValuedExpression)?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
-		return gaKExpressions.getCompareOperationAccess();
+		return gaKEXT.getCompareOperationAccess();
 	}
 	
 	public ParserRule getCompareOperationRule() {
 		return getCompareOperationAccess().getRule();
 	}
 
-	//// order IS IMPORTANT
+	//// 'Not or Valued Expression' Rule
+	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression returns Expression:
 	//	ValuedExpression | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
-		return gaKExpressions.getNotOrValuedExpressionAccess();
+		return gaKEXT.getNotOrValuedExpressionAccess();
 	}
 	
 	public ParserRule getNotOrValuedExpressionRule() {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 
-	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parents to indicate the right binding
+	//// Not Expression Rule
+	//// Example: !A, !false, !(A or B)
+	//// At the latter we need the parents to indicate the right binding.
+	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
 	//NotExpression returns Expression:
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
-		return gaKExpressions.getNotExpressionAccess();
+		return gaKEXT.getNotExpressionAccess();
 	}
 	
 	public ParserRule getNotExpressionRule() {
 		return getNotExpressionAccess().getRule();
 	}
 
-	//// everything that evaluates to a primitive number value
+	//// Valued Expression Rule    
+	//// Everything that evaluates to a primitive number value.
+	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression returns Expression:
 	//	AddExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
-		return gaKExpressions.getValuedExpressionAccess();
+		return gaKEXT.getValuedExpressionAccess();
 	}
 	
 	public ParserRule getValuedExpressionRule() {
 		return getValuedExpressionAccess().getRule();
 	}
 
+	//// Add Expression Rule
+	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression returns Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)+)?;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
-		return gaKExpressions.getAddExpressionAccess();
+		return gaKEXT.getAddExpressionAccess();
 	}
 	
 	public ParserRule getAddExpressionRule() {
 		return getAddExpressionAccess().getRule();
 	}
 
-	//// Example: varA - ?B
+	//// Sub Expression Rule
+	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: var(A) - i
 	//SubExpression returns Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
+	//	subExpressions+=MultExpression)+)?;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
-		return gaKExpressions.getSubExpressionAccess();
+		return gaKEXT.getSubExpressionAccess();
 	}
 	
 	public ParserRule getSubExpressionRule() {
 		return getSubExpressionAccess().getRule();
 	}
 
-	////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
-	////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-	////    | MultExpression;
+	//// Mult Expression Rule
+	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression returns Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression)+)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
-		return gaKExpressions.getMultExpressionAccess();
+		return gaKEXT.getMultExpressionAccess();
 	}
 	
 	public ParserRule getMultExpressionRule() {
 		return getMultExpressionAccess().getRule();
 	}
 
-	//// Example: (2 / 4)
-	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
+	//// Div Expression Rule
+	//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: 2 / 4
 	//DivExpression returns Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression)+)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
-		return gaKExpressions.getDivExpressionAccess();
+		return gaKEXT.getDivExpressionAccess();
 	}
 	
 	public ParserRule getDivExpressionRule() {
 		return getDivExpressionAccess().getRule();
 	}
 
-	//// Example: varA mod ?B
+	//// Mod Expression Rule
+	//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
+	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
+	//// Example: i % j
 	//ModExpression returns Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
+	//	subExpressions+=AtomicValuedExpression)+)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
-		return gaKExpressions.getModExpressionAccess();
+		return gaKEXT.getModExpressionAccess();
 	}
 	
 	public ParserRule getModExpressionRule() {
 		return getModExpressionAccess().getRule();
 	}
 
-	//// Example: -?A, -(?A + ?B)
-	//// at the latter we need the parents to indicate the right binding
+	//// Neg Expression Rule
+	//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
+	//// Example: -i, -2
 	//NegExpression returns Expression:
 	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
-		return gaKExpressions.getNegExpressionAccess();
+		return gaKEXT.getNegExpressionAccess();
 	}
 	
 	public ParserRule getNegExpressionRule() {
 		return getNegExpressionAccess().getRule();
 	}
 
+	//// Atomic Expression Rule
+	//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
+	//// encapsulated in braces, a function call or a text expression.
+	//// Basically, the rule chain may start over again at this point.     
 	//AtomicExpression returns Expression:
 	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
-		return gaKExpressions.getAtomicExpressionAccess();
+		return gaKEXT.getAtomicExpressionAccess();
 	}
 	
 	public ParserRule getAtomicExpressionRule() {
 		return getAtomicExpressionAccess().getRule();
 	}
 
+	//// Atomic Valued Expression Rule
+	//// An atomic valued expression is either a simple int float or string literal, another valued expression
+	//// encapsulated in braces, or a atomic expression.
+	//// Basically, the rule chain may start over again at this point.     
 	//AtomicValuedExpression returns Expression:
 	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
-		return gaKExpressions.getAtomicValuedExpressionAccess();
+		return gaKEXT.getAtomicValuedExpressionAccess();
 	}
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
 	}
 
-	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
+	//// Valued Object Test Expression Rule
+	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
+	//// valued object reference.
+	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression returns Expression:
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) "(" subExpressions+=ValuedObjectTestExpression ")" |
 	//	ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
-		return gaKExpressions.getValuedObjectTestExpressionAccess();
+		return gaKEXT.getValuedObjectTestExpressionAccess();
 	}
 	
 	public ParserRule getValuedObjectTestExpressionRule() {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
-	//// Example: A, varB
+	//// Valued Object Reference Rule
+	//// References a valued object with arbitrary (including none) indices part.
+	//// Example: A, B
 	//ValuedObjectReference:
 	//	valuedObject=[ValuedObject] ("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
-		return gaKExpressions.getValuedObjectReferenceAccess();
+		return gaKEXT.getValuedObjectReferenceAccess();
 	}
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
+	//// Function Call Rule
+	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
 	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
-		return gaKExpressions.getFunctionCallAccess();
+		return gaKEXT.getFunctionCallAccess();
 	}
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
 	}
 
+	//// Parameter Rule
+	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
+	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
+	//Parameter:
+	//	(pureOutput?="!"? callByReference?="&")? expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKEXT.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
+	}
+
+	//// Text Expression Rule
+	//// The text expression rule returns a text expression. Most times text expressions are used for host code.
 	//// Example: 'printf(...)'
 	//TextExpression:
 	//	text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
-		return gaKExpressions.getTextExpressionAccess();
+		return gaKEXT.getTextExpressionAccess();
 	}
 	
 	public ParserRule getTextExpressionRule() {
 		return getTextExpressionAccess().getRule();
 	}
 
+	//// Int Value Rule
 	//IntValue:
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
-		return gaKExpressions.getIntValueAccess();
+		return gaKEXT.getIntValueAccess();
 	}
 	
 	public ParserRule getIntValueRule() {
 		return getIntValueAccess().getRule();
 	}
 
+	//// Float Value Rule
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
-		return gaKExpressions.getFloatValueAccess();
+		return gaKEXT.getFloatValueAccess();
 	}
 	
 	public ParserRule getFloatValueRule() {
 		return getFloatValueAccess().getRule();
 	}
 
+	//// Bool Value Rule
 	//BoolValue:
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
-		return gaKExpressions.getBoolValueAccess();
+		return gaKEXT.getBoolValueAccess();
 	}
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
 	}
 
+	//// String Value Rule	
 	//StringValue:
 	//	value=STRING;
 	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
-		return gaKExpressions.getStringValueAccess();
+		return gaKEXT.getStringValueAccess();
 	}
 	
 	public ParserRule getStringValueRule() {
 		return getStringValueAccess().getRule();
 	}
 
-	//// data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valuedObjects
-	//// used in Kits.xtext 
+	//// Any Type Rule
+	//// Data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valued objects used in Kits.xtext. 
 	//AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
-		return gaKExpressions.getAnyTypeAccess();
+		return gaKEXT.getAnyTypeAccess();
 	}
 	
 	public ParserRule getAnyTypeRule() {
 		return getAnyTypeAccess().getRule();
 	}
 
+	//// -------------------- //
+	////  KExpressions Enums  // 
+	//// -------------------- //
+	//// Compare Operator Enum 
 	//enum CompareOperator returns OperatorType:
-	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
-		return gaKExpressions.getCompareOperatorAccess();
+		return gaKEXT.getCompareOperatorAccess();
 	}
 	
 	public EnumRule getCompareOperatorRule() {
 		return getCompareOperatorAccess().getRule();
 	}
 
+	//// Pre Operator Enum
 	//enum PreOperator returns OperatorType:
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
-		return gaKExpressions.getPreOperatorAccess();
+		return gaKEXT.getPreOperatorAccess();
 	}
 	
 	public EnumRule getPreOperatorRule() {
 		return getPreOperatorAccess().getRule();
 	}
 
-	//enum OrOperator returns OperatorType:
-	//	OR="|";
-	public KExpressionsGrammarAccess.OrOperatorElements getOrOperatorAccess() {
-		return gaKExpressions.getOrOperatorAccess();
+	//// Bitewise Or Operator Enum
+	//enum BitwiseOrOperator returns OperatorType:
+	//	BITWISE_OR="|";
+	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
+		return gaKEXT.getBitwiseOrOperatorAccess();
 	}
 	
-	public EnumRule getOrOperatorRule() {
-		return getOrOperatorAccess().getRule();
+	public EnumRule getBitwiseOrOperatorRule() {
+		return getBitwiseOrOperatorAccess().getRule();
 	}
 
-	//enum AndOperator returns OperatorType:
-	//	AND="&";
-	public KExpressionsGrammarAccess.AndOperatorElements getAndOperatorAccess() {
-		return gaKExpressions.getAndOperatorAccess();
+	//// Bitwise And Operator Enum
+	//enum BitwiseAndOperator returns OperatorType:
+	//	BITWISE_AND="&";
+	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
+		return gaKEXT.getBitwiseAndOperatorAccess();
 	}
 	
-	public EnumRule getAndOperatorRule() {
-		return getAndOperatorAccess().getRule();
+	public EnumRule getBitwiseAndOperatorRule() {
+		return getBitwiseAndOperatorAccess().getRule();
 	}
 
+	//// Not Operator Enum
 	//enum NotOperator returns OperatorType:
 	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
-		return gaKExpressions.getNotOperatorAccess();
+		return gaKEXT.getNotOperatorAccess();
 	}
 	
 	public EnumRule getNotOperatorRule() {
 		return getNotOperatorAccess().getRule();
 	}
 
+	//// Add Operator Enum
 	//enum AddOperator returns OperatorType:
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
-		return gaKExpressions.getAddOperatorAccess();
+		return gaKEXT.getAddOperatorAccess();
 	}
 	
 	public EnumRule getAddOperatorRule() {
 		return getAddOperatorAccess().getRule();
 	}
 
+	//// Sub Operator Enum
 	//enum SubOperator returns OperatorType:
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
-		return gaKExpressions.getSubOperatorAccess();
+		return gaKEXT.getSubOperatorAccess();
 	}
 	
 	public EnumRule getSubOperatorRule() {
 		return getSubOperatorAccess().getRule();
 	}
 
+	//// Mult Operator Enum
 	//enum MultOperator returns OperatorType:
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
-		return gaKExpressions.getMultOperatorAccess();
+		return gaKEXT.getMultOperatorAccess();
 	}
 	
 	public EnumRule getMultOperatorRule() {
 		return getMultOperatorAccess().getRule();
 	}
 
+	//// Mod Operator Enum
 	//enum ModOperator returns OperatorType:
 	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
-		return gaKExpressions.getModOperatorAccess();
+		return gaKEXT.getModOperatorAccess();
 	}
 	
 	public EnumRule getModOperatorRule() {
 		return getModOperatorAccess().getRule();
 	}
 
+	//// Val Operator Enum
 	//enum ValOperator returns OperatorType:
 	//	VAL="val";
 	public KExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
-		return gaKExpressions.getValOperatorAccess();
+		return gaKEXT.getValOperatorAccess();
 	}
 	
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
 	}
 
+	//// Logical Or Operator Enum
 	//enum LogicalOrOperator returns OperatorType:
-	//	OR="||";
+	//	LOGICAL_OR="||";
 	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
-		return gaKExpressions.getLogicalOrOperatorAccess();
+		return gaKEXT.getLogicalOrOperatorAccess();
 	}
 	
 	public EnumRule getLogicalOrOperatorRule() {
 		return getLogicalOrOperatorAccess().getRule();
 	}
 
+	//// Logical And Operator Enum
 	//enum LogicalAndOperator returns OperatorType:
-	//	AND="&&";
+	//	LOGICAL_AND="&&";
 	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
-		return gaKExpressions.getLogicalAndOperatorAccess();
+		return gaKEXT.getLogicalAndOperatorAccess();
 	}
 	
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
 	}
 
-	/// *
-	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	// * / enum ValueType:
+	//// Postfix Operator Enum
+	//enum PostfixAdd returns OperatorType:
+	//	POSTFIX_ADD="++";
+	public KExpressionsGrammarAccess.PostfixAddElements getPostfixAddAccess() {
+		return gaKEXT.getPostfixAddAccess();
+	}
+	
+	public EnumRule getPostfixAddRule() {
+		return getPostfixAddAccess().getRule();
+	}
+
+	//// Postfix Operator Enum
+	//enum PostfixSub returns OperatorType:
+	//	POSTFIX_SUB="--";
+	public KExpressionsGrammarAccess.PostfixSubElements getPostfixSubAccess() {
+		return gaKEXT.getPostfixSubAccess();
+	}
+	
+	public EnumRule getPostfixSubRule() {
+		return getPostfixSubAccess().getRule();
+	}
+
+	//// Value Type Enum
+	//enum ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
-		return gaKExpressions.getValueTypeAccess();
+		return gaKEXT.getValueTypeAccess();
 	}
 	
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
 	}
 
+	//// Host Type Enum
 	//enum HostType returns ValueType:
 	//	HOST="host";
 	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
-		return gaKExpressions.getHostTypeAccess();
+		return gaKEXT.getHostTypeAccess();
 	}
 	
 	public EnumRule getHostTypeRule() {
 		return getHostTypeAccess().getRule();
 	}
 
+	//// Combine Operator Enum
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
-		return gaKExpressions.getCombineOperatorAccess();
+		return gaKEXT.getCombineOperatorAccess();
 	}
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
 	}
 
-	//// custom terminal rule allowing to save transition label string as they are
+	//// ------------------------ //
+	////  KExpressions Terminals  // 
+	//// ------------------------ //
+	//// Hostcode Terminals
+	//// Custom terminal rule allowing to save transition label string as they are
 	//terminal HOSTCODE:
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
-		return gaKExpressions.getHOSTCODERule();
+		return gaKEXT.getHOSTCODERule();
 	} 
 
-	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
+	/// **
+	// * @author ssm
+	// * @kieler.design 2015-08-21 proposed 
+	// * @kieler.rating 2015-08-21 proposed yellow
+	// * /
+	//// ------------------ //
+	// //  Annotation Rules  // 
+	// // ------------------ //
+	// // General rule for annotations
+	//
+	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	// Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | KeyBooleanValueAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
-		return gaKExpressions.getAnnotationAccess();
+		return gaKEXT.getAnnotationAccess();
 	}
 	
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// Valued Annotation Rule
+	// // Valued annotations must have a value. For instance, tag annotations are not allowed.
+	//
+	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
+	// // due to ambiguities.
+	//
 	//ValuedAnnotation returns Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
-		return gaKExpressions.getValuedAnnotationAccess();
+		return gaKEXT.getValuedAnnotationAccess();
 	}
 	
 	public ParserRule getValuedAnnotationRule() {
 		return getValuedAnnotationAccess().getRule();
 	}
 
-	//// e.g.: / ** semantic comment * /
-	// CommentAnnotation returns StringAnnotation:
-	//	value=COMMENT_ANNOTATION;
+	//// Restiricted Annotation Rule
+	//
+	//// The restricted annotation rules uses quoted key string annotations. You can use this rule in 
+	//
+	//// derived grammars if you don't want to permit unquoted strings. 
+	//
+	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
+	//
+	//// rule and to avoid grammar ambiguities.)  
+	// RestrictedAnnotation returns Annotation:
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
+	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation;
+	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
+		return gaKEXT.getRestrictedAnnotationAccess();
+	}
+	
+	public ParserRule getRestrictedAnnotationRule() {
+		return getRestrictedAnnotationAccess().getRule();
+	}
+
+	//// CommentAnnotation
+	// // e.g.: / ** semantic comment * /
+	// CommentAnnotation:
+	//	values+=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
-		return gaKExpressions.getCommentAnnotationAccess();
+		return gaKEXT.getCommentAnnotationAccess();
 	}
 	
 	public ParserRule getCommentAnnotationRule() {
 		return getCommentAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @HVlayout
+	//// TagAnnotation
+	// // e.g.: @HVlayout
 	// TagAnnotation returns Annotation:
-	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
-		return gaKExpressions.getTagAnnotationAccess();
+		return gaKEXT.getTagAnnotationAccess();
 	}
 	
 	public ParserRule getTagAnnotationRule() {
 		return getTagAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @layouter dot;   
-	// KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
+	//// KeyStringValueAnnotation
+	// // e.g.: @layouter dot
+	// // You may separate different values via comma.   
+	//
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ExtendedID values+=EString ("," values+=EString)*;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
-		return gaKExpressions.getKeyStringValueAnnotationAccess();
+		return gaKEXT.getKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyStringValueAnnotationRule() {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// TypedKeyStringValueAnnotation returns
-	//TypedStringAnnotation:
-	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
+	//// TypedKeyStringValueAnnotation
+	// // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+	//
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
-		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
+		return gaKEXT.getTypedKeyStringValueAnnotationAccess();
 	}
 	
 	public ParserRule getTypedKeyStringValueAnnotationRule() {
 		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @visible true;
+	//// QuotedKeyStringValueAnnotation
+	// // The quoted key string value annotation is a replacement derived grammars may use
+	//
+	//// if they want to disallow quote-less strings in a key string annotation. 
+	// QuotedKeyStringValueAnnotation returns
+	//StringAnnotation:
+	//	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedKeyStringValueAnnotationElements getQuotedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getQuotedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedKeyStringValueAnnotationRule() {
+		return getQuotedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// QuotedTypedKeyStringValueAnnotation
+	//
+	//// The quoted typed key string value annotation is a replacement derived grammars may use
+	//
+	//// if they want to disallow quote-less strings in a key string annotation. 
+	// QuotedTypedKeyStringValueAnnotation
+	//returns TypedStringAnnotation:
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
+	public AnnotationsGrammarAccess.QuotedTypedKeyStringValueAnnotationElements getQuotedTypedKeyStringValueAnnotationAccess() {
+		return gaKEXT.getQuotedTypedKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedTypedKeyStringValueAnnotationRule() {
+		return getQuotedTypedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// KeyBooleanValueAnnotation    
+	// // e.g.: @visible true;
 	// KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
-		return gaKExpressions.getKeyBooleanValueAnnotationAccess();
+		return gaKEXT.getKeyBooleanValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyBooleanValueAnnotationRule() {
 		return getKeyBooleanValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @minSpace 10;    
+	//// KeyIntValueAnnotation
+	// // e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Integer;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
-		return gaKExpressions.getKeyIntValueAnnotationAccess();
+		return gaKEXT.getKeyIntValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyIntValueAnnotationRule() {
 		return getKeyIntValueAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @minSpace 10.0;    
+	//// KeyFloatValueAnnotation
+	// // e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Floateger;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
-		return gaKExpressions.getKeyFloatValueAnnotationAccess();
+		return gaKEXT.getKeyFloatValueAnnotationAccess();
 	}
 	
 	public ParserRule getKeyFloatValueAnnotationRule() {
 		return getKeyFloatValueAnnotationAccess().getRule();
 	}
 
-	//// needed for importing other resources
-	// ImportAnnotation:
-	//	"import" importURI=STRING;
-	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
-		return gaKExpressions.getImportAnnotationAccess();
-	}
-	
-	public ParserRule getImportAnnotationRule() {
-		return getImportAnnotationAccess().getRule();
-	}
-
-	//// allow strings without quotes as they don'c contain spaces
+	//// EString
+	// // Allow strings without quotes if they don't contain spaces.
+	//
+	//// For quoteless strings the ExtendedID rule is used.
 	// EString returns ecore::EString:
-	//	STRING | ID;
+	//	STRING | ExtendedID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
-		return gaKExpressions.getEStringAccess();
+		return gaKEXT.getEStringAccess();
 	}
 	
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
 	}
 
-	//ExtendedID returns ecore::EString:
-	//	ID ("." ID)*;
+	//EStringBoolean returns ecore::EString:
+	//	STRING | ExtendedID | BOOLEAN;
+	public AnnotationsGrammarAccess.EStringBooleanElements getEStringBooleanAccess() {
+		return gaKEXT.getEStringBooleanAccess();
+	}
+	
+	public ParserRule getEStringBooleanRule() {
+		return getEStringBooleanAccess().getRule();
+	}
+
+	//// ExtendedID
+	// // ExtendedID extends the ID rule provided by the terminals grammar.
+	//
+	//// An ID may have dot separated parts and may close with a number separated by a hash mark.
+	// ExtendedID returns
+	//ecore::EString:
+	//	ID ("." ID)* ("#" INT)?;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
-		return gaKExpressions.getExtendedIDAccess();
+		return gaKEXT.getExtendedIDAccess();
 	}
 	
 	public ParserRule getExtendedIDRule() {
 		return getExtendedIDAccess().getRule();
 	}
 
-	//// --------------------------
-	// //
-	// //  Terminals...
-	// //
-	// // --------------------------
-	// // custom terminals
+	//// Integer
+	// // The integer rule extends the EInt terminal by an optional sign for negative numbers.
+	// Integer returns
+	//ecore::EInt:
+	//	"-"? INT;
+	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
+		return gaKEXT.getIntegerAccess();
+	}
+	
+	public ParserRule getIntegerRule() {
+		return getIntegerAccess().getRule();
+	}
+
+	//// Floateger
+	// // The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
+	// Floateger
+	//returns ecore::EFloat:
+	//	"-"? FLOAT;
+	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
+		return gaKEXT.getFloategerAccess();
+	}
+	
+	public ParserRule getFloategerRule() {
+		return getFloategerAccess().getRule();
+	}
+
+	//// ---------------------- //
+	// //  Annotation Terminals  // 
+	// // ---------------------- //
 	//
-	//// custom terminal rule introducing semantic comments
+	//// Comment Annotation Terminal
+	// // Custom terminal rule introducing semantic comments.
 	// terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
-		return gaKExpressions.getCOMMENT_ANNOTATIONRule();
+		return gaKEXT.getCOMMENT_ANNOTATIONRule();
 	} 
 
-	//// modified version of Terminals.ML_COMMENT as
-	// // COMMENT_ANNOTATION is not recognized correctly with original one 
+	//// Multiline Comment Terminal
+	// // Modified version of Terminals.ML_COMMENT as
 	//
-	//terminal ML_COMMENT:
+	//// COMMENT_ANNOTATION is not recognized correctly with original one.
+	// terminal ML_COMMENT:
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
-		return gaKExpressions.getML_COMMENTRule();
+		return gaKEXT.getML_COMMENTRule();
 	} 
 
-	//// generic terminals
+	//// Number Terminal
 	// terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
-		return gaKExpressions.getNUMBERRule();
+		return gaKEXT.getNUMBERRule();
 	} 
 
-	//// redefine INT terminal to allow negative numbers
+	//// Integer Terminal
+	// // An INT is a list of numbers.   
 	// terminal INT returns ecore::EInt:
-	//	"-"? NUMBER+;
+	//	NUMBER+;
 	public TerminalRule getINTRule() {
-		return gaKExpressions.getINTRule();
+		return gaKEXT.getINTRule();
 	} 
 
-	//// make sure the Float rule does not shadow the INT rule
-	// terminal FLOAT returns ecore::EFloatObject:
-	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
+	//// Float Terminal    
+	// // Make sure the Float rule does not shadow the INT rule
+	// terminal FLOAT returns
+	//ecore::EFloatObject:
+	//	NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
-		return gaKExpressions.getFLOATRule();
+		return gaKEXT.getFLOATRule();
 	} 
 
-	//// introduce boolean values
+	//// Boolean Terminal   
+	// // Introduce boolean values.
 	// terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
-		return gaKExpressions.getBOOLEANRule();
+		return gaKEXT.getBOOLEANRule();
 	} 
 
-	//// custom terminal rule for strings
+	//// String Terminal
+	// // Custom terminal rule for strings, only use double quotes.
 	// terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
-		return gaKExpressions.getSTRINGRule();
+		return gaKEXT.getSTRINGRule();
 	} 
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
-		return gaKExpressions.getIDRule();
+		return gaKEXT.getIDRule();
 	} 
 
 	//terminal SL_COMMENT:
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
-		return gaKExpressions.getSL_COMMENTRule();
+		return gaKEXT.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
-		return gaKExpressions.getWSRule();
+		return gaKEXT.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
-		return gaKExpressions.getANY_OTHERRule();
+		return gaKEXT.getANY_OTHERRule();
 	} 
 }

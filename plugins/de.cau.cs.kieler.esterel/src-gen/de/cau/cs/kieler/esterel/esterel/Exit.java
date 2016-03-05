@@ -11,11 +11,11 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exit#getTrap <em>Trap</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Exit#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExit()
  * @model

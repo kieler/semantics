@@ -36,7 +36,7 @@ public final class AnnotationsUtil {
     public static String getString(final Annotatable annotatable, final String key) {
         Annotation annotation = annotatable.getAnnotation(key);
         if (annotation instanceof StringAnnotation) {
-            return ((StringAnnotation) annotation).getValue();
+            return ((StringAnnotation) annotation).getValues().get(0);
         }
         return null;
     }

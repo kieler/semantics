@@ -10,12 +10,12 @@ package de.cau.cs.kieler.esterel.esterel;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd1 <em>End1</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd <em>End</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop()
  * @model

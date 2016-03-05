@@ -10,11 +10,11 @@ package de.cau.cs.kieler.esterel.esterel;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEventBody#getEvent <em>Event</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEventBody#getThenPart <em>Then Part</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentEventBody()
  * @model

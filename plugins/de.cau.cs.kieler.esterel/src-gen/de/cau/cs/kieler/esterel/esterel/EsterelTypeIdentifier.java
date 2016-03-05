@@ -11,10 +11,10 @@ import de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.EsterelTypeIdentifier#getFunc <em>Func</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEsterelTypeIdentifier()
  * @model

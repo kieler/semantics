@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapHandlerImpl#getTrapExpr <em>Trap Expr</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

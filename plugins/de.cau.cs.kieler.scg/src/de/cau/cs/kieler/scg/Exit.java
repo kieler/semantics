@@ -21,11 +21,11 @@ package de.cau.cs.kieler.scg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Exit#getEntry <em>Entry</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Exit#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getExit()
  * @model
@@ -33,57 +33,57 @@ package de.cau.cs.kieler.scg;
  */
 public interface Exit extends Node {
     /**
-	 * Returns the value of the '<em><b>Entry</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Entry#getExit <em>Exit</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Entry</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Entry#getExit <em>Exit</em>}'.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Entry</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Entry</em>' reference.
-	 * @see #setEntry(Entry)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getExit_Entry()
-	 * @see de.cau.cs.kieler.scg.Entry#getExit
-	 * @model opposite="exit" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Entry</em>' reference.
+     * @see #setEntry(Entry)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getExit_Entry()
+     * @see de.cau.cs.kieler.scg.Entry#getExit
+     * @model opposite="exit" required="true"
+     * @generated
+     */
     Entry getEntry();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Exit#getEntry <em>Entry</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Exit#getEntry <em>Entry</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Entry</em>' reference.
-	 * @see #getEntry()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Entry</em>' reference.
+     * @see #getEntry()
+     * @generated
+     */
     void setEntry(Entry value);
 
     /**
-	 * Returns the value of the '<em><b>Next</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Next</b></em>' containment reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Next</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Next</em>' containment reference.
-	 * @see #setNext(ControlFlow)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getExit_Next()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Next</em>' containment reference.
+     * @see #setNext(ControlFlow)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getExit_Next()
+     * @model containment="true"
+     * @generated
+     */
     ControlFlow getNext();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Exit#getNext <em>Next</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Exit#getNext <em>Next</em>}' containment reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Next</em>' containment reference.
-	 * @see #getNext()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Next</em>' containment reference.
+     * @see #getNext()
+     * @generated
+     */
     void setNext(ControlFlow value);
 
 } // Exit

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -27,6 +26,10 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Termination Transformation.
@@ -66,7 +69,16 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsComplexCreateExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -121,12 +133,14 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             val otherTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::TERMINATION);
 
             terminationTransition.setType(TransitionType::WEAKABORT);
-            val triggerExpression = createAndExpression
+            val triggerExpression = createLogicalAndExpression
 
             // Setup the auxiliary terminated valuedObject indicating that a normal termination
             // has been taken in the same synchronous tick and must not be taken again.
             val rootState = state.getRootState
-            val terminatedValuedObject = rootState.createSignal(GENERATED_PREFIX + "terminated").setTypePure.uniqueName;
+            val terminatedValuedObject = rootState.createValuedObject(GENERATED_PREFIX + "terminated",
+            	createDeclaration => [ signal = true ]
+            ).uniqueName;
 
             val terminatedEmission = terminatedValuedObject.emit
 
@@ -150,8 +164,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.
-                val finishedValuedObject = targetRootState.getRootState.createSignal(GENERATED_PREFIX + "finished").
-                    setTypePure.uniqueName
+                val finishedValuedObject = targetRootState.getRootState.createValuedObject(GENERATED_PREFIX + "finished",
+                	createDeclaration => [ signal = true ]
+                ).uniqueName
 
                 val finalStates = region.states.filter(e|e.isFinal == true);
 
@@ -171,7 +186,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 
             // if there is just one valuedObject, we do not need an AND!
             if (triggerExpression != null) {
-                terminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
+                terminationTransition.setTrigger(triggerExpression);
             }
         } // end if normal termination present
 

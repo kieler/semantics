@@ -1,0 +1,13 @@
+/* KEXT Test File for postfix effects
+ * 
+ * @author ssm
+ * @date 2015-06-10
+ */
+bool A;
+int I;
+
+@check postfix.add
+I++
+
+@check postfix.sub
+I--

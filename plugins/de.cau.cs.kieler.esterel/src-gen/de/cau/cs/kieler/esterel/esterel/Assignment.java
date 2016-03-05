@@ -12,11 +12,11 @@ import de.cau.cs.kieler.esterel.kexpressions.IVariable;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Assignment#getVar <em>Var</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Assignment#getExpr <em>Expr</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAssignment()
  * @model

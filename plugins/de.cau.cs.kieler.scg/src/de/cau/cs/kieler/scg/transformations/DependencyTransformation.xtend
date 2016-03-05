@@ -22,13 +22,11 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
@@ -43,9 +41,10 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -99,10 +98,13 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     extension SCGThreadExtensions
     
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension AnnotationsExtensions    
+    
+    @Inject
+    extension KEffectsExtensions
 
 
     // -------------------------------------------------------------------------
@@ -221,26 +223,35 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Generate the valued object cache for assignments.
         assignments.forEach[ assignment |
-        	val references = assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        	if (assignment.assignment instanceof ValuedObjectReference) {
-        	    references += assignment.assignment as ValuedObjectReference
-       	    }
-        	val valuedObjects = <ValuedObject> newArrayList => [ v | 
-        	    references.forEach[ v += it.valuedObject ]; 
-        	    v += assignment.valuedObject
-        	]
-        	valuedObjects.forEach[ vo | 
-        		val cache = valuedObjectCache.get(vo)
-        		if (cache == null) {
-        			valuedObjectCache.put(vo, <Node> newArrayList(assignment))
-        		} else {
-        			cache += assignment	
-        		}
-        	] 
-        	// If there is no ancestor fork information for this node, insert an empty list.
-        	if (ancestorForkCache.get(assignment) == null) {
-        	    ancestorForkCache.put(assignment, <Fork> newArrayList())
-        	}
+            if (assignment.assignment != null) {
+        	   val references = assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	   if (assignment.assignment instanceof ValuedObjectReference) {
+        	        references += assignment.assignment as ValuedObjectReference
+       	        }
+        	   val valuedObjects = <ValuedObject> newArrayList => [ v | 
+        	        references.forEach[ v += it.valuedObject ]; 
+        	       v += assignment.valuedObject
+        	   ]
+        	   valuedObjects.forEach[ vo | 
+        		  val cache = valuedObjectCache.get(vo)
+        		  if (cache == null) {
+        			 valuedObjectCache.put(vo, <Node> newArrayList(assignment))
+        		  } else {
+        			 cache += assignment	
+        		  }
+            	] 
+            	// If there is no ancestor fork information for this node, insert an empty list.
+            	if (ancestorForkCache.get(assignment) == null) {
+        	       ancestorForkCache.put(assignment, <Fork> newArrayList())
+        	   }
+       	   } else if (assignment.operator.isPostfixOperator) {
+                val cache = valuedObjectCache.get(assignment.valuedObject)
+                if (cache == null) {
+                    valuedObjectCache.put(assignment.valuedObject, <Node> newArrayList(assignment))
+                } else {
+                    cache += assignment    
+                }       	       
+       	   }
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: assignment VO cache (time elapsed: "+(time / 1000)+"s).")  
@@ -293,7 +304,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
       	 }
       	 System.out.println("o")
 
-        scg.addAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)   
+        scg.createStringAnnotation(SCGFeatures.DEPENDENCY_ID, SCGFeatures.DEPENDENCY_NAME)   
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
@@ -326,7 +337,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         
         // Filter all other assignments.
         assignments.forEach[ node |
-            if (node != assignment && node.valuedObject == assignment.valuedObject) {
+            if (node != assignment) {
                 var DataDependency dependency = null
                 // If they write to the same variable...
                 if (node.isSameScalar(assignment)) {
@@ -423,6 +434,8 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     	// Returns true if the assignment in the assignment node is an OperatorExpression
     	// and accesses the same ValuedObject as the assignment is writing to.
     	if (assignment instanceof FunctionCall) return false
+    	
+    	if (assignment.operator != AssignOperator.ASSIGN) return true
     	
         assignment.assignment instanceof OperatorExpression &&
         assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |

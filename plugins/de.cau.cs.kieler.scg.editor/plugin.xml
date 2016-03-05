@@ -56,5 +56,12 @@
             features="scg, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
             preferred="scg.basicblock.sc, s.c"></editor>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController"
+            editorID="de.cau.cs.kieler.scg.presentation.ScgEditorID">
+      </editor>
+   </extension>
 
 </plugin>

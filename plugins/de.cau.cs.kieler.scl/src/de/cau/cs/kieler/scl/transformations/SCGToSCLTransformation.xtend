@@ -35,10 +35,11 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * SCG to SCL Transformation 
@@ -60,8 +61,13 @@ class SCGToSCLTransformation {
     @Inject 
     extension SCLExtensions
     
+
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsDeclarationExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+
          
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>

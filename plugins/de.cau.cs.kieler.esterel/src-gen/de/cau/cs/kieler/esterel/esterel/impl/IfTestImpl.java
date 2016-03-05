@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenPart <em>Then Part</em>}</li>
@@ -38,7 +39,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElsePart <em>Else Part</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
