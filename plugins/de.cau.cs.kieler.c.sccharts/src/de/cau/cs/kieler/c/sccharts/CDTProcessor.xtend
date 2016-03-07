@@ -32,7 +32,7 @@ import com.google.inject.Inject
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.*
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -54,7 +54,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.cdt.internal.ui.editor.CEditor
 import org.eclipse.ui.IEditorPart
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement
-import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.*
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTUnaryExpression
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -77,16 +77,27 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTBreakStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDefaultStatement
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import java.util.function.UnaryOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 
 /**
  * @author ssm
  *
  */
-class CDTProcessor extends AbstractProductionTransformation {
+class CDTProcessor {
 
     @Inject
-    extension KExpressionsExtension
+    extension KExpressionsCreateExtensions
 
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
     @Inject
     extension SCChartsExtension
 
@@ -102,26 +113,6 @@ class CDTProcessor extends AbstractProductionTransformation {
     Map<String, State> functionStates = new HashMap<String, State>();
 
     String parameterStr
-
-    override String getId() {
-        return CTransformations::SCCHARTS_ID;
-    }
-
-    override getName() {
-        return CTransformations::SCCHARTS_ID
-    }
-
-    override getProducedFeatureId() {
-        return SCChartsFeature::REFERENCE_ID
-    }
-
-    override getRequiredFeatureIds() {
-        return newHashSet(CFeatures::C_ID)
-    }
-
-    override transform(EObject eObject, KielerCompilerContext context) {
-        eObject
-    }
 
     def EObject createFromEditor(IEditorPart editor) {
         val cEditor = editor as CEditor
@@ -156,8 +147,8 @@ class CDTProcessor extends AbstractProductionTransformation {
                     val model = rootFunctionDefinition.transformFunction
 
                     scc.createControlflowRegion => [ state |
-                        id = "_main"
-                        state.label = id
+                        state.id = "_main"
+                        state.label = state.id
                         root.regions += state
                         state.states += model
                     ]
@@ -858,8 +849,8 @@ class CDTProcessor extends AbstractProductionTransformation {
                 sa.referencedScope = functionStates.get("wasauchimmer")
                 val bind = BindingImpl.newInstance
 
-                bind.actual = funcGlobalState.valuedObjects.head
-                bind.formal = functionStates.get("wasauchimmer").valuedObjects.head
+//                bind.actual = funcGlobalState.declarations.head
+//                bind.formal = functionStates.get("wasauchimmer").valuedObjects.head
                 sa.bindings += bind
 
                 state.parentRegion.states += sa
@@ -1013,9 +1004,9 @@ class CDTProcessor extends AbstractProductionTransformation {
             case IASTBinaryExpression::op_plus:
                 opExp.operator = OperatorType::ADD
             case IASTBinaryExpression::op_binaryAnd:
-                opExp.operator = OperatorType::AND
+                opExp.operator = OperatorType::BITWISE_AND
             case IASTBinaryExpression::op_binaryOr:
-                opExp.operator = OperatorType::OR
+                opExp.operator = OperatorType::BITWISE_OR
             //case IASTBinaryExpression::op_binaryXor:     opExp.operator = OperatorType::XOR
             case IASTBinaryExpression::op_divide:
                 opExp.operator = OperatorType::DIV
@@ -1046,7 +1037,7 @@ class CDTProcessor extends AbstractProductionTransformation {
     }
 
     def Assignment createAssignment(CASTUnaryExpression unary) {
-        val assignment = scc.createAssignment
+        val assignment = KEffectsFactory.eINSTANCE.createAssignment
 
         val VOR = (unary.operand as CASTIdExpression).createVOReference
         assignment.valuedObject = VOR.valuedObject

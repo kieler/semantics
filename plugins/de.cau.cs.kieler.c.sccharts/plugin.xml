@@ -35,22 +35,16 @@
       </menuContribution>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.feature">
-      <featureClass
-            class="de.cau.cs.kieler.c.sccharts.CFeature">
-      </featureClass>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.ui.transformation">
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
-            editor="org.eclipse.cdt.ui.editor.CEditor"
-            features="C2">
+            controllerID="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController"
+            editorID="org.eclipse.cdt.ui.editor.CEditor">
       </editor>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <productionTransformationClass
-            class="de.cau.cs.kieler.c.sccharts.CDTProcessor">
-      </productionTransformationClass>
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
+      <controller
+            class="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController">
+      </controller>
    </extension>
 </plugin>
