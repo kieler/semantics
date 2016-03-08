@@ -53,6 +53,13 @@ import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis
+import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation
+
+import de.cau.cs.kieler.sccharts.tsccharts.*
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -445,13 +452,28 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + targetLanguage, model)
+            val context = new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID + ", *T ABORT,*T scg.basicblock.sc, *T NOSIMULATIONVISUALIZATION, T scg.ttp,!T ESTERELSIMULATIONVISUALIZATION" + targetLanguage, model)
+            
+            context.setProperty(Tracing.ACTIVE_TRACING, true);
+            context.setProperty(TimingAnalysis.INPUT_SCCHART, (model as State))
+            
             context.inplace = false
             context.advancedSelect = true
 
             // Compile
             val result = KielerCompiler.compile(context)
 
+            var highestInsertedTPPNumber = -1;
+
+            var List<TPPInformation> tppInformations = result.getAuxiliaryData(typeof(TPPInformation));
+            var TPPInformation tppInformation = if(tppInformations.isEmpty()) null else tppInformations.get(0);
+            if (tppInformation != null) {
+                    highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
+
+                    TimingAnalysis.generateTimingRequestFile(result.string,(model as State),project.location.
+                        toOSString + File.separator + data.projectRelativePath, highestInsertedTPPNumber);
+            }
+            
             // Flush compilation result to target
             if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string) ) {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
