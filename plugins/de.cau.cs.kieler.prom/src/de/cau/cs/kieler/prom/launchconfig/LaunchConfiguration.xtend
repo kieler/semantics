@@ -452,7 +452,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            val context = new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID + ", *T ABORT,*T scg.basicblock.sc, *T NOSIMULATIONVISUALIZATION, T scg.ttp,!T ESTERELSIMULATIONVISUALIZATION" + targetLanguage, model)
+            val context = new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID + ", *T_ABORT,*T_scg.basicblock.sc, *T_NOSIMULATIONVISUALIZATION, T_scg.ttp,!T_ESTERELSIMULATIONVISUALIZATION, T_" + targetLanguage, model)
             
             context.setProperty(Tracing.ACTIVE_TRACING, true);
             context.setProperty(TimingAnalysis.INPUT_SCCHART, (model as State))

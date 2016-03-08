@@ -58,8 +58,8 @@ class ModelImporter {
         
         val resourceSet = new XtextResourceSet();
         
-        val uri2 = URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct")
-        resourceSet.getResource(uri2, true);
+//        val uri2 = URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct")
+//        resourceSet.getResource(uri2, true);
         
         // Collect possibly referenced resources and resolve references
         if(resolveReferences){
