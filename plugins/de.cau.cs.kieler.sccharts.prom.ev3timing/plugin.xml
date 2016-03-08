@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.prom.environmentInitializer">
+      <initializer
+            class="de.cau.cs.kieler.sccharts.prom.ev3timing.Ev3TimingEnvironmentInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.wrapperCodeGenerator">
+      <generator
+            class="de.cau.cs.kieler.sccharts.prom.ev3timing.Ev3TestWrapperCodeGenerator">
+      </generator>
+   </extension>
+
+
+	<extension point="org.eclipse.debug.ui.launchShortcuts">
+    <shortcut
+        id="de.cau.cs.kieler.sccharts.prom.ev3timingShortcut"
+        class="de.cau.cs.kieler.sccharts.prom.ev3timing.Ev3TimingLaunchShortcut"
+        label="Ev3Timing"
+        modes="run, debug">
+       <contextualLaunch>
+          <enablement>
+             <with
+                   variable="selection">
+                <count
+                      value="1">
+                </count>
+                <iterate>
+                   <or>
+                      <test
+                            forcePluginActivation="false"
+                            property="org.eclipse.debug.ui.matchesPattern"
+                            value="*.c">
+                      </test>
+                   </or>
+                </iterate>
+             </with>
+          </enablement>
+       </contextualLaunch>
+
+    </shortcut>
+	</extension>
+	
+</plugin>

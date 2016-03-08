@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Timing analyse for LEGO Mindstorms EV3
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.prom.ev3timing;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.10.0",
+ de.cau.cs.kieler.prom;bundle-version="0.1.0",
+ com.google.guava,
+ org.eclipse.ui;bundle-version="3.106.1",
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.sccharts.text;bundle-version="0.1.1",
+ org.apache.commons.io;bundle-version="2.0.1",
+ com.jcraft.jsch;bundle-version="0.1.51",
+ org.eclipse.osgi,
+ org.eclipse.core.resources,
+ org.eclipse.equinox.registry,
+ org.eclipse.core.filesystem,
+ org.eclipse.jdt.core,
+ org.eclipse.debug.ui;bundle-version="3.10.2",
+ org.eclipse.ui.ide,
+ org.eclipse.ui.console
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Kiel University
+
