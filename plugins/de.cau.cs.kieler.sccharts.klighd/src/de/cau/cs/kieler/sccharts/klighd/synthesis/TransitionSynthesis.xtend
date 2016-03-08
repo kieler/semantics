@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -89,18 +90,49 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         };
 
         // Add Label
+        var String priority = null;
+        var String trigger = null;
+        var String effect = null;
+        
         val label = new StringBuilder();
         if (transition.label.nullOrEmpty) {
             label.append(transition.serializeHR);
+            
+            // Remember trigger and effect(s)
+            if (transition.trigger != null) {
+                trigger = transition.trigger.serializeHR.toString;
+            } else {
+                trigger = "";
+            }
+    
+            if (!transition.effects.empty) {
+                effect = transition.effects.serializeHR.toString;
+            } else {
+                effect = "";
+            }
         } else {
             label.append(transition.label);
         }
+        
         if (transition.sourceState.outgoingTransitions.size > 1) {
+            priority = String.valueOf(
+                transition.sourceState.outgoingTransitions.indexOf(transition) + 1);
+            
             label.insert(0, ": ");
-            label.insert(0, transition.sourceState.outgoingTransitions.indexOf(transition) + 1);
+            label.insert(0, priority);
         }
+        
         if (label.length != 0) {
-            edge.addLabel(label.toString).associateWith(transition);
+            val klabel = edge.addLabel(label.toString).associateWith(transition);
+            
+            // We remember priority, trigger, and effect parts of transition labels because the label
+            // managers cannot distinguish between them without major parsing. That's because the / sign
+            // is used both as a separator between trigger and effect as well as the division operator 
+            if (trigger != null) {
+                klabel.setLayoutOption(SCChartsDiagramProperties.TRANSITION_PRIORITY, priority);
+                klabel.setLayoutOption(SCChartsDiagramProperties.TRANSITION_TRIGGER, trigger);
+                klabel.setLayoutOption(SCChartsDiagramProperties.TRANSITION_EFFECT, effect);
+            }
         }
 
         return edge;

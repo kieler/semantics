@@ -37,5 +37,15 @@ public final class SCChartsDiagramProperties {
     public static final IProperty<SourceModelTrackingAdapter> MODEL_TRACKER =
             new Property<SourceModelTrackingAdapter>("de.cau.cs.kieler.sccharts.klighd.tracker",
                     null);
+    
+    /** The priority part of a transition label to be used by the label management processors. */
+    public static final IProperty<String> TRANSITION_PRIORITY =
+    		new Property<>("de.cau.cs.kieler.sccharts.klighd.transitions.priority", null);
+    /** The trigger part of a transition label to be used by the label management processors. */
+    public static final IProperty<String> TRANSITION_TRIGGER =
+    		new Property<>("de.cau.cs.kieler.sccharts.klighd.transitions.trigger", null);
+    /** The effect part of a transition label to be used by the label management processors. */
+    public static final IProperty<String> TRANSITION_EFFECT =
+    		new Property<>("de.cau.cs.kieler.sccharts.klighd.transitions.effect", null);
 
 }

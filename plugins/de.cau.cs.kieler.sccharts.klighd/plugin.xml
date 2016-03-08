@@ -84,5 +84,29 @@
             default="true">
       </customConfig>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutProviders">
+      <layoutOption
+            advanced="true"
+            appliesTo="labels"
+            id="de.cau.cs.kieler.sccharts.klighd.transitions.priority"
+            name="Transition Priority"
+            type="string">
+      </layoutOption>
+      <layoutOption
+            advanced="true"
+            appliesTo="labels"
+            id="de.cau.cs.kieler.sccharts.klighd.transitions.trigger"
+            name="Transition Trigger"
+            type="string">
+      </layoutOption>
+      <layoutOption
+            advanced="true"
+            appliesTo="labels"
+            id="de.cau.cs.kieler.sccharts.klighd.transitions.effect"
+            name="Transition Effect"
+            type="string">
+      </layoutOption>
+   </extension>
 
 </plugin>
