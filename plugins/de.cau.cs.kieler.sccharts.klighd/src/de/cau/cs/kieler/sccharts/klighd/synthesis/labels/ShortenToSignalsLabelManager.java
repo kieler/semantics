@@ -13,10 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
-import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
