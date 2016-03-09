@@ -385,6 +385,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 		// Build an empty expression for each exit node.
 		for (exit : exitNodes) {
+			val nestedJoins = getNestedThreads(exit.entry)
 
 			if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
 				((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
@@ -397,7 +398,21 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 				// Now, retrieve all surfaces of the actual thread.
 				val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
-
+				
+				// And remove all surfaces from nested threads
+				nestedJoins.forEach[
+					entryNodes.forEach[
+//						threadSurfaces.removeAll(threadNodes.filter(typeof(Surface)).toList)
+					]
+				]
+				
+				// Add already calculated nested empty flag
+				nestedJoins.forEach[
+					it.cachedSchedulingBlock.guards.forEach[
+						System.err.println(it.serialize)
+					]
+				]				
+				
 				// If there are surface, build an empty expression.
 				if (threadSurfaces.size > 0) {
 					/**

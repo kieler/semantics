@@ -15,25 +15,23 @@ package de.cau.cs.kieler.scg.transformations.synchronizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.Map
 import java.util.Set
-import java.util.List
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -150,4 +148,19 @@ abstract class AbstractSynchronizer {
     public def getNewGuards() {
         return newGuards
     }
+    
+    protected def Set<Join> getNestedThreads(Entry entry){
+    	val nestedJoins = entry.getThreadNodes.filter(typeof(Join)).toSet
+		val nodesToBeRemoved = newHashSet()
+		
+		nestedJoins.forEach[
+			val entries = entryNodes
+			entries.forEach[
+				nodesToBeRemoved.addAll(getThreadNodes.filter(typeof(Join)).toSet)
+			]
+		]
+		nestedJoins.removeAll(nodesToBeRemoved)		    	
+		nestedJoins
+    }
+    
 }

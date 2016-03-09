@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -196,6 +197,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 
 		// Build an empty expression for each exit node.
 		for (exit : exitNodes) {
+			val nestedJoins = getNestedThreads(exit.entry)
+			val nestedEmptyExpressions = newLinkedList()
 
 			if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
 				((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
@@ -208,9 +211,29 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 
 				// Now, retrieve all surfaces of the actual thread.
 				val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+				// But remove redundant nested surfaces
+				nestedJoins.forEach [
+					entryNodes.forEach [
+						threadSurfaces.removeAll(threadNodes.filter(typeof(Surface)).toList)
+					]
+					// And add its empty flags to this empty expression
+					val nestedExpression = (it.schedulingBlock.guards.head.expression as OperatorExpression)
+					nestedExpression.subExpressions.filter(typeof(OperatorExpression)).forEach [
+						// Thread's subExp
+						it.subExpressions.forEach [
+							if (it instanceof ValuedObjectReference) {
+								if (it.valuedObject.name.contains("_e")) {
+									val newValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+									newValObjRef.valuedObject = it.valuedObject
+									nestedEmptyExpressions.add(newValObjRef)
+								}
+							}
+						]
+					]
+				]
 
 				// If there are surface, build an empty expression.
-				if (threadSurfaces.size > 0) {
+				if (threadSurfaces.size > 0 || nestedEmptyExpressions.size > 0) {
 					/**
 					 * To build an empty expression we use the Scgsched factory and create a new object.
 					 * As name of the valued object of the expression, we use the name of the guard and
@@ -247,16 +270,26 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 								it.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 						]
 						expression.subExpressions.add(subExpression)
-					} else {
+					} else if (threadSurfaces.size == 1) {
 						// Otherwise, add a reference to the surface block directly.
 						// expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
 						expression.subExpressions.add(
 							threadSurfaces.head.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 					}
-					// Add the newly created expression to the empty expression and link the thread exit object field
-					// to the guard of the exit node. This enables further processors to identify the block responsible
-					// for the creation of the empty expression. 
-					emptyExp.expression = expression
+					if (nestedEmptyExpressions.size > 0) {
+						val bla = KExpressionsFactory::eINSTANCE.createOperatorExpression
+						bla.setOperator(OperatorType::LOGICAL_AND)
+						bla.subExpressions.addAll(nestedEmptyExpressions)
+						if (threadSurfaces.size > 0){
+							bla.subExpressions.add(expression)
+						}
+						emptyExp.expression = bla
+					} else {
+						// Add the newly created expression to the empty expression and link the thread exit object field
+						// to the guard of the exit node. This enables further processors to identify the block responsible
+						// for the creation of the empty expression. 
+						emptyExp.expression = expression
+					}
 					// emptyExp.threadExitObject = exitSB.guard
 					emptyExp.threadExitObject = exitSB.guards.head.valuedObject
 
