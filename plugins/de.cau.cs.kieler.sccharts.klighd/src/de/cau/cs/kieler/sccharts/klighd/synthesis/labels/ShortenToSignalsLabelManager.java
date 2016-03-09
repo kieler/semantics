@@ -14,8 +14,14 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.google.common.base.Joiner;
 
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
@@ -27,71 +33,92 @@ import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
  */
 public class ShortenToSignalsLabelManager extends AbstractKlighdLabelManager {
 
-    /** Operators used in transition labels. */
-    private final static List<String> OPERATORS = Arrays.asList(new String[] { "<<", ">>", ">>>",
+    /** The operators recognized by transition labels. */
+    private final static String[] OPERATORS = new String[] { "<<", ">>", ">>>",
             "<=", ">=", "==", "!=", "&", "^", "|", "&&", "||", "?", "=", "+=", "-=", "*=", "/=",
             "%=", "&=", "^=", "|=", "<<=", ">>=", ">>>=", ";", "~", "!", "*", "/", "%", "+", "-",
-            "<", ">" });
+            "<", ">", "[", "]", "(", ")" };
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String resizeLabel(KLabel label, double targetWidth) {
-        LinkedList<String> deleteEntriesList = new LinkedList<String>();
-        String resultText = label.getText();
-
-        // Delete all operators
-        for (String entry : OPERATORS) {
-            resultText = resultText.replace(entry, "");
-        }
-
-        // Delete numbers
-        LinkedList<String> textList = new LinkedList<String>(
-                Arrays.asList(resultText.trim().split(" ")));
-        
-        for (String textPart : textList) {
-            try {
-                Integer.valueOf(textPart);
-                deleteEntriesList.add(textPart);
-            } catch (NumberFormatException e) {
-                if (textPart.equals("true") || textPart.equals("false")) {
-                    deleteEntriesList.add(textPart);
-                }
-            }
-        }
-        
-        for (String entry : deleteEntriesList) {
-            while (textList.remove(entry)) {
-            }
-        }
-
-        // Retransform the list to string and add commata
-        resultText = "";
-        boolean hostCode = false;
-        for (String textPart : textList) {
-            if (textPart.contains("(")) {
-                hostCode = true;
-            } else if (textPart.contains(")")) {
-                hostCode = false;
-            }
-
-            if (!(textPart.equals("") || resultText.contains(textPart))) {
-                // no empty textpart and no doubled textParts are added
-                if ((textPart.contains(":")) || hostCode) {
-                    resultText += textPart + " ";
-                } else {
-
-                    resultText += textPart.trim() + ", ";
-                }
-            }
-        }
-        
-        if (!textList.isEmpty() && !textList.get(0).equals("")) {
-            // remove last comma
-            resultText = resultText.substring(0, resultText.length() - 2);
-        }
-        
-        return resultText;
+    	// Put together a regular expression to identify things that are not operands, but operators
+    	StringBuilder regexp = new StringBuilder(OPERATORS.length * 3);
+    	regexp.append("\\s+");
+    	
+    	for (String operator : OPERATORS) {
+    		regexp.append("|").append(Pattern.quote(operator));
+    	}
+    	
+    	// We'll leave the priority untouched
+    	String priorityPrefix = extractPriority(label.getText());
+    	
+    	// This is going to become our set of used signal names
+    	Set<String> signals = new LinkedHashSet<>();
+    	
+    	// Iterate over each operand and check what it is (we remove the priority prefix)
+    	String[] operands = label.getText().substring(priorityPrefix.length()).split(regexp.toString());
+    	boolean inHostCode = false;
+    	for (String operand : operands) {
+    		String trimmedOperand = operand.trim();
+    		
+    		// Empty operands are bad operands
+    		if (trimmedOperand.isEmpty()) {
+    			continue;
+    		}
+    		
+    		// Check if the current operand starts a host code call
+    		if (trimmedOperand.startsWith("'")) {
+    			inHostCode = true;
+    			continue;
+    		}
+    		
+    		// If we're currently in host code, we wait for it to be over...
+    		if (inHostCode) {
+    			if (trimmedOperand.endsWith("'")) {
+    				inHostCode = false;
+    				continue;
+    			}
+    		} else {
+    			// true and false are not signals
+    			if ("true".equals(trimmedOperand) || "false".equals(trimmedOperand)) {
+    				continue;
+    			}
+    			
+    			// Check if it's a number
+    			try {
+    				Double.valueOf(trimmedOperand);
+    				continue;
+    			} catch (NumberFormatException e) {
+    				// It's not a number, so continue
+    			}
+    			
+    			signals.add(trimmedOperand);
+    		}
+    	}
+    	
+    	return priorityPrefix + " " + Joiner.on(", ").join(signals);
     }
+    
+    /**
+     * Returns the priority part of the given label text, if any.
+     * 
+     * @param labelText the label text.
+     * @return the priority portion of the label text, without any surrounding whitespace. Can be empty.
+     */
+	private String extractPriority(String labelText) {
+		Pattern pattern = Pattern.compile("\\d+:");
+		Matcher matcher = pattern.matcher(labelText);
+		
+		if (matcher.find()) {
+			// Make sure the label text starts with the pattern
+			if (matcher.start() == 0) {
+				return labelText.substring(0, matcher.end());
+			}
+		}
+		
+		return "";
+	}
 }
