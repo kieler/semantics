@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
@@ -42,9 +43,17 @@ class HideEntryKeywordHook extends SynthesisHook {
 
     /** Keyword for the hide annotation */
     public static final String HIDE_ANNOTATION_KEYWORD = "cgeneratedscchart";
+    
+    /** The related synthesis option */
+    public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption("Hide Entry Keyword",
+        true).setCategory(GeneralSynthesisOptions::APPEARANCE);
 
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(HIDE_ENTRY);
+    }
+    
     override processState(State state, KNode node) {
-        if (state.getRootState.hasHideAnnotation) {
+        if (HIDE_ENTRY.booleanValue && state.getRootState.hasHideAnnotation) {
             if (state.declarations.empty && !state.localActions.empty &&
                 state.localActions.size == state.entryActions.size) { // Remove content
             // Remove entry actions
