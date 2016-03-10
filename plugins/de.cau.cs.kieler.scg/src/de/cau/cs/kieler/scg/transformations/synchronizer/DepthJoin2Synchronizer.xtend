@@ -271,7 +271,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 					surfGuard.expression = newVOR
 					debug("Generated schizophrenic guard " + surfGuard.serialize)
 				}
-//				scg.guards.add(surfGuard)
+				scg.guards.add(surfGuard)
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
 			]
 		}
@@ -386,6 +386,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		// Build an empty expression for each exit node.
 		for (exit : exitNodes) {
 			val nestedJoins = getNestedThreads(exit.entry)
+			val nestedEmptyExpressions = newLinkedList()
 
 			if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
 				((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
@@ -399,22 +400,29 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				// Now, retrieve all surfaces of the actual thread.
 				val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
 				
-				// And remove all surfaces from nested threads
-				nestedJoins.forEach[
-					entryNodes.forEach[
-//						threadSurfaces.removeAll(threadNodes.filter(typeof(Surface)).toList)
+				// But remove redundant nested surfaces
+				nestedJoins.forEach [
+					entryNodes.forEach [
+						threadSurfaces.removeAll(threadNodes.filter(typeof(Surface)).toList)
 					]
-				]
-				
-				// Add already calculated nested empty flag
-				nestedJoins.forEach[
-					it.cachedSchedulingBlock.guards.forEach[
-						System.err.println(it.serialize)
+					// And add its empty flags to this empty expression
+					val nestedExpression = (it.schedulingBlock.guards.head.expression as OperatorExpression)
+					nestedExpression.subExpressions.filter(typeof(OperatorExpression)).forEach [
+						// Thread's subExp
+						it.subExpressions.forEach [
+							if (it instanceof ValuedObjectReference) {
+								if (it.valuedObject.name.contains("_e")) {
+									val newValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+									newValObjRef.valuedObject = it.valuedObject
+									nestedEmptyExpressions.add(newValObjRef)
+								}
+							}
+						]
 					]
-				]				
+				]	
 				
 				// If there are surface, build an empty expression.
-				if (threadSurfaces.size > 0) {
+				if (threadSurfaces.size > 0 || nestedEmptyExpressions.size > 0) {
 					/**
 					 * To build an empty expression we use the Scgsched factory and create a new object.
 					 * As name of the valued object of the expression, we use the name of the guard and
@@ -451,16 +459,29 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 								it.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 						]
 						expression.subExpressions.add(subExpression)
-					} else {
+					} else if (threadSurfaces.size == 1) {
 						// Otherwise, add a reference to the surface block directly.
 						// expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
 						expression.subExpressions.add(
 							threadSurfaces.head.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 					}
-					// Add the newly created expression to the empty expression and link the thread exit object field
-					// to the guard of the exit node. This enables further processors to identify the block responsible
-					// for the creation of the empty expression. 
-					emptyExp.expression = expression
+					if (nestedEmptyExpressions.size > 0) {
+						// Use De'Morgan to reduce calculation
+						// The enriched expression uses the nested empty flags and combines them with an logical and
+						// With De'Morgan this equals the original expression
+						val incrementalExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+						incrementalExpression.setOperator(OperatorType::LOGICAL_AND)
+						incrementalExpression.subExpressions.addAll(nestedEmptyExpressions)
+						if (threadSurfaces.size > 0){
+							incrementalExpression.subExpressions.add(expression)
+						}
+						emptyExp.expression = incrementalExpression
+					} else {
+						// Add the newly created expression to the empty expression and link the thread exit object field
+						// to the guard of the exit node. This enables further processors to identify the block responsible
+						// for the creation of the empty expression. 
+						emptyExp.expression = expression
+					}
 					// emptyExp.threadExitObject = exitSB.guard
 					emptyExp.threadExitObject = exitSB.guards.head.valuedObject
 

@@ -277,13 +277,16 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 							threadSurfaces.head.getCachedSchedulingBlock.guards.head.valuedObject.reference)
 					}
 					if (nestedEmptyExpressions.size > 0) {
-						val bla = KExpressionsFactory::eINSTANCE.createOperatorExpression
-						bla.setOperator(OperatorType::LOGICAL_AND)
-						bla.subExpressions.addAll(nestedEmptyExpressions)
-						if (threadSurfaces.size > 0){
-							bla.subExpressions.add(expression)
+						// Use De'Morgan to reduce calculation
+						// The enriched expression uses the nested empty flags and combines them with an logical and
+						// With De'Morgan this equals the original expression
+						val incrementalExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+						incrementalExpression.setOperator(OperatorType::LOGICAL_AND)
+						incrementalExpression.subExpressions.addAll(nestedEmptyExpressions)
+						if (threadSurfaces.size > 0){ // Add uncovered surfaces
+							incrementalExpression.subExpressions.add(expression)
 						}
-						emptyExp.expression = bla
+						emptyExp.expression = incrementalExpression
 					} else {
 						// Add the newly created expression to the empty expression and link the thread exit object field
 						// to the guard of the exit node. This enables further processors to identify the block responsible
