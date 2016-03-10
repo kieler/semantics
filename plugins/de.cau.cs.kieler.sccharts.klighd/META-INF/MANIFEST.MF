@@ -25,6 +25,8 @@ Require-Bundle: de.cau.cs.kieler.core.krendering.extensions,
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: de.cau.cs.kieler.sccharts.klighd.SCChartsKlighdPlugin
-Export-Package: de.cau.cs.kieler.sccharts.klighd.hooks,
+Export-Package: de.cau.cs.kieler.sccharts.klighd,
+ de.cau.cs.kieler.sccharts.klighd.hooks,
+ de.cau.cs.kieler.sccharts.klighd.synthesis,
  de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
