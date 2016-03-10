@@ -26,7 +26,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
@@ -43,6 +42,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
+import java.util.List
 import java.util.Set
 
 /** 
@@ -196,16 +196,6 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 	}
 
 	private def void fixSchizophrenicStmts(Join join, Set<Node> pilData, SCGraph scg) {
-		/*
-		 * Set schizoNodes;
-		 * 
-		 * 1. Traverse pilData for instantaneousPath(Entry,Exit)
-		 * 2. If node has only pilData ancestors which are not in schizoNodes, goto next node;
-		 * 3. Duplicate node's guard, add it to schizoNodes and modify it:
-		 * 3.1. Duplicated guard gX_s is the thread surface. Remove all depth ancestors from Exp
-		 * 3.2. Original guard gX is the thread depth. Remove all surface ancestors from Exp
-		 * 
-		 */
 		val exitNodes = <Exit>newLinkedList
 		join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
 		val relevantExitNodes = exitNodes.filter [
@@ -213,15 +203,14 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				it.entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
 				pilData.contains(it)
 		]
-		
+
 		val schizoDeclaration = createBoolDeclaration => [
 			scg.declarations += it
 		]
 
 		for (exit : relevantExitNodes) {
-			val schizoNodes = <Node>newHashSet()
+			val schizoNodes = <Node>newLinkedList()
 			markSchizoNodes(schizoNodes, pilData, exit.entry)
-//			System.err.println(schizoNodes) 
 			schizoNodes.forEach [
 				val originalGuard = it.schedulingBlock.guards.head
 				val surfGuard = ScgFactory::eINSTANCE.createGuard
@@ -247,37 +236,33 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 					]
 
 					surfGuard.expression = surfExpression
-//					it.schedulingBlock.guards.add(surfGuard)
-					debug("Generated schizophrenic guard " + surfGuard.serialize)
-					
+
 					origExpression.subExpressions.removeAll(origExpression.subExpressions.filter [
 						val temp = it
 						!pilData.filter [
 							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
-						].isEmpty
-						&&
-						schizoNodes.filter [
+						].isEmpty && schizoNodes.filter [
 							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
 						].isEmpty
-						])
+					])
 				} else {
 					val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-					val newValObj = KExpressionsFactory::eINSTANCE.createValuedObject
-					newValObj.name = (it.schedulingBlock.guards.head.expression as ValuedObjectReference).
-						valuedObject.name + SCHIZO_SUFFIX
-					newVOR.valuedObject = newValObj
+					val cachedVOR = (it.schedulingBlock.guards.head.expression as ValuedObjectReference)
+					newVOR.valuedObject = scg.guards.filter [
+						it.valuedObject.name == cachedVOR.valuedObject.name + SCHIZO_SUFFIX
+					].head.valuedObject
 
 					surfGuard.valuedObject = surfValObj
 					surfGuard.expression = newVOR
-					debug("Generated schizophrenic guard " + surfGuard.serialize)
 				}
+				debug("Generated schizophrenic guard " + surfGuard.serialize)
 				scg.guards.add(surfGuard)
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
 			]
 		}
 	}
 
-	private def void markSchizoNodes(Set<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
+	private def void markSchizoNodes(List<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
 		// Node types: Assignment_, Conditional_, Depth_, Entry, Exit_, Fork, Join, Surface_
 		if(entryPoint instanceof Exit || entryPoint instanceof Surface) return;
 		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
@@ -399,7 +384,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 				// Now, retrieve all surfaces of the actual thread.
 				val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
-				
+
 				// But remove redundant nested surfaces
 				nestedJoins.forEach [
 					entryNodes.forEach [
@@ -419,8 +404,8 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 							}
 						]
 					]
-				]	
-				
+				]
+
 				// If there are surface, build an empty expression.
 				if (threadSurfaces.size > 0 || nestedEmptyExpressions.size > 0) {
 					/**
@@ -472,7 +457,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 						val incrementalExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 						incrementalExpression.setOperator(OperatorType::LOGICAL_AND)
 						incrementalExpression.subExpressions.addAll(nestedEmptyExpressions)
-						if (threadSurfaces.size > 0){
+						if (threadSurfaces.size > 0) {
 							incrementalExpression.subExpressions.add(expression)
 						}
 						emptyExp.expression = incrementalExpression
