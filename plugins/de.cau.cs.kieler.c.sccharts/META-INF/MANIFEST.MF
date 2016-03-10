@@ -6,27 +6,18 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro,
- com.google.guava,
- org.eclipse.xtext.xbase.lib,
- de.cau.cs.kieler.sccharts,
- org.eclipse.core.commands;bundle-version="3.6.100",
- org.eclipse.ui;bundle-version="3.106.0",
- de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts.text,
  com.google.inject,
- org.eclipse.core.runtime;bundle-version="3.10.0",
- org.eclipse.core.resources;bundle-version="3.9.0",
  org.eclipse.emf.workspace,
  org.eclipse.cdt.core;bundle-version="5.9.1",
- org.eclipse.cdt;bundle-version="8.6.0",
  org.eclipse.cdt.ui;bundle-version="5.9.0",
- de.cau.cs.kieler.kico,
- de.cau.cs.kieler.kico.ui,
- org.eclipse.ui.editors;bundle-version="3.8.200",
- de.cau.cs.kieler.core.kexpressions,
  de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.klighd
-Export-Package: de.cau.cs.kieler.c.sccharts
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.sccharts.klighd,
+ org.eclipse.ui.editors;bundle-version="3.8.200"
+Export-Package: de.cau.cs.kieler.c.sccharts,
+ de.cau.cs.kieler.c.sccharts.controller,
+ de.cau.cs.kieler.c.sccharts.synthesis
+Bundle-ActivationPolicy: lazy
 
 
