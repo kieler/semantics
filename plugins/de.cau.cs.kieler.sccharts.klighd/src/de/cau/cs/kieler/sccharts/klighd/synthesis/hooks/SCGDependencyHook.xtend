@@ -53,7 +53,7 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Write_Write
+//import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
@@ -304,10 +304,10 @@ class SCGDependencyHook extends SynthesisActionHook {
         }
         val line = edge.getData(KCustomRendering).children.filter(KPolyline).head;
         // Configure mutual dependency with additional arrow
-        if (dependency instanceof Write_Write) {
-            line.foreground = Colors.RED
-            line.foreground.propagateToChildren = true;
-        }
+//        if (dependency instanceof Write_Write) {
+//            line.foreground = Colors.RED
+//            line.foreground.propagateToChildren = true;
+//        }
         if (opposite) {
             line.addTailArrowDecorator.placementData as KDecoratorPlacementData => [
                 // This fixes a weird bug in the KPolylineExtension
