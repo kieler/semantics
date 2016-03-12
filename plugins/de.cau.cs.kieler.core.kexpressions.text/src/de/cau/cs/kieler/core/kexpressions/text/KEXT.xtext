@@ -65,6 +65,8 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
 	(const?='const')?
+	(extern?='extern')?
+	(volatile?='volatile')?
     (input?='input')? 
     (output?='output')?
     (static?='static')?

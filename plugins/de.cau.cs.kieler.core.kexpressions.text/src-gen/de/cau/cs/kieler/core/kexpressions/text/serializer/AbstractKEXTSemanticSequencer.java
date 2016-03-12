@@ -218,6 +218,8 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         const?='const'? 
+	 *         extern?='extern'? 
+	 *         volatile?='volatile'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
