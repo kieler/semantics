@@ -59,26 +59,23 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	protected var KielerCompilerContext compilerContext
 
 	val LinkedList<String> assignmentActor = new LinkedList<String>
-	val voExpressions = new HashMap<String,ValuedObject>
+	val voExpressions = new HashMap<String, ValuedObject>
 
-//	var conditionalEndNodes = new HashMap<Conditional,Node>
 	def transform(SCGraph scg, KielerCompilerContext context) {
 
 		assignmentActor.clear
 		voExpressions.clear
-//		conditionalEndNodes.clear
-		// this map stores SSA variables and their highest version number
-//		conditionalEndNodes = context.compilationResult.getAuxiliaryData(SSAMapData).head.conditionalEndNodes
-		
 
-		/** circuit object which will have atomic inner actors for each in/output 
-		 * and two non atomic actors:
-		 *  
-		 * - programm's logic (logicRegion)
-		 * - reset, go and tick logic with input registers (InitializationRegion)
+		// this map stores SSA variables of input output variables and their highest version number
+		val inputOutputMap = context.compilationResult.getAuxiliaryData(SSAMapData).head.inputOutputMap
+
+		/**
+		 * Root object which will contain the circuit:
 		 * 
+		 * - In/Output nodes for each input and output
+		 * - ProgramLogic region for the program's logic
+		 * - initialization region for input output registers and reset logic
 		 */
-
 		val newCircuit = CircuitFactory::eINSTANCE.createActor
 		newCircuit.name = scg.label
 
@@ -86,21 +83,17 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		logicRegion.name = "Program Logic"
 		newCircuit.innerActors += logicRegion
 
-//		val preRegisterRegion = CircuitFactory::eINSTANCE.createActor
-//		preRegisterRegion.name = "Pre Registers"
-//		newInnerCircuit.innerActors += preRegisterRegion
-
 		val initializationRegian = CircuitFactory::eINSTANCE.createActor
 		initializationRegian.name = "Circuit Initialization"
 		newCircuit.innerActors += initializationRegian
 
-		// filter all declarations to initialize the circuit
+		// filter all input/output declarations to initialize the circuit
 		val declarations = scg.declarations.filter[isInput || isOutput].toList
-		// initialize circuit creates all in/outputs and a tick and reset input
-		circuitInitialization.initialize(declarations, initializationRegian, logicRegion,
-			newCircuit)
 
-		// filter every input output variable to avoid the creation of pre registers for those variables
+		// initialize circuit creates all in/outputs and a tick and reset input
+		circuitInitialization.initialize(declarations, initializationRegian, logicRegion, newCircuit)
+
+		// filter every input output variable to avoid creating pre registers for those variables
 		val inOutPuts = new LinkedList<String>
 		for (i : declarations.filter[isInput && isOutput].toList) {
 			for (vo : i.valuedObjects) {
@@ -108,31 +101,34 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			}
 		}
 
-		// create actors of the circuit 
+		// create actors of the circuit. chose entry node of SCG as starting point.
 		val entry = scg.eAllContents.filter(Entry).head
 		transformNodesToActors(entry.next.target, logicRegion)
-//		transformNodes2Actors(inOutPuts, newInnerCircuit, nodes, preRegisterRegion, logicRegion, conditionalEndNodes)
-		// cry for bananas if all actors are created
-		System.out.println("BANANAAAAAAAAS")
 
 		// create links for each region of the circuit
 		// this has to be done step by step..... otherwise wrong ports would be connected
 		linkCreator.circuitRegion(newCircuit)
-		linkCreator.logicRegion(logicRegion)
-//		linkCreator.preRegion(preRegisterRegion)
+		linkCreator.logicRegion(logicRegion, inputOutputMap)
 		linkCreator.initRegion(initializationRegian)
 
 		newCircuit
 
 	}
 
+	/**
+	 * Follow the control flow of the SCG and check which type the nodes are of.
+	 * 
+	 * - for assignment nodes call transformAssignemnt and check the next node for its type
+	 * - for conditional nodes call transformConditionalNodes and let this function call 
+	 *   transformNodesToActors if the control flow is unique again
+	 */
 	def void transformNodesToActors(Node n, Actor logic) {
 		if (!(n instanceof Exit)) {
 
 			if (n instanceof Assignment) {
 				transformAssignment(n, logic)
 				transformNodesToActors(n.next.target, logic)
-			} else if (n instanceof Conditional) {				
+			} else if (n instanceof Conditional) {
 				transformNodesToActors(transformConditionalNodes(n, n.then.target, n.^else.target, logic), logic)
 			}
 
@@ -140,6 +136,13 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 	}
 
+	/**
+	 * Creates a MUX for each Assignment node on the "else"-branch. This MUX has the condition as selector port.
+	 * The assignment of the "else"-branch is input for the false case of the condition.
+	 * The assignment on the then branch is input for the true case of the condition. 
+	 * 
+	 * In case of a conditional node on the "then"-branch: first transform its assignment nodes before coming back to its "root"
+	 */
 	def Node transformConditionalNodes(Conditional source, Node thenNode, Node elseNode, Actor logic) {
 		checkForVOassignments(source.condition)
 
@@ -172,33 +175,34 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				outputPort.name = thenNode.valuedObject.name
 				selectPort.name = source.condition.serialize.toString
+
+				// create constant 0 and 1 or take the whole expression as input for the true case of the condition
+				// if an expression is assigned: call transformExpression to create all needed gates
 				if (thenNode.assignment.serialize.toString == "true") {
 					truePort.name = "const1_" + newMUX.name
 					circuitInitialization.createConstantOne(logic, truePort.name)
-//					one = true
 				} else if (thenNode.assignment.serialize.toString == "false") {
 					truePort.name = "const0_" + newMUX.name
 					circuitInitialization.createConstantZero(logic, truePort.name)
-//					zero = true
 				} else {
 					val exp = thenNode.assignment
-					if(exp instanceof ValuedObjectReference) {
+					if (exp instanceof ValuedObjectReference) {
 						voExpressions.put(thenNode.valuedObject.name, exp.valuedObject)
-						
+
 					} else {
-					checkForVOassignments(thenNode.assignment)
-					truePort.name = thenNode.assignment.serialize.toString
-					transformExpressions(thenNode.assignment, logic)
-					
+						checkForVOassignments(thenNode.assignment)
+						truePort.name = thenNode.assignment.serialize.toString
+						transformExpressions(thenNode.assignment, logic)
+
 					}
 
 				}
 				logic.innerActors += newMUX
 
 				falsePort.name = elseNode.assignment.serialize.toString
-				
-				//e.g. O_1 = pre(O)
-				if(!(elseNode.assignment instanceof ValuedObjectReference)){
+
+				// e.g. O_1 = pre(O)
+				if (!(elseNode.assignment instanceof ValuedObjectReference)) {
 					transformExpressions(elseNode.assignment, logic)
 				}
 
@@ -213,7 +217,6 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 	}
 
-	
 	/**
 	 * This method receives only assignments with guards on their left sides. 
 	 * 
@@ -224,29 +227,25 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	 */
 	def transformAssignment(Assignment assignment, Actor logic) {
 
-		
-
 		// Get the right side of assignment. 
 		val expr = assignment.assignment
-		
-		
 
 		// specify which type of logical gate the actor should be
 		if (expr instanceof OperatorExpression) {
-			
-			// Create actor for guard gX
-		var guardname = assignment.valuedObject.name
-		val actor = CircuitFactory::eINSTANCE.createActor
-		actor.name = guardname
-		logic.innerActors += actor
 
-		assignmentActor.add(actor.name)
-		// Create output port of guard actor gX
-		val outputPort = CircuitFactory::eINSTANCE.createPort
-		outputPort.type = "Out"
-		outputPort.name = guardname
-		actor.ports += outputPort
-			
+			// Create actor for guard gX
+			var guardname = assignment.valuedObject.name
+			val actor = CircuitFactory::eINSTANCE.createActor
+			actor.name = guardname
+			logic.innerActors += actor
+
+			assignmentActor.add(actor.name)
+			// Create output port of guard actor gX
+			val outputPort = CircuitFactory::eINSTANCE.createPort
+			outputPort.type = "Out"
+			outputPort.name = guardname
+			actor.ports += outputPort
+
 			switch (expr.operator) {
 				case LOGICAL_AND:
 					actor.type = "AND"
@@ -268,69 +267,53 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				val port = CircuitFactory::eINSTANCE.createPort
 				actor.ports += port
 				port.type = "In"
-				
 
-				if (!(expr.operator.getName == "PRE")){//) && (subexpr instanceof OperatorExpression)) { // && !(a.operator.getName == "NOT"))
-					
-					checkForVOassignments(subexpr)
+				if (!(expr.operator.getName == "PRE")) {
+					checkForVOassignments(subexpr) //this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
 					transformExpressions(subexpr, logic)
-					
-					
-
 				}
 				port.name = subexpr.serialize.toString
 
 			}
 
-		} 		
-		
-		
+		}
+
+
 		/** 
 		 * Searches for Assignments with ValuedObjectReferences as Expressions
 		 * e.g. g0 = _GO 
 		 * 
 		 * should solve copy propagation problems like gXb = gX
 		 * */
-
 		else if (expr instanceof ValuedObjectReference) {
-			if(assignment.valuedObject.name == "g0"){
-			voExpressions.put(expr.valuedObject.name, assignment.valuedObject)	
-//			System.out.println("put " + expr.valuedObject.name + " with value " + assignment.valuedObject)
-			
-			
+			if (assignment.valuedObject.name == "g0") {
+				voExpressions.put(expr.valuedObject.name, assignment.valuedObject)
 			} else {
-			voExpressions.put(assignment.valuedObject.name, expr.valuedObject)
-//			System.out.println("put " + assignment.valuedObject.name + " with value " + expr.valuedObject.name)
-		}	
+				voExpressions.put(assignment.valuedObject.name, expr.valuedObject)
+			}
 		}
 
 	}
-	
-	def checkForVOassignments(Expression expr) {
-		if(expr instanceof ValuedObjectReference){
-//			System.out.println("CHECKING " + expr.valuedObject.name)
 
+	/**
+	 * Replaces all variables which have different names but the same meaning with the same variable name.
+	 * This is necessary because the ports need to have the same names to create links.
+	 */
+	def checkForVOassignments(Expression expr) {
+		if (expr instanceof ValuedObjectReference) {
 			val name = expr.valuedObject.name
-			if(voExpressions.containsKey(name)){
-			expr.valuedObject = voExpressions.get(name)
-			
+			if (voExpressions.containsKey(name)) {
+				expr.valuedObject = voExpressions.get(name)
+
 			}
 		} else {
-		val vos = expr.eAllContents.filter(ValuedObjectReference).toList
+			val vos = expr.eAllContents.filter(ValuedObjectReference).toList
 
-		for(vo : vos){
-//			System.out.println("checkig " + vo.valuedObject.name)
-			val name2 = vo.valuedObject.name
-			if(voExpressions.containsKey(name2)){
-			vo.valuedObject = voExpressions.get(name2)
-//			System.out.println("changed " + name2 + " to " + vo.valuedObject.name)
-				
-//				vo.valuedObject = voExpressions.get(vo)
-//				System.out.println(vo.valuedObject.name + "RRRR")
-			}
-			
-			
-			
+			for (vo : vos) {
+				val name2 = vo.valuedObject.name
+				if (voExpressions.containsKey(name2)) {
+					vo.valuedObject = voExpressions.get(name2)
+				}
 			}
 		}
 	}

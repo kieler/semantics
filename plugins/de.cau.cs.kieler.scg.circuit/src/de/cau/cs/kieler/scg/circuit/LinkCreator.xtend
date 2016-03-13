@@ -42,7 +42,7 @@ class LinkCreator {
 	
 	
 	/*  Creates links for LogicRegion */
-	def logicRegion(Actor logic) {
+	def logicRegion(Actor logic, HashMap<String,Integer> inputOutputMap) {
 		var LinkedList<Port> portList = new LinkedList<Port>
 		portList += logic.ports
 
@@ -64,6 +64,20 @@ class LinkCreator {
 					}
 
 				]
+				//for input output variables: chose highest version to connect to the output
+				for(ioSet : inputOutputMap.entrySet){
+					if(p.name == ioSet.key + "_" + ioSet.value){
+						portList.forEach[outConn |
+							if(outConn.type == "OutConnectorLogic" && outConn.name == ioSet.key){
+								val link = CircuitFactory::eINSTANCE.createLink
+								link.source = p;
+								link.target = outConn
+								logic.innerLinks += link
+								
+							}
+						]
+					}
+				}
 			}
 
 			if (p.type.startsWith("In") || p.type == "Sel" || p.type == "Not") {
@@ -73,6 +87,19 @@ class LinkCreator {
 						link.source = op;
 						link.target = p
 						logic.innerLinks += link
+					}
+				]
+			}
+			
+			//e.g. in ABO A is not changed in the program. but the ports for the logic region have to be connected
+			if(p.type == "OutConnectorLogic" && !inputOutputMap.containsKey(p.name)){
+				portList.forEach[ inConn |
+					if(inConn.type == "InConnectorLogic" && inConn.name == p.name){
+						val link = CircuitFactory::eINSTANCE.createLink
+						link.source = inConn;
+						link.target = p;
+						logic.innerLinks += link
+						
 					}
 				]
 			}
@@ -88,10 +115,7 @@ class LinkCreator {
 		for (a : circuit.innerActors) {
 			val por = a.ports
 			ports += por
-		}
-		
-//		val ports = portList//.filter[name != "Tick" && name != "Reset"]
-		
+		}		
 
 		for (p : ports) {
 			if (p.type == "OutConnectorInit") {
@@ -104,18 +128,7 @@ class LinkCreator {
 					}
 				]
 			}
-//			if (p.type == "InConnectorCircuit") {
-//				ports.forEach [ op | 
-//					if ((op.type == "InConnectorInit") && p.name == op.name) {
-//						val link = CircuitFactory::eINSTANCE.createLink
-//						link.source = p;
-//						link.target = op
-//						circuit.innerLinks += link
-//
-//					}
-//
-//				]
-//			}
+
 			if (p.type == "OutConnectorLogic") {
 				ports.forEach [ op |
 					if ((op.type == "In") && p.name == op.name) {

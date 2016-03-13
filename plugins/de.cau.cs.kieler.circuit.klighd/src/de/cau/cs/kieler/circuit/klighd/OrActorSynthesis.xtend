@@ -80,7 +80,7 @@ class OrActorSynthesis implements IDrawableActor {
 //					KlighdConstants.DEFAULT_FONT_NAME);
 //
 //			]
-			val darkBlue = createKColor.setColor(215, 235, 255);
+		val darkBlue = createKColor.setColor(240, 247, 253);
 
 		node.setNodeSize(30, 25);
 		

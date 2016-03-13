@@ -144,7 +144,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 					if (l != null) {
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setColor(Colors::GRAY)
+						style.setColor(Colors::GRAY_55)
 						l.KRendering.styles.add(style)
 
 					}
@@ -420,15 +420,15 @@ System.out.println("step ONE MORE $$$$$$")
 	}
 
 	def addMuxToHighlight(HashSet<String> highlighting) {
-
-		for (m : muxSelPortMapping.entries) {
-			if (highlighting.contains(m.value.name)) {
-				highlighting += m.key
-				
-			System.out.println(m.key + " ggg")
-		
-			}
-		}
+//
+//		for (m : muxSelPortMapping.entries) {
+//			if (highlighting.contains(m.value.name)) {
+//				highlighting += m.key
+//				
+//			System.out.println(m.key + " ggg")
+//		
+//			}
+//		}
 
 	}
 
@@ -458,20 +458,23 @@ System.out.println("step ONE MORE $$$$$$")
 					if (highlighting == null) {
 
 						// MUX highlighting
-						if (muxActors.contains(entry.key)) {
-							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::RED)
-							entry.value.styles.add(style)
-						} else {
-
-//						System.out.println("highlighted: " + entry.key)
+//						if (muxActors.contains(entry.key)) {
+//							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+//							style.setProperty(HIGHLIGHTING_MARKER, true);
+//							style.setColor(Colors::RED)
+//							entry.value.styles.add(style)
+//						} else {
+//
+////						System.out.println("highlighted: " + entry.key)
+						if(!muxActors.contains(entry.key)){
 							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
 							style.setProperty(HIGHLIGHTING_MARKER, true);
 							style.setColor(Colors::LIGHT_SALMON)
 							entry.value.styles.add(style)
+							
+							}
 
-						}
+//						}
 					}
 				} else {
 					if (!highlights.contains(entry.key)) { // && graylighting != null) {

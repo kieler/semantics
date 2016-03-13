@@ -153,7 +153,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	def createRegion(KNode actorNode, Actor actor) {
 
-		val darkBlue = createKColor.setColor(215, 235, 255);
+		val darkBlue = createKColor.setColor(240, 247, 253);
 		val blue = createKColor.setColor(235, 245, 255);
 
 		val rendering = renderingFactory.createKRoundedRectangle() => [ rect |

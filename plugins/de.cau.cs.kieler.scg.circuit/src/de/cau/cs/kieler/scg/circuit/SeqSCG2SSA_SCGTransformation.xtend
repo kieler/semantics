@@ -59,39 +59,41 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 	@Inject
 	extension KExpressionsValuedObjectExtensions
+	
+	
 	val ssaMap = new HashMap<String, Integer>
-
 	val valuedObjectList = new HashMap<String, ValuedObject>
 	val originalOutputs = new HashMap<String, ValuedObject>
 	val outputOccurenceCounter = new HashMap<String, Integer>
-	val conditionalEndNodes = new HashMap<Conditional,Node>
+	val inputOutputMap = new HashMap<String, Integer>
 
-//	val ssaPreMap = new HashMap<String, Integer>
 	def transform(SCGraph scg, KielerCompilerContext context) {
 
 		valuedObjectList.clear
 		originalOutputs.clear
 		outputOccurenceCounter.clear
-		conditionalEndNodes.clear
-
-		// stores names of SSA variables and the latest version numbers
 		ssaMap.clear
-//		ssaPreMap.clear
-		// val scgraph = scg.copy
-		// assuming only one entry node exists
+		inputOutputMap.clear
+
+		// Assuming only one entry node exists in a sequentialized SCG; Make it the starting point of the SSA transformation
 		val entry = scg.nodes.filter(Entry).head
-		// search for Assignments
+
+		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
 		filterRelevantAssignments(scg.nodes.filter(Assignment).toList)
 
 		createSSAs(entry.next.target, scg)
 
+		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
 
-		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.conditionalEndNodes = conditionalEndNodes])
-
-		
 		return scg
 	}
 
+	/**
+	 * Follows the control flow of the SCG and checks type of nodes.
+	 * --> if current node is an assignment node: transform it with createAssignmentNodes and call createSSAs with the next node.
+	 * --> if current node is a conditional node: transform all nodes occurring on the "then"-branch with transformConditionalNodes.
+	 *     remember the target of the "else"-branch (conditionalEndNodes) and call createSSAs with this node.
+	 */
 	def void createSSAs(Node n, SCGraph scg) {
 
 		if (!(n instanceof Exit)) {
@@ -101,7 +103,6 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				createSSAs(n.next.target, scg)
 			} else if (n instanceof Conditional) {
 				val target = n.^else.target
-				conditionalEndNodes.put(n,target)
 				transformConditionalNodes(n, n, n, n.^else.target, scg)
 				createSSAs(target, scg)
 			}
@@ -109,6 +110,14 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 		}
 	}
 
+	/**
+	 * Transforms all nodes in the "then"-branch originating in a conditional node.
+	 * 
+	 * For each node:
+	 * - in case of a new conditional: call transformConditionalNodes with the current node as sourceConditional
+	 * - in case of an assignment: replace variable by its SSA version and create a new assignment node on the "else"-branch.
+	 * 	 						   This new assignment node assigns the old version of the SSA variable.
+	 */
 	def void transformConditionalNodes(Conditional sourceConditional, Node predecessorNodeThen,
 		Node predecessorNodeElse, Node target, SCGraph scg) {
 
@@ -116,20 +125,21 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 		if (predecessorNodeThen instanceof Conditional) {
 			thisNode = predecessorNodeThen.then.target
-							
-			
 		}
 		if (predecessorNodeThen instanceof Assignment) {
 			thisNode = predecessorNodeThen.next.target
-			
 		}
 		if (thisNode instanceof Conditional) {
 			transformConditionalNodes(thisNode, thisNode, thisNode, thisNode.^else.target, scg)
 		} else if (thisNode instanceof Assignment) {
 
 			val name = thisNode.valuedObject.name
+
+			// make sure this assignment is really relevant. 
+			// maybe this is not necessary. if not, replace all if(isSSArelevant)..
 			val isSSArelevant = ssaMap.containsKey(name)
 
+			// store the current target valued object before transforming the assignemnt node
 			var ValuedObject storeVO
 
 			if (isSSArelevant) {
@@ -138,26 +148,27 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 			transformAssignmentNodes(thisNode, scg)
 
+			// create a new assignment node on the "else"-branch
 			if (isSSArelevant) {
 
 				val newNode = ScgFactory::eINSTANCE.createAssignment
-
 				newNode.valuedObject = thisNode.valuedObject
 
-				// if this is the first SSA variable of an Output x, use pre(x)
+				// if this is the first assignment to an Output x, use pre(x) as assignment on the "else"-branch
+				// otherwise just use the latest version.
 				if (!storeVO.isInput && (ssaMap.get(name) == 1)) {
 					val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					expression.setOperator(OperatorType::PRE)
-
 					expression.subExpressions.add(storeVO.reference)
-
 					newNode.assignment = expression
 				} else {
 					newNode.assignment = storeVO.reference
-
 				}
 				scg.nodes += newNode
 
+				// change the control flow of the "else"-branch.
+				// the new created assignment node is set between the predecessor on the "else"-branch
+				// and its former target node.
 				if (predecessorNodeElse instanceof Conditional) {
 					predecessorNodeElse.^else.target = newNode
 				} else if (predecessorNodeElse instanceof Assignment) {
@@ -170,28 +181,23 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 				newNode.next = newLink
 
+				// as long as there are two control flow branches restart this method for the next node on the "then"-branch.
 				if (!(thisNode.next.target == target)) {
-
 					transformConditionalNodes(sourceConditional, thisNode, newNode, target, scg)
-									
-					
 				}
-				
-				
-
-			}
-			
-
-			else if (!(thisNode.next.target == target)) {
+			} else if (!(thisNode.next.target == target)) {
 
 				transformConditionalNodes(sourceConditional, thisNode, predecessorNodeElse, target, scg)
 			}
-			
-			}
-		
 
+		}
 	}
 
+	/**
+	 * Check for each assignment node if it is SSA relevant. If so, replace the target of the assignment by an SSA variable.
+	 * For each assignment call transformExpression to replace SSA variable occurrences on the right side of the assignment.
+	 * 
+	 */
 	def transformAssignmentNodes(Assignment n, SCGraph scg) {
 		val name = n.valuedObject.name
 		val type = n.valuedObject.type
@@ -202,7 +208,10 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 			val m = ssaMap.get(name)
 			ssaMap.replace(name, m, m + 1)
 
-			if ((outputOccurenceCounter.get(name) == null) || !(ssaMap.get(name) >= (outputOccurenceCounter.get(name)))) {
+			// don't create more valuedObjects than needed.. 
+			// if this is the last time an output is target of an assignment, the original output variable shall be the target.
+			if ((outputOccurenceCounter.get(name) == null) ||
+				!(ssaMap.get(name) >= (outputOccurenceCounter.get(name)))) {
 
 				val vo = createValuedObject(name + "_" + ssaMap.get(name))
 				val dec = createDeclaration()
@@ -222,9 +231,9 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				scg.declarations += dec
 				n.valuedObject = vo
 
-				valuedObjectList.replace(name, vo) // valuedObjectList.put(name, vo)
+				// remember the new valuedObject for this variable to use it in the expression transformation
+				valuedObjectList.replace(name, vo)
 			}
-
 		} else {
 			val expr = n.assignment
 			n.assignment = transformExpressions(expr)
@@ -232,18 +241,40 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 	}
 
+	/**
+	 * Gets the list of all Assignment nodes of the SCG and filters assignments to output and input output variables.
+	 * 
+	 * The assignments are stored in different lists:
+	 * 
+	 * - originalOutputs remembers the original output's name and its valuedObject
+	 * - outputOccurenceCounter stores how often an output variable is target of an assignment (highest version number as break condition)
+	 * - ssaMap stores every output variable with counter 0 (counter for SSA variables)
+	 * - valuedObjectList stores the to a name associated valuedObject
+	 * 
+	 */
 	def filterRelevantAssignments(List<Assignment> assignments) {
 		for (a : assignments) {
 			val name = a.valuedObject.name
-			// gx and _condgx are unique 
+			// gX and _condgx are unique 
 			if (!(name.startsWith("g") || (name.startsWith("_")))) {
+
 				if (!a.valuedObject.isInput) {
+					originalOutputs.put(name, a.valuedObject)
+
 					if (outputOccurenceCounter.containsKey(name)) {
 						val m = outputOccurenceCounter.get(name)
 						outputOccurenceCounter.replace(name, m, m + 1)
 					} else {
 						outputOccurenceCounter.put(name, 1)
-
+					}
+				}
+				// store highest version of input output variable for the circuit transformation
+				if (a.valuedObject.isInput && a.valuedObject.isOutput) {
+					if (inputOutputMap.containsKey(name)) {
+						val m = inputOutputMap.get(name)
+						inputOutputMap.replace(name, m, m + 1)
+					} else {
+						inputOutputMap.put(name, 1)
 					}
 
 				}
@@ -251,26 +282,21 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				// insert every SSA variable into ssaMap and set its version to 0
 				if (!ssaMap.containsKey(name)) {
 					ssaMap.put(name, 0);
-
 					valuedObjectList.put(name, a.valuedObject)
-					if (!a.valuedObject.isInput) {
-						originalOutputs.put(name, a.valuedObject)
-					}
 				}
-
 			}
-
 		}
-
 	}
 
+	/**
+	 * In each Expression replace all SSA variables with their at this moment highest version
+	 */
 	def Expression transformExpressions(Expression expression) {
 
 		if (expression instanceof ValuedObjectReference) {
 			val varName = expression.valuedObject.name
 
 			if (ssaMap.containsKey(varName) && ssaMap.get(varName) > 0) {
-//				val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
 				expression.valuedObject = valuedObjectList.get(varName)
 			}
 
@@ -280,19 +306,16 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				val varName = v.valuedObject.name
 
 				if (ssaMap.containsKey(varName) && ssaMap.get(varName) > 0) {
-//					val vo = createValuedObject(varName + "_" + ssaMap.get(varName))
 					v.valuedObject = valuedObjectList.get(varName)
 				}
-
 			]
-
 		}
 		expression
 	}
-
 }
 
+//Prepare data for CircuitTransformation
 class SSAMapData extends AbstractKielerCompilerAuxiliaryData {
 	@Accessors
-	HashMap<Conditional, Node> conditionalEndNodes
+	HashMap<String, Integer> inputOutputMap
 }
