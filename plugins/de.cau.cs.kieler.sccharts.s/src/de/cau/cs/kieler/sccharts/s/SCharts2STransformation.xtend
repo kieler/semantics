@@ -43,6 +43,8 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Converts a SyncChart into an S program.
@@ -193,7 +195,7 @@ class SCCharts2STransformation {
         // Set s program name (as the root state's name)
         target.setName(rootState.id)
         
-        target.declarations += rootState.copyDeclarations
+        target.declarations += rootState.copyToSDeclarations
 
 //        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
 
@@ -210,7 +212,7 @@ class SCCharts2STransformation {
         
         // Now traverse all states again and fill them
         for (dependencyState : sortedDependencyStates.filter[!isJoin]) {
-            dependencyState.handleState
+            dependencyState.handleState 
         }
         
      }
@@ -819,6 +821,26 @@ class SCCharts2STransformation {
 //    }
 //
 //    // ======================================================================================================
+    
+    
+    // Copy declarations but also build the mapping
+    public def List<Declaration> copyToSDeclarations(EObject source) {
+        <Declaration> newArrayList => [ targetList | 
+            for (declaration : source.eContents.filter(typeof(Declaration))) {
+                // @als: is this trace necessary?
+                targetList += createDeclaration(declaration) => [ newDec |
+                    declaration.valuedObjects.forEach[ copyValuedObject(newDec) ]
+                ]
+            }
+        ]
+    }
+    
+    private def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        val newValuedObject = sourceObject.copy
+        newValuedObject.map(sourceObject)
+        targetDeclaration.valuedObjects += newValuedObject
+    }  
+    
     
 }
 
