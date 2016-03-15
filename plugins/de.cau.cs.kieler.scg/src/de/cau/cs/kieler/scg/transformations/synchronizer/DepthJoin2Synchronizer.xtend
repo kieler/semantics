@@ -44,6 +44,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -116,9 +117,6 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 	extension KEffectsSerializeExtensions
 
 	@Inject
-	extension KExpressionsReplacementExtensions
-
-	@Inject
 	extension KExpressionsCreateExtensions
 
 	protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
@@ -157,6 +155,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
 
+		// Potentially instantaneous loop
 		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
 			criticalNodes.toSet
 		// The valued object of the GuardExpression of the synchronizer is the guard of the
@@ -198,6 +197,8 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 	private def void fixSchizophrenicStmts(Join join, Set<Node> pilData, SCGraph scg) {
 		val exitNodes = <Exit>newLinkedList
 		join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
+
+		// Get all exit nodes with potentially instantaneous paths
 		val relevantExitNodes = exitNodes.filter [
 			(it.entry.threadControlFlowTypes.containsValue(ThreadPathType::INSTANTANEOUS) ||
 				it.entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
@@ -208,23 +209,29 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			scg.declarations += it
 		]
 
+		// Fix all potentially instantaneous paths
 		for (exit : relevantExitNodes) {
+			// Get all schizophrenic nodes
 			val schizoNodes = <Node>newLinkedList()
 			markSchizoNodes(schizoNodes, pilData, exit.entry)
+
+			// For each schizophrenic node, we need a copy for its "surface execution".
+			// The original guard will be modified to only trigger in its depth
 			schizoNodes.forEach [
 				val originalGuard = it.schedulingBlock.guards.head
 				val surfGuard = ScgFactory::eINSTANCE.createGuard
 				val surfValObj = KExpressionsFactory::eINSTANCE.createValuedObject
-				surfValObj.name = originalGuard.valuedObject.name + SCHIZO_SUFFIX
+				surfValObj.name = originalGuard.valuedObject.name + SCHIZO_SUFFIX // Schizo-guards end with "_s"
 
-				if (!(it.schedulingBlock.guards.head.expression instanceof ValuedObjectReference)) {
-					val origExpression = (originalGuard.expression as OperatorExpression)
+				if (!(originalGuard.expression instanceof ValuedObjectReference)) {
+					val originalExpression = (originalGuard.expression as OperatorExpression)
 
 					val surfExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					surfGuard.valuedObject = surfValObj
 
-					surfExpression.operator = origExpression.operator
-					origExpression.subExpressions.filter [
+					surfExpression.operator = originalExpression.operator
+					// Copy all guards which lay on the pil to the surface guard
+					originalExpression.subExpressions.filter [
 						val temp = it
 						!pilData.filter [
 							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
@@ -237,7 +244,9 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 					surfGuard.expression = surfExpression
 
-					origExpression.subExpressions.removeAll(origExpression.subExpressions.filter [
+					// Remove all guards from the original exp which are on the pil but not schizophrenic.
+					// (Those can only be executed in the surface, so we don't need them in the depth anymore)
+					originalExpression.subExpressions.removeAll(originalExpression.subExpressions.filter [
 						val temp = it
 						!pilData.filter [
 							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
@@ -246,26 +255,28 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 						].isEmpty
 					])
 				} else {
-					val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-					val cachedVOR = (it.schedulingBlock.guards.head.expression as ValuedObjectReference)
-					newVOR.valuedObject = scg.guards.filter [
-						it.valuedObject.name == cachedVOR.valuedObject.name + SCHIZO_SUFFIX
+					// If the guard only holds a VOR, just change it to the corresponding schizophrenic guard
+					val newValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+					val cachedValObjRef = (it.schedulingBlock.guards.head.expression as ValuedObjectReference)
+					newValObjRef.valuedObject = scg.guards.filter [
+						it.valuedObject.name == cachedValObjRef.valuedObject.name + SCHIZO_SUFFIX
 					].head.valuedObject
 
 					surfGuard.valuedObject = surfValObj
-					surfGuard.expression = newVOR
+					surfGuard.expression = newValObjRef
 				}
 				debug("Generated schizophrenic guard " + surfGuard.serialize)
 				scg.guards.add(surfGuard)
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
 			]
+		// TODO: Look for surface nodes and add the current guard
 		}
 	}
 
 	private def void markSchizoNodes(List<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
-		// Node types: Assignment_, Conditional_, Depth_, Entry, Exit_, Fork, Join, Surface_
+		
 		if(entryPoint instanceof Exit || entryPoint instanceof Surface) return;
-		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
+//		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
 
 		if (!entryPoint.allPrevious.filter [
 			it.eContainer instanceof Depth || schizoNodes.contains(it.eContainer as Node)
@@ -493,33 +504,9 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 
 	override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
 
-		return !(threadPathTypes.filter[it == ThreadPathType::DELAYED].isEmpty)
+		// Maybe we should forbid nested threads for this synchronizer
+		return (!(threadPathTypes.filter[it == ThreadPathType::DELAYED].empty)) && instantaneousFeedback
 
 	}
 
-//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//        val excludeSet = <Predecessor> newHashSet
-//
-//        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
-//        
-//        var delayFound = false
-//        for(entry:join.getEntryNodes) {
-//            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
-//            if (t != ThreadPathType::INSTANTANEOUS) {
-//                delayFound = true
-//            } else {
-//                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
-//            }
-//        }
-//       
-//        if (!delayFound) { 
-//            excludeSet.clear
-//        }
-//        return excludeSet
-//    }
-//    
-//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//		<Predecessor> newHashSet
-//	}    
 }

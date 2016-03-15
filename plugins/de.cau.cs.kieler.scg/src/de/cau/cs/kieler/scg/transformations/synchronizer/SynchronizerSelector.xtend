@@ -48,8 +48,8 @@ class SynchronizerSelector {
 
 	protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>>newArrayList(
 		typeof(InstantaneousSynchronizer),
-		typeof(SurfaceSynchronizer),
 		typeof(DepthJoin2Synchronizer),
+		typeof(SurfaceSynchronizer),
 		typeof(DepthSynchronizer),
 		typeof(DepthJoinSynchronizer),
 		typeof(SurfaceSynchronizer)
@@ -73,6 +73,7 @@ class SynchronizerSelector {
 		val threadPathTypes = join.getEntryNodes.filter[!hasAnnotation(ANNOTATION_IGNORETHREAD)].map [
 			getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
 		].map[fromString2].toList
+		// Check if there is an instantaneous feedback from the join to the fork
 		val noInstantaneousFeedback = getInstantaneousControlFlows(join, join.fork).isEmpty
 		for (synchronizer : synchronizerInstances) {
 			if (synchronizer.isSynchronizable(join.fork, threadPathTypes, !noInstantaneousFeedback)) {
