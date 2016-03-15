@@ -23,10 +23,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
@@ -42,9 +42,7 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
-import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -212,9 +210,10 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		// Fix all potentially instantaneous paths
 		for (exit : relevantExitNodes) {
 			// Get all schizophrenic nodes
-			val schizoNodes = <Node>newHashSet()
-			markSchizoNodes(schizoNodes, pilData, exit.entry)
-
+			val schizoNodes = markSchizoNodes(pilData, exit.entry)
+			schizoNodes.forEach[
+				System.err.println(it.schedulingBlock.guards.head.serialize)
+			]
 			// For each schizophrenic node, we need a copy for its "surface execution".
 			// The original guard will be modified to only trigger in its depth
 			schizoNodes.forEach [
@@ -266,23 +265,24 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				scg.guards.add(surfGuard)
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
 			]
-		// TODO: Look for surface nodes and add the current guard
+		// TODO: Look for non-schizo nodes and add the current guard
 		}
 	}
 
 	private def create valuedObject : createValuedObject(name) getValuedObject(String name){}
 
-	private def void markSchizoNodes(Set<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
-		
-		if(entryPoint instanceof Exit || entryPoint instanceof Surface) return;
-//		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
-
-		if (!entryPoint.allPrevious.filter [
-			it.eContainer instanceof Depth || schizoNodes.contains(it.eContainer as Node)
-		].isEmpty) {
-			schizoNodes.add(entryPoint)
-		}
-		entryPoint.allNext.forEach[markSchizoNodes(schizoNodes, pilData, it.target)]
+	private def Set<Node> markSchizoNodes(Set<Node> pilData, Entry entry) {
+		// Get all depths... and their inst. control flows.
+		// Filter for reachable nodes
+		// Intersection of both these nodes and pilData are our desired schizoNodes
+		val depths = entry.getThreadNodes.filter(typeof(Depth)).toList
+		val reachableNodes = <Node> newHashSet()
+		depths.forEach[
+			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach[
+				it.forEach[reachableNodes.add(it.target)]
+			]
+		]
+		return reachableNodes.filter[pilData.contains(it)].filter[!(it instanceof Exit)].toSet
 	}
 
 	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {
