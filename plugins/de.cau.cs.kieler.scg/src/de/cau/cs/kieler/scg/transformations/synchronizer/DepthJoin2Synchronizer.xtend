@@ -212,7 +212,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		// Fix all potentially instantaneous paths
 		for (exit : relevantExitNodes) {
 			// Get all schizophrenic nodes
-			val schizoNodes = <Node>newLinkedList()
+			val schizoNodes = <Node>newHashSet()
 			markSchizoNodes(schizoNodes, pilData, exit.entry)
 
 			// For each schizophrenic node, we need a copy for its "surface execution".
@@ -220,8 +220,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 			schizoNodes.forEach [
 				val originalGuard = it.schedulingBlock.guards.head
 				val surfGuard = ScgFactory::eINSTANCE.createGuard
-				val surfValObj = KExpressionsFactory::eINSTANCE.createValuedObject
-				surfValObj.name = originalGuard.valuedObject.name + SCHIZO_SUFFIX // Schizo-guards end with "_s"
+				val surfValObj = getValuedObject(originalGuard.valuedObject.name + SCHIZO_SUFFIX)
 
 				if (!(originalGuard.expression instanceof ValuedObjectReference)) {
 					val originalExpression = (originalGuard.expression as OperatorExpression)
@@ -258,9 +257,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 					// If the guard only holds a VOR, just change it to the corresponding schizophrenic guard
 					val newValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
 					val cachedValObjRef = (it.schedulingBlock.guards.head.expression as ValuedObjectReference)
-					newValObjRef.valuedObject = scg.guards.filter [
-						it.valuedObject.name == cachedValObjRef.valuedObject.name + SCHIZO_SUFFIX
-					].head.valuedObject
+					newValObjRef.valuedObject = getValuedObject(cachedValObjRef.valuedObject.name + SCHIZO_SUFFIX)
 
 					surfGuard.valuedObject = surfValObj
 					surfGuard.expression = newValObjRef
@@ -273,7 +270,9 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		}
 	}
 
-	private def void markSchizoNodes(List<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
+	private def create valuedObject : createValuedObject(name) getValuedObject(String name){}
+
+	private def void markSchizoNodes(Set<Node> schizoNodes, Set<Node> pilData, Node entryPoint) {
 		
 		if(entryPoint instanceof Exit || entryPoint instanceof Surface) return;
 //		if(schizoNodes.contains(entryPoint)) schizoNodes.add(entryPoint);
