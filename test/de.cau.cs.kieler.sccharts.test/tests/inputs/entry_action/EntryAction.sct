@@ -5,7 +5,7 @@ scchart EntryAction {
     initial state A{
       entry / O = false;
     }
-    >-> F;
+    --> F;
     
     final state F;    
 }

@@ -6,7 +6,7 @@ scchart MultipleEntryActions {
       entry / O = true;
       entry / O = false;
     }
-    >-> F;
+    --> F;
     
     final state F;    
 }

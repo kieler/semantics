@@ -1,7 +1,6 @@
 
 @Transformation DURING
 scchart DuringAction {
-  input bool I;
   output bool O;
 
   initial state A {
@@ -14,27 +13,6 @@ scchart DuringAction {
     region _During:
 
     initial state _I
-    --> _I / O = true;
-
-    region _During2:
-
-    initial state _I
-    --> _S immediate / O = true;
-
-    state _S
-    --> _I;
-
-    region _During3:
-
-    initial state _I
-    --> _I with I / O = true;
-
-    region _During4:
-
-    initial state _I
-    --> _S immediate / O = false;
-
-    state _S
-    --> _I;
+    --> _I with / O = true;
   };
 }

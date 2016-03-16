@@ -23,7 +23,7 @@ scchart ConditionalTermination {
 
       final state A1;
     }
-    >-> _Term / _termRegion = true;
+    >-> _Term with / _termRegion = true;
 
     final state _Term;
   }

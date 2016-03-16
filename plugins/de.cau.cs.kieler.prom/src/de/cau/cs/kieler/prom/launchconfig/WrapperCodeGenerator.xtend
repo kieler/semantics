@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
+import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ModelImporter
@@ -23,16 +24,13 @@ import java.io.FileWriter
 import java.io.StringWriter
 import java.util.ArrayList
 import java.util.HashMap
-import java.util.HashSet
 import java.util.List
 import org.apache.commons.io.FilenameUtils
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
-import com.google.common.base.Strings
 
 /**
  * This class generates wrapper code for models.

@@ -14,7 +14,7 @@ scchart WeakSuspensionAndHierarchy {
     
     state S2 {
       initial state S21A
-      --> S22A / O;
+      --> S22A with / O;
       
       state S22A;
     }
@@ -22,7 +22,7 @@ scchart WeakSuspensionAndHierarchy {
     
     state S3 {
       initial state S31A
-      --> S32A immediate / O3;
+      --> S32A immediate with / O3;
       
       state S32A;
     }; 

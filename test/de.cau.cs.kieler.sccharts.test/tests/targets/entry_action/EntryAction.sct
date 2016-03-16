@@ -8,7 +8,7 @@ scchart EntryAction {
     region _Entry:
 
     initial state _Init
-    --> _Done immediate / O = false;
+    --> _Done immediate with / O = false;
 
     final state _Done;
   }
@@ -17,5 +17,5 @@ scchart EntryAction {
   final state F;
 
   state _Exit
-  >-> F;
+  --> F;
 }
