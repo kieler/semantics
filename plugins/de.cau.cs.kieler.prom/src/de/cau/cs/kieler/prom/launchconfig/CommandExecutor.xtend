@@ -19,12 +19,10 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
-import org.eclipse.debug.core.ILaunch
 
 /**
  * This class handles the execution of shell commands in the context of a project launch.

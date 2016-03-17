@@ -8,7 +8,7 @@ scchart MultipleExitActions {
       exit / O = true;
       exit I / O = !O;
     }
-    >-> F;
+    --> F;
     
     final state F;    
 }

@@ -15,14 +15,14 @@ scchart DuringAction {
       region _During:
 
       initial state _I
-      --> _I / I = !I;
+      --> _I with / I = !I;
     }
     --> A0;
 
     region _During:
 
     initial state _I
-    --> _I / O = !O;
+    --> _I with / O = !O;
 
     region _During2:
 

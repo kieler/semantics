@@ -1,0 +1,25 @@
+// Having a valued signal without a combine operator
+// is a valid use case. However this is WIP.
+// When it is implemented, the target for this test has to be revised.
+@Transformation SIGNAL
+scchart ValuedSignals {
+  signal int x = 1 combine +;
+  signal int y = 2;
+  
+  region R1:
+	  initial state A
+	  --> B with / x(3);
+	  
+	  final state B;
+	  
+  region R2:
+  	initial state C
+  	--> D with / x(4);
+  	 final state D;
+  	 
+  region R3:
+ 	initial state E
+  	--> F with x / y(val(x));
+  	  
+  	final state F;
+}

@@ -8,10 +8,10 @@ scchart Chart {
   region R1:
   
     initial state A
-    --> A / x = y+1;
+    --> A with / x = y+1;
   
   region R2:
   
     initial state B
-    --> B / x = y+1;
+    --> B with / x = y+1;
 }

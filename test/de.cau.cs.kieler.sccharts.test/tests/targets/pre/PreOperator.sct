@@ -7,16 +7,16 @@ scchart PreOperator {
   int _cur_x = 1;
 
   initial state A
-  --> B / x = x + 1;
+  --> B with / x = x + 1;
 
   state B
-  --> A / y = _pre_x;
+  --> A with / y = _pre_x;
 
   region _Pre:
 
   initial state _Init
-  --> _Wait immediate / _cur_x = x;
+  --> _Wait immediate with / _cur_x = x;
 
   final state _Wait
-  --> _Init / _pre_x = _cur_x;
+  --> _Init with / _pre_x = _cur_x;
 }

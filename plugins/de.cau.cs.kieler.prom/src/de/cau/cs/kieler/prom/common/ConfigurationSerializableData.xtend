@@ -102,7 +102,7 @@ abstract class ConfigurationSerializableData {
             val data = classObject.newInstance()
 
             // The data for the object is stored with its identifier as key
-            val map = configuration.getAttribute(identifier, null as HashMap)
+            val map = configuration.getAttribute(identifier, null as HashMap<String,String>)
             if (map != null) {
                 data.loadAttributesFromMap(map)
 

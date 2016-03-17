@@ -332,7 +332,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return new Job("KiCo Compilation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
-                val startTime = System.currentTimeMillis()
+//                val startTime = System.currentTimeMillis()
 
                 try {
                     for (data : files) {
@@ -366,7 +366,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
-                val startTime = System.currentTimeMillis()
+//                val startTime = System.currentTimeMillis()
 
                 try {
                     // Create generator
