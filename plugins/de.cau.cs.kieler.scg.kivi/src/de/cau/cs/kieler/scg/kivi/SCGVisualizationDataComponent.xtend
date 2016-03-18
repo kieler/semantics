@@ -240,7 +240,7 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
                     if (highlighting == null) {
                         val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
                         style.setProperty(HIGHLIGHTING_MARKER, true);
-                        style.setColor(Colors::RED)
+                        style.setColor(Colors::LIGHT_SEA_GREEN)
                         entry.value.styles.add(style)
                     } 
                 } else {

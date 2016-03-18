@@ -37,6 +37,16 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.krendering.KForeground
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.kiml.options.HierarchyHandling
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
+import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
+import de.cau.cs.kieler.kiml.options.GraphFeature;
+import de.cau.cs.kieler.kiml.options.HierarchyHandling;
+import de.cau.cs.kieler.kiml.options.LayoutOptions;
+import de.cau.cs.kieler.kiml.LayoutOptionData
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -54,6 +64,9 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	// -------------------------------------------------------------------------
 	// -- KlighD Options
 	// -------------------------------------------------------------------------
+	/** Show Assignment Regions */
+	private static val SynthesisOption SHOW_ASSIGNMENT = SynthesisOption::createCheckOption("Show Assignment Regions",
+		false);
 	/** Show Not-Gates */
 	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
 
@@ -67,25 +80,29 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
 		false);
 	
-	/** Diargram */
-	private static val SynthesisOption BRANDES_KOEPF = SynthesisOption::createCheckOption("Brandes Koepf",
-		true);
+	/** DIAGRAM LAYOUT */
+    private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
+        <String>newLinkedList("Brandes Koepf", "Linear Segments", "Network Simplex", "Simple" ), "Top-Down");	
 	
-	/** Use interactive node placement*/
-	private static val SynthesisOption INTERACTIVE = SynthesisOption::createCheckOption("Interactive",
-		false);
-	
-	/** Use linear segments node placement */
-	private static val SynthesisOption LINEAR_SEGMENTS = SynthesisOption::createCheckOption("Linear Segments",
-		false);
-	
-	/** Use network simplex node placement */
-	private static val SynthesisOption NETWORK_SIMPLEX = SynthesisOption::createCheckOption("Network Simplex",
-		false);
-	
-	/** Use simple node placement */
-	private static val SynthesisOption SIMPLE = SynthesisOption::createCheckOption("Simple",
-		false);
+//	/** Diargram */
+//	private static val SynthesisOption BRANDES_KOEPF = SynthesisOption::createCheckOption("Brandes Koepf",
+//		true);
+//	
+//	/** Use interactive node placement*/
+//	private static val SynthesisOption INTERACTIVE = SynthesisOption::createCheckOption("Interactive",
+//		false);
+//	
+//	/** Use linear segments node placement */
+//	private static val SynthesisOption LINEAR_SEGMENTS = SynthesisOption::createCheckOption("Linear Segments",
+//		false);
+//	
+//	/** Use network simplex node placement */
+//	private static val SynthesisOption NETWORK_SIMPLEX = SynthesisOption::createCheckOption("Network Simplex",
+//		false);
+//	
+//	/** Use simple node placement */
+//	private static val SynthesisOption SIMPLE = SynthesisOption::createCheckOption("Simple",
+//		false);
 
 //	/** Show PreRegister Region */
 //	private static val SynthesisOption SHOW_PRE_REGION = SynthesisOption::createCheckOption("PreRegion", false);
@@ -104,16 +121,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override public getDisplayedSynthesisOptions() {
 		return newLinkedList(
 			SynthesisOption::createSeparator("Visibility"),
+			SHOW_ASSIGNMENT,
 			SHOW_NOT,
 			SHOW_TICK,
 			SHOW_RESET,
 			SHOW_ALL_REGIONS,
 			SynthesisOption::createSeparator("Node Placement"),
-			BRANDES_KOEPF,
-			INTERACTIVE,
-			LINEAR_SEGMENTS,
-			NETWORK_SIMPLEX,
-			SIMPLE
+			LAYOUT
 		)
 	}
 
@@ -121,11 +135,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		if (SHOW_ALL_REGIONS.booleanValue) {
 			val root = createNode().associateWith(model);
+//			root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			model.transformActor(root);
 			return root;
 		} else {
 			val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 			val rootLogic = createNode().associateWith(logic)
+//			rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			logic.transformActor(rootLogic);
 			return rootLogic;
 			
@@ -138,9 +154,9 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 	// create a KNode for an Actor
 	def void transformActor(Actor actor, KNode parent) {
-
 		// draw actors and attach them to parent
 		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
+		
 		actorNode.associateWith(actor)
 		parent.children += actorNode
 
@@ -153,14 +169,15 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE);
 		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT);
 		
-		if(BRANDES_KOEPF.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);}
-		if(INTERACTIVE.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.INTERACTIVE);}
-		if(LINEAR_SEGMENTS.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);}
-		if(NETWORK_SIMPLEX.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
-		if(SIMPLE.booleanValue){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
+		if(LAYOUT.objectValue == "Brandes Koepf"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);}
+		if(LAYOUT.objectValue == "Linear Segments"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);}
+		if(LAYOUT.objectValue == "Network Simplex"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
+		if(LAYOUT.objectValue == "Simple"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
 		
 		
-		
+//		val KLayoutData layoutNodeShapeLayout = actorNode.getData(KShapeLayout);
+//		layoutNodeShapeLayout.setProperty(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+//		actorNode.addLayoutParam(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
 		
 		// add ports to actor
 		for (port : actor.ports) {
@@ -238,7 +255,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					}
 
 				}
-
 			]
 		}
 

@@ -45,11 +45,12 @@ class LinkCreator {
 	def logicRegion(Actor logic, HashMap<String,Integer> inputOutputMap) {
 		var LinkedList<Port> portList = new LinkedList<Port>
 		portList += logic.ports
-
-		for (a : logic.innerActors) {
-			val ports = a.ports
-			portList += ports
-		}
+		
+		portList += logic.eAllContents.filter(Port).toList
+//		for (a : logic.innerActors) {
+//			val ports = a.ports
+//			portList += ports
+//		}
 
 		for (p : portList) {
 			if (p.type == "Out") {

@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.core.krendering.Trigger
 import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.kiml.options.HierarchyHandling
 
 class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	@Inject
@@ -152,17 +153,25 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	}
 
 	def createRegion(KNode actorNode, Actor actor) {
+		actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX)
+		
 
 		val darkBlue = createKColor.setColor(240, 247, 253);
-		val blue = createKColor.setColor(235, 245, 255);
+		val red = createKColor.setColor(222, 100, 100);
 
 		val rendering = renderingFactory.createKRoundedRectangle() => [ rect |
 			rect.lineWidth = 0
-			if (actor.name == null) {
-				rect.setBackground(blue);
-			} else {
+			
+			
+//			////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//			if (actor.name.startsWith("g") && !actor.innerActors.empty) {
+//				rect.lineWidth = 1;
+//				rect.setForeground(red);
+//			} else {
 				rect.setBackground(darkBlue)
-			}
+//			}
+//			////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 //			rect.selectionBackground = "green".color
 
 		]

@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
@@ -60,6 +61,8 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	@Inject
 	extension KExpressionsValuedObjectExtensions
 	
+	 @Inject
+    extension AnnotationsExtensions
 	
 	val ssaMap = new HashMap<String, Integer>
 	val valuedObjectList = new HashMap<String, ValuedObject>
@@ -153,6 +156,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 				val newNode = ScgFactory::eINSTANCE.createAssignment
 				newNode.valuedObject = thisNode.valuedObject
+//				newNode.createStringAnnotation("conditional else", sourceConditional.condition.valuedObjects.head.name )
 
 				// if this is the first assignment to an Output x, use pre(x) as assignment on the "else"-branch
 				// otherwise just use the latest version.

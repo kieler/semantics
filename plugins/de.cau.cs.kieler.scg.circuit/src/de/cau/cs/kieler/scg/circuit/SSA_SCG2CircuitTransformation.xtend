@@ -3,28 +3,23 @@ package de.cau.cs.kieler.scg.circuit
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
-import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.LinkedList
-import java.util.List
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.ScgFactory
+import java.util.LinkedList
 
 class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -237,7 +232,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			var guardname = assignment.valuedObject.name
 			val actor = CircuitFactory::eINSTANCE.createActor
 			actor.name = guardname
-			logic.innerActors += actor
+			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			assignmentActor.add(actor.name)
 			// Create output port of guard actor gX
@@ -261,7 +256,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 					System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
 				}
 			}
-
+			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!
+//			val actorRegion = CircuitFactory::eINSTANCE.createActor
+//			actorRegion.innerActors += actor
+//			actorRegion.name = guardname
+//			logic.innerActors += actorRegion
+			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!
 			// the created actor gate gX needs an input port for each subExpression
 			for (Expression subexpr : expr.subExpressions) {
 				val port = CircuitFactory::eINSTANCE.createPort
@@ -270,11 +270,16 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				if (!(expr.operator.getName == "PRE")) {
 					checkForVOassignments(subexpr) //this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
-					transformExpressions(subexpr, logic)
-				}
+					transformExpressions(subexpr, logic) //change back to actorRegion as 2nd argument
+					
+				} 
+//else { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					logic.innerActors += actor
+//				}
 				port.name = subexpr.serialize.toString
 
 			}
+			
 
 		}
 

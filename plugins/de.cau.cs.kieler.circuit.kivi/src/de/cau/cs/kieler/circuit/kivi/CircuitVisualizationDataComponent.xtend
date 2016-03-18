@@ -72,6 +72,7 @@ import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.core.kgraph.KGraphElement
 import com.google.common.collect.ImmutableMultimap
 import com.google.common.collect.Multimap
+import java.util.HashMap
 
 class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
@@ -97,9 +98,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create
 	val HashMultimap<String, KRendering> guardActorMapping = HashMultimap.create
 	val LinkedList<String> muxActors = new LinkedList<String>
+	val HashMap<String, String> muxTrueLinkMapping = new HashMap<String,String>
 
 	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create
-
+	val HashMap<String, String> linkTargetMapping = new HashMap<String,String>
+	
 //	val LinkedList<String> otherActorMapping = new LinkedList<String>
 	override initialize() throws KiemInitializationException {
 
@@ -164,7 +167,12 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 							val children = kgelem.children.filter[id == "highlightable"]
 							actorMapping.putAll(node.name, children)
 							actorMapping.putAll(node.name, shape)
-								
+							
+//							if(node.name == "g0"){
+//								actorMapping.putAll("_GO", children)
+//								actorMapping.putAll("_GO", shape)
+//							}
+//								
 //								val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 //									style.setColor(Colors::GRAY)
 //									
@@ -179,14 +187,20 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 							
 
 							// store guradActors
-							if (node.name.startsWith("g")) {
-								guardActorMapping.putAll(node.name, children)
-								guardActorMapping.putAll(node.name, shape)
-							} // store logical gate actors and corresponding ports
-							else if (node.type != null) {
+//							if (node.name.startsWith("g")) {
+//								guardActorMapping.putAll(node.name, children)
+//								guardActorMapping.putAll(node.name, shape)
+//							} // store logical gate actors and corresponding ports
+//							else 
+							if (node.type != null) {
 								switch (node.type) {
 									case "MUX": {
 										muxSelPortMapping.putAll(node.name, node.ports.filter[type == "Sel"])
+										val sourcePort = node.ports.filter[type == "In_1"].head.incomingLinks.head.source
+										if(sourcePort instanceof Port){
+											muxTrueLinkMapping.put(node.name, sourcePort.name)
+											linkTargetMapping.put(sourcePort.name , node.name)
+										}
 										muxActors.add(node.name)
 									}
 									case "OR": {
@@ -196,6 +210,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 									case "AND": {
 										andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
 //										otherActorMapping.add(node.name)
+										
 									}
 								}
 							} // store the other actors
@@ -207,6 +222,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 					}
 
 				}
+//				for(entry : andInPortMapping.entries){
+//					System.out.println(entry.key + " " +entry.value)
+//				} 
 
 			}
 
@@ -252,18 +270,24 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		System.out.println("wrapup-------------------------------++++++++!!!!!!!!!!!!!")
 
 		val Runnable run = [|
+			
+
+			highlight(<String>newHashSet)
 			for(entry: linkMapping.entries){
 			if (entry.value != null) {
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setColor(Colors::BLACK)
 						entry.value.styles.add(style)
+						if (entry.value instanceof KRoundedBendsPolyline) {
+							entry.value.lineWidth = 1
+							
+							}
+						
 
 					}
 					
+					
 					}
-
-			highlight(<String>newHashSet)
-
 		]
 		Display.getDefault().syncExec(run)
 
@@ -323,6 +347,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		 orList.putAll(orInPortMapping)
 		val HashMultimap<String,Port> andList = HashMultimap.create
 		 andList.putAll(andInPortMapping)
+		 
+		 for(entry: andList.entries){
+		 	System.out.println(" huhuhuhu " + entry.key + " " + entry.value)
+		 }
+		 
 		addAndOrGatesToHighlight(highlighting, orList, andList)
 		System.out.println("step1-------------------------------++++++++!!!!!!!!!!!!!")
 		for (h : highlighting) {
@@ -334,7 +363,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		jSONObject
 	}
 	
-	def addAndOrGatesToHighlight(HashSet<String> highlighting, Multimap<String, Port> orList, Multimap<String, Port> andList){
+	def void addAndOrGatesToHighlight(HashSet<String> highlighting, Multimap<String, Port> orList, Multimap<String, Port> andList){
 System.out.println("step ONE MORE $$$$$$")
 		// flag to check if something new happened 
 		var boolean oneMore = false
@@ -346,7 +375,8 @@ System.out.println("step ONE MORE $$$$$$")
 		val  orEntries = ors.entries
 		for (or : orEntries) {
 			val key1 = or.key
-			System.out.println("ORRR " + key1)
+			System.out.println("ORRR " + key1 + " with value " + or.value)
+			
 			if (highlighting.contains(or.value.name)) {
 				oneMore = true
 				if(orList.containsKey(key1)){
@@ -369,39 +399,52 @@ System.out.println("step ONE MORE $$$$$$")
 		val length = andEntries.length
 		var cnt = 0
 		for (and : andEntries) {
+			System.out.println("AAAAND " + and.key + " with value " + and.value)
 			if (key == "") { // only happens if this for section starts
 				key = and.key
 
 				// check if this port is highlighted and set flag for next port to remember what happeened here
 				if (highlighting.contains(and.value.name)) {
+					System.out.println("hihglighting contains " + and.value.name )
 					allPorts = true
+//					oneMore = true
 				} else {
 					allPorts = false
+					System.out.println("hihglighting NOT contains " + key + " with value name " + and.value.name)
+					
 				}
 			} // if this is not the first entry of the list, check if its the same and gate as before
 			// afterwards check if all former ports were marked for highlighting
 			else if (key == and.key && allPorts) {
+				System.out.println("Key: " + key + " , and.key " + and.key)
 				// if this port is not meant to be highlighted, the containing and gate shall not be highlighted
 				if (!highlighting.contains(and.value.name)) {
 					allPorts = false
+					System.out.println("hihglighting contains no " + and.value.name)
 				}
 			} // if this is not the first entry on the list, and this entry has another key, as the one before,
 			// check, if all ports of the former gate got a "1" . If so, add the former actor to highlighting list
 			else if (key != and.key) {
+				System.out.println("old key " + key + " , new and.key " + and.key)
 				if (allPorts) {
 					highlighting += key
+					System.out.println("HIGHLICHT IT " + key )
 					if(andList.containsKey(key)){
 					andList.removeAll(key)
-					}
+					
 					
 					oneMore = true
+					
+					}
 				}
 				key = and.key
-				if (!highlighting.contains(key)) {
+				if (!highlighting.contains(and.value.name)) {
 					allPorts = false
+				} else {
+					allPorts = true
 				}
 			}
-			System.out.println("AAAAND " + key + " with value " + and.value)
+			
 			
 			cnt += 1
 			if (allPorts && cnt == length) {
@@ -420,6 +463,13 @@ System.out.println("step ONE MORE $$$$$$")
 	}
 
 	def addMuxToHighlight(HashSet<String> highlighting) {
+		
+		for(m : muxSelPortMapping.entries){
+			if(highlighting.contains(m.value.name)){
+				highlighting += muxTrueLinkMapping.get(m.key)
+				highlighting += m.key
+			}
+		}
 //
 //		for (m : muxSelPortMapping.entries) {
 //			if (highlighting.contains(m.value.name)) {
@@ -458,20 +508,26 @@ System.out.println("step ONE MORE $$$$$$")
 					if (highlighting == null) {
 
 						// MUX highlighting
-//						if (muxActors.contains(entry.key)) {
-//							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-//							style.setProperty(HIGHLIGHTING_MARKER, true);
-//							style.setColor(Colors::RED)
-//							entry.value.styles.add(style)
-//						} else {
+						if (muxActors.contains(entry.key)) {
+							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+							style.setProperty(HIGHLIGHTING_MARKER, true);
+							style.setColor(Colors::LIGHT_SEA_GREEN)
+							entry.value.styles.add(style)
+						} else 
 //
 ////						System.out.println("highlighted: " + entry.key)
 						if(!muxActors.contains(entry.key)){
-							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::LIGHT_SALMON)
-							entry.value.styles.add(style)
-							
+							if(entry.key.startsWith("g")){
+								val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+								style.setProperty(HIGHLIGHTING_MARKER, true);
+								style.setColor(Colors::LIGHT_SALMON)
+								entry.value.styles.add(style)
+							} else {
+								val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+								style.setProperty(HIGHLIGHTING_MARKER, true);
+								style.setColor(Colors::PEACH_PUFF)
+								entry.value.styles.add(style)
+							}
 							}
 
 //						}
@@ -510,19 +566,27 @@ System.out.println("step ONE MORE $$$$$$")
 				if (highlights.contains(entry.key)) {
 					if (highlighting == null) {
 						if (value instanceof KRoundedBendsPolyline) {
-							entry.value.lineWidth = 2
+							entry.value.lineWidth = 3
 						}
+						if(linkTargetMapping.containsKey(entry.key)){
+							val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::LIGHT_SEA_GREEN)
+						entry.value.styles.add(style)
+						} else {
 //						System.out.println("highlighted: " + entry.key)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
 						style.setColor(Colors::LIGHT_SALMON)
 						entry.value.styles.add(style)
+						
+						}
 					}
 					if (highlighting != null){
 						entry.value.styles.remove(highlighting)
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::LIGHT_SALMON_4)
+						style.setColor(Colors::PEACH_PUFF)
 						entry.value.styles.add(style)
 						
 					}
@@ -532,15 +596,23 @@ System.out.println("step ONE MORE $$$$$$")
 //					}
 //					if (!highlights.contains(entry.key) && highlighting != null) {
 //						System.out.println("UNNNhighlighted: " + entry.key)
+						if(highlighting != null){
 						entry.value.styles.remove(highlighting)
+						if (value instanceof KRoundedBendsPolyline) {
+							entry.value.lineWidth = 3
+						}
+						}
 
 //						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
 //						style.setProperty(GRAYLIGHTING_MARKER, true);
 //
 //						style.setColor(Colors::GRAY)
 //						entry.value.styles.add(style)
+						else{
 						if (value instanceof KRoundedBendsPolyline) {
 							entry.value.lineWidth = 1
+							
+							}
 						}
 
 					}
