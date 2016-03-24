@@ -259,8 +259,17 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	def filterRelevantAssignments(List<Assignment> assignments) {
 		for (a : assignments) {
 			val name = a.valuedObject.name
-			// gX and _condgx are unique 
-			if (!(name.startsWith("g") || (name.startsWith("_")))) {
+			// gX and _condgx are unique
+			//TODO: maybe use a more exact detection if guard
+			//Approximate guard detection 
+			val guardName = name.replace("g","");
+			var guardNumber = -1;
+			try {
+			     guardNumber = Integer.parseInt(guardName);
+			} catch(Exception e){}
+			val isGuard = (name != null) && (name.length > 0) && (guardNumber >= 0);
+			//if (!(name.startsWith("g") || (name.startsWith("_cond")))) {
+            if (!isGuard && !name.startsWith("_cond")) {
 
 				if (!a.valuedObject.isInput) {
 					originalOutputs.put(name, a.valuedObject)
