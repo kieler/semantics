@@ -20,7 +20,7 @@ import de.cau.cs.kieler.core.krendering.LineCap
 import de.cau.cs.kieler.core.krendering.LineJoin
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 
-class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDrawableActor  {
+class AndActorSynthesis implements IDrawableActor  {
 	
 
 	
@@ -52,27 +52,8 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 
 	override draw(Actor actor) {
 		val KNode node = actor.node
-		
-//		node.setNodeSize(30, 30);
-//
-//		node.addRectangle =>
-//			[
-//				val orange = createKColor.setColor(209, 156, 100 );
-//				it.shadow = "black".color
-//				it.selectionBackground = orange
-//				it.setBackground("white".color);
-//				node.addInsideBottomCenteredNodeLabel("&", KlighdConstants.DEFAULT_FONT_SIZE,
-//					KlighdConstants.DEFAULT_FONT_NAME);
-//
-//			]
-		node.setNodeSize(32, 25);
-//        node.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
-//        node.ports.forEach[
-//            it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST);
-//        ];
-//        node.ports.last.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-//                       .setLayoutOption(LayoutOptions.OFFSET, -1f);
-//        
+
+		node.setNodeSize(32, 25);        
 		node.addRectangle => [
 		
 			it.invisible = true;
@@ -109,12 +90,6 @@ class AndActorSynthesis extends AbstractDiagramSynthesis<Actor> implements IDraw
 			];
 			
 		];
-		
 		return node;
 	}
-	
-	override transform(Actor model) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-
 }

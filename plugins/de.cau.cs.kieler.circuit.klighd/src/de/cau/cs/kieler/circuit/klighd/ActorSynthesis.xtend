@@ -136,6 +136,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				val expandedRendering = createRegion(actorNode, actor)
 				expandedRendering.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
 				expandedRendering.setProperty(Properties.EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.SMART)
+				expandedRendering.setProperty(LayoutOptions.SELF_LOOP_INSIDE, true);
 				expandedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
 
 				actorNode.data += expandedRendering
@@ -164,12 +165,12 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 			
 			
 //			////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//			if (actor.name.startsWith("g") && !actor.innerActors.empty) {
-//				rect.lineWidth = 1;
-//				rect.setForeground(red);
-//			} else {
+			if (actor.name.startsWith("g") && !actor.innerActors.empty) {
+				rect.lineWidth = 1;
+				rect.setForeground(red);
+			} else {
 				rect.setBackground(darkBlue)
-//			}
+			}
 //			////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 //			rect.selectionBackground = "green".color

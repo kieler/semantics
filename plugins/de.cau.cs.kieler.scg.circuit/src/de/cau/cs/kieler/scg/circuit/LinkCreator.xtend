@@ -44,9 +44,13 @@ class LinkCreator {
 	/*  Creates links for LogicRegion */
 	def logicRegion(Actor logic, HashMap<String,Integer> inputOutputMap) {
 		var LinkedList<Port> portList = new LinkedList<Port>
-		portList += logic.ports
+//		portList += logic.ports
 		
 		portList += logic.eAllContents.filter(Port).toList
+		
+		for( port : portList){
+			System.out.println(port.name + " " + port.type)
+		}
 //		for (a : logic.innerActors) {
 //			val ports = a.ports
 //			portList += ports
@@ -58,6 +62,7 @@ class LinkCreator {
 					if ((ip.type.startsWith("In") || ip.type == "Sel" || ip.type == "Not" || ip.type == "OutConnectorLogic") &&
 						p.name == ip.name && p.eContainer != ip.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
+//						System.out.println(p.name + " connect to " + ip.name + " " + ip.type)
 						link.source = p;
 						link.target = ip
 						logic.innerLinks += link

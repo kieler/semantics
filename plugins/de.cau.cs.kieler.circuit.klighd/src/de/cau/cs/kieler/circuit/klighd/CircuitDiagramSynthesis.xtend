@@ -84,45 +84,15 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
     private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
         <String>newLinkedList("Brandes Koepf", "Linear Segments", "Network Simplex", "Simple" ), "Top-Down");	
 	
-//	/** Diargram */
-//	private static val SynthesisOption BRANDES_KOEPF = SynthesisOption::createCheckOption("Brandes Koepf",
-//		true);
-//	
-//	/** Use interactive node placement*/
-//	private static val SynthesisOption INTERACTIVE = SynthesisOption::createCheckOption("Interactive",
-//		false);
-//	
-//	/** Use linear segments node placement */
-//	private static val SynthesisOption LINEAR_SEGMENTS = SynthesisOption::createCheckOption("Linear Segments",
-//		false);
-//	
-//	/** Use network simplex node placement */
-//	private static val SynthesisOption NETWORK_SIMPLEX = SynthesisOption::createCheckOption("Network Simplex",
-//		false);
-//	
-//	/** Use simple node placement */
-//	private static val SynthesisOption SIMPLE = SynthesisOption::createCheckOption("Simple",
-//		false);
-
-//	/** Show PreRegister Region */
-//	private static val SynthesisOption SHOW_PRE_REGION = SynthesisOption::createCheckOption("PreRegion", false);
-//
-//	/** Show Initialization Region */
-//	private static val SynthesisOption SHOW_INIT_REGION = SynthesisOption::createCheckOption("Initialization", false);
-//
-//	/** Show Program Logic Region */
-//	private static val SynthesisOption SHOW_LOGIC_REGION = SynthesisOption::createCheckOption("Program Logic", true);
-
 	/**  
 	 * Returns a list of KlighD visualization options. Called by KlighD.
 	 * 
-	 * @return Returns a list of KlighD visualization options.
 	 */
 	override public getDisplayedSynthesisOptions() {
 		return newLinkedList(
 			SynthesisOption::createSeparator("Visibility"),
-			SHOW_ASSIGNMENT,
-			SHOW_NOT,
+//			SHOW_ASSIGNMENT,
+//			SHOW_NOT,
 			SHOW_TICK,
 			SHOW_RESET,
 			SHOW_ALL_REGIONS,
@@ -135,13 +105,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		if (SHOW_ALL_REGIONS.booleanValue) {
 			val root = createNode().associateWith(model);
-//			root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+			root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			model.transformActor(root);
 			return root;
 		} else {
 			val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 			val rootLogic = createNode().associateWith(logic)
-//			rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+			rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			logic.transformActor(rootLogic);
 			return rootLogic;
 			
@@ -174,11 +144,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		if(LAYOUT.objectValue == "Network Simplex"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
 		if(LAYOUT.objectValue == "Simple"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
 		
-		
-//		val KLayoutData layoutNodeShapeLayout = actorNode.getData(KShapeLayout);
-//		layoutNodeShapeLayout.setProperty(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
-//		actorNode.addLayoutParam(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN)
-		
+
 		// add ports to actor
 		for (port : actor.ports) {
 			val isAtomic = (actor.innerActors.length == 0)
@@ -307,6 +273,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		if (!(SHOW_ALL_REGIONS.booleanValue)) {
 			if (actor.name == "Program Logic") {
 				actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
+				actorNode.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
+				
 
 			}
 		}
@@ -357,6 +325,10 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				}
 			}
 			it.addRoundedBendsPolyline(3,1).addJunctionPointDecorator;
+			
+			if (it.sourcePort.node == it.targetPort.node) {
+				it.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
+			}
 			
 			]
 

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
+import de.cau.cs.kieler.circuit.Port
 
 class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
@@ -106,6 +107,16 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		linkCreator.logicRegion(logicRegion, inputOutputMap)
 		linkCreator.initRegion(initializationRegian)
 
+
+		for(link : logicRegion.innerLinks){
+			val port = link.source
+			if( port instanceof Port){
+				if(port.name.startsWith("O")){
+					System.out.println(port.toString + " has target " + link.target.toString)
+				}
+			}
+		}
+		
 		newCircuit
 
 	}
@@ -232,7 +243,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			var guardname = assignment.valuedObject.name
 			val actor = CircuitFactory::eINSTANCE.createActor
 			actor.name = guardname
-			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			assignmentActor.add(actor.name)
 			// Create output port of guard actor gX
@@ -257,10 +268,10 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				}
 			}
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!
-//			val actorRegion = CircuitFactory::eINSTANCE.createActor
-//			actorRegion.innerActors += actor
-//			actorRegion.name = guardname
-//			logic.innerActors += actorRegion
+			val actorRegion = CircuitFactory::eINSTANCE.createActor
+			actorRegion.innerActors += actor
+			actorRegion.name = guardname
+			logic.innerActors += actorRegion
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!
 			// the created actor gate gX needs an input port for each subExpression
 			for (Expression subexpr : expr.subExpressions) {
@@ -270,11 +281,11 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 				if (!(expr.operator.getName == "PRE")) {
 					checkForVOassignments(subexpr) //this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
-					transformExpressions(subexpr, logic) //change back to actorRegion as 2nd argument
+					transformExpressions(subexpr, actorRegion) //change back to actorRegion as 2nd argument
 					
 				} 
 //else { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					logic.innerActors += actor
+//					logic.innerActors += actor
 //				}
 				port.name = subexpr.serialize.toString
 
