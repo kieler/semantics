@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.sccharts.DuringAction
 
 /**
  * SCCharts Signal Transformation.
@@ -116,6 +117,14 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     def void transformSignal(State state, State targetRootState) {
         val allSignals = state.signals
 
+        // One absentDuringAction for all signals
+        var DuringAction absentDuringAction 
+
+        if (!allSignals.nullOrEmpty) {
+                absentDuringAction = state.createDuringAction
+                absentDuringAction.setImmediate(true);
+        }
+
         // Go thru all signals
         for (ValuedObject signal : allSignals) {
             signal.setDefaultTrace;
@@ -134,6 +143,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 val updateDuringAction = state.createImmediateDuringAction
                 updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
                 updateDuringAction.setTrigger(presentVariable.reference) 
+
                 // Add an immediate during action that resets the current value
                 // in each tick to the neutral element of the type w.r.t. combination function
                 val resetDuringAction = state.createImmediateDuringAction
@@ -224,11 +234,10 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             // Add a during reset action for the presentVariable if it is an output or local variable.
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
-                val duringAction = state.createDuringAction
 
                 // duringAction.setTrigger(TRUE) (implicit true)
-                duringAction.createAssignment(presentVariable, FALSE)
-                duringAction.setImmediate(true)
+                // create AND add an absent-reset-assignment
+                absentDuringAction.createAssignment(presentVariable, FALSE)
             }
         }
     }
