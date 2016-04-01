@@ -23,13 +23,41 @@ class EvaluationHook extends AbstractHook {
     override postSnapshot(EObject model, KielerCompilerContext context) {
     }
 
+
+    def boolean isVCC(Actor a) {
+        val e = a.name.equals("vcc") || a.name.equals("1");
+        //val e = a.name.startsWith("vcc") || a.name.startsWith("gnd");
+//        if (e) {
+//            System.out.println("BUUUH VCC TRUE:" + a.name);
+//        } else {
+//            System.out.println("BUUUH VCC FALSE:"  + a.name);
+//        }
+        return e;        
+    }
+
+    def boolean isProgramLogic(Actor a) {
+        if (a.name.equals("Program Logic")) {
+            return true;
+        }
+        if (a.eContainer != null) {
+            return (a.eContainer as Actor).isProgramLogic
+        }
+        return false;
+    }
+
     override postTransformation(EObject input, Object result, KielerCompilerContext context,
         ITransformation transformation) {
         if (result instanceof EObject) {
             var model = result as EObject
             val String msg = switch (model) {
                 Actor:
-                    "Number of actors: " + model.eAllContents.filter(Actor).size
+                    "Number of Aactors: " + model.eAllContents.filter(Actor).filter[e |  
+                        (((e.eContainer as Actor) != null) && ((e as Actor).innerActors.nullOrEmpty) 
+                            && e.isProgramLogic
+                        //&& ((e.eContainer as Actor).name.equals("Program Logic"))
+                        )  
+                        &&  (!(e as Actor).isVCC)
+                    ].toList.size
                 case transformation.id == SCGTransformations::SCC2SCG_ID: {
                     "Number of states: " + input.eAllContents.filter(State).size + "\n" + "Number of scg nodes: " +
                         model.eAllContents.filter(Node).size
