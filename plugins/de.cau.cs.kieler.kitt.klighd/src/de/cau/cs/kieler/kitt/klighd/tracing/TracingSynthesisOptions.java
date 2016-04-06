@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
@@ -39,7 +43,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
  * @kieler.rating 2014-08-19 proposed yellow
  * 
  */
-public final class TracingSynthesisOption {
+public final class TracingSynthesisOptions {
 
     public enum TracingMode {
         NO_TRACING, MODEL_TRACING, ELEMENT_TRACING;
@@ -87,22 +91,26 @@ public final class TracingSynthesisOption {
     /**
      * Privates constructor to prevent instantiation.
      */
-    private TracingSynthesisOption() {
+    private TracingSynthesisOptions() {
     }
 
     /** Global tracing synthesis option */
-    private static SynthesisOption option = SynthesisOption.createChoiceOption(
+    public static final SynthesisOption TRACING_OPTION = SynthesisOption.createChoiceOption(
             "Tracing",
             Lists.newArrayList(TracingMode.NO_TRACING.toString(),
                     TracingMode.ELEMENT_TRACING.toString(), TracingMode.MODEL_TRACING.toString()),
             TracingMode.NO_TRACING.toString());
+    
+	/** Global tracing visualization synthesis option */
+	public static final SynthesisOption EDGE_TRACING_OPTION = SynthesisOption
+			.createCheckOption("Show tracing edges between model edges", false);
 
     /**
      * Returns the static SynthesisOption used in syntheses.
      * 
      * @return the synthesis option
      */
-    public static SynthesisOption getSynthesisOption() {
-        return option;
+    public static List<SynthesisOption> getSynthesisOptions() {
+    	return Lists.newArrayList(TRACING_OPTION, EDGE_TRACING_OPTION); 
     }
 }
