@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.List
 import java.util.Map
 import java.util.Set
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -135,7 +137,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 		
 		var i = 0
 		for(assignment : assignments) {
-			assignment.createDependencies(writer, relativeWriter, reader)
+			assignment.createDependencies(writer, relativeWriter, reader, nodeMapping)
 			i++
 			if (i % 250 == 0) {
 				System.out.print(".")
@@ -176,7 +178,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     }   
     
     protected def createDependencies(Assignment assignment, Multimap<ValuedObject, Assignment> writer,
-    	Set<Assignment> relativeWriter, Multimap<ValuedObject, Node> reader
+    	Set<Assignment> relativeWriter, Multimap<ValuedObject, Node> reader, Map<Node, List<Entry>> nodeMapping
     ) {
     	for(VOWriter : writer.get(assignment.valuedObject).filter[ !it.equals(assignment) ]
     	) {
@@ -184,11 +186,15 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
     		)
     		dependency.checkAndSetConfluence
+    		dependency.checkAndSetConcurrency(nodeMapping)
     	}	
     	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
-    		assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
+    		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
+    		dependency.checkAndSetConcurrency(nodeMapping)
     	}	
     }
+    
+
     
 
  

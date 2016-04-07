@@ -33,6 +33,7 @@ import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Fork
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -275,6 +276,10 @@ class SCGCoreExtensions {
     
     def Assignment asAssignment(Node node) {
     	node as Assignment
+    }
+    
+    def Fork asFork(Node node) {
+    	node as Fork
     }
     
 }
