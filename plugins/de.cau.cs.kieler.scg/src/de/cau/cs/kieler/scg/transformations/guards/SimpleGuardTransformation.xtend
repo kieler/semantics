@@ -37,6 +37,9 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * @author ssm
@@ -88,12 +91,6 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     
     @Inject
     extension AnnotationsExtensions
-
-    // -------------------------------------------------------------------------
-    // -- Globals
-    // -------------------------------------------------------------------------
-
-    private static val String ANNOTATION_HOSTCODE = "hostcode" 
     
     // -------------------------------------------------------------------------
     // -- Guard Transformation
@@ -116,9 +113,9 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         scg.setDefaultTrace
         newSCG.trace(scg)
         
-        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
+            newSCG.createStringAnnotation(SCGAnnotations.HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
         val schedulingBlockCache = scg.createSchedulingBlockCache
@@ -132,6 +129,15 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		GAMap.put(guard, it)
         		VAMap.put(it.valuedObject, it)
         	]
+        }
+        
+        // Create sbHeadNodes
+        for(bb : scg.basicBlocks) {
+        	for(sb : bb.schedulingBlocks) {
+        		val assignment = GAMap.get(sb.guards.head)
+        		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE, "Join")
+        		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE, "Fork")
+        	}
         }
         
         // Copy node dependencies

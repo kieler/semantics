@@ -93,6 +93,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.SCGAnnotations
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -701,6 +702,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
 	                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
 	            }
+	        } else {
+                if (assignment.hasAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE)) {
+                    var sbHeadNodeName = assignment.getStringAnnotationValue(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE)
+                	sbHeadNodeName.createLabel(node).associateWith(assignment).configureOutsideTopLeftNodeLabel(sbHeadNodeName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = "black".color
+ 				}
             }
         ]
     }
