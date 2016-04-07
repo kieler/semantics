@@ -13,37 +13,38 @@
  */
 package de.cau.cs.kieler.scg.features
 
-import de.cau.cs.kieler.kico.features.FeatureGroup
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.scg.SCGraph
 
 /**
- * @author als
+ * SCG FT Guards Feature.
+ * 
+ * @author ssm
+ * @kieler.design 2016-04-07 proposed 
+ * @kieler.rating 2016-04-07 proposed yellow
  *
  */
-class SCGraphGroup extends FeatureGroup {
+class FTGuards extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCGFeatureGroups::SCG_ID
+        return SCGFeatures::FT_GUARDS_ID
     }
 
     override getName() {
-        return SCGFeatureGroups::SCG_NAME
+        return SCGFeatures::FT_GUARDS_NAME
     }
 
-    override getFeatureIds() {
-        newHashSet(
-        	SCGFeatures::BASIC_ID, 
-        	SCGFeatures::DEPENDENCY_ID, 
-        	SCGFeatures::BASICBLOCK_ID, 
-        	SCGFeatures::GUARD_EXPRESSIONS_ID, 
-        	SCGFeatures::GUARDS_ID,
-        	SCGFeatures::FT_GUARDS_ID,
-        	SCGFeatures::SCHEDULING_ID, 
-        	SCGFeatures::DC_SCHEDULING_ID,
-        	SCGFeatures::SEQUENTIALIZE_ID
-        )
+    //-------------------------------------------------------------------------
+    @Inject
+    extension AnnotationsExtensions
+
+    // This method checks, if this feature is contained in a model
+    def isContained(SCGraph scg) {
+        return scg.hasAnnotation(SCGFeatures::FT_GUARDS_ID)
     }
-    
 }

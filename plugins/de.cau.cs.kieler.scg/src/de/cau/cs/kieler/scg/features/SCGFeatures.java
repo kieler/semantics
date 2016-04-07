@@ -37,10 +37,16 @@ public class SCGFeatures {
 
     public final static String GUARDS_ID = "scg.guards";
     public final static String GUARDS_NAME = "Guards";
+
+    public final static String FT_GUARDS_ID = "scg.guards.ft";
+    public final static String FT_GUARDS_NAME = "FT Guards";
     
     public final static String SCHEDULING_ID = "scg.scheduling";
     public final static String SCHEDULING_NAME = "Scheduling";
 
+    public final static String DC_SCHEDULING_ID = "scg.scheduling.dc";
+    public final static String DC_SCHEDULING_NAME = "DC Scheduling";
+    
     public final static String SEQUENTIALIZE_ID = "scg.sequentialize";
     public final static String SEQUENTIALIZE_NAME = "Sequentialize";
     

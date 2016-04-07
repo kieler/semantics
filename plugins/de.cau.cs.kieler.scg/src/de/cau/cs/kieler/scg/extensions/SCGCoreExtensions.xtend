@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Fork
+import com.google.common.collect.ImmutableList
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -61,6 +62,10 @@ class SCGCoreExtensions {
     // -------------------------------------------------------------------------
     // -- Block queries
     // -------------------------------------------------------------------------
+   
+    def <E> ImmutableList<E> immutableCopy(List<E> list) {
+        ImmutableList::copyOf(list) as ImmutableList<E>
+    }   
    
     def boolean hasSchedulingData(SCGraph scg) {
     	!scg.nodes.filter[ !dependencies.filter(ScheduleDependency).empty ].empty
@@ -280,6 +285,10 @@ class SCGCoreExtensions {
     
     def Fork asFork(Node node) {
     	node as Fork
+    }
+    
+    def Node asNode(EObject eObject) {
+    	eObject as Node
     }
     
 }
