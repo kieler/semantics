@@ -1508,7 +1508,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                        it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
 	                        it.addArrowDecorator
 	                    ]
-	                    it.setLayoutOption(LayoutOptions::NO_LAYOUT, true)        			
+	                    if (!isGuardSCG) {
+	                    	it.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                    	} else {
+		            		it.sourcePort = sourceKNode.addHelperPort(it.hashCode.toString, PortSide::SOUTH)
+        		    		it.targetPort = targetKNode.addHelperPort(it.hashCode.toString, PortSide::NORTH)                    		
+                    	}        			
 	        		]
         		}
         	}
