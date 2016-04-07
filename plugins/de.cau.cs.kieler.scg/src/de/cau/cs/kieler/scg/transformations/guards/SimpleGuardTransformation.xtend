@@ -135,24 +135,24 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         }
         
         // Copy node dependencies
-//		for(node : scg.nodes.filter[ dependencies.size > 0]) {
-//			val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject))
-//			for(dependency : node.dependencies) {
-//				var Assignment ta = null
-//				if (node instanceof Assignment) {
-//					ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
-//				} else if (node instanceof Conditional) {
-//					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
-//				}
-//				if (ta != null) {
-//					val targetAssignment = ta
-//					dependency.copy => [
-//						sourceAssignment.dependencies += it
-//						it.target = targetAssignment
-//					]
-//				}
-//			}
-//		}
+		for(node : scg.nodes.filter[ dependencies.size > 0]) {
+			val sourceAssignment = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(node).guards.head.valuedObject))
+			for(dependency : node.dependencies) {
+				var Assignment ta = null
+				if (node instanceof Assignment) {
+					ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject))
+				} else if (node instanceof Conditional) {
+					ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject))
+				}
+				if (ta != null) {
+					val targetAssignment = ta
+					dependency.copy => [
+						sourceAssignment.dependencies += it
+						it.target = targetAssignment
+					]
+				}
+			}
+		}
        
         // Create expression dependencies
         System.out.println("Creating expression dependencies...")

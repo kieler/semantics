@@ -1206,8 +1206,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 		
 		if (dependency instanceof DataDependency) {
 	        if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency.type == DataDependencyType.WRITE_WRITE) return dependency;
-	        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency == DataDependencyType.WRITE_RELATIVEWRITE) return dependency;
-	        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency == DataDependencyType.WRITE_READ) return dependency;
+	        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) return dependency;
+	        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency.type == DataDependencyType.WRITE_READ) return dependency;
         }
 
         // Retrieve node information.

@@ -158,13 +158,11 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 					writer.put(node.valuedObject, node)
 					node.expression.getAllReferences.forEach[
 						reader.put(it.valuedObject, node)
-						if (it.valuedObject.equals(valuedObject)) {
+						if (it.valuedObject.equals(node.valuedObject)) {
 							relativeWriter += node
 						}
 					]
 					if (node.operator != AssignOperator::ASSIGN) {
-						reader.put(node.valuedObject, node)
-					} else {
 						relativeWriter += node
 					}
 				}
@@ -182,13 +180,16 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     ) {
     	for(VOWriter : writer.get(assignment.valuedObject).filter[ !it.equals(assignment) ]
     	) {
-    		assignment.createDataDependency(VOWriter, 
+    		val dependency = assignment.createDataDependency(VOWriter, 
     			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
     		)
+    		dependency.checkAndSetConfluence
     	}	
     	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
     		assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     	}	
     }
+    
+
  
 }

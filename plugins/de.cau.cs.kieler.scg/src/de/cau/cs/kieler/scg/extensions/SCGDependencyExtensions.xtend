@@ -22,6 +22,9 @@ import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.DataDependencyType
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -44,6 +47,12 @@ import de.cau.cs.kieler.scg.DataDependencyType
  * @kieler.rating 2016-02-24 proposed yellow
  */
 class SCGDependencyExtensions { 
+	
+	@Inject
+	extension SCGCoreExtensions
+	
+	@Inject
+	extension KExpressionsValueExtensions
 	
 	 public def DataDependency createDataDependency(DataDependencyType type) {
 	 	ScgFactory::eINSTANCE.createDataDependency => [ 
@@ -84,6 +93,20 @@ class SCGDependencyExtensions {
     		source.dependencies += it
     		it.target = target
     	]
+    }
+    
+    public def DataDependency checkAndSetConfluence(DataDependency dependency) {
+    	val sourceNode = dependency.eContainer as Node
+    	val targetNode = dependency.target
+    	dependency.confluent = false
+    	if (sourceNode instanceof Assignment && targetNode instanceof Assignment) {
+    		val sourceExpression = sourceNode.asAssignment.expression
+    		val targetExpression = targetNode.asAssignment.expression
+    		if (sourceExpression.isSameValue(targetExpression)) {
+    			dependency.confluent = true
+    		}
+    	}
+    	dependency
     }
 	
 }
