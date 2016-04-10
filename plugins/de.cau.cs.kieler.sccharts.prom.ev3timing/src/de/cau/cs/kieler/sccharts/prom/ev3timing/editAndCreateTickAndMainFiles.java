@@ -40,18 +40,13 @@ public class editAndCreateTickAndMainFiles {
 
 		String newline = System.lineSeparator();
 
+		int indexOfTick;
 		// Load generated tickFunction
 
 		File file = new File(path);
 		String tickFile = FileUtils.readFileToString(file);
 
-		// check of TPPs are generated
-		if (!tickFile.contains("TPP(")) {
-			System.err.println("No Timing");
-			tppCount = 0;
-			return;
 
-		}
 		// Check for edited
 		if (tickFile.contains("/* Im edit the generated TickFunction       */")
 				&& tickFile
@@ -60,6 +55,20 @@ public class editAndCreateTickAndMainFiles {
 
 			return;
 		}
+
+		// Mark the Tick File
+		String comment = "/* Im edit the generated TickFunction       */"
+				+ newline + "/* It now ready to timing                   */"
+				+ newline + "#include \"" + fileName + ".h\"" + newline
+				+ newline + newline;
+		// define TPP replacment
+
+		comment += "#define TPP(LABEL) "
+				+ "asm volatile(\"\" ::: \"memory\"); "
+				+ "timingTPP##LABEL = *systemTimer; "
+				+ "asm volatile(\"\" ::: \"memory\") " + newline + newline;
+
+		tickFile = insertString(tickFile, comment, 0);
 
 		// get TPP count
 		if (tppCount == -1) {
@@ -73,9 +82,33 @@ public class editAndCreateTickAndMainFiles {
 			}
 		}
 
+		String start = "void tick(){";
+
+		// find TickIndex
+
+		indexOfTick = tickFile.indexOf(start);
+
+		// Insert StartStamp
+		int indexOfStart = tickFile.indexOf(start) + start.length();
+
+		tickFile = insertString(tickFile, newline + "TPP(Entry);" + newline
+
+		, indexOfStart);
+
+		// Find End of Tick.
+		String end = "return;";
+
+		indexOfTick = tickFile.indexOf(start);
+
+		int offsetOfEnd = tickFile.substring(indexOfTick).lastIndexOf(end);
+
+		// Insert EndStamp
+		tickFile = insertString(tickFile, newline + "TPP(Exit);" + newline,
+				indexOfTick + offsetOfEnd);
+
 		// build Timing Variables
 
-		String timingVars = "unsigned long timingTPPStart, timingTPPEnd";
+		String timingVars = "unsigned long timingTPPEntry, timingTPPExit";
 
 		for (int i = 1; i <= tppCount; i++) {
 			timingVars = timingVars + ", timingTPP" + i;
@@ -85,21 +118,23 @@ public class editAndCreateTickAndMainFiles {
 
 		// replace calls with known wcet and insert callcounter
 
-		String start = "void tick(){";
 
-		int indexOfTick = tickFile.indexOf(start);
+		indexOfTick = tickFile.indexOf(start);
 
 		for (Entry<String, String> e : FunctionWCETList) {
 
 			while (tickFile.substring(indexOfTick).contains(e.getKey() + "(")) {
+
 				int tppIndex = tickFile.indexOf(
 						"TPP(",
-						(tickFile.substring(indexOfTick).indexOf(e.getKey()
-								+ "("))
-								+ indexOfTick) + 4;
+						(tickFile.substring(indexOfTick).indexOf(
+								e.getKey() + "(") + indexOfTick))
+						 + 4;
 
-				int i = Integer.parseInt(tickFile.substring(tppIndex,
-						tickFile.indexOf(");", tppIndex)));
+				System.err.println(tickFile.substring(tppIndex));
+
+				String i = tickFile.substring(tppIndex,
+						tickFile.indexOf(");", tppIndex));
 
 				tickFile = tickFile.replaceFirst(e.getKey() + "\\((.*?\\);)",
 						"asm volatile(\"\" ::: \"memory\");  " + e.getKey()
@@ -135,11 +170,11 @@ public class editAndCreateTickAndMainFiles {
 			int size = stateList.size();
 			int setCounter = 0;
 
-			for (int i = 0; i < size * size - 1; i++) {
+			for (int i = 0; i < (int)Math.pow(2,size); i++) {
 				List<Map.Entry<String, String>> valueList = new ArrayList<>();
 				int counterCopy = setCounter;
 				for (int j = 0; j < size; j++) {
-
+					System.err.println((int)Math.pow(2,size) + "  k  " + i);
 					valueList.add(new AbstractMap.SimpleEntry<>(stateList
 							.get(j), Integer.toString(counterCopy % 2)));
 					counterCopy = counterCopy / 2;
@@ -174,36 +209,6 @@ public class editAndCreateTickAndMainFiles {
 
 		tickFile = insertString(tickFile, newline + timingSetFunctions
 				+ newline, indexOfSetFunction);
-
-		// find TickIndex
-
-		indexOfTick = tickFile.indexOf(start);
-
-		// Insert StartStamp
-		int indexOfStart = tickFile.indexOf(start) + start.length();
-
-		tickFile = insertString(tickFile, newline + "TPP(Start);" + newline
-
-		, indexOfStart);
-
-		// Find End of Tick.
-		String end = "return;";
-
-		indexOfTick = tickFile.indexOf(start);
-
-		int offsetOfEnd = tickFile.substring(indexOfTick).lastIndexOf(end);
-
-		// Insert EndStamp
-		tickFile = insertString(tickFile, newline + "TPP(End);" + newline,
-				indexOfTick + offsetOfEnd);
-
-		// Mark the Tick File
-		String comment = "/* Im edit the generated TickFunction       */"
-				+ newline + "/* It now ready to timing                   */"
-				+ newline + "#include \"" + fileName + ".h\"" + newline
-				+ newline + newline;
-
-		tickFile = insertString(tickFile, comment, 0);
 
 		FileUtils.write(file, tickFile);
 
@@ -383,12 +388,12 @@ public class editAndCreateTickAndMainFiles {
 			initResults += "," + e.getKey();
 		}
 
-		initResults += ",TPP(start)";
+		initResults += ",TPP(Entry)";
 
 		for (int i = 1; i <= tppCount; i++) {
 			initResults += ",TPP(" + i + ")";
 		}
-		initResults += ",TPP(end)";
+		initResults += ",TPP(Exit)";
 
 		for (String e : FunctionWCETBlockList) {
 			initResults += "," + e;
@@ -481,7 +486,7 @@ public class editAndCreateTickAndMainFiles {
 		openRerun += newline + "while(rerun){";
 		newline += "	";
 		openRerun += newline + newline;
-		
+
 		selectSet += "reset();" + newline;
 
 		for (int i = 0; i < combinationList.size(); i++) {
@@ -510,7 +515,7 @@ public class editAndCreateTickAndMainFiles {
 				+ newline
 				+ "currBufIndex ++;"
 				+ newline
-				+ "bufNeed = sprintf (&buf[currBufIndex],\"%lu\",timingTPPStart);"
+				+ "bufNeed = sprintf (&buf[currBufIndex],\"%lu\",timingTPPEntry);"
 				+ newline + "currBufIndex = currBufIndex + bufNeed;" + newline;
 
 		for (int i = 1; i <= tppCount; i++) {
@@ -526,7 +531,7 @@ public class editAndCreateTickAndMainFiles {
 				+ newline
 				+ "currBufIndex ++;"
 				+ newline
-				+ "bufNeed = sprintf (&buf[currBufIndex],\"%lu\",timingTPPEnd);"
+				+ "bufNeed = sprintf (&buf[currBufIndex],\"%lu\",timingTPPExit);"
 				+ newline + "currBufIndex = currBufIndex + bufNeed;" + newline;
 
 		for (String s : FunctionWCETBlockList) {
@@ -583,33 +588,22 @@ public class editAndCreateTickAndMainFiles {
 
 		String hFile = "";
 
-		// define TPP replacment
-
-		hFile += "#define TPP(LABEL) " + "asm volatile(\"\" ::: \"memory\"); "
-				+ "timingTPP##LABEL = *systemTimer; "
-				+ "asm volatile(\"\" ::: \"memory\") " + newline + newline;
-
-		// insert counterbarrier
-		for (Entry<String, String> e : FunctionWCETList) {
-
-			hFile += "#define " + e.getKey() + "(...) "
-					+ "asm volatile(\"\" ::: \"memory\");" + e.getKey()
-					+ "TimingCounter++;" + "asm volatile(\"\" ::: \"memory\")"
-					+ newline + newline;
-		}
-
 		// insert Timing Vars
 
 		hFile += "extern unsigned long *systemTimer;" + newline
-				+ "extern unsigned long timingTPPStart, timingTPPEnd";
+				+ "extern unsigned long timingTPPEntry, timingTPPExit";
 		for (int i = 1; i <= tppCount; i++) {
 			hFile += ", timimgTPP" + i;
 		}
 
 		// insert scchart vars
+		if (globalVarList.size()>0){
 		hFile += ";" + newline + newline + "extern char "
 				+ globalVarList.get(0).getKey();
 
+		}
+		
+		
 		for (int i = 1; i < globalVarList.size(); i++) {
 			hFile += ", " + globalVarList.get(i).getKey();
 		}
