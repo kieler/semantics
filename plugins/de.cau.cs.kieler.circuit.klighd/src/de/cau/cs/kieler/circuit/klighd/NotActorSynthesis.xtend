@@ -49,41 +49,26 @@ class NotActorSynthesis implements IDrawableActor {
 	override draw(Actor actor) {
 		val KNode node = actor.node
 
-//		node.setNodeSize(20, 20);
-//
-//		node.addRectangle =>
-//			[
-//
-//				it.shadow = "black".color
-//				it.selectionBackground = "green".color;
-//				it.setBackground("white".color);
-//				node.addInsideBottomCenteredNodeLabel("1", KlighdConstants.DEFAULT_FONT_SIZE,
-//					KlighdConstants.DEFAULT_FONT_NAME);
-//
-//			]
-        node.setNodeSize(30,30);
-        
-        node.addRectangle => [
-            it.invisible = true
-            it.addPolygon => [
-            	it.id = "highlightable"
-                it.lineWidth = 1
-                it.lineCap = LineCap.CAP_ROUND;
-                it.lineJoin = LineJoin.JOIN_ROUND;
-                it.background = "white".color;
-                it.selectionBackground = "gray".color;
-                it.addKPosition(LEFT, 0, 0, TOP, 1, 0)
-                it.addKPosition(RIGHT, 2, 0, TOP, 0, 0.5f)
-                it.addKPosition(LEFT, 0, 0, BOTTOM, 1, 0)
-                
-            ];
-            it.addEllipse => [
-            	it.id = "highlightable"
-            	it.setBackground("white".color).lineWidth = 1;
-            	it.setAreaPlacementData.from(LEFT, 24, 0, TOP, 12,0).to(RIGHT, 0, 0, BOTTOM, 12,0);
-            	]
-        ];
-    
+		node.setNodeSize(30, 30);
+		node.addRectangle => [
+			it.invisible = true
+			it.addPolygon => [
+				it.id = "highlightable"
+				it.lineWidth = 1
+				it.lineCap = LineCap.CAP_ROUND;
+				it.lineJoin = LineJoin.JOIN_ROUND;
+				it.background = "white".color;
+				it.selectionBackground = "gray".color;
+				it.addKPosition(LEFT, 0, 0, TOP, 1, 0)
+				it.addKPosition(RIGHT, 2, 0, TOP, 0, 0.5f)
+				it.addKPosition(LEFT, 0, 0, BOTTOM, 1, 0)
+			];
+			it.addEllipse => [
+				it.id = "highlightable"
+				it.setBackground("white".color).lineWidth = 1;
+				it.setAreaPlacementData.from(LEFT, 24, 0, TOP, 12, 0).to(RIGHT, 0, 0, BOTTOM, 12, 0);
+			]
+		];
 		return node;
 	}
 

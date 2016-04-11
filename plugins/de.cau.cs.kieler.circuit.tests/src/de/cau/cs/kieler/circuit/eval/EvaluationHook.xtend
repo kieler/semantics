@@ -24,18 +24,20 @@ class EvaluationHook extends AbstractHook {
 	}
 	
 	override postTransformation(EObject input, Object result, KielerCompilerContext context, ITransformation transformation) {
-		var model = result as EObject
-		val String msg = switch(model) {
-			Actor: "Number of actors: " + model.eAllContents.filter(Actor).size
-			case transformation.id == SCGTransformations::SCC2SCG_ID: {
-				"Number of states: " + input.eAllContents.filter(State).size + "\n" +
-				"Number of scg nodes: " + model.eAllContents.filter(Node).size
+		if (result instanceof EObject) {
+			var model = result as EObject
+			val String msg = switch(model) {
+				Actor: "Number of actors: " + model.eAllContents.filter(Actor).size
+				case transformation.id == SCGTransformations::SCC2SCG_ID: {
+					"Number of states: " + input.eAllContents.filter(State).size + "\n" +
+					"Number of scg nodes: " + model.eAllContents.filter(Node).size
+				}
+				case transformation.id == SCGTransformations::SEQUENTIALIZE_ID: "Number of seq scg nodes: " + model.eAllContents.filter(Node).size
+				case transformation.id == CircuitTransformation::SCG2SSASCG_ID: "Number of ssa scg nodes: " + model.eAllContents.filter(Node).size
 			}
-			case transformation.id == SCGTransformations::SEQUENTIALIZE_ID: "Number of seq scg nodes: " + model.eAllContents.filter(Node).size
-			case transformation.id == CircuitTransformation::SCG2SSASCG_ID: "Number of ssa scg nodes: " + model.eAllContents.filter(Node).size
-		}
-		if (msg != null) {
-			System.out.println(msg)
+			if (msg != null) {
+				System.out.println(msg)
+			}
 		}
 		return result
 	}

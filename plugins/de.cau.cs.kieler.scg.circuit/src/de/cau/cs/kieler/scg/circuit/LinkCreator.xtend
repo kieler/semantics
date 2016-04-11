@@ -9,9 +9,18 @@ import java.util.HashMap
 
 class LinkCreator {
 	
+	/**
+	 * in every region ports with the same name but different types are connected.
+	 * 
+	 * "InConnector" and "OutConnector" are ports located at regions, 
+	 * "Not", "Sel", "In" and "Out" ports are located at gates.
+	 * 
+	 */
 	
 	
-	/*  Creates links for InitializationRegion */
+	// -------------------------------------------------------------------------
+	// --                     Initialization Region                           --
+	// -------------------------------------------------------------------------
 	def initRegion(Actor init) {
 		val ports = init.eAllContents.filter(Port).toList
 		for (p : ports) {
@@ -22,7 +31,6 @@ class LinkCreator {
 						link.source = op
 						link.target = p
 						init.innerLinks.add(link)
-
 					}
 				}
 			} else if (p.type == "Out") {
@@ -35,42 +43,30 @@ class LinkCreator {
 					}
 				}
 			}
-
 		}
-
 	}
 	
 	
-	/*  Creates links for LogicRegion */
+	// -------------------------------------------------------------------------
+	// --                           Logic Region                              --
+	// -------------------------------------------------------------------------
 	def logicRegion(Actor logic, HashMap<String,Integer> inputOutputMap) {
 		var LinkedList<Port> portList = new LinkedList<Port>
-//		portList += logic.ports
 		
 		portList += logic.eAllContents.filter(Port).toList
 		
-		for( port : portList){
-			System.out.println(port.name + " " + port.type)
-		}
-//		for (a : logic.innerActors) {
-//			val ports = a.ports
-//			portList += ports
-//		}
-
 		for (p : portList) {
 			if (p.type == "Out") {
 				portList.forEach [ ip |
 					if ((ip.type.startsWith("In") || ip.type == "Sel" || ip.type == "Not" || ip.type == "OutConnectorLogic") &&
 						p.name == ip.name && p.eContainer != ip.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
-//						System.out.println(p.name + " connect to " + ip.name + " " + ip.type)
 						link.source = p;
 						link.target = ip
 						logic.innerLinks += link
-
 					}
-
 				]
-				//for input output variables: chose highest version to connect to the output
+				//for input output variables: choose highest version to connect to the output
 				for(ioSet : inputOutputMap.entrySet){
 					if(p.name == ioSet.key + "_" + ioSet.value){
 						portList.forEach[outConn |
@@ -105,14 +101,15 @@ class LinkCreator {
 						link.source = inConn;
 						link.target = p;
 						logic.innerLinks += link
-						
 					}
 				]
 			}
 		}
 	}
 	
-	/*  Create links to connect Regions within the circuit */
+	// -------------------------------------------------------------------------
+	// --              Interconnect Regions and In/outputs                    --
+	// -------------------------------------------------------------------------
 	def circuitRegion(Actor circuit) {
 
 		var LinkedList<Port> ports = new LinkedList<Port>
@@ -142,9 +139,7 @@ class LinkCreator {
 						link.source = p;
 						link.target = op
 						circuit.innerLinks += link
-
 					}
-
 				]
 			}
 			if(p.type == "InConnectorInit"){
@@ -157,9 +152,7 @@ class LinkCreator {
 					}
 				]
 			}
-
 		}
-
 	}
 
 	

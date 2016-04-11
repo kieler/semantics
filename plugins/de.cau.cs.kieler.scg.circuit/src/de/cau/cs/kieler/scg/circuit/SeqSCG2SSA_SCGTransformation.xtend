@@ -1,12 +1,21 @@
 package de.cau.cs.kieler.scg.circuit
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
@@ -14,22 +23,7 @@ import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
-import org.eclipse.emf.common.util.EList
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
@@ -51,9 +45,10 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	override getRequiredFeatureIds() {
 		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
 	}
-
-	@Inject
-	extension KEffectsSerializeExtensions
+	
+	// -------------------------------------------------------------------------
+	// --                             INJECTIONS                              --
+	// -------------------------------------------------------------------------
 
 	@Inject
 	extension KExpressionsDeclarationExtensions
@@ -61,35 +56,59 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	@Inject
 	extension KExpressionsValuedObjectExtensions
 	
-	 @Inject
-    extension AnnotationsExtensions
 	
+	// -------------------------------------------------------------------------
+	// --                             LISTS/MAPS                              --
+	// -------------------------------------------------------------------------
+	
+	//stores name of SSAvariable and its latest version number
 	val ssaMap = new HashMap<String, Integer>
+	
+	// stores name of VO and the VO itself. 
+	// The value will be replaced by a new VO each time an SSA variable is created for the key
 	val valuedObjectList = new HashMap<String, ValuedObject>
-	val originalOutputs = new HashMap<String, ValuedObject>
+	
+	//stores name of output variables and how often this variable is written to
 	val outputOccurenceCounter = new HashMap<String, Integer>
+	
+	//stores all input output variables for usage in link creation for the circuit transformation
 	val inputOutputMap = new HashMap<String, Integer>
+
+
+	// -------------------------------------------------------------------------
+	// --                          Transformation Start                       --
+	// -------------------------------------------------------------------------
 
 	def transform(SCGraph scg, KielerCompilerContext context) {
 
 		valuedObjectList.clear
-		originalOutputs.clear
 		outputOccurenceCounter.clear
 		ssaMap.clear
 		inputOutputMap.clear
 
-		// Assuming only one entry node exists in a sequentialized SCG; Make it the starting point of the SSA transformation
+		// Assuming only one entry node exists in a sequentialized SCG; 
+		// Make it the starting point of the SSA transformation
 		val entry = scg.nodes.filter(Entry).head
 
 		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
 		filterRelevantAssignments(scg.nodes.filter(Assignment).toList)
-
+		
+		// Create the SSA SCG. Start with entry node.
 		createSSAs(entry.next.target, scg)
-
+		
+		// Store input output variables for link creation
 		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
-
-		return scg
+		
+		// Return the SSA SCG
+		scg
 	}
+
+
+	// -------------------------------------------------------------------------
+	// --                          Transformation Methods                     --
+	// -------------------------------------------------------------------------
+
+	
 
 	/**
 	 * Follows the control flow of the SCG and checks type of nodes.
@@ -156,7 +175,6 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 				val newNode = ScgFactory::eINSTANCE.createAssignment
 				newNode.valuedObject = thisNode.valuedObject
-//				newNode.createStringAnnotation("conditional else", sourceConditional.condition.valuedObjects.head.name )
 
 				// if this is the first assignment to an Output x, use pre(x) as assignment on the "else"-branch
 				// otherwise just use the latest version.
@@ -212,8 +230,9 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 			val m = ssaMap.get(name)
 			ssaMap.replace(name, m, m + 1)
 
-			// don't create more valuedObjects than needed.. 
-			// if this is the last time an output is target of an assignment, the original output variable shall be the target.
+			// don't create more valuedObjects than necessary.. 
+			// if this is the last time an output is target of an assignment, 
+			// the original output variable shall remain as the target.
 			if ((outputOccurenceCounter.get(name) == null) ||
 				!(ssaMap.get(name) >= (outputOccurenceCounter.get(name)))) {
 
@@ -246,66 +265,12 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	}
 
 	/**
-	 * Gets the list of all Assignment nodes of the SCG and filters assignments to output and input output variables.
-	 * 
-	 * The assignments are stored in different lists:
-	 * 
-	 * - originalOutputs remembers the original output's name and its valuedObject
-	 * - outputOccurenceCounter stores how often an output variable is target of an assignment (highest version number as break condition)
-	 * - ssaMap stores every output variable with counter 0 (counter for SSA variables)
-	 * - valuedObjectList stores the to a name associated valuedObject
-	 * 
+	 * In each Expression replace all SSA relevant variables with their at this moment highest version
+	 * e.g. g1 = O || g3  => g1 = O_1 || g3 if 1 is the highest version of O and O is SSA relevant
 	 */
-	def filterRelevantAssignments(List<Assignment> assignments) {
-		for (a : assignments) {
-			val name = a.valuedObject.name
-			// gX and _condgx are unique
-			//TODO: maybe use a more exact detection if guard
-			//Approximate guard detection 
-			val guardName = name.replace("g","");
-			var guardNumber = -1;
-			try {
-			     guardNumber = Integer.parseInt(guardName);
-			} catch(Exception e){}
-			val isGuard = (name != null) && (name.length > 0) && (guardNumber >= 0);
-			//if (!(name.startsWith("g") || (name.startsWith("_cond")))) {
-            if (!isGuard && !name.startsWith("_cond")) {
-
-				if (!a.valuedObject.isInput) {
-					originalOutputs.put(name, a.valuedObject)
-
-					if (outputOccurenceCounter.containsKey(name)) {
-						val m = outputOccurenceCounter.get(name)
-						outputOccurenceCounter.replace(name, m, m + 1)
-					} else {
-						outputOccurenceCounter.put(name, 1)
-					}
-				}
-				// store highest version of input output variable for the circuit transformation
-				if (a.valuedObject.isInput && a.valuedObject.isOutput) {
-					if (inputOutputMap.containsKey(name)) {
-						val m = inputOutputMap.get(name)
-						inputOutputMap.replace(name, m, m + 1)
-					} else {
-						inputOutputMap.put(name, 1)
-					}
-
-				}
-
-				// insert every SSA variable into ssaMap and set its version to 0
-				if (!ssaMap.containsKey(name)) {
-					ssaMap.put(name, 0);
-					valuedObjectList.put(name, a.valuedObject)
-				}
-			}
-		}
-	}
-
-	/**
-	 * In each Expression replace all SSA variables with their at this moment highest version
-	 */
-	def Expression transformExpressions(Expression expression) {
-
+	def transformExpressions(Expression expression) {
+		
+		//this is used because eAllContents.filter doesn't filter the "root object" itself...
 		if (expression instanceof ValuedObjectReference) {
 			val varName = expression.valuedObject.name
 
@@ -325,7 +290,70 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 		}
 		expression
 	}
+	
+	/**
+	 * Gets the list of all Assignment nodes of the SCG and filters assignments to output and input output variables.
+	 * 
+	 * The assignments are stored in different lists:
+	 * 
+	 * - outputOccurenceCounter stores how often an output variable is target of an assignment (highest version number as break condition)
+	 * - ssaMap stores every output variable with counter 0 (counter for SSA variables)
+	 * - valuedObjectList stores the to a name associated valuedObject... but only for SSA relevant variables
+	 * 
+	 */
+	def filterRelevantAssignments(List<Assignment> assignments) {
+		for (a : assignments) {
+			val name = a.valuedObject.name
+			// gX and _condgx are unique
+			
+			
+			// TODO: maybe use a more exact detection if guard
+			// Approximate guard detection 
+			val guardName = name.replace("g","");
+			var guardNumber = -1;
+			try {
+			     guardNumber = Integer.parseInt(guardName);
+			} catch(Exception e){}
+			val isGuard = (name != null) && (name.length > 0) && (guardNumber >= 0);
+			//if (!(name.startsWith("g") || (name.startsWith("_cond")))) {
+			
+			
+            if (!isGuard && !name.startsWith("_cond")) {
+
+				if (!a.valuedObject.isInput) {
+
+					if (outputOccurenceCounter.containsKey(name)) {
+						val m = outputOccurenceCounter.get(name)
+						outputOccurenceCounter.replace(name, m, m + 1)
+					} else {
+						outputOccurenceCounter.put(name, 1)
+					}
+				}
+				// store highest version of input output variable for the circuit transformation
+				// this information is necessary because the first MUX of an input output variable needs
+				// the original input as "false" port input 
+				if (a.valuedObject.isInput && a.valuedObject.isOutput) {
+					if (inputOutputMap.containsKey(name)) {
+						val m = inputOutputMap.get(name)
+						inputOutputMap.replace(name, m, m + 1)
+					} else {
+						inputOutputMap.put(name, 1)
+					}
+
+				}
+
+				// insert every SSA variable into ssaMap and set its version to 0
+				// store the same variable with VO in valuedObejctList
+				if (!ssaMap.containsKey(name)) {
+					ssaMap.put(name, 0);
+					valuedObjectList.put(name, a.valuedObject)
+				}
+			}
+		}
+	}
 }
+
+
 
 //Prepare data for CircuitTransformation
 class SSAMapData extends AbstractKielerCompilerAuxiliaryData {

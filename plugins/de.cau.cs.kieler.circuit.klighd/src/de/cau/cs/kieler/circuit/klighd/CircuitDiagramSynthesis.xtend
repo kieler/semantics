@@ -1,52 +1,31 @@
 package de.cau.cs.kieler.circuit.klighd
 
 import de.cau.cs.kieler.circuit.Actor
+import de.cau.cs.kieler.circuit.Link
+import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.krendering.LineCap
 import de.cau.cs.kieler.core.krendering.LineJoin
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.EdgeRouting
+import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kiml.options.HierarchyHandling
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.PortConstraints
+import de.cau.cs.kieler.kiml.options.PortLabelPlacement
 import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
-import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.circuit.CircuitFactory
-import de.cau.cs.kieler.core.krendering.LineCap
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
-import de.cau.cs.kieler.kiml.options.PortLabelPlacement
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.kiml.options.SizeConstraint
-import java.util.EnumSet
-import de.cau.cs.kieler.circuit.Link
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.kiml.options.EdgeType
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.core.krendering.KForeground
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.kgraph.KPort
-import de.cau.cs.kieler.kiml.options.HierarchyHandling
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
-import de.cau.cs.kieler.kiml.options.GraphFeature;
-import de.cau.cs.kieler.kiml.options.HierarchyHandling;
-import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.kiml.LayoutOptionData
 
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
@@ -64,11 +43,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 	// -------------------------------------------------------------------------
 	// -- KlighD Options
 	// -------------------------------------------------------------------------
-	/** Show Assignment Regions */
-	private static val SynthesisOption SHOW_ASSIGNMENT = SynthesisOption::createCheckOption("Show Assignment Regions",
-		false);
-	/** Show Not-Gates */
-	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
+	
+	//TODO: 
+//	/** Show Assignment Regions */
+//	private static val SynthesisOption SHOW_ASSIGNMENT = SynthesisOption::createCheckOption("Show Assignment Regions",
+//		false);
+//	/** Show Not-Gates */
+//	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
 
 	/** Show Tick */
 	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false);
@@ -96,7 +77,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			SHOW_TICK,
 			SHOW_RESET,
 			SHOW_ALL_REGIONS,
-			SynthesisOption::createSeparator("Node Placement"),
+			SynthesisOption::createSeparator("Layout"),
 			LAYOUT
 		)
 	}
@@ -114,19 +95,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			logic.transformActor(rootLogic);
 			return rootLogic;
-			
 			}
-		
-	}
-	
-	protected static val String HIGHLIGHTING_MARKER = new String
-	
+	}	
 
-	// create a KNode for an Actor
+	// -------------------------------------------------------------------------
+	// --                     Transform Actor to KNode                        --
+	// -------------------------------------------------------------------------
+
 	def void transformActor(Actor actor, KNode parent) {
-		// draw actors and attach them to parent
-		val actorNode = actorSynthesis.transform(actor) // actor.createNode().associateWith(actor)
 		
+		// draw KNode gates and attach them to parent
+		val actorNode = actorSynthesis.transform(actor) 
 		actorNode.associateWith(actor)
 		parent.children += actorNode
 
@@ -134,31 +113,40 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
-//		actorNode.setLayoutOption(LayoutOptions.EDGE_ROUTING, EdgeRouting.ORTHOGONAL);
 		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
-		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE);
+		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
+		actorNode.setLayoutOption(LayoutOptions.PORT_SPACING, 20.0f)
+		actorNode.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
 		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT);
-		
+				
 		if(LAYOUT.objectValue == "Brandes Koepf"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);}
 		if(LAYOUT.objectValue == "Linear Segments"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);}
 		if(LAYOUT.objectValue == "Network Simplex"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
 		if(LAYOUT.objectValue == "Simple"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
 		
-
-		// add ports to actor
+		
+		// ------------------------------------------------------------------------
+		// --                     Add KPorts to KNode                            --
+		// ------------------------------------------------------------------------
+		//Layout options for ports
+		
+		
 		for (port : actor.ports) {
-			val isAtomic = (actor.innerActors.length == 0)
-			val isNotGate = (actor.type == "NOT")
 			val kPort = port.port.associateWith(port)
 			actorNode.ports += kPort => [
 				it.associateWith(port)
-				// it.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_RATIO)
-				if (!isAtomic) {
-					it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
+				if (!atomicActor) {
+				//TODO: FIX THIS _GO, g0 stuff...!
+					if(port.name == "g0"){it.addInsidePortLabel("_GO", 8, KlighdConstants.DEFAULT_FONT_NAME)}//.associateWith(port)
+					else{it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME)}//.associateWith(port)
 				}
-
+				
+				// --------------------------------------------------------------
+				// --   Input ports: are placed on the left side of actors     --
+				// --------------------------------------------------------------
 				if (port.type.startsWith("In")) {
-
+					
+					// ports for the tick function are marked with triangle 
 					if (port.name == "Tick") { // /TODO: still not working ... place Tick ports at fixed position
 						it.setPortSize(0, 0)
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
@@ -172,64 +160,78 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 							it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
 							it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
 						]
-					} else {
+					} 
+					// all other input ports have no special design
+					else {
 						it.setPortSize(5, 2);
 						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
 						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 					}
-
+					
+					// "In_1" and "In_0" are MUX input ports. They have a specified order to ensure the flap in simulation working correctly.
 					if (port.type == "In_1") {
 						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-						it.addInsidePortLabel("1", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
 						it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
 					} else if (port.type == "In_0") {
 						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-//						it.addInsidePortLabel("Sel(0)", 5, KlighdConstants.DEFAULT_FONT_NAME).associateWith(port)
 						it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
 					}
 
-				} else if (port.type.startsWith("Out")) {
+				} 
+				// --------------------------------------------------------------
+				// --  Output ports: are placed on the right side of actors    --
+				// --------------------------------------------------------------
+				else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					if (port.outgoingLinks.length == 0) {
-						it.addEllipse.setBackground("red".color).lineWidth = 0;
+					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f) 
+					if (port.outgoingLinks.length == 0) {// mark unnecessary nodes in circuit...
+						it.addEllipse.setBackground("red".color).lineWidth = 0; 
 						it.setPortSize(6, 6);
 					} else {
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
 						it.setPortSize(5, 2);
 					}
 
-				} else if (port.type.startsWith("Sel")) {
+				} 
+				// --------------------------------------------------------------
+				// --   Selection ports: are placed at the bottom of actors    --
+				// --------------------------------------------------------------	
+				else if (port.type.startsWith("Sel")) {
 					it.setPortSize(2, 5);
 					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
 					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
 					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
 
-				} else if (port.type.startsWith("Not")) {
-					if (isNotGate) {
-						it.setPortSize(5, 2);
-						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-					} else {
-						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
-						it.setPortSize(6, 6);
-						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-						it.addEllipse.setBackground("white".color).lineWidth = 1;
-
-					}
-
-				}
+				} 
+				
+//				else if (port.type.startsWith("Not")) {
+//					if (actor.type == "NOT") {
+//						it.setPortSize(5, 2);
+//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+//						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+//						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+//					} else {
+//						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
+//						it.setPortSize(6, 6);
+//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+//						it.addEllipse.setBackground("white".color).lineWidth = 1;
+//					}
+//
+//				}
 			]
 		}
 
-		// create all inner actors 
+		// ------------------------------------------------------------------------
+		// --              Create all inner actors of circuit                    --
+		// ------------------------------------------------------------------------
 		actor.innerActors.forEach [
 			it.transformActor(actorNode);
 		]
 
-		// draw edges for links
+		// ------------------------------------------------------------------------
+		// --              Create KEdges for Links                               --
+		// ------------------------------------------------------------------------
 		actor.innerLinks.forEach [ l |
 			if ((SHOW_TICK.booleanValue) && (SHOW_RESET.booleanValue)) {
 				createLink(l)
@@ -243,69 +245,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				if (!(s.name == "Tick")) {
 					createLink(l)
 				}
-
 			} else if (!SHOW_RESET.booleanValue) {
 				val s = l.source as Port
 				if (!(s.name == "Reset_pre")) {
 					createLink(l)
 				}
-
 			}
-
 		]
-
-		for (p : actor.ports) {
-			if (p.outgoingLinks == null) {
-				actorNode.addEllipse => [
-					it.setBackground("red".color).lineWidth = 1.5f;
-					it.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 6, 0, BOTTOM, 11, 0);
-
-				]
-
-			}
-		}
-
-		if (actor.name == "Circuit Initialization") {
-			actorNode.setLayoutOption(KlighdProperties::EXPAND, false)
-		}
-
-
-		if (!(SHOW_ALL_REGIONS.booleanValue)) {
-			if (actor.name == "Program Logic") {
-				actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
-				actorNode.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
-				
-
-			}
-		}
-		
-//		createKAction() => [			
-//			it.actionId = HIGHLIGHTING_MARKER
-//			val ports = actorNode.ports
-//			for(p : ports){										
-//				for(e : p.edges){					
-//					if(e.targetPort == p){
-//						System.out.println(actor.name)
-//					val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-//					style.setColor(Colors::RED)
-//					e.KRendering.styles.add(style)
-//					
-//					}
-//				}
-//			}
-//			
-//			
-//			
-//		]
-//		if(atomicActor){
-//			actorNode.KRendering.addSingleClickAction(HIGHLIGHTING_MARKER)
-//		}
-
 	}
 	
 
 	def createLink(Link link) {
-
 		createEdge().associateWith(link) => [
 			switch (link.source) {
 				Actor:
@@ -315,7 +265,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.sourcePort = link.source.port
 				}
 			}
-
 			switch (link.target) {
 				Actor:
 					it.target = link.target.node
@@ -326,6 +275,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			}
 			it.addRoundedBendsPolyline(3,1).addJunctionPointDecorator;
 			
+			// this is necessary because otherwise ports are not placed correctly
+			// e.g. A in ABO.. 
 			if (it.sourcePort.node == it.targetPort.node) {
 				it.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
 			}
