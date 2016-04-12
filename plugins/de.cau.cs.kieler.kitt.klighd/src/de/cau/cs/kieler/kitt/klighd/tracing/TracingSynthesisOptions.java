@@ -56,9 +56,9 @@ public final class TracingSynthesisOptions {
             case NO_TRACING:
                 return "No Tracing";
             case MODEL_TRACING:
-                return "Model Tracing";
+                return "Model Tracing (All)";
             case ELEMENT_TRACING:
-                return "Element Tracing";
+                return "Element Tracing (Selection)";
             default:
                 return null;
             }
@@ -103,7 +103,7 @@ public final class TracingSynthesisOptions {
     
 	/** Global tracing visualization synthesis option */
 	public static final SynthesisOption EDGE_TRACING_OPTION = SynthesisOption
-			.createCheckOption("Show tracing edges between model edges", false);
+			.createCheckOption("Show tracing of model edges", false);
 
     /**
      * Returns the static SynthesisOption used in syntheses.
