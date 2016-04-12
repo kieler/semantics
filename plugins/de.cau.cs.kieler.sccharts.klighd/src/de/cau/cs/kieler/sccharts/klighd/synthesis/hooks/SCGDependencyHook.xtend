@@ -170,16 +170,16 @@ class SCGDependencyHook extends SynthesisActionHook {
 	override finish(Scope model, KNode rootNode) {
 		if (SHOW_SCG_DEPENDENCIES.booleanValue) {
 			rootNode.showDependencies(model);
-			val contextViewer = usedContext.getViewer().getContextViewer();
+			val contextViewer = usedContext.getViewer()?.getContextViewer();
 			if (SHOW_SELECTED_DEPENDENCIES.booleanValue) {
 				rootNode.hideDependencies
-				contextViewer.addSelectionChangedListener(selectionListener);
+				contextViewer?.addSelectionChangedListener(selectionListener);
             } else {
-                contextViewer.removeSelectionChangedListener(selectionListener);
+                contextViewer?.removeSelectionChangedListener(selectionListener);
 			}
 		} else {
-			val contextViewer = usedContext.getViewer().getContextViewer();
-            contextViewer.removeSelectionChangedListener(selectionListener);
+			val contextViewer = usedContext.getViewer()?.getContextViewer();
+            contextViewer?.removeSelectionChangedListener(selectionListener);
 		}
 	}
 
