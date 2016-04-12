@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
@@ -45,33 +44,22 @@ import com.google.common.collect.HashMultimap;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
-import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KBackground;
-import de.cau.cs.kieler.core.krendering.KContainerRendering;
 import de.cau.cs.kieler.core.krendering.KLineWidth;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
-import de.cau.cs.kieler.kico.KiCoProperties;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
-import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
-import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
@@ -86,12 +74,6 @@ import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
  *
  */
 public class TimingAnalysis extends Job {
-
-    /**
-     * Stores the original input SCChart.
-     */
-    public static final IProperty<State> INPUT_SCCHART = new Property<State>(
-            "de.cau.cs.kieler.timing.input.scchart", null);
 
     public static final boolean DEBUG = false;
     public static final boolean DEBUG_VERBOSE = false;
@@ -157,11 +139,7 @@ public class TimingAnalysis extends Job {
     private TimingValueRepresentation rep;
     private boolean highlight;
 
-    /*
-     * Private Constructor. This class is not meant to be instantiated other than by the static
-     * startAnalysis method.
-     */
-    private TimingAnalysis(State rootState,
+    protected TimingAnalysis(State rootState,
             HashMultimap<Region, WeakReference<KText>> regionLabels, Region scchartDummyRegion,
             Resource resource, HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
             boolean highlight, TimingValueRepresentation rep) {
@@ -174,73 +152,6 @@ public class TimingAnalysis extends Job {
         this.regionRectangles = regionRectangles;
         this.highlight = highlight;
         this.rep = rep;
-    }
-
-    public static void startAnalysis(State rootState, KNode rootNode, ViewContext viewContext,
-            boolean highlight, TimingValueRepresentation rep) {
-        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
-        // the SCChart itself not to a Region of the SCChart (they cannot be attributed to the
-        // outermost
-        // Region in the root state, because there may be several of those). So we use a dummy
-        // region to represent the SCChart in Timing Analysis.
-        Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
-        scchartDummyRegion.setId("SCChartDummyRegion");
-
-        Resource resource = null;
-        KielerCompilerContext context = viewContext.getProperty(KiCoProperties.COMPILATION_CONTEXT);
-        if (context != null) {
-            resource = context.getMainResource();
-        } else {
-            resource = rootState.eResource();
-        }
-
-        // Step 0: (Preprocessing)
-        // Add timing labels (while still in synthesis run)
-
-        // Hashmap contains weak references, thus the KGraph can be deleted completely while
-        // timing analysis is running
-
-        HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
-        HashMultimap<Region, WeakReference<KRectangle>> regionRectangles = HashMultimap.create();
-        Iterator<EObject> graphIter =
-                ModelingUtil.eAllContentsOfType2(rootNode, KNode.class, KContainerRendering.class,
-                        KRectangle.class);
-        while (graphIter.hasNext()) {
-            EObject eObj = graphIter.next();
-            if (eObj instanceof KRectangle) {
-                KRectangle rect = (KRectangle) eObj;
-                Object sourceElem = rect.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
-                if (sourceElem instanceof Region) {
-                    KText text = KRenderingFactory.eINSTANCE.createKText();
-                    if (REGION_TIMING) {
-                        text.setText("???/???");
-                    }
-                    renderingExtensions.setFontSize(text, 20);
-                    renderingExtensions.setForegroundColor(text, 255, 0, 0);
-                    renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
-                            0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
-                            VerticalAlignment.TOP, 5, 5, 0, 0);
-                    rect.getChildren().add(text);
-                    timingLabels.put((Region) sourceElem, new WeakReference<KText>(text));
-                    regionRectangles.put((Region) sourceElem, new WeakReference<KRectangle>(rect));
-                }
-            }
-        }
-        KRectangle rectangle =
-                (KRectangle) rootNode.getChildren().get(0).getData(KRoundedRectangle.class)
-                        .getChildren().get(0);
-        KText text = KRenderingFactory.eINSTANCE.createKText();
-        text.setText("???");
-        renderingExtensions.setFontSize(text, 24);
-        renderingExtensions.setForegroundColor(text, 255, 0, 0);
-        renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
-                renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5,
-                5, 0, 0);
-        rectangle.getChildren().add(text);
-        timingLabels.put(null, new WeakReference<KText>(text));
-        // start analysis job
-        new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles,
-                highlight, rep).schedule();
     }
 
     /**
@@ -264,7 +175,7 @@ public class TimingAnalysis extends Job {
                         + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp",
                         scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
-        context.setProperty(INPUT_SCCHART, scchart);
+        context.setProperty(SCGTransformation.ENABLE_SFR, false);
         context.setAdvancedSelect(true);
         CompilationResult compilationResult = KielerCompiler.compile(context);
 

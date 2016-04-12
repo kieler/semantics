@@ -44,5 +44,11 @@
             class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPTransformation">
       </productionTransformationClass>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.klighd.hooks">
+      <hook
+            class="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysisHook">
+      </hook>
+   </extension>
 
 </plugin>

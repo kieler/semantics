@@ -50,6 +50,7 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource;
+import de.cau.cs.kieler.kico.KiCoProperties
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -107,7 +108,6 @@ class TTPTransformation extends AbstractProductionTransformation
         var HashMap<Node, Region> nodeRegionMapping = null
         var mappingSize = 0 as int
         var Multimap<Object, Object> mapping = null
-        var State scchart = null
         var Tracing tracing = null
         var List<Tracing> tracings = null
         var CompilationResult compilationResult = null
@@ -127,13 +127,14 @@ class TTPTransformation extends AbstractProductionTransformation
             }
 
             // Analyse tracing relation into a node to region mapping
-            scchart = context.getProperty(TimingAnalysis.INPUT_SCCHART)
-            if (scchart == null)
+            val input = context.getProperty(KiCoProperties.RAW_INPUT_MODEL)
+            if (!(input instanceof State))
             {
                 throw new KielerCompilerException(TimingAnalysisTransformations::TTP_ID,
                     TimingAnalysisTransformations::TTP_ID, "TPP Transformation was not successful./n" +
                         "The original SCChart was not determined.")
-                    }
+            }
+            val scchart = input as State
                     mapping = tracing.getMapping(scg, scchart);
                     mappingSize = mapping.keySet().size();
                     nodeRegionMapping = new HashMap<Node, Region>(mappingSize);
@@ -198,7 +199,7 @@ class TTPTransformation extends AbstractProductionTransformation
                         compilationResult.addAuxiliaryData(tppInformation);
 
                         // Mark scg with feature
-                        scg.addAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID, "")
+                        scg.createStringAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID, "")
                         return scg
                     }
 
