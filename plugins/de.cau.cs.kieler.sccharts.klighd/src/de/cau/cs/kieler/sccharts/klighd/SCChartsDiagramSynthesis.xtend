@@ -380,7 +380,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 ];
                 if (r.empty || !r.label.nullOrEmpty) {
 //                if (!r.allContainedStates.nullOrEmpty) {
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
             ];
             node.addRectangle() => [
@@ -404,7 +404,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.suppressSelectability
                 ];
                 if (r.empty) {
-                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 20, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
         ]

@@ -105,7 +105,12 @@ public class TimingAnalysis extends Job {
     /**
      * Megahertz for which the the milliseconds are calculated from the processor cycles.
      */
-    private static int MEGAHERTZ = 200;
+    private static int MEGAHERTZ = 80;
+    
+    /**
+     * Number of digits behind the decimal point in the display of milliseconds
+     */
+    private static int DIGITS = 0;
 
     /**
      * Enumeration for the possible representations of timing values in the interactive timing
@@ -210,7 +215,7 @@ public class TimingAnalysis extends Job {
                     if (REGION_TIMING) {
                         text.setText("???/???");
                     }
-                    renderingExtensions.setFontSize(text, 10);
+                    renderingExtensions.setFontSize(text, 20);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
@@ -226,7 +231,7 @@ public class TimingAnalysis extends Job {
                         .getChildren().get(0);
         KText text = KRenderingFactory.eINSTANCE.createKText();
         text.setText("???");
-        renderingExtensions.setFontSize(text, 20);
+        renderingExtensions.setFontSize(text, 24);
         renderingExtensions.setForegroundColor(text, 255, 0, 0);
         renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
                 renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5,
@@ -517,7 +522,7 @@ public class TimingAnalysis extends Job {
                         }
                         // If the region belongs to the WCET path, enlarge numbers
                         if (wcpRegions.contains(region)) {
-                            renderingExtensions.setFontSize(label, 18);
+                            renderingExtensions.setFontSize(label, 24);
                         }
                     }
                     // If the region belongs to the WCET path, highlight, if requested by user
@@ -675,7 +680,7 @@ public class TimingAnalysis extends Job {
                 if (!token.equals("/")) {
                     double cycles = Double.parseDouble(token);
                     double timeInMillisecs = (cycles / (MEGAHERTZ * 1000.0));
-                    newTimingResult += (String.format("%.5f", timeInMillisecs));
+                    newTimingResult += (String.format("%."+DIGITS+"f", timeInMillisecs));
                 } else {
                     newTimingResult += (" " + token + " ");
                 }
