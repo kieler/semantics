@@ -24,8 +24,9 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kitt.tracing.Traceable
 
-class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
+class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation implements Traceable {
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --

@@ -59,8 +59,18 @@
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
-            controllerID="de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController"
+            controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.scg.presentation.ScgEditorID">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+            features="scg, codegeneration, s, s.target, circuit"
+            label="Netlist Compilation (SCG)"
+            preferred="s.c, scl.scg"
+            priority="100">
       </editor>
    </extension>
 
