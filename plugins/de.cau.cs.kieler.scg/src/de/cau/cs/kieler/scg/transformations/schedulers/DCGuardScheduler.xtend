@@ -11,6 +11,7 @@ import de.cau.cs.kieler.scg.GuardDependency
 import java.util.LinkedHashSet
 import de.cau.cs.kieler.scg.Node
 import java.util.Set
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * @author ssm
@@ -43,6 +44,9 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     // -- Injections 
     // -------------------------------------------------------------------------
     
+    @Inject
+    extension SCGCoreExtensions
+    	
     @Inject
     extension SCGDependencyExtensions	
     
@@ -89,8 +93,13 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	
     	// Create schedule dependencies for the generated schedule
     	for(schedule : schedules) {
+    		System.out.println("*** NEW SCHEDULE ***")
 	    	for(var i = 0; i < schedule.size-1; i++) {
     			schedule.get(i).createScheduleDependency(schedule.get(i+1))
+    			System.out.println("Scheduling dependency from " + 
+    				schedule.get(i).asAssignment.valuedObject.name + " to " + 
+    				schedule.get(i+1).asAssignment.valuedObject.name
+    			)
     		}
     	}
     	

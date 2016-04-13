@@ -141,11 +141,6 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		// Remove this node from the set and hence mark it as visited.
 		nodesToSchedule -= node
 		val dependencies = node.getSchedulingDependencies.toList
-		System.out.println(node.asAssignment.valuedObject.name)
-		
-		if (node.asAssignment.valuedObject.name.equals("g14")) {
-			System.out.println("g")
-		}
 		
 		// For all relevant dependencies, perform a topological sort if the nodes have not been visited.
 		for(dependency : dependencies) {
@@ -165,6 +160,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		}
 		
 		// Add this node to the schedule.
+		System.out.println(node.asAssignment.valuedObject.name)
 		schedule += node
 	}
 	
