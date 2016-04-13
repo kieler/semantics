@@ -26,7 +26,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico.klighd,
  de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.klighd.ui,
- de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.klighd.kivi
+ de.cau.cs.kieler.klighd.ui.view
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
