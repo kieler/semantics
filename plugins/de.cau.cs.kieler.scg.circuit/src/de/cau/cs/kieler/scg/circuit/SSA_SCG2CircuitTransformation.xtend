@@ -21,8 +21,10 @@ import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
-class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable {
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -75,6 +77,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 		assignmentActor.clear
 		voExpressions.clear
+		
 
 		// this map stores SSA variables of input output variables and their highest version number
 		// only interesting for linkCreator 
@@ -93,6 +96,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		 */
 		val newCircuit = CircuitFactory::eINSTANCE.createActor
 		newCircuit.name = scg.label
+		
+		creationalTransformation(scg, newCircuit)
 
 		val logicRegion = CircuitFactory::eINSTANCE.createActor
 		logicRegion.name = "Program Logic"
@@ -291,6 +296,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			actorRegion.innerActors += actor
 			actorRegion.name = guardname
 			logic.innerActors += actorRegion
+			
+			actorRegion.trace(assignment)
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
 			
 			// the created actor gate gX gets an input port for each subExpression
