@@ -16,12 +16,15 @@ package de.cau.cs.kieler.kico.klighd.internal.model.action;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
+import de.cau.cs.kieler.core.kgraph.KGraphFactory;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 import de.cau.cs.kieler.core.krendering.KPolyline;
 import de.cau.cs.kieler.core.krendering.KRendering;
+import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutDataFactory;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -49,7 +52,8 @@ public class RemovedCollapsedDiagramsAction implements IAction {
 
 		rootNode.getChildren().removeIf(node -> !context.getContextViewer().isExpanded(node));
 		if (!modelChain.isBlankMode()) {
-			for (KNode node : rootNode.getChildren()) {
+			for (int i = 0; i < rootNode.getChildren().size(); i++) {
+				KNode node = rootNode.getChildren().get(i);
 				KContainerRendering container = node.getData(KContainerRendering.class);
 				rendering.setInvisible(container, true);
 				for (KRendering child : container.getChildren()) {
@@ -62,11 +66,19 @@ public class RemovedCollapsedDiagramsAction implements IAction {
 					rendering.setInvisible(line, true);
 					rendering.setInvisible(line.getChildren().get(0), true);
 				}
+				edge = KGraphFactory.eINSTANCE.createKEdge();
+				edge.setSource(node);
+				edge.getData().add(KLayoutDataFactory.eINSTANCE.createKEdgeLayout());
+				KPolyline line = KRenderingFactory.eINSTANCE.createKPolyline();
+				rendering.setInvisible(line, true);
+				edge.getData().add(line);
+				if (i + 1 < rootNode.getChildren().size()) {
+					edge.setTarget(rootNode.getChildren().get(i + 1));
+				}
 			}
 		}
 
 		return ActionResult.createResult(true);
-
 	}
 
 }
