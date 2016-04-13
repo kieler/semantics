@@ -21,7 +21,6 @@ import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.io.InputStream
 import org.apache.commons.io.FileUtils
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -30,6 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Platform
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
@@ -41,8 +41,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
-import org.eclipse.core.variables.VariablesPlugin
-import org.eclipse.core.runtime.QualifiedName
 
 /**op
  * Wizard implementation wich creates a project
@@ -111,6 +109,21 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var DummyPage secondPage
 
+
+
+    /**
+     * The main file that has been created as part of this wizard
+     */
+    private IFile createdMainFile;
+
+    /**
+     * A dummy file in the project that is created and opened only to have the project active in a way
+     * that variables such as ${project_name} can be resolved.
+     */
+    private IFile createdTemporaryFile;
+
+
+
     /**
      * @{inheritDoc}
      */
@@ -137,14 +150,20 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // Continue only if project has been created
         if(newlyCreatedProject != null) {
+            // Select project to resolve variables such as ${project_name}
+            selectProjectForResolvingVariables(newlyCreatedProject)
+            
+            // Create main file. This has to be done before the model file.
+            val isMainFileOk = createMainFile()
             // Create model file
             val isModelFileOk = createModelFile()
-            // Create main file
-            val isMainFileOk = createMainFile()
             // Copy templates to new project
             val isSnippetDirectoryOk = initializeSnippetDirectory()
             // Add some data to properties of new project
             val isProjectPropertiesOk = initializeProjectProperties()
+            
+            // Undo opening the project
+            closeProjectForResolvingVariables(newlyCreatedProject)
             
             // If everything finished successful, the wizard can finish successful
             val isOK = isModelFileOk && isMainFileOk && isSnippetDirectoryOk && isProjectPropertiesOk
@@ -157,6 +176,22 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             return false
         }
+    }
+    
+    private def void selectProjectForResolvingVariables(IProject project) {
+        if(createdTemporaryFile != null) {
+            closeProjectForResolvingVariables(project)
+        }
+        createdTemporaryFile = project.getFile("tmp.txt")
+        createResource(createdTemporaryFile, null)
+        UIUtil.openFileInEditor(createdTemporaryFile)
+    }
+    
+    private def void closeProjectForResolvingVariables(IProject project) {
+        if(createdTemporaryFile != null && createdTemporaryFile.exists) {
+            createdTemporaryFile.delete(false, null)
+        }
+        createdTemporaryFile = null
     }
     
     /**
@@ -188,16 +223,11 @@ class PromProjectWizard extends Wizard implements INewWizard {
             return true
         
         try {
-            // Infere parent directory of file
-            // from main file directory
+            // Infere parent directory of file from main file directory.
+            // Therefore the main file has to be created before the model file. 
             if(Strings.isNullOrEmpty(modelFileDirectory)){
-                modelFileDirectory = ""
-                val env = mainPage.selectedEnvironment
-                if(env.mainFile != ""){
-                    val file = new File(env.mainFile)
-                    val fileDir = file.parent
-                    if(fileDir != null)
-                        modelFileDirectory = fileDir + File.separator
+                if(createdMainFile != null && createdMainFile.exists()){
+                    modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
                 }
             }
             
@@ -220,7 +250,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             val fileHandle = newlyCreatedProject.getFile(modelFileDirectory + modelFileNameWithoutExtension + modelFileExtension)
             createResource(fileHandle, initialContentStream)
             UIUtil.openFileInEditor(fileHandle)
-            
+
             return true
             
         } catch (Exception e) {
@@ -245,7 +275,13 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val env = mainPage.selectedEnvironment
         try {
             if(!Strings.isNullOrEmpty(env.mainFile)){
-                val resolvedMainFilePath = VariablesPlugin.getDefault().stringVariableManager.performStringSubstitution(env.mainFile)
+                var resolvedMainFilePath = ""
+                try {
+                    resolvedMainFilePath = VariablesPlugin.getDefault().stringVariableManager.performStringSubstitution(env.mainFile)
+                } catch (CoreException ce) {
+                    MessageDialog.openError(shell, "Error", ce.message)
+                    return false
+                }
                 
                 // Prepare initial content
                 var InputStream initialContentStream = null
@@ -254,8 +290,8 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 }
                 
                 // Create resource
-                val fileHanlde = newlyCreatedProject.getFile(resolvedMainFilePath)
-                createResource(fileHanlde, initialContentStream)
+                createdMainFile = newlyCreatedProject.getFile(resolvedMainFilePath)
+                createResource(createdMainFile, initialContentStream)
                 
                 // Remember created main file in project properties
                 newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)

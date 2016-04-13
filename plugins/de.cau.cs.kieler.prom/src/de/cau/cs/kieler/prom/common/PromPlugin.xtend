@@ -13,18 +13,16 @@
  */
 package de.cau.cs.kieler.prom.common
 
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.FileInputStream
 import java.io.InputStream
 import java.net.URL
 import java.util.Map
-import org.apache.commons.io.FilenameUtils
 import org.apache.commons.io.IOUtils
 import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
-import org.eclipse.core.variables.VariablesPlugin
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * The activator class controls the plug-in life cycle.

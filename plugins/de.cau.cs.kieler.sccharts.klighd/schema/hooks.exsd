@@ -60,7 +60,7 @@
                   The implementation of the concrete hook handling events in the SCCharts synthesis.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sccharts.klighd.SCChartsSynthesisHook:"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook:"/>
                </appinfo>
             </annotation>
          </attribute>

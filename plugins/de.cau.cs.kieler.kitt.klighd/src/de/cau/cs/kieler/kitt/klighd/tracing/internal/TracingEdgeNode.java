@@ -67,10 +67,12 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     private final EObject source;
     private final boolean sourceIsEdge;
     private PNode sourceNode = null;
+    private boolean ignoreFirstCollapsibleParentForSource = false;
     /** Target */
     private final EObject target;
     private final boolean targetIsEdge;
     private PNode targetNode = null;
+    private boolean ignoreFirstCollapsibleParentForTarget = false;
     /** The node this edge is attached to */
     private final KNode attachNode;
     /** Flag if this PropertyChangeListener is successfully added to all parental child areas */
@@ -106,8 +108,8 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     private void addExpandPropertyChangeListeners() {
         if (!expandPropertyChangeListenersAdded) {
             expandPropertyChangeListenersAdded =
-                    addExpandPropertyChangeListeners(source.eContainer())
-                            && addExpandPropertyChangeListeners(target.eContainer());
+                    addExpandPropertyChangeListeners(source.eContainer(), ignoreFirstCollapsibleParentForSource)
+                            && addExpandPropertyChangeListeners(target.eContainer(), ignoreFirstCollapsibleParentForTarget);
         }
     }
 
@@ -119,8 +121,9 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      *            EObject to add
      * @return success of adding the listeners
      */
-    private boolean addExpandPropertyChangeListeners(final EObject startObject) {
+    private boolean addExpandPropertyChangeListeners(final EObject startObject, boolean ignoreFirstCollapsibleParent) {
         KNode node = getKNode(startObject);
+        boolean ignore = ignoreFirstCollapsibleParent;
         while (node != null) {
             PNode nodeNode = RenderingContextData.get(node).getProperty(REP);
             if (nodeNode == null) {// In case this edge is created before any PNode is created
@@ -128,10 +131,14 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                 return false;
             }
             if (nodeNode instanceof IKNodeNode) {
-                nodeNode.addPropertyChangeListener(IKNodeNode.PROPERTY_EXPANSION, this);
-                if (!((IKNodeNode) nodeNode).isExpanded()) {
-                    collapsedParentalNodes.add((IKNodeNode) nodeNode);
-                }
+            	if (ignore) {
+            		ignore = false;
+            	} else {
+	                nodeNode.addPropertyChangeListener(IKNodeNode.PROPERTY_EXPANSION, this);
+	                if (!((IKNodeNode) nodeNode).isExpanded()) {
+	                    collapsedParentalNodes.add((IKNodeNode) nodeNode);
+	                }
+            	}
             }
             node = node.getParent();
         }
@@ -201,6 +208,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                 if (sourceNode != null) {
                     addToPoint(thePoints[0], sourceNode.getGlobalTranslation());
                 } else {
+                	this.setVisible(false);
                     return;
                 }
 
@@ -211,6 +219,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                 if (targetNode != null) {
                     addToPoint(thePoints[1], targetNode.getGlobalTranslation());
                 } else {
+                	this.setVisible(false);
                     return;
                 }
 
@@ -298,6 +307,28 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     @Override
     public void applyStyles(Styles styles) {
     }
+    
+    /**
+     * If ignore is set to true, the first parent which is collapsible is ignored when searching for collapse parents.
+     */
+    public void setIgnoreFirstCollapsibleParent(boolean ignoreForSource, boolean ignoreForTarget) {
+    	ignoreFirstCollapsibleParentForSource = ignoreForSource;
+    	ignoreFirstCollapsibleParentForTarget = ignoreForTarget;
+    }
+    
+    /**
+     * @return the source
+     */
+    public EObject getSource() {
+		return source;
+	}
+
+    /**
+     * @return the target
+     */
+	public EObject getTarget() {
+		return target;
+	}
 
     /**
      * Returns the PNode representation of the given KGraphElement or KRendering
@@ -351,7 +382,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
         }
     }
 
-    /**
+	/**
      * Added given offset point to given point.
      * 
      * @param point

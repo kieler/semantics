@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.ArrayList
@@ -21,17 +22,20 @@ import java.util.EnumSet
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
+import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
-import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
@@ -43,13 +47,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.jface.viewers.ComboViewer
-import org.eclipse.jface.viewers.ArrayContentProvider
-import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
-import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.core.runtime.IConfigurationElement
-import com.google.common.collect.Lists
-import org.eclipse.core.internal.registry.ConfigurationElement
 
 /** 
  * The tab with the controls to set shell commands which will be executed

@@ -5,7 +5,7 @@ scchart Signals {
   region R1:
   
 	  initial state A
-	  --> B / S;
+	  --> B with / S;
 	  
 	  final state B;
 	  

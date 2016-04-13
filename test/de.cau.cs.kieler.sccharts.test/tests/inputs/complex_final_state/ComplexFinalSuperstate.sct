@@ -6,15 +6,22 @@ scchart ComplexFinalSuperstate {
   
   initial state A {
     
-    initial state A0
-    --> A1 with I1;
+    region R1:
+        initial state A0
+        --> A1 with I1;
     
-    final state A1{
-      initial state A1_1
-      --> A1_2 / O = true;
-       
-      final state A1_2;
-    }--> A0 with I2;
+        final state A1;
+    
+    region R2:
+        initial state A2
+        --> A3;
+    
+        final state A3 {
+          initial state A3_1
+          --> A3_2 with / O = true;
+           
+          final state A3_2;
+        }--> A2 immediate with I2;
     
   }>-> F;
   

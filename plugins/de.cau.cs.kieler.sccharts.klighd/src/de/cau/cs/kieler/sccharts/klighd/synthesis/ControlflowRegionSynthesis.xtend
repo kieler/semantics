@@ -88,6 +88,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             // Expanded
             node.addRegionFigure => [
                 setAsExpandedView
+                associateWith(region)
                 if (region.declarations.empty) {
                     addStatesArea(label.nullOrEmpty);
                 } else {
@@ -108,6 +109,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView
+                associateWith(region)
                 addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             ]
 

@@ -9,7 +9,7 @@ scchart ExitAction {
     --> A1;
 
     state A1
-    --> _Done immediate / O = false;
+    --> _Done immediate with / O = false;
 
     final state _Done;
   }
