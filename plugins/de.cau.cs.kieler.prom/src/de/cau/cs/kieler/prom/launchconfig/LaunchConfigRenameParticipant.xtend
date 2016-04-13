@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -131,10 +132,13 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update the project name of the configuration.
      */
     private def void updateProject(ILaunchConfigurationWorkingCopy wc) {
+        val launchData = KiCoLaunchData.loadFromConfiguration(wc)
+        
         if(project != null) {
             // Rename project
-            if(oldName == wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")){
-                wc.setAttribute(LaunchConfiguration.ATTR_PROJECT, newName)
+            if(oldName == launchData.projectName){
+                launchData.projectName = newName
+                KiCoLaunchData.saveToConfiguration(wc, launchData)
                 wc.doSave()
             }
         }
@@ -144,21 +148,21 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
      * Update the main file and model file paths of the configuration.
      */
     private def void updateFiles(ILaunchConfigurationWorkingCopy wc) {
+        val launchData = KiCoLaunchData.loadFromConfiguration(wc)
+         
         // Only work on files of the launch config's project
-        val projectName = wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-        
-        if(file != null && file.project != null && file.project.name == projectName) {
+        if(file != null && file.project != null && file.project.name == launchData.projectName) {
             // Rename main file
-            if(oldPath == wc.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")){
-                wc.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, newPath)
+            if(oldPath == launchData.mainFile){
+                launchData.mainFile = newPath
+                KiCoLaunchData.saveToConfiguration(wc, launchData)
                 wc.doSave()
             }
             
             // Rename model files
-            val modelFiles = FileCompilationData.loadAllFromConfiguration(wc)
             var changed = false;
             // First change all data objects
-            for(modelFile : modelFiles){
+            for(modelFile : launchData.files){
                 if(oldPath == modelFile.projectRelativePath){
                     modelFile.projectRelativePath = newPath
                     changed = true
@@ -166,7 +170,7 @@ class LaunchConfigRenameParticipant extends RenameParticipant {
             }
             // Flush all changes at once to the working copy
             if(changed){
-                FileCompilationData.saveAllToConfiguration(wc, modelFiles)
+                KiCoLaunchData.saveToConfiguration(wc, launchData)
                 wc.doSave()
             }
         }

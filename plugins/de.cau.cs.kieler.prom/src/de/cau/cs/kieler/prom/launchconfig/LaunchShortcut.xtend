@@ -36,6 +36,7 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 
 /**
  * An implementation for a launch shortcut
@@ -163,19 +164,24 @@ class LaunchShortcut implements ILaunchShortcut {
      * @param config The launch configuration to be initialized
      */
     private def void initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
+        val launchData = new KiCoLaunchData()
+        
         // Set project
-        config.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.name)
+        launchData.projectName = project.name
 
         // Set main file of launch config as main file of project
-        var mainFile = project.getPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER)
-        if (mainFile == null) {
-            mainFile = getMainFileFromDialog()    
+        launchData.mainFile = project.getPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER)
+        if (launchData.mainFile.isNullOrEmpty()) {
+            launchData.mainFile = getMainFileFromDialog()    
         }
-        config.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile)
 
         // Set KiCo target
-        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "s.c")
-        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, ".c")
+        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+        launchData.targetLanguage = "s.c"
+        launchData.targetLanguageFileExtension = ".c"
+        
+        // Flush to configuration 
+        KiCoLaunchData.saveToConfiguration(config, launchData)
 
         // Initialize launch config with environment
         var EnvironmentData env
@@ -282,8 +288,8 @@ class LaunchShortcut implements ILaunchShortcut {
      * @param configuration The configuration to be checked
      */
     private def boolean isGoodMatch(ILaunchConfiguration configuration) {
-        val projectName = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-        return projectName == project.name
+        val launchData = KiCoLaunchData.loadFromConfiguration(configuration)
+        return launchData.projectName == project.name
     }
 }
 

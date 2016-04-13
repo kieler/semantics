@@ -20,6 +20,7 @@ import java.util.Map
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
+import com.google.common.base.Strings
 
 /**
  * Base class for data containers which can be saved and loaded to launch configurations or
@@ -61,8 +62,11 @@ abstract class ConfigurationSerializableData {
     public def void loadAttributesFromMap(Map<String, String> map) {
         val classObject = this.class
         for (f : classObject.declaredFields) {
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                f.set(this, map.get(f.name))
+            if (f.type == String && !Modifier.isStatic(f.modifiers)) {
+                val value = map.get(f.name)
+                val nonNullValue = Strings.nullToEmpty(value)
+                f.set(this, nonNullValue)
+            }
         }
     }
 
@@ -76,8 +80,13 @@ abstract class ConfigurationSerializableData {
         val map = new HashMap<String, String>()
         val classObject = this.class
         for (f : classObject.declaredFields) {
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                map.put(f.name, f.get(this).toString())
+            if (f.type == String && !Modifier.isStatic(f.modifiers)) {
+                val object = f.get(this)
+                if(object != null) {
+                    val value = object.toString()
+                    map.put(f.name, value)
+                }    
+            }
         }
         return map
     }

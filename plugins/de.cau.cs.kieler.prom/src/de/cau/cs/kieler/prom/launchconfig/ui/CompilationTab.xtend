@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
@@ -54,8 +55,8 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  * 
  * @author aas
  */
-class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
-
+class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHolder {
+    
     /**
      * The currently selected data of the list control.
      */
@@ -68,7 +69,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
 
     /**
      * The button which
-     * opens a Resource selection dialog and adds all selected files to the list.
+     * opens a resource selection dialog and adds all selected files to the list.
      */
     private var Button addButton
 
@@ -108,6 +109,14 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
      * The project of this launch configuration.
      */
     private var IProject project
+
+    /**
+     * Constructor
+     */
+    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+        super(tabGroup)
+    }
+
 
     /**
      * {@inheritDoc}
@@ -304,77 +313,70 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
     override getName() {
         return "Compilation"
     }
-
+    
     /**
      * {@inheritDoc}
      */
     override initializeFrom(ILaunchConfiguration configuration) {
-        // Load files to be compiled
-        list.input = FileCompilationData.loadAllFromConfiguration(configuration)
+        super.initializeFrom(configuration)
+        
+        // Update project reference
+        project = LaunchConfiguration.findProject(launchData.projectName)
+        
+        // Set files to be compiled
+        list.input = launchData.files
 
-        // Load target language
+        // Set target language
         if (targetLanguage.input != null) {
-            val loadedTargetLanguage = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, "")
             for (transformation : targetLanguage.input as Set<Transformation>) {
-                if (transformation.id == loadedTargetLanguage) {
+                if (transformation.id == launchData.targetLanguage) {
                     targetLanguage.selection = new StructuredSelection(transformation)
                 }
             }
         }
 
-        targetLanguageFileExtension.text = configuration.getAttribute(
-            LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
+        // Set file extension
+        targetLanguageFileExtension.text = launchData.targetLanguageFileExtension
 
-        // Load target template
-        targetTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, "")
+        // Set target template
+        targetTemplate.text = launchData.targetTemplate
 
-        // Load wrapper code
-        wrapperCodeTemplate.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, "")
-        wrapperCodeSnippets.text = configuration.getAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, "")
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override activated(ILaunchConfigurationWorkingCopy workingCopy) {
-        super.activated(workingCopy)
-
+        // Set wrapper code
+        wrapperCodeTemplate.text = launchData.wrapperCodeTemplate
+        wrapperCodeSnippets.text = launchData.wrapperCodeSnippetDirectory
+        
         // Reset current selection
         currentData = null
 
-        // Update project reference
-        val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-        project = LaunchConfiguration.findProject(projectName)
-
         updateEnabled()
     }
-
+    
     /**
      * {@inheritDoc}
      */
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // Set files to be compiled
-        val datas = list.input as List<FileCompilationData> FileCompilationData.saveAllToConfiguration(configuration, datas)
-
         // Set target language
         val selection = targetLanguage.selection as IStructuredSelection
         if (selection != null) {
             val trans = selection.firstElement as Transformation
             if (trans != null) {
-                configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, trans.id)
+                launchData.targetLanguage = trans.id
             }
         }
 
-        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION,
-            targetLanguageFileExtension.text)
+        // Set file extension
+        launchData.targetLanguageFileExtension = targetLanguageFileExtension.text
 
         // Set target template.
-        configuration.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate.text)
+        launchData.targetTemplate = targetTemplate.text
 
         // Set wrapper code
-        configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate.text)
-        configuration.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippets.text)
+        launchData.wrapperCodeTemplate = wrapperCodeTemplate.text
+        launchData.wrapperCodeSnippetDirectory = wrapperCodeSnippets.text
 
+         // Flush data to configuration
+        KiCoLaunchData.saveToConfiguration(configuration, launchData)
+        
         // Check the user input for consistency
         checkConsistency()
     }
@@ -406,13 +408,7 @@ class CompilationTab extends AbstractLaunchConfigurationTab implements IProjectH
         
         return null
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-    }
-
+    
     /**
      * Enable or disable all controls that work on the currently selected file data.
      * Enable list control iff the project is set correct.

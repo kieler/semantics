@@ -319,7 +319,7 @@ class UIUtil {
         button.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
-                    val rootElement = if (projectHolder == null && projectHolder.project != null)
+                    val rootElement = if (projectHolder != null && projectHolder.project != null)
                             projectHolder.project
                         else
                             ResourcesPlugin.getWorkspace().getRoot()

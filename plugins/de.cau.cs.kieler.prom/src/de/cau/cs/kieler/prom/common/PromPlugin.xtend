@@ -19,7 +19,10 @@ import java.io.InputStream
 import java.net.URL
 import java.util.Map
 import org.apache.commons.io.IOUtils
+import org.eclipse.core.resources.IFolder
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
@@ -126,5 +129,20 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 return inputStream
             }    
         }
+    }
+    
+    /**
+     * Adds a folder of a java project to the build path source folders.
+     * 
+     * @param javaProject The java project
+     * @param sourceFolder The source folder to be added
+     */
+    public static def void addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
+        val root = javaProject.getPackageFragmentRoot(sourceFolder);
+        val oldEntries = javaProject.getRawClasspath();
+        val newEntries = newArrayOfSize(oldEntries.length + 1);
+        System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
+        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
+        javaProject.setRawClasspath(newEntries, null);
     }
 }

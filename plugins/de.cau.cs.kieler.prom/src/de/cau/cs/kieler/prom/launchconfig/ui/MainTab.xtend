@@ -39,6 +39,7 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 
 /** 
  * The tab with the controls for the main information for a KiCo launch.
@@ -46,13 +47,13 @@ import org.eclipse.swt.widgets.Text
  * 
  * @author aas
  */
-class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
+class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHolder {
 
     /**
      * The launch configuration this object is working on.
      */
     private ILaunchConfiguration configuration
-
+    
     /**
      * Combobox with all environments.
      */
@@ -67,6 +68,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Input field for the main file.
      */
     private var Text mainFile
+
+    /**
+     * Constructor
+     */
+    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+        super(tabGroup)
+    }
 
     /** 
      * {@inheritDoc}
@@ -132,7 +140,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         val store = PromPlugin.^default.preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
         
-        
         // Create combobox
         environment = UIUtil.createEnvironmentsCombo(group, environments)
         environment.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -159,23 +166,19 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         button.toolTipText = "Reset this launch configuration to the values of the selected environment"
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
-    override void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    override void initializeFrom(ILaunchConfiguration configuration) {
+    override initializeFrom(ILaunchConfiguration configuration) {
+        super.initializeFrom(configuration)
+        
         this.configuration = configuration
         
-        // Load project
-        project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        // Set project
+        project.text = launchData.projectName
         
-        // Load main file
-        mainFile.text = configuration.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
+        // Set main file
+        mainFile.text = launchData.mainFile
         
         // Load environment
         if (environment.input != null) {
@@ -192,16 +195,19 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // Save project
-        configuration.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.text)
-        
-        // Save main file
-        configuration.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile.text)
-
         // Save environment
         val env = getSelectedEnvironment()
         if (env != null) 
             configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
+            
+        // Set project
+        launchData.projectName = project.text
+        
+        // Set main file
+        launchData.mainFile = mainFile.text
+
+        // Flush to configuration
+        KiCoLaunchData.saveToConfiguration(configuration, launchData)
 
         // Check the user input for consistency
         checkConsistency()

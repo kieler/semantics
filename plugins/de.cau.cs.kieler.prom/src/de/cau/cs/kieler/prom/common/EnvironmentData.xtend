@@ -269,14 +269,16 @@ class EnvironmentData extends ConfigurationSerializableData {
      */
     def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
         config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
-        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE, targetLanguage)
-        config.setAttribute(LaunchConfiguration.ATTR_TARGET_LANGUAGE_FILE_EXTENSION, targetFileExtension)
-        config.setAttribute(LaunchConfiguration.ATTR_TARGET_TEMPLATE, targetTemplate)
-        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_TEMPLATE, wrapperCodeTemplate)
-        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_SNIPPETS, wrapperCodeSnippetsDirectory)
-        config.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, associatedLaunchShortcut)
-        config.setAttribute(LaunchConfiguration.ATTR_WRAPPER_CODE_GENERATOR, wrapperCodeGenerator)
-        
-        CommandData.saveAllToConfiguration(config, commands)    
+
+        val launchData = KiCoLaunchData.loadFromConfiguration(config)
+        launchData.targetLanguage = targetLanguage
+        launchData.targetLanguageFileExtension = targetFileExtension
+        launchData.targetTemplate = targetTemplate
+        launchData.wrapperCodeTemplate = wrapperCodeTemplate
+        launchData.wrapperCodeSnippetDirectory = wrapperCodeSnippetsDirectory
+        launchData.associatedLaunchShortcut = associatedLaunchShortcut
+        launchData.wrapperCodeGenerator = wrapperCodeGenerator
+        launchData.commands = commands
+        KiCoLaunchData.saveToConfiguration(config, launchData)    
     }
 }
