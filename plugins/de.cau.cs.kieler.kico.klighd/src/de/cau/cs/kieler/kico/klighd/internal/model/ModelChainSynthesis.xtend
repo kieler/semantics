@@ -25,14 +25,17 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klighd.DisplayedActionData
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
@@ -41,7 +44,6 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.ui.view.DiagramView
 
 /**
  * Diagram synthesis for a ModelChain.
@@ -77,6 +79,10 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     // -------------------------------------------------------------------------
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(TracingSynthesisOption.synthesisOption);
+    }
+    
+    override public getDisplayedActions() {
+        return newLinkedList(DisplayedActionData.create(RemovedCollapsedDiagramsAction.ID, "Remove collapsed models in model chain"));
     }
 
     override public getDisplayedLayoutOptions() {
