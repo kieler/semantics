@@ -97,6 +97,14 @@ class EnvironmentData extends ConfigurationSerializableData {
     protected String targetTemplate = ""
 
     /**
+     * A path to a directory.
+     * Compiled output will be saved to this path.
+     * If the path is empty, compilation results are saved to the directory of their input files.
+     */
+    @Accessors
+    protected String targetDirectory = ""
+    
+    /**
      * A path to a file used as template for wrapper code generation.
      * Generated wrapper code is inserted in this file.
      */

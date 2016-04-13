@@ -559,10 +559,18 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     private def void initializeNewProject(){
         if (newlyCreatedProject != null) {
+            createBuildDirectory()
+        }
+    }
+    
+    private def void createBuildDirectory() {
+        val env = mainPage.selectedEnvironment
+        val targetDirectory = env.targetDirectory
+        if(!targetDirectory.isNullOrEmpty()) {
             // Create folder for generated files
-            val sourceFolder = newlyCreatedProject.getFolder(LaunchConfiguration.BUILD_DIRECTORY);
+            val sourceFolder = newlyCreatedProject.getFolder(targetDirectory);
             sourceFolder.create(false, true, null);
-
+            
             // Add folder to java class path if it is a java project
             if (newlyCreatedProject.hasNature(JavaCore.NATURE_ID)) {
                 val javaProject = JavaCore.create(newlyCreatedProject);

@@ -30,6 +30,7 @@ import java.io.FileWriter
 import java.io.PrintWriter
 import java.util.List
 import org.apache.commons.io.FilenameUtils
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -45,6 +46,8 @@ import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
@@ -53,6 +56,7 @@ import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
+import org.eclipse.jdt.core.IClasspathEntry
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -79,7 +83,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val COMPILED_CODE_PLACEHOLDER = "kico_code"
 
     /**
-     * The directory in which compiled output of this launch will be saved.
+     * The directory in which compiled output of this launch will be saved per default.
      */
     public static val BUILD_DIRECTORY = "kieler-gen"
 
@@ -96,6 +100,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.prom.launchconfig.main.target.language"
     public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.target.template"
     public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.prom.launchconfig.main.target.file.extension"
+    public static val ATTR_TARGET_DIRECTORY = "de.cau.cs.kieler.prom.launchconfig.main.target.directory"
 
     public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
     public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
@@ -148,6 +153,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private String targetLanguage
     @Accessors
     private String targetTemplate
+    @Accessors
+    private String targetDirectory
     @Accessors
     private String wrapperCodeTemplate
     @Accessors
@@ -215,8 +222,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 getExecuteCommandsJob().schedule()
             }
             
-            // Refresh output directory for files
-            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
+            // Refresh output directory
+            if(!targetDirectory.isNullOrEmpty()) {
+                project.getFolder(targetDirectory).refreshLocal(IResource.DEPTH_INFINITE, monitor)
+            } else {
+                project.refreshLocal(10, monitor)
+            }    
         } else {
             writeToConsole("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
@@ -465,6 +476,18 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         }
     }
 
+    private def String computeBuildDirectory(String projectRelativePath) {
+        if(targetDirectory.isNullOrEmpty()) {
+            if(project.findMember(projectRelativePath) instanceof IFile){
+                return FilenameUtils.getPath(projectRelativePath)
+            } else {
+                return projectRelativePath
+            }
+        } else {
+            return targetDirectory;
+        }
+    }
+
     /**
      * Computes the fully qualified target path for a project relative file path.
      * The target path is in the build directory for kico compiled files and in this directory
@@ -476,23 +499,51 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @return the computed path
      */
     private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
-        // The src directory of a typical java project is not part of the relevant target path.
-        // (Would be more accurate: if the first directory is a java build source folder, remove it)
-        var String projectRelativeRelevantPath;
-        if (projectRelativePath.startsWith("src/") || projectRelativePath.startsWith("src\\"))
-            projectRelativeRelevantPath = projectRelativePath.substring(4)
-        else
-            projectRelativeRelevantPath = projectRelativePath
-
-        // Remove extension
-        val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
-     
-        // Compute target path
-        val projectRelativeTargetPath = BUILD_DIRECTORY + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
+        var String projectRelativeTargetPath;
+        if(targetDirectory.isNullOrEmpty()) {
+            // Compute path such that the target file will be in the same file as the source file.
+            projectRelativeTargetPath = FilenameUtils.getFullPath(projectRelativePath) + FilenameUtils.getBaseName(projectRelativePath) + targetLanguageFileExtension
+        } else {
+            // Compute path in the target directory
+            // such that the directory structure of the original file is retained.
+            var String projectRelativeRelevantPath = projectRelativePath
+            // The source directories of a java project are not part of the relevant target path
+            // because output files will be saved to a java source folder as well.
+            // So we remove the first segment of the path if it is a java source directory.
+            val firstSegment = new Path(projectRelativePath).segment(0);
+            if(!firstSegment.isNullOrEmpty() && project.hasNature(JavaCore.NATURE_ID)) {
+                val javaProject = JavaCore.create(project)
+                if(isJavaSourceDirectory(javaProject, firstSegment)) {
+                    projectRelativeRelevantPath = projectRelativePath.substring(firstSegment.length+1)
+                }
+            }
+            
+            // Remove extension
+            val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
+         
+            // Compute target path
+            projectRelativeTargetPath = targetDirectory + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
+        }
+        
+        // Return either absolute or relative target path
         if(projectRelative)
             return projectRelativeTargetPath
         else
-            return project.location + File.separator + projectRelativeTargetPath
+            return project.location + File.separator + projectRelativeTargetPath    
+    }
+
+    private def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
+        val classPathEntries = javaProject.getRawClasspath();
+        for(entry : classPathEntries) {
+            println(entry.entryKind+","+entry.path.toOSString())
+            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
+                val sourceFolderName = FilenameUtils.getBaseName(entry.path.toOSString())
+                if(sourceFolderName.equals(directory)) {
+                    return true
+                }
+            } 
+        }
+        return false
     }
 
     /**
@@ -508,16 +559,16 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
         if (targetTemplate != "") {
             // Use template
-            val reader = new FileReader(
-                new File(project.location + File.separator + variableManager.performStringSubstitution(targetTemplate)))
+            val targetTemplateLocation = project.location + File.separator + variableManager.performStringSubstitution(targetTemplate)
+            val reader = new FileReader(new File(targetTemplateLocation))
+            // Setup Freemarker
             val cfg = new Configuration(new Version(2, 3, 0))
             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
-
+            // Write output to target path
             val template = new Template(targetTemplate, reader, cfg)
             val writer = new FileWriter(new File(targetPath))
             template.process(#{COMPILED_CODE_PLACEHOLDER -> result}, writer)
             writer.close()
-
             reader.close()
         } else {
             // Don't use template
@@ -554,6 +605,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
         targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
         targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
+        targetDirectory = configuration.getAttribute(ATTR_TARGET_DIRECTORY, "")
 
         // Load wrapper code
         wrapperCodeGenerator = configuration.getAttribute(ATTR_WRAPPER_CODE_GENERATOR, "")

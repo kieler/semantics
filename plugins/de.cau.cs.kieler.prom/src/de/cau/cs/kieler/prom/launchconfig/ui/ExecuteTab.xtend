@@ -339,7 +339,6 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                                 else
                                     ""
         configuration.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, shortcutClassName)
-        System.err.println(shortcutClassName)
     }
 
     /** 
