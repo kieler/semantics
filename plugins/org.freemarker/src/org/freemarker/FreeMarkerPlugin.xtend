@@ -8,10 +8,8 @@ import freemarker.template.TemplateExceptionHandler
 import freemarker.template.Version
 import java.io.File
 import java.util.Locale
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
-import javax.sound.midi.SysexMessage
 
 /**
  * Plugin and interface to use the FreeMarker template engine.

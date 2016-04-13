@@ -18,7 +18,6 @@ import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.List
-import org.eclipse.core.runtime.Platform
 
 /**
  * Returns a list with default environments ready to use.

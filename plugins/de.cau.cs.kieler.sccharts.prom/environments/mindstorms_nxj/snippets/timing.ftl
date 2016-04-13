@@ -80,19 +80,25 @@
         boolean isFirstTick = true;
     </@>
     <@input>
-        <#if targetMillis != '0' >
-        // Wait until target duration of tick reached, but not in very first tick.
+        // Don't set tick duration in very first tick
         if(isFirstTick) {
             isFirstTick = false;
         } else {
-            while ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
-                // Busy waiting...
+            // Set actual tick duration
+            scchart.${varname} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
+            <#if targetMillis != '0' >
+            // Wait until target duration of tick reached
+            if ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
+                try {
+                    Thread.sleep((tickDurationCounter + ${targetMillis}) - System.currentTimeMillis());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            </#if>
+            // Remember tick duration
+            tickDurationCounter = System.currentTimeMillis();
         }
-        </#if>
-        // Set actual tick duration
-        scchart.${varname} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
-        tickDurationCounter = System.currentTimeMillis();
     </@>
 </#macro>
 
