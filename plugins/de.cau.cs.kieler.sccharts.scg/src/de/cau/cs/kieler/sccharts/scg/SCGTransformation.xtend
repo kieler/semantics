@@ -319,12 +319,16 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for SCG generation finished (time elapsed: " + (time / 1000) + "s).")
 
-        rootStateEntry = sCGraph.addEntry.trace(rootState) => [setExit(sCGraph.addExit.trace(rootState))]
+        rootStateEntry = sCGraph.addEntry //.trace(rootState) 
+        	=> [setExit(sCGraph.addExit //.trace(rootState)
+        	)
+        	]
 
         rootState.transformSCGGenerateNodes(sCGraph)
         rootState.transformSCGConnectNodes(sCGraph)
 
-        rootState.mappedNode.createControlFlow.trace(rootState) => [rootStateEntry.setNext(it)]
+        rootState.mappedNode.createControlFlow //.trace(rootState) 
+        	=> [rootStateEntry.setNext(it)]
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG generation finished (overall time elapsed: " + (time / 1000) + "s).")
@@ -477,7 +481,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
             //KITT redirect tracing origins
             links.trace(link)
-            exitNode.next.target.trace(exitNode)
+            
+//            exitNode.next.target.trace(exitNode)
 
             // The removal of the EOpposite relation is necessary
             link.target.incoming.remove(link)
@@ -533,8 +538,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // --                 G E N E R A T E    N O D E S                        --
     // -------------------------------------------------------------------------   
     def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
-        val entry = sCGraph.addEntry.trace(region, region.parentState)
-        val exit = sCGraph.addExit.trace(region, region.parentState)
+        val entry = sCGraph.addEntry //.trace(region, region.parentState)
+        val exit = sCGraph.addExit //.trace(region, region.parentState)
         region.map(entry)
         entry.setExit(exit)
         exit.map(region)
@@ -602,8 +607,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             scopeProvider.parent = transition.sourceState
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
-            conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
-        } else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
+            conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))        } else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
+
             val fork = sCGraph.addFork
             val join = sCGraph.addJoin
             fork.setJoin(join)
@@ -615,7 +620,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 region.transformSCGGenerateNodes(sCGraph)
             }
         } else if (stateTypeCache.get(state).contains(PatternType::EXIT)) {
-            val exit = sCGraph.addExit
+        	clearDefaultTrace;
+            val exit = sCGraph.addExit	
             state.map(exit)
         }
         clearDefaultTrace;
@@ -741,10 +747,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 // The root state does not have a normal termination.
                 // Use the corresponding exit node of the root region in this case. 
                 if (state.isRootState) {
-                    val controlFlow = rootStateEntry.exit.createControlFlow.trace(state)
+                    val controlFlow = rootStateEntry.exit.createControlFlow //.trace(state)
                     join.setNext(controlFlow)
                 } else {
-                    val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow.trace(state)
+                    val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow //.trace(state)
                     join.setNext(controlFlow)
                 }
             }
@@ -754,7 +760,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             // of the region.
             val nodeExit = state.mappedExit
             val regionExit = state.parentRegion.mappedEntry.exit
-            val controlFlowFinal = regionExit.createControlFlow.trace(state)
+            val controlFlowFinal = regionExit.createControlFlow //.trace(state)
             nodeExit.setNext(controlFlowFinal)
         }
     }
