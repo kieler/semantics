@@ -39,7 +39,7 @@ public class SCGFeatures {
     public final static String GUARDS_NAME = "Guards";
 
     public final static String FT_GUARDS_ID = "scg.guards.ft";
-    public final static String FT_GUARDS_NAME = "FT Guards";
+    public final static String FT_GUARDS_NAME = "RTF Guards";
     
     public final static String SCHEDULING_ID = "scg.scheduling";
     public final static String SCHEDULING_NAME = "Scheduling";

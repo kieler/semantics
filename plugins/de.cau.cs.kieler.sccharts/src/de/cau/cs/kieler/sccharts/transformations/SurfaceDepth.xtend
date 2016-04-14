@@ -212,7 +212,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
             //System.out.println("stateAfterDepth:" + stateAfterDepth.id);
 
-            var doDTO = false;
+            var doDTO = true;
 
             if (doDTO) {
                 var done = false
