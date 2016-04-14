@@ -54,7 +54,9 @@ class RegisterActorSynthesis implements IDrawableActor {
 				
 				if(actor.name.startsWith("pre")){
 					it.setBackground("gray".color)
-				} else { it.setBackground("white".color); }
+				} else { 
+					it.setBackground("white".color);
+				}
 				it.selectionBackground = "green".color;
 			]
 	return node;
