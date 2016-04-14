@@ -26,7 +26,7 @@ import com.google.common.base.Strings
  * @author aas
  * 
  */
-class CommandData extends ConfigurationSerializableData {
+class CommandData extends ConfigurationSerializable {
 
     /**
      * User defined name of this command.
@@ -167,7 +167,7 @@ class CommandData extends ConfigurationSerializableData {
      * @return a list with the loaded command data objects.
      */
     public static def List<CommandData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
+        return ConfigurationSerializable.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
             CommandData) as List<CommandData>
     }
 
@@ -179,6 +179,6 @@ class CommandData extends ConfigurationSerializableData {
      * @param datas A list with the data objects that should be saved
      */
     public static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
-        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
+        ConfigurationSerializable.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
     }
 }

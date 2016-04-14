@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.launchconfig.ui
 
 import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
@@ -24,7 +25,6 @@ import java.util.EnumSet
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -39,7 +39,6 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
 
 /** 
  * The tab with the controls for the main information for a KiCo launch.

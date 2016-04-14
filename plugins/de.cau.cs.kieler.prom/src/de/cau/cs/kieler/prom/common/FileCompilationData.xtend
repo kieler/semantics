@@ -26,7 +26,7 @@ import org.apache.commons.io.FilenameUtils
  * 
  * @author aas
  */
-class FileCompilationData extends ConfigurationSerializableData {
+class FileCompilationData extends ConfigurationSerializable {
 
     @Accessors
     protected var String projectRelativePath = ""
@@ -76,7 +76,7 @@ class FileCompilationData extends ConfigurationSerializableData {
      * @return list with the loaded compilation data objects.
      */
     static def List<FileCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_FILES,
+        return ConfigurationSerializable.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_FILES,
             FileCompilationData) as List<FileCompilationData>
     }
 
@@ -88,7 +88,7 @@ class FileCompilationData extends ConfigurationSerializableData {
      * @param datas The data objects to be saved
      */
     static def void saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileCompilationData> datas) {
-        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_FILES, datas)
+        ConfigurationSerializable.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_FILES, datas)
     }
     
     /**

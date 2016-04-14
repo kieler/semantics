@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -25,7 +25,6 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.ltk.core.refactoring.RefactoringStatus
 import org.eclipse.ltk.core.refactoring.participants.CheckConditionsContext
 import org.eclipse.ltk.core.refactoring.participants.DeleteParticipant
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
 
 /**
  * In case of deleting a resource,

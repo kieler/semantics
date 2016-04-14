@@ -5,46 +5,93 @@ import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
 
-class KiCoLaunchData extends ConfigurationSerializableData {
+class KiCoLaunchData extends ConfigurationSerializable {
     
     /**
      * Key for the attribute that holds a launch data object.
      */
     private static val LAUNCH_DATA_IDENTIFIER_ATTR = "launchdata"
     
+    /**
+     * The name of the project that should be launched
+     */
     @Accessors
-    protected String projectName
+    protected String projectName = ""
+    /**
+     * A project relative path to the main file.
+     */
     @Accessors
-    protected String mainFile
+    protected String mainFile = ""
     
+    /**
+     * The files that should be compiled via KiCo
+     */
     @Accessors
-    protected List<FileCompilationData> files
+    protected List<FileCompilationData> files = newArrayList()
     
+    /**
+     * The target language for KiCo compilation.
+     * This is the id of a KiCo transformation feature.
+     */
     @Accessors
-    protected String targetLanguage
+    protected String targetLanguage = ""
+    /**
+     * The file extension for the specified target language (e.g. '.java' for Java Code) 
+     */
     @Accessors
-    protected String targetLanguageFileExtension
+    protected String targetLanguageFileExtension = ""
+    /**
+     * A path to a file used as template for the KiCo compilation result.
+     */
     @Accessors
-    protected String targetTemplate
+    protected String targetTemplate = ""
+    /**
+     * A path to a directory.
+     * Compiled output will be saved to this path.
+     * If the path is empty, compilation results are saved to the directory of their input files.
+     */
     @Accessors
-    protected String targetDirectory
+    protected String targetDirectory = ""
     
+    /**
+     * A path to a file that is used as template for wrapper code generation.
+     */
     @Accessors
-    protected String wrapperCodeTemplate
+    protected String wrapperCodeTemplate = ""
+    /**
+     * A path to a directory containing snippet definitions to use in wrapper code generation from annotations.
+     */
     @Accessors
-    protected String wrapperCodeSnippetDirectory
+    protected String wrapperCodeSnippetDirectory = ""
+    /**
+     * Fully qualified name of a class that implements an wrapper code generator.
+     * If this field is empty, the default wrapper code generator is used. 
+     */
     @Accessors
-    protected String wrapperCodeGenerator
+    protected String wrapperCodeGenerator = ""
 
+    /**
+     * List with commands which should be executed after the compilation and wrapper code generation
+     * of a launch ended successfully.
+     */
     @Accessors
-    protected List<CommandData> commands
+    protected List<CommandData> commands = newArrayList()
+    /**
+     * The class name of an implementation of the associated launch shortcut for this environment.
+     */
     @Accessors
-    protected String associatedLaunchShortcut
+    protected String associatedLaunchShortcut = ""
     
+    /**
+     * {inheritDoc}
+     */
     override getIdentifier() {
         return KiCoLaunchData.LAUNCH_DATA_IDENTIFIER_ATTR
     }
     
+    /**
+     * {inheritDoc}
+     */
     override setIdentifier(String value) {
         // The identifier is constant for this data class.
     }

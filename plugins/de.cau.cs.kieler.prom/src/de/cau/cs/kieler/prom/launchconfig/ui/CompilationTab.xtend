@@ -28,7 +28,6 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener

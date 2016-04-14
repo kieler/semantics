@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import org.eclipse.core.resources.IFile

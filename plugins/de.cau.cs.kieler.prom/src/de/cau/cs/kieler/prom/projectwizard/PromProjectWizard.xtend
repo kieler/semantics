@@ -17,7 +17,6 @@ import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.io.File
 import java.io.InputStream
 import org.apache.commons.io.FileUtils
@@ -30,7 +29,6 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
-import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -274,10 +272,11 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         val env = mainPage.selectedEnvironment
         try {
-            if(!Strings.isNullOrEmpty(env.mainFile)){
+            if(!Strings.isNullOrEmpty(env.launchData.mainFile)){
                 var resolvedMainFilePath = ""
                 try {
-                    resolvedMainFilePath = VariablesPlugin.getDefault().stringVariableManager.performStringSubstitution(env.mainFile)
+                    val variableManager = VariablesPlugin.getDefault().stringVariableManager
+                    resolvedMainFilePath = variableManager.performStringSubstitution(env.launchData.mainFile)
                 } catch (CoreException ce) {
                     MessageDialog.openError(shell, "Error", ce.message)
                     return false
@@ -323,7 +322,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // If the snippet directory of the environment is an absolute path,
         // we do not copy anything to the new project to initialize it.
-        if(env.wrapperCodeSnippetsDirectory ==  "" || new File(env.wrapperCodeSnippetsDirectory).isAbsolute)
+        if(env.launchData.wrapperCodeSnippetDirectory ==  "" || new File(env.launchData.wrapperCodeSnippetDirectory).isAbsolute)
             return true;
         
         // Get environments of which the wrapper code snippets should be imported.
@@ -333,17 +332,17 @@ class PromProjectWizard extends Wizard implements INewWizard {
             try {
                 if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
                     // Fill folder with files from plugin
-                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
                     initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
                 } else if(!Strings.isNullOrEmpty(wrapperEnv.wrapperCodeSnippetsOrigin)){
                     // Copy directory from file system
                     val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
-                    val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.wrapperCodeSnippetsDirectory)
+                    val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.launchData.wrapperCodeSnippetDirectory)
                     
                     FileUtils.copyDirectory(source, target)
                 } else {
                     // Create empty directory 
-                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.wrapperCodeSnippetsDirectory)
+                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
                     createResource(snippetsDirectory, null);
                 }
             } catch (Exception e) {
@@ -565,7 +564,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
     
     private def void createBuildDirectory() {
         val env = mainPage.selectedEnvironment
-        val targetDirectory = env.targetDirectory
+        val targetDirectory = env.launchData.targetDirectory
         if(!targetDirectory.isNullOrEmpty()) {
             // Create folder for generated files
             val sourceFolder = newlyCreatedProject.getFolder(targetDirectory);

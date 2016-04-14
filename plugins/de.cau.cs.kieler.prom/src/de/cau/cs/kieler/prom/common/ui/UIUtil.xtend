@@ -529,7 +529,7 @@ class UIUtil {
         }
 
         // Create columns
-        val nameColumn = createTableColumn(viewer, "Name", 150)
+        val nameColumn = createTableColumn(viewer, "Name", 75)
         nameColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 val c = element as CommandData
@@ -537,7 +537,7 @@ class UIUtil {
             }
         };
 
-        val commandColumn = createTableColumn(viewer, "Command", 300)
+        val commandColumn = createTableColumn(viewer, "Command", 150)
         commandColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 val c = element as CommandData

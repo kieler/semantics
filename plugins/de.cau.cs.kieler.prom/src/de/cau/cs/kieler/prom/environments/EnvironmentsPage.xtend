@@ -101,7 +101,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The input field for the file extension
      * of the selected target language (e.g. '.java' for Java Code).
      */
-    private var Text targetFileExtension
+    private var Text targetLanguageFileExtension
     /**
      * The input field for an optional template used when saving the KiCo compiled output.
      */
@@ -319,7 +319,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         mainFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
-                    currentData.mainFile = mainFile.text
+                    currentData.launchData.mainFile = mainFile.text
                     checkConsistency()
                 }
             }
@@ -377,7 +377,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                     if (selection != null) {
                         val trans = selection.firstElement as Transformation
                         if (trans != null) {
-                            currentData.targetLanguage = trans.id
+                            currentData.launchData.targetLanguage = trans.id
                             checkConsistency()
                         }
                     }
@@ -387,23 +387,23 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
         
         // Create file extension control
-        targetFileExtension = UIUtil.createTextField(group, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
-        targetFileExtension.addModifyListener(new ModifyListener() {
+        targetLanguageFileExtension = UIUtil.createTextField(group, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
+        targetLanguageFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
-                    currentData.targetFileExtension = targetFileExtension.text
+                    currentData.launchData.targetLanguageFileExtension = targetLanguageFileExtension.text
                     checkConsistency()                    
                 }
             }
         })
-        targetFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
+        targetLanguageFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
         // Create template control
         targetTemplate =  UIUtil.createTextField(group, "Output template", EnumSet.of(UIUtil.Buttons.NONE))
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
-                    currentData.targetTemplate = targetTemplate.text
+                    currentData.launchData.targetTemplate = targetTemplate.text
                     checkConsistency()    
                 }
             }
@@ -425,7 +425,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         wrapperCodeTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
-                    currentData.wrapperCodeTemplate = wrapperCodeTemplate.text
+                    currentData.launchData.wrapperCodeTemplate = wrapperCodeTemplate.text
                     checkConsistency()
                 }
             }
@@ -438,7 +438,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         wrapperCodeSnippets.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
-                    currentData.wrapperCodeSnippetsDirectory = wrapperCodeSnippets.text
+                    currentData.launchData.wrapperCodeSnippetDirectory = wrapperCodeSnippets.text
                     checkConsistency()
                 }
             }
@@ -542,7 +542,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         commandName = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         commandName.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(commandName != null){
+                if(currentCommandData != null){
                     currentCommandData.name = commandName.text
                     viewer.refresh()   
                 }
@@ -562,7 +562,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         command = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
         command.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
-                if(command != null){
+                if(currentCommandData != null){
                     currentCommandData.command = command.text
                     viewer.refresh()
                 }
@@ -615,7 +615,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         combo.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
-                currentData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
+                currentData.launchData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
                 checkConsistency()
             }
         })        
@@ -665,7 +665,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         addButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
                 val env = new EnvironmentData("New Environment")
-                env.targetLanguage = getSelectedTargetLanguageId()
+                env.launchData.targetLanguage = getSelectedTargetLanguageId()
                 
                 // Get first project wizard in combo box
                 val input = relatedProjectWizard.input as ArrayList<IConfigurationElement> 
@@ -715,33 +715,35 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
             
             // Update main file
-            mainFile.text = data.mainFile
+            mainFile.text = data.launchData.mainFile
             mainFileOrigin.text = data.mainFileOrigin
             
             // Update target
             if (targetLanguage.input != null) {
                 for (transformation : targetLanguage.input as Set<Transformation>) {
-                    if (transformation.id == data.targetLanguage) {
+                    if (transformation.id == data.launchData.targetLanguage) {
                         targetLanguage.selection = new StructuredSelection(transformation)
                     }
                 }
             }
-            targetFileExtension.text = data.targetFileExtension
-            targetTemplate.text = data.targetTemplate
+            targetLanguageFileExtension.text = data.launchData.targetLanguageFileExtension
+            targetTemplate.text = data.launchData.targetTemplate
             
             // Update wrapper code
-            wrapperCodeTemplate.text = data.wrapperCodeTemplate
-            wrapperCodeSnippets.text = data.wrapperCodeSnippetsDirectory
+            wrapperCodeTemplate.text = data.launchData.wrapperCodeTemplate
+            wrapperCodeSnippets.text = data.launchData.wrapperCodeSnippetDirectory
             wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             
             // Update commands
-            viewer.input = data.commands
+            viewer.input = data.launchData.commands
+            commandName.text = ""
+            command.text = ""
             
             // Select associated launch shortcut in combo viewer
             var selectionFound=false
             for(o : launchShortcuts.input as ArrayList<Object>){
                 if(o instanceof IConfigurationElement){
-                    if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == data.associatedLaunchShortcut) {
+                    if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == data.launchData.associatedLaunchShortcut) {
                         launchShortcuts.selection = new StructuredSelection(o)
                         selectionFound= true
                     }

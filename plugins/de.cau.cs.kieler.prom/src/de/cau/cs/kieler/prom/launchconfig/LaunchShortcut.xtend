@@ -189,7 +189,7 @@ class LaunchShortcut implements ILaunchShortcut {
         // Get environment from project properties if possible
         val environmentName = project.getPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER)
         if (environmentName != null) {
-            env = EnvironmentData.loadFromPreferenceStore(PromPlugin.^default.preferenceStore, environmentName)
+            env = EnvironmentData.loadInstanceFromPreferenceStore(PromPlugin.^default.preferenceStore, environmentName)
         } else {
             env = getEnvironmentFromDialog()            
         }
