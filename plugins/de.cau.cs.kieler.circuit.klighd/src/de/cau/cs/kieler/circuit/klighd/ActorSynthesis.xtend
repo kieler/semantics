@@ -147,7 +147,11 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				rect.lineWidth = 1;
 				rect.setForeground(red);
 			} else {
-				rect.setBackground(darkBlue)
+				if(actor.eContainer != null ){
+				rect.setBackground(darkBlue)} else {
+					rect.lineWidth = 1;
+					rect.setForeground = "black".color
+				}
 			}
 		]
 	return frame
