@@ -56,6 +56,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create // stores every gate name and its highlightable parts
 	val LinkedList<String> muxActors = new LinkedList<String> // stores all MUX names
 	val HashMap<String, String> muxTrueLinkMapping = new HashMap<String, String> // stores name of source and target for "In_1" link of MUX
+	val HashMap<String,Boolean> preRegister = new HashMap<String, Boolean> //e.g., for pre(O) store <pre(O), false>
+	
 	// link maps
 	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create // stores source port name and outgoing link
 
@@ -68,6 +70,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		muxActors.clear
 		linkMapping.clear
 		muxTrueLinkMapping.clear
+		preRegister.clear
 
 		val diagramEditor = getActiveEditor();
 		if (diagramEditor == null) {
@@ -135,7 +138,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 										muxSelPortMapping.put(node.name, node.ports.filter[type == "Sel"].head)
 										val sourcePort = node.ports.filter[type == "In_1"].head.incomingLinks.head.
 											source as Port
-										muxTrueLinkMapping.put(node.name, sourcePort.name)
+										if (!sourcePort.name.startsWith("const0")) {
+											muxTrueLinkMapping.put(node.name, sourcePort.name)
+										}
 										muxActors.add(node.name)
 									}
 									case "OR": {
@@ -143,6 +148,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 									}
 									case "AND": {
 										andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
+									}
+									case "REG": {
+										if(node.name.startsWith("pre")){
+										preRegister.put(node.name, false)
+										}
 									}
 								}
 							}
@@ -231,9 +241,12 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 			}
 		}
+		for (entry : highlighting) {
+			System.out.println("----- " + entry)
 
+		}
 		// -----------------------------------------------
-		// Add MUX, AND and OR gates               --
+		// Add preRegisters, MUX, AND and OR gates               --
 		// -----------------------------------------------
 		addMuxToHighlight(highlighting)
 
@@ -244,8 +257,25 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		andList.putAll(andInPortMapping)
 		addAndOrGatesToHighlight(highlighting, orList, andList)
 
+		for (entry : highlighting) {
+			System.out.println(entry)
+
+		}
+		for (entry : muxTrueLinkMapping.entrySet) {
+			System.out.println("mltm " + entry.key)
+
+		}
+		for (entry : muxActors) {
+			System.out.println("mux " + entry)
+
+		}
+		for (entry : preRegister.entrySet) {
+			System.out.println("pre register " + entry.key + " : " + entry.value.toString )
+
+		}
+		
 		// ---------------------------------------------------------------
-		// Now highlight all entries of list highlighting           --
+		// Now highlight all entries of highlighting list          --
 		// ---------------------------------------------------------------
 		highlight(highlighting)
 
@@ -267,7 +297,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
 				val muxflapMarker = entry.value.styles.findFirst[getProperty(FLAP_MARKER)]
 
-				if (highlighting.contains(entry.key)) {
+				if (highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && preRegister.get("pre(" + entry.key + ")"))) {
 
 					// non-MUX gate highlighting
 					if (highlightingMarker == null) { // if there was no highlighting before, add one
@@ -283,10 +313,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 							entry.value.styles.add(style)
 						}
 					}
+					
 
 					// MUX highlighting
 					if (muxflapMarker == null) {
-						if (muxActors.contains(entry.key)) {
+						if (muxActors.contains(entry.key) ) {
 							if (entry.value.id == "highlightable_1") {
 								val KForeground bstyle = KRenderingFactory.eINSTANCE.createKForeground()
 								bstyle.setProperty(FLAP_MARKER, true)
@@ -315,48 +346,60 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
 				val value = entry.value
 
-				if (highlighting.contains(entry.key)) {
+				if (highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && preRegister.get("pre(" + entry.key + ")"))) {
 					if (highlightingMarker == null) {
-						if (value instanceof KRoundedBendsPolyline) {
-							entry.value.lineWidth = 3
-						}
+
 						// highlighting of the MUX's incoming links.
 						// if MUX shall be highlighted, because "Sel" port is true. The "In_1" Link is green
 						// the link at the "Sel" port will be Light_Salmon (else case)
-						if (muxTrueLinkMapping.containsValue(entry.key) || muxActors.contains(entry.key)) {
-							val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::LIGHT_SEA_GREEN)
-							entry.value.styles.add(style)
-						} else {
-							val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::LIGHT_SALMON)
-							entry.value.styles.add(style)
+						if ((muxTrueLinkMapping.containsKey(entry.key) && muxActors.contains(entry.key)) ||(!muxTrueLinkMapping.containsKey(entry.key) && !muxActors.contains(entry.key))) {
+//							System.out.println("Check")
+//							val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+//							style.setProperty(HIGHLIGHTING_MARKER, true);
+//							style.setColor(Colors::LIGHT_SEA_GREEN)
+//							entry.value.styles.add(style)
+//						} else {
+//							if (!muxTrueLinkMapping.containsKey(entry.key) && !muxActors.contains(entry.key)) {
+								if (value instanceof KRoundedBendsPolyline) {
+									entry.value.lineWidth = 3
+								}
+								val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+								style.setProperty(HIGHLIGHTING_MARKER, true);
+								style.setColor(Colors::LIGHT_SALMON)
+								entry.value.styles.add(style)
+
+//							}
 						}
-					} // if the link was already highlighted: the color shall change an get brighter
+					} // if the link was already highlighted: the color shall change and get brighter
 					// to prevent multiple identical highlighting styles, the old one is removed and a new one is added..
-					else if (highlightingMarker != null) {
-						entry.value.styles.remove(highlightingMarker)
-						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::PEACH_PUFF)
-						entry.value.styles.add(style)
-					}
-				} 
-				// if this link shall not be highlighted: remove highlighting
-				else if (!highlighting.contains(entry.key)) {
+//					else if (highlightingMarker != null) {
+//						entry.value.styles.remove(highlightingMarker)
+//						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+//						style.setProperty(HIGHLIGHTING_MARKER, true);
+//						style.setColor(Colors::PEACH_PUFF)
+//						entry.value.styles.add(style)
+//					}
+				} // if this link shall not be highlighted: remove highlighting
+				else if (!highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && !preRegister.get("pre(" + entry.key + ")"))) {
 					if (highlightingMarker != null) {
 						entry.value.styles.remove(highlightingMarker)
-						if (value instanceof KRoundedBendsPolyline) {
-							entry.value.lineWidth = 3
-						}
-					} else {
+//						if (value instanceof KRoundedBendsPolyline) {
+//							entry.value.lineWidth = 3
+//						}
+//					} else {
 						if (value instanceof KRoundedBendsPolyline) {
 							entry.value.lineWidth = 1
 
 						}
 					}
+				}
+				
+				if(highlighting.contains(entry.key) && preRegister.containsKey("pre(" + entry.key + ")")){
+					System.out.println("----------------- " + entry.key)
+					preRegister.replace("pre(" + entry.key + ")", true)
+				} else if(preRegister.containsKey("pre(" + entry.key + ")")){
+					System.out.println("---------++-------- " + entry.key)
+					preRegister.replace("pre(" + entry.key + ")", false)
 				}
 			}
 		]
@@ -458,12 +501,19 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	def addMuxToHighlight(HashSet<String> highlighting) {
 		for (m : muxSelPortMapping.entries) {
 			if (highlighting.contains(m.value.name)) {
-				highlighting += muxTrueLinkMapping.get(m.key)
+				if (muxTrueLinkMapping.containsKey(m.key)) {
+					highlighting += muxTrueLinkMapping.get(m.key)
+				}
 				highlighting += m.key
-			} // This step is important because C code is generated from sequentialized SCG and NOT from SSA SCG.
-			// Only those MUX with "true" "Sel" entry shall be highlighted. Every other MUXs are removed from list.
-			else if (highlighting.contains(m.key)) {
-				highlighting.remove(m.key)
+			} // This step is important because otherwise mux with "false" "Sel" port entry are highlihgted.
+			// Only those MUXs with "true" "Sel" entry shall be highlighted. Every other MUXs are removed from list.
+//			else if (highlighting.contains(m.key)) {
+//				highlighting.remove(m.key)
+//			}
+
+			if (highlighting.contains(m.key) && highlighting.contains("!" + m.key)) {
+				highlighting.remove("!"+m.key)
+				System.out.println("removed " + "!"+m.key)
 			}
 		}
 	}
