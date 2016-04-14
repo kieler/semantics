@@ -134,8 +134,9 @@
         <repository>
           <id>p2.kieler-pragmatics</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</url>
-        </repository>
+          <!--<url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</url>-->
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
+	</repository>
         <repository>
           <id>p2.xtext.2.8.3</id>
           <layout>p2</layout>
