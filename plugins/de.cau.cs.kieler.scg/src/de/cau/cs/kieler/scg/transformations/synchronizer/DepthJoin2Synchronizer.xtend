@@ -25,6 +25,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -43,6 +44,8 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 import java.util.Set
+import de.cau.cs.kieler.scg.BranchType
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -211,11 +214,8 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 		for (exit : relevantExitNodes) {
 			// Get all schizophrenic nodes
 			val schizoNodes = markSchizoNodes(pilData, exit.entry)
-			schizoNodes.forEach[
-				System.err.println(it.schedulingBlock.guards.head.serialize)
-			]
 			// For each schizophrenic node, we need a copy for its "surface execution".
-			// The original guard will be modified to only trigger in its depth
+			//  The original guard will be modified to only trigger in its depth
 			schizoNodes.forEach [
 				val originalGuard = it.schedulingBlock.guards.head
 				val surfGuard = ScgFactory::eINSTANCE.createGuard
@@ -232,12 +232,19 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 					originalExpression.subExpressions.filter [
 						val temp = it
 						!pilData.filter [
-							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
+							try {
+								it.schedulingBlock.guards.head.valuedObject ==
+									(temp as ValuedObjectReference).valuedObject
+							} catch (ClassCastException e) {
+								return false
+							}
 						].isEmpty
 					].forEach [
-						val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-						newVOR.valuedObject = (it as ValuedObjectReference).valuedObject
-						surfExpression.subExpressions.add(newVOR)
+						if (it instanceof ValuedObjectReference) {
+							val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+							newVOR.valuedObject = (it as ValuedObjectReference).valuedObject
+							surfExpression.subExpressions.add(newVOR)
+						}
 					]
 
 					surfGuard.expression = surfExpression
@@ -245,12 +252,17 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 					// Remove all guards from the original exp which are on the pil but not schizophrenic.
 					// (Those can only be executed in the surface, so we don't need them in the depth anymore)
 					originalExpression.subExpressions.removeAll(originalExpression.subExpressions.filter [
-						val temp = it
-						!pilData.filter [
-							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
-						].isEmpty && schizoNodes.filter [
-							it.schedulingBlock.guards.head.valuedObject == (temp as ValuedObjectReference).valuedObject
-						].isEmpty
+						try {
+							!pilData.filter [ temp |
+								temp.schedulingBlock.guards.head.valuedObject ==
+									(it as ValuedObjectReference).valuedObject
+							].isEmpty && schizoNodes.filter [ temp |
+								temp.schedulingBlock.guards.head.valuedObject ==
+									(it as ValuedObjectReference).valuedObject
+							].isEmpty
+						} catch (ClassCastException e) {
+							return false
+						}
 					])
 				} else {
 					// If the guard only holds a VOR, just change it to the corresponding schizophrenic guard
@@ -264,21 +276,77 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				debug("Generated schizophrenic guard " + surfGuard.serialize)
 				scg.guards.add(surfGuard)
 				schizoDeclaration.valuedObjects += surfGuard.valuedObject
+
+				// fit schizo control flow into normal control flow
+				val nonSchizoSuccessors = it.allNext.map[target].filter [
+					!(schizoNodes.contains(it)) && !(it instanceof Exit)
+				]
+				nonSchizoSuccessors.forEach[ot|enhanceNonSchizoNodes(surfGuard, it.basicBlock, ot, scg)]
+
 			]
-		// TODO: Look for non-schizo nodes and add the current guard
 		}
 	}
 
-	private def create valuedObject : createValuedObject(name) getValuedObject(String name){}
+	private def void enhanceNonSchizoNodes(Guard source, BasicBlock original, Node target, SCGraph scg) {
+		// Get the conditional guard
+		val cond = scg.guards.filter [
+			it.valuedObject.name == AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX + original.schedulingBlocks.head.guards.head.valuedObject.name
+		].head
+		// What type of branch
+		val branchType = target.schedulingBlock.basicBlock.predecessors.filter [
+			it.basicBlock.schedulingBlocks.head.guards.head == original.schedulingBlocks.head.guards.head
+		].head.branchType
+		
+		val targetExpression = target.schedulingBlock.guards.head.expression
+		val sourceValObj = source.valuedObject
+		if (targetExpression instanceof OperatorExpression) {
+			if (targetExpression.operator == OperatorType::LOGICAL_AND) { // If there is only one expression we need to add another with an or-operation
+				val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+					operator = OperatorType::LOGICAL_AND
+					subExpressions.addAll(targetExpression.subExpressions)
+				]
+				targetExpression.subExpressions.clear
+				targetExpression.operator = OperatorType::LOGICAL_OR
+				targetExpression.subExpressions.add(newExp)
+			}
+			// Add the schizo-expression
+			if (targetExpression.operator == OperatorType::LOGICAL_OR) {
+				val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+					val newValObjRefGuard = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
+						it.valuedObject = sourceValObj
+					]
+					val newValObjRefCond = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
+						it.valuedObject = cond.valuedObject
+					]
+					operator = OperatorType::LOGICAL_AND
+					subExpressions.add(newValObjRefGuard)
+					// Add correct cond
+					if(branchType == BranchType::TRUEBRANCH){
+						subExpressions.add(newValObjRefCond)
+					} else {
+						val notExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+							operator = OperatorType::NOT
+							subExpressions.add(newValObjRefCond)
+						]
+						subExpressions.add(notExp)
+					}
+				]
+				targetExpression.subExpressions.add(newExp)
+			}
+		}
+		debug("Modified guard " + target.schedulingBlock.guards.head.serialize)
+	}
+
+	private def create valuedObject : createValuedObject(name) getValuedObject(String name) {}
 
 	private def Set<Node> markSchizoNodes(Set<Node> pilData, Entry entry) {
-		// Get all depths... and their inst. control flows.
+		// Get all depths...
 		// Filter for reachable nodes
 		// Intersection of both these nodes and pilData are our desired schizoNodes
 		val depths = entry.getThreadNodes.filter(typeof(Depth)).toList
-		val reachableNodes = <Node> newHashSet()
-		depths.forEach[
-			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach[
+		val reachableNodes = <Node>newHashSet()
+		depths.forEach [
+			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach [
 				it.forEach[reachableNodes.add(it.target)]
 			]
 		]
@@ -317,7 +385,7 @@ class DepthJoin2Synchronizer extends SurfaceSynchronizer {
 				return FALSE()
 			}
 			// return copy of _conds
-			if (exp.valuedObject.name.startsWith("_c")) {
+			if (exp.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
 				newVOR.valuedObject = exp.valuedObject
 				return newVOR
 			}
