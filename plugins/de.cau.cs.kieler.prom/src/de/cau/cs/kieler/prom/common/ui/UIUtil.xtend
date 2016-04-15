@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.Collections
@@ -111,6 +112,17 @@ class UIUtil {
         * Flag to indicate that a text field should be created with a button to open a folder selection dialog of the file system.
         */
         FILE_SYSTEM_DIRECTORY_BUTTON
+    }
+    
+    enum KiCoLaunchTargetDirectoryOptions {
+        /**
+         * Value to indicate that the default directory should be used as target
+         */
+        KIELER_GEN,
+        /**
+         * Value to indicate that output should be saved in the same folder as the input files
+         */
+        SAME_AS_INPUT
     }
     
     /**
@@ -437,6 +449,25 @@ class UIUtil {
         return combo
     }
 
+    /**
+     * Creates a radio group to set the target directory for compilation results.
+     * 
+     * @param parent The parent composite
+     */
+    public static def List<Button> createTargetDirectoryButtons(Composite parent) {
+        val group = UIUtil.createComposite(parent, 3)
+        
+        createLabel(group, "Target directory")
+        val button1 = SWTFactory.createRadioButton(group, LaunchConfiguration.BUILD_DIRECTORY)
+        button1.data = KiCoLaunchTargetDirectoryOptions.KIELER_GEN
+        button1.toolTipText = "Save compilation output to the "+LaunchConfiguration.BUILD_DIRECTORY+" directory."
+         
+        val button2 = SWTFactory.createRadioButton(group, "Same as input files")
+        button2.data = KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT
+        button2.toolTipText = "Save compilation output in the same folder as the corresponding input files."
+        return #[button1, button2]
+    }
+    
     /**
      * Creates a combobox with the environments.
      * 

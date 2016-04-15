@@ -94,6 +94,17 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
     private var Text targetTemplate
 
     /**
+     * The radio button for the default target directory.
+     */
+    private var Button targetDirectoryKielerGen
+
+    /**
+     * The radio button to specify
+     * that output files should be saved to the same directory as input files.
+     */
+    private var Button targetDirectorySameAsInput
+    
+    /**
      * The input field for the file used as wrapper code template.
      * The wrapper code will be inserted to this file template.
      */
@@ -274,6 +285,23 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         })
         targetTemplate.toolTipText = "Template for the compiled output.\n"
             + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+            
+        // Create target directory control
+        val comp4 = UIUtil.createComposite(group, 1)
+        
+        val buttons = UIUtil.createTargetDirectoryButtons(comp4)
+        for(button : buttons) {
+            button.addSelectionListener(new SelectionAdapter() {
+                override void widgetSelected(SelectionEvent e) {
+                    updateLaunchConfigurationDialog()
+                }
+            })
+            if(button.data == UIUtil.KiCoLaunchTargetDirectoryOptions.KIELER_GEN) {
+                targetDirectoryKielerGen = button
+            } else if(button.data == UIUtil.KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT) {
+                targetDirectorySameAsInput = button
+            }
+        }
     }
 
     /**
@@ -340,6 +368,13 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         // Set target template
         targetTemplate.text = launchData.targetTemplate
 
+        // Set target directory
+        if(launchData.targetDirectory.isNullOrEmpty()) {
+            targetDirectorySameAsInput.selection = true
+        } else {
+            targetDirectoryKielerGen.selection = true
+        }
+
         // Set wrapper code
         wrapperCodeTemplate.text = launchData.wrapperCodeTemplate
         wrapperCodeSnippets.text = launchData.wrapperCodeSnippetDirectory
@@ -368,6 +403,13 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
 
         // Set target template.
         launchData.targetTemplate = targetTemplate.text
+
+        // Set target directory
+        if(targetDirectoryKielerGen.selection) {
+            launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+        } else {
+            launchData.targetDirectory = ""
+        }
 
         // Set wrapper code
         launchData.wrapperCodeTemplate = wrapperCodeTemplate.text

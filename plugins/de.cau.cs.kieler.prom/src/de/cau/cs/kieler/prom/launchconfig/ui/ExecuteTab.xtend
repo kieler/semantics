@@ -307,12 +307,10 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
         viewer.input = launchData.commands
         
         // Select associated launch shortcut in combo viewer
-        println("init:"+launchData.associatedLaunchShortcut)
         var selected = false
         for(o : launchShortcuts.input as ArrayList<Object>) {
             if(o instanceof IConfigurationElement) {
                 val shortcutImplementation = o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
-                println(shortcutImplementation)
                 if(shortcutImplementation == launchData.associatedLaunchShortcut) {
                     launchShortcuts.selection = new StructuredSelection(o)
                     selected = true
@@ -336,7 +334,6 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
                                 else
                                     ""
         launchData.associatedLaunchShortcut = shortcutClassName
-        println("app:"+launchData.associatedLaunchShortcut)
         // Flush to configuration
         KiCoLaunchData.saveToConfiguration(configuration, launchData)
     }

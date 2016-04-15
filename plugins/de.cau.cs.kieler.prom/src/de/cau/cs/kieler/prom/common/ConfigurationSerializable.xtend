@@ -227,7 +227,6 @@ abstract class ConfigurationSerializable {
                     }
                     // Save identifiers of the objects
                     store.setValue(storeKey, identifiersCSV)
-                    println("save:"+storeKey+" = "+identifiersCSV)
                 }
             }
         }
@@ -309,16 +308,13 @@ abstract class ConfigurationSerializable {
                 } else if(typeof(List).isAssignableFrom(f.type)) {
                     // Load list of references that contains serializable data
                     val classOfContent = getClassOfFirstTypeArgument(f.genericType)
-                    println("content:"+classOfContent)
                     if(typeof(ConfigurationSerializable).isAssignableFrom(classOfContent)) {
-                        println("B")
                         // Set value of field
                         val list = new ArrayList()
                         f.set(this, list)
                         // Load content of list
                         // Get identifiers CSV
                         val loadedIdentifiersCSV = store.getString(storeKey)
-                        println("load:"+storeKey+" = "+loadedIdentifiersCSV)
                         if(!loadedIdentifiersCSV.isNullOrEmpty()) {
                             val loadedIdentifiers = loadedIdentifiersCSV.split(",");
                             // Iterate over identifiers

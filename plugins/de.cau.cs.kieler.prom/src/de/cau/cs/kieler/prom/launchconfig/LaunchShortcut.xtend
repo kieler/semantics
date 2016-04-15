@@ -148,10 +148,11 @@ class LaunchShortcut implements ILaunchShortcut {
             val lm = DebugPlugin.getDefault().getLaunchManager()
             val type = lm.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
             val name = project.name
-            val wc = type.newInstance(null, name)
+            val wc = type.newInstance(project, name)
             initializeConfiguration(wc)
             return wc.doSave()
         } catch (CoreException ce) {
+            ce.printStackTrace()
         }
         return null
     }

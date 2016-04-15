@@ -54,6 +54,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
+        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
         launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_nxj"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
@@ -75,6 +76,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
+        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
         launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_ev3"
         launchData.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"

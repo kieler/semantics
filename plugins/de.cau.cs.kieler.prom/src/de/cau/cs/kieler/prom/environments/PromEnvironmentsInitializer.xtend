@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * This class handles initialization of default environments.
@@ -115,6 +116,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         var launchData = new KiCoLaunchData()
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
+        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
         
         var env = new EnvironmentData("Generic Java")
         env.launchData = launchData

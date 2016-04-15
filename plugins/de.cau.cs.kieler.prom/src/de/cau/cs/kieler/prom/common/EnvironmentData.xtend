@@ -140,7 +140,23 @@ class EnvironmentData extends ConfigurationSerializable {
      * Set this environment's values as values of the launch configuration. 
      */
     def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
+        // Save which environment was used to initialize this launch config
         config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
-        KiCoLaunchData.saveToConfiguration(config, launchData)    
+        // Load data
+        val loadedLaunchData = KiCoLaunchData.loadFromConfiguration(config)
+        // Copy values of fields
+        loadedLaunchData.targetLanguage = launchData.targetLanguage
+        loadedLaunchData.targetLanguageFileExtension = launchData.targetLanguageFileExtension
+        loadedLaunchData.targetTemplate = launchData.targetTemplate
+        loadedLaunchData.targetDirectory = launchData.targetDirectory
+        
+        loadedLaunchData.wrapperCodeTemplate = launchData.wrapperCodeTemplate
+        loadedLaunchData.wrapperCodeSnippetDirectory = launchData.wrapperCodeSnippetDirectory
+        loadedLaunchData.wrapperCodeGenerator = launchData.wrapperCodeGenerator
+    
+        loadedLaunchData.commands = launchData.commands
+        loadedLaunchData.associatedLaunchShortcut = launchData.associatedLaunchShortcut
+        // Save data
+        KiCoLaunchData.saveToConfiguration(config, loadedLaunchData)
     }
 }

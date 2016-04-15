@@ -88,23 +88,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     // Attribute names
     public static val ATTR_COMMANDS = "de.cau.cs.kieler.prom.launchconfig.commands"
-
     public static val ATTR_FILES = "de.cau.cs.kieler.prom.launchconfig.files"
     public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.prom.launchconfig.main.environment"
-
-//    public static val ATTR_PROJECT = "de.cau.cs.kieler.prom.launchconfig.main.project"
-//    public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.prom.launchconfig.main.file"
-
-//    public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.prom.launchconfig.main.target.language"
-//    public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.target.template"
-//    public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.prom.launchconfig.main.target.file.extension"
-//    public static val ATTR_TARGET_DIRECTORY = "de.cau.cs.kieler.prom.launchconfig.main.target.directory"
-
-//    public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
-//    public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
-//    public static val ATTR_WRAPPER_CODE_GENERATOR = "de.cau.cs.kieler.prom.launchconfig.wrapper.generator"
-    
-//    public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
 
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
@@ -192,9 +177,19 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 if(!launchData.targetDirectory.isNullOrEmpty()) {
                     project.getFolder(launchData.targetDirectory).refreshLocal(IResource.DEPTH_INFINITE, monitor)
                 } else {
-                    project.refreshLocal(10, monitor)
-                }    
-            
+                    // Refresh directories of files
+                    for(fileData : launchData.files) {
+                        var dir = FilenameUtils.getPathNoEndSeparator(fileData.projectRelativePath)
+                        if(dir.startsWith("/") || dir.startsWith("\\")) {
+                            dir = dir.substring(1)    
+                        }
+                        val fullPath = project.name + File.separator + dir
+                        val folder = project.getFolder(fullPath)
+                        if(folder.exists)
+                            folder.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                    }
+                }
+                
                 // Run associated launch shortcut
                 runAssociatedLauchShortcut()
                 

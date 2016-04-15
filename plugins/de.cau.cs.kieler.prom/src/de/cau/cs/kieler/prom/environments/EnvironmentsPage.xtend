@@ -43,6 +43,7 @@ import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.TabFolder
 import org.eclipse.swt.widgets.TabItem
@@ -106,6 +107,16 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The input field for an optional template used when saving the KiCo compiled output.
      */
     private var Text targetTemplate
+    
+    /**
+     * The radio button for the default target directory.
+     */
+    private var Button targetDirectoryKielerGen
+    /**
+     * The radio button to specify
+     * that output files should be saved to the same directory as input files.
+     */
+    private var Button targetDirectorySameAsInput
     
     /**
      * The input field for the wrapper code template.
@@ -352,7 +363,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private def Composite createCompilationTab(TabFolder folder){
         val comp = createTab(folder, "Compilation")
         
-        createCompilationComponent(comp)
+        createTargetComponent(comp)
         createWrapperCodeComponent(comp)
         
         return comp
@@ -363,10 +374,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * 
      * @param parent The parent composite
      */
-    private def void createCompilationComponent(Composite parent) {
+    private def void createTargetComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Compilation", 2)
         
-        // Create language control
+        // Create target language control
         SWTFactory.createLabel(group, "Language", 1)
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
@@ -386,7 +397,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
         
-        // Create file extension control
+        // Create target language file extension control
         targetLanguageFileExtension = UIUtil.createTextField(group, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
         targetLanguageFileExtension.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -398,7 +409,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetLanguageFileExtension.toolTipText = "File extension for the target language (e.g. '.java' for Java)"
         
-        // Create template control
+        // Create target template control
         targetTemplate =  UIUtil.createTextField(group, "Output template", EnumSet.of(UIUtil.Buttons.NONE))
         targetTemplate.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
@@ -410,6 +421,36 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         })
         targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
         + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+        
+        // Create target directory control
+        val comp = UIUtil.createComposite(group, 3)
+        val gd = comp.layoutData as GridData
+        gd.horizontalSpan = 2
+        
+        val buttons = UIUtil.createTargetDirectoryButtons(comp)
+        for(button : buttons) {
+            if(button.data == UIUtil.KiCoLaunchTargetDirectoryOptions.KIELER_GEN) {
+                targetDirectoryKielerGen = button
+            } else if(button.data == UIUtil.KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT) {
+                targetDirectorySameAsInput = button
+            }
+        }
+        targetDirectoryKielerGen.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                if(currentData != null){
+                    currentData.launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+                    checkConsistency()
+                }
+            }
+        })
+        targetDirectorySameAsInput.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                if(currentData != null){
+                    currentData.launchData.targetDirectory = ""
+                    checkConsistency()
+                }
+            }
+        })
     }
     
     /**
@@ -728,6 +769,13 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
             targetLanguageFileExtension.text = data.launchData.targetLanguageFileExtension
             targetTemplate.text = data.launchData.targetTemplate
+            if(data.launchData.targetDirectory.isNullOrEmpty()) {
+                targetDirectoryKielerGen.selection = false
+                targetDirectorySameAsInput.selection = true
+            } else {
+                targetDirectoryKielerGen.selection = true
+                targetDirectorySameAsInput.selection = false
+            }
             
             // Update wrapper code
             wrapperCodeTemplate.text = data.launchData.wrapperCodeTemplate
@@ -816,7 +864,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * Reverts the preferences values to the default values from the initializer.
      * The method is run if the 'Restore Defaults' button is clicked.
      */
-    override void performDefaults(){
+    override void performDefaults() {
         list.input = PromEnvironmentsInitializer.getAllDefaultEnvironments()
         checkConsistency()
         super.performDefaults()
