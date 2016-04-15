@@ -346,6 +346,8 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
      */
     override initializeFrom(ILaunchConfiguration configuration) {
         super.initializeFrom(configuration)
+        // Ignore the following changes in the UI
+        doNotApplyUIChanges = true
         
         // Update project reference
         project = LaunchConfiguration.findProject(launchData.projectName)
@@ -383,12 +385,19 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         currentData = null
 
         updateEnabled()
+        
+        // Don't ignore UI changes anymore
+        doNotApplyUIChanges = false
     }
     
     /**
      * {@inheritDoc}
      */
     override performApply(ILaunchConfigurationWorkingCopy configuration) {
+         if(doNotApplyUIChanges) {
+            return
+        }
+        
         // Set target language
         val selection = targetLanguage.selection as IStructuredSelection
         if (selection != null) {

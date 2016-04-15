@@ -11,6 +11,14 @@ abstract class AbstractKiCoLaunchConfigurationTab extends AbstractLaunchConfigur
      */
     private KiCoLaunchConfigurationTabGroup tabGroup
     
+    /**
+     * Flag to indicate that changes in the UI should not be applied to the lanuch config.
+     * This is needed in initializeFrom() to prevent applying the loaded values,
+     * until all UI controls have been initialized.  
+     */
+    protected boolean doNotApplyUIChanges
+    
+    
      /**
      * Constructor
      */

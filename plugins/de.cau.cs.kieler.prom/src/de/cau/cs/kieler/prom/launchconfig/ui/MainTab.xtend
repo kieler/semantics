@@ -170,7 +170,10 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
      */
     override initializeFrom(ILaunchConfiguration configuration) {
         super.initializeFrom(configuration)
+        // Ignore the following changes in the UI
+        doNotApplyUIChanges = true
         
+        // Remember this configuration
         this.configuration = configuration
         
         // Set project
@@ -188,12 +191,19 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
                 }
             }
         }
+        
+        // Don't ignore UI changes anymore
+        doNotApplyUIChanges = false
     }
 
     /** 
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
+        if(doNotApplyUIChanges) {
+            return
+        }
+        
         // Save environment
         val env = getSelectedEnvironment()
         if (env != null) 

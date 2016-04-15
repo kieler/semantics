@@ -299,6 +299,8 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
      */
     override initializeFrom(ILaunchConfiguration configuration) {
         super.initializeFrom(configuration)
+        // Ignore the following changes in the UI
+        doNotApplyUIChanges = true
         
         // Update project reference        
         project = LaunchConfiguration.findProject(launchData.projectName)
@@ -321,12 +323,19 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
             launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
         
         updateEnabled()
+        
+         // Don't ignore UI changes anymore
+        doNotApplyUIChanges = false
     }
     
     /** 
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
+        if(doNotApplyUIChanges) {
+            return
+        }
+        
         // Set associated launch shortcut
         val selection = (launchShortcuts.selection as StructuredSelection).firstElement
         val shortcutClassName = if(selection != null && selection instanceof IConfigurationElement)

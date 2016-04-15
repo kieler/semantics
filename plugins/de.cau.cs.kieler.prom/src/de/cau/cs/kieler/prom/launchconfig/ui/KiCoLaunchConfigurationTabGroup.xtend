@@ -27,9 +27,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class KiCoLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
 
+    /**
+     * The data object that the UI is working on.
+     */
     @Accessors
     public KiCoLaunchData launchData
-
+    
     /**
      * {@inheritDoc}
      */
