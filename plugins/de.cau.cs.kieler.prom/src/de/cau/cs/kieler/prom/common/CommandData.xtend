@@ -125,7 +125,7 @@ class CommandData extends ConfigurationSerializable {
      * @return true if it is enabled and should be executed. False otherwise.
      */
     def boolean isEnabled() {
-        return !Strings.isNullOrEmpty(enabled) && Boolean.valueOf(enabled)
+        return !enabled.isNullOrEmpty() && Boolean.valueOf(enabled)
     }
     
     /**

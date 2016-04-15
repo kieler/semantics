@@ -158,7 +158,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
         
         // Load snippet definitions
-        if(!Strings.isNullOrEmpty(resolvedWrapperCodeSnippetDirectory)) {
+        if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
             var File snippetDirectoryLocation = new File(resolvedWrapperCodeSnippetDirectory)
             if (!snippetDirectoryLocation.isAbsolute)
                 snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + resolvedWrapperCodeSnippetDirectory)

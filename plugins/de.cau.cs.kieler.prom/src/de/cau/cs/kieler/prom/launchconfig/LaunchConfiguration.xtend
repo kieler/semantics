@@ -243,7 +243,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     public static def void writeToConsole(String message){
         // If there is nothing to write, we are done immediately.
-        if(Strings.isNullOrEmpty(message))
+        if(message.isNullOrEmpty())
             return;
         
         // Ensure the console exists.
@@ -451,7 +451,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string) ) {
+            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty() && !result.string.isNullOrEmpty() ) {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
             } else {
                 var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
@@ -462,18 +462,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             }
         }
     }
-
-//    private def String computeBuildDirectory(String projectRelativePath) {
-//        if(launchData.targetDirectory.isNullOrEmpty()) {
-//            if(project.findMember(projectRelativePath) instanceof IFile){
-//                return FilenameUtils.getPath(projectRelativePath)
-//            } else {
-//                return projectRelativePath
-//            }
-//        } else {
-//            return launchData.targetDirectory;
-//        }
-//    }
 
     /**
      * Computes the fully qualified target path for a project relative file path.
@@ -653,7 +641,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param name The name of a project to be found
      */
     static def IProject findProject(String name) {
-        if (!Strings.isNullOrEmpty(name) && new Path(name).isValidPath(name)) {
+        if (!name.isNullOrEmpty() && new Path(name).isValidPath(name)) {
             val p = ResourcesPlugin.workspace.root.getProject(name)
             if (p.location != null)
                 return p

@@ -241,7 +241,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
      */
     private def String checkErrors() {
         // Project is not empty
-        if (Strings.isNullOrEmpty(project.text)) {
+        if (project.text.isNullOrEmpty()) {
             return "Project not specified."
         }
         

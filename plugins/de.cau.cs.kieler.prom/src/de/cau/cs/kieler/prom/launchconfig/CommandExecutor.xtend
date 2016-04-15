@@ -75,7 +75,7 @@ class CommandExecutor {
      * @param command The command to be executed
      */
     private def void executeSingle(CommandData command) {
-        if (command != null && !Strings.isNullOrEmpty(command.command)) {
+        if (command != null && !command.command.isNullOrEmpty()) {
             val man = VariablesPlugin.getDefault.stringVariableManager
             command.fullCommand = man.performStringSubstitution(command.command)
             val commandWithParameters = splitStringOnWhitespace(command.fullCommand)
