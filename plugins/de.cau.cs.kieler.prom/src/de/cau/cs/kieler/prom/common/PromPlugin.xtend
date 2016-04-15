@@ -13,13 +13,20 @@
  */
 package de.cau.cs.kieler.prom.common
 
+import com.google.common.base.Charsets
+import com.google.common.io.CharStreams
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import java.io.ByteArrayInputStream
 import java.io.FileInputStream
+import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.net.URL
 import java.util.Map
-import org.apache.commons.io.IOUtils
+import org.eclipse.core.resources.IFolder
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
@@ -112,7 +119,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             
             // Return stream of content where all placeholders are replaced with actual values.
             if(placeholderReplacement != null){
-                val contents = IOUtils.toString(inputStream)
+                val contents = streamToString(inputStream)
                 inputStream.close()
                 
                 // Replace placeholders
@@ -120,11 +127,55 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 for(placeholder : placeholderReplacement.keySet) {
                     contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace(placeholder, placeholderReplacement.get(placeholder))
                 }
-            
-                return IOUtils.toInputStream(contentsWithoutPlaceholders)
+                val stream = stringToStream(contentsWithoutPlaceholders)
+                return stream
             } else {
                 return inputStream
             }    
         }
+    }
+    
+    /**
+     * Reads all text from the given input stream.
+     * 
+     * @param inputStream The input stream
+     * @return the complete text of the stream
+     */
+    def private static String streamToString(InputStream inputStream) {
+        var text = "";
+        val reader = new InputStreamReader(inputStream, Charsets.UTF_8)
+        try {
+            text = CharStreams.toString(reader);
+        } catch (IOException e) {
+            e.printStackTrace()
+        }
+        reader.close()
+        return text
+    }
+    
+    /**
+     * Creates an input stream for a string.
+     * 
+     * @param text The string
+     * @return a stream for the text
+     */
+    def private static InputStream stringToStream(String text) {
+        val stream = new ByteArrayInputStream(text.getBytes());
+        return stream
+    }
+    
+    /**
+     * Adds a folder of a java project to the build path source folders.
+     * 
+     * @param javaProject The java project
+     * @param sourceFolder The source folder to be added
+     */
+    public static def void addFolderToJavaClasspath(IJavaProject javaProject, IFolder sourceFolder) {
+        val root = javaProject.getPackageFragmentRoot(sourceFolder);
+        val oldEntries = javaProject.getRawClasspath();
+        val newEntries = newArrayOfSize(oldEntries.length + 1);
+        System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
+        newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
+        javaProject.setRawClasspath(newEntries, null);
     }
 }

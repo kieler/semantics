@@ -13,7 +13,11 @@
  */
 package de.cau.cs.kieler.prom.common
 
+import com.google.common.base.Strings
 import java.lang.reflect.Modifier
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
@@ -28,7 +32,7 @@ import org.eclipse.jface.preference.IPreferenceStore
  * @author aas
  * 
  */
-abstract class ConfigurationSerializableData {
+abstract class ConfigurationSerializable {
 
     /**
      * Returns a unique identifier which must not contain a comma.
@@ -61,8 +65,11 @@ abstract class ConfigurationSerializableData {
     public def void loadAttributesFromMap(Map<String, String> map) {
         val classObject = this.class
         for (f : classObject.declaredFields) {
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                f.set(this, map.get(f.name))
+            if (f.type == String && !Modifier.isStatic(f.modifiers)) {
+                val value = map.get(f.name)
+                val nonNullValue = Strings.nullToEmpty(value)
+                f.set(this, nonNullValue)
+            }
         }
     }
 
@@ -76,8 +83,13 @@ abstract class ConfigurationSerializableData {
         val map = new HashMap<String, String>()
         val classObject = this.class
         for (f : classObject.declaredFields) {
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                map.put(f.name, f.get(this).toString())
+            if (f.type == String && !Modifier.isStatic(f.modifiers)) {
+                val object = f.get(this)
+                if(object != null) {
+                    val value = object.toString()
+                    map.put(f.name, value)
+                }    
+            }
         }
         return map
     }
@@ -88,14 +100,14 @@ abstract class ConfigurationSerializableData {
      * 
      * @return List of the loaded data objects
      */
-    protected static def List<? extends ConfigurationSerializableData> loadAllFromConfiguration(
-        ILaunchConfiguration configuration, String AttributeKey, Class<? extends ConfigurationSerializableData> classObject) {
+    protected static def List<? extends ConfigurationSerializable> loadAllFromConfiguration(
+        ILaunchConfiguration configuration, String AttributeKey, Class<? extends ConfigurationSerializable> classObject) {
         
         // Load list with identifiers
         val List<String> identifiers = configuration.getAttribute(AttributeKey, #[])
 
         // Prepare the result list.
-        val List<ConfigurationSerializableData> datas = newArrayList()
+        val List<ConfigurationSerializable> datas = newArrayList()
 
         // Create an object for each identifier and load its data.
         for (identifier : identifiers) {
@@ -124,7 +136,7 @@ abstract class ConfigurationSerializableData {
      * @param datas The list of data objects to be saved
      */
     protected static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, String identifiersKey,
-        List<? extends ConfigurationSerializableData> datas) {
+        List<? extends ConfigurationSerializable> datas) {
 
         if (datas != null) {
             // Create a list with the identifiers of the data objects which will be saved.
@@ -152,7 +164,7 @@ abstract class ConfigurationSerializableData {
      * @param datas The list of data objects to be saved
      */
     protected static def saveAllToPreferenceStore(IPreferenceStore store, String identifiersKey,
-        List<? extends ConfigurationSerializableData> datas) {
+        List<? extends ConfigurationSerializable> datas) {
         
         // Save identifiers of data objects as comma separated values
         var identifierCSV = "" 
@@ -174,11 +186,49 @@ abstract class ConfigurationSerializableData {
      * @param store The preference store where the data should be saved
      */
     protected def void saveToPreferenceStore(IPreferenceStore store){
+        saveToPreferenceStore(store, "")
+    }
+    
+    /**
+     * Saves this data object's fields to the preference store.
+     * Thereby the identifiers to store the fields are prefixed with the given prefix. 
+     * 
+     * @param store The preference store where the data should be saved
+     * @param prefix A prefix for the identifiers in the store.
+     */
+    protected def void saveToPreferenceStore(IPreferenceStore store, String prefix){
         // Save string fields
         val classObject = this.class
         for(f : classObject.declaredFields){
-            if (f.type == String && !Modifier.isStatic(f.modifiers))
-                store.setValue(getStoreKey(f.name), f.get(this).toString())
+            if(!Modifier.isStatic(f.modifiers)) {
+                val storeKey = getStoreKey(f.name, prefix)
+                if (f.type ==  String) {
+                    val object = f.get(this)
+                    if(object != null) {
+                        val value = object.toString()
+                        store.setValue(storeKey, value)
+                    }
+                } else if(typeof(ConfigurationSerializable).isAssignableFrom(f.type)) {
+                    // Save single reference of another serializable object
+                    val innerDataObject = f.get(this) as ConfigurationSerializable
+                    // Save object
+                    innerDataObject.saveToPreferenceStore(store, storeKey)
+                    // Save identifier of the object
+                    store.setValue(storeKey, innerDataObject.identifier)
+                } else if(typeof(List).isAssignableFrom(f.type)) {
+                    // Save list of references that contains other serializable objects
+                    val iter = f.get(this) as List
+                    var identifiersCSV = ""
+                    for(i : iter) {
+                        if(i instanceof ConfigurationSerializable) {
+                            i.saveToPreferenceStore(store, storeKey)
+                            identifiersCSV += i.identifier+","
+                        }
+                    }
+                    // Save identifiers of the objects
+                    store.setValue(storeKey, identifiersCSV)
+                }
+            }
         }
     }
     
@@ -191,13 +241,13 @@ abstract class ConfigurationSerializableData {
      * @param classObject A class of which objects are instantiated and loaded from the store
      * @return list with the loaded data objects from the preference store
      */
-    protected static def List<? extends ConfigurationSerializableData> loadAllFromPreferenceStore(IPreferenceStore store, String identifiersKey,
-            Class<? extends ConfigurationSerializableData> classObject) {
+    protected static def List<? extends ConfigurationSerializable> loadAllFromPreferenceStore(IPreferenceStore store, String identifiersKey,
+            Class<? extends ConfigurationSerializable> classObject) {
         
         val identifiersCSV = store.getString(identifiersKey)
         
         // No objects found
-        if(identifiersCSV == "")
+        if(identifiersCSV.isNullOrEmpty())
             return newArrayList()
         
         // Split on comma
@@ -212,7 +262,7 @@ abstract class ConfigurationSerializableData {
             
             // Load the fields
             data.loadFromPreferenceStore(store)
-        }
+        } 
         
         return datas
     }
@@ -222,16 +272,80 @@ abstract class ConfigurationSerializableData {
      * 
      * @param store The preference store to load the data from
      */
-    protected def void loadFromPreferenceStore(IPreferenceStore store){
+    protected def void loadFromPreferenceStore(IPreferenceStore store) {
+        loadFromPreferenceStore(store, "")
+    }
+    
+    /**
+     * Loads the values of this class's fields from the preference store.
+     * Therefor the given prefix is used to identify field values.
+     * 
+     * @param store The preference store to load the data from
+     * @param prefix A prefix for identifiers of fields
+     */
+    protected def void loadFromPreferenceStore(IPreferenceStore store, String prefix){
         // Load string fields
         val classObject = this.class
         for(f : classObject.declaredFields){
-            if (f.type == String && !Modifier.isStatic(f.modifiers)){
-                f.set(this, store.getString(getStoreKey(f.name)))                
+            if( !Modifier.isStatic(f.modifiers)) {
+                val storeKey = getStoreKey(f.name, prefix)
+                if (f.type == String) {
+                    // Load string value
+                    val value = store.getString(storeKey)
+                    val nonNullValue = Strings.nullToEmpty(value)
+                    f.set(this, nonNullValue)
+                } else if(typeof(ConfigurationSerializable).isAssignableFrom(f.type)) {
+                    // Load single reference to other serializable data
+                    // Get identifier
+                    val loadedIdentifier = store.getString(storeKey)
+                    // Create object
+                    val innerDataObject = f.type.newInstance() as ConfigurationSerializable
+                    innerDataObject.identifier = loadedIdentifier
+                    // Load fields of object
+                    innerDataObject.loadFromPreferenceStore(store, storeKey)
+                    // Assign loaded object to field
+                    f.set(this, innerDataObject)
+                } else if(typeof(List).isAssignableFrom(f.type)) {
+                    // Load list of references that contains serializable data
+                    val classOfContent = getClassOfFirstTypeArgument(f.genericType)
+                    if(typeof(ConfigurationSerializable).isAssignableFrom(classOfContent)) {
+                        // Set value of field
+                        val list = new ArrayList()
+                        f.set(this, list)
+                        // Load content of list
+                        // Get identifiers CSV
+                        val loadedIdentifiersCSV = store.getString(storeKey)
+                        if(!loadedIdentifiersCSV.isNullOrEmpty()) {
+                            val loadedIdentifiers = loadedIdentifiersCSV.split(",");
+                            // Iterate over identifiers
+                            for(loadedIdentifier : loadedIdentifiers) {
+                                if(!loadedIdentifier.isNullOrEmpty()) {                                
+                                    // Create object
+                                    val innerDataObject = classOfContent.newInstance() as ConfigurationSerializable
+                                    innerDataObject.identifier = loadedIdentifier
+                                    // Load fields of object
+                                    innerDataObject.loadFromPreferenceStore(store, storeKey)
+                                    // Add to list
+                                    list.add(innerDataObject)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    
+
+    private def Class<?> getClassOfFirstTypeArgument(Type genericType) {
+        if(genericType instanceof ParameterizedType){
+            val fieldArgTypes = genericType.getActualTypeArguments();
+            for(fieldArgType : fieldArgTypes) {
+                return fieldArgType as Class
+            }
+        }
+        return null
+    }
+     
     /**
      * Constructs a unique name for a field of this object
      * by concatenating identifiers for this class, object and field.
@@ -240,5 +354,18 @@ abstract class ConfigurationSerializableData {
      */
     protected def String getStoreKey(String fieldName){
         return class.name+"."+getIdentifier()+"."+fieldName
+    }
+    
+    /**
+     * Constructs a unique name for a field of this object
+     * by concatenating the prefix and identifiers for this class, object and field.
+     * 
+     * @return prefixed and unique identifier for a field of this data object. 
+     */
+    protected def String getStoreKey(String fieldName, String prefix){
+        if(prefix.isNullOrEmpty())
+            return getStoreKey(fieldName)
+        else
+            return prefix+"."+getStoreKey(fieldName)
     }
 }

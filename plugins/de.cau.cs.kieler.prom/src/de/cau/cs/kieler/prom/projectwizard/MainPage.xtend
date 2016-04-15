@@ -157,13 +157,13 @@ class MainPage extends WizardPage {
     }
 
     /**
-     * @return the related project wizard class name of the selected environment in the combobox<br />
+     * @return the associated project wizard class name of the selected environment in the combobox<br />
      *         or an empty string if there is no environment selected. 
      */
     public def String getEnvironmentWizardClassName() {
         val env = getSelectedEnvironment()
         if (env != null) {
-            return env.relatedProjectWizardClass
+            return env.getAssociatedProjectWizardClass
         } else {
             return ""
         }
