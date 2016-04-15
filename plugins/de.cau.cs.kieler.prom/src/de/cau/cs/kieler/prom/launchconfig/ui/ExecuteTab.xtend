@@ -26,14 +26,12 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.CheckboxTableViewer
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT

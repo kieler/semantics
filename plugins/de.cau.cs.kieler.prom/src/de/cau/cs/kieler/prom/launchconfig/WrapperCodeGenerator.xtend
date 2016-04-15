@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.ModelImporter

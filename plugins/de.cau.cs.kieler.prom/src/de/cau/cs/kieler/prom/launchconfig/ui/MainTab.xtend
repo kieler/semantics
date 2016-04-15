@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig.ui
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin

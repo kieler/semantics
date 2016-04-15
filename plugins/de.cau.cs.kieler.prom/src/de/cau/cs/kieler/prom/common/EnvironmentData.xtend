@@ -48,10 +48,10 @@ class EnvironmentData extends ConfigurationSerializable {
     protected KiCoLaunchData launchData = new KiCoLaunchData()
     
     /**
-     * The class name of an implementation of the related project wizard for this environment.
+     * The class name of an implementation of the associated project wizard.
      */
     @Accessors
-    protected String relatedProjectWizardClass = ""
+    protected String associatedProjectWizardClass = ""
     
     /**
      * A path to a file with the initial contents of a newly created main file of this environment.

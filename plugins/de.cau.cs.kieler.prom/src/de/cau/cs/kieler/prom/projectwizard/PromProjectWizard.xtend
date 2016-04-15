@@ -13,13 +13,13 @@
  */
 package de.cau.cs.kieler.prom.projectwizard
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import java.io.File
 import java.io.InputStream
 import org.apache.commons.io.FileUtils
+import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -39,13 +39,12 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
-import org.apache.commons.io.FilenameUtils
 
 /**op
  * Wizard implementation wich creates a project
  * and optionally initializes it by using enviroments.
  * Shows a main page to set the environment and with which files the new project should be initialized.
- * Then the related project wizard of the environment is run.
+ * Then the associated project wizard of the environment is run.
  * 
  * @author aas
  */
@@ -63,7 +62,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
 
     /**
-     * The projects in the workspace before the related wizard of the environment was run.
+     * The projects in the workspace before the associated wizard of the environment was run.
      */
     protected var IProject[] projectsBeforeWizard
     
@@ -127,7 +126,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * Opens the related wizard and initializes the newly created project of this wizard.
+     * Opens the associated wizard and initializes the newly created project of this wizard.
      * 
      * @return true if everything finished successful
      */
@@ -505,7 +504,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
 
     /**
      * Compares the current projects with the projects
-     * which existed before the environment's related project wizard has been opened.
+     * which existed before the environment's associated project wizard has been opened.
      * 
      * @return the project that has been created since this wizard has been opened.
      */

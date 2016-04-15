@@ -18,7 +18,6 @@ import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.base.Strings
 
 /**
  * Container for shell commands.

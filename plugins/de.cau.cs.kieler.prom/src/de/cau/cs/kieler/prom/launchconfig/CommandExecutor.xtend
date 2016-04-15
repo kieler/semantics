@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.CommandData
 import java.io.File
 import java.util.ArrayList

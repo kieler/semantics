@@ -65,7 +65,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.launchData = launchData
         env.modelFile = "src/${project_name}"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
-        env.relatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
+        env.associatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
         return env
     } 
@@ -88,7 +88,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.launchData = launchData
         env.modelFile = "src/${project_name}"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets"
-        env.relatedProjectWizardClass = "org.lejos.ev3.ldt.wizard.NewEV3Project"
+        env.associatedProjectWizardClass = "org.lejos.ev3.ldt.wizard.NewEV3Project"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl"
         return env
     } 
@@ -110,7 +110,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.launchData = launchData
         env.modelFile = "${project_name}"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/snippets"
-        env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/main.ftl"
         return env
     }
@@ -132,7 +132,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.launchData = launchData
         env.modelFile = "${project_name}Model"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets"
-        env.relatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
+        env.associatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
         env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/arduino_main.ftl"
         return env
     }

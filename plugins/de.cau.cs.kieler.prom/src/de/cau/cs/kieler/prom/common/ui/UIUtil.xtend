@@ -41,9 +41,7 @@ import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ICheckStateProvider
-import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn

@@ -160,10 +160,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     
     
     /**
-     * The combobox with the related project wizard class name of the environment.
+     * The combobox with the associated project wizard class name of the environment.
      * The combobox is filled with the extensions of 'org.eclipse.ui.newWizards' that create projects.
      */
-    private var ComboViewer relatedProjectWizard
+    private var ComboViewer associatedProjectWizard
     /**
      * The input field for the default model file of the environment.
      */
@@ -275,15 +275,15 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
-     * Creates the controls for the related project wizard of the current environment.
+     * Creates the controls for the associated project wizard of the current environment.
      */
     private def void createWizardComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project wizard", 2)
         
         // Create ComboViewer
         val combo = new ComboViewer(group, SWT.DEFAULT)
-        relatedProjectWizard = combo
-        relatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a new project"
+        associatedProjectWizard = combo
+        associatedProjectWizard.combo.toolTipText = "Project wizard to run when creating a new project"
         
         // Fill combo
         combo.contentProvider = ArrayContentProvider.instance
@@ -316,7 +316,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
             override selectionChanged(SelectionChangedEvent event) {
                 if(currentData != null){
-                    currentData.relatedProjectWizardClass = getSelectedClassNameInCombobox(relatedProjectWizard)
+                    currentData.associatedProjectWizardClass = getSelectedClassNameInCombobox(associatedProjectWizard)
                     checkConsistency()
                }
             }
@@ -706,9 +706,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 env.launchData.targetLanguage = getSelectedTargetLanguageId()
                 
                 // Get first project wizard in combo box
-                val input = relatedProjectWizard.input as ArrayList<IConfigurationElement> 
+                val input = associatedProjectWizard.input as ArrayList<IConfigurationElement> 
                 if(!input.isEmpty)
-                    env.relatedProjectWizardClass = input.get(0).getAttribute("class")
+                    env.associatedProjectWizardClass = input.get(0).getAttribute("class")
                 
                 // Add environment to list
                 val inputArray = (list.input as ArrayList<EnvironmentData>)
@@ -743,11 +743,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // Update name
             name.text = data.name
             
-            // Update related project wizard
-            if (relatedProjectWizard.input != null) {
-                for (obj : relatedProjectWizard.input as ArrayList<IConfigurationElement>) {
-                    if (obj.getAttribute("class") == data.relatedProjectWizardClass) {
-                        relatedProjectWizard.selection = new StructuredSelection(obj)
+            // Update project wizard
+            if (associatedProjectWizard.input != null) {
+                for (obj : associatedProjectWizard.input as ArrayList<IConfigurationElement>) {
+                    if (obj.getAttribute("class") == data.associatedProjectWizardClass) {
+                        associatedProjectWizard.selection = new StructuredSelection(obj)
                     }
                 }
             }
