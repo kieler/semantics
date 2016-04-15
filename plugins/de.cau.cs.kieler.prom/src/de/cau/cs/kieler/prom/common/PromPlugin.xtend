@@ -13,12 +13,16 @@
  */
 package de.cau.cs.kieler.prom.common
 
+import com.google.common.base.Charsets
+import com.google.common.io.CharStreams
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import java.io.ByteArrayInputStream
 import java.io.FileInputStream
+import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.net.URL
 import java.util.Map
-import org.apache.commons.io.IOUtils
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.runtime.QualifiedName
 import org.eclipse.jdt.core.IJavaProject
@@ -115,7 +119,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             
             // Return stream of content where all placeholders are replaced with actual values.
             if(placeholderReplacement != null){
-                val contents = IOUtils.toString(inputStream)
+                val contents = streamToString(inputStream)
                 inputStream.close()
                 
                 // Replace placeholders
@@ -123,12 +127,41 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 for(placeholder : placeholderReplacement.keySet) {
                     contentsWithoutPlaceholders = contentsWithoutPlaceholders.replace(placeholder, placeholderReplacement.get(placeholder))
                 }
-            
-                return IOUtils.toInputStream(contentsWithoutPlaceholders)
+                val stream = stringToStream(contentsWithoutPlaceholders)
+                return stream
             } else {
                 return inputStream
             }    
         }
+    }
+    
+    /**
+     * Reads all text from the given input stream.
+     * 
+     * @param inputStream The input stream
+     * @return the complete text of the stream
+     */
+    def private static String streamToString(InputStream inputStream) {
+        var text = "";
+        val reader = new InputStreamReader(inputStream, Charsets.UTF_8)
+        try {
+            text = CharStreams.toString(reader);
+        } catch (IOException e) {
+            e.printStackTrace()
+        }
+        reader.close()
+        return text
+    }
+    
+    /**
+     * Creates an input stream for a string.
+     * 
+     * @param text The string
+     * @return a stream for the text
+     */
+    def private static InputStream stringToStream(String text) {
+        val stream = new ByteArrayInputStream(text.getBytes());
+        return stream
     }
     
     /**

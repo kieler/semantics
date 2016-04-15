@@ -17,9 +17,9 @@ import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
-import org.apache.commons.io.FileUtils
-import org.apache.commons.io.FilenameUtils
+import java.nio.file.Files
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
 import org.eclipse.core.resources.IProject
@@ -27,6 +27,7 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.JavaCore
@@ -210,8 +211,8 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // Load path of model file
         val modelFilePathWithoutExtension = getModelFilePath()
-        val modelFileNameWithoutExtension = FilenameUtils.getBaseName(modelFilePathWithoutExtension)
-
+        val modelFileNameWithoutExtension = new Path(modelFilePathWithoutExtension).removeFileExtension.lastSegment
+ 
         try {
             // Open initial content stream
             var InputStream initialContentStream = null
@@ -353,7 +354,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                     val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.launchData.wrapperCodeSnippetDirectory)
                     
-                    FileUtils.copyDirectory(source, target)
+                    copyFolder(source, target)
                 } else {
                     // Create empty directory 
                     val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
@@ -369,6 +370,44 @@ class PromProjectWizard extends Wizard implements INewWizard {
         }
         
         return true;
+    }
+
+    /**
+     * Copy the contents of a folder recursively.
+     */
+    def static private void copyFolder(File src, File dest) {
+        // original code from http://stackoverflow.com/questions/29076439/java-8-copy-directory-recursively
+        
+        // Checks
+        if(src == null || dest == null)
+            return;
+        if(!src.isDirectory())
+            return;
+        if(dest.exists()){
+            if(!dest.isDirectory()){
+                //System.out.println("destination not a folder " + dest);
+                return;
+            }
+        } else {
+            dest.mkdirs();
+        }
+    
+        if(src.listFiles() == null || src.listFiles().length == 0)
+            return;
+        
+        for(File file : src.listFiles()){
+            val fileDest = new File(dest, file.getName())
+//            println(file.getAbsolutePath()+" --> "+fileDest.getAbsolutePath())
+            if(file.isDirectory()){
+                copyFolder(file, fileDest)
+            }else if(!fileDest.exists()){
+                try {
+                    Files.copy(file.toPath(), fileDest.toPath())
+                } catch (IOException e) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     /**

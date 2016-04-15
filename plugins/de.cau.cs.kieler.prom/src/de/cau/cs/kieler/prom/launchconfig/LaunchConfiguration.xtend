@@ -29,7 +29,6 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.PrintWriter
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -179,7 +178,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 } else {
                     // Refresh directories of files
                     for(fileData : launchData.files) {
-                        var dir = FilenameUtils.getPathNoEndSeparator(fileData.projectRelativePath)
+                        var dir = new Path(fileData.projectRelativePath).removeTrailingSeparator.toOSString
                         if(dir.startsWith("/") || dir.startsWith("\\")) {
                             dir = dir.substring(1)    
                         }
@@ -454,7 +453,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         var String projectRelativeTargetPath;
         if(launchData.targetDirectory.isNullOrEmpty()) {
             // Compute path such that the target file will be in the same file as the source file.
-            projectRelativeTargetPath = FilenameUtils.getFullPath(projectRelativePath) + FilenameUtils.getBaseName(projectRelativePath) + launchData.targetLanguageFileExtension
+            projectRelativeTargetPath = new Path(projectRelativePath).removeFileExtension.toOSString + launchData.targetLanguageFileExtension
         } else {
             // Compute path in the target directory
             // such that the directory structure of the original file is retained.
@@ -471,7 +470,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             }
             
             // Remove extension
-            val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
+            val projectRelativeRelevantPathWithoutExtension = new Path(projectRelativeRelevantPath).removeFileExtension        
          
             // Compute target path
             projectRelativeTargetPath = launchData.targetDirectory + File.separator + projectRelativeRelevantPathWithoutExtension + launchData.targetLanguageFileExtension
@@ -488,7 +487,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val classPathEntries = javaProject.getRawClasspath();
         for(entry : classPathEntries) {
             if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
-                val sourceFolderName = FilenameUtils.getBaseName(entry.path.toOSString())
+                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
                 if(sourceFolderName.equals(directory)) {
                     return true
                 }
@@ -566,7 +565,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                                else
                                    ""
         val mainFilePath = launchData.mainFile
-        val mainFileWithoutExtension = FilenameUtils.removeExtension(mainFileName)
+        val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName)
         setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
         setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath)
@@ -580,7 +579,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                                  else
                                     ""
         val mainTargetPath = mainTarget
-        val mainTargetWithoutExtension = FilenameUtils.removeExtension(mainTargetName)
+        val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)

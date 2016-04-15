@@ -24,9 +24,9 @@ import java.io.StringWriter
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -144,7 +144,7 @@ class WrapperCodeGenerator {
         
         // Add name of output file 
         val fileName = new File(resolvedWrapperCodeTargetLocation).name
-        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
         map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
         
         // Inject macro calls in input template
@@ -393,7 +393,7 @@ class WrapperCodeGenerator {
             // If none of the analyzers can get a name for the model
             // we interpret the file name as the model's name, like it is in java classes. 
             if (modelName == null)
-                modelName = FilenameUtils.getBaseName(data.projectRelativePath)
+                modelName = new Path(data.projectRelativePath).removeFileExtension.lastSegment
         }
     }
     
