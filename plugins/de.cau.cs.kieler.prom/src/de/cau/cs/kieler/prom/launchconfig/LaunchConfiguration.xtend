@@ -367,21 +367,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 //                val startTime = System.currentTimeMillis()
 
                 try {
-                    // Create generator
-                    var IWrapperCodeGenerator generator
-                    if(!launchData.wrapperCodeGenerator.isNullOrEmpty()){
-                        generator = instantiateWrapperCodeGenerator(launchData.wrapperCodeGenerator)
-                    } else {
-                        generator = new WrapperCodeGenerator()
-                    }
-                    
-                    // Generate code
-                    if(generator != null) {
-                        generator.launchConfiguration = launchConfig
-                        generator.generateWrapperCode(launchData.files)
-                    } else {
-                        writeToConsole("The class for wrapper code generation " + launchData.wrapperCodeGenerator+ " could not be instantiated.")
-                    }
+                    // Create wrapper code
+                    val generator = new WrapperCodeGenerator(launchConfig)
+                    generator.generateWrapperCode(launchData.files)
                 } catch (Exception e) {
                     writeToConsole(e)
                     return Status.CANCEL_STATUS
@@ -395,18 +383,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             }
         }
     }
-
-    /**
-     * Instantiates a wrapper code generator with the given class name.
-     * 
-     * @param fullyQualifiedClassName The class name
-     */
-    private def IWrapperCodeGenerator instantiateWrapperCodeGenerator(String fullyQualifiedClassName) {
-        return ExtensionLookupUtil.instantiateClassFromExtension(WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID,
-                                       "generator", "class", fullyQualifiedClassName)
-                                       as IWrapperCodeGenerator
-    }
-
+    
     /**
      * Creates a job that executes the commands for this launch config successively.
      * 

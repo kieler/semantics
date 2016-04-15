@@ -3,7 +3,6 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer" schema="schema/de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer.exsd"/>
-   <extension-point id="de.cau.cs.kieler.prom.wrapperCodeGenerator" name="Wrapper Code Generator" schema="schema/de.cau.cs.kieler.prom.wrapperCodeGenerator.exsd"/>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
@@ -95,12 +94,6 @@
                id="org.eclipse.ui.wizards.new.folder">
          </newWizardShortcut>
       </perspectiveExtension>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.prom.wrapperCodeGenerator">
-      <generator
-            class="de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator">
-      </generator>
    </extension>
 
 </plugin>

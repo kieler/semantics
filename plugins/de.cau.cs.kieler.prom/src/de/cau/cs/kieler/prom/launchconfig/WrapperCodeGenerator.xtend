@@ -39,7 +39,7 @@ import org.freemarker.FreeMarkerPlugin
  * 
  * @author aas
  */
-class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
+class WrapperCodeGenerator {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
@@ -77,6 +77,11 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     public static var String macroDefinitions = null
 
     /**
+     * The launch config, which created this instance. 
+     */
+    private LaunchConfiguration launchConfig
+
+    /**
      * The name of the last processed model
      * (e.g. the name for an SCChart).  
      */
@@ -86,18 +91,22 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     private String resolvedWrapperCodeSnippetDirectory
     private String resolvedWrapperCodeTargetLocation
     
+    new(LaunchConfiguration launchConfig) {
+        this.launchConfig = launchConfig
+    }
+    
     /**
      * Generates and saves the wrapper code for a list of files.
      * 
      * @param datas The data objects to generate wrapper code for 
      */
-    override void generateWrapperCode(FileCompilationData... datas) {
+    def public void generateWrapperCode(FileCompilationData... datas) {
 
         // Resolve variables
         val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        resolvedWrapperCodeTemplate = variableManager.performStringSubstitution(launchConfiguration.launchData.wrapperCodeTemplate)
-        resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfiguration.launchData.wrapperCodeSnippetDirectory)
-        resolvedWrapperCodeTargetLocation = launchConfiguration.computeTargetPath(resolvedWrapperCodeTemplate, false)
+        resolvedWrapperCodeTemplate = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate)
+        resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
+        resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
 
         // Check consistency of path
         if (!resolvedWrapperCodeTemplate.isNullOrEmpty()) {
@@ -139,7 +148,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
         
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(launchConfiguration.project.location.toOSString())
+        FreeMarkerPlugin.newConfiguration(launchConfig.project.location.toOSString())
         val template = FreeMarkerPlugin.configuration.getTemplate(resolvedWrapperCodeTemplate)
 
         val writer = new StringWriter()
@@ -160,7 +169,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
             var File snippetDirectoryLocation = new File(resolvedWrapperCodeSnippetDirectory)
             if (!snippetDirectoryLocation.isAbsolute)
-                snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
+                snippetDirectoryLocation = new File(launchConfig.project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
                 
             // Set the snippets directory to implicitly load the macro definitions
             FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
@@ -363,7 +372,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.load(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath, true)
+        val model = ModelImporter.load(launchConfig.project.location.toOSString + File.separator + data.projectRelativePath, true)
 
         if (model != null) {
             initAnalyzers()

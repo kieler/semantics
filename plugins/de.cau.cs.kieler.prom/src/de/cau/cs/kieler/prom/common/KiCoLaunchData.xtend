@@ -63,12 +63,6 @@ class KiCoLaunchData extends ConfigurationSerializable {
      */
     @Accessors
     protected String wrapperCodeSnippetDirectory = ""
-    /**
-     * Fully qualified name of a class that implements an wrapper code generator.
-     * If this field is empty, the default wrapper code generator is used. 
-     */
-    @Accessors
-    protected String wrapperCodeGenerator = ""
 
     /**
      * List with commands which should be executed after the compilation and wrapper code generation

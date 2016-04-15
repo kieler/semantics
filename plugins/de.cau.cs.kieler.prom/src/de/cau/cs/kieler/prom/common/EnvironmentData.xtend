@@ -158,7 +158,6 @@ class EnvironmentData extends ConfigurationSerializable {
         
         loadedLaunchData.wrapperCodeTemplate = launchData.wrapperCodeTemplate
         loadedLaunchData.wrapperCodeSnippetDirectory = launchData.wrapperCodeSnippetDirectory
-        loadedLaunchData.wrapperCodeGenerator = launchData.wrapperCodeGenerator
     
         loadedLaunchData.commands = launchData.commands
         loadedLaunchData.associatedLaunchShortcut = launchData.associatedLaunchShortcut
