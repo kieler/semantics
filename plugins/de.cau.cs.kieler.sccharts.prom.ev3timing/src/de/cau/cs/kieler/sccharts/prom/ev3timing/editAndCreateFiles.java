@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.sccharts.prom.ev3timing;
 
 import java.io.*;
@@ -6,8 +20,16 @@ import java.util.Map.Entry;
 
 import org.apache.commons.io.*;
 
-public class editAndCreateTickAndMainFiles {
+/**
+ * Read .ta-File into Lists. Create files: tickFile, mainFile and headerFile.
+ * 
+ * 
+ * @author dso
+ */
 
+public class editAndCreateFiles {
+
+	// Insert the insert String into the bag String at position index
 	public static String insertString(String bag, String insert, int index) {
 		String bagBegin = bag.substring(0, index);
 		String bagEnd = bag.substring(index);
@@ -39,29 +61,34 @@ public class editAndCreateTickAndMainFiles {
 	public void editTickFile(String path, String fileName) throws IOException {
 
 		String newline = System.lineSeparator();
-
+		String start = "void tick(){";
 		int indexOfTick;
+		String end = "return;";
+
 		// Load generated tickFunction
 
 		File file = new File(path);
 		String tickFile = FileUtils.readFileToString(file);
 
-
 		// Check for edited
+
 		if (tickFile.contains("/* Im edit the generated TickFunction       */")
 				&& tickFile
 						.contains("/* It now ready to timing                   */")) {
 			System.err.println("sct is previewsly edited");
-
 			return;
 		}
 
+		
 		// Mark the Tick File
+
 		String comment = "/* Im edit the generated TickFunction       */"
 				+ newline + "/* It now ready to timing                   */"
 				+ newline + "#include \"" + fileName + ".h\"" + newline
 				+ newline + newline;
-		// define TPP replacment
+
+		
+		// define TPP replacement as a precompiler instruktion
 
 		comment += "#define TPP(LABEL) "
 				+ "asm volatile(\"\" ::: \"memory\"); "
@@ -70,7 +97,9 @@ public class editAndCreateTickAndMainFiles {
 
 		tickFile = insertString(tickFile, comment, 0);
 
-		// get TPP count
+		
+		// get TPP count from tickFile if not in the .ta-File
+
 		if (tppCount == -1) {
 			if (tickFile.contains("TPP(")) {
 				String tpp = tickFile
@@ -82,31 +111,33 @@ public class editAndCreateTickAndMainFiles {
 			}
 		}
 
-		String start = "void tick(){";
-
-		// find TickIndex
+		// find Index of TickFunction
 
 		indexOfTick = tickFile.indexOf(start);
 
 		// Insert StartStamp
+
 		int indexOfStart = tickFile.indexOf(start) + start.length();
 
 		tickFile = insertString(tickFile, newline + "TPP(Entry);" + newline
 
 		, indexOfStart);
 
-		// Find End of Tick.
-		String end = "return;";
+		
+		// Find End of TickFunction.
 
 		indexOfTick = tickFile.indexOf(start);
 
 		int offsetOfEnd = tickFile.substring(indexOfTick).lastIndexOf(end);
 
+		
 		// Insert EndStamp
+		
 		tickFile = insertString(tickFile, newline + "TPP(Exit);" + newline,
 				indexOfTick + offsetOfEnd);
 
-		// build Timing Variables
+		
+		// build Timing Variables for TPPs
 
 		String timingVars = "unsigned long timingTPPEntry, timingTPPExit";
 
@@ -116,8 +147,8 @@ public class editAndCreateTickAndMainFiles {
 		}
 		timingVars = timingVars + ";" + newline;
 
-		// replace calls with known wcet and insert callcounter
-
+		
+		// replace calls with known runtime data and insert Counter for the calls
 
 		indexOfTick = tickFile.indexOf(start);
 
@@ -128,8 +159,7 @@ public class editAndCreateTickAndMainFiles {
 				int tppIndex = tickFile.indexOf(
 						"TPP(",
 						(tickFile.substring(indexOfTick).indexOf(
-								e.getKey() + "(") + indexOfTick))
-						 + 4;
+								e.getKey() + "(") + indexOfTick)) + 4;
 
 				System.err.println(tickFile.substring(tppIndex));
 
@@ -151,6 +181,7 @@ public class editAndCreateTickAndMainFiles {
 
 		}
 
+		
 		// Insert Timing Variables
 
 		String goVars = "char _GO;";
@@ -159,7 +190,9 @@ public class editAndCreateTickAndMainFiles {
 		tickFile = insertString(tickFile, newline + timingVars + newline,
 				indexOfVars);
 
-		// Generate SetFunction
+		
+		// Generate SetFunction 
+
 		List<Map.Entry<String, String>> oneSetList;
 		String oneSetFunction = "";
 
@@ -170,11 +203,11 @@ public class editAndCreateTickAndMainFiles {
 			int size = stateList.size();
 			int setCounter = 0;
 
-			for (int i = 0; i < (int)Math.pow(2,size); i++) {
+			for (int i = 0; i < (int) Math.pow(2, size); i++) {
 				List<Map.Entry<String, String>> valueList = new ArrayList<>();
 				int counterCopy = setCounter;
 				for (int j = 0; j < size; j++) {
-					System.err.println((int)Math.pow(2,size) + "  k  " + i);
+					System.err.println((int) Math.pow(2, size) + "  k  " + i);
 					valueList.add(new AbstractMap.SimpleEntry<>(stateList
 							.get(j), Integer.toString(counterCopy % 2)));
 					counterCopy = counterCopy / 2;
@@ -202,6 +235,7 @@ public class editAndCreateTickAndMainFiles {
 
 		}
 
+		
 		// Insert SetFunctions
 
 		String resetFunction = "void reset(){";
@@ -216,7 +250,9 @@ public class editAndCreateTickAndMainFiles {
 
 	}
 
-	// Helper to read the keywords
+	
+	// Helper to read the keywords of the .ta-File without Combination
+
 	private void decodeLine(String line) {
 
 		if (line.startsWith("HighestTPPNumber ")) {
@@ -262,6 +298,8 @@ public class editAndCreateTickAndMainFiles {
 		return;
 	}
 
+	
+	
 	public void readTa(String path) throws IOException {
 
 		String newline = System.lineSeparator();
@@ -277,7 +315,8 @@ public class editAndCreateTickAndMainFiles {
 		File file = new File(path);
 		String taFile = FileUtils.readFileToString(file);
 
-		// Read keywords State FWCET FunctionWCET GlobalVar
+		
+		// Read keywords State FWCET FunctionWCET GlobalVar HighestTPPNumber
 
 		taCopy = taFile;
 		rightIndex = 0;
@@ -303,7 +342,8 @@ public class editAndCreateTickAndMainFiles {
 
 		}
 
-		// Read Combinations
+		// Read Combinations of the .ta-File
+
 		taCopy = taFile;
 		rightIndex = 0;
 		stateCount = stateList.size();
@@ -354,6 +394,8 @@ public class editAndCreateTickAndMainFiles {
 		return;
 	}
 
+	
+	
 	private String createMainC(String fileName) {
 
 		String newline = System.lineSeparator();
@@ -364,25 +406,36 @@ public class editAndCreateTickAndMainFiles {
 		String openLoops = "";
 		String closeLoops = "";
 		String selectSet = "";
-		String instance = "";
-		String bufferValues = "";
+		String fullMain = "";
 		String initResults = "";
 		String tickResults = "";
 		String tick = "";
 		String openRerun = "";
 		String closeRerun = "";
 
-		// calc max. csv buffer size
-		int bufferSize = (37 + tppCount * 13);
+		/* calc max. csv buffer size 
+		 * 11 digits for SetNumber and separator
+		 *
+		 * one timestamp can be 13 digits with separator
+		 * tppCount plus implicit TPPs timestamps used.
+		 *
+		 * for every globalVar the digits of max. value and separator
+		 *  
+		 * for every HostcodecallCounter 10 digits
+       	 */ 
+
+		int bufferSize = (11 + 26 + tppCount * 13);
 
 		for (Entry<String, List<String>> l : globalVarList) {
 			bufferSize += 2 + Integer.parseInt(l.getValue().get(
 					l.getValue().size() - 1));
 		}
 
-		// static List<Map.Entry<String, List<String>>> globalVarList = new
-		// ArrayList<>();
-
+		bufferSize += FunctionWCETBlockList.size() * 10;
+		
+		
+		// build pieces of the mainFunction
+		
 		initResults += "SetNr";
 		for (Entry<String, List<String>> e : globalVarList) {
 			initResults += "," + e.getKey();
@@ -401,6 +454,8 @@ public class editAndCreateTickAndMainFiles {
 
 		initResults += "\\n";
 
+		
+		
 		start += "#include \"" + fileName + ".c\"" + newline + "#include \""
 				+ fileName + ".h\"" + newline + newline + "#include <time.h>"
 				+ newline + "#include <sys/time.h>" + newline
@@ -437,7 +492,7 @@ public class editAndCreateTickAndMainFiles {
 				+ "//Pointer to the 32Bit timing register" + newline
 				+ "systemTimer = mem + page_offset + 4;" + newline + newline
 				+ "//write header of csv" + newline + "FILE *fp;" + newline
-				+ "fp = fopen(\"./result.csv\", \"w+\");" + newline
+				+ "fp = fopen(\"./" + fileName + "_result.csv\", \"w+\");" + newline
 				+ "fprintf(fp, \"" + initResults + "\");" + newline
 				+ "fclose( fp );" + newline + newline;
 
@@ -464,6 +519,9 @@ public class editAndCreateTickAndMainFiles {
 
 		decl += newline;
 		newline += "	";
+		
+		
+		
 		openLoops += "for(stateLoopcount = 0; stateLoopcount < "
 				+ combinationList.size() + "; stateLoopcount++){" + newline;
 
@@ -496,8 +554,10 @@ public class editAndCreateTickAndMainFiles {
 
 		selectSet += newline;
 
+		
 		tick += newline + "tick();" + newline + newline;
 
+		
 		tickResults += "bufNeed = sprintf (&buf[currBufIndex], \"%u\", stateLoopcount);"
 				+ newline + "currBufIndex = currBufIndex + bufNeed;" + newline;
 
@@ -547,6 +607,8 @@ public class editAndCreateTickAndMainFiles {
 		tickResults += "buf[currBufIndex] = '\\n';" + newline
 				+ "currBufIndex ++;" + newline;
 
+		
+		
 		closeRerun += newline;
 		for (String s : FunctionWCETBlockList) {
 
@@ -556,7 +618,7 @@ public class editAndCreateTickAndMainFiles {
 		closeRerun += "rerun--;" + newline + newline;
 
 		closeRerun += "buf[currBufIndex] = '\\0';" + newline
-				+ "fp = fopen(\"./result.csv\", \"a\");" + newline
+				+ "fp = fopen(\"./" + fileName + "_result.csv\", \"a\");" + newline
 				+ "fputs(buf , fp);" + newline + "fclose( fp );" + newline
 				+ "currBufIndex = 0;" + newline;
 
@@ -576,16 +638,21 @@ public class editAndCreateTickAndMainFiles {
 
 		newline = System.lineSeparator();
 
-		instance = start + decl + openLoops + openRerun + selectSet + tick
+		
+		
+		// conc pieces
+		
+		fullMain = start + decl + openLoops + openRerun + selectSet + tick
 				+ tickResults + closeRerun + closeLoops + end;
 
-		return instance;
+		return fullMain;
 
 	}
 
+	
 	public String createHFile() {
-		String newline = System.lineSeparator();
 
+		String newline = System.lineSeparator();
 		String hFile = "";
 
 		// insert Timing Vars
@@ -597,13 +664,13 @@ public class editAndCreateTickAndMainFiles {
 		}
 
 		// insert scchart vars
-		if (globalVarList.size()>0){
-		hFile += ";" + newline + newline + "extern char "
-				+ globalVarList.get(0).getKey();
+
+		if (globalVarList.size() > 0) {
+			hFile += ";" + newline + newline + "extern char "
+					+ globalVarList.get(0).getKey();
 
 		}
-		
-		
+
 		for (int i = 1; i < globalVarList.size(); i++) {
 			hFile += ", " + globalVarList.get(i).getKey();
 		}
@@ -612,8 +679,7 @@ public class editAndCreateTickAndMainFiles {
 		return hFile;
 	}
 
-	public void start(String folderPath, String tickFileName) {
-		try {
+	public void start(String folderPath, String tickFileName) throws IOException {
 
 			readTa(folderPath.substring(0, folderPath.indexOf("kieler-gen"))
 					+ tickFileName + ".ta");
@@ -624,11 +690,7 @@ public class editAndCreateTickAndMainFiles {
 			FileUtils.write(mainC, createMainC(tickFileName));
 
 			File mainH = new File(folderPath + tickFileName + ".h");
-			FileUtils.write(mainH, createHFile());
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			FileUtils.write(mainH, createHFile());		
 
 	}
 

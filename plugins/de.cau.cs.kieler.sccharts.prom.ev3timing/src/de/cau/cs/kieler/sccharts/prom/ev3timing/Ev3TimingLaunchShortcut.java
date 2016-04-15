@@ -15,11 +15,8 @@
 package de.cau.cs.kieler.sccharts.prom.ev3timing;
 
 import java.io.BufferedReader;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -34,15 +31,17 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.ide.ResourceUtil;
-import org.eclipse.xtext.xbase.lib.Exceptions;
-
 
 import com.google.common.base.Objects;
 
+
 /**
+ * 
+ * 
  * @author dso
- *
  */
+
+
 public class Ev3TimingLaunchShortcut implements ILaunchShortcut {
 
 	/**
@@ -75,7 +74,6 @@ public class Ev3TimingLaunchShortcut implements ILaunchShortcut {
 
 	/**
 	 * 
-	 *
 	 * 
 	 * 
 	 * 
@@ -88,22 +86,27 @@ public class Ev3TimingLaunchShortcut implements ILaunchShortcut {
 	private void launch(final IFile file, final String mode) {
 		
 		
-		
+		//init console to print info
 		String CONSOLE_NAME = "ev3Timing";
-
 		findConsole(CONSOLE_NAME);
+		
 		MessageConsole myConsole = findConsole(CONSOLE_NAME);
 		MessageConsoleStream out = myConsole.newMessageStream();
 
 	
+		
 		String tickFileName = null;
 		String folderPath = null;
-		editAndCreateTickAndMainFiles eT = new editAndCreateTickAndMainFiles();
-		ssh ssh = new ssh();
+		
+		//Call programm generation
+		editAndCreateFiles eT = new editAndCreateFiles();
+		
 		try {
 			file.getParent().getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
 			folderPath = file.getParent().getLocation().toString() + "/";
 
+			
+			//Find tickFile
 			for (IResource e : file.getParent().members()) {
 
 				if (e.getFileExtension().equals("c")) {
@@ -122,7 +125,8 @@ public class Ev3TimingLaunchShortcut implements ILaunchShortcut {
 			
 			eT.start(folderPath, tickFileName);
 
-			try {
+			//Compile programm
+			
 				ProcessBuilder builder = new ProcessBuilder();
 				builder.redirectErrorStream(true);
 				builder.command("arm-none-linux-gnueabi-gcc", "-o", folderPath
@@ -142,28 +146,27 @@ public class Ev3TimingLaunchShortcut implements ILaunchShortcut {
 				}
 
 				while (process.isAlive()) {
-					try {
 						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 				}
 
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+					
+			//upload and run the programm
+			copyAndexecuteProgramm ssh = new copyAndexecuteProgramm();
+			
 			file.getParent().getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
+			
 			ssh.start(folderPath, tickFileName);
+			
 			file.getParent().getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
 
 			
 
 			out.println("Finished\n");
-		} catch (Throwable _e) {
-			throw Exceptions.sneakyThrow(_e);
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+			out.println(e.getMessage());
 		}
 
 	}

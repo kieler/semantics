@@ -13,13 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.prom.ev3timing
 
-import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
- * Returns a list with default environments ready to use.
+ * Create a environment for Prom. Its called "EV3 timing" and configures the timing analysis on LEGO Mindstorms EV3 . 
  * 
  * @author dso
  */
@@ -39,12 +38,8 @@ class Ev3TimingEnvironmentInitializer implements IEnvironmentsInitializer {
 		env.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
         env.wrapperCodeSnippetsDirectory = "kieler-gen"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom.ev3timing/environments/ev3timing/snippets"
-//        env.wrapperCodeGenerator = "de.cau.cs.kieler.sccharts.prom.ev3timing.Ev3TestWrapperCodeGenerator";
-		// env.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
         env.associatedLaunchShortcut = "de.cau.cs.kieler.sccharts.prom.ev3timingShortcut"
 		env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-//        env.mainFile = "main.ftl"
-//        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom.ev3timing/environments/ev3timing/main.ftl"
 		env.mainFile = "main.c";
 
 		return datas

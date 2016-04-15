@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.sccharts.prom.ev3timing;
 
 import java.awt.*;
@@ -5,32 +19,28 @@ import java.io.*;
 
 import javax.swing.*;
 
-import sun.security.util.Password;
-
 import com.jcraft.jsch.*;
 
-/* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /**
- * This program will demonstrate the file transfer from local to remote. $
- * CLASSPATH=.:../build javac ScpTo.java $ CLASSPATH=.:../build java ScpTo file1
- * user@remotehost:file2 You will be asked passwd. If everything works fine, a
- * local file 'file1' will copied to 'file2' on 'remotehost'.
- *
+ * Upload and run the programm.
+ * Copy results back after execution.
+ * 
+ * @author dso
  */
 
-public class ssh {
+public class copyAndexecuteProgramm {
 
 	
+	//Data for the connection
 	static String user = "robot";
 	static String password = "maker";
 	static String host = "10.42.0.3";
 
-	
-	public void exec(Session session, String fileName) {
-		try {
+	// run the programm with the given filename as root
+	public void exec(Session session, String fileName) throws JSchException, IOException {
+		
 
 			String command = "chmod +x " + fileName + ";sudo ./" + fileName;
-		
 
 			String sudo_pass = password;
 
@@ -53,11 +63,11 @@ public class ssh {
 					int i = in.read(tmp, 0, 1024);
 					if (i < 0)
 						break;
-//					System.out.print(new String(tmp, 0, i));
+					
 				}
 				if (channel.isClosed()) {
-//					System.out.println("exit-status: "
-//							+ channel.getExitStatus());
+					System.out.println("exit-status: "
+					+ channel.getExitStatus());
 					break;
 				}
 				try {
@@ -66,20 +76,17 @@ public class ssh {
 				}
 			}
 			channel.disconnect();
-return;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+			return;
+		
 	}
 
-	public void ScpTo(Session session, String folderPath, String fileName) {
+	// copy the fileName from the folderPath to the home of the remote
+	public void ScpTo(Session session, String folderPath, String fileName) throws IOException, JSchException {
 
 		FileInputStream fis = null;
-		try {
+		
 
 			boolean ptimestamp = false;
-
-			
 
 			String command = "scp " + (ptimestamp ? "-p" : "") + " -t " + "./"
 					+ fileName;
@@ -93,9 +100,8 @@ return;
 
 			channel.connect();
 
-			if (checkAck(in) != 0) {
-				System.exit(0);
-			}
+			checkAck(in);
+				
 
 			String fullPath = folderPath + fileName;
 
@@ -114,11 +120,9 @@ return;
 
 			out.write(command.getBytes());
 			out.flush();
-			if (checkAck(in) != 0) {
-				System.exit(0);
-			}
+			
+			checkAck(in);
 
-			System.err.println(fullPath);
 			// send a content of lfile
 			fis = new FileInputStream(fullPath);
 			byte[] buf = new byte[1024];
@@ -126,7 +130,7 @@ return;
 				int len = fis.read(buf, 0, buf.length);
 				if (len <= 0)
 					break;
-				out.write(buf, 0, len); // out.flush();
+				out.write(buf, 0, len); 
 			}
 			fis.close();
 			fis = null;
@@ -134,25 +138,118 @@ return;
 			buf[0] = 0;
 			out.write(buf, 0, 1);
 			out.flush();
-			if (checkAck(in) != 0) {
-				System.exit(0);
-			}
+			checkAck(in);
+			
 			out.close();
 
 			channel.disconnect();
 			return;
 
-			//
-		} catch (Exception e) {
-			 System.out.println(e);
-			try {
-				if (fis != null)
-					fis.close();
-			} catch (Exception ee) {
-			}
-		}
+		
 	}
 
+	
+	
+
+	// copy the fileName from remote to the project
+	public void ScpFrom(Session session, String folderPath, String fileName) throws IOException, JSchException {
+
+		FileOutputStream fos = null;
+
+	
+			String lfile = folderPath + fileName;
+
+			String prefix = null;
+			if (new File(lfile).isDirectory()) {
+				prefix = lfile + File.separator;
+			}
+
+			// exec 'scp -f rfile' remotely
+			String command = "scp -f " + fileName;
+			Channel channel = session.openChannel("exec");
+			((ChannelExec) channel).setCommand(command);
+
+			// get I/O streams for remote scp
+			OutputStream out = channel.getOutputStream();
+			InputStream in = channel.getInputStream();
+
+			channel.connect();
+
+			byte[] buf = new byte[1024];
+
+			// send '\0'
+			buf[0] = 0;
+			out.write(buf, 0, 1);
+			out.flush();
+
+			while (true) {
+				int c = checkAck(in);
+				if (c != 'C') {
+					break;
+				}
+
+				// read '0644 '
+				in.read(buf, 0, 5);
+
+				long filesize = 0L;
+				while (true) {
+					if (in.read(buf, 0, 1) < 0) {
+						// error
+						break;
+					}
+					if (buf[0] == ' ')
+						break;
+					filesize = filesize * 10L + (long) (buf[0] - '0');
+				}
+
+				String file = null;
+				for (int i = 0;; i++) {
+					in.read(buf, i, 1);
+					if (buf[i] == (byte) 0x0a) {
+						file = new String(buf, 0, i);
+						break;
+					}
+				}
+
+				// send '\0'
+				buf[0] = 0;
+				out.write(buf, 0, 1);
+				out.flush();
+
+				// read a content of lfile
+				fos = new FileOutputStream(prefix == null ? lfile : prefix
+						+ file);
+				int foo;
+				while (true) {
+					if (buf.length < filesize)
+						foo = buf.length;
+					else
+						foo = (int) filesize;
+					foo = in.read(buf, 0, foo);
+					if (foo < 0) {
+						// error
+						break;
+					}
+					fos.write(buf, 0, foo);
+					filesize -= foo;
+					if (filesize == 0L)
+						break;
+				}
+				fos.close();
+				fos = null;
+
+				checkAck(in);
+
+				// send '\0'
+				buf[0] = 0;
+				out.write(buf, 0, 1);
+				out.flush();
+			}
+			return;
+
+	}
+
+	
 	static int checkAck(InputStream in) throws IOException {
 		int b = in.read();
 		// b may be 0 for success,
@@ -171,12 +268,10 @@ return;
 				c = in.read();
 				sb.append((char) c);
 			} while (c != '\n');
-			if (b == 1) { // error
-				System.out.print(sb.toString());
+			if (b != 0) { // error
+				throw new IOException("Execution: " + sb.toString());
 			}
-			if (b == 2) { // fatal error
-				System.out.print(sb.toString());
-			}
+			
 		}
 		return b;
 	}
@@ -191,13 +286,10 @@ return;
 			return true;
 		}
 
-		String passwd= password;
-		
-		
-		// JTextField passwordField=(JTextField)new JPasswordField(20);
+		String passwd = password;
 
 		public String getPassphrase() {
-			
+
 			return null;
 		}
 
@@ -206,8 +298,7 @@ return;
 		}
 
 		public boolean promptPassword(String message) {
-		
-			
+
 			return true;
 		}
 
@@ -266,140 +357,28 @@ return;
 		}
 	}
 
-	public void ScpFrom(Session session, String folderPath, String fileName) {
+	
+	public void start(String folderPath, String tickFileName) throws Exception {
 
-		FileOutputStream fos = null;
-
-		try {
-			String lfile = folderPath + fileName;
-
-			String prefix = null;
-			if (new File(lfile).isDirectory()) {
-				prefix = lfile + File.separator;
-			}
-
-			// exec 'scp -f rfile' remotely
-			String command = "scp -f " + fileName;
-			Channel channel = session.openChannel("exec");
-			((ChannelExec) channel).setCommand(command);
-
-			// get I/O streams for remote scp
-			OutputStream out = channel.getOutputStream();
-			InputStream in = channel.getInputStream();
-
-			channel.connect();
-
-			byte[] buf = new byte[1024];
-
-			// send '\0'
-			buf[0] = 0;
-			out.write(buf, 0, 1);
-			out.flush();
-
-			while (true) {
-				int c = checkAck(in);
-				if (c != 'C') {
-					break;
-				}
-
-				// read '0644 '
-				in.read(buf, 0, 5);
-
-				long filesize = 0L;
-				while (true) {
-					if (in.read(buf, 0, 1) < 0) {
-						// error
-						break;
-					}
-					if (buf[0] == ' ')
-						break;
-					filesize = filesize * 10L + (long) (buf[0] - '0');
-				}
-
-				String file = null;
-				for (int i = 0;; i++) {
-					in.read(buf, i, 1);
-					if (buf[i] == (byte) 0x0a) {
-						file = new String(buf, 0, i);
-						break;
-					}
-				}
-
-				
-
-				// send '\0'
-				buf[0] = 0;
-				out.write(buf, 0, 1);
-				out.flush();
-
-				// read a content of lfile
-				fos = new FileOutputStream(prefix == null ? lfile : prefix
-						+ file);
-				int foo;
-				while (true) {
-					if (buf.length < filesize)
-						foo = buf.length;
-					else
-						foo = (int) filesize;
-					foo = in.read(buf, 0, foo);
-					if (foo < 0) {
-						// error
-						break;
-					}
-					fos.write(buf, 0, foo);
-					filesize -= foo;
-					if (filesize == 0L)
-						break;
-				}
-				fos.close();
-				fos = null;
-
-				if (checkAck(in) != 0) {
-					System.exit(0);
-				}
-
-				// send '\0'
-				buf[0] = 0;
-				out.write(buf, 0, 1);
-				out.flush();
-			}
- return;
-		} catch (Exception e) {
-			System.out.println(e);
-			try {
-				if (fos != null)
-					fos.close();
-			} catch (Exception ee) {
-			}
-		}
-	}
-
-	public void start(String folderPath, String tickFileName) {
-
+		JSch jsch = new JSch();
+		Session session = jsch.getSession(user, host, 22);
+		UserInfo ui = new MyUserInfo();
 		
-		
-		try {
-			JSch jsch = new JSch();
-			Session session = jsch.getSession(user, host, 22);
-			UserInfo ui = new MyUserInfo();
-			ui.promptPassword(password);
-			
-			session.setUserInfo(ui);
 
-			session.connect();
+		session.setUserInfo(ui);
 
-			ScpTo(session, folderPath, tickFileName + ".out");
+		session.connect(5000);
 
-			exec(session, tickFileName + ".out");
+		ScpTo(session, folderPath, tickFileName + ".out");
 
-			
-			ScpFrom(session, folderPath.substring(0, folderPath.indexOf("kieler-gen")), "result.csv");
-			
-			session.disconnect();
-		} catch (Exception e) {
+		exec(session, tickFileName + ".out");
 
-			e.printStackTrace();
-		}
-return;
+		ScpFrom(session,
+				folderPath.substring(0, folderPath.indexOf("kieler-gen")),
+				tickFileName + "_result.csv");
+
+		session.disconnect();
+
+		return;
 	}
 }
