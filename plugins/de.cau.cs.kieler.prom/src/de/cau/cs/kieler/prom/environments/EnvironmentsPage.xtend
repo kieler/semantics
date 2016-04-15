@@ -165,6 +165,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private var ComboViewer relatedProjectWizard
     /**
+     * The input field for the default model file of the environment.
+     */
+    private var Text modelFile
+    /**
      * The input field for the default main file of the environment.
      */
     private var Text mainFile
@@ -245,6 +249,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         
         createNameComponent(comp)
         createWizardComponent(comp)
+        createModelFileComponent(comp)
         createMainFileComponent(comp)
         
         return comp
@@ -287,7 +292,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
 
 //        Debug log, which wizards are currently installed 
 //        for (e : ExtensionLookupUtil.getWizardConfigurationElements(true)){
-//            System.err.println(e.getAttribute("class"))
+//            println(e.getAttribute("class"))
 //        }
         
         // Select first element as default 
@@ -320,6 +325,27 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     }
     
     /**
+     * Creates the controls for the model file of the current environment.
+     */
+    private def void createModelFileComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Model file", 2)
+        
+        // Create main file text field
+        modelFile = UIUtil.createTextField(group, "Model file (without file extension)", EnumSet.of(UIUtil.Buttons.NONE))
+        modelFile.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                if(currentData != null){
+                    currentData.modelFile = modelFile.text
+                    checkConsistency()
+                }
+            }
+        })
+        modelFile.toolTipText = "Project relative path to the initial model file of the project.\n"
+            + "The file is created on project setup.\n"
+            + "The path may contain placeholders such as ${project_name}."
+    }
+    
+    /**
      * Creates the controls for the main file of the current environment.
      */
     private def void createMainFileComponent(Composite parent) {
@@ -335,7 +361,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 }
             }
         })
-        mainFile.toolTipText = "Project relative path to main file of the project.\n"
+        mainFile.toolTipText = "Project relative path to the initial main file of the project.\n"
             + "The file is created on project setup.\n"
             + "The path may contain placeholders such as ${project_name}."
         
@@ -622,44 +648,15 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private def void createAssociatedLaunchShortcutComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
         
-        val combo = new ComboViewer(group, SWT.DEFAULT)
-        launchShortcuts = combo
-        launchShortcuts.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
-        
-        // Fill combo
-        combo.contentProvider = ArrayContentProvider.instance
-        
-        val ArrayList<Object> input = new ArrayList<Object>()
-        input.add(StructuredSelection.EMPTY)
-        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
-        combo.input = input
-        
-        //Debug log, which launch shortcuts are currently installed 
-//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
-//            System.err.println(e.getAttribute("class"))
-//        }
-
-        // Select first element as default 
-        combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
-
-        // Create label provider
-        combo.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                if(element != null && element instanceof IConfigurationElement)
-                    return (element as IConfigurationElement).getAttribute("label")
-                else
-                    return ""
-            }
-        }
-        
+        launchShortcuts = UIUtil.createLaunchShortcutCombo(group)
         // Selection event
-        combo.addSelectionChangedListener(new ISelectionChangedListener {
+        launchShortcuts.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
                 currentData.launchData.associatedLaunchShortcut = getSelectedClassNameInCombobox(launchShortcuts)
                 checkConsistency()
             }
-        })        
+        })
     }
     
     /**
@@ -754,6 +751,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                     }
                 }
             }
+            
+            // Update model file
+            modelFile.text = data.modelFile
             
             // Update main file
             mainFile.text = data.launchData.mainFile

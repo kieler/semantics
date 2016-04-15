@@ -62,6 +62,12 @@ class EnvironmentData extends ConfigurationSerializable {
     protected String mainFileOrigin = ""
     
     /**
+     * The project relative path for initial the model file, but without file extension. 
+     */
+    @Accessors
+    protected String modelFile = ""
+    
+    /**
      * A path to a directory with the default contents for the snippet directory when creating a new project.
      * This might either be a file system path or a URL with the platform protocol provided by eclipse
      * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').

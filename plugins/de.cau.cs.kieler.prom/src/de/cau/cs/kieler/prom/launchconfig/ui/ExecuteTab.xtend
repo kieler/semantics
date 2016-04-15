@@ -259,33 +259,9 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
     private def void createAssociatedLaunchShortcutComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
         
-        val combo = new ComboViewer(group, SWT.DEFAULT)
-        launchShortcuts = combo
-        launchShortcuts.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
-        
-        // Fill combo
-        combo.contentProvider = ArrayContentProvider.instance
-        
-        val ArrayList<Object> input = new ArrayList<Object>()
-        input.add(StructuredSelection.EMPTY)
-        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
-        combo.input = input
-        
-        // Select first element as default 
-        combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
-
-        // Create label provider
-        combo.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                if(element != null && element instanceof IConfigurationElement)
-                    return (element as IConfigurationElement).getAttribute("label")
-                else
-                    return ""
-            }
-        }
-        
+        launchShortcuts = UIUtil.createLaunchShortcutCombo(group)
         // Selection event
-        combo.addSelectionChangedListener(new ISelectionChangedListener {
+        launchShortcuts.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
                 checkConsistency()

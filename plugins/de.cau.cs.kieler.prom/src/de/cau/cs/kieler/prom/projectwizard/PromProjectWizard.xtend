@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
+import org.apache.commons.io.FilenameUtils
 
 /**op
  * Wizard implementation wich creates a project
@@ -71,18 +72,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var IProject newlyCreatedProject
 
-
-
-    /**
-     * The directory path of an initial model file for the new project
-     */
-    protected var String modelFileDirectory
-    
-    /**
-     * The base file name of an initial model file for the new project
-     */
-     protected var String modelFileNameWithoutExtension
-     
      /**
      * The file extension (e.g. '.sct') of an initial model file for the new project
      */
@@ -220,43 +209,69 @@ class PromProjectWizard extends Wizard implements INewWizard {
         if(!mainPage.isCreateModelFile)
             return true
         
+        // Load path of model file
+        val modelFilePathWithoutExtension = getModelFilePath()
+        val modelFileNameWithoutExtension = FilenameUtils.getBaseName(modelFilePathWithoutExtension)
+
         try {
-            // Infere parent directory of file from main file directory.
-            // Therefore the main file has to be created before the model file. 
-            if(Strings.isNullOrEmpty(modelFileDirectory)){
-                if(createdMainFile != null && createdMainFile.exists()){
-                    modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
-                }
-            }
-            
-            // Infere file name from project name
-            if(Strings.isNullOrEmpty(modelFileNameWithoutExtension)) {
-                modelFileNameWithoutExtension = newlyCreatedProject.name
-                // We use only alphanumeric characters of the project name
-                modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
-                // the file name may not begin with a number
-                modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
-            }
-            
             // Open initial content stream
             var InputStream initialContentStream = null
-            if(!Strings.isNullOrEmpty(modelFileInitialContentURL)){
+            if(!modelFileInitialContentURL.isNullOrEmpty()){
                 initialContentStream = PromPlugin.getInputStream(modelFileInitialContentURL, #{"${name}" -> modelFileNameWithoutExtension})
             }
             
             // Create file
-            val fileHandle = newlyCreatedProject.getFile(modelFileDirectory + modelFileNameWithoutExtension + modelFileExtension)
+            val fileHandle = newlyCreatedProject.getFile(modelFilePathWithoutExtension + modelFileExtension)
             createResource(fileHandle, initialContentStream)
             UIUtil.openFileInEditor(fileHandle)
 
             return true
             
         } catch (Exception e) {
-            MessageDialog.openError(shell, "Error", "The model file '"+modelFileNameWithoutExtension+"' could not be created.\n"
+            MessageDialog.openError(shell, "Error", "The model file '"+modelFilePathWithoutExtension+"' could not be created.\n"
                 + "Please check the environment settings in the preferences and enter a valid file path.");
 
             return false
         }
+    }
+    
+    /**
+     * Returns the model file path from the environment if it is not empty.
+     * Otherwise a suited value is infered from the project name.
+     * 
+     * @return the path without file extension for the model file  
+     */
+    private def String getModelFilePath() {
+        val env = mainPage.selectedEnvironment
+        var resolvedPath = ""
+        try {
+            val variableManager = VariablesPlugin.getDefault().stringVariableManager
+            resolvedPath = variableManager.performStringSubstitution(env.modelFile)
+        } catch (CoreException ce) {
+            MessageDialog.openError(shell, "Error", ce.message)
+            return "Model"
+        }
+        
+        var modelFilePathWithoutExtension = resolvedPath
+        if(modelFilePathWithoutExtension.isNullOrEmpty()) {
+            // Infere parent directory of file from main file directory.
+            // Therefore the main file has to be created before the model file.
+            var modelFileDirectory = ""
+            if(createdMainFile != null && createdMainFile.exists()){
+                modelFileDirectory = createdMainFile.parent.projectRelativePath.toOSString + File.separator
+            }
+            
+            // Infere file name from project name
+            var modelFileNameWithoutExtension = newlyCreatedProject.name
+            // We use only alphanumeric characters of the project name
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("[^\\w]", "")
+            // the file name may not begin with a number
+            modelFileNameWithoutExtension = modelFileNameWithoutExtension.replaceAll("^\\d*", "")
+            
+            // Cobine directory and name of file
+            modelFilePathWithoutExtension = modelFileDirectory + modelFileNameWithoutExtension
+        }
+        return modelFilePathWithoutExtension
     }
     
     /**
@@ -272,7 +287,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         val env = mainPage.selectedEnvironment
         try {
-            if(!Strings.isNullOrEmpty(env.launchData.mainFile)){
+            if(!env.launchData.mainFile.isNullOrEmpty()){
                 var resolvedMainFilePath = ""
                 try {
                     val variableManager = VariablesPlugin.getDefault().stringVariableManager
@@ -284,7 +299,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 
                 // Prepare initial content
                 var InputStream initialContentStream = null
-                if(!Strings.isNullOrEmpty(env.mainFileOrigin)){
+                if(!env.mainFileOrigin.isNullOrEmpty()){
                     initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, null)
                 }
                 
@@ -334,7 +349,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     // Fill folder with files from plugin
                     val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
                     initializeSnippetsFromDirectoryOfPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
-                } else if(!Strings.isNullOrEmpty(wrapperEnv.wrapperCodeSnippetsOrigin)){
+                } else if(!wrapperEnv.wrapperCodeSnippetsOrigin.isNullOrEmpty()){
                     // Copy directory from file system
                     val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
                     val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.launchData.wrapperCodeSnippetDirectory)

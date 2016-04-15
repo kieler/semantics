@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
@@ -28,6 +29,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
@@ -39,7 +41,9 @@ import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ICheckStateProvider
+import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
@@ -466,6 +470,44 @@ class UIUtil {
         button2.data = KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT
         button2.toolTipText = "Save compilation output in the same folder as the corresponding input files."
         return #[button1, button2]
+    }
+    
+    
+    /**
+     * Creates the combo viewer with configuration elements that define launch shortcuts.
+     * 
+     * @param parent The parent composite
+     */
+    public static def ComboViewer createLaunchShortcutCombo(Composite parent){
+        val viewer = new ComboViewer(parent, SWT.DEFAULT)
+        viewer.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
+        
+        // Fill combo
+        viewer.contentProvider = ArrayContentProvider.instance
+        
+        val ArrayList<Object> input = new ArrayList<Object>()
+        input.add(StructuredSelection.EMPTY)
+        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
+        viewer.input = input
+        
+        // Debug log, which launch shortcuts are currently installed 
+//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
+//            println(e.getAttribute("class"))
+//        }
+
+        // Select first element as default 
+        viewer.selection = new StructuredSelection(StructuredSelection.EMPTY)
+
+        // Create label provider
+        viewer.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                if(element != null && element instanceof IConfigurationElement)
+                    return (element as IConfigurationElement).getAttribute("label")
+                else
+                    return ""
+            }
+        }
+        return viewer       
     }
     
     /**

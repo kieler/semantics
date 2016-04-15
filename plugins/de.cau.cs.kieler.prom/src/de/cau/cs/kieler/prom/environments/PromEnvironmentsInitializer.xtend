@@ -104,6 +104,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         
         var env = new EnvironmentData("Generic")
         env.launchData = launchData
+        env.modelFile = "${project_name}"
         env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         return env
     }
@@ -120,6 +121,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         
         var env = new EnvironmentData("Generic Java")
         env.launchData = launchData
+        env.modelFile = "src/${project_name}"
         env.relatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
         return env
     }
@@ -135,6 +137,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         
         var env = new EnvironmentData("Generic C")
         env.launchData = launchData
+        env.modelFile = "${project_name}"
         env.relatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
         return env
     }
