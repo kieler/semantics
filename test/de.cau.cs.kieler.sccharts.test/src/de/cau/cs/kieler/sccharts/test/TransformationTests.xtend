@@ -22,10 +22,13 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath
+import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.Models
+import java.io.File
 import java.io.PrintStream
+import java.util.ArrayList
 import java.util.Collections
 import java.util.List
+import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.compare.Diff
@@ -50,6 +53,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 
 /** 
  * Transformation tests.
@@ -60,31 +64,35 @@ import org.junit.runner.RunWith
  */
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.test")
-@ModelPath("tests/inputs/**")
-//@ModelFilter("ConnectorState.sct")
 class TransformationTests extends SCChartsTestBase {
 
     /**
      * Project relative path to the input models of the tests.
-     * This has to be the same path as in the @ModelPath annotation, but without the marker for recursive search '**'.
      */
-    static val INPUT_MODELS_FOLDER = "tests/inputs/"
+    static val INPUT_MODELS_FOLDER = "tests/input/"
     
     /**
-     * Project relative path to the folder in which the prototypes for test models are stored.
-     * The models in this directory are assumed to be a correct transformation of the input model.
+     * Folder in which the prototype for a test model is stored.
+     * The path has to be relative to the input model.
+     * Models in target folders are assumed to be a correct transformation of the corresponding input model.
      */
-    static val TARGET_FOLDER = "tests/targets/"
+    static val TARGET_FOLDER = "expected_output"
 
     /**
-     * Project relative path the the directory in which the compiled output of test models will be saved.
+     * Input models that are stored in a folder with this name will not be tested.
+     */
+    static val IGNORE_FOLDER = "known_to_fail"
+
+    /**
+     * Folder in which the compiled output of a test model will be saved.
+     * The path has to be relative to the input model.
      * The models are saved to this folder only to have a human readable form of the compilation result.  
      */
-    static val COMPILATION_RESULT_FOLDER = "tests/compilation_results/"
+    static val COMPILATION_RESULT_FOLDER = "compilation_result"
 
     /** 
-     * The name of the annotation in SCT files,
-     * which defines the transformation that should be used to test the model.
+     * The name of an SCT annotation,
+     * which defines the transformation that should tested.
      */
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
 
@@ -93,9 +101,40 @@ class TransformationTests extends SCChartsTestBase {
      */
     static val comparator = createEMFComparator()
     
+    /**
+     * Searches for models in the test input directory
+     *  
+     * @return the models to be tested.  
+     */
+     @Models
+     def public static Iterable<Object> getModels() {
+         // Find and filter files
+         val fileURLs = newArrayList()
+         val bundle = Platform.getBundle(SCChartsTestActivator.PLUGIN_ID)
+         val allFiles = bundle.findEntries(INPUT_MODELS_FOLDER, "*.sct", true)
+         while(allFiles.hasMoreElements) {
+             val file = allFiles.nextElement()
+             val path = file.path
+             val ignore = path.contains(File.separator + TARGET_FOLDER + File.separator)
+                || path.contains(File.separator + COMPILATION_RESULT_FOLDER + File.separator)
+                || path.contains(File.separator + IGNORE_FOLDER + File.separator)
+//                || !path.contains("AbortAndComplexFinalSuperstate.sct") // Debug code to compile a specific file
+             if(!ignore) {
+                 fileURLs.add(file)
+             }
+         }
+         // Load EObjects
+         val resourceSet = new ResourceSetImpl()
+         val models = new ArrayList<Object>()
+         for(url : fileURLs) {
+            val r = resourceSet.getResource(URI.createURI(url.toString()), true);
+            models += r.getContents().get(0);
+         }
+         return models as Iterable<Object>
+     }
 
-    /*******************************************************************************************
-     * Transformation test (Extended SCCharts)
+    /**
+     * Constructor.
      */
     new(EObject model) {
         super(model)
@@ -114,8 +153,8 @@ class TransformationTests extends SCChartsTestBase {
     @Test
     def public void transformationResultAsExpected() {
         // Calc prototype file for test and compilation result for test
-        val targetFile = modelPath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
-        val compilationResultFile = modelPath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, COMPILATION_RESULT_FOLDER)
+        val targetFile = modelDirectory + File.separator + TARGET_FOLDER + File.separator + modelName
+        val compilationResultFile = modelDirectory + File.separator + COMPILATION_RESULT_FOLDER + File.separator + modelName
         if (model instanceof State) {
             println("------------------ SCT:" + modelName)
 
@@ -168,10 +207,15 @@ class TransformationTests extends SCChartsTestBase {
             }
 
             // Load expected target model
-            val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + targetFile
-            resource = resourceSet.getResource(URI.createURI(targetURL), true)
+            val targetURL = Platform.getBundle(SCChartsTestActivator.PLUGIN_ID).getEntry(targetFile)
+            if(targetURL == null) {
+                Assert.fail("Model "+modelName+" does not have a target file with the expected output.\n"
+                    + "The output was expected to be stored in "+targetFile)
+            }
+            val uri = URI.createURI(targetURL.toString)
+            resource = resourceSet.getResource(uri, true)
             val targetModel = resource.getContents().get(0) as EObject
-
+            
             // Compare the two models
             // If differences occur they are said to be in the left model, which is the compiled
             // result.

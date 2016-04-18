@@ -1,0 +1,49 @@
+
+@Transformation ABORT
+scchart AbortAndComplexFinalSuperstate {
+  input bool count;
+  input bool restart;
+  bool _trig;
+
+  initial state Counting {
+    entry / _trig = false;
+
+    initial state Cnt3
+    --> Cnt2
+    --> Cnt0 immediate with _trig;
+
+    state Cnt2
+    --> Cnt1
+    --> Cnt0 immediate with _trig;
+
+    state Cnt1
+    --> Cnt0
+    --> Cnt0 immediate with _trig;
+
+    final state Cnt0;
+
+    region _Ctrl:
+
+    initial state _Run
+    --> _Done with restart / _trig = true
+    --> _Done immediate with true;
+
+    final state _Done;
+  }
+  >-> _C;
+
+  state Done
+  --> Counting with restart;
+
+  connector state _C
+  --> Counting with restart
+  --> Done;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate;
+
+  state _S
+  --> _I;
+}

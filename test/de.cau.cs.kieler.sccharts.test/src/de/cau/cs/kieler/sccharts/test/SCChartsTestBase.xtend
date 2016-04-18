@@ -1,8 +1,8 @@
 package de.cau.cs.kieler.sccharts.test
 
 import java.io.File
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.core.runtime.Path
 
 class SCChartsTestBase {
     /**
@@ -13,6 +13,10 @@ class SCChartsTestBase {
      * The project relative path of the model
      */
     protected var String modelPath
+    /**
+     * The project relative directory of the model
+     */
+    protected var String modelDirectory
     /**
      * The file name of the model (including file extension)
      */
@@ -30,6 +34,8 @@ class SCChartsTestBase {
         else
             modelPath = path
         // Get the name from the model path
-        this.modelName = FilenameUtils.getName(modelPath)
+        this.modelName = new Path(modelPath).lastSegment
+        // Get the directory from the model path
+        this.modelDirectory = new Path(modelPath).removeLastSegments(1).toOSString
     }
 }
