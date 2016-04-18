@@ -73,10 +73,10 @@ class CodeGenerationTests extends SCChartsTestBase{
                 }    
             }
             
-            val isErrorMessageEmpty = Strings.isNullOrEmpty(result.allErrors)
-            val isWarningMessageEmpty = Strings.isNullOrEmpty(result.allWarnings)
-            val isGeneratedCodeEmpty = Strings.isNullOrEmpty(result.string)
-            val hasError = !isErrorMessageEmpty || !isWarningMessageEmpty || Strings.isNullOrEmpty(result.string)
+            val isErrorMessageEmpty = result.allErrors.isNullOrEmpty()
+            val isWarningMessageEmpty = result.allWarnings.isNullOrEmpty()
+            val isGeneratedCodeEmpty = result.string.isNullOrEmpty()
+            val hasError = !isErrorMessageEmpty || !isWarningMessageEmpty || result.string.isNullOrEmpty()
             
             if(shouldHaveError && !hasError) {
                 // Ensure that error occured

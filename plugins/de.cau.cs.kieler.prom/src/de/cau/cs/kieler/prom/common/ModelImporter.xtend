@@ -58,9 +58,6 @@ class ModelImporter {
         
         val resourceSet = new XtextResourceSet();
         
-        val uri2 = URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct")
-        resourceSet.getResource(uri2, true);
-        
         // Collect possibly referenced resources and resolve references
         if(resolveReferences){
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
@@ -79,8 +76,8 @@ class ModelImporter {
     }
     
     /**
-     * Searches in the project of the model file for files with the same file extension as the given model file.
-     * All findings are added to the resource that, such that they can be resolved when loading the model file.
+     * Searches in the project of the model file for files with the same file extension.
+     * All findings are added to the resource set, such that they can be resolved when loading the model file.
      * 
      * @param modelFileLocation Fully qualified path to a model file
      * @param resourceSet The ResourceSet to which possible references should be added

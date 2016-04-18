@@ -17,21 +17,29 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup
 import org.eclipse.debug.ui.CommonTab
 import org.eclipse.debug.ui.ILaunchConfigurationDialog
 import org.eclipse.debug.ui.ILaunchConfigurationTab
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The tab group for the launch configuration.
  * 
  * @author aas
  */
-class LaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
+class KiCoLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
 
+    /**
+     * The data object that the UI is working on.
+     */
+    @Accessors
+    public KiCoLaunchData launchData
+    
     /**
      * {@inheritDoc}
      */
     override void createTabs(ILaunchConfigurationDialog dialog, String mode) {
-        var mainTab = new MainTab()
-        var compilationTab = new CompilationTab()
-        var execTab = new ExecuteTab()
+        var mainTab = new MainTab(this)
+        var compilationTab = new CompilationTab(this)
+        var execTab = new ExecuteTab(this)
         var commonTab = new CommonTab()
         
         var tabs = (#[mainTab, compilationTab, execTab, commonTab] as ILaunchConfigurationTab[])

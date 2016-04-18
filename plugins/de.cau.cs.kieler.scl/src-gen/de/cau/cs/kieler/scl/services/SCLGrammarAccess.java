@@ -951,8 +951,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration returns kexpressions::Declaration:
-	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? (signal?="signal"?
-	//	type=ValueType | signal?="signal") valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	//	annotations+=Annotation* const?="const"? extern?="extern"? volatile?="volatile"? input?="input"? output?="output"?
+	//	static?="static"? (signal?="signal"? type=ValueType | signal?="signal") valuedObjects+=ValuedObject (","
+	//	valuedObjects+=ValuedObject)* ";";
 	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKEXT.getDeclarationAccess();
 	}

@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.prom.launchconfig.ui
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
@@ -24,7 +24,6 @@ import java.util.EnumSet
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -46,13 +45,13 @@ import org.eclipse.swt.widgets.Text
  * 
  * @author aas
  */
-class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
+class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHolder {
 
     /**
      * The launch configuration this object is working on.
      */
     private ILaunchConfiguration configuration
-
+    
     /**
      * Combobox with all environments.
      */
@@ -67,6 +66,13 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      * Input field for the main file.
      */
     private var Text mainFile
+
+    /**
+     * Constructor
+     */
+    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+        super(tabGroup)
+    }
 
     /** 
      * {@inheritDoc}
@@ -132,7 +138,6 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         val store = PromPlugin.^default.preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
         
-        
         // Create combobox
         environment = UIUtil.createEnvironmentsCombo(group, environments)
         environment.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -159,23 +164,22 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
         button.toolTipText = "Reset this launch configuration to the values of the selected environment"
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
-    override void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    override void initializeFrom(ILaunchConfiguration configuration) {
+    override initializeFrom(ILaunchConfiguration configuration) {
+        super.initializeFrom(configuration)
+        // Ignore the following changes in the UI
+        doNotApplyUIChanges = true
+        
+        // Remember this configuration
         this.configuration = configuration
         
-        // Load project
-        project.text = configuration.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        // Set project
+        project.text = launchData.projectName
         
-        // Load main file
-        mainFile.text = configuration.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
+        // Set main file
+        mainFile.text = launchData.mainFile
         
         // Load environment
         if (environment.input != null) {
@@ -186,22 +190,32 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
                 }
             }
         }
+        
+        // Don't ignore UI changes anymore
+        doNotApplyUIChanges = false
     }
 
     /** 
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        // Save project
-        configuration.setAttribute(LaunchConfiguration.ATTR_PROJECT, project.text)
+        if(doNotApplyUIChanges) {
+            return
+        }
         
-        // Save main file
-        configuration.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, mainFile.text)
-
         // Save environment
         val env = getSelectedEnvironment()
         if (env != null) 
             configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
+            
+        // Set project
+        launchData.projectName = project.text
+        
+        // Set main file
+        launchData.mainFile = mainFile.text
+
+        // Flush to configuration
+        KiCoLaunchData.saveToConfiguration(configuration, launchData)
 
         // Check the user input for consistency
         checkConsistency()
@@ -226,7 +240,7 @@ class MainTab extends AbstractLaunchConfigurationTab implements IProjectHolder {
      */
     private def String checkErrors() {
         // Project is not empty
-        if (Strings.isNullOrEmpty(project.text)) {
+        if (project.text.isNullOrEmpty()) {
             return "Project not specified."
         }
         
