@@ -107,7 +107,6 @@ public class AbstractComparisonMeasurement {
      * @param measuring
      * @return
      */
-    @SuppressWarnings("unchecked")
     public boolean insert(IMeasuring measuring) {
         Testbench testbench = null;
         for (Testbench bench : testbenches) {

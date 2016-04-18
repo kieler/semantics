@@ -10,6 +10,14 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.comparison.core;uses:="de.cau.cs.kieler.comparison.interfaces",
  de.cau.cs.kieler.comparison.datahandler,
- de.cau.cs.kieler.comparison.exchange
+ de.cau.cs.kieler.comparison.exchange,
+ de.cau.cs.kieler.comparison.simulation
 Import-Package: com.google.inject;version="1.3.0",
+ de.cau.cs.kieler.core.model.util,
+ de.cau.cs.kieler.sim.benchmark,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.execution,
+ de.cau.cs.kieler.sim.kiem.internal,
+ de.cau.cs.kieler.sim.kiem.properties,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  org.json

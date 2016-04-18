@@ -29,6 +29,7 @@ import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
+import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -39,6 +40,15 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
  */
 public class KiCoSCCharts2C implements ICompiler {
 
+    private ExecutionSimulator simulator = null;
+    
+    /**
+     * 
+     */
+    public KiCoSCCharts2C() {
+        simulator = new KiCoSCTExecutionSimulator();
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -136,5 +146,13 @@ public class KiCoSCCharts2C implements ICompiler {
     @Override
     public int getCompilationOffset() {
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ExecutionSimulator getSimulator() {
+        return simulator;
     }
 }

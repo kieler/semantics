@@ -27,12 +27,16 @@ public enum Language {
         if (extension != null) {
             switch (extension) {
             case ".sct":
+            case "sct":
                 return SCCharts;
             case ".strl":
+            case "strl":
                 return Esterel;
             case ".java":
+            case "java":
                 return Java;
             case ".c":
+            case "c":
                 return C;
 
             default:

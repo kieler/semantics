@@ -13,5 +13,13 @@
             class="de.cau.cs.kieler.comparison.compilers.cec.CEC2C">
       </compilerClass>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCTExecutionSimulator"
+            id="de.cau.cs.kieler.comparison.compilers.content1"
+            name="de.cau.cs.kieler.comparison.compilers.content1">
+      </content>
+   </extension>
 
 </plugin>

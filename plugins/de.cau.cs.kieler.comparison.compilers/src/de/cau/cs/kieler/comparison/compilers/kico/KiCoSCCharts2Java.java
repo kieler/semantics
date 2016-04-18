@@ -22,6 +22,7 @@ import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
+import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
 
 /**
  * @author nfl
@@ -86,5 +87,14 @@ public class KiCoSCCharts2Java implements ICompiler {
     @Override
     public int getCompilationOffset() {
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ExecutionSimulator getSimulator() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

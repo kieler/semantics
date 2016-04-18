@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.comparison.exchange;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -157,5 +158,7 @@ public class ComparisonConfig {
      */
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
+        if (!this.outputPath.endsWith(File.separator))
+            this.outputPath += File.separator;
     }
 }

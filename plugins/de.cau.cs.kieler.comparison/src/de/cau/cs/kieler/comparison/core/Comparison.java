@@ -17,7 +17,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +81,7 @@ public final class Comparison {
     /**
      * The only comparison execution.
      */
-    private Job comparisonJob;
+    private AsynchronousComparison comparisonJob;
 
     /**
      * Starts a comparison for a given configuration. Only one comparison at a time is allowed. If
@@ -90,6 +89,7 @@ public final class Comparison {
      * 
      * @param config
      *            configuration for the comparison
+     * @param comparisonDataView 
      * @return a string to identify the completed comparison
      */
     public String startComparison(final ComparisonConfig config) {
@@ -104,6 +104,7 @@ public final class Comparison {
 
         // Initiate and start a new comparison job
         comparisonJob = new AsynchronousComparison(config, start);
+        comparisonJob.schedule();
 
         return start;
     }

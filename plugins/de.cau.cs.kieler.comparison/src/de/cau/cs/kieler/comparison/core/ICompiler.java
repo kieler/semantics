@@ -15,6 +15,8 @@ package de.cau.cs.kieler.comparison.core;
 import java.nio.file.Path;
 import java.util.Collection;
 
+import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
+
 /**
  * @author nfl
  *
@@ -56,4 +58,10 @@ public interface ICompiler {
      * @return
      */
     public Collection<String> getFeasibleProperties();
+
+    /**
+     * 
+     * @return
+     */
+    public ExecutionSimulator getSimulator();
 }

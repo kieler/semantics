@@ -25,6 +25,7 @@ import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
+import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
 import de.cau.cs.kieler.esterel.cec.CEC;
 
 /**
@@ -107,5 +108,14 @@ public class CEC2C implements ICompiler {
     public int getCompilationOffset() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ExecutionSimulator getSimulator() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

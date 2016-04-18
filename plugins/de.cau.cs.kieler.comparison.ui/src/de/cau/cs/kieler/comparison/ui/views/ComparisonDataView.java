@@ -268,8 +268,8 @@ public class ComparisonDataView extends ViewPart {
 
         Comparison comparison = Comparison.getComparison();
         String comp = comparison.startComparison(conf);
-
-        // TODO loadComparisonResult(comp);
+        
+        // TODO load result
     }
 
     /**
@@ -283,7 +283,7 @@ public class ComparisonDataView extends ViewPart {
      * 
      * @param comp
      */
-    private void loadComparisonResult(String comp) {
+    public void loadComparisonResult(String comp) {
         viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));
     }
 }

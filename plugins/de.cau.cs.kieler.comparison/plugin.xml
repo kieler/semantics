@@ -3,5 +3,13 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.comparison.compiler" name="Comparison Compiler" schema="schema/de.cau.cs.kieler.comparison.compiler.exsd"/>
    <extension-point id="de.cau.cs.kieler.comparison.testcaseprovider" name="Comparison Testcase Provider" schema="schema/de.cau.cs.kieler.comparison.testcaseprovider.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.comparison.simulation.BenchmarkCollector"
+            id="de.cau.cs.kieler.comparison.content2"
+            name="de.cau.cs.kieler.comparison.content2">
+      </content>
+   </extension>
 
 </plugin>

@@ -10,7 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.comparison.measuring;
+package de.cau.cs.kieler.comparison.simulation;
+
+import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 
 /**
@@ -21,12 +23,12 @@ public class ExecSpeedMeasuring implements IMeasuring {
 
     private String compiler;
     private String testcase;
-    private long speed;
+    private double speed;
     
     /**
      * 
      */
-    public ExecSpeedMeasuring(String compiler, String testcase, long speed) {
+    public ExecSpeedMeasuring(String compiler, String testcase, double speed) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.speed = speed;
@@ -52,7 +54,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
      * 
      * @return
      */
-    public long getSpeed(){
+    public double getSpeed(){
         return speed;
     }
 
@@ -61,7 +63,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
      */
     @Override
     public String getCriteria() {
-        return "Execution Speed";
+        return "Execution Speed (s)";
     }
 
     /**
@@ -72,7 +74,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
     }
 
     /**
-     * @param testcase the testcase to set
+     * @param testcase the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
@@ -81,7 +83,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
     /**
      * @param speed the speed to set
      */
-    public void setSpeed(long speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

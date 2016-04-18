@@ -24,4 +24,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.sccharts.sim.c,
+ de.cau.cs.kieler.sccharts.sim.c.xtend
 
