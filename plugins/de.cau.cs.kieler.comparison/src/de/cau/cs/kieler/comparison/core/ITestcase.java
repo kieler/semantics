@@ -50,4 +50,15 @@ public interface ITestcase {
      * @return
      */
     public Collection<Path> getDependencies();
+
+    /**
+     * 
+     * @return
+     */
+    public Path getTestTrace();
+
+    /**
+     * @param testTrace
+     */
+    public void setTestTrace(Path testTrace);
 }

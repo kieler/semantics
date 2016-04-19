@@ -31,6 +31,7 @@ public class Testcase implements ITestcase {
     private Path path;
     private Collection<String> properties = new ArrayList<String>();
     private Collection<Path> dependencies = new ArrayList<Path>();
+    private Path testTrace;
     
     /**
      * @param id the id to set
@@ -121,6 +122,8 @@ public class Testcase implements ITestcase {
         Testcase testcase = new Testcase();
         String[] values = testcaseLine.split(",");
         
+        // testcase encoded as: filePath, ID, properties[..]
+        // TODO add dependencies and testTrace support, maybe per header line with field names
         try {
             testcase.setPath(new File(file.getParent() + File.separator + values[0]).toPath());
             testcase.setID(values[1]);
@@ -135,5 +138,20 @@ public class Testcase implements ITestcase {
         }
         
         return testcase;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Path getTestTrace() {
+        return testTrace;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setTestTrace(Path testTrace) {
+        this.testTrace = testTrace;
     }
 }

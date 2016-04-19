@@ -12,6 +12,9 @@
       <testcaseProviderClass
             class="de.cau.cs.kieler.comparison.testcaseprovider.CsvTestcaseProvider">
       </testcaseProviderClass>
+      <testcaseProviderClass
+            class="de.cau.cs.kieler.comparison.testcaseprovider.ESOTestcaseProvider">
+      </testcaseProviderClass>
    </extension>
 
 </plugin>

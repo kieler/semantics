@@ -393,9 +393,20 @@ public final class Comparison {
                         + ") could not be merged with an existing testcase: "
                         + "ID is not the same");
             }
+            // ... and the same Test Trace, if both do have one
+            else if (into.getTestTrace() != null && from.getTestTrace() != null && !into.getTestTrace().equals(from.getTestTrace())){
+                // TODO better error logging
+                System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
+                        + ") could not be merged with an existing testcase: "
+                        + "Test Traces are not the same");
+            }
             // All requirements met, therefore insert the properties of the second into the first one
             else {
                 insertProperties(into.getProperties(), from.getProperties());
+                if (into.getTestTrace() == null)
+                {
+                    into.setTestTrace(from.getTestTrace());
+                }
                 return true;
             }
         }
