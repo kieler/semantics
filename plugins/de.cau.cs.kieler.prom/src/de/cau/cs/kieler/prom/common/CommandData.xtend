@@ -18,7 +18,6 @@ import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.base.Strings
 
 /**
  * Container for shell commands.
@@ -26,7 +25,7 @@ import com.google.common.base.Strings
  * @author aas
  * 
  */
-class CommandData extends ConfigurationSerializableData {
+class CommandData extends ConfigurationSerializable {
 
     /**
      * User defined name of this command.
@@ -125,7 +124,7 @@ class CommandData extends ConfigurationSerializableData {
      * @return true if it is enabled and should be executed. False otherwise.
      */
     def boolean isEnabled() {
-        return !Strings.isNullOrEmpty(enabled) && Boolean.valueOf(enabled)
+        return !enabled.isNullOrEmpty() && Boolean.valueOf(enabled)
     }
     
     /**
@@ -167,7 +166,7 @@ class CommandData extends ConfigurationSerializableData {
      * @return a list with the loaded command data objects.
      */
     public static def List<CommandData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializableData.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
+        return ConfigurationSerializable.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
             CommandData) as List<CommandData>
     }
 
@@ -179,6 +178,6 @@ class CommandData extends ConfigurationSerializableData {
      * @param datas A list with the data objects that should be saved
      */
     public static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
-        ConfigurationSerializableData.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
+        ConfigurationSerializable.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
     }
 }
