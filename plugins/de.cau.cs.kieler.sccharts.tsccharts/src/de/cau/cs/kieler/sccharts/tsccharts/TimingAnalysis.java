@@ -172,7 +172,7 @@ public class TimingAnalysis extends Job {
         final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
         KielerCompilerContext context =
                 new KielerCompilerContext(SCGFeatures.SEQUENTIALIZE_ID
-                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.ttp",
+                        + ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",
                         scchart);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.setProperty(SCGTransformation.ENABLE_SFR, false);
@@ -331,7 +331,7 @@ public class TimingAnalysis extends Job {
             pr.waitFor();
         } catch (IOException e) {
             return new Status(IStatus.ERROR, pluginId,
-                    "The timing analysis tool could not be invoked." + e.getMessage());
+                    "There is no timing analysis tool connected or the timing analysis tool could not be invoked.");
         } catch (InterruptedException e) {
             return new Status(IStatus.ERROR, pluginId,
                     "The timing analysis tool invokation was interrupted");

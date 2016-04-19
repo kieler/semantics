@@ -30,9 +30,9 @@ public class TPPInformation extends AbstractKielerCompilerAuxiliaryData {
     private final int highestInsertedTPPNumber;
     private final HashMap<String, Region> tppRegionMapping;
 
-    public TPPInformation(int highestInsertedTPPNumber, HashMap<String, Region> ttpRegionMapping) {
+    public TPPInformation(int highestInsertedTPPNumber, HashMap<String, Region> tppRegionMapping) {
         this.highestInsertedTPPNumber = highestInsertedTPPNumber;
-        this.tppRegionMapping = ttpRegionMapping;
+        this.tppRegionMapping = tppRegionMapping;
     }
     
     /**

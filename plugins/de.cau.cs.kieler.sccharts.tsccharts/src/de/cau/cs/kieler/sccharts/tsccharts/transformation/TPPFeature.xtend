@@ -19,7 +19,7 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
 
 /**
- * TTP Feature.
+ * TPP Feature.
  * 
  * @author als
  * @kieler.design 2016-01-20 proposed 

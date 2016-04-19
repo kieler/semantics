@@ -35,13 +35,13 @@
    <extension
          point="de.cau.cs.kieler.kico.feature">
       <featureClass
-            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPFeature">
+            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPFeature">
       </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TTPTransformation">
+            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPTransformation">
       </productionTransformationClass>
    </extension>
    <extension
