@@ -61,7 +61,7 @@ import de.cau.cs.kieler.kico.KiCoProperties
  * @kieler.rating 2016-01-20 proposed yellow
  * 
  */
-class TTPTransformation extends AbstractProductionTransformation
+class TPPTransformation extends AbstractProductionTransformation
 {
 
     // -------------------------------------------------------------------------
@@ -69,17 +69,17 @@ class TTPTransformation extends AbstractProductionTransformation
     // -------------------------------------------------------------------------
     override getId()
     {
-        return TimingAnalysisTransformations::TTP_ID
+        return TimingAnalysisTransformations::TPP_ID
     }
 
     override getName()
     {
-        return TimingAnalysisTransformations::TTP_ID
+        return TimingAnalysisTransformations::TPP_ID
     }
 
     override getProducedFeatureId()
     {
-        return TimingAnalysisTransformations::TTP_FEATURE_ID
+        return TimingAnalysisTransformations::TPP_FEATURE_ID
     }
 
     override getRequiredFeatureIds()
@@ -95,10 +95,10 @@ class TTPTransformation extends AbstractProductionTransformation
     extension SCChartsExtension
 
     /**
-     * Transform add TTPs to the sequentialized SCG.
+     * Transform add TPPs to the sequentialized SCG.
      * 
      * @param scg the SCG
-     * @return the SCG with TTP
+     * @return the SCG with TPP
      */
     def public Object transform(SCGraph scg, KielerCompilerContext context)
     {
@@ -121,8 +121,8 @@ class TTPTransformation extends AbstractProductionTransformation
         }
         if (tracing == null)
         {
-            throw new KielerCompilerException(TimingAnalysisTransformations::TTP_ID,
-                TimingAnalysisTransformations::TTP_ID,
+            throw new KielerCompilerException(TimingAnalysisTransformations::TPP_ID,
+                TimingAnalysisTransformations::TPP_ID,
                 "TPP Transformation was not successful. No tracing information could be found.")
             }
 
@@ -130,8 +130,8 @@ class TTPTransformation extends AbstractProductionTransformation
             val input = context.getProperty(KiCoProperties.RAW_INPUT_MODEL)
             if (!(input instanceof State))
             {
-                throw new KielerCompilerException(TimingAnalysisTransformations::TTP_ID,
-                    TimingAnalysisTransformations::TTP_ID, "TPP Transformation was not successful./n" +
+                throw new KielerCompilerException(TimingAnalysisTransformations::TPP_ID,
+                    TimingAnalysisTransformations::TPP_ID, "TPP Transformation was not successful./n" +
                         "The original SCChart was not determined.")
             }
             val scchart = input as State
@@ -199,7 +199,7 @@ class TTPTransformation extends AbstractProductionTransformation
                         compilationResult.addAuxiliaryData(tppInformation);
 
                         // Mark scg with feature
-                        scg.createStringAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID, "")
+                        scg.createStringAnnotation(TimingAnalysisTransformations::TPP_FEATURE_ID, "")
                         return scg
                     }
 

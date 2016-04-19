@@ -305,7 +305,7 @@ public class TimingAnalysis extends Job {
         String taFileName = fileName.replace(".sct", ".ta");
         String cFileName = fileName.replace(".sct", ".c");
         String command =
-                "kta ta -compile " + fileFolder + cFileName + " -tafile " + fileFolder + taFileName;
+                "/Users/ima/shared/papers/dac16/kta/bin/kta ta -compile " + fileFolder + cFileName + " -tafile " + fileFolder + taFileName;
         // String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
         try {
             // System.out.println("Current value of PATH: \n" + System.getenv("PATH"));
@@ -431,10 +431,10 @@ public class TimingAnalysis extends Job {
                                 label.setText(timingResult);
                             }
                         }
-                        // If the region belongs to the WCET path, enlarge numbers
-                        if (wcpRegions.contains(region)) {
-                            renderingExtensions.setFontSize(label, 24);
-                        }
+//                        // If the region belongs to the WCET path, enlarge numbers
+//                        if (wcpRegions.contains(region)) {
+//                            renderingExtensions.setFontSize(label, 24);
+//                        }
                     }
                     // If the region belongs to the WCET path, highlight, if requested by user
                     if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
@@ -570,8 +570,6 @@ public class TimingAnalysis extends Job {
             if (rep == TimingValueRepresentation.PERCENT) {
                 double onePercent = overallWCET / 100.00;
                 double FirstNumber = Double.parseDouble(StringTokenizer.nextToken());
-                // throw away the "/"
-                // TODO: Define delimiter set that renders this unnecessary
                 StringTokenizer.nextToken();
                 double SecondNumber = Double.parseDouble(StringTokenizer.nextToken());
                 FirstNumber /= onePercent;

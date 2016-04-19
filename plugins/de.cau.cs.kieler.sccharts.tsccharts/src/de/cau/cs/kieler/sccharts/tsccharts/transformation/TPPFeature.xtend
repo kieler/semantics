@@ -26,17 +26,17 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2016-01-20 proposed yellow
  *
  */
-class TTPFeature extends Feature {
+class TPPFeature extends Feature {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return TimingAnalysisTransformations::TTP_FEATURE_ID
+        return TimingAnalysisTransformations::TPP_FEATURE_ID
     }
 
     override getName() {
-        return TimingAnalysisTransformations::TTP_FEATURE_NAME
+        return TimingAnalysisTransformations::TPP_FEATURE_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -45,6 +45,6 @@ class TTPFeature extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(SCGraph scg) {
-        return scg.hasAnnotation(TimingAnalysisTransformations::TTP_FEATURE_ID)
+        return scg.hasAnnotation(TimingAnalysisTransformations::TPP_FEATURE_ID)
     }
 }

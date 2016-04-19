@@ -23,10 +23,10 @@ package de.cau.cs.kieler.sccharts.tsccharts.transformation;
  */
 public class TimingAnalysisTransformations {
     
-    public final static String TTP_FEATURE_ID = "scg.ttp";
-    public final static String TTP_FEATURE_NAME = "Timing Analysis";
+    public final static String TPP_FEATURE_ID = "scg.ttp";
+    public final static String TPP_FEATURE_NAME = "Timing Analysis";
   
-    public final static String TTP_ID = "scg.ttp";
-    public final static String TTP_NAME = "Timing Analysis";
+    public final static String TPP_ID = "scg.ttp";
+    public final static String TPP_NAME = "Timing Analysis";
     
 }
