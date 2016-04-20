@@ -39,4 +39,3 @@ Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.transformations,
  de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy
-
