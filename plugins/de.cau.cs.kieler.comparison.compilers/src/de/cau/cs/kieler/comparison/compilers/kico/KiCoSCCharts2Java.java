@@ -12,89 +12,23 @@
  */
 package de.cau.cs.kieler.comparison.compilers.kico;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
-
-import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
-import de.cau.cs.kieler.comparison.core.LanguageProperties;
-import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
 
 /**
  * @author nfl
  *
  */
-public class KiCoSCCharts2Java implements ICompiler {
+public class KiCoSCCharts2Java extends AbstractKiCo implements ICompiler {
 
     /**
-     * {@inheritDoc}
+     * 
      */
-    @Override
-    public String getID() {
-        return "KiCo - SCCharts to Java";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Language getSrcLanguage() {
-        return Language.SCCharts;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Language getTrgLanguage() {
-        return Language.Java;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
-        // TODO all
-        try {
-            Thread.sleep((long)(new Random().nextDouble() * 3000));
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return srcFile;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Collection<String> getFeasibleProperties() {
-        // TODO getFeasibleProperties 
-        Collection<String> ret = new ArrayList<String>();
-        ret.add(LanguageProperties.CYCLIC);
-        ret.add(LanguageProperties.DETERMINISTIC);
-        return ret;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getCompilationOffset() {
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ExecutionSimulator getSimulator() {
-        // TODO Auto-generated method stub
-        return null;
+    public KiCoSCCharts2Java() {
+        trgLanguage = Language.Java;
+        trgLanguageString = "Java";
+        trgLanguageExtension = ".java";
+        // TODO add java transformation strings
+        transformation = "T_s.c";
     }
 }
