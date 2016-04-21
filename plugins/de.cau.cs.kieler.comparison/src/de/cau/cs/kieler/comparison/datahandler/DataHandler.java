@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Observer;
 
 import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
@@ -26,7 +27,7 @@ import de.cau.cs.kieler.comparison.measuring.IMeasuring;
  * @author nfl
  *
  */
-public class DataHandler implements IDataHandler {
+public class DataHandler extends AbstractDataHandler {
 
     /**
      * Private constructor for singleton pattern
@@ -52,11 +53,12 @@ public class DataHandler implements IDataHandler {
      * {@inheritDoc}
      */
     @Override
-    public void serialize(String comparison, IMeasuring data) {           
-        
+    public void serialize(String comparison, IMeasuring data) { 
         AbstractComparisonMeasurement measurement = getData(comparison);
         measurement.insert(data);
         saveAsJSONFile(comparison, measurement);
+        this.setChanged();
+        notifyObservers(measurement);
     }
 
     /**

@@ -14,6 +14,8 @@ package de.cau.cs.kieler.comparison.ui.views;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -35,6 +37,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
@@ -45,6 +48,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.comparison.core.Comparison;
+import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
+import de.cau.cs.kieler.comparison.datahandler.DataHandler;
+import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 import de.cau.cs.kieler.comparison.exchange.Testbench;
 
@@ -62,7 +68,7 @@ import de.cau.cs.kieler.comparison.exchange.Testbench;
  * 
  * @author nfl
  */
-public class ComparisonDataView extends ViewPart {
+public class ComparisonDataView extends ViewPart implements Observer {
 
     /**
      * The ID of the view as specified by the extension.
@@ -266,10 +272,10 @@ public class ComparisonDataView extends ViewPart {
         conf.setTestcases(dialog.getTestcases());
         conf.setOutputPath(dialog.getOutputPath());
 
-        Comparison comparison = Comparison.getComparison();
-        String comp = comparison.startComparison(conf);
+        DataHandler.getDataHandler().addObserver(this);
         
-        // TODO load result
+        Comparison comparison = Comparison.getComparison();
+        comparison.startComparison(conf);        
     }
 
     /**
@@ -284,6 +290,42 @@ public class ComparisonDataView extends ViewPart {
      * @param comp
      */
     public void loadComparisonResult(String comp) {
-        viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));
+        Runnable run = new Runnable() {
+            
+            @Override
+            public void run() {
+                viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));                
+            }
+        };
+        
+        Display.getDefault().syncExec(run);
+    }
+
+    /**
+     * 
+     * @param measurement
+     * @return 
+     */
+    public void loadComparisonResult(AbstractComparisonMeasurement measurement) {
+        Runnable run = new Runnable() {
+            
+            @Override
+            public void run() {
+                viewer.setContentProvider(new ComparisonDataViewContentProvider(measurement));                
+            }
+        };
+        
+        Display.getDefault().syncExec(run);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof AbstractComparisonMeasurement) {
+            AbstractComparisonMeasurement measurement = (AbstractComparisonMeasurement) arg;
+            loadComparisonResult(measurement);
+        }
     }
 }

@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import de.cau.cs.kieler.comparison.Activator;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.datahandler.IDataHandler;
+import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
 import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
@@ -94,7 +94,7 @@ public class AsynchronousComparison extends Job {
         Collection<ITestcase> testcases = config.getTestcases();
 
         // the IDataHandler is used to save the comparison results
-        IDataHandler dataHandler = DataHandler.getDataHandler();
+        AbstractDataHandler dataHandler = DataHandler.getDataHandler();
 
         // estimation of work, which has to be done within the comparison
         // used in the progress monitor
@@ -136,6 +136,10 @@ public class AsynchronousComparison extends Job {
 
                     if (monitor.isCanceled()) {
                         monitor.done();
+
+                        // since only one comparison is done at a time, clearing all observer at the end is fine
+                        dataHandler.deleteObservers();
+                        
                         return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
                                 "Comparison canceled.");
                     }
@@ -229,6 +233,9 @@ public class AsynchronousComparison extends Job {
 
         monitor.done();
         
+        // since only one comparison is done at a time, clearing all observer at the end is fine
+        dataHandler.deleteObservers();
+        
         return new Status(IStatus.OK, Activator.PLUGIN_ID, "Comparison done.");
     }
 
@@ -245,7 +252,7 @@ public class AsynchronousComparison extends Job {
     private Path compileKBest(ICompiler compiler, ITestcase testcase, IProgressMonitor monitor,
             int k, double epsilon, int m) {
 
-        IDataHandler dataHandler = DataHandler.getDataHandler();
+        AbstractDataHandler dataHandler = DataHandler.getDataHandler();
 
         String compID = compiler.getID();
         String testID = testcase.getID() + " (" + testcase.getPath() + ")";

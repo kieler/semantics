@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.comparison.datahandler;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
@@ -19,7 +22,7 @@ import de.cau.cs.kieler.comparison.measuring.IMeasuring;
  * @author nfl
  *
  */
-public interface IDataHandler {
+public abstract class AbstractDataHandler extends Observable {
 
     public abstract void serialize(String comparison, IMeasuring data);
     public abstract AbstractComparisonMeasurement getData(String comparison);    

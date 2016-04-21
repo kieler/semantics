@@ -15,8 +15,8 @@ package de.cau.cs.kieler.comparison.ui.views;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
+import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.datahandler.IDataHandler;
 import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 
 /**
@@ -26,6 +26,7 @@ import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 public class ComparisonDataViewContentProvider implements IStructuredContentProvider {
 
     private String filePath;
+    private AbstractComparisonMeasurement measurement;
     
     /**
      * 
@@ -33,6 +34,14 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      */
     public ComparisonDataViewContentProvider(final String filePath){
         this.filePath = filePath;
+    }
+
+    /**
+     * 
+     * @param filePath filePath for the model to display
+     */
+    public ComparisonDataViewContentProvider(final AbstractComparisonMeasurement measurement){
+        this.measurement = measurement;
     }
 
     /**
@@ -65,12 +74,15 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
     @Override
     public Object[] getElements(Object inputElement) {
         
-        if (filePath == null)
-            return new Object[0];
-        
-        IDataHandler dataHandler = DataHandler.getDataHandler();
-        AbstractComparisonMeasurement cm = dataHandler.getData(filePath);
-        
-        return cm.getTestbenches().toArray();
+        if (measurement != null && measurement.getTestbenches() != null){
+            return measurement.getTestbenches().toArray();
+        } else if (filePath != null) {
+            AbstractDataHandler dataHandler = DataHandler.getDataHandler();
+            AbstractComparisonMeasurement cm = dataHandler.getData(filePath);
+            
+            return cm.getTestbenches().toArray();
+        }        
+            
+        return new Object[0];        
     }
 }

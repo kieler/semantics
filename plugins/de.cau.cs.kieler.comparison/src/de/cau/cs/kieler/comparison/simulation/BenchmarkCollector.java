@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.datahandler.IDataHandler;
+import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -36,7 +36,7 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
 
         System.out.println("collector wrap up");
         
-        IDataHandler dataHandler = DataHandler.getDataHandler();
+        AbstractDataHandler dataHandler = DataHandler.getDataHandler();
         
         // overall time
         double sum = 0;        
