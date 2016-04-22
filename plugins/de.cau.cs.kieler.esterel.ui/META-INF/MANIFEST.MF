@@ -21,5 +21,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.ui.contentassist,
- de.cau.cs.kieler.esterel.ui.quickfix
+ de.cau.cs.kieler.esterel.ui.quickfix,
+ de.cau.cs.kieler.esterel.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.esterel.ui.internal.EsterelActivator

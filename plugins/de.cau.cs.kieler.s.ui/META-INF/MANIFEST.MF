@@ -23,5 +23,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.s.ui.contentassist.antlr,
  de.cau.cs.kieler.s.ui.contentassist,
- de.cau.cs.kieler.s.ui.quickfix
+ de.cau.cs.kieler.s.ui.quickfix,
+ de.cau.cs.kieler.s.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.s.ui.internal.SActivator
