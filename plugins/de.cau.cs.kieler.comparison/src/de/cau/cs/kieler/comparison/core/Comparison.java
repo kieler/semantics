@@ -63,7 +63,7 @@ public final class Comparison {
     /**
      * The singleton instance of this class.
      */
-    private static Comparison singleton;
+    private static Comparison singleton = new Comparison();
 
     /**
      * Get the singleton instance of Comparison.

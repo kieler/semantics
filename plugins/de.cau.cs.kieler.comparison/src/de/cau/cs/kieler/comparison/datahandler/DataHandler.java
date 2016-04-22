@@ -36,7 +36,7 @@ public class DataHandler extends AbstractDataHandler {
 
     }
 
-    private static DataHandler singleton;
+    private static DataHandler singleton = new DataHandler();
 
     /**
      * Get the singleton instance of Comparison
