@@ -121,11 +121,12 @@ public class AsynchronousComparison extends Job {
                     } else if (compMeasuringParameters instanceof StandardMeasuringParameters) {
                         StandardMeasuringParameters params =
                                 (StandardMeasuringParameters) compMeasuringParameters;
-                        // K-Best with k = M results in exact k measurements no matter how close
-                        // they are
-                        compilation =
-                                compileKBest(comp, test, monitor, params.getComparisonAmount(), 0,
-                                        params.getComparisonAmount());
+                        // K-Best with k = M results is exact k measurements no matter how close
+                        // they are to the best
+                        for (int i = 0; i < params.getComparisonAmount(); i++)
+                        {
+                            compilation = compileKBest(comp, test, monitor, 1, 0, 1);
+                        }
 
                     } else {
                         // no valid / known measuring selected

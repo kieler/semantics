@@ -7,9 +7,6 @@
             class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2C">
       </compilerClass>
       <compilerClass
-            class="de.cau.cs.kieler.comparison.compilers.kico.KiCoSCCharts2Java">
-      </compilerClass>
-      <compilerClass
             class="de.cau.cs.kieler.comparison.compilers.cec.CEC2C">
       </compilerClass>
    </extension>

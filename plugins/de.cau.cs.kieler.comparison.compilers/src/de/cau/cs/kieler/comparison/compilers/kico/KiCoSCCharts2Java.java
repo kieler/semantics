@@ -19,7 +19,7 @@ import de.cau.cs.kieler.comparison.core.Language;
  * @author nfl
  *
  */
-public class KiCoSCCharts2Java extends AbstractKiCo implements ICompiler {
+public abstract class KiCoSCCharts2Java extends AbstractKiCo implements ICompiler {
 
     /**
      * 
@@ -29,6 +29,6 @@ public class KiCoSCCharts2Java extends AbstractKiCo implements ICompiler {
         trgLanguageString = "Java";
         trgLanguageExtension = ".java";
         // TODO add java transformation strings
-        transformation = "T_s.c";
+        // transformation = "";
     }
 }
