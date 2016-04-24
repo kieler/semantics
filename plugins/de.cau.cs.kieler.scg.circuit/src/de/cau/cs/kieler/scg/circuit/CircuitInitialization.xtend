@@ -122,7 +122,7 @@ class CircuitInitialization {
 	def createConstantZero(Actor actor, String outputPortName) {
 
 		val const0 = CircuitFactory::eINSTANCE.createActor
-		const0.name = "0"
+		const0.name = outputPortName
 		const0.type = "gnd"
 
 		actor.innerActors.add(const0)
@@ -133,7 +133,7 @@ class CircuitInitialization {
 
 	def createConstantOne(Actor actor, String outputPortName) {
 		val const1 = CircuitFactory::eINSTANCE.createActor
-		const1.name = "1"
+		const1.name = outputPortName
 		const1.type = "vcc"
 		
 		actor.innerActors.add(const1)

@@ -38,6 +38,7 @@ import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
+import java.util.List
 
 class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
@@ -47,30 +48,26 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	val injector = Guice.createInjector(configure)
 	extension KRenderingExtensions = injector.getInstance(typeof(KRenderingExtensions))
 
-	// port maps
-	val HashMultimap<String, Port> muxSelPortMapping = HashMultimap.create // stores MUX name and its "Sel" port
-	val HashMultimap<String, Port> orInPortMapping = HashMultimap.create
-	val HashMultimap<String, Port> andInPortMapping = HashMultimap.create
-
-	// actor maps
+	// highlighting Maps
 	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create // stores every gate name and its highlightable parts
-	val LinkedList<String> muxActors = new LinkedList<String> // stores all MUX names
-	val HashMap<String, String> muxTrueLinkMapping = new HashMap<String, String> // stores name of source and target for "In_1" link of MUX
-	val HashMap<String,Boolean> preRegister = new HashMap<String, Boolean> //e.g., for pre(O) store <pre(O), false>
-	
-	// link maps
 	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create // stores source port name and outgoing link
+	// Object maps
+	val LinkedList<Link> wires = new LinkedList<Link> // stores all links
+	val LinkedList<Actor> actors = new LinkedList<Actor> // stores all actors
+	val HashMap<String, Port> targetPorts = new HashMap<String, Port> // stores target port for each link with 1
+	val HashMap<String, Boolean> muxFlapChange = new HashMap<String, Boolean> // stores if a mux shall change position of flap
+	val HashMap<String, Boolean> regChange = new HashMap<String, Boolean> // stores if a reg shall be highlighted
+	// /////////////////////////
 
 	override initialize() throws KiemInitializationException {
 
-		muxSelPortMapping.clear
-		orInPortMapping.clear
-		andInPortMapping.clear
 		actorMapping.clear
-		muxActors.clear
+		wires.clear
+		actors.clear
 		linkMapping.clear
-		muxTrueLinkMapping.clear
-		preRegister.clear
+		targetPorts.clear
+		muxFlapChange.clear
+		regChange.clear
 
 		val diagramEditor = getActiveEditor();
 		if (diagramEditor == null) {
@@ -99,10 +96,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 						val rend = l.getData.filter(KRendering).head
 						val sourcePort = link.source as Port
 						linkMapping.put(sourcePort.name, rend)
+						wires.add(link)
 					}
 
 					// ---------------------------------------------------------------------------
-					// Before first tick in simulation all links shall be gray             --
+					// Before first tick all links shall be gray             --
 					// ---------------------------------------------------------------------------
 					if (l != null) {
 						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
@@ -117,7 +115,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				for (node : circuit.eAllContents.filter(Actor).toList) {
 					val atomicActor = node.innerActors.empty
 
-					if (atomicActor && (node.name != null)) {
+					if (atomicActor && (node.name != null) && (node.type != null)) {
+
 						// get kRendering information for each actor
 						val frame = context.getTargetElement(node, KNode)
 						if (frame != null) {
@@ -130,32 +129,16 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 							actorMapping.putAll(node.name, children)
 							actorMapping.putAll(node.name, shape)
-
-							// several gates are stored in additional maps: MUX, OR, AND
+							actors.add(node)
 							if (node.type != null) {
-								switch (node.type) {
-									case "MUX": {
-										muxSelPortMapping.put(node.name, node.ports.filter[type == "Sel"].head)
-										val sourcePort = node.ports.filter[type == "In_1"].head.incomingLinks.head.
-											source as Port
-										if (!sourcePort.name.startsWith("const0")) {
-											muxTrueLinkMapping.put(node.name, sourcePort.name)
-										}
-										muxActors.add(node.name)
-									}
-									case "OR": {
-										orInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
-									}
-									case "AND": {
-										andInPortMapping.putAll(node.name, node.ports.filter[type == "In"])
-									}
-									case "REG": {
-										if(node.name.startsWith("pre")){
-										preRegister.put(node.name, false)
-										}
-									}
+								if (node.type == "MUX") {
+									muxFlapChange.put(node.name, false)
+								} else if (node.type == "REG") {
+									regChange.put(node.name, false)
+									System.out.println("GGGTGTGGTT")
 								}
 							}
+
 						}
 					}
 				}
@@ -248,38 +231,197 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		// -----------------------------------------------
 		// Add preRegisters, MUX, AND and OR gates               --
 		// -----------------------------------------------
-		addMuxToHighlight(highlighting)
-
-		// lists need to be copied in each step because they will be modified in methods
-		val HashMultimap<String, Port> orList = HashMultimap.create
-		orList.putAll(orInPortMapping)
-		val HashMultimap<String, Port> andList = HashMultimap.create
-		andList.putAll(andInPortMapping)
-		addAndOrGatesToHighlight(highlighting, orList, andList)
-
+		targetPorts.clear
 		for (entry : highlighting) {
-			System.out.println(entry)
+			for (w : wires) {
+				val sP = w.source as Port
+				if (sP.name == entry) {
+					val target = w.target as Port
 
+					targetPorts.put(target.name, target)
+				}
+			}
 		}
-		for (entry : muxTrueLinkMapping.entrySet) {
-			System.out.println("mltm " + entry.key)
 
-		}
-		for (entry : muxActors) {
-			System.out.println("mux " + entry)
+		val actorsCopy = actors.immutableCopy
 
-		}
-		for (entry : preRegister.entrySet) {
-			System.out.println("pre register " + entry.key + " : " + entry.value.toString )
+		addActors(highlighting, actors)
 
-		}
-		
+		actors.clear
+		actors.addAll(actorsCopy)
+
 		// ---------------------------------------------------------------
 		// Now highlight all entries of highlighting list          --
 		// ---------------------------------------------------------------
 		highlight(highlighting)
 
 		jSONObject
+	}
+
+	protected def void addActors(Set<String> highlighting, List<Actor> actorsCopy) {
+		val List<Actor> removeActors = new LinkedList<Actor>
+		for (a : actorsCopy) {
+			System.out.println("check actor " + a.name + "------------------------------")
+			switch a.type {
+				case "REG": addReg(a, highlighting, removeActors)
+				case "AND": addAnd(a, highlighting, removeActors)
+				case "OR": addOr(a, highlighting, removeActors)
+				case "MUX": addMux(a, highlighting, removeActors)
+				case "vcc": addConst1(a, highlighting, removeActors)
+				case "gnd": removeActors += a
+			}
+
+			for (entry : targetPorts.entrySet) {
+				System.out.println("targetPort: " + entry.key)
+			}
+			for (entry : highlighting) {
+				System.out.println("highlighting: " + entry)
+			}
+		}
+
+		if (removeActors.length > 0) {
+			for (entry : removeActors) {
+				actorsCopy.remove(entry)
+			}
+			removeActors.clear
+			addActors(highlighting, actorsCopy)
+		}
+
+	}
+
+	def addConst1(Actor const1, Set<String> highlighting, List<Actor> removeActors) {
+		highlighting += const1.name
+		System.out.println(const1.name + " FFFFFFFFF")
+
+		val allOutgoingWires = wires.filter[(source as Port).name == const1.name]
+		for (entry : allOutgoingWires) {
+			val target = entry.target as Port
+			val ssource = entry.source as Port
+			System.out.println("target: " + target.name + " from entry " + ssource.name)
+			targetPorts.put(target.name, target)
+
+		}
+		removeActors.add(const1)
+	}
+
+	protected def addReg(Actor reg, Set<String> highlighting, List<Actor> removeActors) {
+
+		val lastTick = regChange.get(reg.name)
+		val presentTick = highlighting.contains(reg.name) || targetPorts.containsKey(reg.ports.filter [
+			(type == "In") && (name != "Tick")
+		].head.name)
+		System.out.println(reg.name + " with last tick: " + lastTick + " and present tick " + presentTick)
+		if (lastTick && presentTick) {
+			if (!highlighting.contains(reg.name)) {
+				highlighting += reg.name
+			}
+			val allOutgoingWires = wires.filter[(source as Port).name == reg.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			removeActors.add(reg)
+		} else if (lastTick && !presentTick) {
+			highlighting += reg.name
+			regChange.replace(reg.name, false)
+			val allOutgoingWires = wires.filter[(source as Port).name == reg.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			removeActors.add(reg)
+		} else if (!lastTick && presentTick) {
+			regChange.replace(reg.name, true)
+			removeActors.add(reg)
+		}
+	}
+
+	protected def addMux(Actor mux, Set<String> highlighting, List<Actor> removeActors) {
+
+		val selectionPort = mux.ports.filter[type == "Sel"].head
+		System.out.println("DDDDDDDDDDDDDDDDDDDDggg  " + selectionPort.name)
+		val In1 = mux.ports.filter[type == "In_1"].head
+		val In0 = mux.ports.filter[type == "In_0"].head
+
+		if (targetPorts.containsKey(selectionPort.name) && targetPorts.containsKey(In1.name)) {
+			highlighting += mux.name
+
+			val allOutgoingWires = wires.filter[(source as Port).name == mux.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			muxFlapChange.replace(mux.name, true)
+			System.out.println("DDDDDDDDDDDDDDDDDDDD  " + selectionPort.name)
+			removeActors.add(mux)
+		} else if (!targetPorts.containsKey(selectionPort.name) && targetPorts.containsKey(In0.name)) {
+			highlighting += mux.name
+
+			val allOutgoingWires = wires.filter[(source as Port).name == mux.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			muxFlapChange.replace(mux.name, false)
+			removeActors.add(mux)
+		} else if (targetPorts.containsKey(selectionPort.name)) {
+			muxFlapChange.replace(mux.name, true)
+		} else if (!targetPorts.containsKey(selectionPort.name) && muxFlapChange.get(mux.name)) {
+			muxFlapChange.replace(mux.name, false)
+
+		}
+
+	}
+
+	protected def addAnd(Actor actor, Set<String> highlighting, List<Actor> removeActors) {
+		val inputPorts = actor.ports.filter[type == "In"]
+		
+		var onePortFalse = true
+		
+		
+		for(p : inputPorts){
+			if(!highlighting.contains(p.name)){
+				onePortFalse = false
+			}
+		}
+		
+
+		if (onePortFalse) {
+			highlighting += actor.name
+
+			
+			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			removeActors.add(actor)
+		}
+	}
+
+	protected def addOr(Actor actor, Set<String> highlighting, List<Actor> removeActors) {
+		val inputPorts = actor.ports.filter[type == "In"]
+		
+		var onePortTrue = false
+		
+		
+		for(p : inputPorts){
+			if(highlighting.contains(p.name)){
+				onePortTrue = true
+				System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPTRU " + onePortTrue)
+			}
+		}
+		System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPTRU " + onePortTrue)
+		
+		if (onePortTrue) {
+			highlighting += actor.name
+			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
+			for (entry : allOutgoingWires) {
+				val target = entry.target as Port
+				targetPorts.put(target.name, target)
+			}
+			removeActors.add(actor)
+		}
 	}
 
 	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlightingMarker", false);
@@ -295,49 +437,50 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			for (entry : actorMapping.entries) {
 
 				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-				val muxflapMarker = entry.value.styles.findFirst[getProperty(FLAP_MARKER)]
 
-				if (highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && preRegister.get("pre(" + entry.key + ")"))) {
+				if (highlighting.contains(entry.key)) {
 
 					// non-MUX gate highlighting
-					if (highlightingMarker == null) { // if there was no highlighting before, add one
-						if (entry.key.startsWith("g")) {
-							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::LIGHT_SALMON)
-							entry.value.styles.add(style)
-						} else {
-							val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-							style.setProperty(HIGHLIGHTING_MARKER, true);
-							style.setColor(Colors::PEACH_PUFF)
-							entry.value.styles.add(style)
-						}
-					}
-					
+					if (highlightingMarker == null) {
 
-					// MUX highlighting
-					if (muxflapMarker == null) {
-						if (muxActors.contains(entry.key) ) {
-							if (entry.value.id == "highlightable_1") {
-								val KForeground bstyle = KRenderingFactory.eINSTANCE.createKForeground()
-								bstyle.setProperty(FLAP_MARKER, true)
-								bstyle.setColor(Colors::BLACK)
-								entry.value.styles.add(bstyle)
-							}
-							if (entry.value.id == "highlightable_0") {
-								val KForeground wstyle = KRenderingFactory.eINSTANCE.createKForeground()
-								wstyle.setColor(Colors::PEACH_PUFF) // make it white: check if muxActros.contains(entry.key) is else case above..
-								wstyle.setProperty(FLAP_MARKER, true)
-								entry.value.styles.add(wstyle)
-							}
-						}
+						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::LIGHT_SALMON)
+						entry.value.styles.add(style)
+
 					}
 				} else { // if the gate's name is not listed in highlighting list, remove all highlighting.
 					if (!highlighting.contains(entry.key)) {
 						entry.value.styles.remove(highlightingMarker)
-						entry.value.styles.remove(muxflapMarker)
 					}
 				}
+
+				val muxflapMarker = entry.value.styles.findFirst[getProperty(FLAP_MARKER)]
+
+				for (mux : muxFlapChange.entrySet) {
+					if (mux.key == entry.key) {
+						if (mux.value) {
+							if (muxflapMarker == null) {
+								if (entry.value.id == "highlightable_1") {
+									val KForeground bstyle = KRenderingFactory.eINSTANCE.createKForeground()
+									bstyle.setProperty(FLAP_MARKER, true)
+									bstyle.setColor(Colors::BLACK)
+									entry.value.styles.add(bstyle)
+								}
+								if (entry.value.id == "highlightable_0") {
+									val KForeground wstyle = KRenderingFactory.eINSTANCE.createKForeground()
+									wstyle.setColor(Colors::WHITE) // make it white: check if muxActros.contains(entry.key) is else case above..
+									wstyle.setProperty(FLAP_MARKER, true)
+									entry.value.styles.add(wstyle)
+								}
+							}
+						} else if (!mux.value) {
+							if (muxflapMarker != null)
+								entry.value.styles.remove(muxflapMarker)
+						}
+					}
+				}
+
 			}
 
 			// highlight links: check for each link if source port is located at actor which shall be highlighted.
@@ -346,177 +489,31 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
 				val value = entry.value
 
-				if (highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && preRegister.get("pre(" + entry.key + ")"))) {
+				if (highlighting.contains(entry.key)) {
 					if (highlightingMarker == null) {
-
-						// highlighting of the MUX's incoming links.
-						// if MUX shall be highlighted, because "Sel" port is true. The "In_1" Link is green
-						// the link at the "Sel" port will be Light_Salmon (else case)
-						if ((muxTrueLinkMapping.containsKey(entry.key) && muxActors.contains(entry.key)) ||(!muxTrueLinkMapping.containsKey(entry.key) && !muxActors.contains(entry.key))) {
-//							System.out.println("Check")
-//							val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-//							style.setProperty(HIGHLIGHTING_MARKER, true);
-//							style.setColor(Colors::LIGHT_SEA_GREEN)
-//							entry.value.styles.add(style)
-//						} else {
-//							if (!muxTrueLinkMapping.containsKey(entry.key) && !muxActors.contains(entry.key)) {
-								if (value instanceof KRoundedBendsPolyline) {
-									entry.value.lineWidth = 3
-								}
-								val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-								style.setProperty(HIGHLIGHTING_MARKER, true);
-								style.setColor(Colors::LIGHT_SALMON)
-								entry.value.styles.add(style)
-
-//							}
+						if (value instanceof KRoundedBendsPolyline) {
+							entry.value.lineWidth = 3
 						}
-					} // if the link was already highlighted: the color shall change and get brighter
-					// to prevent multiple identical highlighting styles, the old one is removed and a new one is added..
-//					else if (highlightingMarker != null) {
-//						entry.value.styles.remove(highlightingMarker)
-//						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-//						style.setProperty(HIGHLIGHTING_MARKER, true);
-//						style.setColor(Colors::PEACH_PUFF)
-//						entry.value.styles.add(style)
-//					}
+						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
+						style.setProperty(HIGHLIGHTING_MARKER, true);
+						style.setColor(Colors::LIGHT_SALMON)
+						entry.value.styles.add(style)
+					}
 				} // if this link shall not be highlighted: remove highlighting
-				else if (!highlighting.contains(entry.key) || (preRegister.containsKey("pre(" + entry.key + ")") && !preRegister.get("pre(" + entry.key + ")"))) {
+				else if (!highlighting.contains(entry.key)) {
 					if (highlightingMarker != null) {
 						entry.value.styles.remove(highlightingMarker)
-//						if (value instanceof KRoundedBendsPolyline) {
-//							entry.value.lineWidth = 3
-//						}
-//					} else {
 						if (value instanceof KRoundedBendsPolyline) {
 							entry.value.lineWidth = 1
 
 						}
 					}
 				}
-				
-				if(highlighting.contains(entry.key) && preRegister.containsKey("pre(" + entry.key + ")")){
-					System.out.println("----------------- " + entry.key)
-					preRegister.replace("pre(" + entry.key + ")", true)
-				} else if(preRegister.containsKey("pre(" + entry.key + ")")){
-					System.out.println("---------++-------- " + entry.key)
-					preRegister.replace("pre(" + entry.key + ")", false)
-				}
 			}
 		]
 		Display.getDefault().syncExec(run)
 	}
 
-	// -------------------------------------------------------------------------------------
-	// This method adds AND and OR gates which are subsequently highlighted          --
-	// -------------------------------------------------------------------------------------
-	def void addAndOrGatesToHighlight(HashSet<String> highlighting, Multimap<String, Port> orList,
-		Multimap<String, Port> andList) {
-		// flag to check if something new happened 
-		var boolean oneMore = false
-
-		// add OR 
-		val HashMultimap<String, Port> ors = HashMultimap.create
-		ors.putAll(orList)
-
-		val orEntries = ors.entries
-		for (or : orEntries) {
-			val key1 = or.key
-			if (highlighting.contains(or.value.name)) {
-				oneMore = true
-				if (orList.containsKey(key1)) {
-					orList.removeAll(key1)
-				}
-				highlighting += or.key
-			}
-		}
-
-		// add AND
-		val HashMultimap<String, Port> ands = HashMultimap.create
-		ands.putAll(andList)
-
-		// flag to check if all previous ports of this and gate were highlighted
-		var allPorts = false
-
-		// store name of "active" and gate
-		var key = new String
-
-		val andEntries = ands.entries
-		val length = andEntries.length
-		var cnt = 0
-		for (and : andEntries) {
-
-			if (key == "") { // only happens if this for section starts
-				key = and.key
-
-				// check if this port is highlighted and set flag for next port to remember what happened here
-				if (highlighting.contains(and.value.name)) {
-					allPorts = true
-				} else {
-					allPorts = false
-				}
-			} // if this is not the first entry of the list, check if its the same and gate as before
-			// afterwards check if all former ports were marked for highlighting
-			else if (key == and.key && allPorts) {
-
-				// if this port is not meant to be highlighted, the containing and gate shall not be highlighted
-				if (!highlighting.contains(and.value.name)) {
-					allPorts = false
-				}
-			} // if this is not the first entry on the list, and this entry has another key, as the one before,
-			// check, if all ports of the former gate got a "1". If so, add the former actor to highlighting list
-			else if (key != and.key) {
-				if (allPorts) {
-					highlighting += key
-					if (andList.containsKey(key)) {
-						andList.removeAll(key)
-						oneMore = true
-					}
-				}
-				key = and.key
-				if (!highlighting.contains(and.value.name)) {
-					allPorts = false
-				} else {
-					allPorts = true
-				}
-			}
-			cnt += 1
-			if (allPorts && cnt == length) {
-				highlighting += key
-				if (andList.containsKey(key)) {
-					andList.removeAll(key)
-				}
-			}
-		}
-
-		// this time something happened in here.. so check if this affects another gate
-		if (oneMore) {
-			oneMore = false
-			addAndOrGatesToHighlight(highlighting, orList, andList)
-		}
-	}
-
-	// -------------------------------------------------------------------------------------
-	// This method adds MUX gates and the source port of the "true" link for this MUX     --
-	// -------------------------------------------------------------------------------------
-	def addMuxToHighlight(HashSet<String> highlighting) {
-		for (m : muxSelPortMapping.entries) {
-			if (highlighting.contains(m.value.name)) {
-				if (muxTrueLinkMapping.containsKey(m.key)) {
-					highlighting += muxTrueLinkMapping.get(m.key)
-				}
-				highlighting += m.key
-			} // This step is important because otherwise mux with "false" "Sel" port entry are highlihgted.
-			// Only those MUXs with "true" "Sel" entry shall be highlighted. Every other MUXs are removed from list.
-//			else if (highlighting.contains(m.key)) {
-//				highlighting.remove(m.key)
-//			}
-
-			if (highlighting.contains(m.key) && highlighting.contains("!" + m.key)) {
-				highlighting.remove("!"+m.key)
-				System.out.println("removed " + "!"+m.key)
-			}
-		}
-	}
 
 	protected def IEditorPart getActiveEditor() {
 		val Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();

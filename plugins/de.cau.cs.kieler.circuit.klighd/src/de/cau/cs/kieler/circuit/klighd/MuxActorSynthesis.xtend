@@ -38,7 +38,7 @@ class MuxActorSynthesis implements IDrawableActor {
 			it.lineCap.propagateToChildren = true
 
 			it.addRectangle => [
-				it.id = "highlightable"
+//				it.id = "highlightable"
 				it.lineWidth = 0;
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
@@ -48,7 +48,7 @@ class MuxActorSynthesis implements IDrawableActor {
 			
 			
 			it.addPolygon() => [
-				it.id = "highlightable"
+//				it.id = "highlightable"
 				it.lineWidth = 0
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
@@ -58,7 +58,7 @@ class MuxActorSynthesis implements IDrawableActor {
 			]
 			
 			it.addPolygon() => [
-				it.id = "highlightable"
+//				it.id = "highlightable"
 				it.lineWidth = 0
 				it.background = "white".color;
 				it.selectionBackground = "red".color;
