@@ -48,13 +48,13 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	val injector = Guice.createInjector(configure)
 	extension KRenderingExtensions = injector.getInstance(typeof(KRenderingExtensions))
 
-	// highlighting Maps
+	// highlighting info
 	val HashMultimap<String, KRendering> actorMapping = HashMultimap.create // stores every gate name and its highlightable parts
 	val HashMultimap<String, KRendering> linkMapping = HashMultimap.create // stores source port name and outgoing link
 	// Object maps
 	val LinkedList<Link> wires = new LinkedList<Link> // stores all links
 	val LinkedList<Actor> actors = new LinkedList<Actor> // stores all actors
-	val HashMap<String, Port> targetPorts = new HashMap<String, Port> // stores target port for each link with 1
+	val LinkedList<String> targetPorts = new LinkedList<String> // stores target port for each link with 1
 	val HashMap<String, Boolean> muxFlapChange = new HashMap<String, Boolean> // stores if a mux shall change position of flap
 	val HashMap<String, Boolean> regChange = new HashMap<String, Boolean> // stores if a reg shall be highlighted
 	// /////////////////////////
@@ -135,7 +135,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 									muxFlapChange.put(node.name, false)
 								} else if (node.type == "REG") {
 									regChange.put(node.name, false)
-									System.out.println("GGGTGTGGTT")
 								}
 							}
 
@@ -162,7 +161,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	}
 
 	override wrapup() throws KiemInitializationException {
-		System.out.println("wrapup-------------------------------++++++++!!!!!!!!!!!!!")
+		System.out.println("wrapup----------------------------------------")
 
 		val Runnable run = [|
 
@@ -189,6 +188,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	// In each step: list the gates which shall be highlighted                     --
 	// -------------------------------------------------------------------------------------------------
 	override step(JSONObject jSONObject) throws KiemExecutionException {
+		System.out.println("step ----------------------------------------")
 		// -----------------------------------------------------------
 		// Use highlighting information from C Code            --
 		// -----------------------------------------------------------
@@ -224,10 +224,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				}
 			}
 		}
-		for (entry : highlighting) {
-			System.out.println("----- " + entry)
-
-		}
+		
 		// -----------------------------------------------
 		// Add preRegisters, MUX, AND and OR gates               --
 		// -----------------------------------------------
@@ -238,7 +235,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				if (sP.name == entry) {
 					val target = w.target as Port
 
-					targetPorts.put(target.name, target)
+					targetPorts.add(target.name)
 				}
 			}
 		}
@@ -261,7 +258,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	protected def void addActors(Set<String> highlighting, List<Actor> actorsCopy) {
 		val List<Actor> removeActors = new LinkedList<Actor>
 		for (a : actorsCopy) {
-			System.out.println("check actor " + a.name + "------------------------------")
 			switch a.type {
 				case "REG": addReg(a, highlighting, removeActors)
 				case "AND": addAnd(a, highlighting, removeActors)
@@ -269,13 +265,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 				case "MUX": addMux(a, highlighting, removeActors)
 				case "vcc": addConst1(a, highlighting, removeActors)
 				case "gnd": removeActors += a
-			}
-
-			for (entry : targetPorts.entrySet) {
-				System.out.println("targetPort: " + entry.key)
-			}
-			for (entry : highlighting) {
-				System.out.println("highlighting: " + entry)
 			}
 		}
 
@@ -291,14 +280,11 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	def addConst1(Actor const1, Set<String> highlighting, List<Actor> removeActors) {
 		highlighting += const1.name
-		System.out.println(const1.name + " FFFFFFFFF")
 
 		val allOutgoingWires = wires.filter[(source as Port).name == const1.name]
 		for (entry : allOutgoingWires) {
 			val target = entry.target as Port
-			val ssource = entry.source as Port
-			System.out.println("target: " + target.name + " from entry " + ssource.name)
-			targetPorts.put(target.name, target)
+			targetPorts.add(target.name)
 
 		}
 		removeActors.add(const1)
@@ -307,10 +293,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	protected def addReg(Actor reg, Set<String> highlighting, List<Actor> removeActors) {
 
 		val lastTick = regChange.get(reg.name)
-		val presentTick = highlighting.contains(reg.name) || targetPorts.containsKey(reg.ports.filter [
+		val presentTick = highlighting.contains(reg.name) || targetPorts.contains(reg.ports.filter [
 			(type == "In") && (name != "Tick")
 		].head.name)
-		System.out.println(reg.name + " with last tick: " + lastTick + " and present tick " + presentTick)
 		if (lastTick && presentTick) {
 			if (!highlighting.contains(reg.name)) {
 				highlighting += reg.name
@@ -318,7 +303,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			val allOutgoingWires = wires.filter[(source as Port).name == reg.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			removeActors.add(reg)
 		} else if (lastTick && !presentTick) {
@@ -327,7 +312,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			val allOutgoingWires = wires.filter[(source as Port).name == reg.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			removeActors.add(reg)
 		} else if (!lastTick && presentTick) {
@@ -339,34 +324,32 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	protected def addMux(Actor mux, Set<String> highlighting, List<Actor> removeActors) {
 
 		val selectionPort = mux.ports.filter[type == "Sel"].head
-		System.out.println("DDDDDDDDDDDDDDDDDDDDggg  " + selectionPort.name)
 		val In1 = mux.ports.filter[type == "In_1"].head
 		val In0 = mux.ports.filter[type == "In_0"].head
 
-		if (targetPorts.containsKey(selectionPort.name) && targetPorts.containsKey(In1.name)) {
+		if (targetPorts.contains(selectionPort.name) && targetPorts.contains(In1.name)) {
 			highlighting += mux.name
 
 			val allOutgoingWires = wires.filter[(source as Port).name == mux.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			muxFlapChange.replace(mux.name, true)
-			System.out.println("DDDDDDDDDDDDDDDDDDDD  " + selectionPort.name)
 			removeActors.add(mux)
-		} else if (!targetPorts.containsKey(selectionPort.name) && targetPorts.containsKey(In0.name)) {
+		} else if (!targetPorts.contains(selectionPort.name) && targetPorts.contains(In0.name)) {
 			highlighting += mux.name
 
 			val allOutgoingWires = wires.filter[(source as Port).name == mux.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			muxFlapChange.replace(mux.name, false)
 			removeActors.add(mux)
-		} else if (targetPorts.containsKey(selectionPort.name)) {
+		} else if (targetPorts.contains(selectionPort.name)) {
 			muxFlapChange.replace(mux.name, true)
-		} else if (!targetPorts.containsKey(selectionPort.name) && muxFlapChange.get(mux.name)) {
+		} else if (!targetPorts.contains(selectionPort.name) && muxFlapChange.get(mux.name)) {
 			muxFlapChange.replace(mux.name, false)
 
 		}
@@ -380,7 +363,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		
 		
 		for(p : inputPorts){
-			if(!highlighting.contains(p.name)){
+			if(!highlighting.contains(p.name) && !targetPorts.contains(p.name)){
 				onePortFalse = false
 			}
 		}
@@ -393,7 +376,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			removeActors.add(actor)
 		}
@@ -403,22 +386,19 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		val inputPorts = actor.ports.filter[type == "In"]
 		
 		var onePortTrue = false
-		
-		
+
 		for(p : inputPorts){
-			if(highlighting.contains(p.name)){
+			if(highlighting.contains(p.name) || targetPorts.contains(p.name)){
 				onePortTrue = true
-				System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPTRU " + onePortTrue)
 			}
 		}
-		System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPTRU " + onePortTrue)
 		
 		if (onePortTrue) {
 			highlighting += actor.name
 			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
-				targetPorts.put(target.name, target)
+				targetPorts.add(target.name)
 			}
 			removeActors.add(actor)
 		}
@@ -431,6 +411,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	// This method finally highlights the gates and links                   --
 	// -----------------------------------------------------------------------
 	protected def void highlight(Set<String> highlighting) {
+		System.out.println("highlighting -------------------------------------")
 		val Runnable run = [|
 
 			// highlight actors: check for each entry (actor) if its name is in highlighting list. If so, highlight it.
