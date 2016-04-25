@@ -21,6 +21,8 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
@@ -33,14 +35,13 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.opt.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.HashMap
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Transform SCG to S
@@ -68,7 +69,7 @@ class SCG2S extends AbstractProductionTransformation {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, OptimizerFeatures::CP_ID)
     }
 
     // -------------------------------------------------------------------------
