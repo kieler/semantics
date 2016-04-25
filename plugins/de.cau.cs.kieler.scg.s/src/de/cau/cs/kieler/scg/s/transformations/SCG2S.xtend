@@ -35,7 +35,6 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.opt.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.HashMap
 import java.util.List
@@ -69,7 +68,7 @@ class SCG2S extends AbstractProductionTransformation {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, OptimizerFeatures::CP_ID)
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
     }
 
     // -------------------------------------------------------------------------
