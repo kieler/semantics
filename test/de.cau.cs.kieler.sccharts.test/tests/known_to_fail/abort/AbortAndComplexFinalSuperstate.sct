@@ -1,4 +1,5 @@
 // Edge case from Semantic Meeting 2015-11-17
+// Not schedulable because of KISEMA-1068
 @Transformation ABORT
 scchart AbortAndComplexFinalSuperstate {
   input signal count;

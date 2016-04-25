@@ -1,3 +1,5 @@
+// Transformed model is not savable.
+// See KISEMA-1079
 @Transformation HISTORY
 scchart HistoryTransition {
   input bool I;

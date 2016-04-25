@@ -1,3 +1,5 @@
+// Transformed model is not savable.
+// See KISEMA-1067
 @Transformation DEFERRED
 scchart DeferredTransition {
   input int x;

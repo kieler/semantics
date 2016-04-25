@@ -1,3 +1,4 @@
+// Not schedulable because of KISEMA-1068
 @Transformation STATIC
 scchart StaticVariable {
 

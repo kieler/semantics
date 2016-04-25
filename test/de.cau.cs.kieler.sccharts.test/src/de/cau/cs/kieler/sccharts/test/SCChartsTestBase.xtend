@@ -86,7 +86,7 @@ class SCChartsTestBase {
              val ignore = path.contains(File.separator + TARGET_FOLDER + File.separator)
                 || path.contains(File.separator + COMPILATION_RESULT_FOLDER + File.separator)
                 || path.contains(File.separator + IGNORE_FOLDER + File.separator)
-//                || !path.contains("AbortAndComplexFinalSuperstate.sct") // Debug code to compile a specific file
+//                || !path.contains("history") // Debug code to compile a specific file
              if(!ignore) {
                  fileURLs.add(file)
              }
