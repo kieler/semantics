@@ -29,9 +29,6 @@ import org.junit.runner.RunWith
  * @author aas
  */
 @RunWith(typeof(ModelCollectionTestRunner))
-@BundleId("de.cau.cs.kieler.sccharts.test")
-@ModelPath("tests/inputs/**")
-//@ModelFilter("*During*")
 class CodeGenerationTests extends SCChartsTestBase{
 
     /**
@@ -59,7 +56,7 @@ class CodeGenerationTests extends SCChartsTestBase{
         // Normalize path
         if (model instanceof State) {
             // Compile with KiCo
-            val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, T_s.java", model)
+            val context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, !ABORTWTO, T_s.java", model)
             context.setAdvancedSelect(true)
             val result = KielerCompiler.compile(context)
 
@@ -97,5 +94,4 @@ class CodeGenerationTests extends SCChartsTestBase{
             throw new IllegalArgumentException("Model could not be cast to an SCChart.")
         }
     }
-    
 }
