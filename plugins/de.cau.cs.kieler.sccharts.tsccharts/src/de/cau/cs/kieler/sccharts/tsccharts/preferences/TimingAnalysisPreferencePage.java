@@ -63,21 +63,6 @@ public class TimingAnalysisPreferencePage extends FieldEditorPreferencePage impl
 	    public void init(final IWorkbench workbench) {
 	    	setPreferenceStore(Activator.getDefault().getPreferenceStore());
 	    }
-	    
-//	    /**
-//	     * {@inheritDoc}
-//	     */
-//	    @Override
-//	    public boolean performOk() {
-//	        // dispose all cached Graphviz instances to ensure creation of new processes
-//	        for (LayoutAlgorithmData data : LayoutMetaDataService.getInstance().getAlgorithmData()) {
-//	            if ("Graphviz".equals(data.getBundleName())) {
-//	                data.getInstancePool().clear();
-//	            }
-//	        }
-//	        return super.performOk();
-//	    }
-
 	}
 	
 
