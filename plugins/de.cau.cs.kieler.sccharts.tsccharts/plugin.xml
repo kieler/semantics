@@ -50,5 +50,13 @@
             class="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysisHook">
       </hook>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="de.cau.cs.kieler.sccharts.tsccharts.preferences.TimingAnalysisPreferencePage"
+            id="de.cau.cs.kieler.sccharts.tsccharts.preferences"
+            name="Interactive Timing Analysis">
+      </page>
+   </extension>
 
 </plugin>

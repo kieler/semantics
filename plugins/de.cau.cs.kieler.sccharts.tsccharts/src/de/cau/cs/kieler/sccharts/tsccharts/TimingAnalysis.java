@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -316,19 +317,26 @@ public class TimingAnalysis extends Job {
 
 		LinkedList<TimingRequestResult> resultList = generateTimingRequestFile(
 				code, scchart, uriString, highestInsertedTPPNumber);
-
-		Runtime rt = Runtime.getRuntime();
 		String taFileName = fileName.replace(".sct", ".ta");
 		String cFileName = fileName.replace(".sct", ".c");
-		String command = "kta ta -compile " + fileFolder + cFileName
-				+ " -tafile " + fileFolder + taFileName;
+		
+		String timingToolLocation = Activator.getDefault().getPreferenceStore()
+		        .getString("ktaPath");
+		String compilerLocation = Activator.getDefault().getPreferenceStore().getString("mipsel-mcb32-elf-gccPath");
+//		String timingToolLocation = "/Users/ima/shared/papers/dac16/kta/bin/";
+//		String compilerLocation = "/Applications/mcb32tools.app/Contents/Resources/Toolchain/bin/";
+		ProcessBuilder pb =
+           new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", fileFolder + cFileName, "-tafile", fileFolder +taFileName);
+		Map<String, String> env = pb.environment();
+		env.put("PATH", compilerLocation + ":$PATH");
 		try {
-			Process pr = rt.exec(command);
+			Process p = pb.start();
+			//Process pr = rt.exec(command, envp);
 			// get the timing analysis tool's console output
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					pr.getInputStream()));
+					p.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(
-					pr.getErrorStream()));
+					p.getErrorStream()));
 			// read the output of the analysis tool
 			System.out.println("Output from the timing analysis tool:");
 			String s = null;
@@ -343,7 +351,7 @@ public class TimingAnalysis extends Job {
 				System.out.println(s);
 			}
 			// wait for the timing analysis tool to complete its job
-			pr.waitFor();
+			p.waitFor();
 		} catch (IOException e) {
 			return new Status(
 					IStatus.ERROR,
@@ -849,75 +857,4 @@ public class TimingAnalysis extends Job {
 
 		}
 	}
-
-	// // DEBUG METHODS
-	//
-	// private void debugTracing(HashMap<Node, Region> nodeRegionMapping) {
-	// // get all regions
-	// Set<Region> regions = new HashSet<Region>(nodeRegionMapping.values());
-	// regions.addAll(Arrays.asList((Iterators.toArray(
-	// Iterators.filter(scchart.eAllContents(), Region.class), Region.class))));
-	//
-	// for (Region r : regions) {
-	// String regionID = r == null ? "root" : r.getId();
-	// if (regionID == null) {
-	// State parentState = r.getParentState();
-	// regionID =
-	// parentState.getId() + parentState.getLabel()
-	// + parentState.getRegions().indexOf(r) + r.getLabel();
-	// } else if (r != null) {
-	// regionID += r.getLabel();
-	// }
-	// Pair<String, String> pair =
-	// new Pair<String, String>((scchart.getId() + scchart.getLabel()),
-	// regionID);
-	// Set<String> prev = debugTracingHistory.get(pair);
-	//
-	// Set<String> results = new HashSet<String>();
-	// for (java.util.Map.Entry<Node, Region> entry :
-	// nodeRegionMapping.entrySet()) {
-	// if (entry.getValue() == r) {
-	// results.add(nodeToString(entry.getKey()));
-	// }
-	// }
-	//
-	// if (prev == null) {
-	// debugTracingHistory.put(pair, results);
-	// } else if (results.size() != prev.size()
-	// || !Sets.symmetricDifference(results, prev).isEmpty()) {
-	// String message =
-	// "Error: Tracing produced inconsistent mappings over multiple run";
-	// String fails =
-	// "Errornous nodes of region '" + regionID + "': "
-	// + Joiner.on(",").join(Sets.symmetricDifference(results, prev));
-	// StatusManager.getManager().handle(
-	// new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-	// new Throwable(fails)), StatusManager.LOG);
-	// StatusManager.getManager().handle(
-	// new Status(IStatus.ERROR, Activator.PLUGIN_ID, message,
-	// new Throwable(fails)), StatusManager.SHOW);
-	// }
-	//
-	// if (DEBUG_VERBOSE) {
-	// timingResults.put(r, Joiner.on(",").join(results) + "[" + results.size()
-	// + "]");
-	// }
-	// }
-	// }
-	// private String nodeToString(Node node) {
-	// if (node instanceof Assignment) {
-	// ValuedObject vo = ((Assignment) node).getValuedObject();
-	// if (vo != null) {
-	// return "Ass:" + vo.getName();
-	// } else {
-	// return "Hostcode";
-	// }
-	// } else if (node instanceof Conditional) {
-	// return "Cond:"
-	// + ((ValuedObjectReference) ((Conditional) node).getCondition())
-	// .getValuedObject().getName();
-	// } else {
-	// return node.eClass().getName();
-	// }
-	// }
 }
