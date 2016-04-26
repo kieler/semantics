@@ -150,7 +150,8 @@ class SCGDeclarationExtensions {
         }
         val vo = valuedObjectMapping.get(valuedObject)
         if (vo == null) {
-            throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+            return valuedObject // TODO: Remove
+            //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
         vo
     }    

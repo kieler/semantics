@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
+import java.util.HashMap
 
 class CopyPropagation extends AbstractProductionTransformation {
     // Class Varas
@@ -136,24 +137,29 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it.valuedObject)
             ]
         }
+        val varOccures = new HashMap<AssignmentImpl, ArrayList<Expression>>()
         // Replace read of relevant assignments
         cleanedRelevantAssignments.forEach[
-            ReplaceOccuresInNode(nodes, it)
+            varOccures.put(it, ReplaceOccuresInNode(nodes, it))
         ]
         return scg
     }
     
-    def void ReplaceOccuresInNode (EList<Node> nodes, AssignmentImpl assignment) {
+    def ArrayList<Expression> ReplaceOccuresInNode (EList<Node> nodes, AssignmentImpl assignment) {
+        val varOccures = new ArrayList<Expression>() 
         nodes.forEach[
-            ReplaceOccures(it, assignment)
+            // TODO: get all uses of an var
+            varOccures.addAll(ReplaceOccures(it, assignment))
         ]
+        return varOccures
     }
     
-    def void ReplaceOccures (Node node, AssignmentImpl assignment) {
+    def ArrayList<Expression> ReplaceOccures (Node node, AssignmentImpl assignment) {
+        val outList = new ArrayList<Expression>();
         if(node instanceof AssignmentImpl) {
             val item = node as AssignmentImpl
             if(item.valuedObject.name.equals(assignment.valuedObject.name))
-                return;
+                return outList;
             if(item.assignment instanceof ValuedObjectReferenceImpl) {
                 // replace
                 if(DEBUG) {
@@ -161,30 +167,39 @@ class CopyPropagation extends AbstractProductionTransformation {
                 }
                 var ass = item.assignment as ValuedObjectReferenceImpl
                 if(ass.valuedObject.getName().equals(assignment.valuedObject.getName())) {
-                    item.assignment = assignment.assignment
+                    //item.assignment = assignment.assignment
+                    outList.add(item.assignment)
                 } 
             }
             else if (item.assignment instanceof OperatorExpressionImpl) {
                 var ass = item.assignment as OperatorExpressionImpl
-                val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), ass, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
+                //val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), ass, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
                 ass.subExpressions.forEach[
-                    newSubExpressions.add(ReplaceInSubExpression(it.copySCGExpression, assignment))
+                    var tmp = ReplaceInSubExpression(it/*.copySCGExpression*/, assignment)
+                    if(tmp != null) {
+                        outList.addAll(tmp)
+                    }
                 ]
-                ass.subExpressions = newSubExpressions
+                //ass.subExpressions = newSubExpressions
             }
         }
         else if (node instanceof ConditionalImpl) {
                         
         }
+        return outList
     }
     
-    def Expression ReplaceInSubExpression (Expression exp, AssignmentImpl assignment) {
+    def ArrayList<Expression> ReplaceInSubExpression (Expression exp, AssignmentImpl assignment) {
+        val outList = new ArrayList<Expression>();
         if (exp instanceof OperatorExpressionImpl) {
-            val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), exp, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
+            //val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), exp, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
             exp.subExpressions.forEach[
-                newSubExpressions.add(ReplaceInSubExpression(it.copySCGExpression, assignment))
+                var tmp = ReplaceInSubExpression(it.copySCGExpression, assignment)
+                if(tmp != null) {
+                    outList.addAll(tmp)
+                }
             ]
-            exp.subExpressions = newSubExpressions
+            //exp.subExpressions = newSubExpressions
         }
         else if (exp instanceof ValuedObjectReferenceImpl) {
             val ass = exp as ValuedObjectReferenceImpl
@@ -198,10 +213,10 @@ class CopyPropagation extends AbstractProductionTransformation {
                     if(DEBUG) {
                         System.out.println("Replace: " + exp.valuedObject.name + " with " + ass_ass);
                     }
-                    return ass_ass
+                    outList.add(ass_ass)
                 }
             }
         }
-        return exp
+        return outList
     }
 }
