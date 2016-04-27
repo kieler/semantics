@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.circuit.kivi
 
+import static java.lang.Math.toIntExact;
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Binder
@@ -39,8 +40,10 @@ import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
 import java.util.List
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener
+import de.cau.cs.kieler.sim.kiem.KiemEvent
 
-class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
+class CircuitVisualizationDataComponent extends JSONObjectDataComponent implements IKiemEventListener {
 
 	val Module configure = [ Binder binder |
 		binder.bindScope(typeof(ViewSynthesisShared), Scopes.SINGLETON);
@@ -57,7 +60,17 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	val LinkedList<String> targetPorts = new LinkedList<String> // stores target port for each link with 1
 	val HashMap<String, Boolean> muxFlapChange = new HashMap<String, Boolean> // stores if a mux shall change position of flap
 	val HashMap<String, Boolean> regChange = new HashMap<String, Boolean> // stores if a reg shall be highlighted
+	val LinkedList<HashMap<String, Boolean>> muxFlapChangeSummary = new LinkedList<HashMap<String, Boolean>>
+	val LinkedList<HashMap<String, Boolean>> regChangeSummary = new LinkedList<HashMap<String, Boolean>>
+	val LinkedList<HashSet<String>> highlightingSummary = new LinkedList<HashSet<String>>
 	// /////////////////////////
+	private static long tick = 0
+	private static long oldTick = 0
+	private static boolean newTick = true
+
+	override getDataComponentId() {
+		return "CircuitVisualizationDataComponent";
+	}
 
 	override initialize() throws KiemInitializationException {
 
@@ -68,6 +81,12 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		targetPorts.clear
 		muxFlapChange.clear
 		regChange.clear
+		tick = 0
+		oldTick = 0
+		newTick = true
+		highlightingSummary.clear
+		muxFlapChangeSummary.clear
+		regChangeSummary.clear
 
 		val diagramEditor = getActiveEditor();
 		if (diagramEditor == null) {
@@ -148,12 +167,34 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	}
 
+	override provideEventOfInterest() {
+		val events = {
+			KiemEvent.STEP_INFO
+		}
+		val KiemEvent event = new KiemEvent(events)
+		return event
+	}
+
+	override notifyEvent(KiemEvent event) {
+		if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof de.cau.cs.kieler.core.util.Pair) {
+			val bla = event.getInfo() as de.cau.cs.kieler.core.util.Pair<Long, Long>
+			oldTick = tick
+			tick = bla.getFirst().longValue()
+			if (oldTick < tick) {
+				newTick = true
+			} else if (oldTick > tick) {
+				newTick = false
+
+			}
+		}
+	}
+
 	override isObserver() {
 		true
 	}
 
 	override isProducer() {
-		false
+		true
 	}
 
 	override isHistoryObserver() {
@@ -164,6 +205,13 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		System.out.println("wrapup----------------------------------------")
 
 		val Runnable run = [|
+			
+			for(entry : muxFlapChange.entrySet){
+				entry.value = false
+			}
+			for(entry : regChange.entrySet){
+				entry.value = false
+			}
 
 			highlight(<String>newHashSet)
 			for (entry : linkMapping.entries) {
@@ -188,68 +236,120 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 	// In each step: list the gates which shall be highlighted                     --
 	// -------------------------------------------------------------------------------------------------
 	override step(JSONObject jSONObject) throws KiemExecutionException {
-		System.out.println("step ----------------------------------------")
+		System.out.println("step ---------------------------------------- " + tick)
 		// -----------------------------------------------------------
 		// Use highlighting information from C Code            --
 		// -----------------------------------------------------------
-		val highlighting = <String>newHashSet // this map stores the nodes which shall be highlighted
-		for (key : jSONObject.keys.toIterable) {
+		var highlighting = <String>newHashSet // this map stores the nodes which shall be highlighted
+		if (newTick) {
+			System.out.println("this is a new tick..")
+			for (key : jSONObject.keys.toIterable) {
 
-			// check for active guards in this tick
-			if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
-				val object = jSONObject.get(key)
-				if (object instanceof JSONObject && (object as JSONObject).has("value")) {
-					val value = (object as JSONObject).get("value")
+				// check for active guards in this tick
+				if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
+					val object = jSONObject.get(key)
+					if (object instanceof JSONObject && (object as JSONObject).has("value")) {
+						val value = (object as JSONObject).get("value")
 
-					if ((value as Integer) != 0) {
-						if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
-							val myKey = key.substring(0, key.length - 2)
-							highlighting += myKey
-						} else {
+						if ((value as Integer) != 0) {
+							if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
+								val myKey = key.substring(0, key.length - 2)
+								highlighting += myKey
+							} else {
+								highlighting += key
+							}
+						}
+					}
+				} // ////check for Input Signals which are true for this tick.....or Output if you remove has"value
+				else {
+					val object = jSONObject.get(key)
+					if (object instanceof JSONObject && (object as JSONObject).has("present")) { // &&!(object as JSONObject).has("value")) {
+						val value = (object as JSONObject).get("present")
+						if ((value as Boolean)) {
 							highlighting += key
+						} else {
+							// e.g.: !A is true
+							highlighting += "!" + key
 						}
 					}
 				}
-			} // ////check for Input Signals which are true for this tick.....or Output if you remove has"value
-			else {
-				val object = jSONObject.get(key)
-				if (object instanceof JSONObject && (object as JSONObject).has("present")) { // &&!(object as JSONObject).has("value")) {
-					val value = (object as JSONObject).get("present")
-					if ((value as Boolean)) {
-						highlighting += key
-					} else {
-						// e.g.: !A is true
-						highlighting += "!" + key
+			}
+
+			// -----------------------------------------------
+			// Add preRegisters, MUX, AND and OR gates               --
+			// -----------------------------------------------
+			targetPorts.clear
+			for (entry : highlighting) {
+				for (w : wires) {
+					val sP = w.source as Port
+					if (sP.name == entry) {
+						val target = w.target as Port
+
+						targetPorts.add(target.name)
 					}
 				}
 			}
-		}
-		
-		// -----------------------------------------------
-		// Add preRegisters, MUX, AND and OR gates               --
-		// -----------------------------------------------
-		targetPorts.clear
-		for (entry : highlighting) {
-			for (w : wires) {
-				val sP = w.source as Port
-				if (sP.name == entry) {
-					val target = w.target as Port
 
-					targetPorts.add(target.name)
+			val actorsCopy = actors.immutableCopy
+
+			addActors(highlighting, actors)
+
+			actors.clear
+			actors.addAll(actorsCopy)
+
+			val tickInt = toIntExact(tick)
+			
+			if (highlightingSummary.size < tickInt) {
+				highlightingSummary.add(highlighting)
+				val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
+				mfc.putAll(muxFlapChange)
+				muxFlapChangeSummary.add(mfc)
+				
+				val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
+				rc.putAll(regChange)
+				regChangeSummary.add(rc)
+				for (entry : muxFlapChangeSummary) {
+					System.out.println("mfxs: " + entry)
 				}
+			} else {
+				highlightingSummary.set(tickInt - 1, highlighting)
+				val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
+				mfc.putAll(muxFlapChange)
+				muxFlapChangeSummary.set(tickInt - 1, mfc)
+				
+				val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
+				rc.putAll(regChange)
+				regChangeSummary.set(tickInt - 1, rc)
 			}
-		}
 
-		val actorsCopy = actors.immutableCopy
-
-		addActors(highlighting, actors)
-
-		actors.clear
-		actors.addAll(actorsCopy)
-
+		} 
+		
 		// ---------------------------------------------------------------
 		// Now highlight all entries of highlighting list          --
 		// ---------------------------------------------------------------
+		else if (!newTick) {
+			for (entry : muxFlapChangeSummary) {
+					System.out.println("muxflapchange11: " + entry)
+			}
+			System.out.println("this is an old tick..")
+			highlighting.clear
+			val tickInt = toIntExact(tick)
+			highlighting.addAll(highlightingSummary.get(tickInt - 1))
+			muxFlapChange.clear
+			for (entry : muxFlapChangeSummary) {
+					System.out.println("muxflapchange22: " + entry)
+			}
+			muxFlapChange.putAll(muxFlapChangeSummary.get(tickInt - 1))
+			regChange.clear
+			regChange.putAll(regChangeSummary.get(tickInt - 1))
+			for (entry : muxFlapChangeSummary) {
+					System.out.println("muxflapchange: " + entry)
+			}
+
+		}
+		for (entry : muxFlapChange.entrySet) {
+			System.out.println("mfx    : " + entry)
+		}
 		highlight(highlighting)
 
 		jSONObject
@@ -358,21 +458,18 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	protected def addAnd(Actor actor, Set<String> highlighting, List<Actor> removeActors) {
 		val inputPorts = actor.ports.filter[type == "In"]
-		
+
 		var onePortFalse = true
-		
-		
-		for(p : inputPorts){
-			if(!highlighting.contains(p.name) && !targetPorts.contains(p.name)){
+
+		for (p : inputPorts) {
+			if (!highlighting.contains(p.name) && !targetPorts.contains(p.name)) {
 				onePortFalse = false
 			}
 		}
-		
 
 		if (onePortFalse) {
 			highlighting += actor.name
 
-			
 			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
 			for (entry : allOutgoingWires) {
 				val target = entry.target as Port
@@ -384,15 +481,15 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 
 	protected def addOr(Actor actor, Set<String> highlighting, List<Actor> removeActors) {
 		val inputPorts = actor.ports.filter[type == "In"]
-		
+
 		var onePortTrue = false
 
-		for(p : inputPorts){
-			if(highlighting.contains(p.name) || targetPorts.contains(p.name)){
+		for (p : inputPorts) {
+			if (highlighting.contains(p.name) || targetPorts.contains(p.name)) {
 				onePortTrue = true
 			}
 		}
-		
+
 		if (onePortTrue) {
 			highlighting += actor.name
 			val allOutgoingWires = wires.filter[(source as Port).name == actor.name]
@@ -494,7 +591,6 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent {
 		]
 		Display.getDefault().syncExec(run)
 	}
-
 
 	protected def IEditorPart getActiveEditor() {
 		val Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();

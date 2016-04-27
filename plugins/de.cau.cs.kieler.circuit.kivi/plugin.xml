@@ -9,5 +9,11 @@
             name="Circuit Visualization">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.circuit.kivi.CircuitVisualizationDataComponent">
+      </content>
+   </extension>
 
 </plugin>
