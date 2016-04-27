@@ -27,6 +27,9 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
 import java.util.HashMap
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Link
+import de.cau.cs.kieler.scg.ControlFlow
 
 class CopyPropagation extends AbstractProductionTransformation {
     // Class Varas
@@ -75,7 +78,14 @@ class CopyPropagation extends AbstractProductionTransformation {
         }
         // cache data
         val nodes = scg.nodes
-        val assignments = nodes.filter(typeof(AssignmentImpl)).filter[it.operator.getName().equals("ASSIGN")].filter[it.valuedObject.getName().startsWith("g") || it.valuedObject.getName().startsWith("PRE_g")]
+        val assignments = nodes.filter(typeof(AssignmentImpl)).filter[
+                it.operator.getName().equals("ASSIGN")
+            ].filter[
+                if(it.valuedObject == null) {
+                    return false
+                }
+                return (it.valuedObject.getName().startsWith("g") || it.valuedObject.getName().startsWith("PRE_g"))
+            ]
         if(DEBUG) {
             System.out.println("Assigments")
             assignments.forEach[
@@ -137,86 +147,109 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it.valuedObject)
             ]
         }
-        val varOccures = new HashMap<AssignmentImpl, ArrayList<Expression>>()
         // Replace read of relevant assignments
         cleanedRelevantAssignments.forEach[
-            varOccures.put(it, ReplaceOccuresInNode(nodes, it))
+            FindOccuresInNode(nodes, it)
         ]
+        val endCheckAssignments = new ArrayList<AssignmentImpl>();
+        val assignmentsRefresh = nodes.filter(typeof(AssignmentImpl)).filter[
+                it.operator.getName().equals("ASSIGN")
+            ].filter[
+                if(it.valuedObject == null) {
+                    return false
+                }
+                return (it.valuedObject.getName().startsWith("g") || it.valuedObject.getName().startsWith("PRE_g"))
+            ]
+        cleanedRelevantAssignments.forEach[
+            val name = it.valuedObject.name
+            val occ = assignmentsRefresh.filter[it.valuedObject.getName().equals(name)].size
+            if(DEBUG) {
+                System.out.println(it.valuedObject + " accures " + occ.toString() + " times")
+            }
+            if(occ == 1) {
+                endCheckAssignments.add(it)
+            }
+        ]
+        
+        if(endCheckAssignments.size > 0) {
+            var tmp = endCheckAssignments.get(0)
+            while(tmp != null) {
+                val nextItem = tmp.next
+                val prevItems = tmp.incoming
+                
+                val changes = new ArrayList<Pair<Link, ControlFlow>>()
+                prevItems.forEach[
+                    changes.add(new Pair(it, nextItem))
+                ]
+                nodes.remove(tmp)
+                endCheckAssignments.remove(tmp)
+                
+                changes.forEach[
+                    it.key.target = it.value.target
+                ]
+                
+                //
+                if(endCheckAssignments.size <= 0) {
+                    tmp = null
+                }
+                else {
+                    tmp = endCheckAssignments.get(0)
+                }
+            }
+        }
+        
+        
         return scg
     }
     
-    def ArrayList<Expression> ReplaceOccuresInNode (EList<Node> nodes, AssignmentImpl assignment) {
-        val varOccures = new ArrayList<Expression>() 
+    def void FindOccuresInNode (EList<Node> nodes, Assignment assignment) {
         nodes.forEach[
             // TODO: get all uses of an var
-            varOccures.addAll(ReplaceOccures(it, assignment))
+            FindOccures(it, assignment)
         ]
-        return varOccures
     }
     
-    def ArrayList<Expression> ReplaceOccures (Node node, AssignmentImpl assignment) {
-        val outList = new ArrayList<Expression>();
-        if(node instanceof AssignmentImpl) {
-            val item = node as AssignmentImpl
-            if(item.valuedObject.name.equals(assignment.valuedObject.name))
-                return outList;
-            if(item.assignment instanceof ValuedObjectReferenceImpl) {
-                // replace
+    def void FindOccures(Node node, Assignment assignment) {
+        val search = assignment.valuedObject.name
+        val expression = assignment.assignment
+        if(DEBUG) {
+            System.out.println("Analyse " + node + " for " + search +  " with " + expression)
+        }
+        val expressions = node.eAllContents().filter(typeof(ValuedObjectReferenceImpl))
+        expressions.forEach[
+            val container = it.eContainer
+            if(container instanceof AssignmentImpl) {
+                val assContainer = container as AssignmentImpl
                 if(DEBUG) {
-                    System.out.println("Replace: " + item.valuedObject.name + " with " + assignment);
+                    System.out.println("Assignment: " + assContainer.valuedObject.name)
                 }
-                var ass = item.assignment as ValuedObjectReferenceImpl
-                if(ass.valuedObject.getName().equals(assignment.valuedObject.getName())) {
-                    //item.assignment = assignment.assignment
-                    outList.add(item.assignment)
-                } 
-            }
-            else if (item.assignment instanceof OperatorExpressionImpl) {
-                var ass = item.assignment as OperatorExpressionImpl
-                //val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), ass, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
-                ass.subExpressions.forEach[
-                    var tmp = ReplaceInSubExpression(it/*.copySCGExpression*/, assignment)
-                    if(tmp != null) {
-                        outList.addAll(tmp)
-                    }
-                ]
-                //ass.subExpressions = newSubExpressions
-            }
-        }
-        else if (node instanceof ConditionalImpl) {
-                        
-        }
-        return outList
-    }
-    
-    def ArrayList<Expression> ReplaceInSubExpression (Expression exp, AssignmentImpl assignment) {
-        val outList = new ArrayList<Expression>();
-        if (exp instanceof OperatorExpressionImpl) {
-            //val newSubExpressions = new EObjectContainmentEList<Expression>(typeof(Expression), exp, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
-            exp.subExpressions.forEach[
-                var tmp = ReplaceInSubExpression(it.copySCGExpression, assignment)
-                if(tmp != null) {
-                    outList.addAll(tmp)
-                }
-            ]
-            //exp.subExpressions = newSubExpressions
-        }
-        else if (exp instanceof ValuedObjectReferenceImpl) {
-            val ass = exp as ValuedObjectReferenceImpl
-            if(ass.valuedObject.getName().equals(assignment.valuedObject.getName())) {
-                if(assignment.assignment instanceof ValuedObjectReferenceImpl) {
-                    val ass_ass = assignment.assignment as ValuedObjectReferenceImpl
-                    ass.valuedObject = ass_ass.valuedObject
-                }
-                else if (assignment.assignment instanceof OperatorExpressionImpl) {
-                    val ass_ass = assignment.assignment as OperatorExpressionImpl
-                    if(DEBUG) {
-                        System.out.println("Replace: " + exp.valuedObject.name + " with " + ass_ass);
-                    }
-                    outList.add(ass_ass)
+                if(assContainer.valuedObject.getName().equals(search) /*&& !assContainer.assignment.equals(expression)*/) {
+                    assContainer.assignment = expression.copySCGExpression
                 }
             }
-        }
-        return outList
+            else if (container instanceof ConditionalImpl) {
+                val condContainer = container as ConditionalImpl
+                if(DEBUG) {
+                    System.out.println("Conditional: " + it.valuedObject.name)
+                }
+                if(it.valuedObject.getName().equals(search) /*&& !condContainer.condition.equals(expression)*/) {
+                    condContainer.condition = expression.copySCGExpression
+                }
+            }
+            else if (container instanceof OperatorExpressionImpl) {
+                val operContainer = container as OperatorExpressionImpl
+                if(DEBUG) {
+                    System.out.println("Operator: " + it.valuedObject.name)
+                }
+                if(it.valuedObject.getName().equals(search) /*&& !it.equals(expression)*/) {
+                    val pos = operContainer.subExpressions.indexOf(it)
+                    operContainer.subExpressions.add(pos, expression.copySCGExpression)
+                    operContainer.subExpressions.remove(it)
+                }
+            }
+            else {
+                System.out.println(it)
+            }
+        ]
     }
 }
