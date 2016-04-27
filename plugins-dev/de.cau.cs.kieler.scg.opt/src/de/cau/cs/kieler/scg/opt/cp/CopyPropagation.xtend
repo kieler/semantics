@@ -5,55 +5,27 @@ import de.cau.cs.kieler.scg.opt.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatureGroups
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.impl.AssignmentImpl
 import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl
 import de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl
 import de.cau.cs.kieler.scg.impl.ConditionalImpl
-import org.eclipse.emf.ecore.util.EObjectContainmentEList
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.Expression
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
-import java.util.HashMap
-import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Link
 import de.cau.cs.kieler.scg.ControlFlow
 
 class CopyPropagation extends AbstractProductionTransformation {
     // Class Varas
     public static val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
-    private static val DEBUG = true;
+    private static val DEBUG = false;
     
-    // Inject
-    @Inject
-    extension SCGCoreExtensions
-    
+    // Inject  
     @Inject 
     extension SCGDeclarationExtensions
-         
-    @Inject 
-    extension KExpressionsDeclarationExtensions 
-    
-    @Inject 
-    extension KExpressionsValuedObjectExtensions     
-    
-    @Inject 
-    extension KExpressionsCreateExtensions 
-
-    @Inject
-    extension AnnotationsExtensions
     
     override getProducedFeatureId() {
         return OptimizerFeatures::CP_ID
@@ -223,7 +195,7 @@ class CopyPropagation extends AbstractProductionTransformation {
                 if(DEBUG) {
                     System.out.println("Assignment: " + assContainer.valuedObject.name)
                 }
-                if(assContainer.valuedObject.getName().equals(search) /*&& !assContainer.assignment.equals(expression)*/) {
+                if(assContainer.valuedObject.getName().equals(search)) {
                     assContainer.assignment = expression.copySCGExpression
                 }
             }
@@ -232,7 +204,7 @@ class CopyPropagation extends AbstractProductionTransformation {
                 if(DEBUG) {
                     System.out.println("Conditional: " + it.valuedObject.name)
                 }
-                if(it.valuedObject.getName().equals(search) /*&& !condContainer.condition.equals(expression)*/) {
+                if(it.valuedObject.getName().equals(search)) {
                     condContainer.condition = expression.copySCGExpression
                 }
             }
@@ -241,7 +213,7 @@ class CopyPropagation extends AbstractProductionTransformation {
                 if(DEBUG) {
                     System.out.println("Operator: " + it.valuedObject.name)
                 }
-                if(it.valuedObject.getName().equals(search) /*&& !it.equals(expression)*/) {
+                if(it.valuedObject.getName().equals(search)) {
                     val pos = operContainer.subExpressions.indexOf(it)
                     operContainer.subExpressions.add(pos, expression.copySCGExpression)
                     operContainer.subExpressions.remove(it)
