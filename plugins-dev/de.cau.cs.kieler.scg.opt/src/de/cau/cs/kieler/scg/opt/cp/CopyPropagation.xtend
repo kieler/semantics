@@ -17,13 +17,15 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Link
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 class CopyPropagation extends AbstractProductionTransformation {
-    // Class Vars
+    /* CLASS VARS */
     public static val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
     private static val DEBUG = false;
     
-    // Inject  
+    /* INJECT STUFF */  
     @Inject 
     extension SCGDeclarationExtensions
     
@@ -48,8 +50,9 @@ class CopyPropagation extends AbstractProductionTransformation {
         if(DEBUG) {
             System.out.println("OPTIMIZER")
         }
-        // cache data
+        /* SET FILTER */
         val nodes = scg.nodes
+        val declarations = scg.declarations
         val assignments = nodes.filter(typeof(AssignmentImpl)).filter[
                 it.operator.getName().equals("ASSIGN")
             ].filter[
@@ -88,7 +91,8 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it.valuedObject)
             ]
         }
-        // merge Assignments
+        /* END FILTERING */
+        /* BUILD ONE BIG FILTER */
         val relevantAssignments = one2oneAssignments.toList()
         relevantAssignments.addAll(preAssignments)
         relevantAssignments.addAll(notAssignments)
@@ -98,9 +102,11 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it.valuedObject)
             ]
         }
+        /* END FILTER BUILDING */
         if(DEBUG) {
             System.out.println("CheckOccures")
         }
+        /* CHECK IF THE ASSIGNMENT IS ONLY ASSIGNED ONCE */
         val cleanedRelevantAssignments = new ArrayList<AssignmentImpl>();
         // check if an assignment is used multiple times
         relevantAssignments.forEach[
@@ -119,10 +125,11 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it.valuedObject)
             ]
         }
-        // Replace read of relevant assignments
+        /* REPLACE VARS */
         cleanedRelevantAssignments.forEach[
             FindOccuresInNode(nodes, it)
         ]
+        /* CHECK ASSIGNMENTS */
         val endCheckAssignments = new ArrayList<AssignmentImpl>();
         val assignmentsRefresh = nodes.filter(typeof(AssignmentImpl)).filter[
                 it.operator.getName().equals("ASSIGN")
@@ -143,6 +150,7 @@ class CopyPropagation extends AbstractProductionTransformation {
             }
         ]
         
+        /* REMOVE UNUSED ASSIGNMENTS */
         if(endCheckAssignments.size > 0) {
             var tmp = endCheckAssignments.get(0)
             while(tmp != null) {
@@ -153,7 +161,25 @@ class CopyPropagation extends AbstractProductionTransformation {
                 prevItems.forEach[
                     changes.add(new Pair(it, nextItem))
                 ]
+                // remove node
                 nodes.remove(tmp)
+                val tmp2 = tmp
+                // remove declaration
+                val declChanges = new ArrayList<Pair<Declaration, ValuedObjectImpl>>()
+                declarations.forEach[
+                    val decl = it
+                    it.valuedObjects.forEach[
+                        val itN = it as ValuedObjectImpl
+                        if(itN.getName().equals(tmp2.valuedObject.name)) {
+                            declChanges.add(new Pair(decl, itN))
+                        }
+                    ]
+                ]
+                
+                declChanges.forEach[
+                    it.key.valuedObjects.remove(it.value)
+                ]
+                
                 endCheckAssignments.remove(tmp)
                 
                 changes.forEach[

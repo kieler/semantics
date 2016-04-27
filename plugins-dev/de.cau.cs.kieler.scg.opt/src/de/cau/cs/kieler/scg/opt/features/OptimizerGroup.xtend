@@ -13,7 +13,7 @@ class OptimizerGroup extends FeatureGroup {
     }
     
     override getFeatureIds() {
-        newHashSet(OptimizerFeatures::CP_ID)
+        newHashSet(OptimizerFeatures::CP_ID, OptimizerFeatures::RV_ID)
     }
     
 }

@@ -9,6 +9,9 @@
       <featureClass
             class="de.cau.cs.kieler.scg.opt.features.CopyPropagationFeature">
       </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.opt.features.ReuseVariablesFeature">
+      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
