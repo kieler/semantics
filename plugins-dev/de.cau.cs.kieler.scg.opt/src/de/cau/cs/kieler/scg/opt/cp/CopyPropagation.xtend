@@ -19,7 +19,7 @@ import de.cau.cs.kieler.scg.Link
 import de.cau.cs.kieler.scg.ControlFlow
 
 class CopyPropagation extends AbstractProductionTransformation {
-    // Class Varas
+    // Class Vars
     public static val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
     private static val DEBUG = false;
     
