@@ -43,7 +43,10 @@ public interface ICompiler {
 
     /**
      * 
+     * @param srcFile
+     * @param outputPath
      * @return
+     * @throws CompilationException
      */
     public Path compile(Path srcFile, Path outputPath) throws CompilationException;
 
@@ -51,7 +54,7 @@ public interface ICompiler {
      * 
      * @return
      */
-    public int getCompilationOffset();
+    public long getCompilationOffset();
 
     /**
      * 

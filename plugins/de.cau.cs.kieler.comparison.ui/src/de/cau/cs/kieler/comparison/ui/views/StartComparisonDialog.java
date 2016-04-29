@@ -12,12 +12,8 @@
  */
 package de.cau.cs.kieler.comparison.ui.views;
 
-import java.beans.FeatureDescriptor;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -28,8 +24,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -39,11 +33,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -51,8 +43,8 @@ import de.cau.cs.kieler.comparison.core.Comparison;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
-import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
 import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
+import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
 import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
 
 /**
@@ -386,7 +378,7 @@ public class StartComparisonDialog extends Dialog {
      */
     private void filterTestcaseSelection() {
 
-        HashMap<Path, ITestcase> registered = Comparison.getTestcases(false);
+        HashMap<String, ITestcase> registered = Comparison.getTestcases(false);
 
         // show feasible only
         if (checkBoxFeasTestcases.getSelection()) {
@@ -400,7 +392,7 @@ public class StartComparisonDialog extends Dialog {
                 }
 
                 // filter
-                for (Entry<Path, ITestcase> kv : registered.entrySet()) {
+                for (Entry<String, ITestcase> kv : registered.entrySet()) {
                     boolean allCompsHandled = true;
                     for (ICompiler comp : compilers) {
                         ITestcase testcase = kv.getValue();
@@ -447,7 +439,7 @@ public class StartComparisonDialog extends Dialog {
         else {
             Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
             ArrayList<String> selection = new ArrayList<String>();
-            for (Entry<Path, ITestcase> kv : registered.entrySet()) {
+            for (Entry<String, ITestcase> kv : registered.entrySet()) {
                 if (kv.getValue().getLanguage() == lng) {
                     selection.add(kv.getValue().getID());
                 }
@@ -762,7 +754,7 @@ public class StartComparisonDialog extends Dialog {
      * 
      */
     private void saveTestcases() {
-        HashMap<Path, ITestcase> map = Comparison.getTestcases(false);
+        HashMap<String, ITestcase> map = Comparison.getTestcases(false);
         String[] selection = lstTestcaseSelection.getSelection();
         testcases = new ArrayList<ITestcase>();
         for (int i = 0; i < lstTestcaseSelection.getSelectionCount(); i++) {

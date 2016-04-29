@@ -93,7 +93,7 @@ public abstract class AbstractKiCo implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public int getCompilationOffset() {
+    public long getCompilationOffset() {
         return 0;
     }
 

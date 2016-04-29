@@ -16,13 +16,16 @@ import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The KiCoSCCharts2C compiles to C-Code and provides an ExecutionSimulator for measuring the
+ * execution speed of compiled test cases.
+ * 
  * @author nfl
- *
  */
 public class KiCoSCCharts2C extends AbstractKiCo implements ICompiler {
-    
+
     /**
-     * 
+     * The constructor of KiCo compiling to C-Code. A simulator to execute C-Code is integrated as
+     * well.
      */
     public KiCoSCCharts2C() {
         trgLanguage = Language.C;

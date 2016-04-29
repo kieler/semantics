@@ -21,22 +21,25 @@ import java.util.Collection;
 public interface ITestcaseProvider {
 
     /**
+     * This method is used to uniquely identify the ITestcaseProvider.
      * 
-     * @return
+     * @return an identifier
      */
     public String getID();
     
     /**
+     * This method returns which file extension the ITestcaseProvider handles. Out of these files the
+     * ITestcaseProvider can create a list of ITestcase.
      * 
-     * @return
+     * @return the file extension this ITestcaseProvider handles
      */
     public String getExtension();
     
     /**
+     * This method takes a file and tries to create a list of ITestcase from this file.
      * 
-     * @param path
-     * @param name 
-     * @return 
+     * @param file the file to create ITestcases from
+     * @return a collection of ITestcase
      */
     public Collection<ITestcase> createTestcases(File file);
 }

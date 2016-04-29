@@ -20,7 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Observer;
 
-import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
@@ -54,7 +54,8 @@ public class DataHandler extends AbstractDataHandler {
      */
     @Override
     public void serialize(String comparison, IMeasuring data) { 
-        AbstractComparisonMeasurement measurement = getData(comparison);
+        // loading the complete measurement is not very performant, but required for json insertion
+        GeneralComparisonMeasurement measurement = getData(comparison);
         measurement.insert(data);
         saveAsJSONFile(comparison, measurement);
         this.setChanged();
@@ -65,13 +66,16 @@ public class DataHandler extends AbstractDataHandler {
      * @param comparison
      * @param measures
      */
-    private void saveAsJSONFile(String comparison, AbstractComparisonMeasurement measurement) {
+    private void saveAsJSONFile(String comparison, GeneralComparisonMeasurement measurement) {
         
         String json = measurement.toJSON();
         BufferedWriter bw = null;
                 
         try {
-            bw = new BufferedWriter(new FileWriter(comparison));
+            if (comparison.toLowerCase().contains(".json"))
+                bw = new BufferedWriter(new FileWriter(comparison));
+            else
+                bw = new BufferedWriter(new FileWriter(comparison + ".JSON"));
             bw.write(json);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -90,10 +94,10 @@ public class DataHandler extends AbstractDataHandler {
      * {@inheritDoc}
      */
     @Override
-    public AbstractComparisonMeasurement getData(String comparison) {   
+    public GeneralComparisonMeasurement getData(String comparison) {   
 
         String json = loadJSONFile(comparison);
-        return AbstractComparisonMeasurement.fromJSON(json);
+        return GeneralComparisonMeasurement.fromJSON(json);
     }
 
     /**
@@ -106,7 +110,10 @@ public class DataHandler extends AbstractDataHandler {
         String jsonObj = "";
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(filePath));
+            if (filePath.toLowerCase().contains(".json"))
+                br = new BufferedReader(new FileReader(filePath));
+            else                
+                br = new BufferedReader(new FileReader(filePath + ".JSON"));
             while (br.ready())
             {
              int c = br.read();

@@ -51,8 +51,8 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
         String fileWithoutExtension = filePath.substring(0, filePath.lastIndexOf(getExtension()));
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();
         // ESO files are used for SCCharts as well as Esterel
-        
-        File testFile = new File(fileWithoutExtension+".sct");
+
+        File testFile = new File(fileWithoutExtension + ".sct");
         if (testFile.exists()) {
             Testcase newTest = new Testcase();
             newTest.setLanguage(Language.SCCharts);
@@ -61,8 +61,8 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
             newTest.setID(testFile.getName());
             ret.add(newTest);
         }
-        
-        testFile = new File(fileWithoutExtension+".strl");
+
+        testFile = new File(fileWithoutExtension + ".strl");
         if (testFile.exists()) {
             Testcase newTest = new Testcase();
             newTest.setLanguage(Language.Esterel);
@@ -70,8 +70,8 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
             newTest.setTestTrace(file.toPath());
             newTest.setID(testFile.getName());
             ret.add(newTest);
-        }        
-        
+        }
+
         return ret;
     }
 

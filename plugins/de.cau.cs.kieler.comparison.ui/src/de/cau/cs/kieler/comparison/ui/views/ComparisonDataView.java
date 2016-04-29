@@ -12,8 +12,10 @@
  */
 package de.cau.cs.kieler.comparison.ui.views;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,10 +50,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.comparison.core.Comparison;
+import de.cau.cs.kieler.comparison.core.ICompiler;
+import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
+import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
 import de.cau.cs.kieler.comparison.exchange.Testbench;
 
 /**
@@ -241,7 +246,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
             }
         };
         start.setText("Start Comparison");
-        start.setToolTipText("Start Comparison tooltip");
+        start.setToolTipText("Start Comparison tooltip");        
     }
 
     private void loadFile() {
@@ -306,7 +311,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      * @param measurement
      * @return 
      */
-    public void loadComparisonResult(AbstractComparisonMeasurement measurement) {
+    public void loadComparisonResult(GeneralComparisonMeasurement measurement) {
         Runnable run = new Runnable() {
             
             @Override
@@ -323,8 +328,8 @@ public class ComparisonDataView extends ViewPart implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof AbstractComparisonMeasurement) {
-            AbstractComparisonMeasurement measurement = (AbstractComparisonMeasurement) arg;
+        if (arg instanceof GeneralComparisonMeasurement) {
+            GeneralComparisonMeasurement measurement = (GeneralComparisonMeasurement) arg;
             loadComparisonResult(measurement);
         }
     }

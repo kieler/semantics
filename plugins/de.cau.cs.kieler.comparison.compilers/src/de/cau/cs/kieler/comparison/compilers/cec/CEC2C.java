@@ -105,8 +105,8 @@ public class CEC2C implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public int getCompilationOffset() {
-        // TODO Auto-generated method stub
+    public long getCompilationOffset() {
+        // TODO compute the right value
         return 0;
     }
 
@@ -115,7 +115,6 @@ public class CEC2C implements ICompiler {
      */
     @Override
     public ExecutionSimulator getSimulator() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

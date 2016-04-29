@@ -19,8 +19,10 @@ import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The SctDirectoryProvider extends the AbstractDirectoryProvider by adding SCCharts to the Language
+ * property of each test case generated from a file with ".sct" extension.
+ * 
  * @author nfl
- *
  */
 public class SctDirectoryProvider extends AbstractDirectoryProvider {
 
@@ -46,8 +48,9 @@ public class SctDirectoryProvider extends AbstractDirectoryProvider {
     @Override
     public Collection<ITestcase> createTestcases(File file) {
         Collection<ITestcase> testcases = super.createTestcases(file);
+        // add the language to all test cases
         for (ITestcase testcase : testcases) {
-            // should always be the case, because the super class uses only Testcase
+            // should always be the case, because the super class only uses Testcase
             if (testcase instanceof Testcase)
                 ((Testcase) testcase).setLanguage(Language.SCCharts);
         }

@@ -23,9 +23,8 @@ import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
  * @author nfl
- *
  */
-public class AbstractComparisonMeasurement {
+public class GeneralComparisonMeasurement {
 
     private Collection<String> compilers;
     private Collection<String> testcases;
@@ -95,7 +94,7 @@ public class AbstractComparisonMeasurement {
     /**
      * 
      */
-    public AbstractComparisonMeasurement() {
+    public GeneralComparisonMeasurement() {
         compilers = new ArrayList<String>();
         testcases = new ArrayList<String>();
         criterias = new ArrayList<String>();
@@ -177,8 +176,8 @@ public class AbstractComparisonMeasurement {
      *            JSON String used to generate ComparisonMeasurement
      * @return generated ComparisonMeasurement
      */
-    public static AbstractComparisonMeasurement fromJSON(String json) {
-        AbstractComparisonMeasurement ret = new AbstractComparisonMeasurement();
+    public static GeneralComparisonMeasurement fromJSON(String json) {
+        GeneralComparisonMeasurement ret = new GeneralComparisonMeasurement();
         if (json == null || json.equals(""))
             return ret;
 

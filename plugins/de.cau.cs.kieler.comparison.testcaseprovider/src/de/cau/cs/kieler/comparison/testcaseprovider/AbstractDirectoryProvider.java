@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.comparison.testcaseprovider;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,22 +34,22 @@ public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
     public String getID() {
         return "Directory Testcase Provider";
     }
-    
+
     /**
-     * 
      * {@inheritDoc}
      */
     public Collection<ITestcase> createTestcases(File file) {
         Collection<ITestcase> ret = new ArrayList<ITestcase>();
         Testcase testcase = new Testcase();
-        testcase.setPath(file.toPath());
+        Path filePath = file.toPath();
+        testcase.setPath(filePath);
+        testcase.setID(file.getPath());
 
         // check if the properties are valid
         Collection<String> allProps = LanguageProperties.getAllProperties();
         Collection<String> properties = new ArrayList<String>();
-        for (int i = 0; i < file.toPath().getNameCount(); i++)
-        {
-            String folder = file.toPath().getName(i).toString();
+        for (int i = 0; i < filePath.getNameCount(); i++) {
+            String folder = filePath.getName(i).toString();
             for (String prop : allProps) {
                 if (prop.toLowerCase().equals(folder.toLowerCase())) {
                     properties.add(prop.toLowerCase());
@@ -56,8 +57,7 @@ public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
                 }
             }
         }
-        
-        testcase.setID(file.getName());
+
         testcase.setProperties(properties);
         ret.add(testcase);
         return ret;

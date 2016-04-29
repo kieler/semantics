@@ -31,7 +31,7 @@ public class StandardMeasuringParameters implements IMeasuringParameters {
      * 
      */
     public StandardMeasuringParameters() {
-        this(0);
+        this(1);
     }
 
     /**

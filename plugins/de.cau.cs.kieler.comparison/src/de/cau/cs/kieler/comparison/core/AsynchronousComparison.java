@@ -104,12 +104,13 @@ public class AsynchronousComparison extends Job {
         // each compiler has to compile each test case
         for (ICompiler comp : compilers) {
             for (ITestcase test : testcases) {
-                
+
                 Path compilation = null;
-                
+
                 if (config.compareCompSpeed() || config.compareCompSize()) {
                     IMeasuringParameters compMeasuringParameters =
                             config.getCompareCompParameters();
+                    // usage of different measuring methods
                     if (compMeasuringParameters instanceof KBestMeasuringParameteres) {
                         KBestMeasuringParameteres params =
                                 (KBestMeasuringParameteres) compMeasuringParameters;
@@ -123,8 +124,7 @@ public class AsynchronousComparison extends Job {
                                 (StandardMeasuringParameters) compMeasuringParameters;
                         // K-Best with k = M results is exact k measurements no matter how close
                         // they are to the best
-                        for (int i = 0; i < params.getComparisonAmount(); i++)
-                        {
+                        for (int i = 0; i < params.getComparisonAmount(); i++) {
                             compilation = compileKBest(comp, test, monitor, 1, 0, 1);
                         }
 
@@ -138,105 +138,102 @@ public class AsynchronousComparison extends Job {
                     if (monitor.isCanceled()) {
                         monitor.done();
 
-                        // since only one comparison is done at a time, clearing all observer at the end is fine
+                        // since only one comparison is done at a time, clearing all observer at the
+                        // end is fine
                         dataHandler.deleteObservers();
-                        
+
                         return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
                                 "Comparison canceled.");
                     }
                 }
 
-                // compare compilation speed
-                if (config.compareExecSpeed()) {
-                    
-                    // no comp measurings
-                    if (compilation == null)
-                    {
-                        compilation = compileKBest(comp, test, monitor, 1, 0, 1);
-                    }
-                    
-                    KiemPlugin kiemPlugin = KiemPlugin.getDefault();
-                    if (kiemPlugin == null) 
-                    {
-                        System.out.println("KIEM Plugin is not loaded.");
-                        continue;
-                    }
-                    
-                    List<DataComponentWrapper> dataComponentWrapperList = new ArrayList<DataComponentWrapper>();
-                    
-                    BenchmarkCollector collector = new BenchmarkCollector();
-                    collector.setComparison(comparison);
-                    collector.setCompiler(comp.getID());
-                    collector.setTestcase(test.getID());
-                    
-                    DataComponentWrapper collectorWrapper = new DataComponentWrapper(collector);
-                    collectorWrapper.setEnabled(true);                    
-                    dataComponentWrapperList.add(collectorWrapper);
-                    
-                    System.out.println("collector added: " + dataComponentWrapperList.size());
-
-                    ExecutionSimulator compSim = comp.getSimulator();
-                    if (compSim == null)
-                    {
-                        System.out.println("compiler has no simulator");
-                        continue;
-                    }
-                    compSim.setCompilationPath(compilation);
-                    compSim.setSrcModelPath(test.getPath());
-                    
-                    DataComponentWrapper compWrapper = new DataComponentWrapper(compSim);
-                    compWrapper.setEnabled(true);                    
-                    dataComponentWrapperList.add(compWrapper);
-
-                    System.out.println("compiler added: " + dataComponentWrapperList.size());
-                    
-                    Execution execution = null;
-                    try {
-                        System.out.println("before execution create");
-                        execution = new Execution(dataComponentWrapperList, kiemPlugin.getEventManager());
-                        System.out.println("after execution create");
-                    } catch (KiemInitializationException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("before execution set");
-                    kiemPlugin.setExecution(execution);
-
-
-                    if (kiemPlugin.initExecution())
-                    {
-                        System.out.println("execution initialized");
-                        System.out.println("started? " + execution.isStarted());
-                        
-                        // just some testing; has to be removed
-                        int stepCounter = 0; 
-                        while (execution.isStarted() && stepCounter < 100) {
-                            execution.stepExecutionSync(); 
-                            stepCounter++;
-                        }
-                        
-                        kiemPlugin.getExecution().stopExecutionSync();
-                    }
-                    else
-                    {
-                        System.out.println("execution initialized failed");
-                    }
-
-                    // TODO kiem magic here
-                    // berry's inputs are contained within a subfolder
-                    // kieler inputs use extension .eso
-                    // make sure inputs can be matched to exactly one test case
-
-                }
+//                // compare compilation speed
+//                if (config.compareExecSpeed()) {
+//
+//                    // no comp measurings
+//                    if (compilation == null) {
+//                        compilation = compileKBest(comp, test, monitor, 1, 0, 1);
+//                    }
+//
+//                    KiemPlugin kiemPlugin = KiemPlugin.getDefault();
+//                    if (kiemPlugin == null) {
+//                        System.out.println("KIEM Plugin is not loaded.");
+//                        continue;
+//                    }
+//
+//                    List<DataComponentWrapper> dataComponentWrapperList =
+//                            new ArrayList<DataComponentWrapper>();
+//
+//                    BenchmarkCollector collector = new BenchmarkCollector();
+//                    collector.setComparison(comparison);
+//                    collector.setCompiler(comp.getID());
+//                    collector.setTestcase(test.getID());
+//
+//                    DataComponentWrapper collectorWrapper = new DataComponentWrapper(collector);
+//                    collectorWrapper.setEnabled(true);
+//                    dataComponentWrapperList.add(collectorWrapper);
+//
+//                    System.out.println("collector added: " + dataComponentWrapperList.size());
+//
+//                    ExecutionSimulator compSim = comp.getSimulator();
+//                    if (compSim == null) {
+//                        System.out.println("compiler has no simulator");
+//                        continue;
+//                    }
+//                    compSim.setCompilationPath(compilation);
+//                    compSim.setSrcModelPath(test.getPath());
+//
+//                    DataComponentWrapper compWrapper = new DataComponentWrapper(compSim);
+//                    compWrapper.setEnabled(true);
+//                    dataComponentWrapperList.add(compWrapper);
+//
+//                    System.out.println("compiler added: " + dataComponentWrapperList.size());
+//
+//                    Execution execution = null;
+//                    try {
+//                        System.out.println("before execution create");
+//                        execution =
+//                                new Execution(dataComponentWrapperList,
+//                                        kiemPlugin.getEventManager());
+//                        System.out.println("after execution create");
+//                    } catch (KiemInitializationException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//
+//                    System.out.println("before execution set");
+//                    kiemPlugin.setExecution(execution);
+//
+//                    if (kiemPlugin.initExecution()) {
+//                        System.out.println("execution initialized");
+//                        System.out.println("started? " + execution.isStarted());
+//
+//                        // just some testing; has to be removed
+//                        int stepCounter = 0;
+//                        while (execution.isStarted() && stepCounter < 100) {
+//                            execution.stepExecutionSync();
+//                            stepCounter++;
+//                        }
+//
+//                        kiemPlugin.getExecution().stopExecutionSync();
+//                    } else {
+//                        System.out.println("execution initialized failed");
+//                    }
+//
+//                    // TODO kiem magic here
+//                    // berry's inputs are contained within a subfolder
+//                    // kieler inputs use extension .eso
+//                    // make sure inputs can be matched to exactly one test case
+//
+//                }
             }
         }
 
         monitor.done();
-        
+
         // since only one comparison is done at a time, clearing all observer at the end is fine
         dataHandler.deleteObservers();
-        
+
         return new Status(IStatus.OK, Activator.PLUGIN_ID, "Comparison done.");
     }
 
@@ -287,9 +284,9 @@ public class AsynchronousComparison extends Job {
         });
         long best = 0;
 
+        // compare compilation speed
         if (config.compareCompSpeed()) {
-            // compare compilation speed
-            for (int i = 0; i < m; i++) {
+            for (int i = 1; i <= m; i++) {
                 // if the comparison got canceled within the progress monitor,
                 // react to it and cancel this comparison job
                 if (monitor.isCanceled()) {
@@ -313,10 +310,12 @@ public class AsynchronousComparison extends Job {
                 }
 
                 measurings.add(compTime);
+                // check if enough measurings are in close range
                 if (i >= k) {
-                    measurings.poll();
                     if (measurings.peek() <= (1.0 + epsilon) * best) {
                         break;
+                    } else {
+                        measurings.poll();
                     }
                 }
             }

@@ -17,7 +17,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
+import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 
 /**
  * @author nfl
@@ -26,7 +26,7 @@ import de.cau.cs.kieler.comparison.exchange.AbstractComparisonMeasurement;
 public class ComparisonDataViewContentProvider implements IStructuredContentProvider {
 
     private String filePath;
-    private AbstractComparisonMeasurement measurement;
+    private GeneralComparisonMeasurement measurement;
     
     /**
      * 
@@ -40,7 +40,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      * 
      * @param filePath filePath for the model to display
      */
-    public ComparisonDataViewContentProvider(final AbstractComparisonMeasurement measurement){
+    public ComparisonDataViewContentProvider(final GeneralComparisonMeasurement measurement){
         this.measurement = measurement;
     }
 
@@ -78,7 +78,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
             return measurement.getTestbenches().toArray();
         } else if (filePath != null) {
             AbstractDataHandler dataHandler = DataHandler.getDataHandler();
-            AbstractComparisonMeasurement cm = dataHandler.getData(filePath);
+            GeneralComparisonMeasurement cm = dataHandler.getData(filePath);
             
             return cm.getTestbenches().toArray();
         }        
