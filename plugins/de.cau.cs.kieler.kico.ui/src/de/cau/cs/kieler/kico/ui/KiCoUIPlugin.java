@@ -2,18 +2,28 @@ package de.cau.cs.kieler.kico.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.parser.IParseResult;
+import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
@@ -110,10 +120,10 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 } catch (Exception e) {
                     // ignore
                 }
-                
+
                 String featuresIDs = editors[i].getAttribute("features");
                 ArrayList<String> features = new ArrayList<String>();
-                
+
                 if (featuresIDs != null) {
                     // The special case where we want to add ALL registered transformations
                     if (featuresIDs.equals("ALL")) {
@@ -190,17 +200,15 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
 
             IStatus status;
             if ((exception == null) || (exception instanceof RuntimeException)) {
-                status =
-                        new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
+                status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                        exception);
             } else {
                 try {
-                    status =
-                            new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                                    exception.getCause());
+                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                            exception.getCause());
                 } catch (Exception e) {
-                    status =
-                            new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
-                                    exception);
+                    status = new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                            exception);
                 }
             }
 
@@ -289,19 +297,64 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * @return the active model
      */
     public static EObject getActiveModel() {
-        // The following is WRONG! We don't want a (possibly) compiled model here but the plain
-        // model from the editor!
-        // final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
-        // // TODO: There should be a better mechanism to get the currently active model!
-        // EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
-        XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor();
-        if (xtextEditor == null) {
-            return null;
+        IEditorPart editor = de.cau.cs.kieler.core.model.util.EditorUtils.getLastActiveEditor();
+        if (editor instanceof XtextEditor) { // Get model from XTextEditor
+            return readModelFromXtextEditor((XtextEditor) editor);
+        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
+            return readModelFromEMFEditor((IEditingDomainProvider) editor);
         }
-        EObject model = XtextModelingUtil.getModelFromXtextEditor(xtextEditor, true);
-        return model;
+        return null;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the model from a given Xtext editor. FIXME: copied from
+     * de.cau.cs.kieler.klighd.ui.view.controllers, should be in core.model
+     * 
+     * @param xtextEditor
+     *            the Xtext editor
+     * @return the EObject of the root part of the model
+     */
+    public static EObject readModelFromXtextEditor(final XtextEditor xtextEditor) {
+        IXtextDocument xtextDocument = xtextEditor.getDocument();
+
+        if (xtextDocument instanceof XtextDocument) {
+            IParseResult result = null;
+            IUnitOfWork<IParseResult, XtextResource> work =
+                    new IUnitOfWork<IParseResult, XtextResource>() {
+                        public IParseResult exec(final XtextResource xtextResource)
+                                throws Exception {
+                            return xtextResource.getParseResult();
+                        }
+                    };
+            result = xtextDocument.readOnly(work);
+            return result.getRootASTElement();
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the model from a given EMF tree editor. FIXME: copied from
+     * de.cau.cs.kieler.klighd.ui.view.controllers, should be in core.model
+     * 
+     * 
+     * @param editor
+     *            the EMF tree editor
+     * @return the EObject of the root part of the model
+     */
+    public static EObject readModelFromEMFEditor(final IEditingDomainProvider editor) {
+        List<Resource> resources = editor.getEditingDomain().getResourceSet().getResources();
+
+        if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
+            return EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
 }

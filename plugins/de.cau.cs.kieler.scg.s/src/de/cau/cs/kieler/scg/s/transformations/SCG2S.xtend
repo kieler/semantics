@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -40,6 +40,7 @@ import java.util.List
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Transform SCG to S
@@ -47,14 +48,13 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
  * @author ssm
  * @kieler.design 2014-01-08 proposed 
  * @kieler.rating 2014-01-08 proposed yellow
- *
+ * 
  */
 class SCG2S extends AbstractProductionTransformation {
-    
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return CodeGenerationTransformations::SCG2S_ID
     }
@@ -74,18 +74,20 @@ class SCG2S extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
     @Inject
     extension KExpressionsDeclarationExtensions
 
     @Inject
-    extension SExtension
-    
+    extension KExpressionsCreateExtensions
+
     @Inject
-    extension AnnotationsExtensions    
+    extension SExtension
+
+    @Inject
+    extension AnnotationsExtensions
 
     private static val GOGUARDNAME = "_GO"
-    private static val String ANNOTATION_HOSTCODE = "hostcode"    
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
 
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val processedNodes = <Node, Boolean>newHashMap
@@ -93,19 +95,23 @@ class SCG2S extends AbstractProductionTransformation {
     private val nodeList = <Node>newLinkedList
     private val nodeInstructionMap = <Node, List<Instruction>>newHashMap
 
+    // the main thread to continue after else/then branchs have finished!
+    private var List<Instruction> mainInstructions;
+
     def Program transform(SCGraph scg) {
         valuedObjectMapping.clear
         processedNodes.clear
+        mainInstructions = null
 
         val Program sProgram = SFactory::eINSTANCE.createProgram
         sProgram.priority = 1
-        sProgram.name = if (!scg.label.nullOrEmpty) scg.label else "S"
-        
+        sProgram.name = if(!scg.label.nullOrEmpty) scg.label else "S"
+
         val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
-        hostcodeAnnotations.forEach[
+        hostcodeAnnotations.forEach [
             sProgram.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
-        
+
         // KITT mapping for not inplace transformations
         creationalTransformation(scg, sProgram)
         sProgram.trace(scg)
@@ -127,7 +133,7 @@ class SCG2S extends AbstractProductionTransformation {
 //        }
         for (declaration : scg.declarations) {
             val newDeclaration = createDeclaration(declaration).trace(declaration)
-            declaration.valuedObjects.forEach[ 
+            declaration.valuedObjects.forEach [
                 val newObject = it.copy
                 newDeclaration.valuedObjects += newObject
                 valuedObjectMapping.put(it, newObject)
@@ -150,6 +156,18 @@ class SCG2S extends AbstractProductionTransformation {
         while (!nodeList.empty) {
             val node = nodeList.head
             val instructionList = nodeInstructionMap.get(node)
+
+            // set the main thread
+            if (mainInstructions == null) {
+                mainInstructions = instructionList
+            }
+
+//            (node as Conditional).el            
+//            (node as Assignment).n
+//            if (node instanceof Assignment) {
+//              System.out.println("SCG: " + (node as Assignment).toString)
+//                
+//            }
             node.translate(instructionList)
             nodeList.remove(0)
             nodeInstructionMap.remove(node)
@@ -182,7 +200,7 @@ class SCG2S extends AbstractProductionTransformation {
             sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
 // TODO: VERIFY removal of fixHostCode            
 //            val expression = assignment.assignment.copyExpression.fixHostCode     
-            if (assignment.assignment != null) {       
+            if (assignment.assignment != null) {
                 val expression = assignment.assignment.copyExpression
                 sAssignment.expression = expression
             }
@@ -193,7 +211,7 @@ class SCG2S extends AbstractProductionTransformation {
         } else if (assignment.assignment instanceof TextExpression) {
 
             // This is the case when the valuedObject is null
-            val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
+            val hostCode = (assignment.assignment as TextExpression).text // .copy.fixHostCode as TextExpression
             instructions += hostCode.createHostCode
         } else if (assignment.assignment instanceof FunctionCall) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
@@ -202,7 +220,15 @@ class SCG2S extends AbstractProductionTransformation {
         }
 
         if (assignment.next != null) {
-            assignment.next.target.addNode(instructions)
+
+            // Now check if the target is a target also from another else/then branch,
+            // if so, then switch to MAIN thread instructions list (from else/then instruction list)
+            if (assignment.next.target.incoming.size > 1 && mainInstructions != null) {
+                assignment.next.target.addNode(mainInstructions)
+            } else {
+                // continue normally (maybe instructions are the else/then branch or main thread) 
+                assignment.next.target.addNode(instructions)
+            }
         }
     }
 
@@ -214,20 +240,34 @@ class SCG2S extends AbstractProductionTransformation {
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
 
-        if (conditional.^else != null) {
-            conditional.^else.target.addNode(instructions)
-        }
         if (conditional.then != null) {
             conditional.then.target.addNode(sIf.instructions)
         }
+        if (conditional.^else != null) {
 
-    //        if (conditional.then != null) conditional.then.target.translate(sIf.instructions)        
-    //        if (conditional.^else != null) conditional.^else.target.translate(sIf.instructions)     
+            // Do the following ONLY if we have a real else branch
+            // i.e., the next node has ONLY ONE incoming connections
+            if (conditional.^else.target.incoming.size == 1) {
+                val sIfNot = SFactory::eINSTANCE.createIf.trace(conditional)
+                sIfNot.expression = createNotExpression(conditional.condition.copyExpression)
+                instructions += sIfNot
+                conditional.^else.target.addNode(sIfNot.instructions)
+
+            } else {
+                // We do not have an else branch, continue with the next node (after the conditional)
+                // the next node is the join of the then branch already!
+                conditional.^else.target.addNode(instructions)
+            }
+
+        }
+
+    // if (conditional.then != null) conditional.then.target.translate(sIf.instructions)        
+    // if (conditional.^else != null) conditional.^else.target.translate(sIf.instructions)     
     }
 
-    //  def ValuedObject findValuedObjectByName(Program s, String name) {
-    //          return valuedObjectCache.get(name)
-    //    }    
+    // def ValuedObject findValuedObjectByName(Program s, String name) {
+    // return valuedObjectCache.get(name)
+    // }    
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
     }
@@ -246,8 +286,9 @@ class SCG2S extends AbstractProductionTransformation {
 
             // Otherwise, query all references in the expression and replace the object with the new copy
             // in the target SCG.
-            newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach[
-                valuedObject = valuedObject.getValuedObjectCopy]
+            newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach [
+                valuedObject = valuedObject.getValuedObjectCopy
+            ]
         }
 
         // Return the new expression.
@@ -259,5 +300,4 @@ class SCG2S extends AbstractProductionTransformation {
         nodeInstructionMap.put(node, instructionList)
     }
 
-    
 }

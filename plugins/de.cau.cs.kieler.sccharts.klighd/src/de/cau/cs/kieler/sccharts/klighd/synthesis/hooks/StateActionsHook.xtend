@@ -98,7 +98,7 @@ class StateActionsHook extends SynthesisActionHook {
                 }
             }
         }
-        return ActionResult.createResult(true).dontAnimateLayout;
+        return ActionResult.createResult(true);
     }
 
     /** 

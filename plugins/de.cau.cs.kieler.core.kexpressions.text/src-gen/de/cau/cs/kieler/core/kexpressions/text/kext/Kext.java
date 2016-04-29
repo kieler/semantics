@@ -15,11 +15,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getEntities <em>Entities</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext()
  * @model
@@ -28,35 +28,35 @@ import org.eclipse.emf.ecore.EObject;
 public interface Kext extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Declarations()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Declarations</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Declarations()
+	 * @model containment="true"
+	 * @generated
+	 */
   EList<Declaration> getDeclarations();
 
   /**
-     * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity}.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Entities</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Entities</em>' containment reference list.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Entities()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Entities</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getKext_Entities()
+	 * @model containment="true"
+	 * @generated
+	 */
   EList<TestEntity> getEntities();
 
 } // Kext

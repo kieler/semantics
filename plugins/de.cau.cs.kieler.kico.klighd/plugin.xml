@@ -22,6 +22,10 @@
             class="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction"
             id="de.cau.cs.kieler.kico.klighd.internal.model.action.OpenCodeInEditorAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction"
+            id="de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.controller">

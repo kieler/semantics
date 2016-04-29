@@ -17,14 +17,11 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.kgraph.KGraphFactory;
-import de.cau.cs.kieler.core.kgraph.KGraphPackage;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -41,8 +38,7 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
  */
 @ViewSynthesisShared
 @SuppressWarnings("unchecked")
-public abstract class SubSynthesis<I extends EObject, O extends KGraphElement>
-        implements GeneralSynthesisOptions {
+public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
 
     @Inject
     private SynthesisHooks hooks;
