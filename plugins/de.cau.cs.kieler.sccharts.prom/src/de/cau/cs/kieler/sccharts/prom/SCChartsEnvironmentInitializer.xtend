@@ -124,7 +124,6 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "${project_name}.ftl"
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".ino"
-        launchData.targetTemplate = ""
         launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/arduino"
         launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
@@ -133,7 +132,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.modelFile = "${project_name}Model"
         env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets"
         env.associatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/arduino_main.ftl"
+        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl"
         return env
     }
 }
