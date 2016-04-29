@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -52,7 +53,6 @@ import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -71,6 +71,7 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
+ * Performs a timing analysis for an scchart with the help of the connected kta tool.
  * @author ima, als
  *
  */
@@ -124,7 +125,6 @@ public class TimingAnalysis extends Job {
 		}
 	}
 
-	private static HashMap<Pair<String, String>, Set<String>> debugTracingHistory = new HashMap<Pair<String, String>, Set<String>>();
 	private String pluginId = "de.cau.cs.kieler.sccharts.tsccharts";
 	private FileWriter fileWriter = new FileWriter();
 	private Resource resource;
@@ -215,7 +215,7 @@ public class TimingAnalysis extends Job {
 			tppRegionMap = tppInformation.getTPPRegionMapping();
 		} else {
 			return new Status(IStatus.ERROR, pluginId,
-					"The TPP insertion yielded no auxiliary information.");
+					"Error in the TPP placement phase. (ITA)");
 		}
 
 		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID
@@ -322,11 +322,10 @@ public class TimingAnalysis extends Job {
 		
 		String timingToolLocation = Activator.getDefault().getPreferenceStore()
 		        .getString("ktaPath");
-		String compilerLocation = Activator.getDefault().getPreferenceStore().getString("mipsel-mcb32-elf-gccPath");
-//		String timingToolLocation = "/Users/ima/shared/papers/dac16/kta/bin/";
-//		String compilerLocation = "/Applications/mcb32tools.app/Contents/Resources/Toolchain/bin/";
-		ProcessBuilder pb =
-           new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", fileFolder + cFileName, "-tafile", fileFolder +taFileName);
+		String compilerLocation = Activator.getDefault().getPreferenceStore().
+				getString("mipsel-mcb32-elf-gccPath");
+		ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", 
+				fileFolder + cFileName, "-tafile", fileFolder + taFileName);
 		Map<String, String> env = pb.environment();
 		env.put("PATH", compilerLocation + ":$PATH");
 		try {
@@ -356,7 +355,9 @@ public class TimingAnalysis extends Job {
 			return new Status(
 					IStatus.ERROR,
 					pluginId,
-					"There is no timing analysis tool connected or the timing analysis tool could not be invoked.");
+					"There is no timing analysis tool connected or the timing analysis tool "
+					+ "could not be invoked. Please check whether you have given the correct paths to "
+					+ "the kta executable and the compiler in the KIELER Preferences ");
 		} catch (InterruptedException e) {
 			return new Status(IStatus.ERROR, pluginId,
 					"The timing analysis tool invokation was interrupted");
@@ -737,8 +738,8 @@ public class TimingAnalysis extends Job {
 				}
 			}
 		}
-		HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
-		HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
+		HashMap<Region, BigInteger> deepValues = new HashMap<Region, BigInteger>();
+		HashMap<Region, BigInteger> flatValues = new HashMap<Region, BigInteger>();
 		Iterator<TimingRequestResult> resultListIterator = resultList
 				.iterator();
 		// fill the map for flat values
@@ -750,15 +751,15 @@ public class TimingAnalysis extends Job {
 				resultRegion = tppRegionMap.get(startPoint);
 				if (flatValues.get(resultRegion) == null) {
 					flatValues.put(resultRegion,
-							Integer.parseInt(currentResult.getResult().get(0)));
+							new BigInteger(currentResult.getResult().get(0)));
 				} else {
 					// there may be more than one timing result for a region,
 					// sum the values up
 					flatValues.put(
 							resultRegion,
 							flatValues.get(resultRegion)
-									+ Integer.parseInt(currentResult
-											.getResult().get(0)));
+									.add(new BigInteger(currentResult
+											.getResult().get(0))));
 				}
 			}
 		}
@@ -773,19 +774,19 @@ public class TimingAnalysis extends Job {
 						+ deepValues.get(currentRegion);
 				regionLabelStringMap.put(currentRegion, label);
 			} else {
-				Integer WCRT = 0;
+				BigInteger WCRT = new BigInteger("0");
 				Iterator<Region> outerRegionsIterator = rootState.getRegions()
 						.iterator();
 				while (outerRegionsIterator.hasNext()) {
 					Region nextRegion = outerRegionsIterator.next();
-					Integer currentValue = deepValues.get(nextRegion);
-					WCRT = WCRT + currentValue;
+					BigInteger currentValue = deepValues.get(nextRegion);
+					WCRT = WCRT.add(currentValue);
 				}
 				// get the timing for the parts of the scchart that are not
 				// attributed to a region
-				Integer dummyTiming = flatValues.get(scchartDummyRegion);
+				BigInteger dummyTiming = flatValues.get(scchartDummyRegion);
 				if (dummyTiming != null) {
-					WCRT = WCRT + dummyTiming;
+					WCRT = WCRT.add(dummyTiming);
 				}
 				regionLabelStringMap.put(currentRegion, WCRT.toString());
 			}
@@ -810,8 +811,8 @@ public class TimingAnalysis extends Job {
 	 *            on first call.
 	 */
 	private void calculateDeepTimingValues(State state,
-			HashMap<Region, Integer> flatValues,
-			HashMap<Region, Integer> deepValues) {
+			HashMap<Region, BigInteger> flatValues,
+			HashMap<Region, BigInteger> deepValues) {
 		EList<Region> regionList = state.getRegions();
 		// base case is a state with
 		Iterator<Region> regionListIterator = regionList.iterator();
@@ -828,20 +829,20 @@ public class TimingAnalysis extends Job {
 		while (regionListIterator.hasNext()) {
 			Region childRegion = regionListIterator.next();
 			// Add the region's own flat value to its deep value
-			Integer flatTiming = flatValues.get(childRegion);
+			BigInteger flatTiming = flatValues.get(childRegion);
 			// It is possible that there is no flat timing value stored for a
 			// region, set to zero
 			if (flatTiming == null) {
-				flatTiming = 0;
+				flatTiming = new BigInteger("0");
 				flatValues.put(childRegion, flatTiming);
 			}
 			if (deepValues.get(childRegion) != null) {
-				deepValues.put(childRegion, deepValues.get(childRegion)
-						+ flatTiming);
+				deepValues.put(childRegion, deepValues.get(childRegion).add
+						(flatTiming));
 			} else {
 				deepValues.put(childRegion, flatTiming);
 			}
-			Integer deepTiming = deepValues.get(childRegion);
+			BigInteger deepTiming = deepValues.get(childRegion);
 			// Add deep timing value of this region to the hierarchical timing
 			// value of its parent
 			// region
@@ -849,7 +850,7 @@ public class TimingAnalysis extends Job {
 			if (stateParentRegion != null) {
 				if (deepValues.get(stateParentRegion) != null) {
 					deepValues.put(stateParentRegion,
-							deepValues.get(stateParentRegion) + deepTiming);
+							deepValues.get(stateParentRegion).add(deepTiming));
 				} else {
 					deepValues.put(stateParentRegion, deepTiming);
 				}
