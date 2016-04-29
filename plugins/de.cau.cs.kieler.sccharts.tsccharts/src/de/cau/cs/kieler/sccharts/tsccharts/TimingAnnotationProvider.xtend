@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.sccharts.tsccharts
 
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType
-import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult
+import de.cau.cs.kieler.sccharts.tsccharts.RequestType
+import de.cau.cs.kieler.sccharts.tsccharts.TimingRequestResult
 import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.FileReader

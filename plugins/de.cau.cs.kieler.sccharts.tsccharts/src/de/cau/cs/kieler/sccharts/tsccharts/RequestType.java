@@ -13,7 +13,7 @@
  */
 
 
-package de.cau.cs.kieler.sccharts.tsccharts.handler;
+package de.cau.cs.kieler.sccharts.tsccharts;
 
 /**
  * Enumeration of the possible types of timing requests.

@@ -13,10 +13,9 @@
  */
 
 
-package de.cau.cs.kieler.sccharts.tsccharts.handler;
+package de.cau.cs.kieler.sccharts.tsccharts;
 
 import java.util.LinkedList;
-import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 
 /**
  * This class represents a timing request for the interface of interactive timing analysis. A request 
