@@ -1,3 +1,5 @@
+#include "${model_name}.ino"
+
 // Declaration part of snippets
 ${decls}
 
