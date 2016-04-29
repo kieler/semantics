@@ -18,5 +18,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.esterel.kexpressions.ui.contentassist,
  de.cau.cs.kieler.esterel.kexpressions.ui.contentassist.antlr,
- de.cau.cs.kieler.esterel.kexpressions.ui.quickfix
+ de.cau.cs.kieler.esterel.kexpressions.ui.quickfix,
+ de.cau.cs.kieler.esterel.kexpressions.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.esterel.kexpressions.ui.internal.KExpressionsActivator

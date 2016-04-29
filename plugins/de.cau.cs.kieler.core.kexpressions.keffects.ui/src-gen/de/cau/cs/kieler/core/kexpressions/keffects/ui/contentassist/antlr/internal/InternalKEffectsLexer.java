@@ -71,15 +71,15 @@ public class InternalKEffectsLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g"; }
+    public String getGrammarFileName() { return "InternalKEffects.g"; }
 
     // $ANTLR start "T__16"
     public final void mT__16() throws RecognitionException {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:11:7: ( 'pre' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:11:9: 'pre'
+            // InternalKEffects.g:11:7: ( 'pre' )
+            // InternalKEffects.g:11:9: 'pre'
             {
             match("pre"); 
 
@@ -99,8 +99,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:12:7: ( '|' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:12:9: '|'
+            // InternalKEffects.g:12:7: ( '|' )
+            // InternalKEffects.g:12:9: '|'
             {
             match('|'); 
 
@@ -119,8 +119,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:13:7: ( '&' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:13:9: '&'
+            // InternalKEffects.g:13:7: ( '&' )
+            // InternalKEffects.g:13:9: '&'
             {
             match('&'); 
 
@@ -139,8 +139,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:14:7: ( '!' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:14:9: '!'
+            // InternalKEffects.g:14:7: ( '!' )
+            // InternalKEffects.g:14:9: '!'
             {
             match('!'); 
 
@@ -159,8 +159,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:15:7: ( '+' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:15:9: '+'
+            // InternalKEffects.g:15:7: ( '+' )
+            // InternalKEffects.g:15:9: '+'
             {
             match('+'); 
 
@@ -179,8 +179,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:16:7: ( '-' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:16:9: '-'
+            // InternalKEffects.g:16:7: ( '-' )
+            // InternalKEffects.g:16:9: '-'
             {
             match('-'); 
 
@@ -199,8 +199,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:17:7: ( '*' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:17:9: '*'
+            // InternalKEffects.g:17:7: ( '*' )
+            // InternalKEffects.g:17:9: '*'
             {
             match('*'); 
 
@@ -219,8 +219,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:18:7: ( '%' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:18:9: '%'
+            // InternalKEffects.g:18:7: ( '%' )
+            // InternalKEffects.g:18:9: '%'
             {
             match('%'); 
 
@@ -239,8 +239,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:19:7: ( '/' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:19:9: '/'
+            // InternalKEffects.g:19:7: ( '/' )
+            // InternalKEffects.g:19:9: '/'
             {
             match('/'); 
 
@@ -259,8 +259,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:20:7: ( 'val' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:20:9: 'val'
+            // InternalKEffects.g:20:7: ( 'val' )
+            // InternalKEffects.g:20:9: 'val'
             {
             match("val"); 
 
@@ -280,8 +280,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:21:7: ( '||' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:21:9: '||'
+            // InternalKEffects.g:21:7: ( '||' )
+            // InternalKEffects.g:21:9: '||'
             {
             match("||"); 
 
@@ -301,8 +301,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:22:7: ( '&&' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:22:9: '&&'
+            // InternalKEffects.g:22:7: ( '&&' )
+            // InternalKEffects.g:22:9: '&&'
             {
             match("&&"); 
 
@@ -322,8 +322,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:23:7: ( '()' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:23:9: '()'
+            // InternalKEffects.g:23:7: ( '()' )
+            // InternalKEffects.g:23:9: '()'
             {
             match("()"); 
 
@@ -343,8 +343,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:24:7: ( '=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:24:9: '='
+            // InternalKEffects.g:24:7: ( '=' )
+            // InternalKEffects.g:24:9: '='
             {
             match('='); 
 
@@ -363,8 +363,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:25:7: ( '+=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:25:9: '+='
+            // InternalKEffects.g:25:7: ( '+=' )
+            // InternalKEffects.g:25:9: '+='
             {
             match("+="); 
 
@@ -384,8 +384,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:26:7: ( '-=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:26:9: '-='
+            // InternalKEffects.g:26:7: ( '-=' )
+            // InternalKEffects.g:26:9: '-='
             {
             match("-="); 
 
@@ -405,8 +405,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:27:7: ( '*=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:27:9: '*='
+            // InternalKEffects.g:27:7: ( '*=' )
+            // InternalKEffects.g:27:9: '*='
             {
             match("*="); 
 
@@ -426,8 +426,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:28:7: ( '/=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:28:9: '/='
+            // InternalKEffects.g:28:7: ( '/=' )
+            // InternalKEffects.g:28:9: '/='
             {
             match("/="); 
 
@@ -447,8 +447,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:29:7: ( '++' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:29:9: '++'
+            // InternalKEffects.g:29:7: ( '++' )
+            // InternalKEffects.g:29:9: '++'
             {
             match("++"); 
 
@@ -468,8 +468,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:30:7: ( '--' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:30:9: '--'
+            // InternalKEffects.g:30:7: ( '--' )
+            // InternalKEffects.g:30:9: '--'
             {
             match("--"); 
 
@@ -489,8 +489,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:31:7: ( '==' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:31:9: '=='
+            // InternalKEffects.g:31:7: ( '==' )
+            // InternalKEffects.g:31:9: '=='
             {
             match("=="); 
 
@@ -510,8 +510,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:32:7: ( '<' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:32:9: '<'
+            // InternalKEffects.g:32:7: ( '<' )
+            // InternalKEffects.g:32:9: '<'
             {
             match('<'); 
 
@@ -530,8 +530,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:33:7: ( '<=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:33:9: '<='
+            // InternalKEffects.g:33:7: ( '<=' )
+            // InternalKEffects.g:33:9: '<='
             {
             match("<="); 
 
@@ -551,8 +551,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:34:7: ( '>' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:34:9: '>'
+            // InternalKEffects.g:34:7: ( '>' )
+            // InternalKEffects.g:34:9: '>'
             {
             match('>'); 
 
@@ -571,8 +571,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:35:7: ( '>=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:35:9: '>='
+            // InternalKEffects.g:35:7: ( '>=' )
+            // InternalKEffects.g:35:9: '>='
             {
             match(">="); 
 
@@ -592,8 +592,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:36:7: ( '!=' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:36:9: '!='
+            // InternalKEffects.g:36:7: ( '!=' )
+            // InternalKEffects.g:36:9: '!='
             {
             match("!="); 
 
@@ -613,8 +613,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:37:7: ( '(' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:37:9: '('
+            // InternalKEffects.g:37:7: ( '(' )
+            // InternalKEffects.g:37:9: '('
             {
             match('('); 
 
@@ -633,8 +633,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:38:7: ( ')' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:38:9: ')'
+            // InternalKEffects.g:38:7: ( ')' )
+            // InternalKEffects.g:38:9: ')'
             {
             match(')'); 
 
@@ -653,8 +653,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:39:7: ( '[' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:39:9: '['
+            // InternalKEffects.g:39:7: ( '[' )
+            // InternalKEffects.g:39:9: '['
             {
             match('['); 
 
@@ -673,8 +673,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:40:7: ( ']' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:40:9: ']'
+            // InternalKEffects.g:40:7: ( ']' )
+            // InternalKEffects.g:40:9: ']'
             {
             match(']'); 
 
@@ -693,8 +693,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:41:7: ( ',' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:41:9: ','
+            // InternalKEffects.g:41:7: ( ',' )
+            // InternalKEffects.g:41:9: ','
             {
             match(','); 
 
@@ -713,8 +713,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:42:7: ( '@' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:42:9: '@'
+            // InternalKEffects.g:42:7: ( '@' )
+            // InternalKEffects.g:42:9: '@'
             {
             match('@'); 
 
@@ -733,8 +733,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:43:7: ( '.' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:43:9: '.'
+            // InternalKEffects.g:43:7: ( '.' )
+            // InternalKEffects.g:43:9: '.'
             {
             match('.'); 
 
@@ -753,8 +753,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:44:7: ( '#' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:44:9: '#'
+            // InternalKEffects.g:44:7: ( '#' )
+            // InternalKEffects.g:44:9: '#'
             {
             match('#'); 
 
@@ -773,11 +773,11 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9267:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9267:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalKEffects.g:9267:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalKEffects.g:9267:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9267:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalKEffects.g:9267:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -793,7 +793,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9267:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKEffects.g:9267:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -809,7 +809,7 @@ public class InternalKEffectsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9267:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalKEffects.g:9267:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -846,12 +846,12 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9269:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9269:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalKEffects.g:9269:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalKEffects.g:9269:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9269:33: ( options {greedy=false; } : . )*
+            // InternalKEffects.g:9269:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -876,7 +876,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9269:61: .
+            	    // InternalKEffects.g:9269:61: .
             	    {
             	    matchAny(); 
 
@@ -906,8 +906,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9271:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9271:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalKEffects.g:9271:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalKEffects.g:9271:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -920,7 +920,7 @@ public class InternalKEffectsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9271:31: ( options {greedy=false; } : . )*
+            // InternalKEffects.g:9271:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -945,7 +945,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9271:59: .
+            	    // InternalKEffects.g:9271:59: .
             	    {
             	    matchAny(); 
 
@@ -973,8 +973,8 @@ public class InternalKEffectsLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9273:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9273:24: '0' .. '9'
+            // InternalKEffects.g:9273:22: ( '0' .. '9' )
+            // InternalKEffects.g:9273:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -991,10 +991,10 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9275:10: ( ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9275:12: ( RULE_NUMBER )+
+            // InternalKEffects.g:9275:10: ( ( RULE_NUMBER )+ )
+            // InternalKEffects.g:9275:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9275:12: ( RULE_NUMBER )+
+            // InternalKEffects.g:9275:12: ( RULE_NUMBER )+
             int cnt4=0;
             loop4:
             do {
@@ -1008,7 +1008,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9275:12: RULE_NUMBER
+            	    // InternalKEffects.g:9275:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -1040,17 +1040,17 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKEffects.g:9277:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalKEffects.g:9277:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalKEffects.g:9277:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt12=2;
             alt12 = dfa12.predict(input);
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalKEffects.g:9277:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:15: ( RULE_NUMBER )+
+                    // InternalKEffects.g:9277:15: ( RULE_NUMBER )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -1064,7 +1064,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:15: RULE_NUMBER
+                    	    // InternalKEffects.g:9277:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1081,7 +1081,7 @@ public class InternalKEffectsLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:32: ( RULE_NUMBER )*
+                    // InternalKEffects.g:9277:32: ( RULE_NUMBER )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1094,7 +1094,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:32: RULE_NUMBER
+                    	    // InternalKEffects.g:9277:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1106,7 +1106,7 @@ public class InternalKEffectsLexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalKEffects.g:9277:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1115,7 +1115,7 @@ public class InternalKEffectsLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalKEffects.g:9277:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1126,7 +1126,7 @@ public class InternalKEffectsLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:56: ( '+' | '-' )?
+                            // InternalKEffects.g:9277:56: ( '+' | '-' )?
                             int alt7=2;
                             int LA7_0 = input.LA(1);
 
@@ -1135,7 +1135,7 @@ public class InternalKEffectsLexer extends Lexer {
                             }
                             switch (alt7) {
                                 case 1 :
-                                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:
+                                    // InternalKEffects.g:
                                     {
                                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                                         input.consume();
@@ -1152,7 +1152,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:67: ( RULE_NUMBER )+
+                            // InternalKEffects.g:9277:67: ( RULE_NUMBER )+
                             int cnt8=0;
                             loop8:
                             do {
@@ -1166,7 +1166,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                                 switch (alt8) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:67: RULE_NUMBER
+                            	    // InternalKEffects.g:9277:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -1188,7 +1188,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:82: ( 'f' )?
+                    // InternalKEffects.g:9277:82: ( 'f' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1197,7 +1197,7 @@ public class InternalKEffectsLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:82: 'f'
+                            // InternalKEffects.g:9277:82: 'f'
                             {
                             match('f'); 
 
@@ -1210,9 +1210,9 @@ public class InternalKEffectsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:87: ( RULE_NUMBER )+ 'f'
+                    // InternalKEffects.g:9277:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:87: ( RULE_NUMBER )+
+                    // InternalKEffects.g:9277:87: ( RULE_NUMBER )+
                     int cnt11=0;
                     loop11:
                     do {
@@ -1226,7 +1226,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9277:87: RULE_NUMBER
+                    	    // InternalKEffects.g:9277:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -1265,10 +1265,10 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9279:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9279:16: ( 'true' | 'false' )
+            // InternalKEffects.g:9279:14: ( ( 'true' | 'false' ) )
+            // InternalKEffects.g:9279:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9279:16: ( 'true' | 'false' )
+            // InternalKEffects.g:9279:16: ( 'true' | 'false' )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1286,7 +1286,7 @@ public class InternalKEffectsLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9279:17: 'true'
+                    // InternalKEffects.g:9279:17: 'true'
                     {
                     match("true"); 
 
@@ -1294,7 +1294,7 @@ public class InternalKEffectsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9279:24: 'false'
+                    // InternalKEffects.g:9279:24: 'false'
                     {
                     match("false"); 
 
@@ -1320,11 +1320,11 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9281:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9281:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // InternalKEffects.g:9281:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // InternalKEffects.g:9281:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9281:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // InternalKEffects.g:9281:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1340,7 +1340,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9281:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalKEffects.g:9281:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1356,7 +1356,7 @@ public class InternalKEffectsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9281:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // InternalKEffects.g:9281:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1393,10 +1393,10 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9283:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9283:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKEffects.g:9283:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalKEffects.g:9283:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9283:11: ( '^' )?
+            // InternalKEffects.g:9283:11: ( '^' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -1405,7 +1405,7 @@ public class InternalKEffectsLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9283:11: '^'
+                    // InternalKEffects.g:9283:11: '^'
                     {
                     match('^'); 
 
@@ -1423,7 +1423,7 @@ public class InternalKEffectsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9283:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalKEffects.g:9283:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop16:
             do {
                 int alt16=2;
@@ -1436,7 +1436,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt16) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:
+            	    // InternalKEffects.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -1472,12 +1472,12 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalKEffects.g:9285:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalKEffects.g:9285:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalKEffects.g:9285:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop17:
             do {
                 int alt17=2;
@@ -1490,7 +1490,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalKEffects.g:9285:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1510,7 +1510,7 @@ public class InternalKEffectsLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:40: ( ( '\\r' )? '\\n' )?
+            // InternalKEffects.g:9285:40: ( ( '\\r' )? '\\n' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1519,9 +1519,9 @@ public class InternalKEffectsLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:41: ( '\\r' )? '\\n'
+                    // InternalKEffects.g:9285:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:41: ( '\\r' )?
+                    // InternalKEffects.g:9285:41: ( '\\r' )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
@@ -1530,7 +1530,7 @@ public class InternalKEffectsLexer extends Lexer {
                     }
                     switch (alt18) {
                         case 1 :
-                            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9285:41: '\\r'
+                            // InternalKEffects.g:9285:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1562,10 +1562,10 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9287:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9287:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKEffects.g:9287:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalKEffects.g:9287:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9287:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalKEffects.g:9287:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt20=0;
             loop20:
             do {
@@ -1579,7 +1579,7 @@ public class InternalKEffectsLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:
+            	    // InternalKEffects.g:
             	    {
             	    if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -1619,8 +1619,8 @@ public class InternalKEffectsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9289:16: ( . )
-            // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:9289:18: .
+            // InternalKEffects.g:9289:16: ( . )
+            // InternalKEffects.g:9289:18: .
             {
             matchAny(); 
 
@@ -1635,320 +1635,320 @@ public class InternalKEffectsLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:8: ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        // InternalKEffects.g:1:8: ( T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_STRING | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
         int alt21=45;
         alt21 = dfa21.predict(input);
         switch (alt21) {
             case 1 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:10: T__16
+                // InternalKEffects.g:1:10: T__16
                 {
                 mT__16(); 
 
                 }
                 break;
             case 2 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:16: T__17
+                // InternalKEffects.g:1:16: T__17
                 {
                 mT__17(); 
 
                 }
                 break;
             case 3 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:22: T__18
+                // InternalKEffects.g:1:22: T__18
                 {
                 mT__18(); 
 
                 }
                 break;
             case 4 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:28: T__19
+                // InternalKEffects.g:1:28: T__19
                 {
                 mT__19(); 
 
                 }
                 break;
             case 5 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:34: T__20
+                // InternalKEffects.g:1:34: T__20
                 {
                 mT__20(); 
 
                 }
                 break;
             case 6 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:40: T__21
+                // InternalKEffects.g:1:40: T__21
                 {
                 mT__21(); 
 
                 }
                 break;
             case 7 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:46: T__22
+                // InternalKEffects.g:1:46: T__22
                 {
                 mT__22(); 
 
                 }
                 break;
             case 8 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:52: T__23
+                // InternalKEffects.g:1:52: T__23
                 {
                 mT__23(); 
 
                 }
                 break;
             case 9 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:58: T__24
+                // InternalKEffects.g:1:58: T__24
                 {
                 mT__24(); 
 
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:64: T__25
+                // InternalKEffects.g:1:64: T__25
                 {
                 mT__25(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:70: T__26
+                // InternalKEffects.g:1:70: T__26
                 {
                 mT__26(); 
 
                 }
                 break;
             case 12 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:76: T__27
+                // InternalKEffects.g:1:76: T__27
                 {
                 mT__27(); 
 
                 }
                 break;
             case 13 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:82: T__28
+                // InternalKEffects.g:1:82: T__28
                 {
                 mT__28(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:88: T__29
+                // InternalKEffects.g:1:88: T__29
                 {
                 mT__29(); 
 
                 }
                 break;
             case 15 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:94: T__30
+                // InternalKEffects.g:1:94: T__30
                 {
                 mT__30(); 
 
                 }
                 break;
             case 16 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:100: T__31
+                // InternalKEffects.g:1:100: T__31
                 {
                 mT__31(); 
 
                 }
                 break;
             case 17 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:106: T__32
+                // InternalKEffects.g:1:106: T__32
                 {
                 mT__32(); 
 
                 }
                 break;
             case 18 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:112: T__33
+                // InternalKEffects.g:1:112: T__33
                 {
                 mT__33(); 
 
                 }
                 break;
             case 19 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:118: T__34
+                // InternalKEffects.g:1:118: T__34
                 {
                 mT__34(); 
 
                 }
                 break;
             case 20 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:124: T__35
+                // InternalKEffects.g:1:124: T__35
                 {
                 mT__35(); 
 
                 }
                 break;
             case 21 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:130: T__36
+                // InternalKEffects.g:1:130: T__36
                 {
                 mT__36(); 
 
                 }
                 break;
             case 22 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:136: T__37
+                // InternalKEffects.g:1:136: T__37
                 {
                 mT__37(); 
 
                 }
                 break;
             case 23 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:142: T__38
+                // InternalKEffects.g:1:142: T__38
                 {
                 mT__38(); 
 
                 }
                 break;
             case 24 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:148: T__39
+                // InternalKEffects.g:1:148: T__39
                 {
                 mT__39(); 
 
                 }
                 break;
             case 25 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:154: T__40
+                // InternalKEffects.g:1:154: T__40
                 {
                 mT__40(); 
 
                 }
                 break;
             case 26 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:160: T__41
+                // InternalKEffects.g:1:160: T__41
                 {
                 mT__41(); 
 
                 }
                 break;
             case 27 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:166: T__42
+                // InternalKEffects.g:1:166: T__42
                 {
                 mT__42(); 
 
                 }
                 break;
             case 28 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:172: T__43
+                // InternalKEffects.g:1:172: T__43
                 {
                 mT__43(); 
 
                 }
                 break;
             case 29 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:178: T__44
+                // InternalKEffects.g:1:178: T__44
                 {
                 mT__44(); 
 
                 }
                 break;
             case 30 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:184: T__45
+                // InternalKEffects.g:1:184: T__45
                 {
                 mT__45(); 
 
                 }
                 break;
             case 31 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:190: T__46
+                // InternalKEffects.g:1:190: T__46
                 {
                 mT__46(); 
 
                 }
                 break;
             case 32 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:196: T__47
+                // InternalKEffects.g:1:196: T__47
                 {
                 mT__47(); 
 
                 }
                 break;
             case 33 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:202: T__48
+                // InternalKEffects.g:1:202: T__48
                 {
                 mT__48(); 
 
                 }
                 break;
             case 34 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:208: T__49
+                // InternalKEffects.g:1:208: T__49
                 {
                 mT__49(); 
 
                 }
                 break;
             case 35 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:214: RULE_HOSTCODE
+                // InternalKEffects.g:1:214: RULE_HOSTCODE
                 {
                 mRULE_HOSTCODE(); 
 
                 }
                 break;
             case 36 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:228: RULE_COMMENT_ANNOTATION
+                // InternalKEffects.g:1:228: RULE_COMMENT_ANNOTATION
                 {
                 mRULE_COMMENT_ANNOTATION(); 
 
                 }
                 break;
             case 37 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:252: RULE_ML_COMMENT
+                // InternalKEffects.g:1:252: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
             case 38 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:268: RULE_INT
+                // InternalKEffects.g:1:268: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
             case 39 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:277: RULE_FLOAT
+                // InternalKEffects.g:1:277: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
             case 40 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:288: RULE_BOOLEAN
+                // InternalKEffects.g:1:288: RULE_BOOLEAN
                 {
                 mRULE_BOOLEAN(); 
 
                 }
                 break;
             case 41 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:301: RULE_STRING
+                // InternalKEffects.g:1:301: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
             case 42 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:313: RULE_ID
+                // InternalKEffects.g:1:313: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
             case 43 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:321: RULE_SL_COMMENT
+                // InternalKEffects.g:1:321: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
             case 44 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:337: RULE_WS
+                // InternalKEffects.g:1:337: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
             case 45 :
-                // ../de.cau.cs.kieler.core.kexpressions.keffects.ui/src-gen/de/cau/cs/kieler/core/kexpressions/keffects/ui/contentassist/antlr/internal/InternalKEffects.g:1:345: RULE_ANY_OTHER
+                // InternalKEffects.g:1:345: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -2015,36 +2015,19 @@ public class InternalKEffectsLexer extends Lexer {
         }
     }
     static final String DFA21_eotS =
-        "\1\uffff\1\40\1\42\1\44\1\46\1\51\1\54\1\56\1\uffff\1\63\1\40\1"+
-        "\66\1\70\1\72\1\74\7\uffff\1\36\1\105\2\40\2\36\3\uffff\1\40\24"+
-        "\uffff\1\40\22\uffff\1\105\2\40\2\uffff\1\122\2\uffff\1\123\2\40"+
-        "\2\uffff\1\126\1\40\1\uffff\1\126";
+        "\1\uffff\1\40\1\42\1\44\1\46\1\51\1\54\1\56\1\uffff\1\63\1\40\1\66\1\70\1\72\1\74\7\uffff\1\36\1\105\2\40\2\36\3\uffff\1\40\24\uffff\1\40\22\uffff\1\105\2\40\2\uffff\1\122\2\uffff\1\123\2\40\2\uffff\1\126\1\40\1\uffff\1\126";
     static final String DFA21_eofS =
         "\130\uffff";
     static final String DFA21_minS =
-        "\1\0\1\162\1\174\1\46\1\75\1\53\1\55\1\75\1\uffff\1\52\1\141\1"+
-        "\51\3\75\7\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\21"+
-        "\uffff\1\0\2\uffff\1\154\22\uffff\1\56\1\165\1\154\2\uffff\1\60"+
-        "\2\uffff\1\60\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
+        "\1\0\1\162\1\174\1\46\1\75\1\53\1\55\1\75\1\uffff\1\52\1\141\1\51\3\75\7\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\21\uffff\1\0\2\uffff\1\154\22\uffff\1\56\1\165\1\154\2\uffff\1\60\2\uffff\1\60\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA21_maxS =
-        "\1\uffff\1\162\1\174\1\46\4\75\1\uffff\1\75\1\141\1\51\3\75\7\uffff"+
-        "\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff\1\145\21\uffff"+
-        "\1\uffff\2\uffff\1\154\22\uffff\1\146\1\165\1\154\2\uffff\1\172"+
-        "\2\uffff\1\172\1\145\1\163\2\uffff\1\172\1\145\1\uffff\1\172";
+        "\1\uffff\1\162\1\174\1\46\4\75\1\uffff\1\75\1\141\1\51\3\75\7\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff\1\145\21\uffff\1\uffff\2\uffff\1\154\22\uffff\1\146\1\165\1\154\2\uffff\1\172\2\uffff\1\172\1\145\1\163\2\uffff\1\172\1\145\1\uffff\1\172";
     static final String DFA21_acceptS =
-        "\10\uffff\1\10\6\uffff\1\34\1\35\1\36\1\37\1\40\1\41\1\42\6\uffff"+
-        "\1\52\1\54\1\55\1\uffff\1\52\1\13\1\2\1\14\1\3\1\32\1\4\1\17\1\23"+
-        "\1\5\1\20\1\24\1\6\1\21\1\7\1\10\1\22\1\uffff\1\53\1\11\1\uffff"+
-        "\1\15\1\33\1\25\1\16\1\27\1\26\1\31\1\30\1\34\1\35\1\36\1\37\1\40"+
-        "\1\41\1\42\1\43\1\46\1\47\3\uffff\1\51\1\54\1\uffff\1\44\1\45\3"+
-        "\uffff\1\1\1\12\2\uffff\1\50\1\uffff";
+        "\10\uffff\1\10\6\uffff\1\34\1\35\1\36\1\37\1\40\1\41\1\42\6\uffff\1\52\1\54\1\55\1\uffff\1\52\1\13\1\2\1\14\1\3\1\32\1\4\1\17\1\23\1\5\1\20\1\24\1\6\1\21\1\7\1\10\1\22\1\uffff\1\53\1\11\1\uffff\1\15\1\33\1\25\1\16\1\27\1\26\1\31\1\30\1\34\1\35\1\36\1\37\1\40\1\41\1\42\1\43\1\46\1\47\3\uffff\1\51\1\54\1\uffff\1\44\1\45\3\uffff\1\1\1\12\2\uffff\1\50\1\uffff";
     static final String DFA21_specialS =
         "\1\3\25\uffff\1\1\3\uffff\1\0\26\uffff\1\2\46\uffff}>";
     static final String[] DFA21_transitionS = {
-            "\11\36\2\35\2\36\1\35\22\36\1\35\1\4\1\32\1\25\1\36\1\10\1"+
-            "\3\1\26\1\13\1\17\1\7\1\5\1\22\1\6\1\24\1\11\12\27\2\36\1\15"+
-            "\1\14\1\16\1\36\1\23\32\34\1\20\1\36\1\21\1\33\1\34\1\36\5\34"+
-            "\1\31\11\34\1\1\3\34\1\30\1\34\1\12\4\34\1\36\1\2\uff83\36",
+            "\11\36\2\35\2\36\1\35\22\36\1\35\1\4\1\32\1\25\1\36\1\10\1\3\1\26\1\13\1\17\1\7\1\5\1\22\1\6\1\24\1\11\12\27\2\36\1\15\1\14\1\16\1\36\1\23\32\34\1\20\1\36\1\21\1\33\1\34\1\36\5\34\1\31\11\34\1\1\3\34\1\30\1\34\1\12\4\34\1\36\1\2\uff83\36",
             "\1\37",
             "\1\41",
             "\1\43",

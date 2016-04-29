@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KEXT -->
       <package
-            uri="http://kieler.cs.cau.de/kext/kext"
+            uri="http://kieler.cs.cau.de/kext/0.1.0"
             class="de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage"
             genModel="model/KEXT.genmodel"/>
    </extension>

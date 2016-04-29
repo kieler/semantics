@@ -6,6 +6,7 @@ grammar InternalActions;
 options {
 	superClass=AbstractInternalContentAssistParser;
 	backtrack=true;
+	 memoize=true;
 	
 }
 
