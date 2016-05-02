@@ -46,9 +46,6 @@ import com.google.common.collect.HashMultimap;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.krendering.Colors;
-import de.cau.cs.kieler.core.krendering.KBackground;
-import de.cau.cs.kieler.core.krendering.KLineWidth;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KText;
@@ -139,6 +136,8 @@ public class TimingAnalysis extends Job {
 	private TimingValueRepresentation rep;
 	private boolean highlight;
 	private ICodePreparer codePreparer;
+	private final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
+	private TimingHighlighter timingHighlighter = new TimingHighlighter(renderingFactory);
 
 	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
@@ -174,7 +173,6 @@ public class TimingAnalysis extends Job {
 			return Status.CANCEL_STATUS;
 		}
 
-		final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
 		KielerCompilerContext context = new KielerCompilerContext(
 				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
 						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
@@ -425,8 +423,8 @@ public class TimingAnalysis extends Job {
 						// Adapt timing values, when representation is not in
 						// the default case
 						if (rep != TimingValueRepresentation.CYCLES) {
-							String newTimingResult = adaptTimingRepresentation(rep, timingResult, 
-									overallWCET);
+							String newTimingResult = timingHighlighter.adaptTimingRepresentation
+									(MEGAHERTZ, DIGITS, rep, timingResult, overallWCET);
 							if (REGION_TIMING || region == null) {
 								label.setText(newTimingResult);
 							}
@@ -449,7 +447,8 @@ public class TimingAnalysis extends Job {
 							double onePercent = overallWCET / 100.0;
 							percentage = timingvalue / onePercent;
 						}
-						highlightRegion(region, renderingFactory, percentage, timingLabels.get(region));
+						timingHighlighter.highlightRegion(region, percentage, timingLabels.get(region), 
+								regionRectangles, renderingExtensions);
 					}
 				}
 				return Status.OK_STATUS;
@@ -551,104 +550,6 @@ public class TimingAnalysis extends Job {
 		System.out.println(stringBuilder.toString());
 		assumptionFileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 		return resultList;
-	}
-
-	/**
-	 * The method adapts the timing representation, if it is not in the default
-	 * case
-	 * 
-	 * @param rep
-	 *            The timing representation chosen by the user
-	 * @param timingResult
-	 *            The timing Result, which has one of the formats
-	 *            "<number> / <number>" or <number>
-	 * @param overallWCET
-	 *            The overall WCET needed to calculate percentages
-	 */
-	private String adaptTimingRepresentation(TimingValueRepresentation rep, String timingResult, 
-			Integer overallWCET) {
-		String newTimingResult = "";
-		StringTokenizer StringTokenizer = new StringTokenizer(timingResult);
-		// If we represent in percentage, the overall timing value should stay
-		// untouched, in that
-		// case and only that case the String consists of only one number
-		if (StringTokenizer.countTokens() > 1) {
-			if (rep == TimingValueRepresentation.PERCENT) {
-				double onePercent = overallWCET / 100.00;
-				double FirstNumber = Double.parseDouble(StringTokenizer.nextToken());
-				StringTokenizer.nextToken();
-				double SecondNumber = Double.parseDouble(StringTokenizer.nextToken());
-				FirstNumber /= onePercent;
-				SecondNumber /= onePercent;
-				newTimingResult = String.format("%.2f", FirstNumber) + " / " 
-				                  + String.format("%.2f", SecondNumber);
-			}
-		} else {
-			if (rep == TimingValueRepresentation.PERCENT) {
-				newTimingResult = "100";
-			}
-		}
-		if (rep == TimingValueRepresentation.MILLISECONDS) {
-			while (StringTokenizer.hasMoreTokens()) {
-				String token = StringTokenizer.nextToken();
-				if (!token.equals("/")) {
-					double cycles = Double.parseDouble(token);
-					double timeInMillisecs = (cycles / (MEGAHERTZ * 1000.0));
-					newTimingResult += (String.format("%." + DIGITS + "f", timeInMillisecs));
-				} else {
-					newTimingResult += (" " + token + " ");
-				}
-			}
-		}
-		return newTimingResult;
-	};
-
-	/**
-	 * The method highlightRegion adds red background color to the display of a
-	 * region. In this the darkness of the red color increases with increased
-	 * the higher the percentage of overall WCET that is attributed to this
-	 * region.
-	 * 
-	 * @param region
-	 *            The region to be highlighted.
-	 * @param renderingFactory
-	 *            A renderingFactory
-	 * @param percentage
-	 *            The percentage of the region's fractional WCET in relation to
-	 *            overall WCET
-	 * @param labels
-	 *            The set with the timing labels of the regions of the model
-	 */
-	private void highlightRegion(Region region, KRenderingFactory renderingFactory, double percentage,
-			Set<WeakReference<KText>> labels) {
-		Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
-		for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
-			KRectangle regionRectangle = rectangleRef.get();
-			KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
-			regionRectangle.getChildren().add(0, inner);
-			if (percentage > 50) {
-				regionRectangle.getStyles().add(renderingFactory.createKForeground()
-						.setColor(Colors.RED));
-			}
-			KBackground background = renderingFactory.createKBackground();
-			// in casting percentage, all percentages below zero will be set to
-			// 0, thus they will
-			// not be marked as hot spots
-			int alpha = (int) percentage;
-			background.setAlpha(alpha);
-			inner.getStyles().add(background.setColor(Colors.RED));
-			if (percentage > 50) {
-				final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
-				lwStyle.setLineWidth(3);
-				regionRectangle.getStyles().add(lwStyle);
-				// the red numbers on red ground will not be readable well, so
-				// change them to black
-				for (WeakReference<KText> labelRef : labels) {
-					KText label = labelRef.get();
-					renderingExtensions.setForegroundColor(label, 0, 0, 0);
-				}
-			}
-		}
 	}
 
 	/**
