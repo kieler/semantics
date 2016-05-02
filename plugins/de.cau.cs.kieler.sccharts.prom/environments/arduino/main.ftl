@@ -1,10 +1,10 @@
 #include "${model_name}.ino"
 
-// Declaration part of snippets
+// Declarations
 ${decls}
 
 void setup() {
-    // Initialization part of snippets 
+    // Initializations
 ${inits}
     
     // Init model file
@@ -13,12 +13,12 @@ ${inits}
 
 void loop() {
 
-    // Input part of snippets
+    // Inputs
 ${inputs}
         
     // Reaction of model
     tick();
 
-    // Output part of snippets
+    // Outputs
 ${outputs}
 }

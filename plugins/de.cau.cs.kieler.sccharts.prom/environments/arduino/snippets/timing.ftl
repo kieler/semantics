@@ -54,7 +54,7 @@
 
     Example:
     @Wrapper Time
-    input int time; -->
+    input unsigned time; -->
 <#macro Time>
     <@input>
         // Time
@@ -72,7 +72,7 @@
      
      Example for SCCharts:
          @Wrapper TickDuration, "50"
-         output int tickDuration; -->
+         output unsigned tickDuration; -->
 <#macro TickDuration targetMillis='0'>
     <@decl>
         unsigned long tickDurationCounter;
@@ -106,7 +106,7 @@
 
      Example for SCCharts:
          @Wrapper Delay
-         output int delay = 500; -->
+         output unsigned delayTime = 500; -->
 <#macro Delay>
     <@output>
         if(${varname} > 0) {

@@ -1,13 +1,13 @@
 <#-- SerialRate -->
-<#-- As output variable, sets the rate for serial communication.
+<#-- As input or output variable, sets the rate for serial communication.
      This is done only once in the initialization.
 
      Example for SCCharts:
-         @Wrapper SerialRate
-         output int serialRate = 9600; -->
-<#macro SerialRate>
+         @Wrapper SerialRate, "9600"
+         output int serialRate; -->
+<#macro SerialRate baud>
     <@init>
-        Serial.begin(${varname});
+        Serial.begin(${baud});
     </@>
 </#macro>
 
@@ -20,7 +20,7 @@
 <#macro Print>
     <@output>
         // Print to display
-        if(${varname} != null) {
+        if(${varname}) {
             Serial.println(${varname});
         }
     </@>
