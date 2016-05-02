@@ -161,7 +161,7 @@ public class TimingAnalysis extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		long startTime = System.currentTimeMillis();
-		// Step 1: Compile SCChart to sequentialized SCG
+		// Step 1: Compile SCChart to sequentialized SCG with Timing Program Points (TPP)
 
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
@@ -199,7 +199,7 @@ public class TimingAnalysis extends Job {
 
 		SCGraph scg = (SCGraph) compilationResult.getEObject();
 
-		// get the auxiliary data on Timing Program Points
+		// Step 2: Retrieve the auxiliary data produced by the TPPTransformation
 		int highestInsertedTPPNumber = -1;
 		HashMap<String, Region> tppRegionMap = null;
 		List<TPPInformation> tppInformations = compilationResult
@@ -212,9 +212,10 @@ public class TimingAnalysis extends Job {
 			tppRegionMap = tppInformation.getTPPRegionMapping();
 		} else {
 			return new Status(IStatus.ERROR, pluginId,
-					"Error in the TPP placement phase. (ITA)");
+					"Error in the TPP placement phase. No auxiliary data was produced (ITA).");
 		}
 
+		// Step 3: Generate Code from the Sequentialized SCG with TPP
 		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID
 				+ "," + CodeGenerationFeatures.TARGET_ID + ",T_"
 				+ CodeGenerationTransformations.S2C_ID, scg);
@@ -240,10 +241,8 @@ public class TimingAnalysis extends Job {
 		}
 
 		String code = compilationResult.getString();
-		// Debug, can be removed
-		System.out.print(code);
 
-		// Step 5: Send C code to timing analyzer
+		// Step 4: Prepare file locations, cleanup of outdated files
 
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
@@ -287,11 +286,10 @@ public class TimingAnalysis extends Job {
 					"Files could not be refreshed.");
 		}
 
-		// Workaround for validation with David Broman's tool that does not
-		// handle chars:
+		// Step 5: Prepare code for kta tool
 		String codeInt = code.replace("char", "int");
 		code = codeInt;
-		// Workaround end
+		
 		// Code additions to make the code stand-alone-executable
 		StringBuilder codeAdditionBuilder = new StringBuilder();
 		codeAdditionBuilder
@@ -311,11 +309,15 @@ public class TimingAnalysis extends Job {
 		code = codeAdapted;
 
 		fileWriter.writeToFile(code, targetCodeLocationString);
+		
+		// Step 6: Generate the timing request file (.ta)
 
 		LinkedList<TimingRequestResult> resultList = generateTimingRequestFile(
 				code, scchart, uriString, highestInsertedTPPNumber);
 		String taFileName = fileName.replace(".sct", ".ta");
 		String cFileName = fileName.replace(".sct", ".c");
+		
+		// Step 7: Invoke the timing analysis tool on the code and the generated .ta file
 		
 		String timingToolLocation = Activator.getDefault().getPreferenceStore()
 		        .getString("ktaPath");
@@ -327,7 +329,6 @@ public class TimingAnalysis extends Job {
 		env.put("PATH", compilerLocation + ":$PATH");
 		try {
 			Process p = pb.start();
-			//Process pr = rt.exec(command, envp);
 			// get the timing analysis tool's console output
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
 					p.getInputStream()));
@@ -339,7 +340,7 @@ public class TimingAnalysis extends Job {
 			while ((s = stdInput.readLine()) != null) {
 				System.out.println(s);
 			}
-			// read error messages of the anylsis tool
+			// read error messages of the anaylsis tool
 			System.out.println("Error output from the timing analysis tool:");
 			System.out
 					.println("-----end of timing analysis tool output-------\n");
@@ -369,7 +370,7 @@ public class TimingAnalysis extends Job {
 					"Files could not be refreshed.");
 		}
 
-		// Step 6: Retrieve timing data and associate with regions
+		// Step 8: Retrieve timing data and associate with regions
 
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
@@ -397,7 +398,7 @@ public class TimingAnalysis extends Job {
 		wcpRegions = extractTimingLabels(RequestType.FWCET, resultList,
 				timingLabels, timingResults, tppRegionMap, scchart);
 
-		// Step 7: Feedback information back to the diagram
+		// Step 9: Feedback information to the diagram
 
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
@@ -428,7 +429,6 @@ public class TimingAnalysis extends Job {
 					for (WeakReference<KText> labelRef : labels) {
 						KText label = labelRef.get();
 						if (label != null) {
-							// String timingResult = timingResults.get(region);
 							// Special case: Timing for the whole SCChart
 							if (region == null) {
 								// get the timing for elements not attributed to
