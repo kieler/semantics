@@ -138,6 +138,7 @@ public class TimingAnalysis extends Job {
 	private ArrayList<Region> wcpRegions = new ArrayList<Region>();
 	private TimingValueRepresentation rep;
 	private boolean highlight;
+	private ICodePreparer codePreparer;
 
 	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
@@ -152,6 +153,7 @@ public class TimingAnalysis extends Job {
 		this.regionRectangles = regionRectangles;
 		this.highlight = highlight;
 		this.rep = rep;
+		this.codePreparer = new KTACodePreparer();
 	}
 
 	/**
@@ -281,23 +283,7 @@ public class TimingAnalysis extends Job {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 5: Prepare code for kta tool
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		String codeInt = code.replace("char", "int");
-		code = codeInt;
-
-		// Code additions to make the code stand-alone-executable
-		StringBuilder codeAdditionBuilder = new StringBuilder();
-		codeAdditionBuilder.append("\n\n/* Header file for Timing program points */" 
-		    + "\n#include \"../tpp.h\"");
-		String assumptionFile = uriString.replace(".sct", ".asu");
-		String assumptionFilePath = assumptionFile.replace("file:", "");
-		boolean assumptionFileFound = timingAnnotationProvider.writeStubs(assumptionFilePath, 
-				codeAdditionBuilder);
-		if (!assumptionFileFound) {
-			System.out.println("There are no assumptions on called functions found.");
-		}
-		System.out.println(codeAdditionBuilder.toString());
-		String codeAdapted = code.replace("***/\nint", "***/" + codeAdditionBuilder.toString() 
-		      + "\nint");
+		String codeAdapted = codePreparer.adaptCode(code, uriString);
 		code = codeAdapted;
 
 		fileWriter.writeToFile(code, targetCodeLocationString);
