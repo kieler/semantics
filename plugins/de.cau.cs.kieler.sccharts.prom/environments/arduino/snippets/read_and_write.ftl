@@ -1,45 +1,10 @@
-<#-- Delay -->
-<#-- As output variable, delays the execution in milliseconds of the variable value.
-
-     Example for SCCharts:
-         @Wrapper Delay
-         output int delay = 500; -->
-<#macro Delay>
-    <@declaration>
-        extern int ${varname};
-    </@>
-    <@output>
-        if(${varname} > 0)
-            delay(${varname});
-    </@>
-</#macro>
-
-<#-- SerialRate -->
-<#-- As output variable, sets the rate for serial communication.
-     This is done only once in the initialization.
-
-     Example for SCCharts:
-         @Wrapper SerialRate
-         output int serialRate = 9600; -->
-<#macro SerialRate>
-    <@decl>
-        extern int ${varname};
-    </@>
-    <@init>
-        Serial.begin(${varname});
-    </@>
-</#macro>
-
 <#-- DigitalWrite port -->
-<#-- As output variable, sets the value of the given IO pin to HIGH (variable is true) or LOW (variable is false).
+<#-- As output variable, sets the the given IO pin to HIGH (variable is true) or LOW (variable is false).
 
      Example for SCCharts:
          @Wrapper DigitalWrite, "13"
          output bool pinState = true; -->
 <#macro DigitalWrite port>
-    <@declaration>
-        extern char ${varname};
-    </@>
     <@init>
         pinMode(${port}, OUTPUT);
     </@>
@@ -53,7 +18,7 @@
 </#macro>
 
 <#-- DigitalRead port -->
-<#-- As input variable, reads the value of the given IO pin.
+<#-- As input variable, reads the given IO pin.
      If the IO pin has the value LOW, the variable will be false.
      Otherwise it will be true.
 
@@ -61,9 +26,6 @@
          @Wrapper DigitalRead, "10"
          input bool pinState; -->
 <#macro DigitalRead port>
-    <@declaration>
-        extern char ${varname};
-    </@>
     <@init>
         pinMode(${port}, INPUT);
     </@>
@@ -80,9 +42,6 @@
          @Wrapper AnalogRead, A1
          input int pinValue; -->
 <#macro AnalogRead port>
-    <@declaration>
-        extern int ${varname};
-    </@>
     <@init>
         pinMode(${port}, INPUT);
     </@>
@@ -99,9 +58,6 @@
          @Wrapper AnalogWrite, A1
          output int pinValue = 512; -->
 <#macro AnalogWrite port>
-    <@declaration>
-        extern int ${varname};
-    </@>
     <@init>
         pinMode(${port}, OUTPUT);
     </@>
