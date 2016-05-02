@@ -25,5 +25,6 @@ Export-Package: de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.core.annotations.text.ui.contentassist.antlr,
  de.cau.cs.kieler.core.annotations.text.ui.labeling,
  de.cau.cs.kieler.core.annotations.text.ui.outline,
- de.cau.cs.kieler.core.annotations.text.ui.quickfix
+ de.cau.cs.kieler.core.annotations.text.ui.quickfix,
+ de.cau.cs.kieler.core.annotations.text.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.core.annotations.text.ui.internal.AnnotationsActivator

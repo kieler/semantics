@@ -46,10 +46,8 @@
                 <associateSite>http://guava-osgi.googlecode.com/svn/trunk/repository/</associateSite>
                 <associateSite>http://download.eclipse.org/graphiti/updates/0.8.1</associateSite>
                 <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</associateSite>
-               <!--  
-                DEACTIVATED DUE TO CLOSE COUPLING OF SEMANTICS AND PRAGMATICS (ssm's ongoing activities :-)
-               <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9.1/</associateSite> -->
-               <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</associateSite>
+               <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</associateSite>
+               <!--<associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</associateSite>-->
               </associateSites>
               <siteTemplateFolder>siteTemplate</siteTemplateFolder>
               <symbols>

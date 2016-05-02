@@ -15,8 +15,8 @@ package de.cau.cs.kieler.prom.filewizard
 
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Path
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.swt.SWT
@@ -214,7 +214,7 @@ class AdvancedNewFileCreationPage extends WizardNewFileCreationPage {
      * @return an input stream with initial contents for the new file
      */
     protected override getInitialContents() {
-        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
         val placeholderMap = #{"${name}" -> fileNameWithoutExtension}
         return PromPlugin.getInputStream(initialContentsURL, placeholderMap)
     }

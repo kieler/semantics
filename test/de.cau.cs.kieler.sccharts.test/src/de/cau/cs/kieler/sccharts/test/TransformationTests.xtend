@@ -22,11 +22,13 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath
+import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.Models
+import java.io.File
 import java.io.PrintStream
+import java.util.ArrayList
 import java.util.Collections
 import java.util.List
-import org.apache.commons.io.FilenameUtils
+import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.compare.Diff
@@ -51,42 +53,21 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter
+import java.io.IOException
 
 /** 
- * Testing class that performs two tests -- both for every SCT model.
- * The first test compiles specific transformation features and compares the resulting output with prototypes for the transformation.
- * The second test compiles each input model to Java code. 
+ * Transformation tests.
+ * The input model is compiled with a specific transformation
+ * and the resulting output compared with a prototype for the transformation.
  * 
  * @author aas
  */
 @RunWith(typeof(ModelCollectionTestRunner))
-@BundleId("de.cau.cs.kieler.sccharts.test")
-@ModelPath("tests/inputs/**")
-//@ModelFilter("ConnectorState.sct")
-class TransformationTests {
-
-    /**
-     * Project relative path to the input models of the tests.
-     * This has to be the same path as in the @ModelPath annotation, but without the marker for recursive search '**'.
-     */
-    static val INPUT_MODELS_FOLDER = "tests/inputs/"
-    
-    /**
-     * Project relative path to the folder in which the prototypes for test models are stored.
-     * The models in this directory are assumed to be a correct transformation of the input model.
-     */
-    static val TARGET_FOLDER = "tests/targets/"
-
-    /**
-     * Project relative path the the directory in which the compiled output of test models will be saved.
-     * The models are saved to this folder only to have a human readable form of the compilation result.  
-     */
-    static val COMPILATION_RESULT_FOLDER = "tests/compilation_results/"
+class TransformationTests extends SCChartsTestBase {
 
     /** 
-     * The name of the annotation in SCT files,
-     * which defines the transformation that should be used to test the model.
+     * The name of an SCT annotation,
+     * which defines the transformation that should tested.
      */
     static val TRANSFORMATION_ANNOTATION_NAME = "Transformation"
 
@@ -95,11 +76,13 @@ class TransformationTests {
      */
     static val comparator = createEMFComparator()
 
-
-    /*******************************************************************************************
-     * Transformation test (Extended SCCharts)
+    /**
+     * Constructor.
      */
-     
+    new(EObject model) {
+        super(model)
+    }
+    
     /** 
      * This test method uses specific transformation features to compile a model.
      * The compilation transformation that is used is fetched from an annotation directly in the model file. 
@@ -111,17 +94,12 @@ class TransformationTests {
      * @author aas
      */
     @Test
-    def public void transformationResultAsExpected(EObject model, String modelPath) {
-        val isDebug = false
-
-        // Normalize path
-        val relativePath = Util.stripSlashes(modelPath)
-        val modelFile = FilenameUtils.getName(relativePath)
+    def public void transformationResultAsExpected() {
         // Calc prototype file for test and compilation result for test
-        val targetFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, TransformationTests.TARGET_FOLDER)
-        val compilationResultFile = relativePath.replaceFirst(TransformationTests.INPUT_MODELS_FOLDER, COMPILATION_RESULT_FOLDER)
+        val targetFile = modelDirectory + File.separator + TARGET_FOLDER + File.separator + modelName
+        val compilationResultFile = modelDirectory + File.separator + COMPILATION_RESULT_FOLDER + File.separator + modelName
         if (model instanceof State) {
-            println("------------------ SCT:" + modelFile)
+            println("------------------ SCT:" + modelName)
 
             // Get required transformation from annotation in model
             var String targetTransformationName = null
@@ -137,7 +115,7 @@ class TransformationTests {
             // Check that the transformation is defined and
             // skip tests on files without transformation.
             if (targetTransformationName == null) {
-                throw new IllegalArgumentException("Target transformation was not found in model file " + modelFile)
+                throw new IllegalArgumentException("Target transformation was not found in model file " + modelName)
             } else if(targetTransformationName == "NONE") {
                 // Ignore this test model
                 return;
@@ -156,7 +134,7 @@ class TransformationTests {
             val result = KielerCompiler.compile(context)
             val resultModel = result.getEObject()
             if (resultModel == null) {
-                throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelFile)
+                throw new IllegalArgumentException("KIELER Compiler was not able to compile input model " + modelName)
             }
 
             // Serialize model to human readable text
@@ -172,10 +150,15 @@ class TransformationTests {
             }
 
             // Load expected target model
-            val targetURL = "platform:/plugin/de.cau.cs.kieler.sccharts.test/" + targetFile
-            resource = resourceSet.getResource(URI.createURI(targetURL), true)
+            val targetURL = Platform.getBundle(SCChartsTestActivator.PLUGIN_ID).getEntry(targetFile)
+            if(targetURL == null) {
+                Assert.fail("Model "+modelName+" does not have a target file with the expected output.\n"
+                    + "The output was expected to be stored in "+targetFile)
+            }
+            val uri = URI.createURI(targetURL.toString)
+            resource = resourceSet.getResource(uri, true)
             val targetModel = resource.getContents().get(0) as EObject
-
+            
             // Compare the two models
             // If differences occur they are said to be in the left model, which is the compiled
             // result.
@@ -183,22 +166,19 @@ class TransformationTests {
             val comparison = comparator.compare(scope)
 
             // Print out all matches
-            if (isDebug) {
-                printMatches(comparison.matches, 0, true)
-            }
-
+//                printMatches(comparison.matches, 0, true)
             val differences = comparison.getDifferences()
 
             // Check results
             val int differencesSize = differences.size()
             if (differencesSize > 0) {
                 printDifferences(differences, System.err,
-                    "Differences when compiling " + modelFile + ": " + differencesSize)
-                Assert.fail("Transformation of model file " + modelFile + " results in unexpected model")
+                    "Differences when compiling " + modelName + ": " + differencesSize)
+                Assert.fail("Transformation of model file " + modelName + " results in unexpected model")
             }
 
         } else {
-            throw new IllegalArgumentException("Model " + modelFile + " could not be cast to an SCChart.")
+            throw new IllegalArgumentException("Model " + modelName + " could not be cast to an SCChart.")
         }
     }
 

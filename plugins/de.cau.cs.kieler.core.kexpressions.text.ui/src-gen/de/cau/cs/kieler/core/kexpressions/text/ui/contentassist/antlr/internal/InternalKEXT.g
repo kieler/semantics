@@ -6,7 +6,6 @@ grammar InternalKEXT;
 options {
 	superClass=AbstractInternalContentAssistParser;
 	backtrack=true;
-	 memoize=true;
 	
 }
 

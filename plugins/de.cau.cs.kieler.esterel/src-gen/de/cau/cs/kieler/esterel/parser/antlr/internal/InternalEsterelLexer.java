@@ -135,15 +135,15 @@ public class InternalEsterelLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g"; }
+    public String getGrammarFileName() { return "InternalEsterel.g"; }
 
     // $ANTLR start "T__18"
     public final void mT__18() throws RecognitionException {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:11:7: ( 'module' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:11:9: 'module'
+            // InternalEsterel.g:11:7: ( 'module' )
+            // InternalEsterel.g:11:9: 'module'
             {
             match("module"); 
 
@@ -163,8 +163,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12:7: ( ':' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12:9: ':'
+            // InternalEsterel.g:12:7: ( ':' )
+            // InternalEsterel.g:12:9: ':'
             {
             match(':'); 
 
@@ -183,8 +183,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:13:7: ( 'end' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:13:9: 'end'
+            // InternalEsterel.g:13:7: ( 'end' )
+            // InternalEsterel.g:13:9: 'end'
             {
             match("end"); 
 
@@ -204,8 +204,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:14:7: ( '.' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:14:9: '.'
+            // InternalEsterel.g:14:7: ( '.' )
+            // InternalEsterel.g:14:9: '.'
             {
             match('.'); 
 
@@ -224,8 +224,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:15:7: ( '(' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:15:9: '('
+            // InternalEsterel.g:15:7: ( '(' )
+            // InternalEsterel.g:15:9: '('
             {
             match('('); 
 
@@ -244,8 +244,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:16:7: ( ')' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:16:9: ')'
+            // InternalEsterel.g:16:7: ( ')' )
+            // InternalEsterel.g:16:9: ')'
             {
             match(')'); 
 
@@ -264,8 +264,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:17:7: ( ':=' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:17:9: ':='
+            // InternalEsterel.g:17:7: ( ':=' )
+            // InternalEsterel.g:17:9: ':='
             {
             match(":="); 
 
@@ -285,8 +285,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:18:7: ( 'combine' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:18:9: 'combine'
+            // InternalEsterel.g:18:7: ( 'combine' )
+            // InternalEsterel.g:18:9: 'combine'
             {
             match("combine"); 
 
@@ -306,8 +306,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:19:7: ( 'with' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:19:9: 'with'
+            // InternalEsterel.g:19:7: ( 'with' )
+            // InternalEsterel.g:19:9: 'with'
             {
             match("with"); 
 
@@ -327,8 +327,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:20:7: ( 'signal' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:20:9: 'signal'
+            // InternalEsterel.g:20:7: ( 'signal' )
+            // InternalEsterel.g:20:9: 'signal'
             {
             match("signal"); 
 
@@ -348,8 +348,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:21:7: ( 'in' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:21:9: 'in'
+            // InternalEsterel.g:21:7: ( 'in' )
+            // InternalEsterel.g:21:9: 'in'
             {
             match("in"); 
 
@@ -369,8 +369,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:22:7: ( ',' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:22:9: ','
+            // InternalEsterel.g:22:7: ( ',' )
+            // InternalEsterel.g:22:9: ','
             {
             match(','); 
 
@@ -389,8 +389,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:23:7: ( 'sensor' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:23:9: 'sensor'
+            // InternalEsterel.g:23:7: ( 'sensor' )
+            // InternalEsterel.g:23:9: 'sensor'
             {
             match("sensor"); 
 
@@ -410,8 +410,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:24:7: ( ';' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:24:9: ';'
+            // InternalEsterel.g:24:7: ( ';' )
+            // InternalEsterel.g:24:9: ';'
             {
             match(';'); 
 
@@ -430,8 +430,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:25:7: ( 'relation' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:25:9: 'relation'
+            // InternalEsterel.g:25:7: ( 'relation' )
+            // InternalEsterel.g:25:9: 'relation'
             {
             match("relation"); 
 
@@ -451,8 +451,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:26:7: ( '=>' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:26:9: '=>'
+            // InternalEsterel.g:26:7: ( '=>' )
+            // InternalEsterel.g:26:9: '=>'
             {
             match("=>"); 
 
@@ -472,8 +472,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:27:7: ( '#' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:27:9: '#'
+            // InternalEsterel.g:27:7: ( '#' )
+            // InternalEsterel.g:27:9: '#'
             {
             match('#'); 
 
@@ -492,8 +492,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:28:7: ( 'type' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:28:9: 'type'
+            // InternalEsterel.g:28:7: ( 'type' )
+            // InternalEsterel.g:28:9: 'type'
             {
             match("type"); 
 
@@ -513,8 +513,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:29:7: ( 'constant' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:29:9: 'constant'
+            // InternalEsterel.g:29:7: ( 'constant' )
+            // InternalEsterel.g:29:9: 'constant'
             {
             match("constant"); 
 
@@ -534,8 +534,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:30:7: ( '=' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:30:9: '='
+            // InternalEsterel.g:30:7: ( '=' )
+            // InternalEsterel.g:30:9: '='
             {
             match('='); 
 
@@ -554,8 +554,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:31:7: ( 'function' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:31:9: 'function'
+            // InternalEsterel.g:31:7: ( 'function' )
+            // InternalEsterel.g:31:9: 'function'
             {
             match("function"); 
 
@@ -575,8 +575,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:32:7: ( 'procedure' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:32:9: 'procedure'
+            // InternalEsterel.g:32:7: ( 'procedure' )
+            // InternalEsterel.g:32:9: 'procedure'
             {
             match("procedure"); 
 
@@ -596,8 +596,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:33:7: ( 'task' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:33:9: 'task'
+            // InternalEsterel.g:33:7: ( 'task' )
+            // InternalEsterel.g:33:9: 'task'
             {
             match("task"); 
 
@@ -617,8 +617,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:34:7: ( '||' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:34:9: '||'
+            // InternalEsterel.g:34:7: ( '||' )
+            // InternalEsterel.g:34:9: '||'
             {
             match("||"); 
 
@@ -638,8 +638,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:35:7: ( '[' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:35:9: '['
+            // InternalEsterel.g:35:7: ( '[' )
+            // InternalEsterel.g:35:9: '['
             {
             match('['); 
 
@@ -658,8 +658,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:36:7: ( ']' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:36:9: ']'
+            // InternalEsterel.g:36:7: ( ']' )
+            // InternalEsterel.g:36:9: ']'
             {
             match(']'); 
 
@@ -678,8 +678,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:37:7: ( 'abort' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:37:9: 'abort'
+            // InternalEsterel.g:37:7: ( 'abort' )
+            // InternalEsterel.g:37:9: 'abort'
             {
             match("abort"); 
 
@@ -699,8 +699,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:38:7: ( 'when' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:38:9: 'when'
+            // InternalEsterel.g:38:7: ( 'when' )
+            // InternalEsterel.g:38:9: 'when'
             {
             match("when"); 
 
@@ -720,8 +720,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:39:7: ( 'do' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:39:9: 'do'
+            // InternalEsterel.g:39:7: ( 'do' )
+            // InternalEsterel.g:39:9: 'do'
             {
             match("do"); 
 
@@ -741,8 +741,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:40:7: ( 'case' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:40:9: 'case'
+            // InternalEsterel.g:40:7: ( 'case' )
+            // InternalEsterel.g:40:9: 'case'
             {
             match("case"); 
 
@@ -762,8 +762,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:41:7: ( 'weak' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:41:9: 'weak'
+            // InternalEsterel.g:41:7: ( 'weak' )
+            // InternalEsterel.g:41:9: 'weak'
             {
             match("weak"); 
 
@@ -783,8 +783,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:42:7: ( 'await' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:42:9: 'await'
+            // InternalEsterel.g:42:7: ( 'await' )
+            // InternalEsterel.g:42:9: 'await'
             {
             match("await"); 
 
@@ -804,8 +804,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:43:7: ( 'call' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:43:9: 'call'
+            // InternalEsterel.g:43:7: ( 'call' )
+            // InternalEsterel.g:43:9: 'call'
             {
             match("call"); 
 
@@ -825,8 +825,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:44:7: ( 'upto' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:44:9: 'upto'
+            // InternalEsterel.g:44:7: ( 'upto' )
+            // InternalEsterel.g:44:9: 'upto'
             {
             match("upto"); 
 
@@ -846,8 +846,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:45:7: ( 'watching' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:45:9: 'watching'
+            // InternalEsterel.g:45:7: ( 'watching' )
+            // InternalEsterel.g:45:9: 'watching'
             {
             match("watching"); 
 
@@ -867,8 +867,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:46:7: ( 'timeout' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:46:9: 'timeout'
+            // InternalEsterel.g:46:7: ( 'timeout' )
+            // InternalEsterel.g:46:9: 'timeout'
             {
             match("timeout"); 
 
@@ -888,8 +888,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:47:7: ( 'emit' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:47:9: 'emit'
+            // InternalEsterel.g:47:7: ( 'emit' )
+            // InternalEsterel.g:47:9: 'emit'
             {
             match("emit"); 
 
@@ -909,8 +909,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:48:7: ( 'unemit' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:48:9: 'unemit'
+            // InternalEsterel.g:48:7: ( 'unemit' )
+            // InternalEsterel.g:48:9: 'unemit'
             {
             match("unemit"); 
 
@@ -930,8 +930,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:49:7: ( 'reset' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:49:9: 'reset'
+            // InternalEsterel.g:49:7: ( 'reset' )
+            // InternalEsterel.g:49:9: 'reset'
             {
             match("reset"); 
 
@@ -951,8 +951,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:50:7: ( 'every' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:50:9: 'every'
+            // InternalEsterel.g:50:7: ( 'every' )
+            // InternalEsterel.g:50:9: 'every'
             {
             match("every"); 
 
@@ -972,8 +972,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:51:7: ( 'exit' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:51:9: 'exit'
+            // InternalEsterel.g:51:7: ( 'exit' )
+            // InternalEsterel.g:51:9: 'exit'
             {
             match("exit"); 
 
@@ -993,8 +993,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:52:7: ( 'halt' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:52:9: 'halt'
+            // InternalEsterel.g:52:7: ( 'halt' )
+            // InternalEsterel.g:52:9: 'halt'
             {
             match("halt"); 
 
@@ -1014,8 +1014,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__60;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:53:7: ( 'if' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:53:9: 'if'
+            // InternalEsterel.g:53:7: ( 'if' )
+            // InternalEsterel.g:53:9: 'if'
             {
             match("if"); 
 
@@ -1035,8 +1035,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__61;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:54:7: ( 'elsif' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:54:9: 'elsif'
+            // InternalEsterel.g:54:7: ( 'elsif' )
+            // InternalEsterel.g:54:9: 'elsif'
             {
             match("elsif"); 
 
@@ -1056,8 +1056,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:55:7: ( 'then' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:55:9: 'then'
+            // InternalEsterel.g:55:7: ( 'then' )
+            // InternalEsterel.g:55:9: 'then'
             {
             match("then"); 
 
@@ -1077,8 +1077,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:56:7: ( 'else' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:56:9: 'else'
+            // InternalEsterel.g:56:7: ( 'else' )
+            // InternalEsterel.g:56:9: 'else'
             {
             match("else"); 
 
@@ -1098,8 +1098,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:57:7: ( 'loop' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:57:9: 'loop'
+            // InternalEsterel.g:57:7: ( 'loop' )
+            // InternalEsterel.g:57:9: 'loop'
             {
             match("loop"); 
 
@@ -1119,8 +1119,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:58:7: ( 'each' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:58:9: 'each'
+            // InternalEsterel.g:58:7: ( 'each' )
+            // InternalEsterel.g:58:9: 'each'
             {
             match("each"); 
 
@@ -1140,8 +1140,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:59:7: ( 'nothing' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:59:9: 'nothing'
+            // InternalEsterel.g:59:7: ( 'nothing' )
+            // InternalEsterel.g:59:9: 'nothing'
             {
             match("nothing"); 
 
@@ -1161,8 +1161,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:60:7: ( 'pause' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:60:9: 'pause'
+            // InternalEsterel.g:60:7: ( 'pause' )
+            // InternalEsterel.g:60:9: 'pause'
             {
             match("pause"); 
 
@@ -1182,8 +1182,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:61:7: ( 'present' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:61:9: 'present'
+            // InternalEsterel.g:61:7: ( 'present' )
+            // InternalEsterel.g:61:9: 'present'
             {
             match("present"); 
 
@@ -1203,8 +1203,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:62:7: ( 'positive' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:62:9: 'positive'
+            // InternalEsterel.g:62:7: ( 'positive' )
+            // InternalEsterel.g:62:9: 'positive'
             {
             match("positive"); 
 
@@ -1224,8 +1224,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:63:7: ( 'repeat' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:63:9: 'repeat'
+            // InternalEsterel.g:63:7: ( 'repeat' )
+            // InternalEsterel.g:63:9: 'repeat'
             {
             match("repeat"); 
 
@@ -1245,8 +1245,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:64:7: ( 'times' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:64:9: 'times'
+            // InternalEsterel.g:64:7: ( 'times' )
+            // InternalEsterel.g:64:9: 'times'
             {
             match("times"); 
 
@@ -1266,8 +1266,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__72;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:65:7: ( 'run' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:65:9: 'run'
+            // InternalEsterel.g:65:7: ( 'run' )
+            // InternalEsterel.g:65:9: 'run'
             {
             match("run"); 
 
@@ -1287,8 +1287,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:66:7: ( 'copymodule' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:66:9: 'copymodule'
+            // InternalEsterel.g:66:7: ( 'copymodule' )
+            // InternalEsterel.g:66:9: 'copymodule'
             {
             match("copymodule"); 
 
@@ -1308,8 +1308,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:67:7: ( '/' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:67:9: '/'
+            // InternalEsterel.g:67:7: ( '/' )
+            // InternalEsterel.g:67:9: '/'
             {
             match('/'); 
 
@@ -1328,8 +1328,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:68:7: ( 'tick' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:68:9: 'tick'
+            // InternalEsterel.g:68:7: ( 'tick' )
+            // InternalEsterel.g:68:9: 'tick'
             {
             match("tick"); 
 
@@ -1349,8 +1349,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__76;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:69:7: ( '*' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:69:9: '*'
+            // InternalEsterel.g:69:7: ( '*' )
+            // InternalEsterel.g:69:9: '*'
             {
             match('*'); 
 
@@ -1369,8 +1369,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__77;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:70:7: ( '+' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:70:9: '+'
+            // InternalEsterel.g:70:7: ( '+' )
+            // InternalEsterel.g:70:9: '+'
             {
             match('+'); 
 
@@ -1389,8 +1389,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__78;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:71:7: ( '-' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:71:9: '-'
+            // InternalEsterel.g:71:7: ( '-' )
+            // InternalEsterel.g:71:9: '-'
             {
             match('-'); 
 
@@ -1409,8 +1409,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__79;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:72:7: ( 'mod' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:72:9: 'mod'
+            // InternalEsterel.g:72:7: ( 'mod' )
+            // InternalEsterel.g:72:9: 'mod'
             {
             match("mod"); 
 
@@ -1430,8 +1430,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__80;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:73:7: ( '<>' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:73:9: '<>'
+            // InternalEsterel.g:73:7: ( '<>' )
+            // InternalEsterel.g:73:9: '<>'
             {
             match("<>"); 
 
@@ -1451,8 +1451,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__81;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:74:7: ( '>' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:74:9: '>'
+            // InternalEsterel.g:74:7: ( '>' )
+            // InternalEsterel.g:74:9: '>'
             {
             match('>'); 
 
@@ -1471,8 +1471,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__82;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:75:7: ( '<' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:75:9: '<'
+            // InternalEsterel.g:75:7: ( '<' )
+            // InternalEsterel.g:75:9: '<'
             {
             match('<'); 
 
@@ -1491,8 +1491,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__83;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:76:7: ( '<=' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:76:9: '<='
+            // InternalEsterel.g:76:7: ( '<=' )
+            // InternalEsterel.g:76:9: '<='
             {
             match("<="); 
 
@@ -1512,8 +1512,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__84;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:77:7: ( '>=' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:77:9: '>='
+            // InternalEsterel.g:77:7: ( '>=' )
+            // InternalEsterel.g:77:9: '>='
             {
             match(">="); 
 
@@ -1533,8 +1533,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__85;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:78:7: ( 'not' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:78:9: 'not'
+            // InternalEsterel.g:78:7: ( 'not' )
+            // InternalEsterel.g:78:9: 'not'
             {
             match("not"); 
 
@@ -1554,8 +1554,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__86;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:79:7: ( 'and' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:79:9: 'and'
+            // InternalEsterel.g:79:7: ( 'and' )
+            // InternalEsterel.g:79:9: 'and'
             {
             match("and"); 
 
@@ -1575,8 +1575,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__87;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:80:7: ( 'or' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:80:9: 'or'
+            // InternalEsterel.g:80:7: ( 'or' )
+            // InternalEsterel.g:80:9: 'or'
             {
             match("or"); 
 
@@ -1596,8 +1596,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__88;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:81:7: ( 'suspend' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:81:9: 'suspend'
+            // InternalEsterel.g:81:7: ( 'suspend' )
+            // InternalEsterel.g:81:9: 'suspend'
             {
             match("suspend"); 
 
@@ -1617,8 +1617,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__89;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:82:7: ( 'sustain' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:82:9: 'sustain'
+            // InternalEsterel.g:82:7: ( 'sustain' )
+            // InternalEsterel.g:82:9: 'sustain'
             {
             match("sustain"); 
 
@@ -1638,8 +1638,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__90;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:83:7: ( 'trap' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:83:9: 'trap'
+            // InternalEsterel.g:83:7: ( 'trap' )
+            // InternalEsterel.g:83:9: 'trap'
             {
             match("trap"); 
 
@@ -1659,8 +1659,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__91;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:84:7: ( 'handle' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:84:9: 'handle'
+            // InternalEsterel.g:84:7: ( 'handle' )
+            // InternalEsterel.g:84:9: 'handle'
             {
             match("handle"); 
 
@@ -1680,8 +1680,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__92;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:85:7: ( 'var' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:85:9: 'var'
+            // InternalEsterel.g:85:7: ( 'var' )
+            // InternalEsterel.g:85:9: 'var'
             {
             match("var"); 
 
@@ -1701,8 +1701,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__93;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:86:7: ( '??' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:86:9: '??'
+            // InternalEsterel.g:86:7: ( '??' )
+            // InternalEsterel.g:86:9: '??'
             {
             match("??"); 
 
@@ -1722,8 +1722,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__94;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:87:7: ( 'immediate' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:87:9: 'immediate'
+            // InternalEsterel.g:87:7: ( 'immediate' )
+            // InternalEsterel.g:87:9: 'immediate'
             {
             match("immediate"); 
 
@@ -1743,8 +1743,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:88:7: ( 'exec' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:88:9: 'exec'
+            // InternalEsterel.g:88:7: ( 'exec' )
+            // InternalEsterel.g:88:9: 'exec'
             {
             match("exec"); 
 
@@ -1764,8 +1764,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:89:7: ( 'return' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:89:9: 'return'
+            // InternalEsterel.g:89:7: ( 'return' )
+            // InternalEsterel.g:89:9: 'return'
             {
             match("return"); 
 
@@ -1785,8 +1785,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__97;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:90:7: ( 'input' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:90:9: 'input'
+            // InternalEsterel.g:90:7: ( 'input' )
+            // InternalEsterel.g:90:9: 'input'
             {
             match("input"); 
 
@@ -1806,8 +1806,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__98;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:91:7: ( 'output' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:91:9: 'output'
+            // InternalEsterel.g:91:7: ( 'output' )
+            // InternalEsterel.g:91:9: 'output'
             {
             match("output"); 
 
@@ -1827,8 +1827,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__99;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:92:7: ( 'inputoutput' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:92:9: 'inputoutput'
+            // InternalEsterel.g:92:7: ( 'inputoutput' )
+            // InternalEsterel.g:92:9: 'inputoutput'
             {
             match("inputoutput"); 
 
@@ -1848,8 +1848,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__100;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:93:8: ( '@' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:93:10: '@'
+            // InternalEsterel.g:93:8: ( '@' )
+            // InternalEsterel.g:93:10: '@'
             {
             match('@'); 
 
@@ -1868,8 +1868,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__101;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:94:8: ( 'pre' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:94:10: 'pre'
+            // InternalEsterel.g:94:8: ( 'pre' )
+            // InternalEsterel.g:94:10: 'pre'
             {
             match("pre"); 
 
@@ -1889,8 +1889,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__102;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:95:8: ( '?' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:95:10: '?'
+            // InternalEsterel.g:95:8: ( '?' )
+            // InternalEsterel.g:95:10: '?'
             {
             match('?'); 
 
@@ -1909,8 +1909,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__103;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:96:8: ( 'pure' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:96:10: 'pure'
+            // InternalEsterel.g:96:8: ( 'pure' )
+            // InternalEsterel.g:96:10: 'pure'
             {
             match("pure"); 
 
@@ -1930,8 +1930,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__104;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:97:8: ( 'boolean' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:97:10: 'boolean'
+            // InternalEsterel.g:97:8: ( 'boolean' )
+            // InternalEsterel.g:97:10: 'boolean'
             {
             match("boolean"); 
 
@@ -1951,8 +1951,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__105;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:98:8: ( 'unsigned' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:98:10: 'unsigned'
+            // InternalEsterel.g:98:8: ( 'unsigned' )
+            // InternalEsterel.g:98:10: 'unsigned'
             {
             match("unsigned"); 
 
@@ -1972,8 +1972,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__106;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:99:8: ( 'integer' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:99:10: 'integer'
+            // InternalEsterel.g:99:8: ( 'integer' )
+            // InternalEsterel.g:99:10: 'integer'
             {
             match("integer"); 
 
@@ -1993,8 +1993,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__107;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:100:8: ( 'float' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:100:10: 'float'
+            // InternalEsterel.g:100:8: ( 'float' )
+            // InternalEsterel.g:100:10: 'float'
             {
             match("float"); 
 
@@ -2014,8 +2014,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__108;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:101:8: ( 'double' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:101:10: 'double'
+            // InternalEsterel.g:101:8: ( 'double' )
+            // InternalEsterel.g:101:10: 'double'
             {
             match("double"); 
 
@@ -2035,8 +2035,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__109;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:102:8: ( 'string' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:102:10: 'string'
+            // InternalEsterel.g:102:8: ( 'string' )
+            // InternalEsterel.g:102:10: 'string'
             {
             match("string"); 
 
@@ -2056,8 +2056,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__110;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:103:8: ( 'host' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:103:10: 'host'
+            // InternalEsterel.g:103:8: ( 'host' )
+            // InternalEsterel.g:103:10: 'host'
             {
             match("host"); 
 
@@ -2077,8 +2077,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__111;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:104:8: ( 'none' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:104:10: 'none'
+            // InternalEsterel.g:104:8: ( 'none' )
+            // InternalEsterel.g:104:10: 'none'
             {
             match("none"); 
 
@@ -2098,8 +2098,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__112;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:105:8: ( 'max' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:105:10: 'max'
+            // InternalEsterel.g:105:8: ( 'max' )
+            // InternalEsterel.g:105:10: 'max'
             {
             match("max"); 
 
@@ -2119,8 +2119,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = T__113;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:106:8: ( 'min' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:106:10: 'min'
+            // InternalEsterel.g:106:8: ( 'min' )
+            // InternalEsterel.g:106:10: 'min'
             {
             match("min"); 
 
@@ -2140,11 +2140,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ESTEREL_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalEsterel.g:12310:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalEsterel.g:12310:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('%'); 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalEsterel.g:12310:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop1:
             do {
                 int alt1=2;
@@ -2157,7 +2157,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalEsterel.g:12310:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2177,7 +2177,7 @@ public class InternalEsterelLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:47: ( ( '\\r' )? '\\n' )?
+            // InternalEsterel.g:12310:47: ( ( '\\r' )? '\\n' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -2186,9 +2186,9 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:48: ( '\\r' )? '\\n'
+                    // InternalEsterel.g:12310:48: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:48: ( '\\r' )?
+                    // InternalEsterel.g:12310:48: ( '\\r' )?
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
@@ -2197,7 +2197,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt2) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12310:48: '\\r'
+                            // InternalEsterel.g:12310:48: '\\r'
                             {
                             match('\r'); 
 
@@ -2229,12 +2229,12 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ESTEREL_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12312:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12312:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
+            // InternalEsterel.g:12312:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
+            // InternalEsterel.g:12312:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
             {
             match('%'); 
             match('{'); 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12312:35: ( options {greedy=false; } : . )*
+            // InternalEsterel.g:12312:35: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -2259,7 +2259,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12312:63: .
+            	    // InternalEsterel.g:12312:63: .
             	    {
             	    matchAny(); 
 
@@ -2289,11 +2289,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12314:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12314:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
+            // InternalEsterel.g:12314:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
+            // InternalEsterel.g:12314:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12314:19: (~ ( '\"' ) | '\"' '\"' )*
+            // InternalEsterel.g:12314:19: (~ ( '\"' ) | '\"' '\"' )*
             loop5:
             do {
                 int alt5=3;
@@ -2315,7 +2315,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12314:20: ~ ( '\"' )
+            	    // InternalEsterel.g:12314:20: ~ ( '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2330,7 +2330,7 @@ public class InternalEsterelLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12314:27: '\"' '\"'
+            	    // InternalEsterel.g:12314:27: '\"' '\"'
             	    {
             	    match('\"'); 
             	    match('\"'); 
@@ -2360,11 +2360,11 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12316:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12316:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // InternalEsterel.g:12316:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalEsterel.g:12316:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12316:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // InternalEsterel.g:12316:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop6:
             do {
                 int alt6=3;
@@ -2380,7 +2380,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12316:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // InternalEsterel.g:12316:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2396,7 +2396,7 @@ public class InternalEsterelLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12316:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // InternalEsterel.g:12316:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2433,12 +2433,12 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12318:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12318:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // InternalEsterel.g:12318:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // InternalEsterel.g:12318:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12318:33: ( options {greedy=false; } : . )*
+            // InternalEsterel.g:12318:33: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -2463,7 +2463,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12318:61: .
+            	    // InternalEsterel.g:12318:61: .
             	    {
             	    matchAny(); 
 
@@ -2493,8 +2493,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12320:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12320:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // InternalEsterel.g:12320:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // InternalEsterel.g:12320:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -2507,7 +2507,7 @@ public class InternalEsterelLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12320:31: ( options {greedy=false; } : . )*
+            // InternalEsterel.g:12320:31: ( options {greedy=false; } : . )*
             loop8:
             do {
                 int alt8=2;
@@ -2532,7 +2532,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12320:59: .
+            	    // InternalEsterel.g:12320:59: .
             	    {
             	    matchAny(); 
 
@@ -2560,8 +2560,8 @@ public class InternalEsterelLexer extends Lexer {
     // $ANTLR start "RULE_NUMBER"
     public final void mRULE_NUMBER() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12322:22: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12322:24: '0' .. '9'
+            // InternalEsterel.g:12322:22: ( '0' .. '9' )
+            // InternalEsterel.g:12322:24: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2578,10 +2578,10 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12324:10: ( ( RULE_NUMBER )+ )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12324:12: ( RULE_NUMBER )+
+            // InternalEsterel.g:12324:10: ( ( RULE_NUMBER )+ )
+            // InternalEsterel.g:12324:12: ( RULE_NUMBER )+
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12324:12: ( RULE_NUMBER )+
+            // InternalEsterel.g:12324:12: ( RULE_NUMBER )+
             int cnt9=0;
             loop9:
             do {
@@ -2595,7 +2595,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12324:12: RULE_NUMBER
+            	    // InternalEsterel.g:12324:12: RULE_NUMBER
             	    {
             	    mRULE_NUMBER(); 
 
@@ -2627,17 +2627,17 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalEsterel.g:12326:12: ( ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' ) )
+            // InternalEsterel.g:12326:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
+            // InternalEsterel.g:12326:14: ( ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )? | ( RULE_NUMBER )+ 'f' )
             int alt17=2;
             alt17 = dfa17.predict(input);
             switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
+                    // InternalEsterel.g:12326:15: ( RULE_NUMBER )+ '.' ( RULE_NUMBER )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:15: ( RULE_NUMBER )+
+                    // InternalEsterel.g:12326:15: ( RULE_NUMBER )+
                     int cnt10=0;
                     loop10:
                     do {
@@ -2651,7 +2651,7 @@ public class InternalEsterelLexer extends Lexer {
 
                         switch (alt10) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:15: RULE_NUMBER
+                    	    // InternalEsterel.g:12326:15: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2668,7 +2668,7 @@ public class InternalEsterelLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:32: ( RULE_NUMBER )*
+                    // InternalEsterel.g:12326:32: ( RULE_NUMBER )*
                     loop11:
                     do {
                         int alt11=2;
@@ -2681,7 +2681,7 @@ public class InternalEsterelLexer extends Lexer {
 
                         switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:32: RULE_NUMBER
+                    	    // InternalEsterel.g:12326:32: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2693,7 +2693,7 @@ public class InternalEsterelLexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
+                    // InternalEsterel.g:12326:45: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+ )?
                     int alt14=2;
                     int LA14_0 = input.LA(1);
 
@@ -2702,7 +2702,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt14) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
+                            // InternalEsterel.g:12326:46: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_NUMBER )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2713,7 +2713,7 @@ public class InternalEsterelLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:56: ( '+' | '-' )?
+                            // InternalEsterel.g:12326:56: ( '+' | '-' )?
                             int alt12=2;
                             int LA12_0 = input.LA(1);
 
@@ -2722,7 +2722,7 @@ public class InternalEsterelLexer extends Lexer {
                             }
                             switch (alt12) {
                                 case 1 :
-                                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:
+                                    // InternalEsterel.g:
                                     {
                                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                                         input.consume();
@@ -2739,7 +2739,7 @@ public class InternalEsterelLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:67: ( RULE_NUMBER )+
+                            // InternalEsterel.g:12326:67: ( RULE_NUMBER )+
                             int cnt13=0;
                             loop13:
                             do {
@@ -2753,7 +2753,7 @@ public class InternalEsterelLexer extends Lexer {
 
                                 switch (alt13) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:67: RULE_NUMBER
+                            	    // InternalEsterel.g:12326:67: RULE_NUMBER
                             	    {
                             	    mRULE_NUMBER(); 
 
@@ -2775,7 +2775,7 @@ public class InternalEsterelLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:82: ( 'f' )?
+                    // InternalEsterel.g:12326:82: ( 'f' )?
                     int alt15=2;
                     int LA15_0 = input.LA(1);
 
@@ -2784,7 +2784,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt15) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:82: 'f'
+                            // InternalEsterel.g:12326:82: 'f'
                             {
                             match('f'); 
 
@@ -2797,9 +2797,9 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:87: ( RULE_NUMBER )+ 'f'
+                    // InternalEsterel.g:12326:87: ( RULE_NUMBER )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:87: ( RULE_NUMBER )+
+                    // InternalEsterel.g:12326:87: ( RULE_NUMBER )+
                     int cnt16=0;
                     loop16:
                     do {
@@ -2813,7 +2813,7 @@ public class InternalEsterelLexer extends Lexer {
 
                         switch (alt16) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12326:87: RULE_NUMBER
+                    	    // InternalEsterel.g:12326:87: RULE_NUMBER
                     	    {
                     	    mRULE_NUMBER(); 
 
@@ -2852,10 +2852,10 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12328:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12328:16: ( 'true' | 'false' )
+            // InternalEsterel.g:12328:14: ( ( 'true' | 'false' ) )
+            // InternalEsterel.g:12328:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12328:16: ( 'true' | 'false' )
+            // InternalEsterel.g:12328:16: ( 'true' | 'false' )
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2873,7 +2873,7 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12328:17: 'true'
+                    // InternalEsterel.g:12328:17: 'true'
                     {
                     match("true"); 
 
@@ -2881,7 +2881,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12328:24: 'false'
+                    // InternalEsterel.g:12328:24: 'false'
                     {
                     match("false"); 
 
@@ -2907,10 +2907,10 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12330:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12330:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalEsterel.g:12330:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // InternalEsterel.g:12330:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12330:11: ( '^' )?
+            // InternalEsterel.g:12330:11: ( '^' )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -2919,7 +2919,7 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt19) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12330:11: '^'
+                    // InternalEsterel.g:12330:11: '^'
                     {
                     match('^'); 
 
@@ -2937,7 +2937,7 @@ public class InternalEsterelLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12330:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // InternalEsterel.g:12330:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop20:
             do {
                 int alt20=2;
@@ -2950,7 +2950,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:
+            	    // InternalEsterel.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -2986,12 +2986,12 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalEsterel.g:12332:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalEsterel.g:12332:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalEsterel.g:12332:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop21:
             do {
                 int alt21=2;
@@ -3004,7 +3004,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt21) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalEsterel.g:12332:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -3024,7 +3024,7 @@ public class InternalEsterelLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:40: ( ( '\\r' )? '\\n' )?
+            // InternalEsterel.g:12332:40: ( ( '\\r' )? '\\n' )?
             int alt23=2;
             int LA23_0 = input.LA(1);
 
@@ -3033,9 +3033,9 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt23) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:41: ( '\\r' )? '\\n'
+                    // InternalEsterel.g:12332:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:41: ( '\\r' )?
+                    // InternalEsterel.g:12332:41: ( '\\r' )?
                     int alt22=2;
                     int LA22_0 = input.LA(1);
 
@@ -3044,7 +3044,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt22) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12332:41: '\\r'
+                            // InternalEsterel.g:12332:41: '\\r'
                             {
                             match('\r'); 
 
@@ -3076,10 +3076,10 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12334:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12334:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalEsterel.g:12334:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalEsterel.g:12334:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12334:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalEsterel.g:12334:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt24=0;
             loop24:
             do {
@@ -3093,7 +3093,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt24) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:
+            	    // InternalEsterel.g:
             	    {
             	    if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -3133,8 +3133,8 @@ public class InternalEsterelLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12336:16: ( . )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:12336:18: .
+            // InternalEsterel.g:12336:16: ( . )
+            // InternalEsterel.g:12336:18: .
             {
             matchAny(); 
 
@@ -3149,768 +3149,768 @@ public class InternalEsterelLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:8: ( T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        // InternalEsterel.g:1:8: ( T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
         int alt25=109;
         alt25 = dfa25.predict(input);
         switch (alt25) {
             case 1 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:10: T__18
+                // InternalEsterel.g:1:10: T__18
                 {
                 mT__18(); 
 
                 }
                 break;
             case 2 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:16: T__19
+                // InternalEsterel.g:1:16: T__19
                 {
                 mT__19(); 
 
                 }
                 break;
             case 3 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:22: T__20
+                // InternalEsterel.g:1:22: T__20
                 {
                 mT__20(); 
 
                 }
                 break;
             case 4 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:28: T__21
+                // InternalEsterel.g:1:28: T__21
                 {
                 mT__21(); 
 
                 }
                 break;
             case 5 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:34: T__22
+                // InternalEsterel.g:1:34: T__22
                 {
                 mT__22(); 
 
                 }
                 break;
             case 6 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:40: T__23
+                // InternalEsterel.g:1:40: T__23
                 {
                 mT__23(); 
 
                 }
                 break;
             case 7 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:46: T__24
+                // InternalEsterel.g:1:46: T__24
                 {
                 mT__24(); 
 
                 }
                 break;
             case 8 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:52: T__25
+                // InternalEsterel.g:1:52: T__25
                 {
                 mT__25(); 
 
                 }
                 break;
             case 9 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:58: T__26
+                // InternalEsterel.g:1:58: T__26
                 {
                 mT__26(); 
 
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:64: T__27
+                // InternalEsterel.g:1:64: T__27
                 {
                 mT__27(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:70: T__28
+                // InternalEsterel.g:1:70: T__28
                 {
                 mT__28(); 
 
                 }
                 break;
             case 12 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:76: T__29
+                // InternalEsterel.g:1:76: T__29
                 {
                 mT__29(); 
 
                 }
                 break;
             case 13 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:82: T__30
+                // InternalEsterel.g:1:82: T__30
                 {
                 mT__30(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:88: T__31
+                // InternalEsterel.g:1:88: T__31
                 {
                 mT__31(); 
 
                 }
                 break;
             case 15 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:94: T__32
+                // InternalEsterel.g:1:94: T__32
                 {
                 mT__32(); 
 
                 }
                 break;
             case 16 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:100: T__33
+                // InternalEsterel.g:1:100: T__33
                 {
                 mT__33(); 
 
                 }
                 break;
             case 17 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:106: T__34
+                // InternalEsterel.g:1:106: T__34
                 {
                 mT__34(); 
 
                 }
                 break;
             case 18 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:112: T__35
+                // InternalEsterel.g:1:112: T__35
                 {
                 mT__35(); 
 
                 }
                 break;
             case 19 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:118: T__36
+                // InternalEsterel.g:1:118: T__36
                 {
                 mT__36(); 
 
                 }
                 break;
             case 20 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:124: T__37
+                // InternalEsterel.g:1:124: T__37
                 {
                 mT__37(); 
 
                 }
                 break;
             case 21 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:130: T__38
+                // InternalEsterel.g:1:130: T__38
                 {
                 mT__38(); 
 
                 }
                 break;
             case 22 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:136: T__39
+                // InternalEsterel.g:1:136: T__39
                 {
                 mT__39(); 
 
                 }
                 break;
             case 23 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:142: T__40
+                // InternalEsterel.g:1:142: T__40
                 {
                 mT__40(); 
 
                 }
                 break;
             case 24 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:148: T__41
+                // InternalEsterel.g:1:148: T__41
                 {
                 mT__41(); 
 
                 }
                 break;
             case 25 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:154: T__42
+                // InternalEsterel.g:1:154: T__42
                 {
                 mT__42(); 
 
                 }
                 break;
             case 26 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:160: T__43
+                // InternalEsterel.g:1:160: T__43
                 {
                 mT__43(); 
 
                 }
                 break;
             case 27 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:166: T__44
+                // InternalEsterel.g:1:166: T__44
                 {
                 mT__44(); 
 
                 }
                 break;
             case 28 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:172: T__45
+                // InternalEsterel.g:1:172: T__45
                 {
                 mT__45(); 
 
                 }
                 break;
             case 29 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:178: T__46
+                // InternalEsterel.g:1:178: T__46
                 {
                 mT__46(); 
 
                 }
                 break;
             case 30 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:184: T__47
+                // InternalEsterel.g:1:184: T__47
                 {
                 mT__47(); 
 
                 }
                 break;
             case 31 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:190: T__48
+                // InternalEsterel.g:1:190: T__48
                 {
                 mT__48(); 
 
                 }
                 break;
             case 32 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:196: T__49
+                // InternalEsterel.g:1:196: T__49
                 {
                 mT__49(); 
 
                 }
                 break;
             case 33 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:202: T__50
+                // InternalEsterel.g:1:202: T__50
                 {
                 mT__50(); 
 
                 }
                 break;
             case 34 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:208: T__51
+                // InternalEsterel.g:1:208: T__51
                 {
                 mT__51(); 
 
                 }
                 break;
             case 35 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:214: T__52
+                // InternalEsterel.g:1:214: T__52
                 {
                 mT__52(); 
 
                 }
                 break;
             case 36 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:220: T__53
+                // InternalEsterel.g:1:220: T__53
                 {
                 mT__53(); 
 
                 }
                 break;
             case 37 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:226: T__54
+                // InternalEsterel.g:1:226: T__54
                 {
                 mT__54(); 
 
                 }
                 break;
             case 38 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:232: T__55
+                // InternalEsterel.g:1:232: T__55
                 {
                 mT__55(); 
 
                 }
                 break;
             case 39 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:238: T__56
+                // InternalEsterel.g:1:238: T__56
                 {
                 mT__56(); 
 
                 }
                 break;
             case 40 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:244: T__57
+                // InternalEsterel.g:1:244: T__57
                 {
                 mT__57(); 
 
                 }
                 break;
             case 41 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:250: T__58
+                // InternalEsterel.g:1:250: T__58
                 {
                 mT__58(); 
 
                 }
                 break;
             case 42 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:256: T__59
+                // InternalEsterel.g:1:256: T__59
                 {
                 mT__59(); 
 
                 }
                 break;
             case 43 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:262: T__60
+                // InternalEsterel.g:1:262: T__60
                 {
                 mT__60(); 
 
                 }
                 break;
             case 44 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:268: T__61
+                // InternalEsterel.g:1:268: T__61
                 {
                 mT__61(); 
 
                 }
                 break;
             case 45 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:274: T__62
+                // InternalEsterel.g:1:274: T__62
                 {
                 mT__62(); 
 
                 }
                 break;
             case 46 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:280: T__63
+                // InternalEsterel.g:1:280: T__63
                 {
                 mT__63(); 
 
                 }
                 break;
             case 47 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:286: T__64
+                // InternalEsterel.g:1:286: T__64
                 {
                 mT__64(); 
 
                 }
                 break;
             case 48 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:292: T__65
+                // InternalEsterel.g:1:292: T__65
                 {
                 mT__65(); 
 
                 }
                 break;
             case 49 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:298: T__66
+                // InternalEsterel.g:1:298: T__66
                 {
                 mT__66(); 
 
                 }
                 break;
             case 50 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:304: T__67
+                // InternalEsterel.g:1:304: T__67
                 {
                 mT__67(); 
 
                 }
                 break;
             case 51 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:310: T__68
+                // InternalEsterel.g:1:310: T__68
                 {
                 mT__68(); 
 
                 }
                 break;
             case 52 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:316: T__69
+                // InternalEsterel.g:1:316: T__69
                 {
                 mT__69(); 
 
                 }
                 break;
             case 53 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:322: T__70
+                // InternalEsterel.g:1:322: T__70
                 {
                 mT__70(); 
 
                 }
                 break;
             case 54 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:328: T__71
+                // InternalEsterel.g:1:328: T__71
                 {
                 mT__71(); 
 
                 }
                 break;
             case 55 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:334: T__72
+                // InternalEsterel.g:1:334: T__72
                 {
                 mT__72(); 
 
                 }
                 break;
             case 56 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:340: T__73
+                // InternalEsterel.g:1:340: T__73
                 {
                 mT__73(); 
 
                 }
                 break;
             case 57 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:346: T__74
+                // InternalEsterel.g:1:346: T__74
                 {
                 mT__74(); 
 
                 }
                 break;
             case 58 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:352: T__75
+                // InternalEsterel.g:1:352: T__75
                 {
                 mT__75(); 
 
                 }
                 break;
             case 59 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:358: T__76
+                // InternalEsterel.g:1:358: T__76
                 {
                 mT__76(); 
 
                 }
                 break;
             case 60 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:364: T__77
+                // InternalEsterel.g:1:364: T__77
                 {
                 mT__77(); 
 
                 }
                 break;
             case 61 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:370: T__78
+                // InternalEsterel.g:1:370: T__78
                 {
                 mT__78(); 
 
                 }
                 break;
             case 62 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:376: T__79
+                // InternalEsterel.g:1:376: T__79
                 {
                 mT__79(); 
 
                 }
                 break;
             case 63 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:382: T__80
+                // InternalEsterel.g:1:382: T__80
                 {
                 mT__80(); 
 
                 }
                 break;
             case 64 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:388: T__81
+                // InternalEsterel.g:1:388: T__81
                 {
                 mT__81(); 
 
                 }
                 break;
             case 65 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:394: T__82
+                // InternalEsterel.g:1:394: T__82
                 {
                 mT__82(); 
 
                 }
                 break;
             case 66 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:400: T__83
+                // InternalEsterel.g:1:400: T__83
                 {
                 mT__83(); 
 
                 }
                 break;
             case 67 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:406: T__84
+                // InternalEsterel.g:1:406: T__84
                 {
                 mT__84(); 
 
                 }
                 break;
             case 68 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:412: T__85
+                // InternalEsterel.g:1:412: T__85
                 {
                 mT__85(); 
 
                 }
                 break;
             case 69 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:418: T__86
+                // InternalEsterel.g:1:418: T__86
                 {
                 mT__86(); 
 
                 }
                 break;
             case 70 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:424: T__87
+                // InternalEsterel.g:1:424: T__87
                 {
                 mT__87(); 
 
                 }
                 break;
             case 71 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:430: T__88
+                // InternalEsterel.g:1:430: T__88
                 {
                 mT__88(); 
 
                 }
                 break;
             case 72 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:436: T__89
+                // InternalEsterel.g:1:436: T__89
                 {
                 mT__89(); 
 
                 }
                 break;
             case 73 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:442: T__90
+                // InternalEsterel.g:1:442: T__90
                 {
                 mT__90(); 
 
                 }
                 break;
             case 74 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:448: T__91
+                // InternalEsterel.g:1:448: T__91
                 {
                 mT__91(); 
 
                 }
                 break;
             case 75 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:454: T__92
+                // InternalEsterel.g:1:454: T__92
                 {
                 mT__92(); 
 
                 }
                 break;
             case 76 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:460: T__93
+                // InternalEsterel.g:1:460: T__93
                 {
                 mT__93(); 
 
                 }
                 break;
             case 77 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:466: T__94
+                // InternalEsterel.g:1:466: T__94
                 {
                 mT__94(); 
 
                 }
                 break;
             case 78 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:472: T__95
+                // InternalEsterel.g:1:472: T__95
                 {
                 mT__95(); 
 
                 }
                 break;
             case 79 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:478: T__96
+                // InternalEsterel.g:1:478: T__96
                 {
                 mT__96(); 
 
                 }
                 break;
             case 80 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:484: T__97
+                // InternalEsterel.g:1:484: T__97
                 {
                 mT__97(); 
 
                 }
                 break;
             case 81 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:490: T__98
+                // InternalEsterel.g:1:490: T__98
                 {
                 mT__98(); 
 
                 }
                 break;
             case 82 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:496: T__99
+                // InternalEsterel.g:1:496: T__99
                 {
                 mT__99(); 
 
                 }
                 break;
             case 83 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:502: T__100
+                // InternalEsterel.g:1:502: T__100
                 {
                 mT__100(); 
 
                 }
                 break;
             case 84 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:509: T__101
+                // InternalEsterel.g:1:509: T__101
                 {
                 mT__101(); 
 
                 }
                 break;
             case 85 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:516: T__102
+                // InternalEsterel.g:1:516: T__102
                 {
                 mT__102(); 
 
                 }
                 break;
             case 86 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:523: T__103
+                // InternalEsterel.g:1:523: T__103
                 {
                 mT__103(); 
 
                 }
                 break;
             case 87 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:530: T__104
+                // InternalEsterel.g:1:530: T__104
                 {
                 mT__104(); 
 
                 }
                 break;
             case 88 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:537: T__105
+                // InternalEsterel.g:1:537: T__105
                 {
                 mT__105(); 
 
                 }
                 break;
             case 89 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:544: T__106
+                // InternalEsterel.g:1:544: T__106
                 {
                 mT__106(); 
 
                 }
                 break;
             case 90 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:551: T__107
+                // InternalEsterel.g:1:551: T__107
                 {
                 mT__107(); 
 
                 }
                 break;
             case 91 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:558: T__108
+                // InternalEsterel.g:1:558: T__108
                 {
                 mT__108(); 
 
                 }
                 break;
             case 92 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:565: T__109
+                // InternalEsterel.g:1:565: T__109
                 {
                 mT__109(); 
 
                 }
                 break;
             case 93 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:572: T__110
+                // InternalEsterel.g:1:572: T__110
                 {
                 mT__110(); 
 
                 }
                 break;
             case 94 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:579: T__111
+                // InternalEsterel.g:1:579: T__111
                 {
                 mT__111(); 
 
                 }
                 break;
             case 95 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:586: T__112
+                // InternalEsterel.g:1:586: T__112
                 {
                 mT__112(); 
 
                 }
                 break;
             case 96 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:593: T__113
+                // InternalEsterel.g:1:593: T__113
                 {
                 mT__113(); 
 
                 }
                 break;
             case 97 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:600: RULE_ESTEREL_SL_COMMENT
+                // InternalEsterel.g:1:600: RULE_ESTEREL_SL_COMMENT
                 {
                 mRULE_ESTEREL_SL_COMMENT(); 
 
                 }
                 break;
             case 98 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:624: RULE_ESTEREL_ML_COMMENT
+                // InternalEsterel.g:1:624: RULE_ESTEREL_ML_COMMENT
                 {
                 mRULE_ESTEREL_ML_COMMENT(); 
 
                 }
                 break;
             case 99 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:648: RULE_STRING
+                // InternalEsterel.g:1:648: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
             case 100 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:660: RULE_HOSTCODE
+                // InternalEsterel.g:1:660: RULE_HOSTCODE
                 {
                 mRULE_HOSTCODE(); 
 
                 }
                 break;
             case 101 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:674: RULE_COMMENT_ANNOTATION
+                // InternalEsterel.g:1:674: RULE_COMMENT_ANNOTATION
                 {
                 mRULE_COMMENT_ANNOTATION(); 
 
                 }
                 break;
             case 102 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:698: RULE_ML_COMMENT
+                // InternalEsterel.g:1:698: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
             case 103 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:714: RULE_INT
+                // InternalEsterel.g:1:714: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
             case 104 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:723: RULE_FLOAT
+                // InternalEsterel.g:1:723: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
             case 105 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:734: RULE_BOOLEAN
+                // InternalEsterel.g:1:734: RULE_BOOLEAN
                 {
                 mRULE_BOOLEAN(); 
 
                 }
                 break;
             case 106 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:747: RULE_ID
+                // InternalEsterel.g:1:747: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
             case 107 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:755: RULE_SL_COMMENT
+                // InternalEsterel.g:1:755: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
             case 108 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:771: RULE_WS
+                // InternalEsterel.g:1:771: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
             case 109 :
-                // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1:779: RULE_ANY_OTHER
+                // InternalEsterel.g:1:779: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -3977,129 +3977,19 @@ public class InternalEsterelLexer extends Lexer {
         }
     }
     static final String DFA25_eotS =
-        "\1\uffff\1\62\1\64\1\62\3\uffff\4\62\2\uffff\1\62\1\120\1\uffff"+
-        "\3\62\1\56\2\uffff\6\62\1\155\3\uffff\1\163\1\165\2\62\1\172\1\uffff"+
-        "\1\62\1\176\2\56\1\u0081\1\56\3\uffff\3\62\3\uffff\6\62\3\uffff"+
-        "\12\62\1\u009e\1\u009f\1\62\2\uffff\2\62\3\uffff\14\62\3\uffff\3"+
-        "\62\1\u00b9\6\62\13\uffff\1\u00c5\2\62\3\uffff\1\62\1\176\5\uffff"+
-        "\1\u0081\1\uffff\1\u00ce\1\u00cf\1\u00d0\1\u00d1\25\62\2\uffff\5"+
-        "\62\1\u00ee\13\62\1\u00fb\5\62\1\u0101\1\62\1\uffff\7\62\1\u010b"+
-        "\1\62\3\uffff\1\62\1\u010e\1\62\1\uffff\3\176\1\62\4\uffff\1\u0113"+
-        "\1\62\1\u0115\1\u0116\1\62\1\u0118\1\u0119\3\62\1\u011d\1\u011e"+
-        "\1\u011f\1\u0120\1\u0121\15\62\1\uffff\1\u012f\1\u0130\1\62\1\u0133"+
-        "\1\u0134\1\u0135\1\u0136\5\62\1\uffff\2\62\1\u013e\2\62\1\uffff"+
-        "\1\62\1\u0142\2\62\1\u0145\1\62\1\u0147\1\u0148\1\62\1\uffff\1\u014a"+
-        "\1\62\1\uffff\1\62\1\uffff\1\176\1\62\1\uffff\1\u014e\2\uffff\1"+
-        "\u014f\2\uffff\3\62\5\uffff\6\62\1\u015a\3\62\1\u015e\2\62\2\uffff"+
-        "\1\62\1\u0162\4\uffff\1\62\1\u0164\1\u0136\2\62\1\u0167\1\62\1\uffff"+
-        "\1\u0169\1\u016a\1\62\1\uffff\2\62\1\uffff\1\62\2\uffff\1\62\1\uffff"+
-        "\2\62\1\u0172\2\uffff\4\62\1\u0177\1\u0178\2\62\1\u017b\1\62\1\uffff"+
-        "\3\62\1\uffff\1\u0180\1\u0181\1\62\1\uffff\1\62\1\uffff\2\62\1\uffff"+
-        "\1\62\2\uffff\1\u0187\1\u0188\1\62\1\u018a\1\62\1\u018c\1\62\1\uffff"+
-        "\1\u018e\3\62\2\uffff\1\u0192\1\u0193\1\uffff\1\62\1\u0195\2\62"+
-        "\2\uffff\1\u0198\2\62\1\u019b\1\62\2\uffff\1\62\1\uffff\1\u019e"+
-        "\1\uffff\1\u019f\1\uffff\1\u01a0\1\62\1\u01a2\2\uffff\1\62\1\uffff"+
-        "\1\62\1\u01a5\1\uffff\1\u01a6\1\62\1\uffff\1\u01a8\1\u01a9\3\uffff"+
-        "\1\62\1\uffff\1\62\1\u01ac\2\uffff\1\u01ad\2\uffff\1\u01ae\1\62"+
-        "\3\uffff\1\u01b0\1\uffff";
+        "\1\uffff\1\62\1\64\1\62\3\uffff\4\62\2\uffff\1\62\1\120\1\uffff\3\62\1\56\2\uffff\6\62\1\155\3\uffff\1\163\1\165\2\62\1\172\1\uffff\1\62\1\176\2\56\1\u0081\1\56\3\uffff\3\62\3\uffff\6\62\3\uffff\12\62\1\u009e\1\u009f\1\62\2\uffff\2\62\3\uffff\14\62\3\uffff\3\62\1\u00b9\6\62\13\uffff\1\u00c5\2\62\3\uffff\1\62\1\176\5\uffff\1\u0081\1\uffff\1\u00ce\1\u00cf\1\u00d0\1\u00d1\25\62\2\uffff\5\62\1\u00ee\13\62\1\u00fb\5\62\1\u0101\1\62\1\uffff\7\62\1\u010b\1\62\3\uffff\1\62\1\u010e\1\62\1\uffff\3\176\1\62\4\uffff\1\u0113\1\62\1\u0115\1\u0116\1\62\1\u0118\1\u0119\3\62\1\u011d\1\u011e\1\u011f\1\u0120\1\u0121\15\62\1\uffff\1\u012f\1\u0130\1\62\1\u0133\1\u0134\1\u0135\1\u0136\5\62\1\uffff\2\62\1\u013e\2\62\1\uffff\1\62\1\u0142\2\62\1\u0145\1\62\1\u0147\1\u0148\1\62\1\uffff\1\u014a\1\62\1\uffff\1\62\1\uffff\1\176\1\62\1\uffff\1\u014e\2\uffff\1\u014f\2\uffff\3\62\5\uffff\6\62\1\u015a\3\62\1\u015e\2\62\2\uffff\1\62\1\u0162\4\uffff\1\62\1\u0164\1\u0136\2\62\1\u0167\1\62\1\uffff\1\u0169\1\u016a\1\62\1\uffff\2\62\1\uffff\1\62\2\uffff\1\62\1\uffff\2\62\1\u0172\2\uffff\4\62\1\u0177\1\u0178\2\62\1\u017b\1\62\1\uffff\3\62\1\uffff\1\u0180\1\u0181\1\62\1\uffff\1\62\1\uffff\2\62\1\uffff\1\62\2\uffff\1\u0187\1\u0188\1\62\1\u018a\1\62\1\u018c\1\62\1\uffff\1\u018e\3\62\2\uffff\1\u0192\1\u0193\1\uffff\1\62\1\u0195\2\62\2\uffff\1\u0198\2\62\1\u019b\1\62\2\uffff\1\62\1\uffff\1\u019e\1\uffff\1\u019f\1\uffff\1\u01a0\1\62\1\u01a2\2\uffff\1\62\1\uffff\1\62\1\u01a5\1\uffff\1\u01a6\1\62\1\uffff\1\u01a8\1\u01a9\3\uffff\1\62\1\uffff\1\62\1\u01ac\2\uffff\1\u01ad\2\uffff\1\u01ae\1\62\3\uffff\1\u01b0\1\uffff";
     static final String DFA25_eofS =
         "\u01b1\uffff";
     static final String DFA25_minS =
-        "\1\0\1\141\1\75\1\141\3\uffff\2\141\1\145\1\146\2\uffff\1\145\1"+
-        "\76\1\uffff\3\141\1\174\2\uffff\1\142\1\157\1\156\1\141\2\157\1"+
-        "\52\3\uffff\2\75\1\162\1\141\1\77\1\uffff\1\157\1\173\2\0\1\56\1"+
-        "\101\3\uffff\1\144\1\170\1\156\3\uffff\1\144\1\151\2\145\1\163\1"+
-        "\143\3\uffff\1\155\1\154\1\164\1\145\1\141\1\164\1\147\1\156\1\163"+
-        "\1\162\2\60\1\155\2\uffff\1\154\1\156\3\uffff\1\160\1\163\1\143"+
-        "\1\145\1\141\1\156\1\157\1\154\1\145\1\165\1\163\1\162\3\uffff\1"+
-        "\157\1\141\1\144\1\60\1\164\1\145\1\154\1\163\1\157\1\156\1\0\12"+
-        "\uffff\1\60\1\164\1\162\3\uffff\1\157\1\0\5\uffff\1\56\1\uffff\4"+
-        "\60\1\164\1\162\1\164\1\143\1\145\1\150\1\142\1\163\1\171\1\145"+
-        "\1\154\1\150\1\156\1\153\1\143\1\156\1\163\1\160\1\151\1\165\1\145"+
-        "\2\uffff\1\145\1\141\2\145\1\165\1\60\1\145\1\153\1\145\1\153\1"+
-        "\156\1\160\1\145\1\143\1\141\1\163\1\143\1\60\1\163\1\151\1\145"+
-        "\1\162\1\151\1\60\1\142\1\uffff\1\157\1\155\1\151\1\164\1\144\1"+
-        "\164\1\160\1\60\1\145\3\uffff\1\160\1\60\1\154\4\0\1\154\4\uffff"+
-        "\1\60\1\171\2\60\1\146\2\60\1\151\1\164\1\155\5\60\1\150\1\141\1"+
-        "\157\1\145\1\141\1\156\1\164\1\147\1\144\2\164\1\141\1\162\1\uffff"+
-        "\2\60\1\157\4\60\2\164\3\145\1\uffff\1\145\1\164\1\60\2\164\1\uffff"+
-        "\1\154\1\60\1\151\1\147\1\60\1\154\2\60\1\151\1\uffff\1\60\1\165"+
-        "\1\uffff\1\145\1\uffff\1\0\1\145\1\uffff\1\60\2\uffff\1\60\2\uffff"+
-        "\1\156\1\141\1\157\5\uffff\1\151\1\154\1\162\1\156\1\151\1\147\1"+
-        "\60\1\145\2\151\1\60\1\164\1\156\2\uffff\1\165\1\60\4\uffff\1\151"+
-        "\2\60\1\144\1\156\1\60\1\151\1\uffff\2\60\1\145\1\uffff\1\164\1"+
-        "\156\1\uffff\1\145\2\uffff\1\156\1\uffff\1\164\1\141\1\60\2\uffff"+
-        "\1\145\1\156\1\144\1\156\2\60\1\144\1\156\1\60\1\165\1\uffff\1\162"+
-        "\1\141\1\157\1\uffff\2\60\1\164\1\uffff\1\157\1\uffff\1\165\1\164"+
-        "\1\uffff\1\166\2\uffff\2\60\1\145\1\60\1\147\1\60\1\156\1\uffff"+
-        "\1\60\1\164\1\165\1\147\2\uffff\2\60\1\uffff\1\164\1\60\1\164\1"+
-        "\156\2\uffff\1\60\1\156\1\162\1\60\1\145\2\uffff\1\144\1\uffff\1"+
-        "\60\1\uffff\1\60\1\uffff\1\60\1\154\1\60\2\uffff\1\160\1\uffff\1"+
-        "\145\1\60\1\uffff\1\60\1\145\1\uffff\2\60\3\uffff\1\145\1\uffff"+
-        "\1\165\1\60\2\uffff\1\60\2\uffff\1\60\1\164\3\uffff\1\60\1\uffff";
+        "\1\0\1\141\1\75\1\141\3\uffff\2\141\1\145\1\146\2\uffff\1\145\1\76\1\uffff\3\141\1\174\2\uffff\1\142\1\157\1\156\1\141\2\157\1\52\3\uffff\2\75\1\162\1\141\1\77\1\uffff\1\157\1\173\2\0\1\56\1\101\3\uffff\1\144\1\170\1\156\3\uffff\1\144\1\151\2\145\1\163\1\143\3\uffff\1\155\1\154\1\164\1\145\1\141\1\164\1\147\1\156\1\163\1\162\2\60\1\155\2\uffff\1\154\1\156\3\uffff\1\160\1\163\1\143\1\145\1\141\1\156\1\157\1\154\1\145\1\165\1\163\1\162\3\uffff\1\157\1\141\1\144\1\60\1\164\1\145\1\154\1\163\1\157\1\156\1\0\12\uffff\1\60\1\164\1\162\3\uffff\1\157\1\0\5\uffff\1\56\1\uffff\4\60\1\164\1\162\1\164\1\143\1\145\1\150\1\142\1\163\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\156\1\163\1\160\1\151\1\165\1\145\2\uffff\1\145\1\141\2\145\1\165\1\60\1\145\1\153\1\145\1\153\1\156\1\160\1\145\1\143\1\141\1\163\1\143\1\60\1\163\1\151\1\145\1\162\1\151\1\60\1\142\1\uffff\1\157\1\155\1\151\1\164\1\144\1\164\1\160\1\60\1\145\3\uffff\1\160\1\60\1\154\4\0\1\154\4\uffff\1\60\1\171\2\60\1\146\2\60\1\151\1\164\1\155\5\60\1\150\1\141\1\157\1\145\1\141\1\156\1\164\1\147\1\144\2\164\1\141\1\162\1\uffff\2\60\1\157\4\60\2\164\3\145\1\uffff\1\145\1\164\1\60\2\164\1\uffff\1\154\1\60\1\151\1\147\1\60\1\154\2\60\1\151\1\uffff\1\60\1\165\1\uffff\1\145\1\uffff\1\0\1\145\1\uffff\1\60\2\uffff\1\60\2\uffff\1\156\1\141\1\157\5\uffff\1\151\1\154\1\162\1\156\1\151\1\147\1\60\1\145\2\151\1\60\1\164\1\156\2\uffff\1\165\1\60\4\uffff\1\151\2\60\1\144\1\156\1\60\1\151\1\uffff\2\60\1\145\1\uffff\1\164\1\156\1\uffff\1\145\2\uffff\1\156\1\uffff\1\164\1\141\1\60\2\uffff\1\145\1\156\1\144\1\156\2\60\1\144\1\156\1\60\1\165\1\uffff\1\162\1\141\1\157\1\uffff\2\60\1\164\1\uffff\1\157\1\uffff\1\165\1\164\1\uffff\1\166\2\uffff\2\60\1\145\1\60\1\147\1\60\1\156\1\uffff\1\60\1\164\1\165\1\147\2\uffff\2\60\1\uffff\1\164\1\60\1\164\1\156\2\uffff\1\60\1\156\1\162\1\60\1\145\2\uffff\1\144\1\uffff\1\60\1\uffff\1\60\1\uffff\1\60\1\154\1\60\2\uffff\1\160\1\uffff\1\145\1\60\1\uffff\1\60\1\145\1\uffff\2\60\3\uffff\1\145\1\uffff\1\165\1\60\2\uffff\1\60\2\uffff\1\60\1\164\3\uffff\1\60\1\uffff";
     static final String DFA25_maxS =
-        "\1\uffff\1\157\1\75\1\170\3\uffff\1\157\1\151\1\165\1\156\2\uffff"+
-        "\1\165\1\76\1\uffff\1\171\2\165\1\174\2\uffff\1\167\1\157\1\160"+
-        "\3\157\1\57\3\uffff\1\76\1\75\1\165\1\141\1\77\1\uffff\1\157\1\173"+
-        "\2\uffff\1\146\1\172\3\uffff\1\144\1\170\1\156\3\uffff\1\144\1\151"+
-        "\1\145\1\151\1\163\1\143\3\uffff\1\160\1\163\1\164\1\145\1\141\1"+
-        "\164\1\147\1\156\1\163\1\162\2\172\1\155\2\uffff\1\164\1\156\3\uffff"+
-        "\1\160\1\163\1\155\1\145\1\165\1\156\1\157\1\154\1\157\1\165\1\163"+
-        "\1\162\3\uffff\1\157\1\141\1\144\1\172\1\164\1\163\1\156\1\163\1"+
-        "\157\1\164\1\uffff\12\uffff\1\172\1\164\1\162\3\uffff\1\157\1\uffff"+
-        "\5\uffff\1\146\1\uffff\4\172\1\164\1\162\1\164\1\143\1\151\1\150"+
-        "\1\142\1\163\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\156\1\163"+
-        "\1\164\1\151\1\165\1\145\2\uffff\1\145\1\141\2\145\1\165\1\172\1"+
-        "\145\1\153\1\145\1\153\1\156\1\160\1\145\1\143\1\141\1\163\1\143"+
-        "\1\172\1\163\1\151\1\145\1\162\1\151\1\172\1\142\1\uffff\1\157\1"+
-        "\155\1\151\1\164\1\144\1\164\1\160\1\172\1\145\3\uffff\1\160\1\172"+
-        "\1\154\4\uffff\1\154\4\uffff\1\172\1\171\2\172\1\146\2\172\1\151"+
-        "\1\164\1\155\5\172\1\150\1\141\1\157\1\145\1\141\1\156\1\164\1\147"+
-        "\1\144\2\164\1\141\1\162\1\uffff\2\172\1\163\4\172\2\164\3\145\1"+
-        "\uffff\1\145\1\164\1\172\2\164\1\uffff\1\154\1\172\1\151\1\147\1"+
-        "\172\1\154\2\172\1\151\1\uffff\1\172\1\165\1\uffff\1\145\1\uffff"+
-        "\1\uffff\1\145\1\uffff\1\172\2\uffff\1\172\2\uffff\1\156\1\141\1"+
-        "\157\5\uffff\1\151\1\154\1\162\1\156\1\151\1\147\1\172\1\145\2\151"+
-        "\1\172\1\164\1\156\2\uffff\1\165\1\172\4\uffff\1\151\2\172\1\144"+
-        "\1\156\1\172\1\151\1\uffff\2\172\1\145\1\uffff\1\164\1\156\1\uffff"+
-        "\1\145\2\uffff\1\156\1\uffff\1\164\1\141\1\172\2\uffff\1\145\1\156"+
-        "\1\144\1\156\2\172\1\144\1\156\1\172\1\165\1\uffff\1\162\1\141\1"+
-        "\157\1\uffff\2\172\1\164\1\uffff\1\157\1\uffff\1\165\1\164\1\uffff"+
-        "\1\166\2\uffff\2\172\1\145\1\172\1\147\1\172\1\156\1\uffff\1\172"+
-        "\1\164\1\165\1\147\2\uffff\2\172\1\uffff\1\164\1\172\1\164\1\156"+
-        "\2\uffff\1\172\1\156\1\162\1\172\1\145\2\uffff\1\144\1\uffff\1\172"+
-        "\1\uffff\1\172\1\uffff\1\172\1\154\1\172\2\uffff\1\160\1\uffff\1"+
-        "\145\1\172\1\uffff\1\172\1\145\1\uffff\2\172\3\uffff\1\145\1\uffff"+
-        "\1\165\1\172\2\uffff\1\172\2\uffff\1\172\1\164\3\uffff\1\172\1\uffff";
+        "\1\uffff\1\157\1\75\1\170\3\uffff\1\157\1\151\1\165\1\156\2\uffff\1\165\1\76\1\uffff\1\171\2\165\1\174\2\uffff\1\167\1\157\1\160\3\157\1\57\3\uffff\1\76\1\75\1\165\1\141\1\77\1\uffff\1\157\1\173\2\uffff\1\146\1\172\3\uffff\1\144\1\170\1\156\3\uffff\1\144\1\151\1\145\1\151\1\163\1\143\3\uffff\1\160\1\163\1\164\1\145\1\141\1\164\1\147\1\156\1\163\1\162\2\172\1\155\2\uffff\1\164\1\156\3\uffff\1\160\1\163\1\155\1\145\1\165\1\156\1\157\1\154\1\157\1\165\1\163\1\162\3\uffff\1\157\1\141\1\144\1\172\1\164\1\163\1\156\1\163\1\157\1\164\1\uffff\12\uffff\1\172\1\164\1\162\3\uffff\1\157\1\uffff\5\uffff\1\146\1\uffff\4\172\1\164\1\162\1\164\1\143\1\151\1\150\1\142\1\163\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\156\1\163\1\164\1\151\1\165\1\145\2\uffff\1\145\1\141\2\145\1\165\1\172\1\145\1\153\1\145\1\153\1\156\1\160\1\145\1\143\1\141\1\163\1\143\1\172\1\163\1\151\1\145\1\162\1\151\1\172\1\142\1\uffff\1\157\1\155\1\151\1\164\1\144\1\164\1\160\1\172\1\145\3\uffff\1\160\1\172\1\154\4\uffff\1\154\4\uffff\1\172\1\171\2\172\1\146\2\172\1\151\1\164\1\155\5\172\1\150\1\141\1\157\1\145\1\141\1\156\1\164\1\147\1\144\2\164\1\141\1\162\1\uffff\2\172\1\163\4\172\2\164\3\145\1\uffff\1\145\1\164\1\172\2\164\1\uffff\1\154\1\172\1\151\1\147\1\172\1\154\2\172\1\151\1\uffff\1\172\1\165\1\uffff\1\145\1\uffff\1\uffff\1\145\1\uffff\1\172\2\uffff\1\172\2\uffff\1\156\1\141\1\157\5\uffff\1\151\1\154\1\162\1\156\1\151\1\147\1\172\1\145\2\151\1\172\1\164\1\156\2\uffff\1\165\1\172\4\uffff\1\151\2\172\1\144\1\156\1\172\1\151\1\uffff\2\172\1\145\1\uffff\1\164\1\156\1\uffff\1\145\2\uffff\1\156\1\uffff\1\164\1\141\1\172\2\uffff\1\145\1\156\1\144\1\156\2\172\1\144\1\156\1\172\1\165\1\uffff\1\162\1\141\1\157\1\uffff\2\172\1\164\1\uffff\1\157\1\uffff\1\165\1\164\1\uffff\1\166\2\uffff\2\172\1\145\1\172\1\147\1\172\1\156\1\uffff\1\172\1\164\1\165\1\147\2\uffff\2\172\1\uffff\1\164\1\172\1\164\1\156\2\uffff\1\172\1\156\1\162\1\172\1\145\2\uffff\1\144\1\uffff\1\172\1\uffff\1\172\1\uffff\1\172\1\154\1\172\2\uffff\1\160\1\uffff\1\145\1\172\1\uffff\1\172\1\145\1\uffff\2\172\3\uffff\1\145\1\uffff\1\165\1\172\2\uffff\1\172\2\uffff\1\172\1\164\3\uffff\1\172\1\uffff";
     static final String DFA25_acceptS =
-        "\4\uffff\1\4\1\5\1\6\4\uffff\1\14\1\16\2\uffff\1\21\4\uffff\1\31"+
-        "\1\32\7\uffff\1\73\1\74\1\75\5\uffff\1\123\6\uffff\1\152\1\154\1"+
-        "\155\3\uffff\1\152\1\7\1\2\6\uffff\1\4\1\5\1\6\15\uffff\1\14\1\16"+
-        "\2\uffff\1\20\1\24\1\21\14\uffff\1\30\1\31\1\32\13\uffff\1\153\1"+
-        "\71\1\73\1\74\1\75\1\77\1\102\1\101\1\103\1\100\3\uffff\1\114\1"+
-        "\125\1\123\2\uffff\1\141\1\143\1\144\1\147\1\150\1\uffff\1\154\31"+
-        "\uffff\1\13\1\53\31\uffff\1\35\11\uffff\1\145\1\146\1\106\10\uffff"+
-        "\1\76\1\137\1\140\1\3\34\uffff\1\67\14\uffff\1\124\5\uffff\1\105"+
-        "\11\uffff\1\104\2\uffff\1\113\1\uffff\1\142\2\uffff\1\45\1\uffff"+
-        "\1\51\1\116\1\uffff\1\56\1\60\3\uffff\1\36\1\41\1\11\1\34\1\37\15"+
-        "\uffff\1\22\1\27\2\uffff\1\72\1\55\1\111\1\151\7\uffff\1\126\3\uffff"+
-        "\1\42\2\uffff\1\52\1\uffff\1\135\1\57\1\uffff\1\136\3\uffff\1\50"+
-        "\1\54\12\uffff\1\120\3\uffff\1\47\3\uffff\1\66\1\uffff\1\132\2\uffff"+
-        "\1\62\1\uffff\1\33\1\40\7\uffff\1\1\4\uffff\1\12\1\15\2\uffff\1"+
-        "\134\4\uffff\1\65\1\117\5\uffff\1\133\1\46\1\uffff\1\112\1\uffff"+
-        "\1\121\1\uffff\1\10\3\uffff\1\107\1\110\1\uffff\1\131\2\uffff\1"+
-        "\44\2\uffff\1\63\2\uffff\1\61\1\127\1\23\1\uffff\1\43\2\uffff\1"+
-        "\17\1\25\1\uffff\1\64\1\130\2\uffff\1\115\1\26\1\70\1\uffff\1\122";
+        "\4\uffff\1\4\1\5\1\6\4\uffff\1\14\1\16\2\uffff\1\21\4\uffff\1\31\1\32\7\uffff\1\73\1\74\1\75\5\uffff\1\123\6\uffff\1\152\1\154\1\155\3\uffff\1\152\1\7\1\2\6\uffff\1\4\1\5\1\6\15\uffff\1\14\1\16\2\uffff\1\20\1\24\1\21\14\uffff\1\30\1\31\1\32\13\uffff\1\153\1\71\1\73\1\74\1\75\1\77\1\102\1\101\1\103\1\100\3\uffff\1\114\1\125\1\123\2\uffff\1\141\1\143\1\144\1\147\1\150\1\uffff\1\154\31\uffff\1\13\1\53\31\uffff\1\35\11\uffff\1\145\1\146\1\106\10\uffff\1\76\1\137\1\140\1\3\34\uffff\1\67\14\uffff\1\124\5\uffff\1\105\11\uffff\1\104\2\uffff\1\113\1\uffff\1\142\2\uffff\1\45\1\uffff\1\51\1\116\1\uffff\1\56\1\60\3\uffff\1\36\1\41\1\11\1\34\1\37\15\uffff\1\22\1\27\2\uffff\1\72\1\55\1\111\1\151\7\uffff\1\126\3\uffff\1\42\2\uffff\1\52\1\uffff\1\135\1\57\1\uffff\1\136\3\uffff\1\50\1\54\12\uffff\1\120\3\uffff\1\47\3\uffff\1\66\1\uffff\1\132\2\uffff\1\62\1\uffff\1\33\1\40\7\uffff\1\1\4\uffff\1\12\1\15\2\uffff\1\134\4\uffff\1\65\1\117\5\uffff\1\133\1\46\1\uffff\1\112\1\uffff\1\121\1\uffff\1\10\3\uffff\1\107\1\110\1\uffff\1\131\2\uffff\1\44\2\uffff\1\63\2\uffff\1\61\1\127\1\23\1\uffff\1\43\2\uffff\1\17\1\25\1\uffff\1\64\1\130\2\uffff\1\115\1\26\1\70\1\uffff\1\122";
     static final String DFA25_specialS =
-        "\1\1\47\uffff\1\7\1\0\101\uffff\1\11\21\uffff\1\3\113\uffff\1\2"+
-        "\1\4\1\5\1\6\104\uffff\1\10\u009f\uffff}>";
+        "\1\1\47\uffff\1\7\1\0\101\uffff\1\11\21\uffff\1\3\113\uffff\1\2\1\4\1\5\1\6\104\uffff\1\10\u009f\uffff}>";
     static final String[] DFA25_transitionS = {
-            "\11\56\2\55\2\56\1\55\22\56\1\55\1\56\1\50\1\17\1\56\1\47\1"+
-            "\56\1\51\1\5\1\6\1\35\1\36\1\13\1\37\1\4\1\34\12\52\1\2\1\14"+
-            "\1\40\1\16\1\41\1\44\1\45\32\54\1\24\1\56\1\25\1\53\1\54\1\56"+
-            "\1\26\1\46\1\7\1\27\1\3\1\21\1\54\1\31\1\12\2\54\1\32\1\1\1"+
-            "\33\1\42\1\22\1\54\1\15\1\11\1\20\1\30\1\43\1\10\3\54\1\56\1"+
-            "\23\uff83\56",
+            "\11\56\2\55\2\56\1\55\22\56\1\55\1\56\1\50\1\17\1\56\1\47\1\56\1\51\1\5\1\6\1\35\1\36\1\13\1\37\1\4\1\34\12\52\1\2\1\14\1\40\1\16\1\41\1\44\1\45\32\54\1\24\1\56\1\25\1\53\1\54\1\56\1\26\1\46\1\7\1\27\1\3\1\21\1\54\1\31\1\12\2\54\1\32\1\1\1\33\1\42\1\22\1\54\1\15\1\11\1\20\1\30\1\43\1\10\3\54\1\56\1\23\uff83\56",
             "\1\60\7\uffff\1\61\5\uffff\1\57",
             "\1\63",
             "\1\72\12\uffff\1\71\1\66\1\65\7\uffff\1\67\1\uffff\1\70",
@@ -4171,8 +4061,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0099",
             "\1\u009a",
             "\1\u009b",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\17\62\1\u009c\3"+
-            "\62\1\u009d\6\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\17\62\1\u009c\3\62\1\u009d\6\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\1\u00a0",
             "",
@@ -4200,8 +4089,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00b5",
             "\1\u00b6",
             "\1\u00b7",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00b8\5"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00b8\5\62",
             "\1\u00ba",
             "\1\u00bb\15\uffff\1\u00bc",
             "\1\u00bd\1\uffff\1\u00be",
@@ -4226,8 +4114,7 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "",
             "\1\u00c8",
-            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82"+
-            "\u00cc",
+            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82\u00cc",
             "",
             "",
             "",
@@ -4235,8 +4122,7 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "\1\u0082\1\uffff\12\u0083\54\uffff\1\u0082",
             "",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00cd\5"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00cd\5\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
@@ -4280,8 +4166,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00f7",
             "\1\u00f8",
             "\1\u00f9",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\22\62\1\u00fa\7"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\22\62\1\u00fa\7\62",
             "\1\u00fc",
             "\1\u00fd",
             "\1\u00fe",
@@ -4297,8 +4182,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0107",
             "\1\u0108",
             "\1\u0109",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\7\62\1\u010a\22"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\7\62\1\u010a\22\62",
             "\1\u010c",
             "",
             "",
@@ -4308,10 +4192,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u010f",
             "\12\u0110\1\u00ca\ufff5\u0110",
             "\0\u0110",
-            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\27\u00cc\1\u0111\127\u00cc"+
-            "\1\u00cb\uff82\u00cc",
-            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82"+
-            "\u00cc",
+            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\27\u00cc\1\u0111\127\u00cc\1\u00cb\uff82\u00cc",
+            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82\u00cc",
             "\1\u0112",
             "",
             "",
@@ -4380,8 +4262,7 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "\1\u014c",
             "",
-            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82"+
-            "\u00cc",
+            "\12\u00cc\1\u00ca\2\u00cc\1\u00c9\157\u00cc\1\u00cb\uff82\u00cc",
             "\1\u014d",
             "",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
@@ -4404,8 +4285,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0156",
             "\1\u0157",
             "\1\u0158",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\16\62\1\u0159\13"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\16\62\1\u0159\13\62",
             "\1\u015b",
             "\1\u015c",
             "\1\u015d",

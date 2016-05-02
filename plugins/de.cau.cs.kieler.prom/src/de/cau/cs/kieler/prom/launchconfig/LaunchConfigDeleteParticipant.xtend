@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -123,10 +123,12 @@ class LaunchConfigDeleteParticipant extends DeleteParticipant {
      * Update the project name of the configuration.
      */
     private def void updateProject(ILaunchConfigurationWorkingCopy wc) {
+        val launchData = KiCoLaunchData.loadFromConfiguration(wc)
+        
         if(project != null) {
             val oldName = project.name
             // Delete complete launch configuration
-            if(oldName == wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")){
+            if(oldName == launchData.projectName){
                 wc.delete()
                 wc.doSave().delete()
             }
@@ -137,15 +139,16 @@ class LaunchConfigDeleteParticipant extends DeleteParticipant {
      * Update the main file and model file paths of the configuration.
      */
     private def void updateFiles(ILaunchConfigurationWorkingCopy wc) {
-        // Only work on files of the launch config's project
-        val projectName = wc.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
+        val launchData = KiCoLaunchData.loadFromConfiguration(wc)
         
-        if(file != null && file.project != null && file.project.name == projectName) {
+        // Only work on files of the launch config's project
+        if(file != null && file.project != null && file.project.name == launchData.projectName) {
             val oldPath = file.projectRelativePath.toOSString
             
             // Clear main file field
-            if(oldPath == wc.getAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")){
-                wc.setAttribute(LaunchConfiguration.ATTR_MAIN_FILE, "")
+            if(oldPath == launchData.mainFile){
+                launchData.mainFile = ""
+                KiCoLaunchData.saveToConfiguration(wc, launchData)
                 wc.doSave()
             }
             // Main file in project properties
@@ -154,20 +157,19 @@ class LaunchConfigDeleteParticipant extends DeleteParticipant {
             }
             
             // Remove model files
-            val modelFiles = FileCompilationData.loadAllFromConfiguration(wc)
-            val cloneOfModelFiles = modelFiles.clone()
+            val cloneOfModelFiles = launchData.files.clone()
             var changed = false;
             // First change all data objects
             // (We iterate over a clone of the collection, because the original will be modified)
             for(modelFile : cloneOfModelFiles){
                 if(oldPath == modelFile.projectRelativePath){
-                    modelFiles.remove(modelFile)
+                    launchData.files.remove(modelFile)
                     changed = true
                 }
             }
             // Flush all changes at once to the working copy
             if(changed){
-                FileCompilationData.saveAllToConfiguration(wc, modelFiles)
+                KiCoLaunchData.saveToConfiguration(wc, launchData)
                 wc.doSave()
             }
         }

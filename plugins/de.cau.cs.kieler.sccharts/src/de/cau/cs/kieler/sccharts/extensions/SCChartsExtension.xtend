@@ -315,7 +315,7 @@ class SCChartsExtension {
     }
 
     def State createState(ControlflowRegion region, String id, String label) {
-        val state = createState(id)
+        val state = createState(id) => [ it.label = label ]
         region.states.add(state)
         state
     }

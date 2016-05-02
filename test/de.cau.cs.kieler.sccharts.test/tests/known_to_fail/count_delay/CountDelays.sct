@@ -1,0 +1,12 @@
+// Transformed model is not savable.
+// See KISEMA-1067
+@Transformation COUNTDELAY
+scchart CountDelay {
+  
+  input bool I;
+  
+  initial state A
+  --> F with 5 I;
+  
+  final state F;
+}
