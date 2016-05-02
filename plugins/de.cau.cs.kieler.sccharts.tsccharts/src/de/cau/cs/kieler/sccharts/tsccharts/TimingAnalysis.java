@@ -68,7 +68,9 @@ import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
 /**
- * Performs a timing analysis for an scchart with the help of the connected kta tool.
+ * Performs a timing analysis for an scchart with the help of the connected kta
+ * tool.
+ * 
  * @author ima, als
  *
  */
@@ -137,11 +139,10 @@ public class TimingAnalysis extends Job {
 	private TimingValueRepresentation rep;
 	private boolean highlight;
 
-	protected TimingAnalysis(State rootState,
-			HashMultimap<Region, WeakReference<KText>> regionLabels,
+	protected TimingAnalysis(State rootState, HashMultimap<Region, WeakReference<KText>> regionLabels,
 			Region scchartDummyRegion, Resource resource,
-			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles,
-			boolean highlight, TimingValueRepresentation rep) {
+			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles, boolean highlight,
+			TimingValueRepresentation rep) {
 		super("Timing Analysis");
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
@@ -161,7 +162,8 @@ public class TimingAnalysis extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		long startTime = System.currentTimeMillis();
-		// Step 1: Compile SCChart to sequentialized SCG with Timing Program Points (TPP)
+		// Step 1: Compile SCChart to sequentialized SCG with Timing Program
+		// Points (TPP)
 
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
@@ -170,22 +172,19 @@ public class TimingAnalysis extends Job {
 
 		final KRenderingFactory renderingFactory = KRenderingFactory.eINSTANCE;
 		KielerCompilerContext context = new KielerCompilerContext(
-				SCGFeatures.SEQUENTIALIZE_ID
-						+ ",*T_ABORT,*T_scg.basicblock.sc,*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",
-				scchart);
+				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
+						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
 		context.setProperty(Tracing.ACTIVE_TRACING, true);
 		context.setProperty(SCGTransformation.ENABLE_SFR, false);
 		context.setAdvancedSelect(true);
 		CompilationResult compilationResult = KielerCompiler.compile(context);
 
-		if (!(compilationResult.getEObject() instanceof SCGraph)
-				|| compilationResult.getPostponedErrors().size() > 0) {
+		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
+				.getPostponedErrors().size() > 0) {
 			if (!(compilationResult.getEObject() instanceof SCGraph)) {
-				System.out
-						.println("The scg sequentialization did not return an scg.");
+				System.out.println("The scg sequentialization did not return an scg.");
 			} else {
-				System.out
-						.println("The sequentialization yielded postponed Errors:\n");
+				System.out.println("The sequentialization yielded postponed Errors:\n");
 				Iterator<KielerCompilerException> errorIterator = compilationResult
 						.getPostponedErrors().iterator();
 				while (errorIterator.hasNext()) {
@@ -193,8 +192,7 @@ public class TimingAnalysis extends Job {
 					System.out.println(currentError.getMessage() + "\n");
 				}
 			}
-			return new Status(IStatus.ERROR, pluginId,
-					"SCG sequentialization failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed. (ITA)");
 		}
 
 		SCGraph scg = (SCGraph) compilationResult.getEObject();
@@ -202,13 +200,10 @@ public class TimingAnalysis extends Job {
 		// Step 2: Retrieve the auxiliary data produced by the TPPTransformation
 		int highestInsertedTPPNumber = -1;
 		HashMap<String, Region> tppRegionMap = null;
-		List<TPPInformation> tppInformations = compilationResult
-				.getAuxiliaryData(TPPInformation.class);
-		TPPInformation tppInformation = tppInformations.isEmpty() ? null
-				: tppInformations.get(0);
+		List<TPPInformation> tppInformations = compilationResult.getAuxiliaryData(TPPInformation.class);
+		TPPInformation tppInformation = tppInformations.isEmpty() ? null : tppInformations.get(0);
 		if (tppInformation != null) {
-			highestInsertedTPPNumber = tppInformation
-					.getHighestInsertedTPPNumber();
+			highestInsertedTPPNumber = tppInformation.getHighestInsertedTPPNumber();
 			tppRegionMap = tppInformation.getTPPRegionMapping();
 		} else {
 			return new Status(IStatus.ERROR, pluginId,
@@ -216,28 +211,23 @@ public class TimingAnalysis extends Job {
 		}
 
 		// Step 3: Generate Code from the Sequentialized SCG with TPP
-		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID
-				+ "," + CodeGenerationFeatures.TARGET_ID + ",T_"
-				+ CodeGenerationTransformations.S2C_ID, scg);
+		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + "," 
+		        + CodeGenerationFeatures.TARGET_ID + ",T_" + CodeGenerationTransformations.S2C_ID, scg);
 		compilationResult = KielerCompiler.compile(context);
 
-		if (compilationResult.getString() == null
-				|| compilationResult.getPostponedErrors().size() > 0) {
+		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
 			if (compilationResult.getString() == null) {
-				System.out
-						.println("The code generation yielded no code string.");
+				System.out.println("The code generation yielded no code string.");
 			} else {
-				System.out
-						.println("The code generation yielded postponed Errors:\n");
-				Iterator<KielerCompilerException> errorIterator = compilationResult
-						.getPostponedErrors().iterator();
+				System.out.println("The code generation yielded postponed Errors:\n");
+				Iterator<KielerCompilerException> errorIterator = compilationResult.getPostponedErrors()
+						.iterator();
 				while (errorIterator.hasNext()) {
 					KielerCompilerException currentError = errorIterator.next();
 					System.out.println(currentError.getMessage() + "\n");
 				}
 			}
-			return new Status(IStatus.ERROR, pluginId,
-					"The code generation failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "The code generation failed. (ITA)");
 		}
 
 		String code = compilationResult.getString();
@@ -259,81 +249,72 @@ public class TimingAnalysis extends Job {
 			fileLocationString = uriString.replace("file:", "");
 			fileFolder = fileLocationString.replace(fileName, "");
 		} else {
-			return new Status(IStatus.ERROR, pluginId,
-					"The resource for the given model could not be found.");
+			return new Status(IStatus.ERROR, pluginId, "The resource for the given model could "
+					+ "not be found.");
 		}
 
 		// Make sure no outdated files (.ta, .c, .ta.out) linger
-		String targetCodeLocationString = fileLocationString.replace(".sct",
-				".c");
+		String targetCodeLocationString = fileLocationString.replace(".sct", ".c");
 		String taFileLocationString = fileLocationString.replace(".sct", ".ta");
-		String taOutFileLocationString = fileLocationString.replace(".sct",
-				".ta.out");
+		String taOutFileLocationString = fileLocationString.replace(".sct", ".ta.out");
 		try {
 			Files.deleteIfExists(Paths.get(targetCodeLocationString, ""));
 			Files.deleteIfExists(Paths.get(taFileLocationString, ""));
 			Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
 		} catch (IOException e1) {
-			System.out
-					.println("IOException when deleting outdated timing files: \n");
+			System.out.println("IOException when deleting outdated timing files: \n");
 			e1.printStackTrace();
 		}
 		try {
-			ResourcesPlugin.getWorkspace().getRoot()
-					.refreshLocal(IResource.DEPTH_INFINITE, null);
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (CoreException e) {
-			return new Status(IStatus.ERROR, pluginId,
-					"Files could not be refreshed.");
+			return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
 		}
 
 		// Step 5: Prepare code for kta tool
 		String codeInt = code.replace("char", "int");
 		code = codeInt;
-		
+
 		// Code additions to make the code stand-alone-executable
 		StringBuilder codeAdditionBuilder = new StringBuilder();
-		codeAdditionBuilder
-				.append("\n\n/* Header file for Timing program points */"
-						+ "\n#include \"../tpp.h\"");
+		codeAdditionBuilder.append("\n\n/* Header file for Timing program points */" 
+		    + "\n#include \"../tpp.h\"");
 		String assumptionFile = uriString.replace(".sct", ".asu");
 		String assumptionFilePath = assumptionFile.replace("file:", "");
-		boolean assumptionFileFound = timingAnnotationProvider.writeStubs(
-				assumptionFilePath, codeAdditionBuilder);
+		boolean assumptionFileFound = timingAnnotationProvider.writeStubs(assumptionFilePath, 
+				codeAdditionBuilder);
 		if (!assumptionFileFound) {
-			System.out
-					.println("There are no assumptions on called functions found.");
+			System.out.println("There are no assumptions on called functions found.");
 		}
 		System.out.println(codeAdditionBuilder.toString());
-		String codeAdapted = code.replace("***/\nint", "***/"
-				+ codeAdditionBuilder.toString() + "\nint");
+		String codeAdapted = code.replace("***/\nint", "***/" + codeAdditionBuilder.toString() 
+		      + "\nint");
 		code = codeAdapted;
 
 		fileWriter.writeToFile(code, targetCodeLocationString);
-		
+
 		// Step 6: Generate the timing request file (.ta)
 
-		LinkedList<TimingRequestResult> resultList = generateTimingRequestFile(
-				code, scchart, uriString, highestInsertedTPPNumber);
+		LinkedList<TimingRequestResult> resultList = generateTimingRequestFile(code, scchart, uriString,
+				highestInsertedTPPNumber);
 		String taFileName = fileName.replace(".sct", ".ta");
 		String cFileName = fileName.replace(".sct", ".c");
-		
-		// Step 7: Invoke the timing analysis tool on the code and the generated .ta file
-		
-		String timingToolLocation = Activator.getDefault().getPreferenceStore()
-		        .getString("ktaPath");
-		String compilerLocation = Activator.getDefault().getPreferenceStore().
-				getString("mipsel-mcb32-elf-gccPath");
-		ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", 
-				fileFolder + cFileName, "-tafile", fileFolder + taFileName);
+
+		// Step 7: Invoke the timing analysis tool on the code and the generated
+		// .ta file
+
+		String timingToolLocation = Activator.getDefault().getPreferenceStore().getString("ktaPath");
+		String compilerLocation = Activator.getDefault().getPreferenceStore()
+				.getString("mipsel-mcb32-elf-gccPath");
+		ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", fileFolder 
+				+ cFileName, "-tafile", fileFolder + taFileName);
 		Map<String, String> env = pb.environment();
 		env.put("PATH", compilerLocation + ":$PATH");
 		try {
 			Process p = pb.start();
 			// get the timing analysis tool's console output
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					p.getInputStream()));
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(
-					p.getErrorStream()));
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			// read the output of the analysis tool
 			System.out.println("Output from the timing analysis tool:");
 			String s = null;
@@ -342,32 +323,28 @@ public class TimingAnalysis extends Job {
 			}
 			// read error messages of the anaylsis tool
 			System.out.println("Error output from the timing analysis tool:");
-			System.out
-					.println("-----end of timing analysis tool output-------\n");
+			System.out.println("-----end of timing analysis tool output-------\n");
 			while ((s = stdError.readLine()) != null) {
 				System.out.println(s);
 			}
 			// wait for the timing analysis tool to complete its job
 			p.waitFor();
 		} catch (IOException e) {
-			return new Status(
-					IStatus.ERROR,
-					pluginId,
-					"There is no timing analysis tool connected or the timing analysis tool "
-					+ "could not be invoked. Please check whether you have given the correct paths to "
-					+ "the kta executable and the compiler in the KIELER Preferences ");
-		} catch (InterruptedException e) {
 			return new Status(IStatus.ERROR, pluginId,
-					"The timing analysis tool invokation was interrupted");
+					"There is no timing analysis tool connected or the timing analysis tool "
+							+ "could not be invoked. Please check whether you have given the "
+							+ "correct paths to the kta executable and the compiler in the "
+							+ "KIELER Preferences ");
+		} catch (InterruptedException e) {
+			return new Status(IStatus.ERROR, pluginId, "The timing analysis tool invokation was "
+					+ "interrupted");
 		}
 
 		// Refresh to make sure the .c file can be found
 		try {
-			ResourcesPlugin.getWorkspace().getRoot()
-					.refreshLocal(IResource.DEPTH_INFINITE, null);
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (CoreException e) {
-			return new Status(IStatus.ERROR, pluginId,
-					"Files could not be refreshed.");
+			return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
 		}
 
 		// Step 8: Retrieve timing data and associate with regions
@@ -382,11 +359,10 @@ public class TimingAnalysis extends Job {
 		String taFile = uriString.replace(".sct", ".ta.out");
 		String taPath = taFile.replace("file:", "");
 
-		int timingInformationFetch = timingAnnotationProvider
-				.getTimingInformation(resultList, taPath, rep);
+		int timingInformationFetch = timingAnnotationProvider.getTimingInformation(resultList, taPath,
+				rep);
 		if (timingInformationFetch == 1) {
-			return new Status(IStatus.ERROR, pluginId,
-					"The timing information file was not found");
+			return new Status(IStatus.ERROR, pluginId, "The timing information file was not found");
 		} else if (timingInformationFetch == 2) {
 			return new Status(IStatus.ERROR, pluginId,
 					"An IO error occurred while timing information was retrieved from file.");
@@ -395,8 +371,8 @@ public class TimingAnalysis extends Job {
 		// calculate timing values for all regions and store a list of regions
 		// that belong to the
 		// WCET path in wcpRegions for special display
-		wcpRegions = extractTimingLabels(RequestType.FWCET, resultList,
-				timingLabels, timingResults, tppRegionMap, scchart);
+		wcpRegions = extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults, 
+				tppRegionMap,scchart);
 
 		// Step 9: Feedback information to the diagram
 
@@ -415,9 +391,8 @@ public class TimingAnalysis extends Job {
 				String scchartTiming = timingResults.get(scchartDummyRegion);
 				String timingResultChart = timingResults.get(null);
 				if (scchartTiming != null) {
-					Integer timingResultSum = Integer
-							.parseInt(timingResultChart)
-							+ Integer.parseInt(scchartTiming);
+					Integer timingResultSum = Integer.parseInt(timingResultChart) + 
+							Integer.parseInt(scchartTiming);
 					overallWCET = timingResultSum;
 				} else {
 					overallWCET = Integer.parseInt(timingResultChart);
@@ -447,8 +422,8 @@ public class TimingAnalysis extends Job {
 						// Adapt timing values, when representation is not in
 						// the default case
 						if (rep != TimingValueRepresentation.CYCLES) {
-							String newTimingResult = adaptTimingRepresentation(
-									rep, timingResult, overallWCET);
+							String newTimingResult = adaptTimingRepresentation(rep, timingResult, 
+									overallWCET);
 							if (REGION_TIMING || region == null) {
 								label.setText(newTimingResult);
 							}
@@ -460,34 +435,28 @@ public class TimingAnalysis extends Job {
 					}
 					// If the region belongs to the WCET path, highlight, if
 					// requested by user
-					if (highlight && HOTSPOT_HIGHLIGHTING
-							&& wcpRegions.contains(region)) {
+					if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
 						// determine how much percent of the overall WCET is
 						// attributed to this
 						// region
 						double percentage = 0.0;
 						if (timingResultChart != null) {
-							StringTokenizer resultTokenizer = new StringTokenizer(
-									timingResult);
-							Double timingvalue = Double
-									.parseDouble(resultTokenizer.nextToken());
+							StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
+							Double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
 							double onePercent = overallWCET / 100.0;
 							percentage = timingvalue / onePercent;
 						}
-						highlightRegion(region, renderingFactory, percentage,
-								timingLabels.get(region));
+						highlightRegion(region, renderingFactory, percentage, timingLabels.get(region));
 					}
 				}
-
 				return Status.OK_STATUS;
 			}
 		}.schedule();
 		long stopTime = System.currentTimeMillis();
 		long elapsedTime = stopTime - startTime;
 		// delete temporary files if not needed for debugging
-		System.out
-				.println("Interactive Timing Analysis completed (elapsed time: "
-						+ elapsedTime + " ms).");
+		System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
+				+ " ms).");
 		return Status.OK_STATUS;
 	}
 
@@ -512,9 +481,8 @@ public class TimingAnalysis extends Job {
 	 * @return Returns the list of TimingRequestResults prepared for storing the
 	 *         analysis results
 	 */
-	public static LinkedList<TimingRequestResult> generateTimingRequestFile(
-			String code, State scchart, String uriString,
-			int highestInsertedTPPNumber) {
+	public static LinkedList<TimingRequestResult> generateTimingRequestFile(String code, State scchart,
+			String uriString, int highestInsertedTPPNumber) {
 		FileWriter assumptionFileWriter = new FileWriter();
 		TimingAnnotationProvider assumptionTimingAnnotationProvider = new TimingAnnotationProvider();
 		StringBuilder stringBuilder = new StringBuilder();
@@ -546,15 +514,14 @@ public class TimingAnalysis extends Job {
 		// // environment inputs (as opposed to states)
 		// stringBuilder.append("\nGlobalVar _GO 0..1");
 		EList<Declaration> declarationList = scchart.getDeclarations();
-		Iterator<Declaration> declarationListIterator = declarationList
-				.iterator();
+		Iterator<Declaration> declarationListIterator = declarationList.iterator();
 		while (declarationListIterator.hasNext()) {
 			Declaration currentDeclaration = declarationListIterator.next();
 			if (currentDeclaration.isInput()) {
 				ValueType type = currentDeclaration.getType();
 				if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-					stringBuilder.append("\nGlobalVar "
-							+ currentDeclaration.getValuedObjects().get(0)
+					stringBuilder
+							.append("\nGlobalVar " + currentDeclaration.getValuedObjects().get(0)
 									.getName() + " 0..1");
 				}
 			}
@@ -568,9 +535,8 @@ public class TimingAnalysis extends Job {
 		boolean assumptionFilePresent = assumptionTimingAnnotationProvider
 				.getAssumptions(assumptionFilePath, stringBuilder);
 		if (!assumptionFilePresent) {
-			System.out
-					.println("An associated assumption file for this model was not found. No timing "
-							+ "assumptions for called functions available.");
+			System.out.println("An associated assumption file for this model was not found. No timing "
+					+ "assumptions for called functions available.");
 		}
 		System.out.println(stringBuilder.toString());
 		// write timing requests appended to the assumptionString
@@ -580,8 +546,7 @@ public class TimingAnalysis extends Job {
 		String requestFile = uriString.replace(".sct", ".ta");
 		String requestFilePath = requestFile.replace("file:", "");
 		System.out.println(stringBuilder.toString());
-		assumptionFileWriter.writeToFile(stringBuilder.toString(),
-				requestFilePath);
+		assumptionFileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 		return resultList;
 	}
 
@@ -597,8 +562,8 @@ public class TimingAnalysis extends Job {
 	 * @param overallWCET
 	 *            The overall WCET needed to calculate percentages
 	 */
-	private String adaptTimingRepresentation(TimingValueRepresentation rep,
-			String timingResult, Integer overallWCET) {
+	private String adaptTimingRepresentation(TimingValueRepresentation rep, String timingResult, 
+			Integer overallWCET) {
 		String newTimingResult = "";
 		StringTokenizer StringTokenizer = new StringTokenizer(timingResult);
 		// If we represent in percentage, the overall timing value should stay
@@ -607,15 +572,13 @@ public class TimingAnalysis extends Job {
 		if (StringTokenizer.countTokens() > 1) {
 			if (rep == TimingValueRepresentation.PERCENT) {
 				double onePercent = overallWCET / 100.00;
-				double FirstNumber = Double.parseDouble(StringTokenizer
-						.nextToken());
+				double FirstNumber = Double.parseDouble(StringTokenizer.nextToken());
 				StringTokenizer.nextToken();
-				double SecondNumber = Double.parseDouble(StringTokenizer
-						.nextToken());
+				double SecondNumber = Double.parseDouble(StringTokenizer.nextToken());
 				FirstNumber /= onePercent;
 				SecondNumber /= onePercent;
-				newTimingResult = String.format("%.2f", FirstNumber) + " / "
-						+ String.format("%.2f", SecondNumber);
+				newTimingResult = String.format("%.2f", FirstNumber) + " / " 
+				                  + String.format("%.2f", SecondNumber);
 			}
 		} else {
 			if (rep == TimingValueRepresentation.PERCENT) {
@@ -628,8 +591,7 @@ public class TimingAnalysis extends Job {
 				if (!token.equals("/")) {
 					double cycles = Double.parseDouble(token);
 					double timeInMillisecs = (cycles / (MEGAHERTZ * 1000.0));
-					newTimingResult += (String.format("%." + DIGITS + "f",
-							timeInMillisecs));
+					newTimingResult += (String.format("%." + DIGITS + "f", timeInMillisecs));
 				} else {
 					newTimingResult += (" " + token + " ");
 				}
@@ -654,19 +616,16 @@ public class TimingAnalysis extends Job {
 	 * @param labels
 	 *            The set with the timing labels of the regions of the model
 	 */
-	private void highlightRegion(Region region,
-			KRenderingFactory renderingFactory, double percentage,
+	private void highlightRegion(Region region, KRenderingFactory renderingFactory, double percentage,
 			Set<WeakReference<KText>> labels) {
-		Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles
-				.get(region);
+		Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
 		for (WeakReference<KRectangle> rectangleRef : rectangleRefs) {
 			KRectangle regionRectangle = rectangleRef.get();
 			KRectangle inner = KRenderingFactory.eINSTANCE.createKRectangle();
 			regionRectangle.getChildren().add(0, inner);
 			if (percentage > 50) {
-				regionRectangle.getStyles().add(
-						renderingFactory.createKForeground().setColor(
-								Colors.RED));
+				regionRectangle.getStyles().add(renderingFactory.createKForeground()
+						.setColor(Colors.RED));
 			}
 			KBackground background = renderingFactory.createKBackground();
 			// in casting percentage, all percentages below zero will be set to
@@ -676,8 +635,7 @@ public class TimingAnalysis extends Job {
 			background.setAlpha(alpha);
 			inner.getStyles().add(background.setColor(Colors.RED));
 			if (percentage > 50) {
-				final KLineWidth lwStyle = KRenderingFactory.eINSTANCE
-						.createKLineWidth();
+				final KLineWidth lwStyle = KRenderingFactory.eINSTANCE.createKLineWidth();
 				lwStyle.setLineWidth(3);
 				regionRectangle.getStyles().add(lwStyle);
 				// the red numbers on red ground will not be readable well, so
@@ -713,9 +671,9 @@ public class TimingAnalysis extends Job {
 	 * @param rootState
 	 * @return Returns a list of the Regions that are on the WCET path
 	 */
-	private ArrayList<Region> extractTimingLabels(RequestType requestType,
+	private ArrayList<Region> extractTimingLabels(RequestType requestType, 
 			LinkedList<TimingRequestResult> resultList,
-			HashMultimap<Region, WeakReference<KText>> timingLabelList,
+			HashMultimap<Region, WeakReference<KText>> timingLabelList, 
 			HashMap<Region, String> regionLabelStringMap,
 			HashMap<String, Region> tppRegionMap, State rootState) {
 		// retrieve WCET path
@@ -737,8 +695,7 @@ public class TimingAnalysis extends Job {
 		}
 		HashMap<Region, BigInteger> deepValues = new HashMap<Region, BigInteger>();
 		HashMap<Region, BigInteger> flatValues = new HashMap<Region, BigInteger>();
-		Iterator<TimingRequestResult> resultListIterator = resultList
-				.iterator();
+		Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
 		// fill the map for flat values
 		while (resultListIterator.hasNext()) {
 			TimingRequestResult currentResult = resultListIterator.next();
@@ -747,16 +704,13 @@ public class TimingAnalysis extends Job {
 				String startPoint = currentResult.getStartPoint();
 				resultRegion = tppRegionMap.get(startPoint);
 				if (flatValues.get(resultRegion) == null) {
-					flatValues.put(resultRegion,
-							new BigInteger(currentResult.getResult().get(0)));
+					flatValues.put(resultRegion, new BigInteger(currentResult.getResult().get(0)));
 				} else {
 					// there may be more than one timing result for a region,
 					// sum the values up
-					flatValues.put(
-							resultRegion,
-							flatValues.get(resultRegion)
-									.add(new BigInteger(currentResult
-											.getResult().get(0))));
+					flatValues.put(resultRegion,
+							flatValues.get(resultRegion).add(new BigInteger(currentResult.getResult()
+									.get(0))));
 				}
 			}
 		}
@@ -767,13 +721,11 @@ public class TimingAnalysis extends Job {
 			if (!(currentRegion == null)) {
 				// Possibly we have to mark this region as part of the WCET path
 				// (WCP)
-				String label = flatValues.get(currentRegion) + " / "
-						+ deepValues.get(currentRegion);
+				String label = flatValues.get(currentRegion) + " / " + deepValues.get(currentRegion);
 				regionLabelStringMap.put(currentRegion, label);
 			} else {
 				BigInteger WCRT = new BigInteger("0");
-				Iterator<Region> outerRegionsIterator = rootState.getRegions()
-						.iterator();
+				Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
 				while (outerRegionsIterator.hasNext()) {
 					Region nextRegion = outerRegionsIterator.next();
 					BigInteger currentValue = deepValues.get(nextRegion);
@@ -807,17 +759,14 @@ public class TimingAnalysis extends Job {
 	 *            Mapping of Regions to their hierarchical timing values. Empty
 	 *            on first call.
 	 */
-	private void calculateDeepTimingValues(State state,
-			HashMap<Region, BigInteger> flatValues,
+	private void calculateDeepTimingValues(State state, HashMap<Region, BigInteger> flatValues,
 			HashMap<Region, BigInteger> deepValues) {
 		EList<Region> regionList = state.getRegions();
 		// base case is a state with
 		Iterator<Region> regionListIterator = regionList.iterator();
-		List<State> macroChildStates = timingAnnotationProvider
-				.getMacroChildStates(state);
+		List<State> macroChildStates = timingAnnotationProvider.getMacroChildStates(state);
 		if (!macroChildStates.isEmpty()) {
-			Iterator<State> macroChildStatesIterator = macroChildStates
-					.iterator();
+			Iterator<State> macroChildStatesIterator = macroChildStates.iterator();
 			while (macroChildStatesIterator.hasNext()) {
 				State macroChild = macroChildStatesIterator.next();
 				calculateDeepTimingValues(macroChild, flatValues, deepValues);
@@ -834,8 +783,7 @@ public class TimingAnalysis extends Job {
 				flatValues.put(childRegion, flatTiming);
 			}
 			if (deepValues.get(childRegion) != null) {
-				deepValues.put(childRegion, deepValues.get(childRegion).add
-						(flatTiming));
+				deepValues.put(childRegion, deepValues.get(childRegion).add(flatTiming));
 			} else {
 				deepValues.put(childRegion, flatTiming);
 			}
@@ -846,13 +794,11 @@ public class TimingAnalysis extends Job {
 			Region stateParentRegion = state.getParentRegion();
 			if (stateParentRegion != null) {
 				if (deepValues.get(stateParentRegion) != null) {
-					deepValues.put(stateParentRegion,
-							deepValues.get(stateParentRegion).add(deepTiming));
+					deepValues.put(stateParentRegion, deepValues.get(stateParentRegion).add(deepTiming));
 				} else {
 					deepValues.put(stateParentRegion, deepTiming);
 				}
 			}
-
 		}
 	}
 }
