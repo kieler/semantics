@@ -162,9 +162,11 @@ public class TimingAnalysis extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		long startTime = System.currentTimeMillis();
-		// Step 1: Compile SCChart to sequentialized SCG with Timing Program
-		// Points (TPP)
-
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		// Step 1: Compile SCChart to sequentialized SCG with Timing Program 
+		// Points (TPP), uses the TPPTransformation at the end of the chain
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
@@ -196,8 +198,10 @@ public class TimingAnalysis extends Job {
 		}
 
 		SCGraph scg = (SCGraph) compilationResult.getEObject();
-
+        
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 2: Retrieve the auxiliary data produced by the TPPTransformation
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		int highestInsertedTPPNumber = -1;
 		HashMap<String, Region> tppRegionMap = null;
 		List<TPPInformation> tppInformations = compilationResult.getAuxiliaryData(TPPInformation.class);
@@ -209,8 +213,10 @@ public class TimingAnalysis extends Job {
 			return new Status(IStatus.ERROR, pluginId,
 					"Error in the TPP placement phase. No auxiliary data was produced (ITA).");
 		}
-
+		
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 3: Generate Code from the Sequentialized SCG with TPP
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		context = new KielerCompilerContext(CodeGenerationFeatures.S_CODE_ID + "," 
 		        + CodeGenerationFeatures.TARGET_ID + ",T_" + CodeGenerationTransformations.S2C_ID, scg);
 		compilationResult = KielerCompiler.compile(context);
@@ -231,9 +237,10 @@ public class TimingAnalysis extends Job {
 		}
 
 		String code = compilationResult.getString();
-
+         
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 4: Prepare file locations, cleanup of outdated files
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
@@ -271,7 +278,9 @@ public class TimingAnalysis extends Job {
 			return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
 		}
 
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 5: Prepare code for kta tool
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		String codeInt = code.replace("char", "int");
 		code = codeInt;
 
@@ -293,22 +302,28 @@ public class TimingAnalysis extends Job {
 
 		fileWriter.writeToFile(code, targetCodeLocationString);
 
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 6: Generate the timing request file (.ta)
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		LinkedList<TimingRequestResult> resultList = generateTimingRequestFile(code, scchart, uriString,
 				highestInsertedTPPNumber);
 		String taFileName = fileName.replace(".sct", ".ta");
 		String cFileName = fileName.replace(".sct", ".c");
 
-		// Step 7: Invoke the timing analysis tool on the code and the generated
-		// .ta file
-
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		// Step 7: Invoke the timing analysis tool on the code and the generated .ta file
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		// Get the paths to the kta binary and the compiler used by kta, which should be provided by the 
+		// user in the preference page
 		String timingToolLocation = Activator.getDefault().getPreferenceStore().getString("ktaPath");
 		String compilerLocation = Activator.getDefault().getPreferenceStore()
 				.getString("mipsel-mcb32-elf-gccPath");
 		ProcessBuilder pb = new ProcessBuilder(timingToolLocation + "kta", "ta", "-compile", fileFolder 
 				+ cFileName, "-tafile", fileFolder + taFileName);
 		Map<String, String> env = pb.environment();
+		// As the kta tool calls the mipsel-mcb32-elf-gcc compiler, we have to make sure it is on the 
+		// PATH for the kta tool, so it can find it
 		env.put("PATH", compilerLocation + ":$PATH");
 		try {
 			Process p = pb.start();
@@ -347,8 +362,9 @@ public class TimingAnalysis extends Job {
 			return new Status(IStatus.ERROR, pluginId, "Files could not be refreshed.");
 		}
 
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 8: Retrieve timing data and associate with regions
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
@@ -374,8 +390,9 @@ public class TimingAnalysis extends Job {
 		wcpRegions = extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults, 
 				tppRegionMap,scchart);
 
+		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 9: Feedback information to the diagram
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 		if (monitor.isCanceled()) {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
