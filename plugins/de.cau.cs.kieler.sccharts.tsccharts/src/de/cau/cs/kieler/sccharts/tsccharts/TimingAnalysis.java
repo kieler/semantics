@@ -407,16 +407,6 @@ public class TimingAnalysis extends Job {
 						if (label != null) {
 							// Special case: Timing for the whole SCChart
 							if (region == null) {
-								// get the timing for elements not attributed to
-								// a concrete region
-								// String scchartTiming =
-								// timingResults.get(scchartDummyRegion);
-								// add it to the timing for child regions
-								// if (scchartTiming != null) {
-								// Integer timingResultSum =
-								// Integer.parseInt(timingResult)
-								// + Integer.parseInt(scchartTiming);
-								// overallWCET = timingResultSum;
 								timingResult = overallWCET.toString();
 							}
 						}
@@ -507,14 +497,9 @@ public class TimingAnalysis extends Job {
 		}
 		// Get the inputs for which we want to have globalvar assumptions
 		// Note that at the moment we will generate globalvar assumptions
-		// automatically only for
-		// boolean
-		// inputs, others have to be specified in the .asu file
-		// // First, add an assumption line for _GO, which will always be there,
-		// we treat it
-		// analogously to
-		// // environment inputs (as opposed to states)
-		// stringBuilder.append("\nGlobalVar _GO 0..1");
+		// automatically only form boolean inputs, others have to be specified in the .asu file
+		// First, add an assumption line for _GO, which will always be there,we treat it
+		// analogously to environment inputs (as opposed to states)
 		EList<Declaration> declarationList = scchart.getDeclarations();
 		Iterator<Declaration> declarationListIterator = declarationList.iterator();
 		while (declarationListIterator.hasNext()) {
@@ -528,10 +513,8 @@ public class TimingAnalysis extends Job {
 				}
 			}
 		}
-		// read (optional) additional assumptions and timing assumptions for
-		// called functions into
-		// the
-		// assumptions file
+		// read (optional) additional assumptions and timing assumptions for called functions into
+		// the assumptions file
 		String assumptionFile = uriString.replace(".sct", ".asu");
 		String assumptionFilePath = assumptionFile.replace("file:", "");
 		boolean assumptionFilePresent = assumptionTimingAnnotationProvider
@@ -610,8 +593,7 @@ public class TimingAnalysis extends Job {
 				if (flatValues.get(resultRegion) == null) {
 					flatValues.put(resultRegion, new BigInteger(currentResult.getResult().get(0)));
 				} else {
-					// there may be more than one timing result for a region,
-					// sum the values up
+					// there may be more than one timing result for a region, sum the values up
 					flatValues.put(resultRegion,
 							flatValues.get(resultRegion).add(new BigInteger(currentResult.getResult()
 									.get(0))));
@@ -680,8 +662,7 @@ public class TimingAnalysis extends Job {
 			Region childRegion = regionListIterator.next();
 			// Add the region's own flat value to its deep value
 			BigInteger flatTiming = flatValues.get(childRegion);
-			// It is possible that there is no flat timing value stored for a
-			// region, set to zero
+			// It is possible that there is no flat timing value stored for a region, set to zero
 			if (flatTiming == null) {
 				flatTiming = new BigInteger("0");
 				flatValues.put(childRegion, flatTiming);
@@ -693,8 +674,7 @@ public class TimingAnalysis extends Job {
 			}
 			BigInteger deepTiming = deepValues.get(childRegion);
 			// Add deep timing value of this region to the hierarchical timing
-			// value of its parent
-			// region
+			// value of its parent region
 			Region stateParentRegion = state.getParentRegion();
 			if (stateParentRegion != null) {
 				if (deepValues.get(stateParentRegion) != null) {
