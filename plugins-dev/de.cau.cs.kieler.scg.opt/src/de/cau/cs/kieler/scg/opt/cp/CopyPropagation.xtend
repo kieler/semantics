@@ -19,11 +19,12 @@ import de.cau.cs.kieler.scg.Link
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import java.util.HashMap
 
 class CopyPropagation extends AbstractProductionTransformation {
     /* CLASS VARS */
     public static val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
-    private static val DEBUG = false;
+    private static val DEBUG = true;
     
     /* INJECT STUFF */  
     @Inject 
@@ -131,21 +132,26 @@ class CopyPropagation extends AbstractProductionTransformation {
         ]
         /* CHECK ASSIGNMENTS */
         val endCheckAssignments = new ArrayList<AssignmentImpl>();
-        val assignmentsRefresh = nodes.filter(typeof(AssignmentImpl)).filter[
-                it.operator.getName().equals("ASSIGN")
-            ].filter[
-                if(it.valuedObject == null) {
-                    return false
+        val reads = new HashMap<String, Integer>()
+        nodes.forEach[
+            val readIterator = it.eAllContents.filter(typeof(ValuedObjectReferenceImpl))
+            readIterator.forEach[
+                val id = it.valuedObject.name
+                if(reads.containsKey(id)) {
+                    reads.replace(id, reads.get(id), reads.get(id) + 1)
                 }
-                return (it.valuedObject.getName().startsWith("g") || it.valuedObject.getName().startsWith("PRE_g"))
+                else {
+                    reads.put(id, 1)
+                }
             ]
+        ]
         cleanedRelevantAssignments.forEach[
             val name = it.valuedObject.name
-            val occ = assignmentsRefresh.filter[it.valuedObject.getName().equals(name)].size
+            val occ = reads.getOrDefault(name, 0)
             if(DEBUG) {
                 System.out.println(it.valuedObject + " accures " + occ.toString() + " times")
             }
-            if(occ == 1) {
+            if(occ == 0) {
                 endCheckAssignments.add(it)
             }
         ]
@@ -239,7 +245,7 @@ class CopyPropagation extends AbstractProductionTransformation {
                 if(DEBUG) {
                     System.out.println("Operator: " + it.valuedObject.name)
                 }
-                if(it.valuedObject.getName().equals(search)) {
+                if(!operContainer.operator.getName().equals("PRE") && it.valuedObject.getName().equals(search)) {
                     val pos = operContainer.subExpressions.indexOf(it)
                     operContainer.subExpressions.add(pos, expression.copySCGExpression)
                     operContainer.subExpressions.remove(it)
