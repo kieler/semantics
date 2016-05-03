@@ -1,3 +1,15 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright 2016 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
 package de.cau.cs.kieler.comparison.simulation;
 
 import java.util.ArrayList;
@@ -5,10 +17,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
-import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
+import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.comparison.datahandler;
 
 import java.util.Observable;
-import java.util.Observer;
 
 import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;

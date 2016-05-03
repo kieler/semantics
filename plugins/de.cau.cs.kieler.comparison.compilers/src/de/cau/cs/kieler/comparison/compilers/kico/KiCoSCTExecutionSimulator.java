@@ -50,7 +50,6 @@ import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**

@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,14 +15,12 @@ package de.cau.cs.kieler.comparison.compilers.cec;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import de.cau.cs.kieler.comparison.core.CompilationException;
 import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
 import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;

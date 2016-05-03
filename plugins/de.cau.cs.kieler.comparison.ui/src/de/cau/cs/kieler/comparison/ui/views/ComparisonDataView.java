@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -12,19 +12,12 @@
  */
 package de.cau.cs.kieler.comparison.ui.views;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -41,22 +34,16 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.comparison.core.Comparison;
-import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
-import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.datahandler.DataHandler;
-import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
-import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
+import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.exchange.Testbench;
 
 /**

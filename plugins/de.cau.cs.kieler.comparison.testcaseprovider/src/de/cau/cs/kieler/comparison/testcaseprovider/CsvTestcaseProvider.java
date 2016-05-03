@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -25,7 +24,6 @@ import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.ITestcaseProvider;
 import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageException;
-import de.cau.cs.kieler.comparison.core.LanguageProperties;
 
 /**
  * @author nfl

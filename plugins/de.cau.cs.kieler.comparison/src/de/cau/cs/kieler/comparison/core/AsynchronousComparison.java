@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2015 by
+ * Copyright 2016 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,10 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.PriorityQueue;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -30,8 +28,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
 import de.cau.cs.kieler.comparison.Activator;
-import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
+import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
 import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
@@ -40,13 +38,6 @@ import de.cau.cs.kieler.comparison.measuring.CompError;
 import de.cau.cs.kieler.comparison.measuring.CompLoCMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSizeMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSpeedMeasuring;
-import de.cau.cs.kieler.comparison.simulation.BenchmarkCollector;
-import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
-import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 
 /**
  * AsynchronousComparison extends the Job class and is used to execute the comparison between
