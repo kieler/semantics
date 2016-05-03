@@ -15,5 +15,4 @@ Require-Bundle: de.cau.cs.kieler.core.kexpressions,
  de.cau.cs.kieler.semantics.test.common,
  org.eclipse.core.runtime;bundle-version="3.10.0",
  de.cau.cs.kieler.core.kexpressions.keffects,
- org.apache.commons.io;bundle-version="2.0.1",
  org.eclipse.core.resources
