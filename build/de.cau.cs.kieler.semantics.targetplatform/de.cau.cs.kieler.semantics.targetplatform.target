@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="Generated from KIELER" sequenceNumber="1">
+  <locations>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.gmf.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.gmf.tooling.runtime.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.graphiti.sdk.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.jst.ws.jaxws.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/releases/mars"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="javax.xml.bind" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150821153341/repository/"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="de.cau.cs.kieler.kgraph.feature.feature.group" version="0.0.0"/>
+      <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
+      <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
+      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/"/>
+    </location>
+  </locations>
+</target>
