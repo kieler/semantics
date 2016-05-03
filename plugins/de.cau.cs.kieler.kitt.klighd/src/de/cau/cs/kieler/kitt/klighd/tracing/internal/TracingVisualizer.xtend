@@ -443,6 +443,7 @@ class TracingVisualizer {
                 it.figureObject = new TracingEdgeNode(source, target, attachNode);
                 it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
                 it.addPolyline => [
+                	it.lineWidth = 3f
                     it.foreground = Colors.CHOCOLATE_1;
                     it.addArrowDecorator;
                 ];
