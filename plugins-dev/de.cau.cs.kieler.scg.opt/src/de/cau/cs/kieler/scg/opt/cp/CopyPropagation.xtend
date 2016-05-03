@@ -23,8 +23,9 @@ import java.util.HashMap
 
 class CopyPropagation extends AbstractProductionTransformation {
     /* CLASS VARS */
-    public static val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
-    private static val DEBUG = true;
+    public static final val ANNOTATION_COPY_PROPAGATION = "copy_propagation" 
+    private static final val DEBUG = false
+    private static final val INSTRUMENTED = true
     
     /* INJECT STUFF */  
     @Inject 
@@ -46,14 +47,20 @@ class CopyPropagation extends AbstractProductionTransformation {
         return OptimizerFeatures::CP_NAME
     }
     
-    // TODO: minimize cyclomatic index
     def SCGraph transform(SCGraph scg) {
+        val startTime = System.nanoTime()
         if(DEBUG) {
             System.out.println("OPTIMIZER")
         }
         /* SET FILTER */
         val nodes = scg.nodes
         val declarations = scg.declarations
+        if(INSTRUMENTED) {
+            System.out.println("#START COPY PROPAGATION INSTRUMENTATION#")
+            System.out.println("#BEFORE OPTIMIZATION")
+            System.out.println("NodeCount: " + nodes.size)
+            System.out.println("DeclarationCount: " + declarations.size)
+        }
         val assignments = nodes.filter(typeof(AssignmentImpl)).filter[
                 it.operator.getName().equals("ASSIGN")
             ].filter[
@@ -120,6 +127,13 @@ class CopyPropagation extends AbstractProductionTransformation {
                 cleanedRelevantAssignments.add(it)
             }
         ]
+        if(INSTRUMENTED) {
+            System.out.println("Assignments(ALL): " + assignments.size)
+            System.out.println("DirectAssignments: " + one2oneAssignments.size)
+            System.out.println("PREAssignments: " + preAssignments.size)
+            System.out.println("NOTAssignments: " + notAssignments.size)
+            System.out.println("RelevantAssignments: " + cleanedRelevantAssignments.size)
+        }
         if(DEBUG) {
             System.out.println("CleanedRelevantAssignments")
             cleanedRelevantAssignments.forEach[
@@ -138,7 +152,7 @@ class CopyPropagation extends AbstractProductionTransformation {
             readIterator.forEach[
                 val id = it.valuedObject.name
                 if(reads.containsKey(id)) {
-                    reads.replace(id, reads.get(id), reads.get(id) + 1)
+                    reads.replace(id, reads.get(id) + 1)
                 }
                 else {
                     reads.put(id, 1)
@@ -183,6 +197,9 @@ class CopyPropagation extends AbstractProductionTransformation {
                 ]
                 
                 declChanges.forEach[
+                    if(INSTRUMENTED) {
+                        System.out.println("Removed: " + it.value.name);
+                    }
                     it.key.valuedObjects.remove(it.value)
                 ]
                 
@@ -201,6 +218,19 @@ class CopyPropagation extends AbstractProductionTransformation {
                 }
             }
         }
+        val endTime = System.nanoTime()
+        if(INSTRUMENTED) {
+            System.out.println("#AFTER OPTIMIZATION");
+            System.out.println("Nodes: " + nodes.size)
+            System.out.println("Declarations: " + declarations.size)
+            System.out.println("Assignments(ALL): " + assignments.size)
+            System.out.println("DirectAssignments: " + one2oneAssignments.size)
+            System.out.println("PREAssignments: " + preAssignments.size)
+            System.out.println("NOTAssignments: " + notAssignments.size)
+            System.out.println("#END COPY PROPAGATION INSTRUMENTATION#")
+        }
+        val duration = (endTime - startTime) as long
+        System.out.println("Copy Propagation elapsed time: " + (duration as double) / 1000000000 + " s")
         
         
         return scg
@@ -208,7 +238,6 @@ class CopyPropagation extends AbstractProductionTransformation {
     
     def void FindOccuresInNode (EList<Node> nodes, Assignment assignment) {
         nodes.forEach[
-            // TODO: get all uses of an var
             FindOccures(it, assignment)
         ]
     }

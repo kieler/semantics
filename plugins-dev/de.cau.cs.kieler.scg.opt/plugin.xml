@@ -18,6 +18,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.opt.cp.CopyPropagation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.opt.reusevars.ReuseVariables">
+      </productionTransformationClass>
    </extension>
 
 </plugin>
