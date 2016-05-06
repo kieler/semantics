@@ -8,19 +8,17 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.impl.AssignmentImpl
 import java.util.ArrayList
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl
-import java.util.HashMap
 import java.util.TreeMap
 import de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.impl.ConditionalImpl
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.scg.Assignment
 import java.util.Map.Entry
+import org.eclipse.emf.common.util.EList
 
 class ReuseVariables extends AbstractProductionTransformation {
-    private static final val DEBUG = true
+    private static final val DEBUG = false
     private static final val INSTRUMENTED = true
 
     override getProducedFeatureId() {
@@ -58,7 +56,7 @@ class ReuseVariables extends AbstractProductionTransformation {
             System.out.println("#START VARIABLE RECYCLING INSTRUMENTATION#")
             System.out.println("#BEFORE OPTIMIZATION")
             System.out.println("NodeCount: " + nodes.size)
-            System.out.println("DeclarationCount: " + declarations.size)
+            System.out.println("DeclarationCount: " + CountDeclarations(declarations))
             System.out.println("AssignmentCount: " + assignments.size)
         }
 
@@ -204,7 +202,7 @@ class ReuseVariables extends AbstractProductionTransformation {
         if (INSTRUMENTED) {
             System.out.println("#AFTER OPTIMIZATION")
             System.out.println("NodeCount: " + nodes.size)
-            System.out.println("DeclarationCount: " + declarations.size)
+            System.out.println("DeclarationCount: " + CountDeclarations(declarations))
             System.out.println("AssignmentCount: " + assignments.size)
             System.out.println("#END VARIABLE RECYCLING INSTRUMENTATION#")
         }
@@ -259,5 +257,14 @@ class ReuseVariables extends AbstractProductionTransformation {
             }
         }
         return null
+    }
+    
+    def int CountDeclarations(EList<Declaration> decl) {
+        var count = 0;
+        for(var i = 0; i < decl.size; i++) {
+            val tmpDecl = decl.get(i)
+            count += tmpDecl.valuedObjects.size
+        }
+        return count
     }
 }

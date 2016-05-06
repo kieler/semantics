@@ -12,6 +12,9 @@
       <featureClass
             class="de.cau.cs.kieler.scg.opt.features.ReuseVariablesFeature">
       </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.opt.features.SimplifyBooleans">
+      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -20,6 +23,9 @@
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.opt.reusevars.ReuseVariables">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.opt.simpbool.SimplifyBoolean">
       </productionTransformationClass>
    </extension>
 

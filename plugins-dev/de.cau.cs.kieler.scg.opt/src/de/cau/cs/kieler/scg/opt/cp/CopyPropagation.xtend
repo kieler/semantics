@@ -59,7 +59,7 @@ class CopyPropagation extends AbstractProductionTransformation {
             System.out.println("#START COPY PROPAGATION INSTRUMENTATION#")
             System.out.println("#BEFORE OPTIMIZATION")
             System.out.println("NodeCount: " + nodes.size)
-            System.out.println("DeclarationCount: " + declarations.size)
+            System.out.println("DeclarationCount: " + CountDeclarations(declarations))
         }
         val assignments = nodes.filter(typeof(AssignmentImpl)).filter[
                 it.operator.getName().equals("ASSIGN")
@@ -222,7 +222,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         if(INSTRUMENTED) {
             System.out.println("#AFTER OPTIMIZATION");
             System.out.println("Nodes: " + nodes.size)
-            System.out.println("Declarations: " + declarations.size)
+            System.out.println("Declarations: " + CountDeclarations(declarations))
             System.out.println("Assignments(ALL): " + assignments.size)
             System.out.println("DirectAssignments: " + one2oneAssignments.size)
             System.out.println("PREAssignments: " + preAssignments.size)
@@ -284,5 +284,14 @@ class CopyPropagation extends AbstractProductionTransformation {
                 System.out.println(it)
             }
         ]
+    }
+    
+    def int CountDeclarations(EList<Declaration> decl) {
+        var count = 0;
+        for(var i = 0; i < decl.size; i++) {
+            val tmpDecl = decl.get(i)
+            count += tmpDecl.valuedObjects.size
+        }
+        return count
     }
 }
