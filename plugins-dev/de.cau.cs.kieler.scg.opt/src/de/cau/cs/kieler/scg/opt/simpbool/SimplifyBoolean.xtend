@@ -5,6 +5,9 @@ import de.cau.cs.kieler.scg.opt.features.OptimizerFeatures
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.features.SCGFeatureGroups
+import de.cau.cs.kieler.scg.impl.AssignmentImpl
+import de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl
+import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl
 
 class SimplifyBoolean extends AbstractProductionTransformation {
     private static final val DEBUG = false
@@ -27,6 +30,13 @@ class SimplifyBoolean extends AbstractProductionTransformation {
     }
 
     def SCGraph transform(SCGraph scg) {
+        // build boolean strings
+        // simplify booleans
+        // rebuíld Expressions from strings
         return scg
+    }
+    
+    def String OperationToString() {
+        
     }
 }
