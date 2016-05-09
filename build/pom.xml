@@ -42,30 +42,32 @@
         <activeByDefault>true</activeByDefault>
       </activation>
 
-      <repositories>
-        <!--<repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
-		</repository> -->
-        <!--<repository>
-          <id>p2.emf.2.10</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
-        </repository> -->
-		<!--<repository>
-          <id>p2.mars</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/releases/mars</url>
-		</repository>-->
-	</repositories>
-
       <modules>
         <module>../plugins</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
       </modules>
     </profile>
+	
+    <!-- The Semantics product. -->
+    <profile>
+      <id>semantics.product</id>
+	  
+	  <repositories>
+        <repository>
+          <id>p2.kieler-semantics</id>
+          <layout>p2</layout>
+          <url>${kieler.semantics.nightly}</url>
+        </repository>
+	  </repositories>
+      
+      <modules>
+		<module>de.cau.cs.kieler.semantics.targetplatform</module>	  
+        <module>../plugins/de.cau.cs.kieler.core.product</module>
+        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
+        <module>de.cau.cs.kieler.semantics.product.repository</module>
+      </modules>
+    </profile>	
 	
   </profiles>
 
