@@ -54,8 +54,6 @@ import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
-
 /**
  * Implementation of a launch configuration that uses KiCo.
  * 
