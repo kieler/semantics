@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sccharts.feature"
       label="KIELER SCCharts"
-      version="0.1.1.qualifier"
+      version="0.1.2.qualifier"
       provider-name="Kiel University"
       plugin="de.cau.cs.kieler.sccharts">
 
