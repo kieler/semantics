@@ -9,7 +9,7 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.core.kexpressions</artifactId>
-  <version>0.5.1-SNAPSHOT</version>
+  <version>0.5.2-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>

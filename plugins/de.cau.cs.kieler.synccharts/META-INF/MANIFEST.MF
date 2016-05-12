@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: KIELER SyncCharts
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts;singleton:=true
-Bundle-Version: 0.5.5.qualifier
+Bundle-Version: 0.5.6.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0",
  org.eclipse.ui;bundle-version="3.5.0",

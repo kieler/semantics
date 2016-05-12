@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SC Graph Editor
 Bundle-SymbolicName: de.cau.cs.kieler.scg.editor;singleton:=true
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.1.2.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.presentation.ScgEditorPlugin$Implementation
 Bundle-Vendor: Kiel University
