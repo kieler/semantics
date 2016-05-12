@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.sccharts.tsccharts;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -59,7 +61,7 @@ public class TimingHighlighter {
 	 * @param regionRectangles 
 	 *            The mapping that says which region belongs to which rectangle.
 	 */
-	public void highlightRegion(Region region, double percentage,
+	public void highlightRegion(Region region, int percentage,
 			Set<WeakReference<KText>> labels,HashMultimap<Region, 
 			WeakReference<KRectangle>> regionRectangles, KRenderingExtensions renderingExtensions) {
 		Set<WeakReference<KRectangle>> rectangleRefs = regionRectangles.get(region);
@@ -104,8 +106,8 @@ public class TimingHighlighter {
 	 * @param overallWCET
 	 *            The overall WCET needed to calculate percentages
 	 */
-	public String adaptTimingRepresentation(int megaHertz, int digits, TimingValueRepresentation rep, String timingResult, 
-			Integer overallWCET) {
+	public String adaptTimingRepresentation(int megaHertz, int digits, TimingValueRepresentation rep, 
+			String timingResult, BigInteger overallWCET) {
 		String newTimingResult = "";
 		StringTokenizer StringTokenizer = new StringTokenizer(timingResult);
 		// If we represent in percentage, the overall timing value should stay
@@ -113,14 +115,13 @@ public class TimingHighlighter {
 		// case and only that case the String consists of only one number
 		if (StringTokenizer.countTokens() > 1) {
 			if (rep == TimingValueRepresentation.PERCENT) {
-				double onePercent = overallWCET / 100.00;
-				double FirstNumber = Double.parseDouble(StringTokenizer.nextToken());
+				BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
+				BigInteger FirstNumber = new BigInteger(StringTokenizer.nextToken());
 				StringTokenizer.nextToken();
-				double SecondNumber = Double.parseDouble(StringTokenizer.nextToken());
-				FirstNumber /= onePercent;
-				SecondNumber /= onePercent;
-				newTimingResult = String.format("%.2f", FirstNumber) + " / " 
-				                  + String.format("%.2f", SecondNumber);
+				BigInteger SecondNumber = new BigInteger(StringTokenizer.nextToken());
+				FirstNumber = (FirstNumber.divide(onePercent));
+				SecondNumber= (SecondNumber.divide(onePercent));
+				newTimingResult = FirstNumber.toString() + " / " + SecondNumber.toString();
 			}
 		} else {
 			if (rep == TimingValueRepresentation.PERCENT) {

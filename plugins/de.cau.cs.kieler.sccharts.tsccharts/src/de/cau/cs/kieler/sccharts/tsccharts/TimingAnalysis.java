@@ -388,15 +388,16 @@ public class TimingAnalysis extends Job {
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 
 				// get overallWCET
-				Integer overallWCET = 0;
+				BigInteger overallWCET = new BigInteger("0");
 				String scchartTiming = timingResults.get(scchartDummyRegion);
 				String timingResultChart = timingResults.get(null);
 				if (scchartTiming != null) {
-					Integer timingResultSum = Integer.parseInt(timingResultChart) + 
-							Integer.parseInt(scchartTiming);
+					BigInteger timingResultChartBI = new BigInteger(timingResultChart);
+					BigInteger scchartTimingBI = new BigInteger(scchartTiming);
+					BigInteger timingResultSum = timingResultChartBI.add(scchartTimingBI);
 					overallWCET = timingResultSum;
 				} else {
-					overallWCET = Integer.parseInt(timingResultChart);
+					overallWCET = new BigInteger(timingResultChart);
 				}
 
 				for (Region region : timingLabels.keySet()) {
@@ -428,16 +429,17 @@ public class TimingAnalysis extends Job {
 					// requested by user
 					if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
 						// determine how much percent of the overall WCET is
-						// attributed to this
-						// region
-						double percentage = 0.0;
+						// attributed to this region
+						BigInteger percentage = new BigInteger("0");
+						int percentageInt = 0;
 						if (timingResultChart != null) {
 							StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
-							Double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
-							double onePercent = overallWCET / 100.0;
-							percentage = timingvalue / onePercent;
+							BigInteger timingvalue = new BigInteger(resultTokenizer.nextToken());
+							BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
+							percentage = timingvalue.divide(onePercent);
+							percentageInt = percentage.intValue();
 						}
-						timingHighlighter.highlightRegion(region, percentage, timingLabels.get(region), 
+						timingHighlighter.highlightRegion(region, percentageInt, timingLabels.get(region), 
 								regionRectangles, renderingExtensions);
 					}
 				}
