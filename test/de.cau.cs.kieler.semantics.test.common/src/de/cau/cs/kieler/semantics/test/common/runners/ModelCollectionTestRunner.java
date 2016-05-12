@@ -676,7 +676,7 @@ public class ModelCollectionTestRunner extends Suite {
                     testMethod.validatePublicVoid(false, errors);
                     Method method = testMethod.getMethod();
                     final Class<?>[] methodParams = method.getParameterTypes();
-                boolean methodOK = (methodParams.length == 0 || (methodParams.length == 1
+                boolean methodOK = (methodParams.length == 0 || (methodParams.length <= 2
                         && (methodParams[0].equals(Object.class)
                                 || EObject.class.isAssignableFrom(methodParams[0]))));
                 if (!methodOK) {
