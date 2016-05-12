@@ -251,7 +251,7 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                                 if (it.valuedObject != null) {
                                     val sb = schedulingBlockVOCache.get(it.valuedObject)
                                     if (sb != null) {
-                                        SBs += schedulingBlockVOCache.get(it.valuedObject)
+                                        SBs += sb
                                     }
                                 }
                             }
