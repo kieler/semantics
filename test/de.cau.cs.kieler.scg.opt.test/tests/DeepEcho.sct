@@ -1,0 +1,46 @@
+scchart DeepEcho{
+  region Main:
+  initial state C1{
+    region R1:
+    initial state C2{
+      region R2:
+       initial state C3{
+         region R3:
+         initial state C4{
+           region R4:
+           initial state C5{
+             region R5:
+             initial state C6{
+               region R6:
+               initial state C7{
+                 region R7:
+                 initial state C8{
+                   region R8:
+                   initial state C9{
+                     region R9:
+                     initial state init
+                     --> done immediate with / 'echo()';
+                     final state done;
+                     region R10:
+                     initial state init
+                     --> done immediate with / 'echo()';
+                     final state done;
+                   } >-> done immediate with / 'echo()';
+                   final state done;
+                 } >-> done immediate with / 'echo()';
+                   final state done;
+               } >-> done immediate with / 'echo()';
+                   final state done;
+             } >-> done immediate with / 'echo()';
+                   final state done;
+           } >-> done immediate with / 'echo()';
+                   final state done;
+         } >-> done immediate with / 'echo()';
+                   final state done;
+       } >-> done immediate with / 'echo()';
+                   final state done;
+    } >-> done immediate with / 'echo()';
+                   final state done;
+  } >-> done immediate with / 'echo()';
+                   final state done;
+}

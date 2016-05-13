@@ -20,13 +20,14 @@ import org.eclipse.emf.common.util.EList
 class ReuseVariables extends AbstractProductionTransformation {
     private static final val DEBUG = false
     private static final val INSTRUMENTED = true
+    private static final val MAX_SEARCH_DEPTH = 100 // good value for big and small models to achieve fast output
 
     override getProducedFeatureId() {
         return OptimizerFeatures::RV_ID
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID /*OptimizerFeatures::CP_ID*/ )
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID/* , OptimizerFeatures::CP_ID */)
     }
 
     override getId() {
@@ -119,7 +120,6 @@ class ReuseVariables extends AbstractProductionTransformation {
                 lastUse.put(name, new Pair(assigment, it.value))
             }
         ]
-
         do {
             if (DEBUG) {
                 System.out.println("LAST USE")
@@ -132,6 +132,7 @@ class ReuseVariables extends AbstractProductionTransformation {
             // get second element which is not a pre-node from firstElem
             val secondElem = GetSecondElem(lastUse, firstElem)
             if (secondElem != null) {
+                lastUse.remove(secondElem.key)
                 if (DEBUG) {
                     System.out.println("FirstElem: " + firstElem.key + " | SecondElem: " + secondElem.key)
                 }
@@ -192,8 +193,6 @@ class ReuseVariables extends AbstractProductionTransformation {
                     }
                     it.key.valuedObjects.remove(it.value)
                 ]
-                // remove secondElem if replaced
-                lastUse.remove(secondElem.key)
             }
         } while (lastUse.size > 0)
 
@@ -210,12 +209,22 @@ class ReuseVariables extends AbstractProductionTransformation {
 
         return scg
     }
-
-    def boolean InNextPointerChain(Node needle, Node nextP) {
-        return InNextPointerChain(needle, nextP, false)
+    
+    ArrayList<Node> visited = new ArrayList() 
+    
+    def boolean InNextPointerChain(Node needle, Node nextP, boolean hard) {
+        visited.clear()
+        return InNextPointerChain(needle, nextP, false, 0)
     }
 
-    def boolean InNextPointerChain(Node needle, Node nextP, boolean hard) {
+    def boolean InNextPointerChain(Node needle, Node nextP, boolean hard, int hops) {
+        if(visited.contains(nextP)) {
+            return false
+        }
+        visited.add(nextP)
+        if(MAX_SEARCH_DEPTH != 0 && hops > MAX_SEARCH_DEPTH) {
+            return false
+        }
         if (hard && nextP.equals(needle)) {
             return true
         }
@@ -224,12 +233,12 @@ class ReuseVariables extends AbstractProductionTransformation {
             var one = false
             var two = false
             if (!condNode.^else.target.equals(needle)) {
-                one = InNextPointerChain(needle, condNode.^else.target, hard)
+                one = InNextPointerChain(needle, condNode.^else.target, hard, hops + 1)
             } else {
                 one = true
             }
-            if (!condNode.then.target.equals(needle)) {
-                two = InNextPointerChain(needle, condNode.then.target, hard)
+            if (one || !condNode.then.target.equals(needle)) {
+                two = InNextPointerChain(needle, condNode.then.target, hard, hops + 1)
             } else {
                 two = true
             }
@@ -237,7 +246,7 @@ class ReuseVariables extends AbstractProductionTransformation {
         } else if (nextP instanceof AssignmentImpl) {
             val assNode = nextP as AssignmentImpl
             if (!assNode.next.target.equals(needle)) {
-                return InNextPointerChain(needle, assNode.next.target, hard)
+                return InNextPointerChain(needle, assNode.next.target, hard, hops + 1)
             } else {
                 return true
             }

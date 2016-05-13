@@ -1,0 +1,25 @@
+scchart _22_history_mixed_with_nonhistory "22-history-mixed-with-nonhistory" {
+  output signal O1;
+  output signal O2;
+  output signal O3;
+  input signal R;
+  input signal H;
+
+  initial state A {
+
+    initial state C
+    --> B with / O1;
+
+    state B
+    --> D with / O2;
+
+    state D
+    --> C with / O3;
+  }
+  o-> E with R
+  --> E with H;
+
+  state E
+  --> A history with H
+  --> A with R;
+}

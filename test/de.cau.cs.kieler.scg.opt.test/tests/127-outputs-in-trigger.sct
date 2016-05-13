@@ -1,0 +1,16 @@
+scchart S0 "simple" {
+  input signal I;
+  output signal O;
+
+  state S3 "S1";
+
+  initial state S4 "S0"
+  --> S3 with I / O;
+
+  region:
+
+  initial state S0 "s2"
+  --> S1 with O;
+
+  state S1 "s3";
+}

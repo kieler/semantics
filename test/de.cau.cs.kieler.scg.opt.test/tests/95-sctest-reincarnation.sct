@@ -1,0 +1,27 @@
+scchart reincarnation {
+  input signal A;
+  signal gotS;
+
+  region R0:
+
+  initial state Reincarnation {
+    signal S;
+
+    region R0:
+
+    initial state I
+    --> C1 immediate;
+
+    state p;
+
+    final state r;
+
+    state q
+    --> r with A / S;
+
+    state C1
+    --> p immediate with S / gotS
+    --> q immediate;
+  }
+  >-> Reincarnation;
+}

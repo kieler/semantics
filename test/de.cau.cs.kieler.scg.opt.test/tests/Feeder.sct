@@ -1,0 +1,70 @@
+scchart feeder {
+  input bool morning;
+  input bool Sugarfoot;
+  input bool Stella;
+  output bool feedingDone;
+  
+  initial state init
+  --> composer immediate with morning
+  --> hay immediate;
+
+state composer {
+    region assortFeed:
+    
+    initial state init
+    --> goodFeeders immediate with Sugarfoot || Stella
+    --> badFeeders immediate;
+    
+    state goodFeeders{
+      region dietFeed:
+      initial state init
+      --> specialAdditives immediate with Stella / 'administerPellets()'
+      --> medicamentation immediate with  / 'administerPellets()';
+      
+      state specialAdditives{
+        region Extras:
+        initial state init
+        --> done immediate with / 'administerMinerals()';
+        final state done;
+      }
+      >-> done immediate; 
+      
+      state medicamentation{
+        region administerMedicaments:
+        initial state init
+        --> done immediate with / 'administerMedicamentation()';
+        final state done;
+      }
+      >-> done immediate;
+      
+      final state done;
+      
+    }
+    >-> done immediate;
+    
+    state badFeeders{
+      region nourishingFeed:
+      initial state init
+      --> done immediate with / 'administerDoubleOats()';
+      final state done;
+    }
+    >-> done immediate;
+    final state done;
+    
+ }
+ >-> report;
+ 
+
+ 
+  state hay{
+    region administerHay:
+    initial state init
+    --> done immediate with / 'feedHay()';
+    final state done;
+    }
+    >-> report immediate;
+    
+     state report
+     --> done immediate with / feedingDone = true;
+     final state done;
+}
