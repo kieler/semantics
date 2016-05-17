@@ -28,10 +28,10 @@ import de.cau.cs.kieler.comparison.measuring.IMeasuring;
  * 
  * @author nfl
  */
-public class DataHandler extends AbstractDataHandler {
+public final class DataHandler extends AbstractDataHandler {
 
     /**
-     * Private constructor for singleton pattern
+     * Private constructor for singleton pattern.
      */
     private DataHandler() {
 
@@ -40,13 +40,14 @@ public class DataHandler extends AbstractDataHandler {
     private static DataHandler singleton = new DataHandler();
 
     /**
-     * Get the singleton instance of Comparison
+     * Get the singleton instance of Comparison.
      * 
      * @return Singleton Comparison
      */
     public static DataHandler getDataHandler() {
-        if (singleton == null)
+        if (singleton == null) {
             singleton = new DataHandler();
+        }
         return singleton;
     }
 
@@ -54,7 +55,7 @@ public class DataHandler extends AbstractDataHandler {
      * {@inheritDoc}
      */
     @Override
-    public void serialize(String comparison, IMeasuring data) {
+    public void serialize(final String comparison, final IMeasuring data) {
         // loading the complete measurement is not very performant, but required for json insertion
         GeneralComparisonMeasurement measurement = getData(comparison);
         measurement.insert(data);
@@ -74,16 +75,17 @@ public class DataHandler extends AbstractDataHandler {
      * @param measurement
      *            the measurings to serialize
      */
-    private void saveAsJSONFile(String comparison, GeneralComparisonMeasurement measurement) {
+    private void saveAsJSONFile(final String comparison, final GeneralComparisonMeasurement measurement) {
 
         String json = measurement.toJSON();
         BufferedWriter bw = null;
 
         try {
-            if (comparison.toLowerCase().contains(".json"))
+            if (comparison.toLowerCase().contains(".json")) {
                 bw = new BufferedWriter(new FileWriter(comparison));
-            else
+            } else {
                 bw = new BufferedWriter(new FileWriter(comparison + ".JSON"));
+            }
             bw.write(json);
         } catch (IOException e) {
             // measurings are probably lost
@@ -102,7 +104,7 @@ public class DataHandler extends AbstractDataHandler {
      * {@inheritDoc}
      */
     @Override
-    public GeneralComparisonMeasurement getData(String comparison) {
+    public GeneralComparisonMeasurement getData(final String comparison) {
         // load the content of a JSON file as String
         String json = loadJSONFile(comparison);
         // parse the String to a GeneralComparisonMeasurement object
@@ -116,19 +118,21 @@ public class DataHandler extends AbstractDataHandler {
      *            the JSON file containing the measurings
      * @return a JSON String of the comparison
      */
-    private String loadJSONFile(String filePath) {
+    private String loadJSONFile(final String filePath) {
 
         String jsonObj = "";
         BufferedReader br = null;
         try {
-            if (filePath.toLowerCase().contains(".json"))
+            if (filePath.toLowerCase().contains(".json")) {
                 br = new BufferedReader(new FileReader(filePath));
-            else
+            } else {
                 br = new BufferedReader(new FileReader(filePath + ".JSON"));
+            }
             while (br.ready()) {
                 int c = br.read();
-                if (c == -1)
+                if (c == -1) {
                     break;
+                }
                 jsonObj += (char) c;
             }
         } catch (FileNotFoundException e) {
@@ -141,8 +145,9 @@ public class DataHandler extends AbstractDataHandler {
             jsonObj = "";
         } finally {
             try {
-                if (br != null)
+                if (br != null) {
                     br.close();
+                }
             } catch (IOException e) {
                 // ignore
             }

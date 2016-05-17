@@ -39,7 +39,7 @@ public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
     /**
      * {@inheritDoc}
      */
-    public Collection<ITestcase> createTestcases(File file) {
+    public Collection<ITestcase> createTestcases(final File file) {
         Collection<ITestcase> ret = new ArrayList<ITestcase>();
         Testcase testcase = new Testcase();
         Path filePath = file.toPath();

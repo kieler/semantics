@@ -29,7 +29,7 @@ public interface ITestcaseProvider {
      * 
      * @return an unique identifier
      */
-    public String getID();
+    String getID();
 
     /**
      * This method returns which file extension are handled by the {@link ITestcaseProvider}. Out of
@@ -37,7 +37,7 @@ public interface ITestcaseProvider {
      * 
      * @return the file extension this ITestcaseProvider can handle
      */
-    public String getExtension();
+    String getExtension();
 
     /**
      * This method takes a file and tries to create a list of {@link ITestcase}s from this file.
@@ -46,5 +46,5 @@ public interface ITestcaseProvider {
      *            the file to create ITestcases from
      * @return a collection of ITestcase
      */
-    public Collection<ITestcase> createTestcases(File file);
+    Collection<ITestcase> createTestcases(File file);
 }

@@ -80,7 +80,7 @@ public final class Comparison {
     /**
      * The only comparison execution.
      */
-    public AsynchronousComparison comparisonJob;
+    private AsynchronousComparison comparisonJob;
 
     /**
      * Starts a comparison for a given configuration. Only one comparison at a time is allowed. If
@@ -191,8 +191,7 @@ public final class Comparison {
 
         // Add the default folder (de.cau.cs.kieler.comparison/testcases/) as test case folder
         try {
-            URL url =
-                    new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/");
+            URL url = new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/");
             files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
         } catch (IOException | URISyntaxException e) {
             // should never happen
@@ -263,9 +262,9 @@ public final class Comparison {
             // If the current file is a directory, filter its containing files
             if (file.isDirectory()) {
                 files.addAll(Arrays.asList(file.listFiles(filter)));
-            }
-            // Else try to create ITestcases for the current file using the given providers
-            else {
+            } else {
+                // Else try to create ITestcases for the current file using the given providers
+
                 // Used to answer the question: Did any provider successfully create an ITestcase?
                 boolean parsed = false;
                 // Try each provider
@@ -305,9 +304,8 @@ public final class Comparison {
             // If no ITestcase with the current path exists in the cache, add the current test case
             if (cached == null) {
                 testcasesCached.put(test.getID(), test);
-            }
-            // Else try to merge the two test cases into the cached one
-            else {
+            } else {
+                // Else try to merge the two test cases into the cached one
                 mergeTestcases(cached, test);
             }
         }
@@ -380,25 +378,22 @@ public final class Comparison {
                 System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
                         + ") could not be merged with an existing testcase: "
                         + "Language is not the same");
-            }
-            // ... and the same ID
-            else if (!into.getID().equals(from.getID())) {
+            } else if (!into.getID().equals(from.getID())) {
+                // ... and the same ID
                 // TODO better error logging
                 System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
                         + ") could not be merged with an existing testcase: "
                         + "ID is not the same");
-            }
-            // ... and the same Test Trace, if both do have one
-            else if (into.getTestTrace() != null && from.getTestTrace() != null
+            } else if (into.getTestTrace() != null && from.getTestTrace() != null
                     && !into.getTestTrace().equals(from.getTestTrace())) {
+                // ... and the same Test Trace, if both do have one
                 // TODO better error logging
                 System.out.println("ITestcase (" + from.getID() + ", " + from.getPath()
                         + ") could not be merged with an existing testcase: "
                         + "Test Traces are not the same");
-            }
-            // All requirements met, therefore insert the properties of the second into the first
-            // one
-            else {
+            } else {
+                // All requirements met, therefore insert the properties of the second into the
+                // first one
                 insertProperties(into.getProperties(), from.getProperties());
                 if (into.getTestTrace() == null) {
                     into.setTestTrace(from.getTestTrace());
@@ -439,8 +434,8 @@ public final class Comparison {
 
     /**
      * Used to get a collection of all test case providers. The collection consist of KeyValuePairs,
-     * where the value is an instance of {@link ITestcaseProvider} and the key is an identifier for this
-     * provider as String. This method uses caching for optimization.
+     * where the value is an instance of {@link ITestcaseProvider} and the key is an identifier for
+     * this provider as String. This method uses caching for optimization.
      * 
      * @param forceReload
      *            if true, the cache will be refreshed; otherwise the cache my be used

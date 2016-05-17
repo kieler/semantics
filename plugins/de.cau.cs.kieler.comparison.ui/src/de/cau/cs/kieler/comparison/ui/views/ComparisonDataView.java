@@ -98,7 +98,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
     private int sortBy = -1;
 
     /**
-     * This is a callback that will allow us to create the viewer and initialize it.
+     * {@inheritDoc}
      */
     public void createPartControl(final Composite parent) {
         viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -137,7 +137,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      */
     private class SortListener implements SelectionListener {
         @Override
-        public void widgetSelected(SelectionEvent e) {
+        public void widgetSelected(final SelectionEvent e) {
             if (e.getSource() instanceof TableColumn) {
                 TableColumn tc = (TableColumn) e.getSource();
                 for (int i = 0; i < TITLES.length; i++) {
@@ -155,7 +155,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
         }
 
         @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
+        public void widgetDefaultSelected(final SelectionEvent e) {
             // never called
         }
 
@@ -167,7 +167,10 @@ public class ComparisonDataView extends ViewPart implements Observer {
      * @author nfl
      */
     private class TestbenchComparator extends ViewerComparator {
-        public int compare(Viewer viewer, Object e1, Object e2) {
+        /**
+         * {@inheritDoc}
+         */
+        public int compare(final Viewer viewer, final Object e1, final Object e2) {
             if (e1 instanceof Testbench && e2 instanceof Testbench) {
                 Testbench t1 = (Testbench) e1;
                 Testbench t2 = (Testbench) e2;
@@ -213,7 +216,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      */
     private class InfoDoubleClickListener implements IDoubleClickListener {
         @Override
-        public void doubleClick(DoubleClickEvent event) {
+        public void doubleClick(final DoubleClickEvent event) {
             ISelection sel = event.getSelection();
             if (sel instanceof IStructuredSelection && !sel.isEmpty()) {
                 IStructuredSelection struct = (IStructuredSelection) sel;
@@ -293,8 +296,9 @@ public class ComparisonDataView extends ViewPart implements Observer {
         fileDialog.setFilterNames(new String[] { "Comparison Results(*.JSON)" });
 
         String open = fileDialog.open();
-        if (open != null && open != "")
+        if (open != null && open != "") {
             loadComparisonResult(open);
+        }
     }
 
     /**
@@ -306,8 +310,9 @@ public class ComparisonDataView extends ViewPart implements Observer {
         // open a new dialog
         StartComparisonDialog dialog = new StartComparisonDialog(viewer.getControl().getShell());
         // if the dialog got canceled, don't proceed
-        if (dialog.open() != Window.OK)
+        if (dialog.open() != Window.OK) {
             return;
+        }
 
         // get all the information from the dialog
         ComparisonConfig conf = new ComparisonConfig();
@@ -340,7 +345,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      * @param comp
      *            the String identifier for a comparison to load
      */
-    public void loadComparisonResult(String comp) {
+    public void loadComparisonResult(final String comp) {
         Runnable run = new Runnable() {
 
             @Override
@@ -359,7 +364,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      *            the measurings of a comparison stored in a {@link GeneralComparisonMeasurement}
      *            object
      */
-    public void loadComparisonResult(GeneralComparisonMeasurement measurement) {
+    public void loadComparisonResult(final GeneralComparisonMeasurement measurement) {
         Runnable run = new Runnable() {
 
             @Override
@@ -375,7 +380,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
      * {@inheritDoc}
      */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(final Observable o, final Object arg) {
         if (arg instanceof GeneralComparisonMeasurement) {
             GeneralComparisonMeasurement measurement = (GeneralComparisonMeasurement) arg;
             loadComparisonResult(measurement);

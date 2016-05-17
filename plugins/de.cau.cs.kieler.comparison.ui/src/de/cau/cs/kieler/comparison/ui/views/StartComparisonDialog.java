@@ -43,7 +43,6 @@ import de.cau.cs.kieler.comparison.core.Comparison;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
-import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
 import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
 import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
@@ -58,11 +57,11 @@ import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
 public class StartComparisonDialog extends Dialog {
 
     /**
-     * Protected constructor.
+     * The constructor for the dialog to initiate a comparison.
      * 
-     * @param parentShell
+     * @param parentShell the parent shell, or null to create a top-level shell
      */
-    protected StartComparisonDialog(Shell parentShell) {
+    protected StartComparisonDialog(final Shell parentShell) {
         super(parentShell);
     }
 
@@ -85,7 +84,7 @@ public class StartComparisonDialog extends Dialog {
 
     /**
      * The text field for the amount of compilation time measurings used by the Standard measuring
-     * method
+     * method.
      */
     private Text txtCompAmount;
 
@@ -117,7 +116,9 @@ public class StartComparisonDialog extends Dialog {
      */
     private boolean compSpeed;
 
-    // TODO implement functionality in the comparison class
+    // NOTE: Since the functionality of comparing execution times of compiled test cases is not
+    // implemented in the Comparison, the selection of this option is disabled in the dialog.
+
     // private Button checkBoxExecSpeed;
     // private Text txtExecAmount;
     // private int execAmount = 1;
@@ -280,7 +281,7 @@ public class StartComparisonDialog extends Dialog {
      * {@inheritDoc}
      */
     @Override
-    protected Control createDialogArea(Composite parent) {
+    protected Control createDialogArea(final Composite parent) {
         Composite container = (Composite) super.createDialogArea(parent);
 
         GridLayout layout = new GridLayout(2, true);
@@ -316,7 +317,7 @@ public class StartComparisonDialog extends Dialog {
     /**
      * {@inheritDoc}
      */
-    protected void configureShell(Shell shell) {
+    protected void configureShell(final Shell shell) {
         super.configureShell(shell);
         shell.setText("Compiler Comparison");
     }
@@ -328,7 +329,7 @@ public class StartComparisonDialog extends Dialog {
      * @param container
      *            the container containing this group
      */
-    private void createCompilerSelection(Composite container) {
+    private void createCompilerSelection(final Composite container) {
 
         // get all known languages
         String[] languageStrings = getLanguageStrings(true);
@@ -349,7 +350,7 @@ public class StartComparisonDialog extends Dialog {
         cmbSrcLng.addModifyListener(new ModifyListener() {
 
             @Override
-            public void modifyText(ModifyEvent e) {
+            public void modifyText(final ModifyEvent e) {
                 filterCompilerSelection();
             }
         });
@@ -363,7 +364,7 @@ public class StartComparisonDialog extends Dialog {
         cmbTrgLng.addModifyListener(new ModifyListener() {
 
             @Override
-            public void modifyText(ModifyEvent e) {
+            public void modifyText(final ModifyEvent e) {
                 filterCompilerSelection();
             }
         });
@@ -373,14 +374,15 @@ public class StartComparisonDialog extends Dialog {
         lstCompilerSelection.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 saveCompilers();
-                if (checkBoxFeasTestcases.getSelection())
+                if (checkBoxFeasTestcases.getSelection()) {
                     filterTestcaseSelection();
+                }
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void widgetDefaultSelected(final SelectionEvent e) {
 
             }
         });
@@ -397,7 +399,7 @@ public class StartComparisonDialog extends Dialog {
      * 
      * @return a list of all languages as Strings
      */
-    private String[] getLanguageStrings(boolean withEmpty) {
+    private String[] getLanguageStrings(final boolean withEmpty) {
         Language[] languages = Language.values();
         String[] languageStrings;
         if (withEmpty) {
@@ -423,14 +425,16 @@ public class StartComparisonDialog extends Dialog {
         // get the selected source language
         String srcString = cmbSrcLng.getItem(cmbSrcLng.getSelectionIndex());
         Language src = null;
-        if (srcString != null && srcString != "")
+        if (srcString != null && srcString != "") {
             src = Language.valueOf(srcString);
+        }
 
         // get the selected target language
         String trgString = cmbTrgLng.getItem(cmbTrgLng.getSelectionIndex());
         Language trg = null;
-        if (trgString != null && trgString != "")
+        if (trgString != null && trgString != "") {
             trg = Language.valueOf(trgString);
+        }
 
         // the list of filtered compilers
         Collection<String> filtered = new ArrayList<String>();
@@ -445,8 +449,9 @@ public class StartComparisonDialog extends Dialog {
             }
         }
 
-        if (lstCompilerSelection != null)
+        if (lstCompilerSelection != null) {
             lstCompilerSelection.setItems(filtered.toArray(new String[filtered.size()]));
+        }
     }
 
     /**
@@ -456,7 +461,7 @@ public class StartComparisonDialog extends Dialog {
      * @param container
      *            the container containing this group
      */
-    private void createTestcaseSelection(Composite container) {
+    private void createTestcaseSelection(final Composite container) {
 
         // create a new group
         Group grp = new Group(container, SWT.BORDER);
@@ -474,7 +479,7 @@ public class StartComparisonDialog extends Dialog {
         cmbTestcase.addModifyListener(new ModifyListener() {
 
             @Override
-            public void modifyText(ModifyEvent e) {
+            public void modifyText(final ModifyEvent e) {
                 filterTestcaseSelection();
             }
         });
@@ -486,13 +491,13 @@ public class StartComparisonDialog extends Dialog {
         checkBoxFeasTestcases.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 cmbTestcase.setEnabled(!checkBoxFeasTestcases.getSelection());
                 filterTestcaseSelection();
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void widgetDefaultSelected(final SelectionEvent e) {
 
             }
         });
@@ -589,9 +594,8 @@ public class StartComparisonDialog extends Dialog {
 
             cachedFilteredTestcases.sort(new ReverseStringComparator());
             lstTestcaseSelection.setItems(cachedFilteredTestcases.toArray(new String[0]));
-        }
-        // show only matching source language
-        else {
+        } else {
+            // show only matching source language
             Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
             ArrayList<String> selection = new ArrayList<String>();
             for (Entry<String, ITestcase> kv : registered.entrySet()) {
@@ -614,7 +618,7 @@ public class StartComparisonDialog extends Dialog {
          * {@inheritDoc}
          */
         @Override
-        public int compare(String o1, String o2) {
+        public int compare(final String o1, final String o2) {
             return o1.compareTo(o2);
         }
     }
@@ -625,12 +629,14 @@ public class StartComparisonDialog extends Dialog {
      * @return true, if cached compilers are the same as the ones currently selected
      */
     private boolean checkCachedCompilers() {
-        if (compilers.size() != cachedCompilers.size() || compilers.size() == 0)
+        if (compilers.size() != cachedCompilers.size() || compilers.size() == 0) {
             return false;
+        }
 
         for (ICompiler comp : compilers) {
-            if (!cachedCompilers.contains(comp.getID()))
+            if (!cachedCompilers.contains(comp.getID())) {
                 return false;
+            }
         }
 
         return true;
@@ -642,7 +648,7 @@ public class StartComparisonDialog extends Dialog {
      * @param container
      *            the container containing this group
      */
-    private void createConfigurationSelection(Composite container) {
+    private void createConfigurationSelection(final Composite container) {
 
         // create a new group
         Group grp = new Group(container, SWT.BORDER);
@@ -657,7 +663,7 @@ public class StartComparisonDialog extends Dialog {
         checkBoxCompSpeed.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 txtCompAmount.setEnabled(checkBoxCompSpeed.getSelection());
                 txtCompKBestK.setEnabled(checkBoxCompSpeed.getSelection());
                 txtCompKBestEpsilon.setEnabled(checkBoxCompSpeed.getSelection());
@@ -667,7 +673,7 @@ public class StartComparisonDialog extends Dialog {
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void widgetDefaultSelected(final SelectionEvent e) {
             }
         });
 
@@ -691,7 +697,7 @@ public class StartComparisonDialog extends Dialog {
 
         cmbCompilationMeasuring.addModifyListener(new ModifyListener() {
             @Override
-            public void modifyText(ModifyEvent e) {
+            public void modifyText(final ModifyEvent e) {
                 if (cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex())
                         .equals(StandardMeasuringParameters.getID())) {
                     ((GridData) lblCompAmount.getLayoutData()).exclude = false;
@@ -732,7 +738,7 @@ public class StartComparisonDialog extends Dialog {
 
         cmbCompilationMeasuring.addModifyListener(new ModifyListener() {
             @Override
-            public void modifyText(ModifyEvent e) {
+            public void modifyText(final ModifyEvent e) {
                 if (cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex())
                         .equals(KBestMeasuringParameteres.getID())) {
                     ((GridData) lblCompKBestK.getLayoutData()).exclude = false;
@@ -814,12 +820,12 @@ public class StartComparisonDialog extends Dialog {
         checkBoxCompSize.addSelectionListener(new SelectionListener() {
 
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 checkOkayButton();
             }
 
             @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void widgetDefaultSelected(final SelectionEvent e) {
             }
         });
 
@@ -848,12 +854,12 @@ public class StartComparisonDialog extends Dialog {
             }
             compSpeedParams = new StandardMeasuringParameters(compAmount);
         } else if (selectedCompParams.equals(KBestMeasuringParameteres.getID())) {
-            int K = 1;
+            int k = 1;
             double epsilon = 0;
-            int M = 1;
+            int m = 1;
 
             try {
-                K = Integer.parseInt(txtCompKBestK.getText());
+                k = Integer.parseInt(txtCompKBestK.getText());
             } catch (NumberFormatException nfe) {
                 // String could not be parsed to int
                 // TODO better error logging
@@ -867,13 +873,13 @@ public class StartComparisonDialog extends Dialog {
                 System.out.println("Double epsilon: String could not be parsed to double.");
             }
             try {
-                M = Integer.parseInt(txtCompKBestM.getText());
+                m = Integer.parseInt(txtCompKBestM.getText());
             } catch (NumberFormatException nfe) {
                 // String could not be parsed to int
                 // TODO better error logging
                 System.out.println("Int M: String could not be parsed to int.");
             }
-            compSpeedParams = new KBestMeasuringParameteres(K, epsilon, M);
+            compSpeedParams = new KBestMeasuringParameteres(k, epsilon, m);
         } else {
             // no valid / known measuring selected
             // TODO better error logging
@@ -949,7 +955,7 @@ public class StartComparisonDialog extends Dialog {
      * {@inheritDoc}
      */
     @Override
-    protected void createButtonsForButtonBar(Composite parent) {
+    protected void createButtonsForButtonBar(final Composite parent) {
         okayButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
     }

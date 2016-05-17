@@ -28,7 +28,7 @@ public interface ITestcase {
      * 
      * @return an unique identifier
      */
-    public String getID();
+    String getID();
 
     /**
      * Each program is written in a programming language. This method returns that language to
@@ -36,7 +36,7 @@ public interface ITestcase {
      * 
      * @return the language the test case is written in
      */
-    public Language getLanguage();
+    Language getLanguage();
 
     /**
      * The method is used to return the path to the test case program this wrapper interface is
@@ -44,7 +44,7 @@ public interface ITestcase {
      * 
      * @return the path to the program
      */
-    public Path getPath();
+    Path getPath();
 
     /**
      * Each test case may specify a collection of properties. A compiler can specify which
@@ -53,7 +53,7 @@ public interface ITestcase {
      * 
      * @return a collection of test case properties
      */
-    public Collection<String> getProperties();
+    Collection<String> getProperties();
 
     /**
      * A test case may depend on other test cases. For example this can be the case for referring
@@ -62,7 +62,7 @@ public interface ITestcase {
      * 
      * @return a collection of paths to test cases this test case depends on
      */
-    public Collection<Path> getDependencies();
+    Collection<Path> getDependencies();
 
     /**
      * For the execution of the test case an input trace is required and an output trace might be
@@ -70,7 +70,7 @@ public interface ITestcase {
      * 
      * @return the path to the input/output trace
      */
-    public Path getTestTrace();
+    Path getTestTrace();
 
     /**
      * For the execution of the test case an input trace is required and an output trace might be
@@ -78,5 +78,5 @@ public interface ITestcase {
      * 
      * @param testTrace the path to the input/output trace
      */
-    public void setTestTrace(Path testTrace);
+    void setTestTrace(Path testTrace);
 }

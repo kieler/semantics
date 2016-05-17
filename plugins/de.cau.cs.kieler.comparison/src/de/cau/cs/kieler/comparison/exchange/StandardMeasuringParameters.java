@@ -30,7 +30,7 @@ public class StandardMeasuringParameters implements IMeasuringParameters {
      * 
      * @param amount the amount of measurings that should be taken
      */
-    public StandardMeasuringParameters(int amount) {
+    public StandardMeasuringParameters(final int amount) {
         this.comparisonAmount = amount;
     }
 
@@ -56,7 +56,7 @@ public class StandardMeasuringParameters implements IMeasuringParameters {
      * @param comparisonAmount
      *            the amount to set
      */
-    public void setComparisonAmount(int comparisonAmount) {
+    public void setComparisonAmount(final int comparisonAmount) {
         this.comparisonAmount = comparisonAmount;
     }
 

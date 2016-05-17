@@ -25,11 +25,13 @@ public enum Language {
     /**
      * This method can be used to get the language matching to a given file extension.
      * 
-     * @param extension the file extension
+     * @param extension
+     *            the file extension
      * @return the language using the file extension
-     * @throws LanguageException if no matching language can be found, an exception is thrown
+     * @throws LanguageException
+     *             if no matching language can be found, an exception is thrown
      */
-    public static Language fromExtension(String extension) throws LanguageException {
+    public static Language fromExtension(final String extension) throws LanguageException {
         if (extension != null) {
             switch (extension) {
             case ".sct":

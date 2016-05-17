@@ -39,11 +39,18 @@ public class ExecSpeedMeasuring implements IMeasuring {
 
     /**
      * The constructor for an {@link ExecSpeedMeasuring} object.
+     * 
+     * @param compiler
+     *            the compiler used in the measuring
+     * @param testcase
+     *            the test case used in the measuring
+     * @param time
+     *            the time measured during the execution
      */
-    public ExecSpeedMeasuring(String compiler, String testcase, double speed) {
+    public ExecSpeedMeasuring(final String compiler, final String testcase, final double time) {
         this.compiler = compiler;
         this.testcase = testcase;
-        this.speed = speed;
+        this.speed = time;
     }
 
     /**
@@ -85,7 +92,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -95,7 +102,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -105,7 +112,7 @@ public class ExecSpeedMeasuring implements IMeasuring {
      * @param speed
      *            the speed to set
      */
-    public void setSpeed(double speed) {
+    public void setSpeed(final double speed) {
         this.speed = speed;
     }
 

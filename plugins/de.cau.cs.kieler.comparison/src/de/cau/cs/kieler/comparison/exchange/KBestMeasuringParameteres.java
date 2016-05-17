@@ -23,29 +23,32 @@ public class KBestMeasuringParameteres implements IMeasuringParameters {
     /**
      * The amount of best measurings required to be in close range.
      */
-    int K;
-    
+    private int k;
+
     /**
      * The allowed close range the best K measurings have to be in.
      */
-    double epsilon;
-    
+    private double epsilon;
+
     /**
-     * The amount of measurings taken at most. 
+     * The amount of measurings taken at most.
      */
-    int M;
+    private int m;
 
     /**
      * The constructor for a K-Best Scheme based measurement.
      * 
-     * @param K the amount of best measuring required to be in close range
-     * @param epsilon the allowed close range
-     * @param M the termination criterion
+     * @param k
+     *            the amount of best measuring required to be in close range
+     * @param epsilon
+     *            the allowed close range
+     * @param m
+     *            the termination criterion
      */
-    public KBestMeasuringParameteres(int K, double epsilon, int M) {
-        this.K = K;
+    public KBestMeasuringParameteres(final int k, final double epsilon, final int m) {
+        this.k = k;
         this.epsilon = epsilon;
-        this.M = M;
+        this.m = m;
     }
 
     /**
@@ -61,7 +64,7 @@ public class KBestMeasuringParameteres implements IMeasuringParameters {
      * @return the K
      */
     public int getK() {
-        return K;
+        return k;
     }
 
     /**
@@ -70,8 +73,8 @@ public class KBestMeasuringParameteres implements IMeasuringParameters {
      * @param k
      *            the K to set
      */
-    public void setK(int k) {
-        K = k;
+    public void setK(final int k) {
+        this.k = k;
     }
 
     /**
@@ -89,27 +92,27 @@ public class KBestMeasuringParameteres implements IMeasuringParameters {
      * @param epsilon
      *            the epsilon to set
      */
-    public void setEpsilon(double epsilon) {
+    public void setEpsilon(final double epsilon) {
         this.epsilon = epsilon;
     }
 
     /**
-     * Getter for the amount of measurings taken at most (M). 
+     * Getter for the amount of measurings taken at most (M).
      * 
      * @return the M
      */
     public int getM() {
-        return M;
+        return m;
     }
 
     /**
-     * Setter for the amount of measurings taken at most (M). 
+     * Setter for the amount of measurings taken at most (M).
      * 
      * @param m
      *            the M to set
      */
-    public void setM(int m) {
-        M = m;
+    public void setM(final int m) {
+        this.m = m;
     }
 
     /**

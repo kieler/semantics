@@ -23,8 +23,10 @@ public class LanguageException extends Exception {
 
     /**
      * The constructor for a LanguageException object.
+     * 
+     * @param message the detailed message 
      */
-    public LanguageException(String message) {
+    public LanguageException(final String message) {
         super(message);
     }
 }

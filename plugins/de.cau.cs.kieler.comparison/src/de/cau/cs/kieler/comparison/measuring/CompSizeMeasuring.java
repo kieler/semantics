@@ -45,7 +45,7 @@ public class CompSizeMeasuring implements IMeasuring {
      * @param size
      *            the byte size of the compilation
      */
-    public CompSizeMeasuring(String compiler, String testcase, long size) {
+    public CompSizeMeasuring(final String compiler, final String testcase, final long size) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.setSize(size);
@@ -81,7 +81,7 @@ public class CompSizeMeasuring implements IMeasuring {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -91,7 +91,7 @@ public class CompSizeMeasuring implements IMeasuring {
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -110,7 +110,7 @@ public class CompSizeMeasuring implements IMeasuring {
      * @param size
      *            the size to set
      */
-    public void setSize(long size) {
+    public void setSize(final long size) {
         this.size = size;
     }
 

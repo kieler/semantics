@@ -26,26 +26,26 @@ public interface IMeasuring {
      * 
      * @return the identification String
      */
-    public String getCompiler();
+    String getCompiler();
 
     /**
      * This method is used to get the identifier of the test case used in the measuring.
      * 
      * @return the identification String
      */
-    public String getTestcase();
+    String getTestcase();
 
     /**
      * This method is used to get the criterion used in the measuring.
      * 
      * @return the identification String
      */
-    public String getCriterion();
+    String getCriterion();
 
     /**
      * This method is used to get the measuring result itself.
      * 
      * @return the measuring
      */
-    public String getMeasuringData();
+    String getMeasuringData();
 }

@@ -16,7 +16,6 @@ import java.nio.file.Path;
 
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;

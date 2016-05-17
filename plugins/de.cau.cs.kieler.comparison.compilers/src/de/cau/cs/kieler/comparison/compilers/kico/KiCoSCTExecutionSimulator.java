@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.comparison.compilers.kico;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -53,8 +52,8 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
- * The KiCoSCTExecutionSimulator is used to simulate the execution of C-Code compiled by KiCo.
- * It implements {@link ExecutionSimulator} to be used by {@link AbstractKiCo} as simulator.
+ * The KiCoSCTExecutionSimulator is used to simulate the execution of C-Code compiled by KiCo. It
+ * implements {@link ExecutionSimulator} to be used by {@link AbstractKiCo} as simulator.
  * 
  * @author nfl
  */
@@ -94,7 +93,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      * {@inheritDoc}
      */
     @Override
-    public void setCompilationPath(Path compilation) {
+    public void setCompilationPath(final Path compilation) {
         compilationPath = compilation;
     }
 
@@ -102,7 +101,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      * {@inheritDoc}
      */
     @Override
-    public boolean setSrcModelPath(Path srcModel) {
+    public boolean setSrcModelPath(final Path srcModel) {
         try {
 
             URI uri = URI.createFileURI(srcModel.toString());
@@ -110,8 +109,9 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
             // Get the resource
             Resource resource = new ResourceSetImpl().getResource(uri, true);
             if (resource == null || resource.getContents() == null
-                    || resource.getContents().isEmpty())
+                    || resource.getContents().isEmpty()) {
                 return false;
+            }
 
             // The following should be a state or an SCG
             EObject stateOrSCG = resource.getContents().get(0);
@@ -133,7 +133,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      * {@inheritDoc}
      */
     @Override
-    public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         System.out.println("- entering step with jSONObject: " + jSONObject.toString());
 
         // The return object to construct
@@ -209,7 +209,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      * {@inheritDoc}
      */
     @Override
-    public void doModel2ModelTransform(ProgressMonitorAdapter monitor)
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
 
         if (monitor != null) {
@@ -252,29 +252,31 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
                     + e.getMessage() + "\n\n", true, e);
         }
     }
-    
+
     /**
      * This method is used to generate the wrapper code around the tick method.
      * 
-     * @param stateOrSCG the test case before compilation
-     * @param cSCChartCCode the compiled test case
+     * @param stateOrSCG
+     *            the test case before compilation
+     * @param cSCChartCCode
+     *            the compiled test case
      * @throws IOException
      * @throws InterruptedException
      */
-    private void generateWrapperCode(EObject stateOrSCG, String cSCChartCCode) throws IOException,
-            InterruptedException {
+    private void generateWrapperCode(final EObject stateOrSCG, final String cSCChartCCode)
+            throws IOException, InterruptedException {
         String cSimulation = "";
         if (stateOrSCG instanceof State) {
-        //  System.out.println("15");
+            // System.out.println("15");
             CSimulationSCChart cSimulationSCChart =
                     Guice.createInjector().getInstance(CSimulationSCChart.class);
-        //  System.out.println("16");
+            // System.out.println("16");
             cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
         } else if (stateOrSCG instanceof SCGraph) {
-        //  System.out.println("15");
+            // System.out.println("15");
             CSimulationSCG cSimulationSCG =
                     Guice.createInjector().getInstance(CSimulationSCG.class);
-        //  System.out.println("16");
+            // System.out.println("16");
             cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
         }
         // System.out.println("17 " + cSimulation);
@@ -322,7 +324,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      * @param modelAsText
      *            the model as text
      */
-    private static void writeOutputModel(String outputFile, byte[] model) {
+    private static void writeOutputModel(final String outputFile, final byte[] model) {
         FileOutputStream out;
         try {
             out = new FileOutputStream(outputFile);
@@ -335,7 +337,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
         }
     }
 
-    /** 
+    /**
      * The single s / kexpression extension.
      */
     private static KExpressionsValuedObjectExtensions kExpressionValuedObjectExtensions =
@@ -389,7 +391,7 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
      *            the sub directory
      * @return the bundle path
      */
-    private String getBundlePath(String subDirectory) {
+    private String getBundlePath(final String subDirectory) {
         Bundle bundle = Platform.getBundle(SCChartsSimCPlugin.PLUGIN_ID);
 
         String bundleLocation = null;

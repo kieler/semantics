@@ -30,7 +30,7 @@ public interface ICompiler {
      * 
      * @return an unique identifier
      */
-    public String getID();
+    String getID();
 
     /**
      * Each compiler translates a program from one language into another. This method is used to
@@ -38,7 +38,7 @@ public interface ICompiler {
      * 
      * @return the source language of the compiler
      */
-    public Language getSrcLanguage();
+    Language getSrcLanguage();
 
     /**
      * Each compiler translates a program from one language into another. This method is used to
@@ -46,7 +46,7 @@ public interface ICompiler {
      * 
      * @return the target language of the compiler
      */
-    public Language getTrgLanguage();
+    Language getTrgLanguage();
 
     /**
      * This method is used by the compiler to translate a given program. If the compilation can not
@@ -60,7 +60,7 @@ public interface ICompiler {
      * @throws CompilationException
      *             an exception thrown, if the compilation had problems
      */
-    public Path compile(Path srcFile, Path outputPath) throws CompilationException;
+    Path compile(Path srcFile, Path outputPath) throws CompilationException;
 
     /**
      * Each compiler may specify which test case properties he is able to compile. This way test
@@ -68,7 +68,7 @@ public interface ICompiler {
      * 
      * @return a collection of feasible properties
      */
-    public Collection<String> getFeasibleProperties();
+    Collection<String> getFeasibleProperties();
 
     /**
      * For the time measuring of the compilation an offset can be set. This offset should by default
@@ -77,7 +77,7 @@ public interface ICompiler {
      * 
      * @return the time in ms subtracted from the measuring result
      */
-    public long getCompilationOffset();
+    long getCompilationOffset();
 
     /**
      * The time measuring of test case executions can be used as a criterion for the comparison. To
@@ -86,5 +86,5 @@ public interface ICompiler {
      * 
      * @return the ExecutionSimulator used to execute a test case compiled by the compiler
      */
-    public ExecutionSimulator getSimulator();
+    ExecutionSimulator getSimulator();
 }

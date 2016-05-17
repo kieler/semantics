@@ -30,7 +30,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      * {@inheritDoc}
      */
     @Override
-    public void addListener(ILabelProviderListener listener) {
+    public void addListener(final ILabelProviderListener listener) {
 
     }
 
@@ -46,7 +46,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      * {@inheritDoc}
      */
     @Override
-    public boolean isLabelProperty(Object element, String property) {
+    public boolean isLabelProperty(final Object element, final String property) {
         return false;
     }
 
@@ -54,7 +54,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      * {@inheritDoc}
      */
     @Override
-    public void removeListener(ILabelProviderListener listener) {
+    public void removeListener(final ILabelProviderListener listener) {
 
     }
 
@@ -62,7 +62,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      * {@inheritDoc}
      */
     @Override
-    public Image getColumnImage(Object element, int columnIndex) {
+    public Image getColumnImage(final Object element, final int columnIndex) {
         return null;
     }
 
@@ -70,7 +70,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      * {@inheritDoc}
      */
     @Override
-    public String getColumnText(Object element, int columnIndex) {
+    public String getColumnText(final Object element, final int columnIndex) {
         if (element instanceof Testbench) {
             Testbench bench = (Testbench) element;
             if (columnIndex == 0) {

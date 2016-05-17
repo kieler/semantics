@@ -53,8 +53,8 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      * The constructor for this class using a {@link GeneralComparisonMeasurement} object containing
      * the measuring results of a comparison.
      * 
-     * @param comparison
-     *            filePath for the model to display
+     * @param measurement
+     *            file path of the model to display
      */
     public ComparisonDataViewContentProvider(final GeneralComparisonMeasurement measurement) {
         this.measurement = measurement;
@@ -79,7 +79,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      * {@inheritDoc}
      */
     @Override
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+    public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
 
     }
 
@@ -87,7 +87,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      * {@inheritDoc}
      */
     @Override
-    public Object[] getElements(Object inputElement) {
+    public Object[] getElements(final Object inputElement) {
 
         // constructed using a comparison string
         if (measurement == null && comparison != null) {

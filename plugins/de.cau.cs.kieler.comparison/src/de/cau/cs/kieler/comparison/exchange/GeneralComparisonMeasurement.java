@@ -19,9 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.comparison.core.ICompiler;
-import de.cau.cs.kieler.comparison.core.ITestcase;
-import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
@@ -52,7 +49,7 @@ public class GeneralComparisonMeasurement {
      * @param compilers
      *            the compilers to set
      */
-    public void setCompilers(Collection<String> compilers) {
+    public void setCompilers(final Collection<String> compilers) {
         this.compilers = compilers;
     }
 
@@ -71,7 +68,7 @@ public class GeneralComparisonMeasurement {
      * @param testcases
      *            the identifiers of the test cases to set
      */
-    public void setTestcases(Collection<String> testcases) {
+    public void setTestcases(final Collection<String> testcases) {
         this.testcases = testcases;
     }
 
@@ -90,7 +87,7 @@ public class GeneralComparisonMeasurement {
      * @param criteria
      *            the criteria to set
      */
-    public void setCriterias(Collection<String> criteria) {
+    public void setCriterias(final Collection<String> criteria) {
         this.criteria = criteria;
     }
 
@@ -111,7 +108,7 @@ public class GeneralComparisonMeasurement {
      * @param testbenches
      *            the test benches to set
      */
-    public void setTestbenches(Collection<Testbench> testbenches) {
+    public void setTestbenches(final Collection<Testbench> testbenches) {
         this.testbenches = testbenches;
     }
 
@@ -134,7 +131,7 @@ public class GeneralComparisonMeasurement {
      *            the measuring to insert
      * @return true, if the insertion was successfully; false otherwise
      */
-    public boolean insert(IMeasuring measuring) {
+    public boolean insert(final IMeasuring measuring) {
         Testbench testbench = null;
         // look for a test bench using the same compiler, test case and criterion
         for (Testbench bench : testbenches) {
@@ -190,7 +187,7 @@ public class GeneralComparisonMeasurement {
      *            the Testbench to transform
      * @return the JSON-String
      */
-    private String benchToJSON(Testbench testbench) {
+    private String benchToJSON(final Testbench testbench) {
         String ret = "{\n";
         ret += "\"compiler\": \"" + testbench.getCompiler() + "\",\n";
         ret += "\"testcase\": \"" + testbench.getTestcase() + "\",\n";
@@ -216,10 +213,11 @@ public class GeneralComparisonMeasurement {
      *            JSON-String used to generate GeneralComparisonMeasurement
      * @return generated GeneralComparisonMeasurement
      */
-    public static GeneralComparisonMeasurement fromJSON(String json) {
+    public static GeneralComparisonMeasurement fromJSON(final String json) {
         GeneralComparisonMeasurement ret = new GeneralComparisonMeasurement();
-        if (json == null || json.equals(""))
+        if (json == null || json.equals("")) {
             return ret;
+        }
 
         // try to parse the JSON-String
         try {
@@ -260,7 +258,7 @@ public class GeneralComparisonMeasurement {
      * @param object
      *            object to add
      */
-    private static <T> void addToCollection(Collection<T> collection, T object) {
+    private static <T> void addToCollection(Collection<T> collection, final T object) {
         boolean missing = true;
         for (T obj : collection) {
             if (obj.equals(object)) {
@@ -268,7 +266,8 @@ public class GeneralComparisonMeasurement {
                 break;
             }
         }
-        if (missing)
+        if (missing) {
             collection.add(object);
+        }
     }
 }

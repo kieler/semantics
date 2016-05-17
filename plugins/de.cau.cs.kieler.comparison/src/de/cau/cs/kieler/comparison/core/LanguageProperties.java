@@ -22,15 +22,54 @@ import java.util.Collection;
  */
 public abstract class LanguageProperties {
 
+    /**
+     * The String representing the cyclic property.
+     */
     public static final String CYCLIC = "CYCLIC";
+
+    /**
+     * The String representing the acyclic property.
+     */
     public static final String ACYCLIC = "ACYCLIC";
+
+    /**
+     * The String representing the reactive property.
+     */
     public static final String REACTIVE = "REACTIVE";
+
+    /**
+     * The String representing the deterministic property.
+     */
     public static final String DETERMINISTIC = "DETERMINISTIC";
+
+    /**
+     * The String representing the logically correct property.
+     */
     public static final String LOGICALLY_CORRECT = "LOGICAL-CORRECT";
+
+    /**
+     * The String representing the constructive property.
+     */
     public static final String CONSTRUCTIVE = "CONSTRUCTIVE";
+
+    /**
+     * The String representing the non constructive property.
+     */
     public static final String NON_CONSTRUCTIVE = "NON-CONSTRUCTIVE";
+
+    /**
+     * The String representing the sequentially constructive property.
+     */
     public static final String SEQUENTIALLY_CONSTRUCTIVE = "SEQUENTIAL-CONSTRUCTIVE";
+
+    /**
+     * The String representing the pure property.
+     */
     public static final String PURE = "PURE";
+
+    /**
+     * The String representing the valued property.
+     */
     public static final String VALUED = "VALUED";
 
     /**

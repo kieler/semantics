@@ -46,13 +46,14 @@ public class SctDirectoryProvider extends AbstractDirectoryProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(File file) {
+    public Collection<ITestcase> createTestcases(final File file) {
         Collection<ITestcase> testcases = super.createTestcases(file);
         // add the language to all test cases
         for (ITestcase testcase : testcases) {
             // should always be the case, because the super class only uses Testcase
-            if (testcase instanceof Testcase)
-                ((Testcase) testcase).setLanguage(Language.SCCharts);            
+            if (testcase instanceof Testcase) {
+                ((Testcase) testcase).setLanguage(Language.SCCharts);
+            }            
         }        
         return testcases;
     }

@@ -36,42 +36,52 @@ public class Testcase implements ITestcase {
     private Path testTrace;
 
     /**
+     * The setter for the identification String of this test case.
+     * 
      * @param id
      *            the id to set
      */
-    public void setID(String id) {
+    public void setID(final String id) {
         this.id = id;
     }
 
     /**
+     * The setter for the language of this test case.
+     * 
      * @param language
      *            the language to set
      */
-    public void setLanguage(Language language) {
+    public void setLanguage(final Language language) {
         this.language = language;
     }
 
     /**
-     * @param testcase
-     *            the test case to set
+     * The setter for the file path of this test case.
+     * 
+     * @param path
+     *            the path case to set
      */
-    public void setPath(Path path) {
+    public void setPath(final Path path) {
         this.path = path;
     }
 
     /**
+     * The setter for the collection of properties of this test case.
+     * 
      * @param properties
      *            the properties to set
      */
-    public void setProperties(Collection<String> properties) {
+    public void setProperties(final Collection<String> properties) {
         this.properties = properties;
     }
 
     /**
+     * The setter for the collection of dependencies of this test case.
+     * 
      * @param dependencies
      *            the dependencies to set
      */
-    public void setDependencies(Collection<Path> dependencies) {
+    public void setDependencies(final Collection<Path> dependencies) {
         this.dependencies = dependencies;
     }
 
@@ -117,15 +127,17 @@ public class Testcase implements ITestcase {
     /**
      * Creates a new Testcase without a Language from a csv String.
      * 
+     * @param file
+     *            the file path of the test case encoded as comma separated values
      * @param testcaseLine
-     *            the test case encoded as comma separated values
-     * @param testcaseLine
+     *            a single line of comma separated values
      * @return null, if the csv string could not be parsed; the created test case otherwise
      */
-    public static Testcase fromCsvString(File file, String testcaseLine) {
+    public static Testcase fromCsvString(final File file, final String testcaseLine) {
 
-        if (testcaseLine == null || testcaseLine.isEmpty())
+        if (testcaseLine == null || testcaseLine.isEmpty()) {
             return null;
+        }
 
         Testcase testcase = new Testcase();
         String[] values = testcaseLine.split(",");
@@ -159,7 +171,7 @@ public class Testcase implements ITestcase {
     /**
      * {@inheritDoc}
      */
-    public void setTestTrace(Path testTrace) {
+    public void setTestTrace(final Path testTrace) {
         this.testTrace = testTrace;
     }
 }

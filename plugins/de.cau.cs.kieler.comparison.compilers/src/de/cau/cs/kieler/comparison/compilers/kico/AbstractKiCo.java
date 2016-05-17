@@ -130,7 +130,7 @@ public abstract class AbstractKiCo implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
+    public Path compile(final Path srcFile, final Path outputPath) throws CompilationException {
 
         // try to load the source model
         URI uri = null;
@@ -142,8 +142,9 @@ public abstract class AbstractKiCo implements ICompiler {
 
         // Get the resource
         Resource resource = new ResourceSetImpl().getResource(uri, true);
-        if (resource == null || resource.getContents() == null || resource.getContents().isEmpty())
+        if (resource == null || resource.getContents() == null || resource.getContents().isEmpty()) {
             throw new CompilationException("Unable to load EObject from source file");
+        }
 
         EObject eobj = resource.getContents().get(0);
 
@@ -156,9 +157,10 @@ public abstract class AbstractKiCo implements ICompiler {
         // TODO resolve dependencies to other SCCharts
 
         CompilationResult compResult = KielerCompiler.compile(context);
-        if (compResult.getAllErrors() != null && !compResult.getAllErrors().isEmpty())
+        if (compResult.getAllErrors() != null && !compResult.getAllErrors().isEmpty()) {
             throw new CompilationException("Compilation failed: "
                     + compResult.getAllErrors().toString().replace("\n", ""));
+        }
 
         File out = new File(outputPath.toFile(), srcFile.getFileName() + trgLanguageExtension);
 

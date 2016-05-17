@@ -24,8 +24,10 @@ public class CompilationException extends Exception {
 
     /**
      * The constructor for a CompilationException object.
+     * 
+     * @param message the detailed message 
      */
-    public CompilationException(String message) {
+    public CompilationException(final String message) {
         super(message);
     }
 

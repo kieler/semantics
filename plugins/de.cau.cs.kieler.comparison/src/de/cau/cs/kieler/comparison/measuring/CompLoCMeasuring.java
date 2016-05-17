@@ -45,7 +45,7 @@ public class CompLoCMeasuring implements IMeasuring {
      * @param size
      *            the amount of lines of code
      */
-    public CompLoCMeasuring(String compiler, String testcase, int size) {
+    public CompLoCMeasuring(final String compiler, final String testcase, final int size) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.setSize(size);
@@ -81,7 +81,7 @@ public class CompLoCMeasuring implements IMeasuring {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -91,7 +91,7 @@ public class CompLoCMeasuring implements IMeasuring {
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -110,7 +110,7 @@ public class CompLoCMeasuring implements IMeasuring {
      * @param size
      *            the size to set
      */
-    public void setSize(int size) {
+    public void setSize(final int size) {
         this.size = size;
     }
 

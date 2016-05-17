@@ -45,7 +45,7 @@ public class CompError implements IMeasuring {
      * @param message
      *            the error message thrown during the compilation
      */
-    public CompError(String compiler, String testcase, String message) {
+    public CompError(final String compiler, final String testcase, final String message) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.message = message;
@@ -98,7 +98,7 @@ public class CompError implements IMeasuring {
      * @param message
      *            the message to set
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -108,7 +108,7 @@ public class CompError implements IMeasuring {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -118,7 +118,7 @@ public class CompError implements IMeasuring {
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 }

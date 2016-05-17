@@ -46,12 +46,13 @@ public class StrlDirectoryProvider extends AbstractDirectoryProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(File file) {
+    public Collection<ITestcase> createTestcases(final File file) {
         Collection<ITestcase> testcases = super.createTestcases(file);
         for (ITestcase testcase : testcases) {
             // should always be the case, because the super class uses only Testcase
-            if (testcase instanceof Testcase)
+            if (testcase instanceof Testcase) {
                 ((Testcase) testcase).setLanguage(Language.Esterel);
+            }
         }
         return testcases;
     }

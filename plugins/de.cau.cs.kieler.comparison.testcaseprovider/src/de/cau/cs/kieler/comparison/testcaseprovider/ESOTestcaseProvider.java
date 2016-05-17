@@ -48,7 +48,7 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(File file) {
+    public Collection<ITestcase> createTestcases(final File file) {
         String filePath = file.getPath();
         String fileWithoutExtension = filePath.substring(0, filePath.lastIndexOf(getExtension()));
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();

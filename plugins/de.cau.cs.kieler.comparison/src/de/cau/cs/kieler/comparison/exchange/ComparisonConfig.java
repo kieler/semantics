@@ -73,8 +73,9 @@ public class ComparisonConfig {
      * @return the compilers
      */
     public Collection<ICompiler> getCompilers() {
-        if (compilers == null)
+        if (compilers == null) {
             compilers = new ArrayList<ICompiler>();
+        }
         return compilers;
     }
 
@@ -84,7 +85,7 @@ public class ComparisonConfig {
      * @param compilers
      *            the compilers to set
      */
-    public void setCompilers(Collection<ICompiler> compilers) {
+    public void setCompilers(final Collection<ICompiler> compilers) {
         this.compilers = compilers;
     }
 
@@ -94,8 +95,9 @@ public class ComparisonConfig {
      * @return the test cases
      */
     public Collection<ITestcase> getTestcases() {
-        if (testcases == null)
+        if (testcases == null) {
             testcases = new ArrayList<ITestcase>();
+        }
         return testcases;
     }
 
@@ -105,7 +107,7 @@ public class ComparisonConfig {
      * @param testcases
      *            the test cases to set
      */
-    public void setTestcases(Collection<ITestcase> testcases) {
+    public void setTestcases(final Collection<ITestcase> testcases) {
         this.testcases = testcases;
     }
 
@@ -126,7 +128,7 @@ public class ComparisonConfig {
      * @param compareCompSpeed
      *            the boolean flag to set
      */
-    public void setCompareCompSpeed(boolean compareCompSpeed) {
+    public void setCompareCompSpeed(final boolean compareCompSpeed) {
         this.compareCompSpeed = compareCompSpeed;
     }
 
@@ -144,10 +146,10 @@ public class ComparisonConfig {
      * Setter to specify how the compilation speed should be measured. The
      * {@link IMeasuringParameters} class is used for this purpose.
      * 
-     * @param compareCompSpeedAmount
+     * @param compareCompParameters
      *            the measuring parameters to set
      */
-    public void setCompareCompParameters(IMeasuringParameters compareCompParameters) {
+    public void setCompareCompParameters(final IMeasuringParameters compareCompParameters) {
         this.compareCompParameters = compareCompParameters;
     }
 
@@ -168,7 +170,7 @@ public class ComparisonConfig {
      * @param compareExecSpeed
      *            the boolean flag to set
      */
-    public void setCompareExecSpeed(boolean compareExecSpeed) {
+    public void setCompareExecSpeed(final boolean compareExecSpeed) {
         this.compareExecSpeed = compareExecSpeed;
     }
 
@@ -187,7 +189,7 @@ public class ComparisonConfig {
      * @param compareExecSpeedAmount
      *            the amount of executions to set
      */
-    public void setCompareExecSpeedAmount(int compareExecSpeedAmount) {
+    public void setCompareExecSpeedAmount(final int compareExecSpeedAmount) {
         this.compareExecSpeedAmount = compareExecSpeedAmount;
     }
 
@@ -208,7 +210,7 @@ public class ComparisonConfig {
      * @param compareCompSize
      *            the boolean flag to set
      */
-    public void setCompareCompSize(boolean compareCompSize) {
+    public void setCompareCompSize(final boolean compareCompSize) {
         this.compareCompSize = compareCompSize;
     }
 
@@ -227,9 +229,10 @@ public class ComparisonConfig {
      * @param outputPath
      *            the output path to set
      */
-    public void setOutputPath(String outputPath) {
+    public void setOutputPath(final String outputPath) {
         this.outputPath = outputPath;
-        if (!this.outputPath.endsWith(File.separator))
+        if (!this.outputPath.endsWith(File.separator)) {
             this.outputPath += File.separator;
+        }
     }
 }

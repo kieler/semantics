@@ -52,7 +52,7 @@ public class CsvTestcaseProvider implements ITestcaseProvider {
      * {@inheritDoc}
      */
     @Override
-    public Collection<ITestcase> createTestcases(File file) {
+    public Collection<ITestcase> createTestcases(final File file) {
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();
 
         BufferedReader br = null;
@@ -86,8 +86,9 @@ public class CsvTestcaseProvider implements ITestcaseProvider {
             e.printStackTrace();
         } finally {
             try {
-                if (br != null)
+                if (br != null) {
                     br.close();
+                }
             } catch (IOException e) {
                 // not much to do in this case, except maybe logging
             }

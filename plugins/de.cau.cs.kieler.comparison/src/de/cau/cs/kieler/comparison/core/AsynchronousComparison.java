@@ -57,7 +57,7 @@ public class AsynchronousComparison extends Job {
      * @param comparison
      *            the identifier for the comparison
      */
-    public AsynchronousComparison(ComparisonConfig config, String comparison) {
+    public AsynchronousComparison(final ComparisonConfig config, final String comparison) {
         super("Asynchronous Comparison Job");
 
         setUser(true);
@@ -79,7 +79,7 @@ public class AsynchronousComparison extends Job {
      * {@inheritDoc}
      */
     @Override
-    protected IStatus run(IProgressMonitor monitor) {
+    protected IStatus run(final IProgressMonitor monitor) {
         // the compilers, which are used within the comparison
         Collection<ICompiler> compilers = config.getCompilers();
         // the test cases, which are used within the comparison
@@ -187,8 +187,8 @@ public class AsynchronousComparison extends Job {
      *            the third parameter for the K-Best Scheme (M) is used as a stop criterion
      * @return the path to the compiled test case
      */
-    private Path compileKBest(ICompiler compiler, ITestcase testcase, IProgressMonitor monitor,
-            int k, double epsilon, int m) {
+    private Path compileKBest(final ICompiler compiler, final ITestcase testcase,
+            final IProgressMonitor monitor, final int k, final double epsilon, final int m) {
 
         AbstractDataHandler dataHandler = DataHandler.getDataHandler();
 
@@ -217,7 +217,7 @@ public class AsynchronousComparison extends Job {
         PriorityQueue<Long> measurings = new PriorityQueue<Long>(k, new Comparator<Long>() {
 
             @Override
-            public int compare(Long o1, Long o2) {
+            public int compare(final Long o1, final Long o2) {
                 // reverse natural order
                 return o2.compareTo(o1);
             }
@@ -288,8 +288,9 @@ public class AsynchronousComparison extends Job {
                         "LoC measuring failed."));
             } finally {
                 try {
-                    if (br != null)
+                    if (br != null) {
                         br.close();
+                    }
                 } catch (IOException e) {
                     // not much to do in this case, except maybe logging
                 }

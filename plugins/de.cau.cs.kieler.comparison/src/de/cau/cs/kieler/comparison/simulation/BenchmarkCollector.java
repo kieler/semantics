@@ -86,7 +86,7 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
     }
 
     @Override
-    public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
 
         // gather the data produces in the last round
         try {
@@ -105,7 +105,7 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -115,7 +115,7 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -125,7 +125,7 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
      * @param comparison
      *            the comparison to set
      */
-    public void setComparison(String comparison) {
+    public void setComparison(final String comparison) {
         this.comparison = comparison;
     }
 

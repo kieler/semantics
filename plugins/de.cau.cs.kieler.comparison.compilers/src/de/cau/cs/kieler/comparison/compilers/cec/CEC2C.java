@@ -63,7 +63,7 @@ public class CEC2C implements ICompiler {
      * {@inheritDoc}
      */
     @Override
-    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
+    public Path compile(final Path srcFile, final Path outputPath) throws CompilationException {
 
         Path ret;
         URI src = null;

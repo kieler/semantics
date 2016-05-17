@@ -45,7 +45,7 @@ public class CompSpeedMeasuring implements IMeasuring {
      * @param speed
      *            the time of the compilation in ms
      */
-    public CompSpeedMeasuring(String compiler, String testcase, long speed) {
+    public CompSpeedMeasuring(final String compiler, final String testcase, final long speed) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.time = speed;
@@ -90,7 +90,7 @@ public class CompSpeedMeasuring implements IMeasuring {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -100,7 +100,7 @@ public class CompSpeedMeasuring implements IMeasuring {
      * @param testcase
      *            the testcase to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -110,7 +110,7 @@ public class CompSpeedMeasuring implements IMeasuring {
      * @param time
      *            the time to set
      */
-    public void setTime(long time) {
+    public void setTime(final long time) {
         this.time = time;
     }
 

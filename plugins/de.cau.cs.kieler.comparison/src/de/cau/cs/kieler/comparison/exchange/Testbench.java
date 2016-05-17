@@ -65,7 +65,7 @@ public class Testbench {
      * @param compiler
      *            the compiler to set
      */
-    public void setCompiler(String compiler) {
+    public void setCompiler(final String compiler) {
         this.compiler = compiler;
     }
 
@@ -84,7 +84,7 @@ public class Testbench {
      * @param testcase
      *            the test case to set
      */
-    public void setTestcase(String testcase) {
+    public void setTestcase(final String testcase) {
         this.testcase = testcase;
     }
 
@@ -103,7 +103,7 @@ public class Testbench {
      * @param criterion
      *            the criteria to set
      */
-    public void setCriterion(String criterion) {
+    public void setCriterion(final String criterion) {
         this.criterion = criterion;
     }
 
@@ -122,7 +122,7 @@ public class Testbench {
      * @param data
      *            the measurings to set
      */
-    public void setData(Collection<String> data) {
+    public void setData(final Collection<String> data) {
         this.data = data;
     }
 }
