@@ -361,6 +361,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 255; it.green = 0; it.blue = 0;]
+    private static val KColor PRIORITY_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
+        [it.red = 255; it.green = 30; it.blue = 30;]
     private static val int PROBLEM_WIDTH = 4    
 
     /** Constants for semantic object mapping */
@@ -672,6 +674,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
     
@@ -789,6 +797,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -835,6 +849,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0.1f).to(RIGHT,0,0,BOTTOM,0,0.2f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -884,6 +904,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -920,6 +946,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0.7f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -956,6 +988,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -1004,6 +1042,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
@@ -1054,6 +1098,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
             }
+            val container = node.KContainerRendering
+            val txt = container.addText("1")
+            txt.setAreaPlacementData.from(LEFT,0,0.6f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setForeground(PRIORITY_COLOR.copy)
+            txt.setFontBold(true)
+            txt.setFontSize(7)
         ]
     }
 
