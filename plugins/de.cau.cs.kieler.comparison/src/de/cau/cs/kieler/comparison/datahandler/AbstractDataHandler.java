@@ -19,8 +19,9 @@ import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
  * The AbstractDataHandler class is used to serialize and deserialize measurings taken in a
- * comparison. On top of that the AbstractDataHandler extends Observable, allowing Observer to get
- * notified, when the DataHandler serializes and changes a given set of measurings.
+ * comparison. On top of that the AbstractDataHandler extends {@link Observable}, allowing
+ * {@link Observer} to get notified, when the DataHandler serializes and changes a given set of
+ * measurings.
  * 
  * @author nfl
  */
@@ -30,9 +31,9 @@ public abstract class AbstractDataHandler extends Observable {
      * Serializes a measuring data into a comparison.
      * 
      * @param comparison
-     *            The comparison the measuring was taken in.
+     *            the comparison the measuring was taken in
      * @param data
-     *            The measuring taken during the comparison.
+     *            the measuring taken during the comparison
      */
     public abstract void serialize(String comparison, IMeasuring data);
 
@@ -40,7 +41,7 @@ public abstract class AbstractDataHandler extends Observable {
      * Deserializes a set of measurings taken in a comparison.
      * 
      * @param comparison
-     *            The comparison to deserialize.
+     *            the comparison to deserialize
      * @return a set of measurings
      */
     public abstract GeneralComparisonMeasurement getData(String comparison);

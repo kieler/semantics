@@ -14,19 +14,31 @@ package de.cau.cs.kieler.comparison.simulation;
 
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
-
 /**
+ * A specific implementation of the {@link IMeasuring} interface. The ExecSpeedMeasuring class is
+ * used to measure the time of a simulation of a compiled test case.
+ * 
  * @author nfl
- *
  */
 public class ExecSpeedMeasuring implements IMeasuring {
 
-    private String compiler;
-    private String testcase;
-    private double speed;
-    
     /**
-     * 
+     * The identifier of the compiler used in the measuring.
+     */
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measuring.
+     */
+    private String testcase;
+
+    /**
+     * The execution time of the simulation.
+     */
+    private double speed;
+
+    /**
+     * The constructor for an {@link ExecSpeedMeasuring} object.
      */
     public ExecSpeedMeasuring(String compiler, String testcase, double speed) {
         this.compiler = compiler;
@@ -49,12 +61,13 @@ public class ExecSpeedMeasuring implements IMeasuring {
     public String getTestcase() {
         return testcase;
     }
-    
+
     /**
+     * Getter for the execution time of the simulation.
      * 
-     * @return
+     * @return the speed
      */
-    public double getSpeed(){
+    public double getSpeed() {
         return speed;
     }
 
@@ -62,26 +75,35 @@ public class ExecSpeedMeasuring implements IMeasuring {
      * {@inheritDoc}
      */
     @Override
-    public String getCriteria() {
+    public String getCriterion() {
         return "Execution Speed (s)";
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter for the identifier of the compiler used in the simulation.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @param testcase the test case to set
+     * Setter for the identifier of the test case used in the simulation.
+     * 
+     * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
 
     /**
-     * @param speed the speed to set
+     * Setter for the execution time of the simulation.
+     * 
+     * @param speed
+     *            the speed to set
      */
     public void setSpeed(double speed) {
         this.speed = speed;
@@ -92,6 +114,6 @@ public class ExecSpeedMeasuring implements IMeasuring {
      */
     @Override
     public String getMeasuringData() {
-        return ""+speed;
+        return "" + speed;
     }
 }

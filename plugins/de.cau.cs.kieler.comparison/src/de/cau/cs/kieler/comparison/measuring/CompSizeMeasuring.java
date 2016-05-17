@@ -12,22 +12,38 @@
  */
 package de.cau.cs.kieler.comparison.measuring;
 
-
 /**
+ * A specific implementation of the {@link IMeasuring} interface. The CompSizeMeasuring class is
+ * used to measure the size of a compilation in bytes.
+ * 
  * @author nfl
- *
  */
 public class CompSizeMeasuring implements IMeasuring {
 
-    private String compiler;
-    private String testcase;
-    private long size;
-    
     /**
-     * @param size 
-     * @param testcase 
-     * @param compiler 
+     * The identifier of the compiler used in the measuring.
+     */
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measuring.
+     */
+    private String testcase;
+
+    /**
+     * The size of the compilation in bytes.
+     */
+    private long size;
+
+    /**
+     * The constructor for a {@link CompSizeMeasuring} object.
      * 
+     * @param compiler
+     *            the identifier of the compiler used in the measuring
+     * @param testcase
+     *            the identifier of the test case used in the measuring
+     * @param size
+     *            the byte size of the compilation
      */
     public CompSizeMeasuring(String compiler, String testcase, long size) {
         this.compiler = compiler;
@@ -55,25 +71,33 @@ public class CompSizeMeasuring implements IMeasuring {
      * {@inheritDoc}
      */
     @Override
-    public String getCriteria() {
+    public String getCriterion() {
         return "Compilation Size (byte)";
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter for the identifier of the compiler used in the measuring.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @param testcase the testcase to set
+     * Setter for the identifier of the test case used in the measuring.
+     * 
+     * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
 
     /**
+     * Getter for the size of the compilation in bytes.
+     * 
      * @return the size
      */
     public long getSize() {
@@ -81,7 +105,10 @@ public class CompSizeMeasuring implements IMeasuring {
     }
 
     /**
-     * @param size the size to set
+     * Setter for the size of the compilation in bytes.
+     * 
+     * @param size
+     *            the size to set
      */
     public void setSize(long size) {
         this.size = size;
@@ -92,6 +119,6 @@ public class CompSizeMeasuring implements IMeasuring {
      */
     @Override
     public String getMeasuringData() {
-        return ""+size;
+        return "" + size;
     }
 }

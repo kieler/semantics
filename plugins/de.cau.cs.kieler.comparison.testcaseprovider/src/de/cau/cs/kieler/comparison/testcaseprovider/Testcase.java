@@ -21,8 +21,10 @@ import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The Testcase is used as realization of the {@link ITestcase} interface implementing the getter
+ * required by the interface as well as setter methods.
+ * 
  * @author nfl
- *
  */
 public class Testcase implements ITestcase {
 
@@ -32,37 +34,42 @@ public class Testcase implements ITestcase {
     private Collection<String> properties = new ArrayList<String>();
     private Collection<Path> dependencies = new ArrayList<Path>();
     private Path testTrace;
-    
+
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setID(String id) {
         this.id = id;
     }
 
     /**
-     * @param language the language to set
+     * @param language
+     *            the language to set
      */
     public void setLanguage(Language language) {
         this.language = language;
     }
 
     /**
-     * @param testcase the test case to set
+     * @param testcase
+     *            the test case to set
      */
     public void setPath(Path path) {
         this.path = path;
     }
 
     /**
-     * @param properties the properties to set
+     * @param properties
+     *            the properties to set
      */
     public void setProperties(Collection<String> properties) {
         this.properties = properties;
     }
 
     /**
-     * @param dependencies the dependencies to set
+     * @param dependencies
+     *            the dependencies to set
      */
     public void setDependencies(Collection<Path> dependencies) {
         this.dependencies = dependencies;
@@ -110,33 +117,34 @@ public class Testcase implements ITestcase {
     /**
      * Creates a new Testcase without a Language from a csv String.
      * 
-     * @param testcaseLine the test case encoded as comma separated values
-     * @param testcaseLine 
+     * @param testcaseLine
+     *            the test case encoded as comma separated values
+     * @param testcaseLine
      * @return null, if the csv string could not be parsed; the created test case otherwise
      */
     public static Testcase fromCsvString(File file, String testcaseLine) {
 
         if (testcaseLine == null || testcaseLine.isEmpty())
             return null;
-        
+
         Testcase testcase = new Testcase();
         String[] values = testcaseLine.split(",");
-        
+
         // testcase encoded as: filePath, ID, properties[..]
         // TODO add dependencies and testTrace support, maybe per header line with field names
         try {
             testcase.setPath(new File(file.getParent() + File.separator + values[0]).toPath());
-            testcase.setID(values[1]);
+            testcase.setID(testcase.getPath().toString());
             Collection<String> props = new ArrayList<String>();
             for (int i = 2; i < values.length; i++) {
                 props.add(values[i]);
             }
-            testcase.setProperties(props);            
+            testcase.setProperties(props);
         } catch (IndexOutOfBoundsException e) {
             // parsing the csv failed: return null
             return null;
         }
-        
+
         return testcase;
     }
 

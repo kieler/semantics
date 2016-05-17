@@ -13,44 +13,57 @@
 package de.cau.cs.kieler.comparison.exchange;
 
 /**
+ * This class is used for measuring with the standard measuring approach. A
+ * standard measuring is done by taking a specific amount of measurings.
+ * 
  * @author nfl
- *
  */
 public class StandardMeasuringParameters implements IMeasuringParameters {
-    
-    private int comparisonAmount;
-    
+
     /**
+     * The amount of measurings being taken.
+     */
+    private int comparisonAmount;
+
+    /**
+     * The constructor to create a {@link StandardMeasuringParameters} object.
      * 
+     * @param amount the amount of measurings that should be taken
      */
     public StandardMeasuringParameters(int amount) {
         this.comparisonAmount = amount;
     }
-    
+
     /**
-     * 
+     * A constructor to create a {@link StandardMeasuringParameters} object with a single measuring.
      */
     public StandardMeasuringParameters() {
         this(1);
     }
 
     /**
-     * @return the comparisonAmount
+     * Getter for the amount of measurings being taken.
+     * 
+     * @return the amount
      */
     public int getComparisonAmount() {
         return comparisonAmount;
     }
 
     /**
-     * @param comparisonAmount the comparisonAmount to set
+     * Setter for the amount of measurings being taken.
+     * 
+     * @param comparisonAmount
+     *            the amount to set
      */
     public void setComparisonAmount(int comparisonAmount) {
         this.comparisonAmount = comparisonAmount;
     }
 
     /**
+     * Static method to identify this measuring method.
      * 
-     * @return
+     * @return identification String
      */
     public static String getID() {
         return "Standard";

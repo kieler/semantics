@@ -12,24 +12,43 @@
  */
 package de.cau.cs.kieler.comparison.measuring;
 
-
 /**
+ * A specific implementation of the {@link IMeasuring} interface. The CompSpeedMeasuring class is
+ * used to measure the time of a compilation in ms.
+ * 
  * @author nfl
- *
  */
 public class CompSpeedMeasuring implements IMeasuring {
 
-    private String compiler;
-    private String testcase;
-    private long speed;
-    
     /**
-     * 
+     * The identifier of the compiler used in the measuring.
      */
-    public CompSpeedMeasuring(String comp, String test, long speed) {        
-        this.compiler = comp;
-        this.testcase = test;
-        this.speed = speed;
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measuring.
+     */
+    private String testcase;
+
+    /**
+     * The time of the compilation in ms.
+     */
+    private long time;
+
+    /**
+     * The constructor for a {@link CompSizeMeasuring} object.
+     * 
+     * @param compiler
+     *            the identifier of the compiler used in the measuring
+     * @param testcase
+     *            the identifier of the test case used in the measuring
+     * @param speed
+     *            the time of the compilation in ms
+     */
+    public CompSpeedMeasuring(String compiler, String testcase, long speed) {
+        this.compiler = compiler;
+        this.testcase = testcase;
+        this.time = speed;
     }
 
     /**
@@ -47,42 +66,52 @@ public class CompSpeedMeasuring implements IMeasuring {
     public String getTestcase() {
         return testcase;
     }
-    
+
     /**
+     * Getter for the time of the compilation in ms.
      * 
-     * @return
+     * @return the time
      */
-    public long getSpeed(){
-        return speed;
+    public long getTime() {
+        return time;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getCriteria() {
+    public String getCriterion() {
         return "Compilation Speed (ms)";
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter for the identifier of the compiler used in the measuring.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @param testcase the testcase to set
+     * Setter for the identifier of the test case used in the measuring.
+     * 
+     * @param testcase
+     *            the testcase to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
 
     /**
-     * @param speed the speed to set
+     * Setter for the time of the compilation in ms.
+     * 
+     * @param time
+     *            the time to set
      */
-    public void setSpeed(long speed) {
-        this.speed = speed;
+    public void setTime(long time) {
+        this.time = time;
     }
 
     /**
@@ -90,6 +119,6 @@ public class CompSpeedMeasuring implements IMeasuring {
      */
     @Override
     public String getMeasuringData() {
-        return ""+speed;
+        return "" + time;
     }
 }

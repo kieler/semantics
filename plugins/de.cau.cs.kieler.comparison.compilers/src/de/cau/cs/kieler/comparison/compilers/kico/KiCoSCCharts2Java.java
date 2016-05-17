@@ -16,13 +16,15 @@ import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The KiCoSCCharts2Java class compiles to Java code. It is abstract and missing the transformation
+ * rule as well as a simulator.
+ * 
  * @author nfl
- *
  */
 public abstract class KiCoSCCharts2Java extends AbstractKiCo implements ICompiler {
 
     /**
-     * 
+     * The constructor of KiCo compiling to Java code.
      */
     public KiCoSCCharts2Java() {
         trgLanguage = Language.Java;

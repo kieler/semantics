@@ -19,19 +19,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.comparison.core.ICompiler;
+import de.cau.cs.kieler.comparison.core.ITestcase;
+import de.cau.cs.kieler.comparison.datahandler.AbstractDataHandler;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
+ * This class is used for the communication with {@link AbstractDataHandler}s. The measurings and
+ * components of a comparison can be stored using this class.
+ * 
  * @author nfl
  */
 public class GeneralComparisonMeasurement {
 
     private Collection<String> compilers;
     private Collection<String> testcases;
-    private Collection<String> criterias;
+    private Collection<String> criteria;
     private Collection<Testbench> testbenches;
 
     /**
+     * Getter for the {@link ICompiler}s used in the comparison.
+     * 
      * @return the compilers
      */
     public Collection<String> getCompilers() {
@@ -39,6 +47,8 @@ public class GeneralComparisonMeasurement {
     }
 
     /**
+     * Setter for the {@link ICompiler}s used in the comparison.
+     * 
      * @param compilers
      *            the compilers to set
      */
@@ -47,71 +57,90 @@ public class GeneralComparisonMeasurement {
     }
 
     /**
-     * @return the testcases
+     * Getter for the test cases used in the comparison.
+     * 
+     * @return the identifiers of the test cases
      */
     public Collection<String> getTestcases() {
         return testcases;
     }
 
     /**
+     * Setter for the test cases used in the comparison.
+     * 
      * @param testcases
-     *            the testcases to set
+     *            the identifiers of the test cases to set
      */
     public void setTestcases(Collection<String> testcases) {
         this.testcases = testcases;
     }
 
     /**
-     * @return the criterias
+     * Getter for the measuring criteria used in the comparison.
+     * 
+     * @return the criteria
      */
-    public Collection<String> getCriterias() {
-        return criterias;
+    public Collection<String> getCriteria() {
+        return criteria;
     }
 
     /**
-     * @param criterias
-     *            the criterias to set
+     * Setter for the measuring criteria used in the comparison.
+     * 
+     * @param criteria
+     *            the criteria to set
      */
-    public void setCriterias(Collection<String> criterias) {
-        this.criterias = criterias;
+    public void setCriterias(Collection<String> criteria) {
+        this.criteria = criteria;
     }
 
     /**
-     * @return the testbenches
+     * Getter for the measurings taken in the comparison. The {@link Testbench} class is used for
+     * that purpose.
+     * 
+     * @return the test benches
      */
     public Collection<Testbench> getTestbenches() {
         return testbenches;
     }
 
     /**
+     * Setter for the measurings taken in the comparison. The {@link Testbench} class is used for
+     * that purpose.
+     * 
      * @param testbenches
-     *            the testbenches to set
+     *            the test benches to set
      */
     public void setTestbenches(Collection<Testbench> testbenches) {
         this.testbenches = testbenches;
     }
 
     /**
-     * 
+     * The constructor for an empty {@link GeneralComparisonMeasurement} object.
      */
     public GeneralComparisonMeasurement() {
         compilers = new ArrayList<String>();
         testcases = new ArrayList<String>();
-        criterias = new ArrayList<String>();
+        criteria = new ArrayList<String>();
         testbenches = new ArrayList<Testbench>();
     }
 
     /**
+     * This method is used to insert a {@link IMeasuring} into the GeneralComparisonMeasurement
+     * object. If a {@link Testbench} using the same compiler, test case and criterion exists, that
+     * measuring is inserted into that test bench. Otherwise a new test bench is created.
      * 
      * @param measuring
-     * @return
+     *            the measuring to insert
+     * @return true, if the insertion was successfully; false otherwise
      */
     public boolean insert(IMeasuring measuring) {
         Testbench testbench = null;
+        // look for a test bench using the same compiler, test case and criterion
         for (Testbench bench : testbenches) {
             if (bench.getCompiler().equals(measuring.getCompiler())
                     && bench.getTestcase().equals(measuring.getTestcase())
-                    && bench.getCriteria().equals(measuring.getCriteria())) {
+                    && bench.getCriterion().equals(measuring.getCriterion())) {
                 testbench = bench;
                 break;
             }
@@ -120,7 +149,7 @@ public class GeneralComparisonMeasurement {
             testbench = new Testbench();
             testbench.setCompiler(measuring.getCompiler());
             testbench.setTestcase(measuring.getTestcase());
-            testbench.setCriteria(measuring.getCriteria());
+            testbench.setCriterion(measuring.getCriterion());
             testbenches.add(testbench);
         }
         testbench.getData().add(measuring.getMeasuringData());
@@ -129,13 +158,16 @@ public class GeneralComparisonMeasurement {
     }
 
     /**
+     * Transforms a {@link GeneralComparisonMeasurement} object into a JSON-String.
      * 
-     * @return
+     * @return the JSON-String
      */
     public String toJSON() {
+        // open new enclosing JSON object
         String ret = "{ \n";
         ret += "\"comparison\": [\n";
 
+        // add test benches
         if (testbenches.size() > 0) {
             Testbench[] array = testbenches.toArray(new Testbench[testbenches.size()]);
             ret += benchToJSON(array[0]);
@@ -144,17 +176,25 @@ public class GeneralComparisonMeasurement {
             }
         }
 
+        // close enclosing JSON object
         ret += "\n]";
         ret += "\n}";
 
         return ret;
     }
 
+    /**
+     * Transforms a given {@link Testbench} object into a JSON-String.
+     * 
+     * @param testbench
+     *            the Testbench to transform
+     * @return the JSON-String
+     */
     private String benchToJSON(Testbench testbench) {
         String ret = "{\n";
         ret += "\"compiler\": \"" + testbench.getCompiler() + "\",\n";
         ret += "\"testcase\": \"" + testbench.getTestcase() + "\",\n";
-        ret += "\"criteria\": \"" + testbench.getCriteria() + "\",\n";
+        ret += "\"criteria\": \"" + testbench.getCriterion() + "\",\n";
         ret += "\"measurings\": [";
         Collection<String> dataCollection = testbench.getData();
         if (dataCollection.size() > 0) {
@@ -170,26 +210,28 @@ public class GeneralComparisonMeasurement {
     }
 
     /**
-     * Creates a new ComparisonMeasurement from a JSON String
+     * Creates a new GeneralComparisonMeasurement from a JSON-String.
      * 
      * @param json
-     *            JSON String used to generate ComparisonMeasurement
-     * @return generated ComparisonMeasurement
+     *            JSON-String used to generate GeneralComparisonMeasurement
+     * @return generated GeneralComparisonMeasurement
      */
     public static GeneralComparisonMeasurement fromJSON(String json) {
         GeneralComparisonMeasurement ret = new GeneralComparisonMeasurement();
         if (json == null || json.equals(""))
             return ret;
 
+        // try to parse the JSON-String
         try {
             JSONObject root = new JSONObject(json);
             JSONArray array = root.getJSONArray("comparison");
+            // parse the test benches
             for (int i = 0; i < array.length(); i++) {
                 JSONObject measuring = array.getJSONObject(i);
                 Testbench bench = new Testbench();
                 bench.setCompiler(measuring.getString("compiler"));
                 bench.setTestcase(measuring.getString("testcase"));
-                bench.setCriteria(measuring.getString("criteria"));
+                bench.setCriterion(measuring.getString("criteria"));
                 JSONArray measurings = measuring.getJSONArray("measurings");
                 ArrayList<String> list = new ArrayList<String>();
                 for (int j = 0; j < measurings.length(); j++) {
@@ -199,33 +241,34 @@ public class GeneralComparisonMeasurement {
                 ret.testbenches.add(bench);
                 addToCollection(ret.compilers, bench.getCompiler());
                 addToCollection(ret.testcases, bench.getTestcase());
-                addToCollection(ret.criterias, bench.getCriteria());
+                addToCollection(ret.criteria, bench.getCriterion());
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // return everything that went well
         }
 
         return ret;
     }
 
     /**
-     * Adds a string to a given collection, if the string is not already in collection.
+     * Adds an object to a matching collection, if no equal object is already in collection.
      * 
+     * @param <T>
+     *            the type of the object and the objects in the collection
      * @param collection
      *            collection to modify
-     * @param string
-     *            string to add
+     * @param object
+     *            object to add
      */
-    private static void addToCollection(Collection<String> collection, String string) {
+    private static <T> void addToCollection(Collection<T> collection, T object) {
         boolean missing = true;
-        for (String comp : collection) {
-            if (comp.equals(string)) {
+        for (T obj : collection) {
+            if (obj.equals(object)) {
                 missing = false;
                 break;
             }
         }
         if (missing)
-            collection.add(string);
+            collection.add(object);
     }
 }

@@ -16,24 +16,43 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * The Testbench class is used to communicate measurings regarding the same compiler, test case and
+ * criterion.
+ * 
  * @author nfl
- *
  */
 public class Testbench {
 
-    private String compiler;
-    private String testcase;
-    private String criteria; 
-    private Collection<String> data;   
-    
     /**
-     * 
+     * The identifier of the compiler used in the measurings.
+     */
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measurings.
+     */
+    private String testcase;
+
+    /**
+     * The criterion used in the measurings.
+     */
+    private String criterion;
+
+    /**
+     * The collection of measurings.
+     */
+    private Collection<String> data;
+
+    /**
+     * The constructor for an empty {@link Testbench} object.
      */
     public Testbench() {
         data = new ArrayList<String>();
     }
 
     /**
+     * Getter of the identifier of the compiler used in the measurings.
+     * 
      * @return the compiler
      */
     public String getCompiler() {
@@ -41,50 +60,67 @@ public class Testbench {
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter of the identifier of the compiler used in the measurings.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @return the testcase
+     * Getter of the identifier of the test case used in the measurings.
+     * 
+     * @return the test case
      */
     public String getTestcase() {
         return testcase;
     }
 
     /**
-     * @param testcase the testcase to set
+     * Setter of the identifier of the test case used in the measurings.
+     * 
+     * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
 
     /**
-     * @return the criteria
+     * Getter of the criterion used in the measurings.
+     * 
+     * @return the criterion
      */
-    public String getCriteria() {
-        return criteria;
+    public String getCriterion() {
+        return criterion;
     }
 
     /**
-     * @param criteria the criteria to set
+     * Setter of the criterion used in the measurings.
+     * 
+     * @param criterion
+     *            the criteria to set
      */
-    public void setCriteria(String criteria) {
-        this.criteria = criteria;
+    public void setCriterion(String criterion) {
+        this.criterion = criterion;
     }
 
     /**
-     * @return the data
+     * Getter for the collection of measurings.
+     * 
+     * @return the measurings
      */
     public Collection<String> getData() {
         return data;
     }
-    
+
     /**
+     * Setter for the collection of measurings.
      * 
-     * @param data the data to set
+     * @param data
+     *            the measurings to set
      */
     public void setData(Collection<String> data) {
         this.data = data;

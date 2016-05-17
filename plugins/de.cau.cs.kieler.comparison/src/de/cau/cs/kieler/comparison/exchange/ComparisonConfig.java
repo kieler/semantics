@@ -20,23 +20,56 @@ import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 
 /**
+ * The ComparisonConfig is used to specify options for the comparison. An object of this class is
+ * required to start a comparison.
+ * 
  * @author nfl
- *
  */
 public class ComparisonConfig {
 
+    /**
+     * The {@link ICompiler} used in the comparison.
+     */
     private Collection<ICompiler> compilers;
+
+    /**
+     * The {@link ITestcase} used in the comparison.
+     */
     private Collection<ITestcase> testcases;
 
+    /**
+     * Signals the use of the compilation speed as comparison criterion.
+     */
     private boolean compareCompSpeed = false;
+
+    /**
+     * Specifies how the compilation speed should be measured.
+     */
     private IMeasuringParameters compareCompParameters;
+
+    /**
+     * Signals the use of the execution speed of compiled test cases as comparison criterion.
+     */
     private boolean compareExecSpeed = false;
+
+    /**
+     * Specifies how often the execution speed should be measured.
+     */
     private int compareExecSpeedAmount = 1;
+
+    /**
+     * Signals the use of the compilation size as comparison criterion.
+     */
     private boolean compareCompSize = false;
 
+    /**
+     * The path to store the comparison measurings.
+     */
     private String outputPath;
 
     /**
+     * Getter for the {@link ICompiler} used in the comparison.
+     * 
      * @return the compilers
      */
     public Collection<ICompiler> getCompilers() {
@@ -46,6 +79,8 @@ public class ComparisonConfig {
     }
 
     /**
+     * Setter for the {@link ICompiler} used in the comparison.
+     * 
      * @param compilers
      *            the compilers to set
      */
@@ -54,6 +89,8 @@ public class ComparisonConfig {
     }
 
     /**
+     * Getter for the {@link ITestcase} used in the comparison.
+     * 
      * @return the test cases
      */
     public Collection<ITestcase> getTestcases() {
@@ -63,6 +100,8 @@ public class ComparisonConfig {
     }
 
     /**
+     * Setter for the {@link ITestcase} used in the comparison.
+     * 
      * @param testcases
      *            the test cases to set
      */
@@ -71,90 +110,122 @@ public class ComparisonConfig {
     }
 
     /**
-     * @return the compareCompSpeed
+     * Getter for the boolean flag used to signal the use of the compilation speed as comparison
+     * criterion.
+     * 
+     * @return the boolean flag
      */
     public boolean compareCompSpeed() {
         return compareCompSpeed;
     }
 
     /**
+     * Setter for the boolean flag used to signal the use of the compilation speed as comparison
+     * criterion.
+     * 
      * @param compareCompSpeed
-     *            the compareCompSpeed to set
+     *            the boolean flag to set
      */
     public void setCompareCompSpeed(boolean compareCompSpeed) {
         this.compareCompSpeed = compareCompSpeed;
     }
 
     /**
-     * @return the compareCompSpeedAmount
+     * Getter to specify how the compilation speed should be measured. The
+     * {@link IMeasuringParameters} class is used for this purpose.
+     * 
+     * @return the measuring parameters
      */
     public IMeasuringParameters getCompareCompParameters() {
         return compareCompParameters;
     }
 
     /**
+     * Setter to specify how the compilation speed should be measured. The
+     * {@link IMeasuringParameters} class is used for this purpose.
+     * 
      * @param compareCompSpeedAmount
-     *            the compareCompSpeedAmount to set
+     *            the measuring parameters to set
      */
     public void setCompareCompParameters(IMeasuringParameters compareCompParameters) {
         this.compareCompParameters = compareCompParameters;
     }
 
     /**
-     * @return the compareExecSpeed
+     * Getter for the boolean flag used to signal the use of the execution speed of compiled test
+     * cases as comparison criterion.
+     * 
+     * @return the boolean flag
      */
     public boolean compareExecSpeed() {
         return compareExecSpeed;
     }
 
     /**
+     * Setter for the boolean flag used to signal the use of the execution speed of compiled test
+     * cases as comparison criterion.
+     * 
      * @param compareExecSpeed
-     *            the compareExecSpeed to set
+     *            the boolean flag to set
      */
     public void setCompareExecSpeed(boolean compareExecSpeed) {
         this.compareExecSpeed = compareExecSpeed;
     }
 
     /**
-     * @return the compareExecSpeedAmount
+     * Getter for the amount of time measurings used in the executions of compiled test cases.
+     * 
+     * @return the amount of executions
      */
     public int getCompareExecSpeedAmount() {
         return compareExecSpeedAmount;
     }
 
     /**
+     * Setter for the amount of time measurings used in the executions of compiled test cases.
+     * 
      * @param compareExecSpeedAmount
-     *            the compareExecSpeedAmount to set
+     *            the amount of executions to set
      */
     public void setCompareExecSpeedAmount(int compareExecSpeedAmount) {
         this.compareExecSpeedAmount = compareExecSpeedAmount;
     }
 
     /**
-     * @return the compareCompSize
+     * Getter for the boolean flag used to signal the use of the size measuring of compiled test
+     * cases as comparison criterion.
+     * 
+     * @return the boolean flag
      */
     public boolean compareCompSize() {
         return compareCompSize;
     }
 
     /**
+     * Setter for the boolean flag used to signal the use of the size measuring of compiled test
+     * cases as comparison criterion.
+     * 
      * @param compareCompSize
-     *            the compareCompSize to set
+     *            the boolean flag to set
      */
     public void setCompareCompSize(boolean compareCompSize) {
         this.compareCompSize = compareCompSize;
     }
 
     /**
-     * @return the outputPath
+     * Getter for the path to store the comparison measurings.
+     * 
+     * @return the output path
      */
     public String getOutputPath() {
         return outputPath;
     }
 
     /**
+     * Setter for the path to store the comparison measurings.
+     * 
      * @param outputPath
-     *            the outputPath to set
+     *            the output path to set
      */
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;

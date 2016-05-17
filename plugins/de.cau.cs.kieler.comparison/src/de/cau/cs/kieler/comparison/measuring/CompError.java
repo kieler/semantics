@@ -12,28 +12,45 @@
  */
 package de.cau.cs.kieler.comparison.measuring;
 
-
 /**
+ * A specific implementation of the {@link IMeasuring} interface. The CompError class is used to
+ * measure errors thrown by compilers during a compilation.
+ * 
  * @author nfl
- *
  */
 public class CompError implements IMeasuring {
 
-    private String compiler;
-    private String testcase;
-    private String message;
-    
     /**
+     * The identifier of the compiler used in the measuring.
+     */
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measuring.
+     */
+    private String testcase;
+
+    /**
+     * The error message thrown during the compilation.
+     */
+    private String message;
+
+    /**
+     * The constructor to create a {@link CompError} object.
+     * 
      * @param compiler
+     *            the identifier of the compiler used in the measuring
      * @param testcase
+     *            the identifier of the test case used in the measuring
      * @param message
+     *            the error message thrown during the compilation
      */
     public CompError(String compiler, String testcase, String message) {
         this.compiler = compiler;
         this.testcase = testcase;
         this.message = message;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -54,7 +71,7 @@ public class CompError implements IMeasuring {
      * {@inheritDoc}
      */
     @Override
-    public String getCriteria() {
+    public String getCriterion() {
         return "Error Message";
     }
 
@@ -67,6 +84,8 @@ public class CompError implements IMeasuring {
     }
 
     /**
+     * Getter for the error message thrown during the compilation.
+     * 
      * @return the message
      */
     public String getMessage() {
@@ -74,24 +93,32 @@ public class CompError implements IMeasuring {
     }
 
     /**
-     * @param message the message to set
+     * Setter for the error message thrown during the compilation.
+     * 
+     * @param message
+     *            the message to set
      */
     public void setMessage(String message) {
         this.message = message;
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter for the identifier of the compiler used in the measuring.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @param testcase the testcase to set
+     * Setter for the identifier of the test case used in the measuring.
+     * 
+     * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
-
 }

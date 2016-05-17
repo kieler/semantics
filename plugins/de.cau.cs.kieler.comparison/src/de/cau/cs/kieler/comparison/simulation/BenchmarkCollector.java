@@ -25,18 +25,37 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
+/**
+ * The BenchmarkCollector class is used for the simulation of compilations using KIEM. It is
+ * responsible for gathering all the measuring taken by KIEM for each step.
+ * 
+ * @author nfl
+ */
 public class BenchmarkCollector extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
-    // TODO remove test defaults
-    private ArrayList<Double> times = new ArrayList<Double>();
-    private String comparison;
+    /**
+     * The identifier of the compiler used in the simulation.
+     */
     private String compiler;
-    private String testcase;
-    
-    public void setComparison(String comparison) {
-        this.comparison = comparison;
-    }
 
+    /**
+     * The identifier of the test case used in the simulation.
+     */
+    private String testcase;
+
+    /**
+     * The comparison the measurings are taken in.
+     */
+    private String comparison;
+
+    /**
+     * The measurings of each step done by the KIEM.
+     */
+    private ArrayList<Double> times = new ArrayList<Double>();
+
+    /**
+     * The constructor for a {@link BenchmarkCollector} object.
+     */
     public BenchmarkCollector() {
 
     }
@@ -44,21 +63,16 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
     @Override
     public void wrapup() throws KiemInitializationException {
 
-        System.out.println("collector wrap up");
-        
-        AbstractDataHandler dataHandler = DataHandler.getDataHandler();
-        
         // overall time
-        double sum = 0;        
-        for (Double time : times)
-        {
+        double sum = 0;
+        for (Double time : times) {
             sum += time;
-        }        
-        
-        ExecSpeedMeasuring data = new ExecSpeedMeasuring(compiler, testcase, sum);        
+        }
+
+        // serialize measuring
+        AbstractDataHandler dataHandler = DataHandler.getDataHandler();
+        ExecSpeedMeasuring data = new ExecSpeedMeasuring(compiler, testcase, sum);
         dataHandler.serialize(comparison, data);
-        
-        System.out.println("collector wrap up done");
     }
 
     @Override
@@ -74,27 +88,45 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
     @Override
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
 
+        // gather the data produces in the last round
         try {
             Double bench = (Double) jSONObject.get(Benchmark.BENCHMARK_SIGNAL_TIME);
             times.add(bench);
         } catch (JSONException e) {
             // ignore
         }
+        // do not produce new data
         return null;
     }
 
     /**
+     * Setter for the compiler used in the simulation of the compiled test case.
+     * 
      * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
-        this.compiler = compiler;        
+        this.compiler = compiler;
     }
 
     /**
+     * Setter for the test case used in the simulation.
+     * 
      * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
-        this.testcase = testcase;        
+        this.testcase = testcase;
+    }
+
+    /**
+     * Setter for the comparison the measurings are taken in.
+     * 
+     * @param comparison
+     *            the comparison to set
+     */
+    public void setComparison(String comparison) {
+        this.comparison = comparison;
     }
 
     /**
@@ -102,9 +134,9 @@ public class BenchmarkCollector extends JSONObjectDataComponent implements IJSON
      */
     @Override
     public void initialize() throws KiemInitializationException {
-        
+
     }
-    
+
     /**
      * {@inheritDoc}
      */

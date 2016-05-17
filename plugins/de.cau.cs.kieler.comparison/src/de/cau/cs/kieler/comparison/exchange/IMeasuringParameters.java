@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.comparison.exchange;
 
 /**
+ * This interface is used as an abstraction level for different kinds of measuring. 
+ * 
  * @author nfl
- *
  */
 public interface IMeasuringParameters {    
     

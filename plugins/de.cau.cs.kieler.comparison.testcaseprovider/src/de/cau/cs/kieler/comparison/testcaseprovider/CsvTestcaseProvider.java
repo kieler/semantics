@@ -26,8 +26,9 @@ import de.cau.cs.kieler.comparison.core.Language;
 import de.cau.cs.kieler.comparison.core.LanguageException;
 
 /**
+ * The CsvTestcaseProvider is used to augment test cases with properties specified in a CSV file.
+ * 
  * @author nfl
- *
  */
 public class CsvTestcaseProvider implements ITestcaseProvider {
 
@@ -55,8 +56,9 @@ public class CsvTestcaseProvider implements ITestcaseProvider {
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();
 
         BufferedReader br = null;
-        try {            
+        try {
             br = new BufferedReader(new FileReader(file));
+            // each line specifies the properties of one test case
             for (String testcaseLine = br.readLine(); testcaseLine != null; testcaseLine =
                     br.readLine()) {
                 Testcase test = Testcase.fromCsvString(file, testcaseLine);

@@ -22,8 +22,9 @@ import de.cau.cs.kieler.comparison.core.ITestcaseProvider;
 import de.cau.cs.kieler.comparison.core.LanguageProperties;
 
 /**
+ * The AbstractDirectoryProvider is used to parse the directory into test case properties.
+ * 
  * @author nfl
- *
  */
 public abstract class AbstractDirectoryProvider implements ITestcaseProvider {
 

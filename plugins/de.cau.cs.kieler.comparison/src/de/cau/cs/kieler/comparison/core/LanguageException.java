@@ -13,17 +13,18 @@
 package de.cau.cs.kieler.comparison.core;
 
 /**
+ * An Exception class used by the {@link Language#fromExtension(String extension) } method.
+ * 
  * @author nfl
- *
  */
 public class LanguageException extends Exception {
-    
-    /**
-     * 
-     */
+
     private static final long serialVersionUID = -6961053620099419662L;
 
-    public LanguageException(String message){
+    /**
+     * The constructor for a LanguageException object.
+     */
+    public LanguageException(String message) {
         super(message);
     }
 }

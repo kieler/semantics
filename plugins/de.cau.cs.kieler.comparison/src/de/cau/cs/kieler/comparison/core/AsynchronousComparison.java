@@ -38,11 +38,12 @@ import de.cau.cs.kieler.comparison.measuring.CompError;
 import de.cau.cs.kieler.comparison.measuring.CompLoCMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSizeMeasuring;
 import de.cau.cs.kieler.comparison.measuring.CompSpeedMeasuring;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
- * AsynchronousComparison extends the Job class and is used to execute the comparison between
- * compilers. This job schedules itself and needs a ComparisonConfig and an identification string to
- * be created.
+ * AsynchronousComparison extends the {@link Job} class and is used to execute the comparison
+ * between compilers. This job needs a {@link ComparisonConfig} and an identification String to be
+ * created.
  * 
  * @author nfl
  */
@@ -138,85 +139,24 @@ public class AsynchronousComparison extends Job {
                     }
                 }
 
-//                // compare compilation speed
-//                if (config.compareExecSpeed()) {
-//
-//                    // no comp measurings
-//                    if (compilation == null) {
-//                        compilation = compileKBest(comp, test, monitor, 1, 0, 1);
-//                    }
-//
-//                    KiemPlugin kiemPlugin = KiemPlugin.getDefault();
-//                    if (kiemPlugin == null) {
-//                        System.out.println("KIEM Plugin is not loaded.");
-//                        continue;
-//                    }
-//
-//                    List<DataComponentWrapper> dataComponentWrapperList =
-//                            new ArrayList<DataComponentWrapper>();
-//
-//                    BenchmarkCollector collector = new BenchmarkCollector();
-//                    collector.setComparison(comparison);
-//                    collector.setCompiler(comp.getID());
-//                    collector.setTestcase(test.getID());
-//
-//                    DataComponentWrapper collectorWrapper = new DataComponentWrapper(collector);
-//                    collectorWrapper.setEnabled(true);
-//                    dataComponentWrapperList.add(collectorWrapper);
-//
-//                    System.out.println("collector added: " + dataComponentWrapperList.size());
-//
-//                    ExecutionSimulator compSim = comp.getSimulator();
-//                    if (compSim == null) {
-//                        System.out.println("compiler has no simulator");
-//                        continue;
-//                    }
-//                    compSim.setCompilationPath(compilation);
-//                    compSim.setSrcModelPath(test.getPath());
-//
-//                    DataComponentWrapper compWrapper = new DataComponentWrapper(compSim);
-//                    compWrapper.setEnabled(true);
-//                    dataComponentWrapperList.add(compWrapper);
-//
-//                    System.out.println("compiler added: " + dataComponentWrapperList.size());
-//
-//                    Execution execution = null;
-//                    try {
-//                        System.out.println("before execution create");
-//                        execution =
-//                                new Execution(dataComponentWrapperList,
-//                                        kiemPlugin.getEventManager());
-//                        System.out.println("after execution create");
-//                    } catch (KiemInitializationException e) {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    }
-//
-//                    System.out.println("before execution set");
-//                    kiemPlugin.setExecution(execution);
-//
-//                    if (kiemPlugin.initExecution()) {
-//                        System.out.println("execution initialized");
-//                        System.out.println("started? " + execution.isStarted());
-//
-//                        // just some testing; has to be removed
-//                        int stepCounter = 0;
-//                        while (execution.isStarted() && stepCounter < 100) {
-//                            execution.stepExecutionSync();
-//                            stepCounter++;
-//                        }
-//
-//                        kiemPlugin.getExecution().stopExecutionSync();
-//                    } else {
-//                        System.out.println("execution initialized failed");
-//                    }
-//
-//                    // TODO kiem magic here
-//                    // berry's inputs are contained within a subfolder
-//                    // kieler inputs use extension .eso
-//                    // make sure inputs can be matched to exactly one test case
-//
-//                }
+                // compare compilation speed
+                if (config.compareExecSpeed()) {
+
+                    // no comp measurings
+                    if (compilation == null) {
+                        compilation = compileKBest(comp, test, monitor, 1, 0, 1);
+                    }
+
+                    KiemPlugin kiemPlugin = KiemPlugin.getDefault();
+                    if (kiemPlugin == null) {
+                        System.out.println("KIEM Plugin is not loaded.");
+                        continue;
+                    }
+
+                    // TODO kiem magic here
+                    System.out
+                            .println("TODO: Comparing the Execution Speed of Compilations not implemented.");
+                }
             }
         }
 
@@ -229,14 +169,23 @@ public class AsynchronousComparison extends Job {
     }
 
     /**
-     * @param monitor
-     * @param compilers
-     * @param testcases
-     * @param outputPath
-     * @param k
-     * @param epsilon
-     * @param m
+     * Uses the K-Best Scheme for measuring compilations.
      * 
+     * @param compiler
+     *            the compiler used for the compilation
+     * @param testcase
+     *            the test case to compile
+     * @param monitor
+     *            the IProgressMonitor used for visual feedback of the progression
+     * @param k
+     *            the first parameter for the K-Best Scheme (K) is used to tell how many measurings
+     *            have to be in close range
+     * @param epsilon
+     *            the second parameter for the K-Best Scheme (epsilon) is used to describe the range
+     *            of the best K measurings
+     * @param m
+     *            the third parameter for the K-Best Scheme (M) is used as a stop criterion
+     * @return the path to the compiled test case
      */
     private Path compileKBest(ICompiler compiler, ITestcase testcase, IProgressMonitor monitor,
             int k, double epsilon, int m) {

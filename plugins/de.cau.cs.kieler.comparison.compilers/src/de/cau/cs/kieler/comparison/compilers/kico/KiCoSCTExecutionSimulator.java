@@ -53,16 +53,22 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
+ * The KiCoSCTExecutionSimulator is used to simulate the execution of C-Code compiled by KiCo.
+ * It implements {@link ExecutionSimulator} to be used by {@link AbstractKiCo} as simulator.
+ * 
  * @author nfl
- *
  */
 public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
 
-    // TODO remove test defaults
-    // TODO remove extension point
-    private Path srcModelPath = new File("/home/nfl/Documents/Master/simulator/AO.sct").toPath();
-    private Path compilationPath = new File("/home/nfl/Documents/Master/simulator/AO.sct.c")
-            .toPath();
+    /**
+     * The path to the test case before compilation.
+     */
+    private Path srcModelPath;
+
+    /**
+     * The path to the compiled test case.
+     */
+    private Path compilationPath;
 
     /** The SSCharts State / SCG is the considered model to simulate. */
     private EObject myModel = null;
@@ -229,12 +235,12 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
 
             if (cSCChartCCode.equals("")) {
                 // compilation failed
-                throw new KiemInitializationException("Unable to load CCode", true, null);
+                throw new KiemInitializationException("Unable to load C-Code", true, null);
             }
 
             // Generate Simulation wrapper C code
             generateWrapperCode(stateOrSCG, cSCChartCCode);
-            
+
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n", true, e);
@@ -246,27 +252,29 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
                     + e.getMessage() + "\n\n", true, e);
         }
     }
-
+    
     /**
-     * @param stateOrSCG 
-     * @param cSCChartCCode 
-     * @throws IOException 
-     * @throws InterruptedException 
+     * This method is used to generate the wrapper code around the tick method.
      * 
+     * @param stateOrSCG the test case before compilation
+     * @param cSCChartCCode the compiled test case
+     * @throws IOException
+     * @throws InterruptedException
      */
-    private void generateWrapperCode(EObject stateOrSCG, String cSCChartCCode) throws IOException, InterruptedException {
+    private void generateWrapperCode(EObject stateOrSCG, String cSCChartCCode) throws IOException,
+            InterruptedException {
         String cSimulation = "";
         if (stateOrSCG instanceof State) {
-            System.out.println("15");
+        //  System.out.println("15");
             CSimulationSCChart cSimulationSCChart =
                     Guice.createInjector().getInstance(CSimulationSCChart.class);
-            System.out.println("16");
+        //  System.out.println("16");
             cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
         } else if (stateOrSCG instanceof SCGraph) {
-            System.out.println("15");
+        //  System.out.println("15");
             CSimulationSCG cSimulationSCG =
                     Guice.createInjector().getInstance(CSimulationSCG.class);
-            System.out.println("16");
+        //  System.out.println("16");
             cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
         }
         // System.out.println("17 " + cSimulation);
@@ -327,7 +335,9 @@ public class KiCoSCTExecutionSimulator extends ExecutionSimulator {
         }
     }
 
-    /** The single s / kexpression extension. */
+    /** 
+     * The single s / kexpression extension.
+     */
     private static KExpressionsValuedObjectExtensions kExpressionValuedObjectExtensions =
             new KExpressionsValuedObjectExtensions();
 

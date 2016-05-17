@@ -19,8 +19,10 @@ import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The StrlDirectoryProvider extends the AbstractDirectoryProvider by adding Esterel to the Language
+ * property of each test case generated from a file with ".strl" extension.
+ * 
  * @author nfl
- *
  */
 public class StrlDirectoryProvider extends AbstractDirectoryProvider {
 

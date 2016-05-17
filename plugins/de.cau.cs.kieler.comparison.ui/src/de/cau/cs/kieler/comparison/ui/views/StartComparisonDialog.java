@@ -43,57 +43,162 @@ import de.cau.cs.kieler.comparison.core.Comparison;
 import de.cau.cs.kieler.comparison.core.ICompiler;
 import de.cau.cs.kieler.comparison.core.ITestcase;
 import de.cau.cs.kieler.comparison.core.Language;
+import de.cau.cs.kieler.comparison.exchange.ComparisonConfig;
 import de.cau.cs.kieler.comparison.exchange.IMeasuringParameters;
 import de.cau.cs.kieler.comparison.exchange.KBestMeasuringParameteres;
 import de.cau.cs.kieler.comparison.exchange.StandardMeasuringParameters;
 
 /**
+ * The StartComparisonDialog is a {@link Dialog} used to initialize a compiler comparison done by
+ * the {@link Comparison} class. The dialog displays options used in the {@link ComparisonConfig},
+ * which is required to start a comparison.
+ * 
  * @author nfl
- *
  */
 public class StartComparisonDialog extends Dialog {
 
     /**
+     * Protected constructor.
+     * 
      * @param parentShell
      */
     protected StartComparisonDialog(Shell parentShell) {
         super(parentShell);
     }
 
+    /**
+     * The Okay button to save all options into a {@link ComparisonConfig} object and start a
+     * comparison using this configuration.
+     */
     private Button okayButton;
+
+    /**
+     * The check box to signal if the compilation time of the compilers should be compared.
+     */
     private Button checkBoxCompSpeed;
+
+    /**
+     * The drop down menu for different measuring methods used in the measuring of compilation
+     * times.
+     */
     private Combo cmbCompilationMeasuring;
+
+    /**
+     * The text field for the amount of compilation time measurings used by the Standard measuring
+     * method
+     */
     private Text txtCompAmount;
+
+    /**
+     * The text field for the first parameter K used by the K-Best Scheme for the comparison of
+     * compilation times.
+     */
     private Text txtCompKBestK;
+
+    /**
+     * The text field for the second parameter epsilon used by the K-Best Scheme for the comparison
+     * of compilation times.
+     */
     private Text txtCompKBestEpsilon;
+
+    /**
+     * The text field for the third parameter M used by the K-Best Scheme for the comparison of
+     * compilation times.
+     */
     private Text txtCompKBestM;
+
+    /**
+     * Used to the different measuring parameters for the comparison of compilation times.
+     */
     private IMeasuringParameters compSpeedParams;
+
+    /**
+     * Boolean flag to signal if the compilation times should be compared.
+     */
     private boolean compSpeed;
 
-    private Button checkBoxExecSpeed;
-    private Text txtExecAmount;
-    private int execAmount = 1;
-    private boolean execSpeed;
+    // TODO implement functionality in the comparison class
+    // private Button checkBoxExecSpeed;
+    // private Text txtExecAmount;
+    // private int execAmount = 1;
+    // private boolean execSpeed;
 
+    /**
+     * Check box to signal of the size of compilations should be compared.
+     */
     private Button checkBoxCompSize;
+
+    /**
+     * Boolean flag to signal of the size of compilations should be compared.
+     */
     private boolean compSize;
 
+    /**
+     * A collection of compilers available for the comparison.
+     */
     private Collection<ICompiler> compilers = new ArrayList<ICompiler>();
+
+    /**
+     * A cached, possibly filtered collection of compilers available for the comparison.
+     */
     private Collection<String> cachedCompilers = new ArrayList<String>();
+
+    /**
+     * The drop down list of available source languages to filter compilers.
+     */
     private Combo cmbSrcLng;
+
+    /**
+     * The drop down list of available target languages to filter compilers.
+     */
     private Combo cmbTrgLng;
+
+    /**
+     * The list of compilers for the user to select.
+     */
     private List lstCompilerSelection;
 
+    /**
+     * A collection of test cases available for the comparison.
+     */
     private Collection<ITestcase> testcases = new ArrayList<ITestcase>();
+
+    /**
+     * A cached, possibly filtered collection of test cases available for the comparison.
+     */
     private ArrayList<String> cachedFilteredTestcases = new ArrayList<String>();
+
+    /**
+     * The drop down list to filter the available test cases depending on the languages they are
+     * written in.
+     */
     private Combo cmbTestcase;
+
+    /**
+     * The list of test cases for the user to select.
+     */
     private List lstTestcaseSelection;
+
+    /**
+     * A check box to filter test cases depending on their properties matching the selected
+     * compilers.
+     */
     private Button checkBoxFeasTestcases;
 
+    /**
+     * A text field to specify a path where the comparison results should be stored.
+     */
     private Text txtOutputPath;
+
+    /**
+     * The path to store measuring results specified in the text field.
+     */
     private String outputPath;
 
     /**
+     * Getter for the boolean flag indicating if a comparison should use the compilation times as
+     * measuring criterion.
+     * 
      * @return the compSpeed
      */
     public boolean compareCompSpeed() {
@@ -101,13 +206,24 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * Getter for the boolean flag indicating if a comparison should use the execution times of
+     * compiled test cases as measuring criterion.
+     * 
+     * NOTE: Since the functionality is not implemented in the {@link Comparison}, the selection of
+     * this option is disabled in the dialog.
+     * 
      * @return the execSpeed
      */
     public boolean compareExecSpeed() {
-        return execSpeed;
+        // functionality not implemented
+        // return execSpeed;
+        return false;
     }
 
     /**
+     * Getter for the boolean flag indicating if a comparison should use the size of compilations as
+     * measuring criterion.
+     * 
      * @return the compSize
      */
     public boolean compareCompSize() {
@@ -115,6 +231,9 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * Getter for the parameters of a measuring method, if the compilation time should be used as
+     * measuring criterion.
+     * 
      * @return the compSpeedParams
      */
     public IMeasuringParameters getCompSpeedParams() {
@@ -122,10 +241,18 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * Getter for the parameters of a measuring method, if the execution time of compiled test cases
+     * should be used as measuring criterion.
+     * 
+     * NOTE: Since the functionality is not implemented in the {@link Comparison}, the selection of
+     * this option is disabled in the dialog.
+     * 
      * @return the execAmount
      */
     public int getExecAmount() {
-        return execAmount;
+        // functionality not implemented
+        // return execAmount;
+        return 0;
     }
 
     /**
@@ -161,8 +288,11 @@ public class StartComparisonDialog extends Dialog {
         layout.marginLeft = 10;
         container.setLayout(layout);
 
+        // create a group for the selection of compilers
         createCompilerSelection(container);
+        // create a group for the selection of test cases
         createTestcaseSelection(container);
+        // create a group for overall configuration options
         createConfigurationSelection(container);
 
         return container;
@@ -192,20 +322,26 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * This method creates a group for the selection and configuration of the compilers used in the
+     * comparison.
+     * 
      * @param container
+     *            the container containing this group
      */
     private void createCompilerSelection(Composite container) {
 
+        // get all known languages
         String[] languageStrings = getLanguageStrings(true);
 
+        // create a new group
         Group grp = new Group(container, SWT.BORDER);
         GridLayout layout = new GridLayout(2, true);
         grp.setLayout(layout);
         grp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         grp.setText("Compiler Selection");
 
+        // add the source language filter to the group
         new Label(grp, SWT.NONE).setText("Source Language:");
-
         cmbSrcLng = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbSrcLng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbSrcLng.setItems(languageStrings);
@@ -218,8 +354,8 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
+        // add the target language filter to the group
         new Label(grp, SWT.NONE).setText("Target Language:");
-
         cmbTrgLng = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbTrgLng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbTrgLng.setItems(languageStrings);
@@ -232,6 +368,7 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
+        // add the available compilers to the group
         lstCompilerSelection = new List(grp, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
         lstCompilerSelection.addSelectionListener(new SelectionListener() {
 
@@ -256,7 +393,9 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * @return
+     * This method is used to get all known languages for compilers and test cases.
+     * 
+     * @return a list of all languages as Strings
      */
     private String[] getLanguageStrings(boolean withEmpty) {
         Language[] languages = Language.values();
@@ -274,22 +413,29 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * 
+     * This method is used to filter the list of compilers depending on the selected source and
+     * target language.
      */
     private void filterCompilerSelection() {
 
+        // get the registered compilers from the Comparison
         HashMap<String, ICompiler> registered = Comparison.getCompilers(false);
+        // get the selected source language
         String srcString = cmbSrcLng.getItem(cmbSrcLng.getSelectionIndex());
         Language src = null;
         if (srcString != null && srcString != "")
             src = Language.valueOf(srcString);
+
+        // get the selected target language
         String trgString = cmbTrgLng.getItem(cmbTrgLng.getSelectionIndex());
         Language trg = null;
         if (trgString != null && trgString != "")
             trg = Language.valueOf(trgString);
 
+        // the list of filtered compilers
         Collection<String> filtered = new ArrayList<String>();
 
+        // traverse the list of compilers for suited ones
         for (Entry<String, ICompiler> kv : registered.entrySet()) {
             if ((src == null || kv.getValue().getSrcLanguage() == null || kv.getValue()
                     .getSrcLanguage() == src)
@@ -304,17 +450,23 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * This method creates a group for the selection and configuration of the test cases used in the
+     * comparison.
+     * 
      * @param container
+     *            the container containing this group
      */
     private void createTestcaseSelection(Composite container) {
+
+        // create a new group
         Group grp = new Group(container, SWT.BORDER);
         GridLayout layout = new GridLayout(2, true);
         grp.setLayout(layout);
         grp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         grp.setText("Testcase Selection");
 
+        // add the language selection filter to the group
         new Label(grp, SWT.NONE).setText("Language:");
-
         cmbTestcase = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbTestcase.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmbTestcase.setItems(getLanguageStrings(false));
@@ -327,6 +479,7 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
+        // add the button to filter test cases depending on the selected compilers and properties
         checkBoxFeasTestcases = new Button(grp, SWT.CHECK);
         checkBoxFeasTestcases.setText("Show feasible testcases only");
         checkBoxFeasTestcases.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
@@ -344,40 +497,42 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
+        // add the available test cases to the group
         lstTestcaseSelection = new List(grp, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
-
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         int listHeight = lstTestcaseSelection.getItemHeight() * 6;
         gridData.heightHint = lstTestcaseSelection.computeTrim(0, 0, 0, listHeight).height;
         lstTestcaseSelection.setLayoutData(gridData);
-        // TODO remove debug listener
-        lstTestcaseSelection.addSelectionListener(new SelectionListener() {
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                for (String test : lstTestcaseSelection.getSelection()) {
-                    for (ITestcase testcase : Comparison.getTestcases(false).values()) {
-                        if (testcase.getID().equals(test)) {
-                            System.out.println(testcase.getPath() + ": "
-                                    + testcase.getProperties());
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-
-            }
-        });
+        // debug listener for the properties of test cases
+        // lstTestcaseSelection.addSelectionListener(new SelectionListener() {
+        //
+        // @Override
+        // public void widgetSelected(SelectionEvent e) {
+        // for (String test : lstTestcaseSelection.getSelection()) {
+        // for (ITestcase testcase : Comparison.getTestcases(false).values()) {
+        // if (testcase.getID().equals(test)) {
+        // System.out.println(testcase.getPath() + ": " + testcase.getProperties());
+        // }
+        // }
+        // }
+        // }
+        //
+        // @Override
+        // public void widgetDefaultSelected(SelectionEvent e) {
+        //
+        // }
+        // });
         filterTestcaseSelection();
     }
 
     /**
-     * 
+     * This method is used to filter the list of test cases depending on the selected language and
+     * their properties in comparison to the properties of the selected compilers.
      */
     private void filterTestcaseSelection() {
 
+        // get all available test cases
         HashMap<String, ITestcase> registered = Comparison.getTestcases(false);
 
         // show feasible only
@@ -391,7 +546,7 @@ public class StartComparisonDialog extends Dialog {
                     cachedCompilers.add(comp.getID());
                 }
 
-                // filter
+                // traverse the list of test cases for suited ones
                 for (Entry<String, ITestcase> kv : registered.entrySet()) {
                     boolean allCompsHandled = true;
                     for (ICompiler comp : compilers) {
@@ -435,7 +590,7 @@ public class StartComparisonDialog extends Dialog {
             cachedFilteredTestcases.sort(new ReverseStringComparator());
             lstTestcaseSelection.setItems(cachedFilteredTestcases.toArray(new String[0]));
         }
-        // show only matching src language
+        // show only matching source language
         else {
             Language lng = Language.valueOf(cmbTestcase.getItem(cmbTestcase.getSelectionIndex()));
             ArrayList<String> selection = new ArrayList<String>();
@@ -450,7 +605,8 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * Natural order of String.
+     * The ReverseStringComparator class is used for the comparison of Strings using their reverse
+     * natural order.
      */
     private class ReverseStringComparator implements Comparator<String> {
 
@@ -464,7 +620,7 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * Checks if the cached compiler / test case selection could be used
+     * Checks if the cached compiler / test case selection could be used.
      * 
      * @return true, if cached compilers are the same as the ones currently selected
      */
@@ -481,16 +637,20 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
+     * This method creates a group for configuration options used in the comparison.
+     * 
      * @param container
+     *            the container containing this group
      */
     private void createConfigurationSelection(Composite container) {
 
+        // create a new group
         Group grp = new Group(container, SWT.BORDER);
         grp.setLayout(new GridLayout(6, false));
         grp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1));
         grp.setText("Comparison Configuration");
 
-        // Comp Speed
+        // add the comparison of compilation time as criterion
         checkBoxCompSpeed = new Button(grp, SWT.CHECK);
         checkBoxCompSpeed.setText("Compare Compilation Speed");
         checkBoxCompSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
@@ -502,7 +662,7 @@ public class StartComparisonDialog extends Dialog {
                 txtCompKBestK.setEnabled(checkBoxCompSpeed.getSelection());
                 txtCompKBestEpsilon.setEnabled(checkBoxCompSpeed.getSelection());
                 txtCompKBestM.setEnabled(checkBoxCompSpeed.getSelection());
-                
+
                 checkOkayButton();
             }
 
@@ -513,7 +673,7 @@ public class StartComparisonDialog extends Dialog {
 
         // Combo selection for different measurements
         // since parameter fields can not be created dynamically,
-        // there is no need to add option dynamically (for example using extension points)
+        // there is no need to add options dynamically (for example using extension points)
         cmbCompilationMeasuring = new Combo(grp, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
         cmbCompilationMeasuring
                 .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
@@ -548,7 +708,7 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
-        // K-best measuring
+        // K-Best measuring
         Label lblCompKBestK = new Label(grp, SWT.NONE);
         lblCompKBestK.setText("K:");
         lblCompKBestK.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -604,47 +764,50 @@ public class StartComparisonDialog extends Dialog {
                 container.layout();
             }
         });
-        
+
         cmbCompilationMeasuring.select(0);
         checkBoxCompSpeed.setSelection(true);
 
-        // Exec Speed
-        checkBoxExecSpeed = new Button(grp, SWT.CHECK);
-        checkBoxExecSpeed.setText("Compare Execution Speed");
-        checkBoxExecSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
-        checkBoxExecSpeed.addSelectionListener(new SelectionListener() {
+        // NOTE: Since the functionality of using execution speed as measuring criterion is not
+        // implemented in the Comparison, adding the corresponding options in the dialog is disabled
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                txtExecAmount.setEnabled(checkBoxExecSpeed.getSelection());
-                checkOkayButton();
-            }
+        // add the execution time of compiled test cases as measuring criterion
+        // checkBoxExecSpeed = new Button(grp, SWT.CHECK);
+        // checkBoxExecSpeed.setText("Compare Execution Speed");
+        // checkBoxExecSpeed.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+        // checkBoxExecSpeed.addSelectionListener(new SelectionListener() {
+        //
+        // @Override
+        // public void widgetSelected(SelectionEvent e) {
+        // txtExecAmount.setEnabled(checkBoxExecSpeed.getSelection());
+        // checkOkayButton();
+        // }
+        //
+        // @Override
+        // public void widgetDefaultSelected(SelectionEvent e) {
+        // }
+        // });
 
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-        });
+        // txtExecAmount = new Text(grp, SWT.BORDER);
+        // txtExecAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        // txtExecAmount.setText(Integer.toString(execAmount));
+        // txtExecAmount.setEnabled(checkBoxExecSpeed.getSelection());
+        // txtExecAmount.addModifyListener(new ModifyListener() {
+        //
+        // @Override
+        // public void modifyText(ModifyEvent e) {
+        // Text textWidget = (Text) e.getSource();
+        // int compText;
+        // try {
+        // compText = Integer.parseInt(textWidget.getText());
+        // } catch (NumberFormatException nfe) {
+        // compText = 1;
+        // }
+        // execAmount = compText;
+        // }
+        // });
 
-        txtExecAmount = new Text(grp, SWT.BORDER);
-        txtExecAmount.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        txtExecAmount.setText(Integer.toString(execAmount));
-        txtExecAmount.setEnabled(checkBoxExecSpeed.getSelection());
-        txtExecAmount.addModifyListener(new ModifyListener() {
-
-            @Override
-            public void modifyText(ModifyEvent e) {
-                Text textWidget = (Text) e.getSource();
-                int compText;
-                try {
-                    compText = Integer.parseInt(textWidget.getText());
-                } catch (NumberFormatException nfe) {
-                    compText = 1;
-                }
-                execAmount = compText;
-            }
-        });
-
-        // Comp Size
+        // add the comparison of compilation size
         checkBoxCompSize = new Button(grp, SWT.CHECK);
         checkBoxCompSize.setText("Compare Compilation Size");
         checkBoxCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1));
@@ -660,8 +823,8 @@ public class StartComparisonDialog extends Dialog {
             }
         });
 
+        // add the path for storing measuring results
         new Label(grp, SWT.NONE).setText("Output path");
-        ;
         txtOutputPath = new Text(grp, SWT.BORDER);
         txtOutputPath.setText(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
                 + "/");
@@ -673,6 +836,7 @@ public class StartComparisonDialog extends Dialog {
      */
     @Override
     protected void okPressed() {
+        // save all options specified in the dialog into variables
         String selectedCompParams =
                 cmbCompilationMeasuring.getItem(cmbCompilationMeasuring.getSelectionIndex());
         if (selectedCompParams.equals(StandardMeasuringParameters.getID())) {
@@ -680,7 +844,7 @@ public class StartComparisonDialog extends Dialog {
             try {
                 compAmount = Integer.parseInt(txtCompAmount.getText());
             } catch (NumberFormatException nfe) {
-                // TODO String could not be parsed into int
+                // String could not be parsed into int, take the default
             }
             compSpeedParams = new StandardMeasuringParameters(compAmount);
         } else if (selectedCompParams.equals(KBestMeasuringParameteres.getID())) {
@@ -716,13 +880,16 @@ public class StartComparisonDialog extends Dialog {
             System.out.println("No valid / known method for compilation measuring selected");
         }
 
-        try {
-            execAmount = Integer.parseInt(txtExecAmount.getText());
-        } catch (NumberFormatException nfe) {
-            execAmount = 1;
-        }
+        // NOTE: Since the functionality of using execution speed as measuring criterion is not
+        // implemented in the Comparison, adding the corresponding options in the dialog is disabled
 
-        execSpeed = checkBoxExecSpeed.getSelection();
+        // try {
+        // execAmount = Integer.parseInt(txtExecAmount.getText());
+        // } catch (NumberFormatException nfe) {
+        // execAmount = 1;
+        // }
+        //
+        // execSpeed = checkBoxExecSpeed.getSelection();
         compSpeed = checkBoxCompSpeed.getSelection();
         compSize = checkBoxCompSize.getSelection();
         saveCompilers();
@@ -733,7 +900,9 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * 
+     * This method is used to store the compilers selected in the dialog in variables. Since the
+     * dialog only displays the String identifier, the matching {@link ICompiler} implementation
+     * needs to be found.
      */
     public void saveCompilers() {
         HashMap<String, ICompiler> map = Comparison.getCompilers(false);
@@ -751,7 +920,9 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * 
+     * This method is used to store the test cases selected in the dialog in variables. Since the
+     * dialog only displays the String identifier, the matching {@link ITestcase} implementation
+     * needs to be found.
      */
     private void saveTestcases() {
         HashMap<String, ITestcase> map = Comparison.getTestcases(false);
@@ -784,12 +955,12 @@ public class StartComparisonDialog extends Dialog {
     }
 
     /**
-     * Enables and disables the OK Button
+     * Enables and disables the OK Button.
      */
     private void checkOkayButton() {
         boolean enabled = false;
         enabled |= checkBoxCompSpeed.getSelection();
-        enabled |= checkBoxExecSpeed.getSelection();
+        // enabled |= checkBoxExecSpeed.getSelection();
         enabled |= checkBoxCompSize.getSelection();
         okayButton.setEnabled(enabled);
     }

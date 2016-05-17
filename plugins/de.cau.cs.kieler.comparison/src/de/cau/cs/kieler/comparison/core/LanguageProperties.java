@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * This class is used to store all known properties used by compilers or test cases.
+ * 
  * @author nfl
  */
 public abstract class LanguageProperties {
-    
+
     public static final String CYCLIC = "CYCLIC";
     public static final String ACYCLIC = "ACYCLIC";
     public static final String REACTIVE = "REACTIVE";
@@ -30,8 +32,14 @@ public abstract class LanguageProperties {
     public static final String SEQUENTIALLY_CONSTRUCTIVE = "SEQUENTIAL-CONSTRUCTIVE";
     public static final String PURE = "PURE";
     public static final String VALUED = "VALUED";
-    
-    public static Collection<String> getAllProperties(){
+
+    /**
+     * This static method can be used to get a collection of properties, which are used by compilers
+     * or test cases in the comparison framework.
+     * 
+     * @return a collection of properties represented as Strings
+     */
+    public static Collection<String> getAllProperties() {
         ArrayList<String> ret = new ArrayList<String>();
         ret.add(CYCLIC);
         ret.add(ACYCLIC);
@@ -42,9 +50,9 @@ public abstract class LanguageProperties {
         ret.add(SEQUENTIALLY_CONSTRUCTIVE);
         ret.add(PURE);
         ret.add(VALUED);
-        
+
         // TODO maybe add extension point?
-        
+
         return ret;
     }
 }

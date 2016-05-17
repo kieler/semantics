@@ -52,8 +52,8 @@ public class SctDirectoryProvider extends AbstractDirectoryProvider {
         for (ITestcase testcase : testcases) {
             // should always be the case, because the super class only uses Testcase
             if (testcase instanceof Testcase)
-                ((Testcase) testcase).setLanguage(Language.SCCharts);
-        }
+                ((Testcase) testcase).setLanguage(Language.SCCharts);            
+        }        
         return testcases;
     }
 }

@@ -12,23 +12,21 @@
  */
 package de.cau.cs.kieler.comparison.core;
 
-
 /**
+ * An Exception class used to unify compilation errors. CompilationException can be thrown by a
+ * compiler during the comparison and will be handled.
+ * 
  * @author nfl
- *
  */
 public class CompilationException extends Exception {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2887264246507111126L;
 
     /**
-     * 
+     * The constructor for a CompilationException object.
      */
     public CompilationException(String message) {
         super(message);
-    }    
-    
+    }
+
 }

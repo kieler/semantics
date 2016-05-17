@@ -19,8 +19,10 @@ import org.eclipse.swt.graphics.Image;
 import de.cau.cs.kieler.comparison.exchange.Testbench;
 
 /**
+ * The ComparisonDataViewLabelProvider is used to display the measurings in the
+ * {@link ComparisonDataView} provided by the {@link ComparisonDataViewContentProvider}.
+ * 
  * @author nfl
- *
  */
 public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
 
@@ -29,8 +31,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      */
     @Override
     public void addListener(ILabelProviderListener listener) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -38,8 +39,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      */
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -47,7 +47,6 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      */
     @Override
     public boolean isLabelProperty(Object element, String property) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -56,8 +55,7 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      */
     @Override
     public void removeListener(ILabelProviderListener listener) {
-        // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -65,7 +63,6 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
      */
     @Override
     public Image getColumnImage(Object element, int columnIndex) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -75,14 +72,14 @@ public class ComparisonDataViewLabelProvider implements ITableLabelProvider {
     @Override
     public String getColumnText(Object element, int columnIndex) {
         if (element instanceof Testbench) {
-            Testbench bench = (Testbench)element; 
-            if (columnIndex == 0){
-                return bench.getCriteria();
-            } else if (columnIndex == 1){
+            Testbench bench = (Testbench) element;
+            if (columnIndex == 0) {
+                return bench.getCriterion();
+            } else if (columnIndex == 1) {
                 return bench.getCompiler();
-            } else if (columnIndex == 2){
+            } else if (columnIndex == 2) {
                 return bench.getTestcase();
-            } else if (columnIndex == 3){
+            } else if (columnIndex == 3) {
                 return bench.getData().toString();
             }
         }

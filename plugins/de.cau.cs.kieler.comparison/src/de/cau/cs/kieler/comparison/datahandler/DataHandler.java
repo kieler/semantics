@@ -23,8 +23,10 @@ import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.measuring.IMeasuring;
 
 /**
+ * A specific implementation of the {@link AbstractDataHandler}. This DataHandler uses the Singleton
+ * pattern and serializes using the JSON data format.
+ * 
  * @author nfl
- *
  */
 public class DataHandler extends AbstractDataHandler {
 
@@ -47,29 +49,36 @@ public class DataHandler extends AbstractDataHandler {
             singleton = new DataHandler();
         return singleton;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void serialize(String comparison, IMeasuring data) { 
+    public void serialize(String comparison, IMeasuring data) {
         // loading the complete measurement is not very performant, but required for json insertion
         GeneralComparisonMeasurement measurement = getData(comparison);
         measurement.insert(data);
         saveAsJSONFile(comparison, measurement);
+
         this.setChanged();
         notifyObservers(measurement);
     }
 
     /**
+     * This method stores a comparison and its measurings as a JSON file. The comparison identifier
+     * given as String is used for unique naming of the JSON file. The
+     * {@link GeneralComparisonMeasurement} contains the measurings.
+     * 
      * @param comparison
-     * @param measures
+     *            a String which uniquely identifies the comparison
+     * @param measurement
+     *            the measurings to serialize
      */
     private void saveAsJSONFile(String comparison, GeneralComparisonMeasurement measurement) {
-        
+
         String json = measurement.toJSON();
         BufferedWriter bw = null;
-                
+
         try {
             if (comparison.toLowerCase().contains(".json"))
                 bw = new BufferedWriter(new FileWriter(comparison));
@@ -77,15 +86,15 @@ public class DataHandler extends AbstractDataHandler {
                 bw = new BufferedWriter(new FileWriter(comparison + ".JSON"));
             bw.write(json);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // measurings are probably lost
+            // TODO better error logging
+            System.out.println("Measurings could not be serialized.");
         } finally {
             try {
                 bw.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }            
+                // ignore
+            }
         }
     }
 
@@ -93,45 +102,49 @@ public class DataHandler extends AbstractDataHandler {
      * {@inheritDoc}
      */
     @Override
-    public GeneralComparisonMeasurement getData(String comparison) {   
-
+    public GeneralComparisonMeasurement getData(String comparison) {
+        // load the content of a JSON file as String
         String json = loadJSONFile(comparison);
+        // parse the String to a GeneralComparisonMeasurement object
         return GeneralComparisonMeasurement.fromJSON(json);
     }
 
     /**
+     * This method reads a comparison and its measurings from a JSON file as a String.
      * 
      * @param filePath
-     * @return
+     *            the JSON file containing the measurings
+     * @return a JSON String of the comparison
      */
     private String loadJSONFile(String filePath) {
-        
+
         String jsonObj = "";
         BufferedReader br = null;
         try {
             if (filePath.toLowerCase().contains(".json"))
                 br = new BufferedReader(new FileReader(filePath));
-            else                
+            else
                 br = new BufferedReader(new FileReader(filePath + ".JSON"));
-            while (br.ready())
-            {
-             int c = br.read();
-             if (c == -1)
-                 break;
-             jsonObj += (char)c;
+            while (br.ready()) {
+                int c = br.read();
+                if (c == -1)
+                    break;
+                jsonObj += (char) c;
             }
         } catch (FileNotFoundException e) {
             // File not found -> return empty String
+            jsonObj = "";
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // TODO better error logging
+            System.out.println("Measurings could not be deserialized.");
+            // make sure the return String is not corrupted
+            jsonObj = "";
         } finally {
             try {
                 if (br != null)
                     br.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // ignore
             }
         }
         return jsonObj;

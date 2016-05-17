@@ -27,8 +27,11 @@ import de.cau.cs.kieler.comparison.simulation.ExecutionSimulator;
 import de.cau.cs.kieler.esterel.cec.CEC;
 
 /**
+ * The CEC2C class realizes the {@link ICompiler} interface required for the use of the compiler
+ * extension point in the comparison plugin. This class uses the de.cau.cs.kieler.esterel.cec.CEC
+ * plugin to compiled program from Esterel to C code.
+ * 
  * @author nfl
- *
  */
 public class CEC2C implements ICompiler {
 
@@ -66,16 +69,20 @@ public class CEC2C implements ICompiler {
         URI src = null;
         File out = null;
 
+        // try to create / find source and target files.
         try {
             out = new File(outputPath.toFile(), srcFile.getFileName() + ".c");
             src = srcFile.toUri();
         } catch (NullPointerException e) {
+            // compilation can not be completed
             throw new CompilationException("Source File not found");
         }
 
+        // try to compile the source file
         try {
             ret = new File(CEC.run(src, out, null).toString()).toPath();
         } catch (IOException e) {
+            // compilation was not successful
             throw new CompilationException("Compilation failed: "
                     + e.getMessage().replace("\n", ""));
         }
@@ -88,7 +95,7 @@ public class CEC2C implements ICompiler {
      */
     @Override
     public Collection<String> getFeasibleProperties() {
-        // TODO getFeasibleProperties 
+        // TODO get all feasible properties
         Collection<String> ret = new ArrayList<String>();
         ret.add(LanguageProperties.CYCLIC);
         ret.add(LanguageProperties.ACYCLIC);
@@ -104,7 +111,6 @@ public class CEC2C implements ICompiler {
      */
     @Override
     public long getCompilationOffset() {
-        // TODO compute the right value
         return 0;
     }
 

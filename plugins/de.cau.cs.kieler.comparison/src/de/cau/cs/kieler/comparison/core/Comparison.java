@@ -191,9 +191,8 @@ public final class Comparison {
 
         // Add the default folder (de.cau.cs.kieler.comparison/testcases/) as test case folder
         try {
-            // TODO remove TestEsterel/ below
             URL url =
-                    new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/TestEsterel/");
+                    new URL("platform:/plugin/de.cau.cs.kieler.comparison/testcases/");
             files.add(new File(FileLocator.resolve(url).toURI()).getCanonicalFile());
         } catch (IOException | URISyntaxException e) {
             // should never happen
@@ -317,9 +316,9 @@ public final class Comparison {
     }
 
     /**
-     * Inserts a Collection of ITestcase into another Collection of ITestcase without Duplicates. If
-     * two ITestcase have the same file path, but are not compatible, the second ITestcase will be
-     * ignored. If two ITestcase are compatible, the properties are merged.
+     * Inserts a collection of {@link ITestcase} into another collection of ITestcase without
+     * duplicates. If two ITestcase have the same file path, but are not compatible, the second
+     * ITestcase will be ignored. If two ITestcase are compatible, the properties are merged.
      * 
      * Warning: This merge could possible result in a problematic ITestcase, if different providers
      * provide excluding properties.
@@ -361,9 +360,9 @@ public final class Comparison {
     }
 
     /**
-     * Tries to merge the second test case into the first one. This can only be done successfully,
-     * if both test cases have the same file path, Language and identifier. In that case both lists
-     * of properties are getting merged into a single one.
+     * Tries to merge the second {@link ITestcase} into the first one. This can only be done
+     * successfully, if both test cases have the same file path, {@link Language} and identifier. In
+     * that case both lists of properties are getting merged into a single one.
      * 
      * @param into
      *            the first test case to merge into
@@ -411,7 +410,7 @@ public final class Comparison {
     }
 
     /**
-     * Inserts a Collection of String into another Collection of String without Duplicates.
+     * Inserts a collection of String into another collection of String without duplicates.
      * 
      * @param into
      *            the collection to insert into
@@ -440,7 +439,7 @@ public final class Comparison {
 
     /**
      * Used to get a collection of all test case providers. The collection consist of KeyValuePairs,
-     * where the value is an instance of ITestcaseProvider and the key is an identifier for this
+     * where the value is an instance of {@link ITestcaseProvider} and the key is an identifier for this
      * provider as String. This method uses caching for optimization.
      * 
      * @param forceReload

@@ -13,16 +13,22 @@
 package de.cau.cs.kieler.comparison.core;
 
 /**
+ * Each test case program is written in a programming language. This enum is used for these
+ * languages and specifies which languages are handled in the comparison.
+ * 
  * @author nfl
  */
 public enum Language {
 
-    SCCharts,
-    Esterel,
-    Java,
-    C,
-    ExecutableCode;
+    SCCharts, Esterel, Java, C, ExecutableCode;
 
+    /**
+     * This method can be used to get the language matching to a given file extension.
+     * 
+     * @param extension the file extension
+     * @return the language using the file extension
+     * @throws LanguageException if no matching language can be found, an exception is thrown
+     */
     public static Language fromExtension(String extension) throws LanguageException {
         if (extension != null) {
             switch (extension) {

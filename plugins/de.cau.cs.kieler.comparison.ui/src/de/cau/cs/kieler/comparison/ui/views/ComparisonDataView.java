@@ -47,16 +47,10 @@ import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 import de.cau.cs.kieler.comparison.exchange.Testbench;
 
 /**
- * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
- * from the model. The sample creates a dummy model on the fly, but a real implementation would
- * connect to the model available either in this or another plug-in (e.g. the workspace). The view
- * is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model objects should be presented in the view. Each
- * view can present the same model objects using different labels and icons, if needed.
- * Alternatively, a single label provider can be shared between views in order to ensure that
- * objects of the same type are presented in the same way everywhere.
- * <p>
+ * The ComparisonDataView is a view used to display the measuring results gathered by a compiler
+ * comparison. This view uses the {@link DataHandler} class to load measuring results. This view can
+ * also be used to initiate a comparison done by the {@link Comparison} class by using the
+ * {@link StartComparisonDialog}.
  * 
  * @author nfl
  */
@@ -67,8 +61,19 @@ public class ComparisonDataView extends ViewPart implements Observer {
      */
     public static final String ID = "de.cau.cs.kieler.comparison.ui.views.DataView";
 
+    /**
+     * The viewer.
+     */
     private TableViewer viewer;
+
+    /**
+     * The action to load a set of measurings.
+     */
     private Action loadFile;
+
+    /**
+     * The action to initiate a comparison.
+     */
     private Action start;
 
     /**
@@ -77,8 +82,19 @@ public class ComparisonDataView extends ViewPart implements Observer {
     public ComparisonDataView() {
     }
 
+    /**
+     * The titles of the columns in the table.
+     */
     static final String[] TITLES = { "Criteria", "Compiler", "Testcase", "Results" };
+
+    /**
+     * The initial width of each column in the table.
+     */
     static final int[] WIDTH = { 200, 150, 350, 200 };
+
+    /**
+     * The measurings can be sorted by a specified column.
+     */
     private int sortBy = -1;
 
     /**
@@ -114,6 +130,11 @@ public class ComparisonDataView extends ViewPart implements Observer {
         contributeToActionBars();
     }
 
+    /**
+     * The SortListener is used to sort the columns of the table view.
+     * 
+     * @author nfl
+     */
     private class SortListener implements SelectionListener {
         @Override
         public void widgetSelected(SelectionEvent e) {
@@ -140,6 +161,11 @@ public class ComparisonDataView extends ViewPart implements Observer {
 
     }
 
+    /**
+     * The TestbenchComparator is used to compare {@link Testbench}es.
+     * 
+     * @author nfl
+     */
     private class TestbenchComparator extends ViewerComparator {
         public int compare(Viewer viewer, Object e1, Object e2) {
             if (e1 instanceof Testbench && e2 instanceof Testbench) {
@@ -148,7 +174,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
                 int comp = 0;
                 switch (sortBy) {
                 case 0:
-                    comp = t1.getCriteria().compareTo(t2.getCriteria());
+                    comp = t1.getCriterion().compareTo(t2.getCriterion());
                     break;
                 case 1:
                     comp = t1.getCompiler().compareTo(t2.getCompiler());
@@ -178,8 +204,14 @@ public class ComparisonDataView extends ViewPart implements Observer {
             }
         };
     }
-    
-    private class InfoDoubleClickListener implements IDoubleClickListener{        
+
+    /**
+     * The InfoDoubleClickListener is used to open a more detailed view of a measuring by double
+     * clicking a row.
+     * 
+     * @author nfl
+     */
+    private class InfoDoubleClickListener implements IDoubleClickListener {
         @Override
         public void doubleClick(DoubleClickEvent event) {
             ISelection sel = event.getSelection();
@@ -191,7 +223,7 @@ public class ComparisonDataView extends ViewPart implements Observer {
                     String infoText = "";
                     infoText += "Compiler: \n" + bench.getCompiler();
                     infoText += "\n\nTest case: \n" + bench.getTestcase();
-                    infoText += "\n\nCriteria: \n" + bench.getCriteria();
+                    infoText += "\n\nCriteria: \n" + bench.getCriterion();
                     if (bench.getData() != null && !bench.getData().isEmpty()) {
                         infoText += "\n\nMeasuring";
                         if (bench.getData().size() > 1) {
@@ -208,16 +240,28 @@ public class ComparisonDataView extends ViewPart implements Observer {
         }
     }
 
+    /**
+     * Makes contritbutions to the ActionBars, in specific the two new actions (load a set of
+     * measurings and initiate a comparison) to the tool bar.
+     */
     private void contributeToActionBars() {
         IActionBars bars = getViewSite().getActionBars();
         fillLocalToolBar(bars.getToolBarManager());
     }
 
+    /**
+     * Adds the two new actions to the tool bar.
+     * 
+     * @param manager
+     */
     private void fillLocalToolBar(final IToolBarManager manager) {
         manager.add(loadFile);
         manager.add(start);
     }
 
+    /**
+     * Creates the two new actions.
+     */
     private void makeActions() {
         loadFile = new Action() {
             public void run() {
@@ -233,13 +277,18 @@ public class ComparisonDataView extends ViewPart implements Observer {
             }
         };
         start.setText("Start Comparison");
-        start.setToolTipText("Start Comparison tooltip");        
+        start.setToolTipText("Start Comparison tooltip");
     }
 
+    /**
+     * Method used to load a set of measurings. This method uses the
+     * {@link ComparisonDataViewContentProvider} for this purpose.
+     */
     private void loadFile() {
         // File standard dialog
         FileDialog fileDialog = new FileDialog(viewer.getControl().getShell(), SWT.OPEN);
         fileDialog.setText("Select File");
+        // The JSON Datahandler is used in this view
         fileDialog.setFilterExtensions(new String[] { "*.JSON" });
         fileDialog.setFilterNames(new String[] { "Comparison Results(*.JSON)" });
 
@@ -248,12 +297,19 @@ public class ComparisonDataView extends ViewPart implements Observer {
             loadComparisonResult(open);
     }
 
+    /**
+     * Initializes a comparison. The {@link ComparisonConfig} is created and filled using the
+     * {@link StartComparisonDialog}.
+     */
     private void initiateComparison() {
 
+        // open a new dialog
         StartComparisonDialog dialog = new StartComparisonDialog(viewer.getControl().getShell());
+        // if the dialog got canceled, don't proceed
         if (dialog.open() != Window.OK)
             return;
 
+        // get all the information from the dialog
         ComparisonConfig conf = new ComparisonConfig();
         conf.setCompareExecSpeed(dialog.compareExecSpeed());
         conf.setCompareExecSpeedAmount(dialog.getExecAmount());
@@ -264,10 +320,11 @@ public class ComparisonDataView extends ViewPart implements Observer {
         conf.setTestcases(dialog.getTestcases());
         conf.setOutputPath(dialog.getOutputPath());
 
+        // register this view to be notified
         DataHandler.getDataHandler().addObserver(this);
-        
-        Comparison comparison = Comparison.getComparison();
-        comparison.startComparison(conf);        
+
+        // initiate
+        Comparison.getComparison().startComparison(conf);
     }
 
     /**
@@ -278,35 +335,39 @@ public class ComparisonDataView extends ViewPart implements Observer {
     }
 
     /**
+     * This method is used to load the results of a comparison.
      * 
      * @param comp
+     *            the String identifier for a comparison to load
      */
     public void loadComparisonResult(String comp) {
         Runnable run = new Runnable() {
-            
+
             @Override
             public void run() {
-                viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));                
+                viewer.setContentProvider(new ComparisonDataViewContentProvider(comp));
             }
         };
-        
+
         Display.getDefault().syncExec(run);
     }
 
     /**
+     * This method is used to load the results of a comparison.
      * 
      * @param measurement
-     * @return 
+     *            the measurings of a comparison stored in a {@link GeneralComparisonMeasurement}
+     *            object
      */
     public void loadComparisonResult(GeneralComparisonMeasurement measurement) {
         Runnable run = new Runnable() {
-            
+
             @Override
             public void run() {
-                viewer.setContentProvider(new ComparisonDataViewContentProvider(measurement));                
+                viewer.setContentProvider(new ComparisonDataViewContentProvider(measurement));
             }
         };
-        
+
         Display.getDefault().syncExec(run);
     }
 

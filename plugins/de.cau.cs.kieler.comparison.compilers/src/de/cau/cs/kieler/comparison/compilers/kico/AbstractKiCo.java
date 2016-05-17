@@ -35,18 +35,40 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 
 /**
+ * The AbstractKiCo class utilizes the Write-Things-Once principle. KiCo is able to compile from and
+ * to any language within the KiCo compilation chain displayed in the KiCo Selection View. The
+ * compilation call however is always the same. Therefore, this method is implemented in this
+ * abstract class to enable multiple KiCo implementations using this abstract super class.
+ * 
  * @author nfl
- *
  */
 public abstract class AbstractKiCo implements ICompiler {
 
+    /**
+     * The ExecutionSimulator used for the simulation of compiled test cases.
+     */
     protected ExecutionSimulator simulator;
+
+    /**
+     * The language to compile a test case into.
+     */
     protected Language trgLanguage;
+
+    /**
+     * A String to identify the target language.
+     */
     protected String trgLanguageString;
+
+    /**
+     * A String representing the file extension for the target language.
+     */
     protected String trgLanguageExtension;
+
+    /**
+     * The transformation rule used by KiCo for the compilation into the target language.
+     */
     protected String transformation = "";
 
-    
     /**
      * {@inheritDoc}
      */
@@ -71,13 +93,12 @@ public abstract class AbstractKiCo implements ICompiler {
         return trgLanguage;
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
     public Collection<String> getFeasibleProperties() {
-        // TODO get all feasible properties 
+        // TODO get all feasible properties
         Collection<String> ret = new ArrayList<String>();
         ret.add(LanguageProperties.CYCLIC);
         ret.add(LanguageProperties.ACYCLIC);
@@ -105,53 +126,57 @@ public abstract class AbstractKiCo implements ICompiler {
         return simulator;
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public Path compile(Path srcFile, Path outputPath) throws CompilationException {        
-        
+    public Path compile(Path srcFile, Path outputPath) throws CompilationException {
+
+        // try to load the source model
         URI uri = null;
-        try {            
+        try {
             uri = URI.createFileURI(srcFile.toString());
         } catch (IllegalArgumentException e) {
             throw new CompilationException("Unable to load source file");
-        }        
-        
+        }
+
         // Get the resource
         Resource resource = new ResourceSetImpl().getResource(uri, true);
-        if(resource == null || resource.getContents() == null || resource.getContents().isEmpty())
+        if (resource == null || resource.getContents() == null || resource.getContents().isEmpty())
             throw new CompilationException("Unable to load EObject from source file");
-        
+
         EObject eobj = resource.getContents().get(0);
-        
-        KielerCompilerContext context = new KielerCompilerContext("!T_SIMULATIONVISUALIZATION, !T_ESTERELSIMULATIONVISUALIZATION, " + transformation, eobj); 
+
+        KielerCompilerContext context =
+                new KielerCompilerContext(
+                        "!T_SIMULATIONVISUALIZATION, !T_ESTERELSIMULATIONVISUALIZATION, "
+                                + transformation, eobj);
         context.setAdvancedSelect(true);
-        
+
         // TODO resolve dependencies to other SCCharts
-        
+
         CompilationResult compResult = KielerCompiler.compile(context);
-        if(compResult.getAllErrors() != null && ! compResult.getAllErrors().isEmpty())
-            throw new CompilationException("Compilation failed: " + compResult.getAllErrors().toString().replace("\n", ""));
-        
+        if (compResult.getAllErrors() != null && !compResult.getAllErrors().isEmpty())
+            throw new CompilationException("Compilation failed: "
+                    + compResult.getAllErrors().toString().replace("\n", ""));
+
         File out = new File(outputPath.toFile(), srcFile.getFileName() + trgLanguageExtension);
-        
+
         BufferedWriter bw = null;
-                
+
+        // save compiled test case as file
         try {
             bw = new BufferedWriter(new FileWriter(out));
             bw.write(compResult.getString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new CompilationException(
+                    "Compilation failed: Unable to save compilation as file: " + e.getMessage());
         } finally {
             try {
                 bw.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }            
+                // ignore
+            }
         }
         return out.toPath();
     }

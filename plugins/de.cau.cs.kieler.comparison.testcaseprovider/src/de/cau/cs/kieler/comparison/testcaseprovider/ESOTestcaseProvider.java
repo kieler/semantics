@@ -21,8 +21,10 @@ import de.cau.cs.kieler.comparison.core.ITestcaseProvider;
 import de.cau.cs.kieler.comparison.core.Language;
 
 /**
+ * The ESOTestcaseProvider is used to add ESO files to their test cases. ESO files are used as in-
+ * and / or output traces for the execution of compiled test cases.
+ * 
  * @author nfl
- *
  */
 public class ESOTestcaseProvider implements ITestcaseProvider {
 
@@ -50,15 +52,15 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
         String filePath = file.getPath();
         String fileWithoutExtension = filePath.substring(0, filePath.lastIndexOf(getExtension()));
         ArrayList<ITestcase> ret = new ArrayList<ITestcase>();
-        // ESO files are used for SCCharts as well as Esterel
 
+        // ESO files are used for SCCharts as well as Esterel
         File testFile = new File(fileWithoutExtension + ".sct");
         if (testFile.exists()) {
             Testcase newTest = new Testcase();
             newTest.setLanguage(Language.SCCharts);
             newTest.setPath(testFile.toPath());
             newTest.setTestTrace(file.toPath());
-            newTest.setID(testFile.getName());
+            newTest.setID(testFile.getPath());
             ret.add(newTest);
         }
 
@@ -68,7 +70,7 @@ public class ESOTestcaseProvider implements ITestcaseProvider {
             newTest.setLanguage(Language.Esterel);
             newTest.setPath(testFile.toPath());
             newTest.setTestTrace(file.toPath());
-            newTest.setID(testFile.getName());
+            newTest.setID(testFile.getPath());
             ret.add(newTest);
         }
 

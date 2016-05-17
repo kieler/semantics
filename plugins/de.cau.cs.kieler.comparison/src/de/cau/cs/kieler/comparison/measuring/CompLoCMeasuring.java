@@ -12,22 +12,38 @@
  */
 package de.cau.cs.kieler.comparison.measuring;
 
-
 /**
+ * A specific implementation of the {@link IMeasuring} interface. The CompLoCMeasuring class is used
+ * to measure the size of a compilation by lines of code.
+ * 
  * @author nfl
- *
  */
 public class CompLoCMeasuring implements IMeasuring {
 
-    private String compiler;
-    private String testcase;
-    private int size;
-    
     /**
-     * @param size 
-     * @param testcase 
-     * @param compiler 
+     * The identifier of the compiler used in the measuring.
+     */
+    private String compiler;
+
+    /**
+     * The identifier of the test case used in the measuring.
+     */
+    private String testcase;
+
+    /**
+     * The amount of lines of code.
+     */
+    private int size;
+
+    /**
+     * The constructor for a {@link CompLoCMeasuring} object.
      * 
+     * @param compiler
+     *            the identifier of the compiler used in the measuring
+     * @param testcase
+     *            the identifier of the test case used in the measuring
+     * @param size
+     *            the amount of lines of code
      */
     public CompLoCMeasuring(String compiler, String testcase, int size) {
         this.compiler = compiler;
@@ -55,25 +71,33 @@ public class CompLoCMeasuring implements IMeasuring {
      * {@inheritDoc}
      */
     @Override
-    public String getCriteria() {
+    public String getCriterion() {
         return "Compilation Size (LoC)";
     }
 
     /**
-     * @param compiler the compiler to set
+     * Setter for the identifier of the compiler used in the measuring.
+     * 
+     * @param compiler
+     *            the compiler to set
      */
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
 
     /**
-     * @param testcase the testcase to set
+     * Setter for the identifier of the test case used in the measuring.
+     * 
+     * @param testcase
+     *            the test case to set
      */
     public void setTestcase(String testcase) {
         this.testcase = testcase;
     }
 
     /**
+     * Getter for the amount of lines of code.
+     * 
      * @return the size
      */
     public int getSize() {
@@ -81,7 +105,10 @@ public class CompLoCMeasuring implements IMeasuring {
     }
 
     /**
-     * @param size the size to set
+     * Setter for the amount of lines of code.
+     * 
+     * @param size
+     *            the size to set
      */
     public void setSize(int size) {
         this.size = size;
@@ -92,6 +119,6 @@ public class CompLoCMeasuring implements IMeasuring {
      */
     @Override
     public String getMeasuringData() {
-        return ""+size;
+        return "" + size;
     }
 }

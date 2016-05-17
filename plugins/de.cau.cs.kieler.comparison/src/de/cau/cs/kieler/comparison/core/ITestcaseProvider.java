@@ -16,29 +16,34 @@ import java.io.File;
 import java.util.Collection;
 
 /**
+ * Test case providers are used to generate test cases. This interface is used to specify such a
+ * provider. The implementation of this interface is required to use the extension point for test
+ * case providers.
+ * 
  * @author nfl
  */
 public interface ITestcaseProvider {
 
     /**
-     * This method is used to uniquely identify the ITestcaseProvider.
+     * This method is used to uniquely identify the {@link ITestcaseProvider}.
      * 
-     * @return an identifier
+     * @return an unique identifier
      */
     public String getID();
-    
+
     /**
-     * This method returns which file extension the ITestcaseProvider handles. Out of these files the
-     * ITestcaseProvider can create a list of ITestcase.
+     * This method returns which file extension are handled by the {@link ITestcaseProvider}. Out of
+     * these files the ITestcaseProvider can create a list of {@link ITestcase}s.
      * 
-     * @return the file extension this ITestcaseProvider handles
+     * @return the file extension this ITestcaseProvider can handle
      */
     public String getExtension();
-    
+
     /**
-     * This method takes a file and tries to create a list of ITestcase from this file.
+     * This method takes a file and tries to create a list of {@link ITestcase}s from this file.
      * 
-     * @param file the file to create ITestcases from
+     * @param file
+     *            the file to create ITestcases from
      * @return a collection of ITestcase
      */
     public Collection<ITestcase> createTestcases(File file);

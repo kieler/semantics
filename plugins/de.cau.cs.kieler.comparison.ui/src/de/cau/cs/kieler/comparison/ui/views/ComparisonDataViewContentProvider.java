@@ -20,35 +20,51 @@ import de.cau.cs.kieler.comparison.datahandler.DataHandler;
 import de.cau.cs.kieler.comparison.exchange.GeneralComparisonMeasurement;
 
 /**
+ * The ComparisonDataViewContentProvider is used to provide the {@link ComparisonDataView} with
+ * measurings.
+ * 
  * @author nfl
- *
  */
 public class ComparisonDataViewContentProvider implements IStructuredContentProvider {
 
-    private String filePath;
-    private GeneralComparisonMeasurement measurement;
-    
     /**
-     * 
-     * @param filePath filePath for the model to display
+     * The comparison containing the data.
      */
-    public ComparisonDataViewContentProvider(final String filePath){
-        this.filePath = filePath;
+    private String comparison;
+
+    /**
+     * The measurings obtained from a comparison.
+     */
+    private GeneralComparisonMeasurement measurement;
+
+    /**
+     * The constructor for this class using the comparison identifier. The {@link DataHandler} is
+     * used to obtain a {@link GeneralComparisonMeasurement} object using that comparison
+     * identifier.
+     * 
+     * @param comparison
+     *            filePath for the model to display
+     */
+    public ComparisonDataViewContentProvider(final String comparison) {
+        this.comparison = comparison;
     }
 
     /**
+     * The constructor for this class using a {@link GeneralComparisonMeasurement} object containing
+     * the measuring results of a comparison.
      * 
-     * @param filePath filePath for the model to display
+     * @param comparison
+     *            filePath for the model to display
      */
-    public ComparisonDataViewContentProvider(final GeneralComparisonMeasurement measurement){
+    public ComparisonDataViewContentProvider(final GeneralComparisonMeasurement measurement) {
         this.measurement = measurement;
     }
 
     /**
-     * 
+     * The empty constructor.
      */
     public ComparisonDataViewContentProvider() {
-        // TODO Auto-generated constructor stub
+
     }
 
     /**
@@ -56,8 +72,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      */
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -65,7 +80,7 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      */
     @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // TODO Auto-generated method stub
+
     }
 
     /**
@@ -73,16 +88,18 @@ public class ComparisonDataViewContentProvider implements IStructuredContentProv
      */
     @Override
     public Object[] getElements(Object inputElement) {
-        
-        if (measurement != null && measurement.getTestbenches() != null){
-            return measurement.getTestbenches().toArray();
-        } else if (filePath != null) {
+
+        // constructed using a comparison string
+        if (measurement == null && comparison != null) {
             AbstractDataHandler dataHandler = DataHandler.getDataHandler();
-            GeneralComparisonMeasurement cm = dataHandler.getData(filePath);
-            
-            return cm.getTestbenches().toArray();
-        }        
-            
-        return new Object[0];        
+            measurement = dataHandler.getData(comparison);
+        }
+        // return the measurings
+        if (measurement != null && measurement.getTestbenches() != null) {
+            return measurement.getTestbenches().toArray();
+        }
+
+        // nothing to display
+        return new Object[0];
     }
 }
