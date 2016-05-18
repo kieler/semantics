@@ -1,0 +1,12 @@
+scchart Regions {
+  input bool S;
+  initial state A
+  --> B;
+  state B {
+    region Region1 :
+    initial state B1
+    --> B2;
+    state B2; region Region2 :
+    initial state B3;
+  };
+}

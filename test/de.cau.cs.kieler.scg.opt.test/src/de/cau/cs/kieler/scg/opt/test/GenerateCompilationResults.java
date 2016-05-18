@@ -40,11 +40,11 @@ import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(KEXTTestRunner.class)
+@RunWith(GenerateCompilationResultsRunner.class)
 @BundleId("de.cau.cs.kieler.scg.opt.test")
 @ModelPath("tests/")
 @ModelFilter("*.sct")
-public class KEXTTest {
+public class GenerateCompilationResults {
     /**
      * Provides a {@link ResourceSet} in order to load the models properly.
      * 

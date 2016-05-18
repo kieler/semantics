@@ -1,0 +1,12 @@
+scchart HistoryDeep {
+  input bool var1;
+  output bool var2;
+  initial state A
+  --> B history with var1;
+  state B {
+    initial state B1
+    --> B2;
+    state B2;
+  }
+  --> A with var1;
+}

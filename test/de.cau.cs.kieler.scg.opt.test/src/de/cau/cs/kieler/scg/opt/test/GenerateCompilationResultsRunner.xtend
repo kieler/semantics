@@ -43,8 +43,14 @@ import de.cau.cs.kieler.scg.impl.AssignmentImpl
 import java.io.FileWriter
 import java.io.BufferedWriter
 import java.io.PrintWriter
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl
+import de.cau.cs.kieler.scg.impl.ControlFlowImpl
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.sccharts.State
 
-class KEXTTestRunner extends ModelCollectionTestRunner {
+class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
 	public static String KEXT_CHECK_ANNOTATION="check"
 	public static String KEXT_EXPECT_ANNOTATION="expect"
 	static FileWriter fw = new FileWriter("results.csv", true);
@@ -63,12 +69,14 @@ class KEXTTestRunner extends ModelCollectionTestRunner {
 		if (object instanceof StateImpl) {
 		    var long startTime;
 		    var long endTime;
-			var StateImpl obj=(object as StateImpl) 
+			var StateImpl obj=(object as StateImpl)
+			addResults(obj, modelName, "model")
+			// count startspace
 			// first compile to sequenzialized scg
 			startTime = System.nanoTime()
 			var SCGraph seq=sequenzializedSCG(obj) 
 			endTime = System.nanoTime()
-			addResults(seq, modelName, "base", endTime - startTime);
+			addResults(seq, modelName, "compile", endTime - startTime);
 			// compile with feature
 			startTime = System.nanoTime()
 			var SCGraph cp=cp(seq)
@@ -100,12 +108,53 @@ class KEXTTestRunner extends ModelCollectionTestRunner {
 			results.clear()
 		}
 	}
+	def private void addResults(StateImpl in, String modelName, String id) {
+	    var Result base=new Result() 
+        base.id=id
+        if(in != null) {
+            base.nodes = countStates(in.regions) // states
+            base.declarations = CountDeclarations(in.declarations)
+            base.assigments = -1
+        }
+        base.duration = 0
+        
+        if(results == null) {
+            results = new ArrayList()
+        }
+        
+        results.add(base)
+	}
+	def private int countStates(EList<Region> list) {
+	    var int count = 1
+	    val countList = new ArrayList<Integer>()
+	    
+	    list.forEach[
+	        if(it instanceof ControlflowRegionImpl) {
+	           var cfr = it as ControlflowRegionImpl
+	           countList.add(cfr.states.size)
+	           cfr.states.forEach[
+	               if(it.regions != null) {
+	                   countList.add(countStates(it.regions))
+	               }
+	           ]
+	        }
+	        else {
+	            System.out.println(it)
+	        }
+	    ]
+	    
+	    for(var i = 0; i < countList.size; i++) {
+	        count += countList.get(i)
+	    }
+	    
+	    return count
+	}
 	def private void addResults(SCGraph in, String modelName, String id, long duration) {
 		var Result base=new Result() 
 		base.id=id 
 		if(in != null) {
             base.nodes=in.getNodes().size()
-            base.declarations=CountDeclarations(in)
+            base.declarations=CountDeclarations(in.declarations)
             base.assigments=CountAssignments(in)
 		}
 		base.duration = (duration as double) / 1000000
@@ -126,8 +175,28 @@ class KEXTTestRunner extends ModelCollectionTestRunner {
                     return (it.valuedObject.getName().startsWith("g") || it.valuedObject.getName().startsWith("PRE_g"))
                 ].size
 	}
-	def int CountDeclarations(SCGraph in) {
-	    val decl = in.declarations
+	def int CountDeclarations(State in) {
+	    val countList = new ArrayList<Integer>()
+	    var count = 0
+	    
+	    countList.add(CountDeclarations(in.declarations))
+	    
+	    in.regions.forEach[
+	        countList.add(CountDeclarations(it.declarations))
+	        if(it instanceof ControlflowRegionImpl) {
+	            val cfr = it as ControlflowRegionImpl
+	            cfr.states.forEach[
+	                countList.add(CountDeclarations(it))
+	            ]
+	        }
+	    ]
+	    
+	    for(var i = 0; i < countList.size; i++) {
+	        count = countList.get(i)
+	    }
+	    return count
+	}
+	def int CountDeclarations(EList<Declaration> decl) {
         var count = 0;
         for(var i = 0; i < decl.size; i++) {
             val tmpDecl = decl.get(i)
