@@ -44,14 +44,15 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     private var Text txtNumberOfInputsMax
     private var Text txtNumberOfOutputsMin
     private var Text txtNumberOfOutputsMax
-    private var Text txtMaxExpressionDepth
     private var Text txtChanceForConcurrency
     private var Text txtMaxConcurrency     
+    private var Text txtMaxExpressionDepth
+    private var Text txtChanceForExpressions
     
     @Accessors private var int numberOfModels
     @Accessors private var int numberOfStatesMin
     @Accessors private var int numberOfStatesMax
-    @Accessors private var int chanceForNewTransition
+    @Accessors private var double chanceForNewTransition
     @Accessors private var int maxTransitions
     @Accessors private var double chanceForImmediate
     @Accessors private var double chanceForSuperstate
@@ -60,9 +61,10 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     @Accessors private var int numberOfInputsMax
     @Accessors private var int numberOfOutputsMin
     @Accessors private var int numberOfOutputsMax
-    @Accessors private var int maxExpressionDepth
     @Accessors private var double chanceForConcurrency
     @Accessors private var int maxConcurrency
+    @Accessors private var int maxExpressionDepth
+    @Accessors private var double chanceForExpressions
     
 
     new(Shell parentShell) {
@@ -120,12 +122,6 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         txtMaxHierarchyDepth = container.createText("3")
     }
 
-//    private def void createMaxHierarchyDepth(Composite container) {
-//        container.createLabel("Max hierarchy depth")
-//        container.insertDummy(1)
-//        container.insertDummy(2)
-//    }
-
     private def void createChanceForConcurrency(Composite container) {
         container.createLabel("Chance for concurrency")
         container.createLabel("rnd")
@@ -135,12 +131,12 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     }
 
     private def void createNumberOfTransitions(Composite container) {
-        container.createLabel("Number of transitions")
+        container.createLabel("Chance for new transitions")
 
-        container.createLabel("min")
-        txtNumberOfTransitionsMin = container.createText("1")
+        container.createLabel("rnd")
+        txtChanceForNewTransition = container.createText("0.2")
         container.createLabel("max")
-        txtNumberOfTransitionsMax = container.createText("3")
+        txtMaxTransitions = container.createText("3")
     }
 
     private def void createChanceForImmediate(Composite container) {
@@ -169,10 +165,11 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     }
     
     private def void createMaxExpressionDepth(Composite container) {
-        container.createLabel("Max expression depth")
-        container.insertDummy(1)
-        txtMaxExpressionDepth = container.createText("2")
-        container.insertDummy(2)
+        container.createLabel("Chance for expressions")
+        container.createLabel("rnd")
+        txtChanceForExpressions = container.createText("0.1")
+        container.createLabel("max")
+        txtMaxExpressionDepth = container.createText("3")
     }    
 
 
@@ -209,8 +206,8 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         this.numberOfModels = txtNumberOfModels.text.parseInt
         this.numberOfStatesMin = txtNumberOfStatesMin.text.parseInt
         this.numberOfStatesMax = txtNumberOfStatesMax.text.parseInt
-        this.numberOfTransitionsMin = txtNumberOfTransitionsMin.text.parseInt
-        this.numberOfTransitionsMax = txtNumberOfTransitionsMax.text.parseInt
+        this.chanceForNewTransition = txtChanceForNewTransition.text.parseDouble
+        this.maxTransitions = txtMaxTransitions.text.parseInt
         this.chanceForImmediate = txtChanceForImmediate.text.parseDouble
         this.chanceForSuperstate = txtChanceForSuperstate.text.parseDouble
         this.maxHierarchyDepth = txtMaxHierarchyDepth.text.parseInt
@@ -218,9 +215,10 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         this.numberOfInputsMax = txtNumberOfInputsMax.text.parseInt
         this.numberOfOutputsMin = txtNumberOfOutputsMin.text.parseInt
         this.numberOfOutputsMax = txtNumberOfInputsMax.text.parseInt
-        this.maxExpressionDepth = txtMaxExpressionDepth.text.parseInt
         this.chanceForConcurrency = txtChanceForConcurrency.text.parseDouble
         this.maxConcurrency = txtMaxConcurrency.text.parseInt
+        this.maxExpressionDepth = txtMaxExpressionDepth.text.parseInt
+        this.chanceForExpressions = txtChanceForExpressions.text.parseDouble
     }
 
     override void okPressed() {
