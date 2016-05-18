@@ -15,8 +15,13 @@ package de.cau.cs.kieler.sccharts.text.ui.SCTGenerator;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.ui.PlatformUI;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
@@ -30,22 +35,34 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
     public static final String SCT_GENERATOR_OPENDIALOG =
             "de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog";
 
-    private static Injector injector = new SctStandaloneSetup()
-        .createInjectorAndDoEMFRegistration();    
-    
+    private static Injector injector =
+            new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         String commandString = event.getCommand().getId().toString();
-        
+        final ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getSelectionService().getSelection();
+
         if (commandString.equals(SCT_GENERATOR_OPENDIALOG)) {
-            SCTGeneratorDialog dialog = new SCTGeneratorDialog(null);
-            if (dialog.open() != Window.OK)return null;
-        } 
+
+            if (selection instanceof IStructuredSelection) {
+                final Object[] elements = ((IStructuredSelection) selection).toArray();
+                for (Object element : elements) {
+                    if (element instanceof IProject) {
+                        SCTGeneratorDialog dialog = new SCTGeneratorDialog(null);
+                        if (dialog.open() == Window.OK) {
+                            SCTGenerator generator = injector.getInstance(SCTGenerator.class);
+                            generator.createModels(dialog, (IProject) element);
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
-
 
 }
