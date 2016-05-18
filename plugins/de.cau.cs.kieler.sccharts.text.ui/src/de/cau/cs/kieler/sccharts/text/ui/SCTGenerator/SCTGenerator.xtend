@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 
 /**
  * @author ssm
@@ -135,15 +136,15 @@ class SCTGenerator {
             
             val states = region.states.toList
             
-//            for (s : states) {
-//                val int transitions = random(dialog.numberOfTransitionsMin, dialog.numberOfTransitionsMax)
-//                for(var int t = 1; t < transitions; t++) {
-//                    val transition = s.createTransitionTo(s)
-//                    if (dialog.chanceForImmediate.chance) {
-//                        transition.immediate = true
-//                    }
-//                }
-//            }
+            for (s : states) {
+                val int transitions = random(dialog.numberOfTransitionsMin, dialog.numberOfTransitionsMax)
+                for(var int t = 1; t < transitions; t++) {
+                    val transition = s.createTransition(states.get(states.size.random))
+                    if (dialog.chanceForImmediate.chance) {
+                        transition.immediate = true
+                    }
+                }
+            }
         }
     }
     
@@ -157,9 +158,6 @@ class SCTGenerator {
         while(stateCounter + 1 < statesLeft) {
             var newState = region.createState(STATE_PREFIX + stateCounter)
             
-            var transition = lastState.createTransitionTo(newState)
-            var transition2 = lastState.createTransitionTo(newState)
-
             stateCounter++
             
             if (dialog.chanceForSuperstate.chance && stateCounter + 2 < statesLeft) {
@@ -168,11 +166,13 @@ class SCTGenerator {
                 stateCounter += stateCost
             }
 
+            var transition = lastState.createTransition(newState)
+
             lastState = newState            
         }
         
         var newState = region.createState(STATE_PREFIX + stateCounter) => [ final = true ]
-        lastState.createTransitionTo(newState)
+        lastState.createTransition(newState)
     }
     
     
@@ -207,6 +207,13 @@ class SCTGenerator {
     
     private def boolean chance(double rnd) {
         Math.random < rnd
+    }
+    
+    private def createTransition(State sourceState, State targetState) {
+        var transition = SCChartsFactory::eINSTANCE.createTransition()
+        transition.targetState = targetState
+        sourceState.outgoingTransitions += transition
+        transition        
     }
     
 }

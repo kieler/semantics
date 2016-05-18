@@ -35,8 +35,8 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     private var Text txtNumberOfModels
     private var Text txtNumberOfStatesMin
     private var Text txtNumberOfStatesMax
-    private var Text txtNumberOfTransitionsMin
-    private var Text txtNumberOfTransitionsMax
+    private var Text txtChanceForNewTransition
+    private var Text txtMaxTransitions
     private var Text txtChanceForImmediate
     private var Text txtChanceForSuperstate
     private var Text txtMaxHierarchyDepth
@@ -51,8 +51,8 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     @Accessors private var int numberOfModels
     @Accessors private var int numberOfStatesMin
     @Accessors private var int numberOfStatesMax
-    @Accessors private var int numberOfTransitionsMin
-    @Accessors private var int numberOfTransitionsMax
+    @Accessors private var int chanceForNewTransition
+    @Accessors private var int maxTransitions
     @Accessors private var double chanceForImmediate
     @Accessors private var double chanceForSuperstate
     @Accessors private var int maxHierarchyDepth
