@@ -167,7 +167,7 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     private def void createMaxExpressionDepth(Composite container) {
         container.createLabel("Chance for expressions")
         container.createLabel("rnd")
-        txtChanceForExpressions = container.createText("0.1")
+        txtChanceForExpressions = container.createText("0.25")
         container.createLabel("max")
         txtMaxExpressionDepth = container.createText("3")
     }    

@@ -35,6 +35,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -69,7 +70,7 @@ class SCTGenerator {
                         is = "0" + is
                     }
                     createModel(dialog, project, ID_PREFIX + is)
-                    monitor.worked(1)
+                    if (i % 2 == 0 ) { monitor.worked(2) }
                     if (monitor.canceled) {
                         return Status.CANCEL_STATUS
                     }
@@ -130,13 +131,19 @@ class SCTGenerator {
             for (s : states) {
                 val int transitions = 1 + dialog.chanceForNewTransition.chance(dialog.maxTransitions)
                 for (var int t = 1; t < transitions; t++) {
-                    s.createTransition(states.get(states.size.random)) => [
-                        it.createTransitionTrigger(dialog)
-                        it.createTransitionEffects(dialog)
-                        if (dialog.chanceForImmediate.chance) {
-                            it.immediate = true
-                        }
-                    ]
+                    s.createTransition(states.get(states.size.random)) =>
+                        [
+                            it.createTransitionTrigger(dialog)
+                            it.createTransitionEffects(dialog)
+                            if (dialog.chanceForImmediate.chance) {
+                                if ((it.eContainer.asState != it.targetState) &&
+                                    !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
+                                      (it.targetState.outgoingTransitions.filter[immediate].size > 0))
+                                ) {
+                                    it.immediate = true
+                                }
+                            }
+                        ]
                 }
             }
         }
@@ -205,12 +212,12 @@ class SCTGenerator {
         }
         transition
     }
-    
+
     private def Assignment createEffectExpression(Declaration declaration) {
         createAssignment(
             declaration.valuedObjects.get(declaration.valuedObjects.size.random),
-            if (Math.random < 0.5) TRUE else TRUE
-        )    
+            if(Math.random < 0.5) TRUE else TRUE
+        )
     }
 
     private def saveModel(State rootState, IProject project) {
@@ -258,6 +265,10 @@ class SCTGenerator {
         transition.targetState = targetState
         sourceState.outgoingTransitions += transition
         transition
+    }
+
+    private def asState(EObject obj) {
+        obj as State
     }
 
 }
