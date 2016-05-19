@@ -114,7 +114,7 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
         if(in != null) {
             base.nodes = countStates(in.regions) // states
             base.declarations = CountDeclarations(in.declarations)
-            base.assigments = -1
+            base.assigments = CountTransitions(in.regions) // transitions 
         }
         base.duration = 0
         
@@ -123,6 +123,28 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
         }
         
         results.add(base)
+	}
+	def private int CountTransitions(EList<Region> list) {
+	    var int count = 1
+        val countList = new ArrayList<Integer>()
+        
+        list.forEach[
+            if(it instanceof ControlflowRegionImpl) {
+               var cfr = it as ControlflowRegionImpl
+               cfr.states.forEach[
+                    countList.add(it.incomingTransitions.size)
+                    if(it.regions != null) {
+                       countList.add(CountTransitions(it.regions))
+                   }
+               ]
+            }
+        ]
+        
+        for(var i = 0; i < countList.size; i++) {
+            count += countList.get(i)
+        }
+        
+        return count
 	}
 	def private int countStates(EList<Region> list) {
 	    var int count = 1
@@ -137,9 +159,6 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
 	                   countList.add(countStates(it.regions))
 	               }
 	           ]
-	        }
-	        else {
-	            System.out.println(it)
 	        }
 	    ]
 	    

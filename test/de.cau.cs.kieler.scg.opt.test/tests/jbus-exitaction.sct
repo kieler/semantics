@@ -1,0 +1,12 @@
+scchart Actions {
+  input bool var1;
+  output bool var2;
+  initial state A
+  --> B;
+  state B {
+    exit var1 / var2 = true;
+    initial state B1
+    --> B2;
+    state B2;
+  };
+}
