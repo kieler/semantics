@@ -9,5 +9,5 @@ scchart simple {
 
     final state E;
   }
-  >-> R / O;
+  >-> R with / O;
 }

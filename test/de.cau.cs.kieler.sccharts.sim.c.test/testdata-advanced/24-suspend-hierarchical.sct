@@ -12,13 +12,13 @@ scchart ^suspend {
       suspend I;
 
       initial state B
-      --> C / O1;
+      --> C with / O1;
 
       state C
-      --> D / O2;
+      --> D with / O2;
 
       state D
-      --> B / O3;
+      --> B with / O3;
     };
   };
 }
