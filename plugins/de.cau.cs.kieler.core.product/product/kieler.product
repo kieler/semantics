@@ -13,7 +13,7 @@ A research project on enhancing the model-based design of complex systems
 For more information, visit our website:
 http://www.informatik.uni-kiel.de/rtsys/kieler/
 
-Copyright 2014 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group
+Copyright 2016 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group
       </text>
    </aboutInfo>
 
@@ -69,6 +69,7 @@ openFile
             winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
