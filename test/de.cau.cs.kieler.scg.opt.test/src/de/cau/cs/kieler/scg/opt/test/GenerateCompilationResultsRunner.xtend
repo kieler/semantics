@@ -147,7 +147,7 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
         return count
 	}
 	def private int countStates(EList<Region> list) {
-	    var int count = 1
+	    var int count = 0
 	    val countList = new ArrayList<Integer>()
 	    
 	    list.forEach[
