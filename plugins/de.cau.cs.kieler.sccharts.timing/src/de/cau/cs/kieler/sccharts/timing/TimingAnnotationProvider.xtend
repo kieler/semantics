@@ -11,11 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.tsccharts
+package de.cau.cs.kieler.sccharts.timing
 
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.tsccharts.RequestType
-import de.cau.cs.kieler.sccharts.tsccharts.TimingRequestResult
+import de.cau.cs.kieler.sccharts.timing.RequestType
+import de.cau.cs.kieler.sccharts.timing.TimingRequestResult
 import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.FileReader
@@ -24,7 +24,7 @@ import java.util.LinkedList
 import java.util.List
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import java.util.StringTokenizer
-import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis.TimingValueRepresentation
+import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation
 
 /**
  * This class provides methods for requesting and getting timing information.

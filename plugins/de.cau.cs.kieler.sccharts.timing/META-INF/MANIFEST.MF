@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Timing Interface for SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.timing;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sccharts.tsccharts.Activator
+Bundle-Activator: de.cau.cs.kieler.sccharts.timing.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
@@ -27,7 +27,7 @@ Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.scg.s.transformations
-Export-Package: de.cau.cs.kieler.sccharts.tsccharts,
- de.cau.cs.kieler.sccharts.tsccharts.transformation
+Export-Package: de.cau.cs.kieler.sccharts.timing,
+ de.cau.cs.kieler.sccharts.timing.transformation
 Bundle-Vendor: Kiel University
 

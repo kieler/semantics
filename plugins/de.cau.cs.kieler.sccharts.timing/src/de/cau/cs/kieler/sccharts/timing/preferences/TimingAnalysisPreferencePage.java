@@ -12,14 +12,14 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sccharts.tsccharts.preferences;
+package de.cau.cs.kieler.sccharts.timing.preferences;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import de.cau.cs.kieler.sccharts.tsccharts.Activator;
+import de.cau.cs.kieler.sccharts.timing.Activator;
 
 /**
  * The interactive timing analysis preference page.

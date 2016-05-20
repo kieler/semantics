@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.tsccharts;
+package de.cau.cs.kieler.sccharts.timing;
 
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis.TimingValueRepresentation;
+import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation;
 
 /**
  * Provides methods to highlight model parts according to timing related information. 

@@ -13,7 +13,7 @@
  */
 
 
-package de.cau.cs.kieler.sccharts.tsccharts;
+package de.cau.cs.kieler.sccharts.timing;
 
 import java.util.LinkedList;
 

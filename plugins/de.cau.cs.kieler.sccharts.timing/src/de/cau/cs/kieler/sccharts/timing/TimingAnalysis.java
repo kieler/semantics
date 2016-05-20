@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.tsccharts;
+package de.cau.cs.kieler.sccharts.timing;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +58,8 @@ import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
-import de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPInformation;
+import de.cau.cs.kieler.sccharts.timing.transformation.TPPInformation;
+import de.cau.cs.kieler.sccharts.timing.TimingAnnotationProvider;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;

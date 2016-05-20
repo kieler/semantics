@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.tsccharts.transformation
+package de.cau.cs.kieler.sccharts.timing.transformation
 
 import com.google.common.collect.Iterators
 import com.google.common.collect.Multimap
@@ -29,8 +29,8 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis
-import de.cau.cs.kieler.sccharts.tsccharts.TimingUtil
+import de.cau.cs.kieler.sccharts.timing.TimingAnalysis
+import de.cau.cs.kieler.sccharts.timing.TimingUtil
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow

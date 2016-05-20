@@ -35,25 +35,25 @@
    <extension
          point="de.cau.cs.kieler.kico.feature">
       <featureClass
-            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPFeature">
+            class="de.cau.cs.kieler.sccharts.timing.transformation.TPPFeature">
       </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.sccharts.tsccharts.transformation.TPPTransformation">
+            class="de.cau.cs.kieler.sccharts.timing.transformation.TPPTransformation">
       </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
       <hook
-            class="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysisHook">
+            class="de.cau.cs.kieler.sccharts.timing.TimingAnalysisHook">
       </hook>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="de.cau.cs.kieler.sccharts.tsccharts.preferences.TimingAnalysisPreferencePage"
+            class="de.cau.cs.kieler.sccharts.timing.preferences.TimingAnalysisPreferencePage"
             id="de.cau.cs.kieler.sccharts.tsccharts.preferences"
             name="Interactive Timing Analysis">
       </page>

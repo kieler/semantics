@@ -10,7 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.tsccharts;
+package de.cau.cs.kieler.sccharts.timing;
+
+import de.cau.cs.kieler.sccharts.timing.TimingAnnotationProvider;
 
 /**
  * Postprocessing of the generated Code so that the kta tool can work with it
