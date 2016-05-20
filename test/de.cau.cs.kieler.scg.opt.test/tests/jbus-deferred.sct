@@ -1,10 +1,5 @@
 scchart Deferred {
-  input bool var1;
-  output bool var2;
+  input bool IN;
   initial state A
-  --> B deferred with var1;
-  state B {
-    entry var1 / var2 = true;
-  }
-  --> A with var1;
+  --> A deferred;
 }

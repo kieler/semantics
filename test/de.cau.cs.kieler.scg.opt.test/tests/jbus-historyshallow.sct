@@ -1,12 +1,7 @@
 scchart HistoryShallow {
-  input bool var1;
-  output bool var2;
   initial state A
-  --> B shallow history with var1;
+  --> B shallow history;
   state B {
-    initial state B1
-    --> B2;
-    state B2;
-  }
-  --> A with var1;
+    initial state B1;
+  };
 }

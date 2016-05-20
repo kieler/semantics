@@ -1,7 +1,8 @@
 scchart simple {
+  input bool IN;
   initial state A {
     region R0:
     initial final state S1;
   }
-  >-> A immediate;
+  >-> A immediate with IN;
 }

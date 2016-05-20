@@ -1,0 +1,6 @@
+scchart simple {
+  input bool IN;
+  output bool OUT;
+  initial state A
+  o-> A immediate with IN / OUT = true;
+}

@@ -1,4 +1,5 @@
 scchart simple {
+  input bool IN;
   initial state A
-  o-> A;
+  --> A with IN;
 }

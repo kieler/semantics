@@ -1,12 +1,6 @@
 scchart Actions {
   input bool var1;
-  output bool var2;
-  initial state A
-  --> B;
-  state B {
-    immediate during var1 / var2 = true;
-    initial state B1
-    --> B2;
-    state B2;
+  initial state B {
+    immediate during var1;
   };
 }

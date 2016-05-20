@@ -1,12 +1,7 @@
 scchart simple {
-  input signal I;
-  output signal O;
-
   initial state A {
     region R0:
     initial final state S1;
   }
-  >-> B with I / O;
-
-  state B;
+  >-> A;
 }

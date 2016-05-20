@@ -1,9 +1,4 @@
 scchart simple {
-  input signal I;
-  output signal O;
-
   initial state A
-  o-> B immediate with I / O;
-
-  state B;
+  o-> A immediate;
 }

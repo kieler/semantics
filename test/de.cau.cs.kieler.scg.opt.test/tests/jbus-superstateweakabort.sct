@@ -1,12 +1,6 @@
 scchart WeakAbort {
-  input bool W;
-  initial state A
-  --> B;
-  state B {
-    initial state B1
-    --> B2;
-    state B2;
+  initial state A {
+    initial state B1;
   }
-  --> C with W;
-  state C;
+  --> A;
 }

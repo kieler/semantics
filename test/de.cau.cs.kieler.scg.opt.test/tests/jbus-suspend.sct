@@ -1,10 +1,6 @@
 scchart ^suspend {
-  input signal I;
-  output signal O;
-
   initial state A {
-
     initial state B
-    --> B with / O;
+    --> B;
   };
 }

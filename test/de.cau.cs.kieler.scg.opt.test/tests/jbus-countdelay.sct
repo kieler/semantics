@@ -1,8 +1,5 @@
 scchart CountDelay {
-  input bool var1;
-  output bool var2;
+  input bool IN;
   initial state A
-  --> B with 4 var1;
-  state B
-  --> A with var1;
+  --> A with 2 IN;
 }
