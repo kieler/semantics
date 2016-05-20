@@ -19,6 +19,9 @@
   <modules>
     <module>../build/de.cau.cs.kieler.semantics.targetplatform</module>
     <module>../test</module> 
+    <module>de.cau.cs.kieler.circuit</module>
+    <module>de.cau.cs.kieler.circuit.kivi</module>
+    <module>de.cau.cs.kieler.circuit.klighd</module>
     <module>de.cau.cs.kieler.core.annotations</module>
     <module>de.cau.cs.kieler.core.annotations.edit</module>
     <module>de.cau.cs.kieler.core.annotations.text</module>
@@ -83,6 +86,7 @@
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
 	<module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.scg</module>
+    <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.edit</module>
     <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
