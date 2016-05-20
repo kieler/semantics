@@ -133,7 +133,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         logger.info(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
-
+		
         return rootNode;
     }
 

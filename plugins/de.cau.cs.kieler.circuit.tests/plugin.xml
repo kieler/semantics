@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.hook">
+      <hookClass
+            class="de.cau.cs.kieler.circuit.eval.EvaluationHook">
+      </hookClass>
+   </extension>
+
+</plugin>
