@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tsccharts
+Bundle-Name: Timing Interface for SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.tsccharts;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.tsccharts.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -22,11 +22,12 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg;bundle-version="0.1.1",
  de.cau.cs.kieler.sccharts.klighd;bundle-version="0.1.1"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.scg.s.transformations
 Export-Package: de.cau.cs.kieler.sccharts.tsccharts,
  de.cau.cs.kieler.sccharts.tsccharts.transformation
+Bundle-Vendor: Kiel University
 
