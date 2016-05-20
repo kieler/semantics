@@ -81,6 +81,7 @@
     <module>de.cau.cs.kieler.sccharts.sim.c</module>
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
+	<module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scg.edit</module>
     <module>de.cau.cs.kieler.scg.editor</module>
