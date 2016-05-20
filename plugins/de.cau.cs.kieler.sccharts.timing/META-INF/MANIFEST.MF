@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Timing Interface for SCCharts
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.tsccharts;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.timing;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.tsccharts.Activator
 Require-Bundle: org.eclipse.ui,
