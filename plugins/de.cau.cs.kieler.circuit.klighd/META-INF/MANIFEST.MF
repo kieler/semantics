@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.circuit.klighd
-Bundle-Vendor: My Company
-Bundle-Version: 1.0.0.qualifier
+Bundle-Name: KIELER Circuit KLighD Synthesis
+Bundle-Vendor: Kiel University
+Bundle-Version: 0.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.circuit.klighd; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: javax.inject,

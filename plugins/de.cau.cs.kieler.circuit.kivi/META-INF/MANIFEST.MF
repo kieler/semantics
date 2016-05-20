@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Kivi
+Bundle-Name: KIELER Circuit Simulation Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.circuit.kivi;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.circuit.kivi.CircuitKiviPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -30,3 +30,4 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd.kivi
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Kiel University
