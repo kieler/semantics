@@ -19,10 +19,10 @@ scchart _100_local_signal_trap_immediate_dependency
     --> B2 with I;
 
     state C
-    --> CC immediate / O3;
+    --> CC immediate with / O3;
 
     state B2 "B"
-    --> C immediate / T; O2;
+    --> C immediate with / T; O2;
 
     state CC;
 

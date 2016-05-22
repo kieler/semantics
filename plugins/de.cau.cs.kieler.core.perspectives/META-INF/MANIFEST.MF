@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER SCCharts Perspectives
+Bundle-Name: KIELER Modeling Perspectives
 Bundle-SymbolicName: de.cau.cs.kieler.core.perspectives;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Kiel University

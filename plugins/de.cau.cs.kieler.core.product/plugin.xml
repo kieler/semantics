@@ -11,7 +11,7 @@
             name="KIELER">
          <property
                name="aboutText"
-               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2012 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group">
+               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2016 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group">
          </property>
          <property
                name="aboutImage"
@@ -20,10 +20,6 @@
          <property
                name="appName"
                value="KIELER">
-         </property>
-         <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini">
          </property>
          <property
                name="introTitle"
@@ -35,7 +31,7 @@
          </property>
          <property
                name="version"
-               value="0.7.0">
+               value="0.11.0">
          </property>
          <property
                name="windowImages"
@@ -64,6 +60,10 @@
           <property
                 name="startupMessageRect"
                 value="10,200,0,0">
+          </property>
+          <property
+                name="preferenceCustomization"
+                value="plugin_customization.ini">
           </property>
       </product>
    </extension>

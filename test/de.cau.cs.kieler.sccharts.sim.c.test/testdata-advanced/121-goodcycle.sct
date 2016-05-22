@@ -13,7 +13,7 @@ scchart S0 "good_cycle" {
   --> S1 with B;
 
   state S1 "s4"
-  --> S2 / A;
+  --> S2 with / A;
 
   state S2 "s5";
 }

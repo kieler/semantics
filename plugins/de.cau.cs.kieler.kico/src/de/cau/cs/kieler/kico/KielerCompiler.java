@@ -210,6 +210,7 @@ public class KielerCompiler {
             hook.preCompilation(context);
         }
 
+        context.setProperty(KiCoProperties.RAW_INPUT_MODEL, transformationEObject);
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = copy(transformationEObject, context);

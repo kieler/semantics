@@ -11,7 +11,7 @@
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
     <tycho-version>0.21.0</tycho-version>
-    <xtend-version>2.8.3</xtend-version>
+    <xtend-version>2.9.2</xtend-version>
     <targetJdk>1.8</targetJdk>
 	
 
@@ -24,88 +24,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		
+    <kieler.semantics.nightly>
+      http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/
+    </kieler.semantics.nightly>		
   </properties>
 
 
   <!-- Define one profile for each output target we have. -->
   <profiles>
-  
-    <profile>
-      <id>product.contrib</id>
-      
-      <repositories>
-        <repository>
-          <id>p2.target</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
-        </repository>
-        <repository>
-          <id>p2.target.delta</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
-        </repository>
-      </repositories>
-
-      <modules>
-        <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
-      </modules>
-    </profile>
-  
-      <!-- The Semantics product. -->
-    <profile>
-      <id>semantics.product</id>
-      
-      <repositories>
-        <repository>
-          <id>p2.target</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
-        </repository>
-        <repository>
-          <id>p2.target.delta</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
-        </repository>
-<!--        <repository>
-          <id>p2.guava</id>
-          <layout>p2</layout>
-          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository -->
-        <repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
-        </repository>
-        <repository>
-          <id>p2.kieler-semantics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
-        </repository>
-        <repository>
-          <id>p2.xtext.2.8.3</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
-        </repository>      
-        <repository>
-          <id>p2.emf.2.10</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
-        </repository>  		
-        <repository>
-          <id>p2.ptolemy</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
-        </repository>
-      </repositories>
-
-      <modules>
-        <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
-        <module>de.cau.cs.kieler.semantics.product.repository</module>
-      </modules>
-    </profile>
-  
   
     <!-- The Semantics updatesite. -->
     <profile>
@@ -115,54 +42,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
 
-      <repositories>
-        <repository>
-          <id>p2.target</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
-        </repository>
-        <repository>
-          <id>p2.target.delta</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
-        </repository>
-        <!-- repository>
-          <id>p2.guava</id>
-          <layout>p2</layout>
-          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository -->
-        <repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
-	</repository>
-        <repository>
-          <id>p2.xtext.2.8.3</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
-        </repository>      
-        <repository>
-          <id>p2.emf.2.10</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
-        </repository>  		
-        <repository>
-          <id>p2.ptolemy</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
-        </repository>
-        <!-- <repository>
-          <id>p2.xtext.2.8.3</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.3/</url>
-        </repository>      
-        <repository>
-          <id>p2.emf.2.10</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/</url>
-        </repository>-->
-	</repositories>
-
       <modules>
         <module>../plugins</module>
         <module>../features</module>
@@ -170,87 +49,23 @@
       </modules>
     </profile>
 	
+    <!-- The Semantics product. -->
     <profile>
-      <id>klots</id>
-      
-      <repositories>
-        <!-- repository>
-          <id>p2.guava</id>
-          <layout>p2</layout>
-          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository -->
-        <repository>
-          <id>p2.target</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
-        </repository>
-        <repository>
-          <id>p2.target.delta</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
-        </repository>
-        <repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
-        </repository>
+      <id>semantics.product</id>
+	  
+	  <repositories>
         <repository>
           <id>p2.kieler-semantics</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
+          <url>${kieler.semantics.nightly}</url>
         </repository>
-        <repository>
-          <id>p2.ptolemy</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
-        </repository>
-      </repositories>
-
-      <modules>
-        <module>../../lego/plugins</module>
-        <module>../../lego/features/de.cau.cs.kieler.klots.feature</module>
-      </modules>
-    </profile>	
-	
-	
-    <profile>
-      <id>klots.product</id>
+	  </repositories>
       
-      <repositories>
-        <!-- repository>
-          <id>p2.guava</id>
-          <layout>p2</layout>
-          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository -->
-        <repository>
-          <id>p2.target</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
-        </repository>
-        <repository>
-          <id>p2.target.delta</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
-        </repository>
-        <repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</url>
-        </repository>
-        <repository>
-          <id>p2.kieler-semantics</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
-        </repository>
-        <repository>
-          <id>p2.ptolemy</id>
-          <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
-        </repository>
-      </repositories>
-
       <modules>
-        <module>../../lego/build/de.cau.cs.kieler.klots.product.repository</module>
+		<module>de.cau.cs.kieler.semantics.targetplatform</module>	  
+        <module>../plugins/de.cau.cs.kieler.core.product</module>
+        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
+        <module>de.cau.cs.kieler.semantics.product.repository</module>
       </modules>
     </profile>	
 	
@@ -259,6 +74,11 @@
 
 <!-- maven plugin repositories -->
   <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </pluginRepository>
     <pluginRepository>
       <id>xtend</id>
       <layout>default</layout>
@@ -392,6 +212,15 @@
               <classifier>indigo</classifier>
             </artifact>
           </target> -->
+		  
+          <target>
+            <artifact>
+              <groupId>de.cau.cs.kieler</groupId>
+              <artifactId>de.cau.cs.kieler.semantics.targetplatform</artifactId>
+              <version>0.1.0-SNAPSHOT</version>
+            </artifact>
+          </target>		  
+		  
           <environments>
             <environment>
               <os>linux</os>
@@ -416,17 +245,13 @@
             <environment>
               <os>macosx</os>
               <ws>cocoa</ws>
-              <arch>x86</arch>
-            </environment>
-            <environment>
-              <os>macosx</os>
-              <ws>cocoa</ws>
               <arch>x86_64</arch>
             </environment>
           </environments>
         </configuration>
       </plugin>
     </plugins>
+	
     <pluginManagement>
       <plugins>
         <!-- maven xtend plugin to tell maven how to compile xtend code -->

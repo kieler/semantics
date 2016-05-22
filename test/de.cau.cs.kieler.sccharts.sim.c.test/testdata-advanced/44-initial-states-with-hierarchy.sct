@@ -7,7 +7,7 @@ scchart _44_initial_states_with_hierarchy "44-initial-states-with-hierarchy" {
     state BB;
 
     initial state AA
-    --> BB / ExitSetC;
+    --> BB with / ExitSetC;
   };
 
   region ExitActionRegion17159221:

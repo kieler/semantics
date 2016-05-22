@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Generic Simulation DataComponent
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.ui.datacomponent;singleton:=true
-Bundle-Version: 0.4.3.qualifier
+Bundle-Version: 0.4.4.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.ui.datacomponent.DataComponentPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: de.cau.cs.kieler.core.model;visibility:=reexport,

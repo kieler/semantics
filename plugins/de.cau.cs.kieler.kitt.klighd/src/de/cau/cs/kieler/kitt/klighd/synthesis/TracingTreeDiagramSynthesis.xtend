@@ -29,7 +29,6 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
@@ -44,6 +43,7 @@ import java.util.List
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
 
 /**
  * KLighD visualization for TraingTrees and EObjectsCollections in ModelWrappers.
@@ -94,7 +94,9 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
     public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption.createCheckOption("EObject attributes", false);
 
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES, TracingSynthesisOption.synthesisOption);
+        val options = newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES)
+        options.addAll(TracingSynthesisOptions.synthesisOptions);
+        return options
     }
 
     override public getDisplayedLayoutOptions() {
