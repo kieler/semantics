@@ -789,6 +789,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
+            port.addLayoutParam(Properties.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
         ]
     }
 
