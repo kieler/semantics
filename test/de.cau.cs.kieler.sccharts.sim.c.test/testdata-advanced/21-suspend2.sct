@@ -6,16 +6,16 @@ scchart ^suspend {
     suspend I;
 
     initial state B
-    --> C / O;
+    --> C with / O;
 
     state C {
 
       initial state _
-      --> _ / O;
+      --> _ with / O;
     }
-    --> D / O;
+    --> D with / O;
 
     state D
-    --> B / O;
+    --> B with / O;
   };
 }

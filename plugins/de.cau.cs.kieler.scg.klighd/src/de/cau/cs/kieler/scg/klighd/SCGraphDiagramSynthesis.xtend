@@ -803,6 +803,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             txt.setForeground(PRIORITY_COLOR.copy)
             txt.setFontBold(true)
             txt.setFontSize(7)
+            port.addLayoutParam(Properties.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
         ]
     }
 

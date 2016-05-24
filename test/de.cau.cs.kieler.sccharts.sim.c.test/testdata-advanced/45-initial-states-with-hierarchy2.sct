@@ -8,7 +8,7 @@ scchart _45_initial_states_with_hierarchy2 "45-initial-states-with-hierarchy2" {
     state BB;
 
     initial state AA
-    --> BB / ExitSetC;
+    --> BB with / ExitSetC;
   }
   --> Z with I;
 

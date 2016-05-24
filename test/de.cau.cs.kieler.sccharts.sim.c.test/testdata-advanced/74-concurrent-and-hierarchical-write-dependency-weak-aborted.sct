@@ -12,7 +12,7 @@ scchart _74_concurrent_and_hierarchical_write_dependency_weak_aborted
 
     state C;
   }
-  --> D / O2;
+  --> D with / O2;
 
   state D;
 

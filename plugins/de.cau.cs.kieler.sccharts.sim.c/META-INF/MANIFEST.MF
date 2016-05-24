@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: C based SCCharts Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.sim.c;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,

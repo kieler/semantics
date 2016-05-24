@@ -47,6 +47,9 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
+import de.cau.cs.kieler.core.krendering.KPolyline
+import de.cau.cs.kieler.core.krendering.KSpline
 
 /**
  * Adds tracing edges from mappings to a diagram.
@@ -396,7 +399,7 @@ class TracingVisualizer {
     private def createTracingEdges(Object source, Object target, KNode attachNode, ViewContext viewContext,
         TracingMapping equivalenceClasses) {
         val origin = new Pair(source, target);
-        val predicate = Predicates.or(viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_PREDICATE),
+        var predicateConstuct = Predicates.or(viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_PREDICATE),
             [
                 if (it instanceof KGraphElement) {
                     return (it as KGraphElement).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACING_NODE);
@@ -406,6 +409,14 @@ class TracingVisualizer {
                     return false;
                 }
             ]);
+        val traceEdges = viewContext.getOptionValue(TracingSynthesisOptions.EDGE_TRACING_OPTION)
+        if (traceEdges instanceof Boolean && !(traceEdges as Boolean)) {
+            predicateConstuct = Predicates.and(predicateConstuct,
+                [
+                    return !(it instanceof KEdge || it instanceof KPolyline || it instanceof KSpline)
+                ])
+        }
+        val predicate = predicateConstuct
         viewContext.getDiagramElements(source, equivalenceClasses).filter(predicate).forEach [ sourceElem |
             viewContext.getDiagramElements(target, equivalenceClasses).filter(predicate).forEach [ targetElem |
                 createTracingEdge(sourceElem, targetElem, origin, attachNode);

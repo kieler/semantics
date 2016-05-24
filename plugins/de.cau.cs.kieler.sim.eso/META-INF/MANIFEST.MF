@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER ESO File Support
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.2.3.qualifier
+Bundle-Version: 0.2.4.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sim.eso;singleton:=true
 Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
 Bundle-ActivationPolicy: lazy
