@@ -40,6 +40,7 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -111,6 +112,9 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
 
     @Inject
     extension AnnotationsExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -242,9 +246,14 @@ class GuardScheduler extends AbstractScheduler implements Traceable {
                         placedVOs += ref
                         
                         // Add the guarded scheduling blocks to the list of needed scheduling blocks
-                        guard.expression.eAllContents.filter(ValuedObjectReference).forEach[
+                        guard.expression.getAllReferences.forEach[
                             if (!it.valuedObject.name.equals(AbstractGuardCreator.GOGUARDNAME)) {
-                                SBs += schedulingBlockVOCache.get(it.valuedObject)
+                                if (it.valuedObject != null) {
+                                    val sb = schedulingBlockVOCache.get(it.valuedObject)
+                                    if (sb != null) {
+                                        SBs += sb
+                                    }
+                                }
                             }
                         ]
                     }

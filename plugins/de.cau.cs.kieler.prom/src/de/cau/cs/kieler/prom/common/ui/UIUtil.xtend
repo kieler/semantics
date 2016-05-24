@@ -64,8 +64,6 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.IDE
 
-import static de.cau.cs.kieler.prom.common.ui.UIUtil.*
-
 /**
  * Factory class to create SWT widgets
  * and util class for general purpose UI actions such as enabling/disabling controls.
