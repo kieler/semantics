@@ -49,6 +49,7 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -204,6 +205,8 @@ class S2C {
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
            return '''char'''
+       } else if (valueType == ValueType::STRING) {
+           return '''char*'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''
@@ -618,6 +621,11 @@ class S2C {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
+   // Expand a string expression value.
+   def dispatch CharSequence expand(StringValue expression) {
+        '''"«expression.value.toString»"'''
+   }
+   
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
        if (!valuedObjectReference.indices.nullOrEmpty) {
