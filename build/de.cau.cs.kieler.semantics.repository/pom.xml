@@ -18,8 +18,8 @@
 <!-- These are a few properties we use for the small update site index.html that is generated. -->
   <properties>
     <update.site.name>KIELER Semantics</update.site.name>
-    <update.site.description>Nightly</update.site.description>
-    <update.site.version>0.10.0</update.site.version>
+    <update.site.description>Release</update.site.description>
+    <update.site.version>0.11.0</update.site.version>
     <target.eclipse.version>4.5 (Mars)</target.eclipse.version>
     <!--  <target.eclipse.version>4.2 (Juno)</target.eclipse.version>  -->
   </properties>
