@@ -22,10 +22,11 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Write_Write
+import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import java.util.Stack
-import de.cau.cs.kieler.scg.Write_Write
 
 /**
  * A class to determine the Strongly Connected Components of an SCG
@@ -99,7 +100,7 @@ class StronglyConnectedComponentCalc {
          stack.push(currentNode)
          unvisitedNodes.remove(currentNode)
          
-         for(nextNode : currentNode.neighbors) {
+         for(nextNode : currentNode.neighborsAndDependencies) {
              //Next node has not yet been visited
              if(unvisitedNodes.contains(nextNode)) {
                  tarjan(nextNode)
@@ -126,11 +127,26 @@ class StronglyConnectedComponentCalc {
              sccList.add(scc)
          }
      }
+     
+     def HashMap<Node,Integer> createNodeToSCCMap (LinkedList<LinkedList<Node>> sccs){
+        var i = 0;
+        var map = <Node,Integer> newHashMap
+        for (scc : sccs){
+            for (s : scc){
+                map.put(s,i)
+            }
+            i++;
+        }
+        return map
+    }
+    
+    //-----------------------------------------------------------------------------------------------
+    //----------------------------NEIGHBORS & DEPENDENCIES-------------------------------------------
+    //-----------------------------------------------------------------------------------------------
     
     /**
      * Finds the following neighbor(s) of the node with the 
-     * exception of Surface --> Depth connections as well as 
-     * their dependencies 
+     * exception of Surface --> Depth connections
      * 
      * @param n
      *          The node for which the neighbors are to be found
@@ -185,18 +201,100 @@ class StronglyConnectedComponentCalc {
         if(n instanceof Surface) {
             //Do nothing
         }
+        
+        neighbors
+    }
+    
+    /**
+     * Finds the following neighbor(s) of the node, even 
+     * Surface --> Depth connections
+     * 
+     * @param n
+     *          The node for which the neighbors are to be found
+     * 
+     * @return 
+     *          The following neighbor(s) of the node
+     */
+    def LinkedList<Node> getAllNeighbors(Node n) {
+        
+        var neighbors = <Node> newLinkedList
+        if(n instanceof Surface) {
+            val sur = n as Surface
+            neighbors.add(sur.depth)
+            neighbors
+        } else {
+            return n.neighbors
+        }
+    }
+    
+    /**
+     * Finds the outgoing concurrent dependencies of a Node 
+     * 
+     * @param n
+     *          The node for which the dependencies are to be found
+     * 
+     * @return 
+     *          The outgoing dependencies of the node
+     */
+    def LinkedList<Node> getConcurrentDependencies(Node n) {
+        var deps = <Node> newLinkedList
         //Get only concurrent dependencies!!
         for(dep : n.dependencies) {
             if(dep instanceof DataDependency) {
                 val dataDep = dep as DataDependency
                 if(dataDep.concurrent && !dataDep.confluent) {
-                    neighbors.add(dep.target)
+                    deps.add(dep.target)
                 }
                 
             }
             
         }
+        deps
+    }
+    
+    /**
+     * Finds the following neighbor(s) of the node with the 
+     * exception of Surface --> Depth connections as well as 
+     * their dependencies 
+     * 
+     * @param n
+     *          The node for which the neighbors are to be found
+     * 
+     * @return 
+     *          The following neighbor(s) of the node
+     */
+    def LinkedList<Node> getNeighborsAndDependencies(Node n) {
+        var neighbors = <Node> newLinkedList
+        neighbors.addAll(n.neighbors)
+        neighbors.addAll(n.concurrentDependencies)
         neighbors
+    }
+    
+    
+    
+    def LinkedList<Node> findAllNeighborsOfSCC(LinkedList<Node> scc) {
+        var neighbors = <Node> newLinkedList
+        for(node : scc) {
+            for(neighbor : node.allNeighbors) {
+                if(!scc.contains(neighbor)) {
+                    neighbors.add(neighbor)
+                }
+            }
+        }
+        neighbors
+    }
+    
+    def LinkedList<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
+        var dependencies = <Node> newLinkedList
+        for(node : scc) {
+            for(dep : node.concurrentDependencies) {
+                if(!scc.contains(dep)) {
+                    dependencies.add(dep)
+                }
+            }
+        }
+        dependencies
+        
     }
     
     //-----------------------------------------------------------------------------------------------
@@ -238,4 +336,21 @@ class StronglyConnectedComponentCalc {
         }
         true
     }
+    
+    
+    //-----------------------------------------------------------------------------------------------
+    //-----------------------------ACYCLIC GRAPH & LONGEST PATH--------------------------------------
+    //-----------------------------------------------------------------------------------------------
+    
+    def LinkedList<LinkedList<Node>> createAcyclicGraph(LinkedList<LinkedList<Node>> sccs) {
+        val sccMap = createNodeToSCCMap(sccs);
+        
+        for(scc : sccs) {
+            
+        }
+        
+        return null
+    }
+    
+    
 }
