@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Priorities
+Bundle-SymbolicName: de.cau.cs.kieler.scg.priorities;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.scg.priorities.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.kico;bundle-version="0.1.0",
+ de.cau.cs.kieler.scg;bundle-version="0.1.1",
+ de.cau.cs.kieler.core;bundle-version="0.15.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+

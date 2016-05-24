@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg.priorities, scg.basic, scg.dependency, scg.scgPrio, sclp.sclpTrans"
+            label="PrioComp"
+            preferred="NOSIMULATIONVISUALIZATION"
+            priority="1">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.priorities.SCGPriority">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.priorities.sclp.SCLPTransformation">
+      </productionTransformationClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.scg.priorities.SCGPriorityFeature">
+      </featureClass>
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.priorities.SCGPrioFeatureGroup">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.priorities.sclp.SCLPTransformationFeature">
+      </featureClass>
+   </extension>
+
+</plugin>

@@ -948,7 +948,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             val container = node.KContainerRendering
             val txt = container.addText("1")
-            txt.setAreaPlacementData.from(LEFT,0,0.7f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+            txt.setAreaPlacementData.from(LEFT,0,0,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
             txt.setForeground(PRIORITY_COLOR.copy)
             txt.setFontBold(true)
             txt.setFontSize(7)
