@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint"
+            id="scchartsExceptionBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.debug.scchartsTextLineBreakpointMarker">
+      </breakpoint>
+   </extension>
+   <extension
+         id="scchartsExceptionBreakpointMarker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsDebugModelPresentation"
+            id="scchartsDebugModelPresentation">
+      </debugModelPresentation>
+   </extension>
+
+</plugin>
