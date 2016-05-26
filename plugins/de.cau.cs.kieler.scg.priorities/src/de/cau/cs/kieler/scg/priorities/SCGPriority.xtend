@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import javax.inject.Inject
+import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 
 /**
  * @author lpe
@@ -27,6 +28,12 @@ class SCGPriority extends AbstractProductionTransformation{
     
     @Inject
     extension StronglyConnectedComponentCalc
+    
+    @Inject
+    extension NodePriorities
+    
+    @Inject
+    extension SCCExtensions
     
     override getProducedFeatureId() {
         "scg.scgPrio"
@@ -40,12 +47,23 @@ class SCGPriority extends AbstractProductionTransformation{
         return newHashSet(SCGFeatures::DEPENDENCY_ID)
     }
     
-    def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
         val nodes = scg.nodes
         val scc = findSCCs(nodes)
         
         if(schedulable(scc)) {
             println("SCHEDULABLE!!")
+            val sccMap = createNodeToSCCMap(scc)
+            val nodePrios = calcNodePrios(scc, sccMap)
+            
+            //DEBUG INFORMATION
+            for(n : scg.nodes) {
+                if(nodePrios.containsKey(n)) {
+                    println(n + " -- Priority: " + nodePrios.get(n))
+                    
+                }
+            }
+            
         } else {
             // show warning
             if (context != null) {
