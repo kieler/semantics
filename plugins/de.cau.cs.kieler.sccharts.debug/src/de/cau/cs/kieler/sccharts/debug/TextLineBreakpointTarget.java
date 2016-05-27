@@ -25,6 +25,10 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
 /**
+ * Gets instantiated by the adapter facory for the xtext editor. 
+ * 
+ * TODO: implement adapter factory: http://www.eclipse.org/articles/article.php?file=Article-Adapters/index.html
+ *  
  * @author lgr
  *
  */

@@ -25,13 +25,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
  *
  */
 public class BreakpointHandler extends AbstractHandler {
-    
-    
+        
     /**
      * {@inheritDoc}
      */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+        // TODO: somehow reach line toggling
         return null;
     }
 }
