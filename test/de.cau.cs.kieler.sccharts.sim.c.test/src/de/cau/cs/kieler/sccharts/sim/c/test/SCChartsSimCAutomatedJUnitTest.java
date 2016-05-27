@@ -64,7 +64,7 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
         // first test simple tests
         paths.add(new Path("/testdata-simple/"));
         // then test advanced tests (if no failure)
-        paths.add(new Path("/testdata-advanced/"));
+        //paths.add(new Path("/testdata-advanced/"));
         return paths;
 //        return new Path("knowntofail");
 //        return new Path("testdata");

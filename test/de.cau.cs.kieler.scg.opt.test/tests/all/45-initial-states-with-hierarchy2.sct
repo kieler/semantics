@@ -1,0 +1,23 @@
+scchart _45_initial_states_with_hierarchy2 "45-initial-states-with-hierarchy2" {
+  output signal O;
+  output signal ExitSetC;
+  input signal I;
+
+  initial state A {
+
+    state BB;
+
+    initial state AA
+    --> BB with / ExitSetC;
+  }
+  --> Z with I;
+
+  state Z;
+
+  region ExitActionRegion17159221:
+
+  initial state C
+  --> D with ExitSetC / O;
+
+  state D;
+}

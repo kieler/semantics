@@ -1,0 +1,382 @@
+/* 
+ * Station2Station/KHOc.sct
+ * Author: krat
+ * Description:
+ * Travels from the Kicking Horse Pass to Outer Circle Station
+ * Implements automatic arrival track switching
+ *
+ * Tested in combination with OCKH
+ * (see OCKH.sct)
+ */
+scchart KHOC "KH to OC Controller" {
+  input int KH_ST_1_perm, KH_ST_2_perm, KH_ST_3_perm;
+  input int KH_ST_4_perm, KH_ST_5_perm, KH_ST_6_perm, KIO_LN_1_perm;
+  input int OC_ST_0_perm, OC_ST_1_perm, OC_ST_2_perm, OC_ST_3_perm;
+  output bool KH_ST_1_req[11], KH_ST_2_req[11], KH_ST_3_req[11];
+  output bool KH_ST_4_req[11], KH_ST_5_req[11], KH_ST_6_req[11], KIO_LN_1_req[11];
+  output bool OC_ST_0_req[11], OC_ST_1_req[11], OC_ST_2_req[11], OC_ST_3_req[11];
+  
+  input int trainNum;
+  input int depTrack;
+  input int destTrack;
+  input bool cleanup;
+  input bool debug;
+  output int arrTrack;
+  output bool trainTravelling;
+  int arrTrack_use;
+
+  initial state leave_KH_ST{
+    entry debug / 'println("[trainNum][KH-OC] Controller started")';
+      bool all_perms = false;
+    
+      region "Get permissions":
+      initial state Entry {
+        entry debug / 'println("[trainNum][KH-OC] Requesting permissions for KH_ST_6 and KIO_LN_1")';
+	    entry / KH_ST_6_req[trainNum] = true;
+	    entry / KIO_LN_1_req[trainNum] = true;
+	  }
+	  --> Success with (KH_ST_6_perm == trainNum) & (KIO_LN_1_perm == trainNum)
+	  --> Release1 with (KH_ST_6_perm == trainNum) | (KIO_LN_1_perm == trainNum);
+	  
+	  state Release1
+	  --> Release;
+	  
+	  state Success {
+	    entry debug / 'println("[trainNum][KH-OC] Got permissions for KH_ST_6 and KIO_LN_1")';
+	    entry / all_perms = true;
+	    entry / trainTravelling = true;
+	  }
+	  --> done immediate;
+	  
+	  final state done;
+	  
+	  state Release {
+	    entry debug / 'println("[trainNum][KH-OC] Releasing requests for KH_ST_6 and KIO_LN_1")';
+	    entry / KH_ST_6_req[trainNum] = false;
+	    entry / KIO_LN_1_req[trainNum] = false;
+	  }
+	  --> waitTick;
+	  
+	  state waitTick
+	  --> Entry;
+      
+      region "main":
+	  initial state init
+	  --> Dep_KH_ST_1 with depTrack == 1 & all_perms
+	  --> Dep_KH_ST_2 with depTrack == 2 & all_perms
+	  --> Dep_KH_ST_3 with depTrack == 3 & all_perms
+	  --> Dep_KH_ST_4 with depTrack == 4 & all_perms
+	  --> Dep_KH_ST_5 with depTrack == 5 & all_perms;
+	  
+	  state Dep_KH_ST_1 {
+	    entry debug / 'println("[trainNum][KH-OC] Leaving KH_ST_1")';
+	    entry / 'railPoint(8,STRAIGHT)';
+	    entry / 'railPoint(9,BRANCH)';
+	    entry / 'railSignal(KH_ST_1, FWD, GREEN)';
+	    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+	    entry / 'railTrack(KH_ST_1,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KH_ST_6,FWD,trainNum,NORMAL)';
+	  } --> KH_ST_1_KIO_LN_1 with 'railContact(KIO_LN_1,0)';
+	  
+	  state Dep_KH_ST_2 {
+	    entry debug / 'println("[trainNum][KH-OC] Leaving KH_ST_2")';
+	    entry / 'railPoint(7,BRANCH)';
+	    entry / 'railPoint(8,BRANCH)';
+	    entry / 'railPoint(9,BRANCH)';
+	    entry / 'railSignal(KH_ST_2, FWD, GREEN)';
+	    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+	    entry / 'railTrack(KH_ST_2,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KH_ST_6,FWD,trainNum,NORMAL)';
+	  } --> KH_ST_2_KIO_LN_1 with 'railContact(KIO_LN_1,0)';
+	  
+	    state Dep_KH_ST_3 {
+	      entry debug / 'println("[trainNum][KH-OC] Leaving KH_ST_3")';
+	    entry / 'railPoint(6,BRANCH)';
+	    entry / 'railPoint(7,STRAIGHT)';
+	    entry / 'railPoint(8,BRANCH)';
+	    entry / 'railPoint(9,BRANCH)';
+	    entry / 'railSignal(KH_ST_3, FWD, GREEN)';
+	    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+	    entry / 'railTrack(KH_ST_3,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KH_ST_6,FWD,trainNum,NORMAL)';
+	  } --> KH_ST_3_KIO_LN_1 with 'railContact(KIO_LN_1,0)';
+	  
+	    state Dep_KH_ST_4 {
+	      entry debug / 'println("[trainNum][KH-OC] Leaving KH_ST_4")';
+	  	entry / 'railPoint(5,BRANCH)';
+	    entry / 'railPoint(8,BRANCH)';
+	    entry / 'railPoint(6,STRAIGHT)';
+	    entry / 'railPoint(7,STRAIGHT)';
+	    entry / 'railPoint(9,BRANCH)';
+	    entry / 'railSignal(KH_ST_4, FWD, GREEN)';
+	    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+	    entry / 'railTrack(KH_ST_4,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+	    entry / 'railTrack(KH_ST_6,FWD,trainNum,NORMAL)';
+	  } --> KH_ST_4_KIO_LN_1 with 'railContact(KIO_LN_1,0)';
+	  
+	    state Dep_KH_ST_5 {
+		    entry debug / 'println("[trainNum][KH-OC] Leaving KH_ST_5")';
+		    entry / 'railPoint(5,STRAIGHT)';
+		    entry / 'railPoint(6,STRAIGHT)';
+		    entry / 'railPoint(7,STRAIGHT)';
+		    entry / 'railPoint(8,BRANCH)';
+		    entry / 'railPoint(9,BRANCH)';
+		    entry / 'railSignal(KH_ST_5, FWD, GREEN)';
+		    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+		    entry / 'railTrack(KH_ST_5,FWD,trainNum,NORMAL)';
+		    entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+		    entry / 'railTrack(KH_ST_6,FWD,trainNum,NORMAL)';
+	  } --> KH_ST_5_KIO_LN_1 with 'railContact(KIO_LN_1,0)';
+	
+	
+	  state KH_ST_1_KIO_LN_1 {
+	    entry / 'println("[trainNum][KH-OC] Entering KIO_LN_1")';
+	    entry / 'railSignal(KH_ST_1, FWD, RED)';
+	    entry / 'railTrackOff(KH_ST_1)';
+	    entry / KH_ST_1_req[trainNum] = false;
+	  }
+	  --> done immediate;
+	  
+	  state KH_ST_2_KIO_LN_1 {
+	    entry / 'println("[trainNum][KH-OC] Entering KIO_LN_1")';
+	    entry / 'railSignal(KH_ST_2, FWD, RED)';
+	    entry / 'railTrackOff(KH_ST_2)';
+	    entry / KH_ST_2_req[trainNum] = false;
+	  }
+	  --> done immediate;
+	  
+	  state KH_ST_3_KIO_LN_1 {
+	    entry / 'println("[trainNum][KH-OC] Entering KIO_LN_1")';
+	    entry / 'railSignal(KH_ST_3, FWD, RED)';
+	    entry / 'railTrackOff(KH_ST_3)';
+	    entry / KH_ST_3_req[trainNum] = false;
+	  }
+	  --> done immediate;
+	  
+	  state KH_ST_4_KIO_LN_1 {
+	    entry / 'println("[trainNum][KH-OC] Entering KIO_LN_1")';
+	    entry / 'railSignal(KH_ST_4, FWD, RED)';
+	    entry / 'railTrackOff(KH_ST_4)';
+	    entry / KH_ST_4_req[trainNum] = false;
+	  }
+	  --> done immediate;
+	  
+	  state KH_ST_5_KIO_LN_1 {
+	    entry / 'println("[trainNum][KH-OC] Entering KIO_LN_1")';
+	    entry / 'railSignal(KH_ST_5, FWD, RED)';
+	    entry / 'railTrackOff(KH_ST_5)';
+	    entry / KH_ST_5_req[trainNum] = false;
+	  }
+	  --> done immediate;
+	  
+	  final state done;
+  }>-> KIO_LN_1;
+
+
+  state KIO_LN_1 {
+    bool all_perms = false;
+
+    initial state Entry
+    --> Continue with 'railContact(KIO_LN_1,0)' & all_perms
+    --> Slowdown with 'railContact(KIO_LN_1,0)';
+
+    state Slowdown {
+      entry debug / 'println("[trainNum][KH-OC] Slowing down on KIO_LN_1")';
+      entry / 'railTrack(KIO_LN_1,FWD,trainNum,CAUTION)'
+    }
+    --> Waiting with 'railContact(KIO_LN_1,1)'
+    --> Continue with all_perms;
+
+    state Waiting {
+      entry debug / 'println("[trainNum][KH-OC] Stopping on KIO_LN_1")';
+      entry / 'railTrackBrake(KIO_LN_1)';
+    }
+    --> Continue with all_perms;
+  
+
+
+    state Continue {
+      entry debug / 'println("[trainNum][KH-OC] Continuing on KIO_LN_1")';
+      entry / 'railPoint(27,BRANCH)';
+      entry / 'railPoint(28,STRAIGHT)';
+      entry arrTrack_use == 1 / 'railPoint(26,STRAIGHT)';
+      entry arrTrack_use == 1 / 'railPoint(25,BRANCH)';
+      entry arrTrack_use == 2 / 'railPoint(25,BRANCH)';
+      entry arrTrack_use == 2 / 'railPoint(26,BRANCH)';
+      entry arrTrack_use == 3 / 'railPoint(25,STRAIGHT)';
+
+      entry / 'railSignal(KIO_LN_1,FWD,GREEN)';
+      entry / 'railTrack(KIO_LN_1,FWD,trainNum,NORMAL)';
+      entry / 'railTrack(OC_ST_0,FWD,trainNum,NORMAL)';
+      entry arrTrack_use == 1 / 'railTrack(OC_ST_1,FWD,trainNum,NORMAL)';
+      entry arrTrack_use == 1 / 'railSignal(OC_ST_1, FWD, RED)';
+      entry arrTrack_use == 2 / 'railTrack(OC_ST_2,FWD,trainNum,NORMAL)';
+      entry arrTrack_use == 2 / 'railSignal(OC_ST_2, FWD, RED)';
+      entry arrTrack_use == 3 / 'railTrack(OC_ST_3,FWD,trainNum,NORMAL)';
+      entry arrTrack_use == 3 / 'railSignal(OC_ST_3, FWD, RED)';
+      entry / arrTrack = arrTrack_use;
+    }
+	  --> done immediate;
+	  
+	  final state done;
+    
+    region "cleanup":
+      initial state Entry
+      	--> cleanup with 'railContact(KIO_LN_1,0)';
+          
+      state cleanup {
+        entry debug / 'println("[trainNum][KH-OC] Fully entered KIO_LN_1")';
+        entry / 'railTrackOff(KH_ST_6)';
+        entry / KH_ST_6_req[trainNum] = false;
+      }
+	  --> done immediate;
+	  
+	  final state done;
+	  
+    region "Get permissions":
+      initial state Entry {
+          entry debug / 'println("[trainNum][KH-OC] Requesting permissons for OC_ST_0 and OC_ST_all")';
+          entry / OC_ST_0_req[trainNum] = true;
+          entry destTrack == 1 | !cleanup / OC_ST_1_req[trainNum] = true;
+          entry destTrack == 2 | !cleanup / OC_ST_2_req[trainNum] = true;
+          entry destTrack == 3 | !cleanup / OC_ST_3_req[trainNum] = true;
+      }
+      --> Success with (OC_ST_0_perm == trainNum) & destTrack == 1 & (OC_ST_1_perm == trainNum) / arrTrack_use = 1
+      --> Success with (OC_ST_0_perm == trainNum) & destTrack == 2 & (OC_ST_2_perm == trainNum) / arrTrack_use = 2
+      --> Success with (OC_ST_0_perm == trainNum) & destTrack == 3 & (OC_ST_3_perm == trainNum) / arrTrack_use = 3
+      --> Success with (OC_ST_0_perm == trainNum) & (OC_ST_1_perm == trainNum) / arrTrack_use = 1
+      --> Success with (OC_ST_0_perm == trainNum) & (OC_ST_2_perm == trainNum) / arrTrack_use = 2
+      --> Success with (OC_ST_0_perm == trainNum) & (OC_ST_3_perm == trainNum) / arrTrack_use = 3
+      --> Release1 with (OC_ST_0_perm == trainNum) | (OC_ST_1_perm == trainNum) | (OC_ST_2_perm == trainNum) | (OC_ST_3_perm == trainNum);
+  	
+  	state Release1
+  	--> Release;
+      
+      state Success {
+        entry debug / 'println("[trainNum][KH-OC] Got permissons for OC_ST_0 and OC_ST_X")';
+        entry / all_perms = true;
+      } --> UndoReqs;
+      
+      state UndoReqs {
+        entry !(arrTrack_use == 1) / OC_ST_1_req[trainNum] = false;
+        entry !(arrTrack_use == 2) / OC_ST_2_req[trainNum] = false;
+        entry !(arrTrack_use == 3) / OC_ST_3_req[trainNum] = false;
+      }
+	  --> done immediate;
+	  
+	  final state done;
+      
+      state Release {
+        entry debug / 'println("[trainNum][KH-OC] Releasing requests for OC_ST_0, OC_ST_1, OC_ST_2 and OC_ST_3")';
+        entry / OC_ST_1_req[trainNum] = false;
+        entry / OC_ST_2_req[trainNum] = false;
+        entry / OC_ST_3_req[trainNum] = false;
+        entry / OC_ST_0_req[trainNum] = false;
+      } --> Entry;
+
+  } >-> KIO_LN_1_OC_ST;
+
+
+  state KIO_LN_1_OC_ST
+    --> Arr_OC_ST_1 with arrTrack_use == 1 & 'railContact(OC_ST_1,0)'
+    --> Arr_OC_ST_2 with arrTrack_use == 2 & 'railContact(OC_ST_2,0)'
+    --> Arr_OC_ST_3 with arrTrack_use == 3 & 'railContact(OC_ST_3,0)';
+
+
+  state Arr_OC_ST_1 {
+    entry / 'println("[trainNum][KH-OC] Entering OC_ST_1")';
+    entry / 'railTrack(OC_ST_0,FWD,trainNum,SLOW)';
+    entry / 'railTrack(OC_ST_1,FWD,trainNum,SLOW)';
+    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+    entry / 'railTrackOff(KIO_LN_1)';
+    entry / KIO_LN_1_req[trainNum] = false;
+    
+    initial state SlowEntry
+    --> Slow with 'railContact(OC_ST_1,0)';
+    
+    state Slow {
+      entry debug / 'println("[trainNum][KH-OC] Entered OC_ST_1 completely")';
+      entry / 'railTrackOff(OC_ST_0)';
+      entry / OC_ST_0_req[trainNum] = false;
+    }
+    --> Halt with 'railContact(OC_ST_1,1)';
+
+    state Halt {
+      entry debug / 'println("[trainNum][KH-OC] Stopping on OC_ST_1")';
+      entry / 'railTrackBrake(OC_ST_1)';
+      entry / 'railArrival(trainNum,OC_ST_1)';
+    }
+	  --> done immediate;
+	  
+	  final state done;
+  }
+  >-> waitForDep;
+  
+  state Arr_OC_ST_2 {
+    entry / 'println("[trainNum][KH-OC] Entering OC_ST_2")';
+    entry / 'railTrack(OC_ST_0,FWD,trainNum,SLOW)';
+    entry / 'railTrack(OC_ST_2,FWD,trainNum,SLOW)';
+    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+    entry / 'railTrackOff(KIO_LN_1)';
+    entry / KIO_LN_1_req[trainNum] = false;
+    
+    initial state SlowEntry
+    --> Slow with 'railContact(OC_ST_2,0)';
+    
+    state Slow {
+      entry debug / 'println("[trainNum][KH-OC] Entered OC_ST_2 completly")';
+      entry / 'railTrackOff(OC_ST_0)';
+      entry / OC_ST_0_req[trainNum] = false;
+    }
+    --> Halt with 'railContact(OC_ST_2,1)';
+
+    state Halt {
+      entry debug / 'println("[trainNum][KH-OC] Stopping on OC_ST_2")';
+      entry / 'railTrackBrake(OC_ST_2)';
+      entry / 'railArrival(trainNum,OC_ST_2)';
+    }
+	  --> done immediate;
+	  
+	  final state done;
+  }
+  >-> waitForDep;
+  
+  state Arr_OC_ST_3 {
+    entry / 'println("[trainNum][KH-OC] Entering OC_ST_3")';
+    entry / 'railTrack(OC_ST_0,FWD,trainNum,SLOW)';
+    entry / 'railTrack(OC_ST_3,FWD,trainNum,SLOW)';
+    entry / 'railSignal(KIO_LN_1, FWD, RED)';
+    entry / 'railTrackOff(KIO_LN_1)';
+    entry / KIO_LN_1_req[trainNum] = false;
+    
+    initial state SlowEntry
+    --> Slow with 'railContact(OC_ST_3,0)';
+    
+    state Slow {
+      entry debug / 'println("[trainNum][KH-OC] Entered OC_ST_3 completly")';
+      entry / 'railTrackOff(OC_ST_0)';
+      entry / OC_ST_0_req[trainNum] = false;
+    }
+    --> Halt with 'railContact(OC_ST_3,1)';
+
+    state Halt {
+      entry debug / 'println("[trainNum][KH-OC] Stopping on OC_ST_3")';
+      entry / 'railTrackBrake(OC_ST_3)';
+      entry / 'railArrival(trainNum,OC_ST_3)';
+     }
+	  --> done immediate;
+	  
+	  final state done;
+  }
+  >-> waitForDep;
+  
+  state waitForDep
+  --> done with 'railDeparture(trainNum)' / trainTravelling = false;
+
+
+  final state done;
+}

@@ -1,0 +1,38 @@
+@VHLayout
+scchart Robot {
+  input bool bumper;
+  input bool accelerator;
+  output bool motor;
+
+  region Main:
+ 
+  initial state Init
+  --> Emergency immediate with bumper
+  --> Normal immediate;
+
+  state Emergency {
+    region HandleEmergency:
+    initial state StartE
+    --> DoneE with / 'errorLog()'; motor =  false;
+    final state DoneE;
+  };
+//  >-> Stopped with /motor = false;
+  
+  state Normal {
+
+    region HandleMotor:
+
+    initial state Start
+    --> Conditional immediate with / 'getImage()'; 
+    
+    state Conditional "Ready"
+    --> Stop with accelerator / motor = true
+    --> Stop with / 'writeLog()'; motor = false;
+    
+    final state Stop;
+
+   };
+ // >-> Stopped with / motor = false;
+
+//  final state Stopped;
+}

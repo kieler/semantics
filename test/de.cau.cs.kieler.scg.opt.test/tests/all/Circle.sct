@@ -1,0 +1,17 @@
+scchart circle {
+  input bool A
+  input bool B
+  input bool C
+  input bool D
+  
+  region circle:
+  
+  initial state S0
+  --> S1 with A;
+  state S1
+  --> S2 with B;
+  state S2
+  --> S3 with C;
+  state S3
+    --> S0 with D;
+}

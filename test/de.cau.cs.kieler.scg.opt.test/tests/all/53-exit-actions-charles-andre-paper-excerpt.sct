@@ -1,0 +1,18 @@
+scchart _53_exit_actions_charles_andre_paper_excerpt
+"53-exit-actions-charles-andre-paper-excerpt" {
+  output signal X0;
+  output signal Y0;
+  output signal Y1;
+  input signal b;
+  input signal R;
+  output signal X1;
+
+  initial state M0 {
+
+    initial state M10
+    --> _ with b / X1;
+
+    state _;
+  }
+  o-> M0 with R / X0;
+}

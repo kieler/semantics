@@ -1,0 +1,18 @@
+scchart _52_exit_actions_charles_andre_paper_excerpt_b_immediate
+"52-exit-actions-charles-andre-paper-excerpt-b-immediate" {
+  output signal Y2;
+  input signal b;
+  output signal X2;
+  input signal S;
+  input signal W;
+
+  initial state M10 {
+
+    initial state M2
+    --> _ immediate with b / X2;
+
+    state _;
+  }
+  o-> M10 with S
+  --> M10 with W;
+}

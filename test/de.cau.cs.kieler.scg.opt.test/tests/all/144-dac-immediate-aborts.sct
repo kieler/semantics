@@ -1,0 +1,16 @@
+scchart ImmediateAborts {
+  input signal Otrig;
+  input signal Itrig;
+  output signal O;
+
+  state Outer {
+
+    initial state S;
+  }
+  --> Outer2 immediate with Otrig / O;
+
+  state Outer2;
+
+  initial state A
+  --> Outer with Itrig;
+}

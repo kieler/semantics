@@ -1,0 +1,7 @@
+scchart Signal {
+  input signal i;
+  output signal o;
+  initial state init
+  --> done with i / o;
+  final state done;
+}  

@@ -20,28 +20,12 @@
 
 % Output: 
 ;
-A 
-% Output: O(1) 
-;
 
-% Output: O(1) 
-;
-
-% Output: O(1) 
-;
-
-% Output: O(1) 
-;
-
-% Output: O(1) 
-;
-! reset;
-A 
 % Output: 
 ;
-A 
-% Output: O(1) 
+
+% Output: 
 ;
-A 
-% Output: O(1) 
+
+% Output: 
 ;

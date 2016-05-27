@@ -140,7 +140,7 @@ public abstract class KiemAutomatedJUnitTest {
     // Private properties
 
     /** The kiem plugin single instance. */
-    private static KiemPlugin kiemPlugin = null;
+    protected static KiemPlugin kiemPlugin = null;
 
     /** The ESO files. */
     private static List<IPath> esoFiles = new LinkedList<IPath>();
@@ -360,7 +360,8 @@ public abstract class KiemAutomatedJUnitTest {
         allWorkspaceFiles.addAll(allExternalFiles);
 
         // Test if a valid execution file is defined
-        IPath executionFilePath = getExecutionFilePath(allWorkspaceFiles, getExecutionFileName());
+        String tmp = getExecutionFileName();
+        IPath executionFilePath = getExecutionFilePath(allWorkspaceFiles, tmp);
         if (executionFilePath == null) {
             throw new RuntimeException(
                     "No execution file is defined or the execution file is not found.");

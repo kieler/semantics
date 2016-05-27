@@ -1,0 +1,6 @@
+scchart FinalStateTermination {
+  initial state A {
+    initial final state B1;
+  }
+  >-> A;
+}

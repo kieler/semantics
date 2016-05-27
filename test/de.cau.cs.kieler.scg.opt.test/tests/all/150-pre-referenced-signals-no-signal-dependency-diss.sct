@@ -1,0 +1,24 @@
+scchart ^pre {
+  output signal O;
+  input signal I;
+  output signal B;
+
+  region Region:
+
+  initial state A
+  --> B with I / B;
+
+  state C;
+
+  state EB {
+
+    initial state ib
+    --> fb immediate with pre(B) / O;
+
+    state fb;
+  }
+  --> C immediate with / B;
+
+  state B
+  --> EB with I;
+}

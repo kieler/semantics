@@ -1,0 +1,6 @@
+scchart Actions {
+  input bool var1;
+  initial state B {
+    immediate during var1;
+  };
+}
