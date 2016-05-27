@@ -28,7 +28,7 @@ import org.eclipse.ui.PlatformUI;
  * @author lgr
  *
  */
-public class TextLineBrekpointTarget implements IToggleBreakpointsTarget {
+public class TextLineBreakpointTarget implements IToggleBreakpointsTarget {
 
     /**
      * {@inheritDoc}

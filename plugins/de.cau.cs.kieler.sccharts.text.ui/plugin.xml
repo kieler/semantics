@@ -395,10 +395,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:#TextRulerContext?after=group.open">
+            locationURI="popup:#TextRulerContext">
          <command
                commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
-               label="Hello Test"
+               label="Toggle Breakpoint"
                style="push">
             <visibleWhen
                   checkEnabled="false">
