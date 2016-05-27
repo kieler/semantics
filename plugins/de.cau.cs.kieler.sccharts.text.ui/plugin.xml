@@ -392,6 +392,39 @@
             editorID="de.cau.cs.kieler.sccharts.text.sct.Sct">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:#TextRulerContext?after=group.open">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               label="Hello Test"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.debug.BreakpointHandler"
+            commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.sccharts.debug.BreakpointHandler"
+            description="Toggle Breakpoint in specified Line."
+            id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+            name="Toggle Breakpoint">
+      </command>
+   </extension>
        
     
 
