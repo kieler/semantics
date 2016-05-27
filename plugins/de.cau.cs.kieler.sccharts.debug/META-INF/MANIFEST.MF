@@ -15,3 +15,4 @@ Import-Package: org.eclipse.debug.ui.actions,
  org.eclipse.jface.text,
  org.eclipse.ui,
  org.eclipse.ui.texteditor
+Export-Package: de.cau.cs.kieler.sccharts.debug

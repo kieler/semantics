@@ -398,8 +398,9 @@
             locationURI="popup:#TextRulerContext">
          <command
                commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               icon="icons/obj16/SCChartsTextFile.gif"
                label="Toggle Breakpoint"
-               style="push">
+               style="toggle">
             <visibleWhen
                   checkEnabled="false">
                <reference
@@ -410,19 +411,12 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="de.cau.cs.kieler.sccharts.debug.BreakpointHandler"
-            commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand">
-      </handler>
-   </extension>
-   <extension
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="de.cau.cs.kieler.sccharts.debug.BreakpointHandler"
             description="Toggle Breakpoint in specified Line."
             id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
-            name="Toggle Breakpoint">
+            name="Toggle Breakpoint Command">
       </command>
    </extension>
        
