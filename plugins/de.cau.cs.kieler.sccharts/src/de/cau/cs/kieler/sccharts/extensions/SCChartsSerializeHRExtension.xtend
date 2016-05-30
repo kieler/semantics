@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * @author ssm
@@ -191,6 +192,14 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
                     text.append(vo.initialValue.serializeHR);
                 }else{
                     text.append(vo.initialValue.serialize);
+                }
+            }
+            if (vo.combineOperator != null && vo.combineOperator != CombineOperator.NONE) {
+                text.append(" combine ");
+                if (hr) {
+                    text.append(vo.combineOperator.serializeHR);
+                }else{
+                    text.append(vo.combineOperator.serialize);
                 }
             }
             if (voIter.hasNext) {

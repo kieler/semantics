@@ -232,6 +232,25 @@ class KExpressionsSerializeExtensions {
         return result
     }
     
+    
+        // Expand a combine operator expression.
+    def dispatch CharSequence serialize(CombineOperator combineOperator) {
+        var CharSequence result = ""
+        
+        switch (combineOperator) {
+            case CombineOperator.ADD : return "+" 
+            case CombineOperator.MULT : return "*" 
+            case CombineOperator.MIN : return "min" 
+            case CombineOperator.MAX : return "max"
+            case CombineOperator.AND : return "and"
+            case CombineOperator.OR : return "or"
+            //FIXME discuss what to serialize in the host case
+            case CombineOperator.HOST : return  "host"
+        }
+        return "" 
+    }
+    
+    
     def dispatch CharSequence serialize(OperatorExpression expression) {
 		val result = serializeOperatorExpression(expression)
 		
