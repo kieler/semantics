@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.TransitionType
 
 /**
  * @author ssm
@@ -70,7 +71,9 @@ class SCTGenerator {
                         is = "0" + is
                     }
                     createModel(dialog, project, ID_PREFIX + is)
-                    if (i % 2 == 0 ) { monitor.worked(2) }
+                    if (i % 2 == 0) {
+                        monitor.worked(2)
+                    }
                     if (monitor.canceled) {
                         return Status.CANCEL_STATUS
                     }
@@ -135,11 +138,12 @@ class SCTGenerator {
                         [
                             it.createTransitionTrigger(dialog)
                             it.createTransitionEffects(dialog)
+                            if (it.sourceState.isSuperstate)
+                                it.type = TransitionType.TERMINATION
                             if (dialog.chanceForImmediate.chance) {
                                 if ((it.eContainer.asState != it.targetState) &&
                                     !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
-                                      (it.targetState.outgoingTransitions.filter[immediate].size > 0))
-                                ) {
+                                        (it.targetState.outgoingTransitions.filter[immediate].size > 0))) {
                                     it.immediate = true
                                 }
                             }
@@ -160,16 +164,18 @@ class SCTGenerator {
 
             stateCounter++
 
+            lastState.createTransition(newState) => [
+                it.createTransitionTrigger(dialog)
+                it.createTransitionEffects(dialog)
+                if (it.sourceState.isSuperstate)
+                    it.type = TransitionType.TERMINATION
+            ]
+
             if (dialog.chanceForSuperstate.chance && stateCounter + 2 < statesLeft) {
                 val stateCost = random(1, statesLeft - 1)
                 newState.createRegions(dialog, hierarchy, stateCost)
                 stateCounter += stateCost
             }
-
-            lastState.createTransition(newState) => [
-                it.createTransitionTrigger(dialog)
-                it.createTransitionEffects(dialog)
-            ]
 
             lastState = newState
         }
@@ -178,6 +184,8 @@ class SCTGenerator {
         lastState.createTransition(newState) => [
             it.createTransitionTrigger(dialog)
             it.createTransitionEffects(dialog)
+            if (it.sourceState.isSuperstate)
+                it.type = TransitionType.TERMINATION
         ]
     }
 
@@ -265,6 +273,10 @@ class SCTGenerator {
         transition.targetState = targetState
         sourceState.outgoingTransitions += transition
         transition
+    }
+
+    private def isSuperstate(State state) {
+        state.regions.size > 0
     }
 
     private def asState(EObject obj) {
