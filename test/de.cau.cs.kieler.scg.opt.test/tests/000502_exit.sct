@@ -1,8 +1,0 @@
-scchart ^exit {
-  output bool O;
-  
-  initial state A {
-    exit / O = false;
-  };
-  
-}

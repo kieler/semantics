@@ -1,6 +1,0 @@
-scchart simple {
-  input bool I;
-  input bool I2;
-  initial state A
-  --> A with pre(I) && pre(I2);
-}

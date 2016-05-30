@@ -1,5 +1,0 @@
-scchart Signal {
-  output signal OUT;
-  initial state init
-  --> init with / OUT;
-}  

@@ -1,6 +1,0 @@
-scchart Actions {
-  input bool var1;
-  initial state B {
-    during var1;
-  };
-}

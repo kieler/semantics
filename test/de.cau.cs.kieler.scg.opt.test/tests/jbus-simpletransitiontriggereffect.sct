@@ -1,6 +1,0 @@
-scchart simple {
-  input bool IN;
-  input bool OUT;
-  initial state A
-  --> A with IN / OUT = true;
-}

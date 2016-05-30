@@ -1,4 +1,0 @@
-scchart Deferred {
-  initial state A
-  --> A deferred;
-}

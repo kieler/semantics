@@ -1,6 +1,0 @@
-scchart StrongAbort {
-  initial state A {
-    initial state B1;
-  }
-  o-> A;
-}

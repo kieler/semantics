@@ -1,4 +1,0 @@
-scchart simple {
-  initial state A
-  o-> A;
-}

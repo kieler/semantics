@@ -1,8 +1,0 @@
-scchart ^during {
-  output bool O;
-  
-  initial state A {
-    during / O = false;
-  };
-  
-}

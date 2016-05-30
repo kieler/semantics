@@ -1,7 +1,0 @@
-scchart HistoryDeep {
-  initial state A
-  --> B history;
-  state B {
-    initial state B1;
-  };
-}

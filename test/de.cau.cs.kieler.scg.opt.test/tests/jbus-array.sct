@@ -1,6 +1,0 @@
-scchart Array {
-  int myArray[10][2];
-    initial state init
-  --> done with myArray[1][0] == 1 / myArray[2][1] = 2;
-  final state done;
-} 

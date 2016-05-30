@@ -1,9 +1,0 @@
-scchart WeakAbort {
-  initial state A {
-    initial state B1;
-  }
-  --> B
-  --> C;
-  final state B;
-  final state C;
-}

@@ -1,8 +1,0 @@
-scchart Regions {
-  initial state A {
-    region Region1 :
-    initial state B1;
-    region Region2 :
-    initial state B3;
-  };
-}

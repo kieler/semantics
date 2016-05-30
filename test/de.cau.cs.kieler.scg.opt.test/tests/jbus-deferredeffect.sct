@@ -1,5 +1,0 @@
-scchart Deferred {
-  output bool OUT;
-  initial state A
-  --> A deferred with / OUT = true;
-}
