@@ -32,7 +32,7 @@ import org.eclipse.ui.PlatformUI;
  * @author lgr
  *
  */
-public class TextLineBreakpointTarget implements IToggleBreakpointsTarget {
+public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
 
     /**
      * {@inheritDoc}

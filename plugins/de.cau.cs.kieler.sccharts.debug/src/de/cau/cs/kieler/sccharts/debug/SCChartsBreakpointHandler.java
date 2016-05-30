@@ -24,7 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author lgr
  *
  */
-public class BreakpointHandler extends AbstractHandler {
+public class SCChartsBreakpointHandler extends AbstractHandler {
         
     /**
      * {@inheritDoc}

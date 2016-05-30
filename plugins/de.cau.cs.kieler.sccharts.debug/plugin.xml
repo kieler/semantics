@@ -26,5 +26,15 @@
             id="scchartsDebugModelPresentation">
       </debugModelPresentation>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpointTarget">
+         <adapter
+               type="org.eclipse.debug.ui.actions.IToggleBreakpointsTarget">
+         </adapter>
+      </factory>
+   </extension>
 
 </plugin>
