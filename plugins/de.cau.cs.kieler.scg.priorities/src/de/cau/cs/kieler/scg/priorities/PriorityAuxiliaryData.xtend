@@ -23,6 +23,8 @@ import java.util.HashMap
 class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     
     private HashMap<Node, Integer> nodePrio
+    private HashMap<Node, Integer> threadSegmentID
+    private HashMap<Node, Integer> optimizedPrioID
     
     new(HashMap<Node, Integer> npr) {
         nodePrio = npr.clone as HashMap<Node, Integer>
@@ -34,6 +36,22 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     
     public def HashMap<Node, Integer> getNodePrio() {
         nodePrio
+    }
+    
+    public def void setThreadSegmentID(HashMap<Node, Integer> tsid) {
+        threadSegmentID = tsid.clone as HashMap<Node, Integer>
+    }
+    
+    public def HashMap<Node, Integer> getThreadSegmentID() {
+        threadSegmentID
+    }
+    
+    public def void setOptimizedPrioID(HashMap<Node, Integer> opid) {
+        optimizedPrioID = opid.clone as HashMap<Node, Integer>
+    }
+    
+    public def HashMap<Node, Integer> getOptimizedPrioID() {
+        optimizedPrioID
     }
     
 }

@@ -69,8 +69,8 @@ class SCGPriority extends AbstractProductionTransformation{
             println("SCHEDULABLE!!")
             val sccMap = createNodeToSCCMap(scc)
             val nodePrios = calcNodePrios(scc, sccMap)
-//            val auxData = new PriorityAuxiliaryData(nodePrios)
-//            context.compilationResult.addAuxiliaryData(auxData)
+            val auxData = new PriorityAuxiliaryData(nodePrios)
+            //context.compilationResult.addAuxiliaryData(auxData)
             //DEBUG INFORMATION
            /* for(n : scg.nodes) {
                 if(nodePrios.containsKey(n)) {
@@ -82,6 +82,7 @@ class SCGPriority extends AbstractProductionTransformation{
             
             
             val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
+            auxData.threadSegmentID = threadSegmentIDs
             //val auxData = new PriorityAuxiliaryData(threadSegmentIDs)
             //context.compilationResult.addAuxiliaryData(auxData)
             
@@ -90,7 +91,9 @@ class SCGPriority extends AbstractProductionTransformation{
             //context.compilationResult.addAuxiliaryData(auxData)
             
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
-            val auxData = new PriorityAuxiliaryData(optPrioIDs)
+            auxData.optimizedPrioID = optPrioIDs
+            
+            
             context.compilationResult.addAuxiliaryData(auxData)
             
             
