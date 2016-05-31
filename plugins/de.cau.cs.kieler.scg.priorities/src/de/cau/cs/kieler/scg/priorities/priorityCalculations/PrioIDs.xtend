@@ -22,7 +22,22 @@ import java.util.List
  */
 class PrioIDs {
     
-    
+    /**
+     * Calculates the priority IDs of every node using the node priorities, the thread segment IDs and the overall 
+     * number of thread segment IDs: node priority * number of thread segmend IDs + thread segment ID
+     * 
+     * @param nodePrios
+     *                  The node priorities of all nodes
+     * @param threadSegmentIDs
+     *                  The thread segment IDs of all nodes
+     * @param nThreadSegmentIDs
+     *                  The overall number of used thread segment IDs
+     * @param nodes
+     *                  A list of all nodes contained in the SCG
+     * 
+     * @return
+     *                  A HashMap mapping the nodes to their PrioID
+     */
     public def HashMap<Node, Integer> calcPrioIDs(HashMap<Node, Integer> nodePrios, HashMap<Node, Integer> 
                                                         threadSegmentIDs, int nThreadSegmentIDs, List<Node> nodes) {
         

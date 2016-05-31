@@ -24,6 +24,18 @@ import java.util.List
 class OptimizedPrioIDs {
     
     
+    /**
+     * Calculates the optimized priority IDs of every node of the SCG using the prioIDs. This is done to remove 
+     * 'empty' priority IDs as in, priority IDs which are not used by any node. 
+     * 
+     * @param prioIDs
+     *                  The priority IDs of all nodes
+     * @param nodes
+     *                  A list of all nodes of the SCG
+     * 
+     * @return
+     *                  A HashMap mapping the nodes to their optimized priority IDs
+     */
     public def HashMap<Node, Integer> calcOptimizedPrioIDs(HashMap<Node, Integer> prioIDs, List<Node> nodes) {
         
         var LinkedList<Integer> ids = <Integer> newLinkedList

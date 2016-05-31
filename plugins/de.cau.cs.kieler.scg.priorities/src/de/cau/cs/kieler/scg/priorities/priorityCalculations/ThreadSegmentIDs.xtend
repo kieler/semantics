@@ -30,16 +30,34 @@ class ThreadSegmentIDs {
     @Inject
     extension SCCExtensions
     
-    
+    /** The thread segment ID for each node */
     private HashMap<Node, Integer> threadSegmentIDs
+    /** A HashMap to store whether a node has been visited or not */
     private HashMap<Node, Boolean> visited
+    /** The node priorities of a node calculated beforehand */
     private HashMap<Node, Integer> nodePrios
+    /** The overall number of thread segment IDs */
     private int nThreadSegmentIDs
     
+    /**
+     * Gives the number of thread segment IDs
+     */
     public def int getNumberOfThreadSegmentIDs() {
         return nThreadSegmentIDs
     }
     
+    /**
+     * Calculates the thread segment IDs of the given SCG (given as a list of nodes).
+     * 
+     * @param nodes
+     *              The SCG for which to calculate the thread segment IDs
+     * @param nodePrios
+     *              The node priorities of the given nodes. This is required to minimize 
+     *              context switches 
+     * 
+     * @return
+     *              A HashMap mapping the nodes of the SCG to their thread segment ID
+     */
     public def HashMap<Node, Integer> calcThreadSegmentIDs(List<Node> nodes, HashMap<Node, Integer> nodePrios) {
         
         this.nodePrios = nodePrios
@@ -67,6 +85,19 @@ class ThreadSegmentIDs {
         return threadSegmentIDs
     }
     
+    /**
+     *  Method to calculate the thread segment IDs of the nodes. Executes a depth-first search 
+     *  of the nodes. If we reach the end of an execution, the thread is given the ID threadID. 
+     * 
+     * @param node
+     *              The current node. Calculates the thread segment ID for all his children and then 
+     *              calculate the thread segment ID of this node.
+     * @param threadID
+     *              The threadID to be given to the thread
+     * 
+     * @return
+     *              The thread segment ID of the node to be used by its parent node
+     */
     private def int assignThreadSegmentIDs(Node node, int threadID) {
         var tID = threadID
         val neighbors = node.allNeighbors
