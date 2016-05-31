@@ -63,6 +63,9 @@ class SCGPriority extends AbstractProductionTransformation{
                     
                 }
             }
+            val auxData = new PriorityAuxiliaryData(nodePrios)
+            context.compilationResult.addAuxiliaryData(auxData)
+            
             
         } else {
             // show warning

@@ -16,4 +16,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core;bundle-version="0.15.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.scg.priorities,
+ de.cau.cs.kieler.scg.priorities.extensions,
+ de.cau.cs.kieler.scg.priorities.sclp
 
