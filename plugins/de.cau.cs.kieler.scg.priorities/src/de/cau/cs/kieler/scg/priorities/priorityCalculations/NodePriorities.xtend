@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.priorityCalculations
+package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions

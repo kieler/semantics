@@ -17,10 +17,10 @@ import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import javax.inject.Inject
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
-import de.cau.cs.kieler.scg.priorityCalculations.StronglyConnectedComponentCalc
-import de.cau.cs.kieler.scg.priorityCalculations.NodePriorities
+import de.cau.cs.kieler.scg.priorities.priorityCalculations.NodePriorities
+import de.cau.cs.kieler.scg.priorities.priorityCalculations.StronglyConnectedComponentCalc
+import javax.inject.Inject
 
 /**
  * @author lpe
