@@ -19,7 +19,10 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import de.cau.cs.kieler.scg.priorities.priorityCalculations.NodePriorities
+import de.cau.cs.kieler.scg.priorities.priorityCalculations.OptimizedPrioIDs
+import de.cau.cs.kieler.scg.priorities.priorityCalculations.PrioIDs
 import de.cau.cs.kieler.scg.priorities.priorityCalculations.StronglyConnectedComponentCalc
+import de.cau.cs.kieler.scg.priorities.priorityCalculations.ThreadSegmentIDs
 import javax.inject.Inject
 
 /**
@@ -36,6 +39,15 @@ class SCGPriority extends AbstractProductionTransformation{
     
     @Inject
     extension SCCExtensions
+    
+    @Inject
+    extension ThreadSegmentIDs
+    
+    @Inject
+    extension PrioIDs
+    
+    @Inject
+    extension OptimizedPrioIDs
     
     override getProducedFeatureId() {
         "scg.scgPrio"
@@ -57,15 +69,28 @@ class SCGPriority extends AbstractProductionTransformation{
             println("SCHEDULABLE!!")
             val sccMap = createNodeToSCCMap(scc)
             val nodePrios = calcNodePrios(scc, sccMap)
-            
+//            val auxData = new PriorityAuxiliaryData(nodePrios)
+//            context.compilationResult.addAuxiliaryData(auxData)
             //DEBUG INFORMATION
-            for(n : scg.nodes) {
+           /* for(n : scg.nodes) {
                 if(nodePrios.containsKey(n)) {
                     println(n + " -- Priority: " + nodePrios.get(n))
                     
                 }
             }
-            val auxData = new PriorityAuxiliaryData(nodePrios)
+            */
+            
+            
+            val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
+            //val auxData = new PriorityAuxiliaryData(threadSegmentIDs)
+            //context.compilationResult.addAuxiliaryData(auxData)
+            
+            val prioIDs = calcPrioIDs(nodePrios, threadSegmentIDs, getNumberOfThreadSegmentIDs, nodes)
+            //val auxData = new PriorityAuxiliaryData(prioIDs)
+            //context.compilationResult.addAuxiliaryData(auxData)
+            
+            val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
+            val auxData = new PriorityAuxiliaryData(optPrioIDs)
             context.compilationResult.addAuxiliaryData(auxData)
             
             

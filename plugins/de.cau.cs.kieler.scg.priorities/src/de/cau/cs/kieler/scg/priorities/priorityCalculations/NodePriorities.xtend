@@ -44,7 +44,7 @@ class NodePriorities {
      *              A HashMap that maps each node in the SCG to the SCC it belongs to
      * 
      */
-    def HashMap<Node, Integer> calcNodePrios(LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccMap) {
+    public def HashMap<Node, Integer> calcNodePrios(LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccMap) {
         visited = newHashMap
         index = newHashMap
         sccPrio = newHashMap

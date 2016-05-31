@@ -40,7 +40,7 @@ class SCCExtensions {
      * @return
      *              A HashMap containing all nodes and the index of the SCC in sccs they belong to
      */
-    def HashMap<Node,Integer> createNodeToSCCMap (LinkedList<LinkedList<Node>> sccs){
+    public def HashMap<Node,Integer> createNodeToSCCMap (LinkedList<LinkedList<Node>> sccs){
         var i = 0;
         var map = <Node,Integer> newHashMap
         for (scc : sccs){
@@ -66,7 +66,7 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    def LinkedList<Node> getNeighbors(Node n) {
+    public def LinkedList<Node> getNeighbors(Node n) {
         var neighbors = <Node> newLinkedList
         
         if(n instanceof Entry) {
@@ -127,7 +127,7 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    def LinkedList<Node> getAllNeighbors(Node n) {
+    public def LinkedList<Node> getAllNeighbors(Node n) {
         
         var neighbors = <Node> newLinkedList
         if(n instanceof Surface) {
@@ -148,7 +148,7 @@ class SCCExtensions {
      * @return 
      *          The outgoing dependencies of the node
      */
-    def LinkedList<Node> getConcurrentDependencies(Node n) {
+    public def LinkedList<Node> getConcurrentDependencies(Node n) {
         var deps = <Node> newLinkedList
         //Get only concurrent dependencies!!
         for(dep : n.dependencies) {
@@ -175,7 +175,7 @@ class SCCExtensions {
      * @return 
      *          The following neighbor(s) of the node
      */
-    def LinkedList<Node> getNeighborsAndDependencies(Node n) {
+    public def LinkedList<Node> getNeighborsAndDependencies(Node n) {
         var neighbors = <Node> newLinkedList
         neighbors.addAll(n.neighbors)
         neighbors.addAll(n.concurrentDependencies)
@@ -192,7 +192,7 @@ class SCCExtensions {
      * @return
      *          The neighboring SCCs of scc
      */
-    def LinkedList<Node> findNeighborsOfSCC(LinkedList<Node> scc) {
+    public def LinkedList<Node> findNeighborsOfSCC(LinkedList<Node> scc) {
         var neighbors = <Node> newLinkedList
         for(node : scc) {
             for(neighbor : node.neighbors) {
@@ -213,7 +213,7 @@ class SCCExtensions {
      * @return
      *          The dependent SCCs
      */
-    def LinkedList<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
+    public def LinkedList<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
         var dependencies = <Node> newLinkedList
         for(node : scc) {
             for(dep : node.concurrentDependencies) {
