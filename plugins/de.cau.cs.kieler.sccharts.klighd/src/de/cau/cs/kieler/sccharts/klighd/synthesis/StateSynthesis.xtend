@@ -124,7 +124,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add declarations
             for (declaration : state.declarations) {
-                node.addDeclarationLabel(declaration.serializeComponents(true)) => [
+                node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)];
@@ -133,7 +133,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
             // Add actions
             for (action : state.localActions) {
-                node.addActionLabel(action.serializeComponents(true)) => [
+                node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(action);
                     eAllContents.filter(KRendering).forEach[associateWith(action)];

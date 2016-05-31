@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
-import com.google.common.base.Joiner
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
@@ -184,7 +183,7 @@ class StateStyles {
      * Adds a label in declaration style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addActionLabel(KNode node, Pair<List<String>, List<String>> components) {
+    def KRectangle addActionLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
         node.actionsContainer.addKeywordLabel(components);
     }
 
@@ -192,14 +191,14 @@ class StateStyles {
      * Adds a label in action style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KNode node, Pair<List<String>, List<String>> components) {
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
         return node.declarationsContainer.addKeywordLabel(components);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
-    package def addKeywordLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
+    package def addKeywordLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
@@ -207,15 +206,40 @@ class StateStyles {
                 invisible = true;
                 // Add left alignment
                 setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
-                setGridPlacement(2);
-                val joiner = Joiner.on(" ");
-                addText(joiner.join(components.key) + " ") => [
-                    foreground = KEYWORD.color;
-                    fontBold = true;
-                ]
-                addText(joiner.join(components.value));
+                var parts = 0
+                val entries = components.iterator
+                val builder = new StringBuilder()
+                var keyword = true
+                var KText ktext = null               
+                while (entries.hasNext) {
+                	val entry = entries.next
+                	if (builder.length > 0 && keyword != entry.value) {
+		                ktext = it.addText(builder.append(" ").toString)
+		                if (keyword) {
+		                	ktext.highlightKeyword
+		                }                		
+		                builder.length = 0
+                		parts++
+                	}
+                	if (builder.length > 0) {
+                		builder.append(" ")
+                	}
+                	builder.append(entry.key)
+                	keyword = entry.value
+                }
+                ktext = addText(builder.toString)
+                if (keyword) {
+                	ktext.highlightKeyword
+                }
+                parts++
+                setGridPlacement(parts)
             ]
         ]
+    }
+    
+    package def highlightKeyword(KText ktext) {
+        ktext.foreground = KEYWORD.color;
+        ktext.fontBold = true;    	
     }
 
     /**

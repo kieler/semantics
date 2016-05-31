@@ -132,7 +132,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 // Add declarations
                 // TODO display declaration otherwise
                 for (declaration : region.declarations) {
-                    addDeclarationLabel(declaration.serializeComponents(true)) => [
+                    addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                         associateWith(declaration);
                         children.forEach[associateWith(declaration)];

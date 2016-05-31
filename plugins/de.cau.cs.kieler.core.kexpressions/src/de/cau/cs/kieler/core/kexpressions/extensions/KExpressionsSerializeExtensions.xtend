@@ -233,21 +233,18 @@ class KExpressionsSerializeExtensions {
     }
     
     
-        // Expand a combine operator expression.
     def dispatch CharSequence serialize(CombineOperator combineOperator) {
-        var CharSequence result = ""
-        
-        switch (combineOperator) {
-            case CombineOperator.ADD : return "+" 
-            case CombineOperator.MULT : return "*" 
-            case CombineOperator.MIN : return "min" 
-            case CombineOperator.MAX : return "max"
-            case CombineOperator.AND : return "and"
-            case CombineOperator.OR : return "or"
+        return switch (combineOperator) {
+            case CombineOperator.ADD : "+" 
+            case CombineOperator.MULT : "*" 
+            case CombineOperator.MIN : "min" 
+            case CombineOperator.MAX : "max"
+            case CombineOperator.AND : "and"
+            case CombineOperator.OR : "or"
             //FIXME discuss what to serialize in the host case
-            case CombineOperator.HOST : return  "host"
+            case CombineOperator.HOST : "host"
+            default: ""
         }
-        return "" 
     }
     
     
