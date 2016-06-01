@@ -29,7 +29,8 @@ public class SimulateModels extends KiemAutomatedJUnitTest {
     }
     protected String getExecutionFileName() {
         //return "sccharts_c_validation_headless.execution";
-    	return "opt_cp.execution";
+    	// TODO: build execution per optimization
+    	return "rvcp.execution";
     }
     @Override
     protected IPath getExternalRelativeTestPath() {
@@ -37,7 +38,7 @@ public class SimulateModels extends KiemAutomatedJUnitTest {
     }
     @Override
     protected boolean stopOnError() {
-        return true;
+        return false;
     }
     @Override
     public void kiemAutomatedJUnitTestExecution() {

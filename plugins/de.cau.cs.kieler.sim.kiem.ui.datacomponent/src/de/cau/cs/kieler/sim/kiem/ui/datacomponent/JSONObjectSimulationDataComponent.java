@@ -337,7 +337,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     /**
      * {@inheritDoc}
      */
-    public final JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         // If an opened EMF model editor is involved, check the timestamp
         if (this.getModelRootElement() != null && getModelRootElement().eResource() != null) {
             try {
