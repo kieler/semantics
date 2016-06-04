@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSAFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSASCLFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSASignalSCLFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSAEstFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSAOptFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature">
+      </featureClass>
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
+      </featureGroupClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.ssa.SSATransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.scl.SSASCG2SSASCL">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.scl.SSASCL2SSASignalSCL">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.strl.SSASignalSCL2SSAEst">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer">
+      </productionTransformationClass>
+   </extension>
+
+</plugin>
