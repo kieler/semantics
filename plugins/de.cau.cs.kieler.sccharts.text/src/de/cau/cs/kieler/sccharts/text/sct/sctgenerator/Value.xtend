@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGeneratorProperty
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
@@ -19,7 +20,6 @@ import org.eclipse.xtend.lib.annotations.Data
  *
  */
 @Data
-class ChanceMax<T, S> extends SCTGeneratorProperty {
-    T chance;
-    S max;    
+class Value<T> extends SCTGeneratorProperty {
+    T value
 }

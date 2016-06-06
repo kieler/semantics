@@ -52,55 +52,58 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorExtension {
     public static val SCTGENERATOR_CORE_TAB = SCTGENERATOR_ID + "tabs.Core"
     public static val SCTGENERATOR_EXTENSIONS_TAB = SCTGENERATOR_ID + "tabs.Extensions"
 
-    public static val IProperty<Integer> NUMBER_OF_MODELS = new Property<Integer>(SCTGENERATOR_ID +
-        ".numberOfModels", 10)
+    public static val IProperty<Value<Integer>> NUMBER_OF_MODELS = 
+        new Property<Value<Integer>>(
+            SCTGENERATOR_ID + ".numberOfModels", 
+            new Value<Integer>("Number of Models", 10)
+        )
 
     public static val IProperty<MinMax<Integer>> NUMBER_OF_STATES = 
         new Property<MinMax<Integer>>(
             SCTGENERATOR_ID + ".numberOfStates", 
-            new MinMax<Integer>(3, 15)
+            new MinMax<Integer>("Number of States", 3, 15)
         )
 
     public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_TRANSITION = 
         new Property<ChanceMax<Double, Integer>>(
             SCTGENERATOR_ID + ".chanceForTransition",
-            new ChanceMax<Double, Integer>(0.1d, 3)
+            new ChanceMax<Double, Integer>("Chance for Transition", 0.1d, 3)
         )
         
-    public static val IProperty<Double> CHANCE_FOR_IMMEDIATE = 
-        new Property<Double>(
+    public static val IProperty<Value<Double>> CHANCE_FOR_IMMEDIATE = 
+        new Property<Value<Double>>(
             SCTGENERATOR_ID + ".chanceForImmediate",
-            0.1d
+            new Value<Double>("Chance for Immediate", 0.1d)
         )
 
     public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_SUPERSTATE = 
         new Property<ChanceMax<Double, Integer>>(
             SCTGENERATOR_ID + ".chanceForSuperstate",
-            new ChanceMax<Double, Integer>(0.1d, 3)
+            new ChanceMax<Double, Integer>("Chance for Superstate", 0.1d, 3)
         )
 
     public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_CONCURRENCY = 
         new Property<ChanceMax<Double, Integer>>(
             SCTGENERATOR_ID + ".chanceForConcurrency",
-            new ChanceMax<Double, Integer>(0.1d, 3)
+            new ChanceMax<Double, Integer>("Chance for Concurrency", 0.1d, 3)
         )
         
     public static val IProperty<MinMax<Integer>> NUMBER_OF_INPUTS = 
         new Property<MinMax<Integer>>(
             SCTGENERATOR_ID + ".numberOfInputs",
-            new MinMax<Integer>(1, 3)
+            new MinMax<Integer>("Number of Inputs", 1, 3)
         )        
 
     public static val IProperty<MinMax<Integer>> NUMBER_OF_OUTPUTS = 
         new Property<MinMax<Integer>>(
             SCTGENERATOR_ID + ".numberOfOutputs",
-            new MinMax<Integer>(1, 3)
+            new MinMax<Integer>("Number of Outputs", 1, 3)
         ) 
         
     public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_EXPRESSION = 
         new Property<ChanceMax<Double, Integer>>(
             SCTGENERATOR_ID + ".chanceForExpression",
-            new ChanceMax<Double, Integer>(0.25d, 3)
+            new ChanceMax<Double, Integer>("Chance for Expression", 0.25d, 3)
         )
         
         
@@ -139,7 +142,7 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorExtension {
         val job = new Job("Creating Models") {
 
             override protected run(IProgressMonitor monitor) {
-                val int numberOfModels = getProperty(NUMBER_OF_MODELS) 
+                val int numberOfModels = getProperty(NUMBER_OF_MODELS).value
                 monitor.beginTask("Creating Models", numberOfModels)
                 for (var int i = 0; i < numberOfModels; i++) {
                     var String is = "" + i

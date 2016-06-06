@@ -19,7 +19,6 @@ import org.eclipse.xtend.lib.annotations.Data
  *
  */
 @Data
-class ChanceMax<T, S> extends SCTGeneratorProperty {
-    T chance;
-    S max;    
+class SCTGeneratorProperty {
+    String caption;
 }

@@ -19,7 +19,7 @@ import org.eclipse.xtend.lib.annotations.Data
  *
  */
 @Data
-class MinMax<T> {
+class MinMax<T> extends SCTGeneratorProperty {
     T min;
     T max;    
 }

@@ -16,6 +16,7 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 
 /**
  * @author J
@@ -33,16 +34,16 @@ class AbortExtension implements ISCTGeneratorExtension {
         )
     }
     
-    public static val IProperty<Double> CHANCE_FOR_STRONG_ABORTS = 
-        new Property<Double>(
+    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = 
+        new Property<Value<Double>>(
             SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
-            0.1d
+            new Value("Chance for Strong Abort", 0.1d)
         )    
 
-    public static val IProperty<Double> CHANCE_FOR_WEAK_ABORTS = 
-        new Property<Double>(
+    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = 
+        new Property<Value<Double>>(
             SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
-            0.1d
+            new Value("Chance for Weak Abort", 0.1d)
         )    
 
 }
