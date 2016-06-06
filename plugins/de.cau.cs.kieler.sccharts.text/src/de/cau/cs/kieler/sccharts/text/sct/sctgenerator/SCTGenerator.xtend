@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
-import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.core.properties.IProperty
@@ -29,6 +28,7 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import com.google.inject.Injector
 
 /**
  * @author ssm
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 @Singleton
 class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHolder {
     
-    @Inject extension ModelGenerator
+    @Inject public var Injector injector;                
     
     public static val SCT_MODEL_EXTENSION = "sct"
     
@@ -148,7 +148,8 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
                     while (is.length < numberOfModels.toString.length) {
                         is = "0" + is
                     }
-                    val model = createModel(ID_PREFIX + is)
+                    val modelGenerator = injector.getInstance(ModelGenerator)
+                    val model = modelGenerator.createModel(ID_PREFIX + is)
                     saveModel(model, project)
                     if (i % 2 == 0) {
                         monitor.worked(2)
@@ -197,8 +198,9 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
            if (chance instanceof Double && max instanceof Integer) {
                return (chance as Double).chance(max as Integer)
            }
-        } else if (propertyValue instanceof Double) {
-            return if (propertyValue.chance) 1 else 0 
+        } else if (propertyValue instanceof Value<?>) {
+            if (propertyValue.value instanceof Double)
+                return if ((propertyValue.value as Double).chance) 1 else 0 
         }
         0
     }
@@ -257,14 +259,15 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
     /// STATIC
     ///
         
-    static def List<ISCTGeneratorExtension> getRegisteredExtensions() {
+    def List<ISCTGeneratorExtension> getRegisteredExtensions() {
         val regExt = <ISCTGeneratorExtension>newArrayList
         val extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(
                         SCTGENERATOR_EXTENSION_POINT);
         for (ext : extensions) {
             try {
                 val exeExt = ext.createExecutableExtension("class") 
-                val instance = getGuiceInstance(exeExt) as ISCTGeneratorExtension
+                val instance = injector.getInstance(exeExt.class) as ISCTGeneratorExtension
+//                val instance = getGuiceInstance(exeExt) as ISCTGeneratorExtension
                 regExt += instance
             } catch (CoreException e) {
                 System.err.print("Could not load SCT Generator extension: " + ext.getName )
@@ -273,10 +276,5 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
         regExt
     }        
        
-    private static def Object getGuiceInstance(Object object) {
-        Guice.createInjector().getInstance(object.getClass());
-    }
-    
-        
 }
             

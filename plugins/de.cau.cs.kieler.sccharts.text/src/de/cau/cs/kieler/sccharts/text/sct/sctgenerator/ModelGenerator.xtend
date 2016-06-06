@@ -50,9 +50,10 @@ class ModelGenerator {
     private static val INPUT_PREFIX = "I"
     private static val OUTPUT_PREFIX = "O"
     
-    private val generatorExtensions = SCTGenerator.registeredExtensions
+    private val generatorExtensions = <ISCTGeneratorExtension> newLinkedList
 
     def createModel(String id) {
+        generatorExtensions += registeredExtensions
         var int statesLeft = SCTGenerator.NUMBER_OF_STATES.random
         val int inputs = SCTGenerator.NUMBER_OF_INPUTS.random
         val int outputs = SCTGenerator.NUMBER_OF_INPUTS.random
@@ -205,7 +206,7 @@ class ModelGenerator {
         ]
     }
 
-    private def isSuperstate(State state) {
+    public static def isSuperstate(State state) {
         state.regions.size > 0
     }
 
