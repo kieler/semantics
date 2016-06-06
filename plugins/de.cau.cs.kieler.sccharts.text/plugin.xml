@@ -7,9 +7,9 @@
         schema="schema/de.cau.cs.kieler.sccharts.text.sct.generator.extension.exsd"/>
    <extension
          point="de.cau.cs.kieler.sccharts.text.sct.generator.extension">
-      <SCT Generator Extension
+      <SCTGeneratorExtension
             class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.AbortExtension">
-      </SCT Generator Extension>
+      </SCTGeneratorExtension>
    </extension>
    
 </plugin>
