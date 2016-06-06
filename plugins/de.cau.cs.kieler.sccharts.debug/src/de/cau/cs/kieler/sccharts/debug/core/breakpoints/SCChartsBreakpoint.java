@@ -46,7 +46,7 @@ public class SCChartsBreakpoint extends LineBreakpoint {
                 setMarker(marker);
                 marker.setAttribute(IBreakpoint.ENABLED, true);
                 marker.setAttribute(IBreakpoint.PERSISTED, persistent);
-                marker.setAttribute(IMarker.LINE_NUMBER, persistent);
+                marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
                 marker.setAttribute(IBreakpoint.ID, getModelIdentifier());
                 marker.setAttribute(IMarker.MESSAGE, "Line Breakpoint: " + resource.getName() + " [line: " + lineNumber + "]");
             }

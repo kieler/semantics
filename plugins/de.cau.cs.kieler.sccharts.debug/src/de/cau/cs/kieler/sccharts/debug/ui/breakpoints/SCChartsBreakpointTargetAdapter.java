@@ -42,7 +42,9 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
     @Override
     public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
         IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+        
         if (editor != null) {
+        	// Get needed information to reach breakpoints.
             IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
             ITextSelection textSelection = (ITextSelection) selection;
             int lineNumber = textSelection.getStartLine();

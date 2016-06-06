@@ -53,7 +53,7 @@ public class SCChartsBreakpointHandler extends AbstractHandler {
         } catch(CoreException e) {}  
         IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(SCChartsDebugModelPresentation.ID);
         for (int i = 0; i < bs.length; i++) {
-            System.out.print(bs[i] + " ");
+            System.out.print(bs[i] + " " + bs[i].getMarker().LINE_NUMBER);
         }
         
         

@@ -17,5 +17,4 @@ Import-Package: org.eclipse.debug.ui.actions,
  org.eclipse.ui,
  org.eclipse.ui.part,
  org.eclipse.ui.texteditor
-Export-Package: de.cau.cs.kieler.sccharts.debug,
- de.cau.cs.kieler.sccharts.debug.core.model
+Export-Package: de.cau.cs.kieler.sccharts.debug.core.model
