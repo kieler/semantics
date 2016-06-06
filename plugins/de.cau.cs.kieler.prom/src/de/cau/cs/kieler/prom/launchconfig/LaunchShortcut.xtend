@@ -148,7 +148,9 @@ class LaunchShortcut implements ILaunchShortcut {
             val lm = DebugPlugin.getDefault().getLaunchManager()
             val type = lm.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
             val name = project.name
-            val wc = type.newInstance(project, name)
+            // To ensure a unique name w.r.t. other launches of the same project (e.g. for Arduino),
+            // we append the name of the launch type in brackets.
+            val wc = type.newInstance(null, name + " ("+type.name+")")
             initializeConfiguration(wc)
             return wc.doSave()
         } catch (CoreException ce) {
