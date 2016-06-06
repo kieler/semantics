@@ -15,5 +15,7 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.debug.ui.actions,
  org.eclipse.jface.text,
  org.eclipse.ui,
+ org.eclipse.ui.part,
  org.eclipse.ui.texteditor
-Export-Package: de.cau.cs.kieler.sccharts.debug
+Export-Package: de.cau.cs.kieler.sccharts.debug,
+ de.cau.cs.kieler.sccharts.debug.core.model

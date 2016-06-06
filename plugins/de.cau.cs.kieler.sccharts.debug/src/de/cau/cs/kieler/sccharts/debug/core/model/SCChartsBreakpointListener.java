@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug;
+package de.cau.cs.kieler.sccharts.debug.core.model;
 
 import org.eclipse.core.resources.IMarkerDelta;
 import org.eclipse.debug.core.IBreakpointListener;

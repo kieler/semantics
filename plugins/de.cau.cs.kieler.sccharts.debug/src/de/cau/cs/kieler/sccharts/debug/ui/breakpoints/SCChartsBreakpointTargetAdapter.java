@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug;
+package de.cau.cs.kieler.sccharts.debug.ui.breakpoints;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -24,53 +24,48 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
+import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
+
 /**
- * Gets instantiated by the adapter facory for the xtext editor. 
+ * An Adapter to create breakpoints in .sct-files using the XText Editor. This 
+ * class gets instantiated by the {@code SCChartsBreakpointTargetAdapterFactory} 
+ * adapter factory for the XText editor. 
  * 
- * TODO: implement adapter factory: http://www.eclipse.org/articles/article.php?file=Article-Adapters/index.html
- *  
  * @author lgr
- *
  */
-public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
+public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) {
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor();
+    public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
         if (editor != null) {
             IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
             ITextSelection textSelection = (ITextSelection) selection;
             int lineNumber = textSelection.getStartLine();
-            IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
-                    .getBreakpoints(SCChartsDebugModelPresentation.ID);
-
+            IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(SCChartsDebugModelPresentation.ID);
+            
+            // Look for existing breakpoints and delete them if needed.
             for (int i = 0; i < breakpoints.length; i++) {
                 IBreakpoint breakpoint = breakpoints[i];
                 if (resource.equals(breakpoint.getMarker().getResource())) {
                     int bl;
-                    try {
-                        bl = ((LineBreakpoint) breakpoint).getLineNumber();  
-                        if (bl == (lineNumber + 1)) {
-                            breakpoint.delete();
-                            return;
-                        }
-                    } catch (CoreException e) {
-                        e.printStackTrace();
+                    bl = ((LineBreakpoint) breakpoint).getLineNumber();
+                    if (bl == (lineNumber + 1)) {
+                        breakpoint.delete();
+                        return;
+
                     }
-                    
                 }
             }
-            SCChartsBreakpoint breakpoint;
-            try {
-                breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
-                DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
-            } catch (CoreException e) {
-                e.printStackTrace();
-            }
+            
+            // Create a new breakpoint in the specified line.
+            SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
+            DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
+            DebugPlugin.getDefault().getBreakpointManager().fireBreakpointChanged(breakpoint);
         }
     }
 
@@ -86,10 +81,8 @@ public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
      * {@inheritDoc}
      */
     @Override
-    public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection)
-            throws CoreException {
-        // TODO Auto-generated method stub
-
+    public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+        // NOT SUPPORTED
     }
 
     /**
@@ -97,7 +90,7 @@ public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
      */
     @Override
     public boolean canToggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) {
-        // TODO Auto-generated method stub
+        // NOT SUPPORTED
         return false;
     }
 
@@ -106,8 +99,7 @@ public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
      */
     @Override
     public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-        // TODO Auto-generated method stub
-
+     // NOT SUPPORTED
     }
 
     /**
@@ -115,7 +107,7 @@ public class SCChartsBreakpointTarget implements IToggleBreakpointsTarget {
      */
     @Override
     public boolean canToggleWatchpoints(IWorkbenchPart part, ISelection selection) {
-        // TODO Auto-generated method stub
+        // NOT SUPPORTED
         return false;
     }
 

@@ -10,20 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug;
+package de.cau.cs.kieler.sccharts.debug.ui.presentation;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.debug.core.model.ILineBreakpoint;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.IValueDetailListener;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * @author lgr
  *
  */
-public class SCChartsDebugModelPresentation implements IDebugModelPresentation {
+public class SCChartsDebugModelPresentation extends LabelProvider implements IDebugModelPresentation {
     
     public static String ID = "de.cau.cs.kieler.sccharts.debug.scchartsDebugModelPresentation";
     
@@ -68,7 +72,9 @@ public class SCChartsDebugModelPresentation implements IDebugModelPresentation {
      */
     @Override
     public IEditorInput getEditorInput(Object element) {
-        // TODO Auto-generated method stub
+        if (element instanceof IFile) {
+            return new FileEditorInput((IFile) ((ILineBreakpoint) element).getMarker().getResource());
+        }
         return null;
     }
 
