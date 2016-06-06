@@ -13,30 +13,29 @@
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
 import com.google.inject.Guice
+import com.google.inject.Inject
+import com.google.inject.Singleton
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.sccharts.State
+import java.io.IOException
 import java.util.List
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.Platform
-import java.util.LinkedHashMap
-import com.google.inject.Inject
 import org.eclipse.core.resources.IProject
+import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
-import com.google.inject.Singleton
-import de.cau.cs.kieler.sccharts.State
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import java.io.IOException
 
 /**
  * @author ssm
  * 
  */
 @Singleton
-class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorExtension {
+class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHolder {
     
     @Inject extension ModelGenerator
     

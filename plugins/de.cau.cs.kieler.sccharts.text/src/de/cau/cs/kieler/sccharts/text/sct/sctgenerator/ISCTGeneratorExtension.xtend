@@ -14,12 +14,21 @@ package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
 import java.util.List
 import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * @author ssm
  *
  */
-interface ISCTGeneratorExtension {
-    def String getTab()
-    def List<IProperty<?>> getProperties()
+interface ISCTGeneratorExtension extends ISCTGeneratorPropertyHolder {
+    def void onDeclarationCreate(Declaration declaration)
+    def void onStateCreate(State state)
+    def void onRegionCreate(Region region)
+    def void onTransitionCreate(Transition transition)
+    def void onExpressionCreate(Expression expression)
+    def void onModelCreate(State rootState)
 }

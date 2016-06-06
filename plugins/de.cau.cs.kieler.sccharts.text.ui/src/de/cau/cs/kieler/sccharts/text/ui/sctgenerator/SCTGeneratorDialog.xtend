@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.swt.widgets.Text
+import static extension java.lang.Integer.parseInt
+import static extension java.lang.Double.parseDouble
 
 /**
  * @author ssm
@@ -44,13 +46,13 @@ class SCTGeneratorDialog extends TitleAreaDialog {
 
     new(Shell parentShell) {
         super(parentShell)
+        propertyInputs.clear
     }
 
     override create() {
         super.create();
         setTitle("SCT Generator");
         setMessage("Specify the generation parameter of the SCT models.", IMessageProvider.INFORMATION);
-        propertyInputs.clear
     }
 
     override boolean isResizable() {
@@ -187,14 +189,6 @@ class SCTGeneratorDialog extends TitleAreaDialog {
             val lbtDummy = new Label(container, SWT.NONE);
             lbtDummy.setText("")
         }
-    }
-    
-    private def parseInt(String s) {
-        Integer.parseInt(s)
-    }
-    
-    private def parseDouble(String s) {
-        Double.parseDouble(s)
-    }    
+    }   
 
 }

@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -12,38 +12,60 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions
 
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * @author J
- *
+ * 
  */
 class AbortExtension implements ISCTGeneratorExtension {
-    
+
     override getTab() {
         SCTGenerator.SCTGENERATOR_EXTENSIONS_TAB
     }
-    
+
     override getProperties() {
         <IProperty<?>>newArrayList(
-            CHANCE_FOR_STRONG_ABORTS, CHANCE_FOR_WEAK_ABORTS
+            CHANCE_FOR_STRONG_ABORTS,
+            CHANCE_FOR_WEAK_ABORTS
         )
     }
-    
-    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = 
-        new Property<Value<Double>>(
-            SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
-            new Value("Chance for Strong Abort", 0.1d)
-        )    
 
-    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = 
-        new Property<Value<Double>>(
-            SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
-            new Value("Chance for Weak Abort", 0.1d)
-        )    
+    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = new Property<Value<Double>>(
+        SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
+        new Value("Chance for Strong Abort", 0.1d)
+    )
+
+    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = new Property<Value<Double>>(
+        SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
+        new Value("Chance for Weak Abort", 0.1d)
+    )
+
+    override onStateCreate(State state) {
+    }
+
+    override onRegionCreate(Region region) {
+    }
+
+    override onTransitionCreate(Transition transition) {
+    }
+
+    override onExpressionCreate(Expression expression) {
+    }
+
+    override onModelCreate(State rootState) {
+    }
+    
+    override onDeclarationCreate(Declaration declaration) {
+    }
 
 }

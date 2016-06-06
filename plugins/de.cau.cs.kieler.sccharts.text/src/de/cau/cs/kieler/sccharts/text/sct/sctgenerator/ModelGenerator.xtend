@@ -28,17 +28,14 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.io.IOException
-import java.util.concurrent.ExecutionException
-import org.eclipse.core.resources.IProject
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import com.google.inject.Singleton
 
 /**
  * @author ssm
  * 
  */
+@Singleton
 class ModelGenerator {
 
     @Inject extension KExpressionsDeclarationExtensions
@@ -52,6 +49,8 @@ class ModelGenerator {
     private static val REGION_PREFIX = "R"
     private static val INPUT_PREFIX = "I"
     private static val OUTPUT_PREFIX = "O"
+    
+    private val generatorExtensions = SCTGenerator.registeredExtensions
 
     def createModel(String id) {
         var int statesLeft = SCTGenerator.NUMBER_OF_STATES.random
@@ -61,24 +60,26 @@ class ModelGenerator {
         val rootState = createSCChart => [
             it.id = id
             it.label = id
-            it.declarations += createDeclaration(ValueType.BOOL) => [
-                input = true
+            it.declarations += createDeclaration(ValueType.BOOL) => [ decl | 
+                decl.input = true
                 for (var int i = 0; i < inputs; i++) {
                     val j = i
-                    it.valuedObjects += createValuedObject => [it.name = INPUT_PREFIX + j]
+                    decl.valuedObjects += createValuedObject => [it.name = INPUT_PREFIX + j]
                 }
+                generatorExtensions.forEach[ onDeclarationCreate(decl) ]
             ]
-            it.declarations += createDeclaration(ValueType.BOOL) => [
-                output = true
+            it.declarations += createDeclaration(ValueType.BOOL) => [ decl |
+                decl.output = true
                 for (var int i = 0; i < outputs; i++) {
                     val j = i
-                    it.valuedObjects += createValuedObject => [it.name = OUTPUT_PREFIX + j]
+                    decl.valuedObjects += createValuedObject => [it.name = OUTPUT_PREFIX + j]
                 }
+                generatorExtensions.forEach[ onDeclarationCreate(decl) ]
             ]
         ]
 
         rootState.createRegions(0, statesLeft)
-
+        generatorExtensions.forEach[ onModelCreate(rootState) ]
         rootState
     }
 
@@ -99,12 +100,8 @@ class ModelGenerator {
             for (s : states) {
                 val int transitions = 1 + SCTGenerator.CHANCE_FOR_TRANSITION.random
                 for (var int t = 1; t < transitions; t++) {
-                    s.createTransition(states.get(states.size.random)) =>
+                    s.createCompleteTransition(states.get(states.size.random)) =>
                         [
-                            it.createTransitionTrigger
-                            it.createTransitionEffects                            
-                            if (it.sourceState.isSuperstate)
-                                it.type = TransitionType.TERMINATION
                             if (SCTGenerator.CHANCE_FOR_IMMEDIATE.random != 0) {
                                 if ((it.eContainer.asState != it.targetState) &&
                                     !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
@@ -115,6 +112,8 @@ class ModelGenerator {
                         ]
                 }
             }
+            
+            generatorExtensions.forEach[ onRegionCreate(region) ]
         }
     }
 
@@ -129,12 +128,7 @@ class ModelGenerator {
 
             stateCounter++
 
-            lastState.createTransition(newState) => [
-                it.createTransitionTrigger
-                it.createTransitionEffects
-                if (it.sourceState.isSuperstate)
-                    it.type = TransitionType.TERMINATION
-            ]
+            lastState.createCompleteTransition(newState)
 
             if (SCTGenerator.CHANCE_FOR_SUPERSTATE.random(hierarchy) && stateCounter + 2 < statesLeft) {
                 val stateCost = random(1, statesLeft - 1)
@@ -143,15 +137,12 @@ class ModelGenerator {
             }
 
             lastState = newState
+            val newStateFinal = newState
+            generatorExtensions.forEach[ onStateCreate(newStateFinal) ]
         }
 
         var newState = region.createState(STATE_PREFIX + stateCounter) => [final = true]
-        lastState.createTransition(newState) => [
-            it.createTransitionTrigger
-            it.createTransitionEffects
-            if (it.sourceState.isSuperstate)
-                it.type = TransitionType.TERMINATION
-        ]
+        lastState.createCompleteTransition(newState)
     }
 
     private def createTransitionTrigger(Transition transition) {
@@ -160,6 +151,7 @@ class ModelGenerator {
 
         val rootState = (transition.eContainer as State).getRootState
         transition.trigger = createTriggerExpression(rootState.declarations.filter[input == true].head, triggerDepth)
+        generatorExtensions.forEach[ onExpressionCreate(transition.trigger) ]
         transition
     }
 
@@ -182,6 +174,9 @@ class ModelGenerator {
         val rootState = (transition.eContainer as State).getRootState
         for (var int i = 0; i < effectCount; i++) {
             transition.effects += createEffectExpression(rootState.declarations.filter[output == true].head)
+            generatorExtensions.forEach[
+                onExpressionCreate(transition.effects.last.asAssignment.expression)
+            ]
         }
         transition
     }
@@ -194,10 +189,20 @@ class ModelGenerator {
     }
 
     private def createTransition(State sourceState, State targetState) {
-        var transition = SCChartsFactory::eINSTANCE.createTransition()
+        val transition = SCChartsFactory::eINSTANCE.createTransition()
         transition.targetState = targetState
         sourceState.outgoingTransitions += transition
         transition
+    }
+    
+    private def createCompleteTransition(State sourceState, State targetState) {
+        createTransition(sourceState, targetState) => [ transition | 
+            transition.createTransitionTrigger
+            transition.createTransitionEffects
+            if (transition.sourceState.isSuperstate)
+                transition.type = TransitionType.TERMINATION
+            generatorExtensions.forEach[ onTransitionCreate(transition) ]        
+        ]
     }
 
     private def isSuperstate(State state) {
@@ -206,6 +211,10 @@ class ModelGenerator {
 
     private def asState(EObject obj) {
         obj as State
+    }
+    
+    private def asAssignment(EObject obj) {
+        obj as Assignment
     }
 
 }
