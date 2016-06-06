@@ -36,6 +36,16 @@ class AbortExtension implements ISCTGeneratorExtension {
     
     @Inject extension SCTGenerator
 
+    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = new Property<Value<Double>>(
+        SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
+        new Value("Chance for Strong Abort", 0.0d)
+    )
+
+    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = new Property<Value<Double>>(
+        SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
+        new Value("Chance for Weak Abort", 0.0d)
+    )
+    
     override getTab() {
         SCTGenerator.SCTGENERATOR_EXTENSIONS_TAB
     }
@@ -47,22 +57,13 @@ class AbortExtension implements ISCTGeneratorExtension {
         )
     }
 
-    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = new Property<Value<Double>>(
-        SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
-        new Value("Chance for Strong Abort", 0.0d)
-    )
-
-    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = new Property<Value<Double>>(
-        SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
-        new Value("Chance for Weak Abort", 0.0d)
-    )
-
     override onTransitionCreate(Transition transition) {
         if (transition.sourceState.isSuperstate) {
-            if (CHANCE_FOR_STRONG_ABORTS.random != 0) 
+            if (CHANCE_FOR_STRONG_ABORTS.random != 0) {
                 transition.type = TransitionType.STRONGABORT
-            else if (CHANCE_FOR_WEAK_ABORTS.random != 0)
+            } else if (CHANCE_FOR_WEAK_ABORTS.random != 0) {
                 transition.type = TransitionType.WEAKABORT
+            }
         }
     }
     
