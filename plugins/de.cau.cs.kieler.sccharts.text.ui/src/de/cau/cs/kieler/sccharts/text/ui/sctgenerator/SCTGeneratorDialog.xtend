@@ -10,21 +10,27 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.text.ui.SCTGenerator
+package de.cau.cs.kieler.sccharts.text.ui.sctgenerator
 
-import org.eclipse.jface.dialogs.TitleAreaDialog
-import org.eclipse.swt.widgets.Shell
-import org.eclipse.swt.widgets.Control
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
+import java.util.HashMap
+import java.util.List
 import org.eclipse.jface.dialogs.IMessageProvider
-import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.layout.GridData
+import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.swt.SWT
+import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Label
+import org.eclipse.swt.widgets.Shell
 import org.eclipse.swt.widgets.Text
-import static extension java.lang.Integer.*
-import static extension java.lang.Double.*
 import org.eclipse.xtend.lib.annotations.Accessors
+
+import static extension java.lang.Double.*
+import static extension java.lang.Integer.*
+import org.eclipse.swt.widgets.Group
 
 /**
  * @author ssm
@@ -79,21 +85,19 @@ class SCTGeneratorDialog extends TitleAreaDialog {
 
     override Control createDialogArea(Composite parent) {
         val area = super.createDialogArea(parent) as Composite
-        val container = new Composite(area, SWT.NONE)
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
-        val layout = new GridLayout(5, false)
-        container.setLayout(layout)
+        
+        val injector = SCTGeneratorDialogHandler.getInjector
+        val generator = injector.getInstance(typeof(SCTGenerator));
+        val HashMap<String, List<IProperty<?>>> tabbedProperties = generator.getTabbedProperties
 
-        container.createNumberOfModels
-        container.createNumberOfStates
-        container.createChanceForSuperstate
-//        container.createMaxHierarchyDepth
-        container.createChanceForConcurrency
-        container.createNumberOfTransitions
-        container.createChanceForImmediate
-        container.createNumberOfInputs
-        container.createNumberOfOutputs
-        container.createMaxExpressionDepth
+        for(key : tabbedProperties.keySet) {
+//            val container = new Composite(area, SWT.NONE)
+            val container = new Group(area, SWT.NONE)
+            container.setText(key.split("\\.").last)
+            container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
+            val layout = new GridLayout(5, false)
+            container.setLayout(layout)
+        }        
 
         area
     }

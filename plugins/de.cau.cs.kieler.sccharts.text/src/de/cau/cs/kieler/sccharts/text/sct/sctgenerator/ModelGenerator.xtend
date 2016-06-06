@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.text.ui.SCTGenerator
+package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
@@ -20,78 +20,43 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.io.IOException
-import org.eclipse.core.commands.ExecutionException
+import java.util.concurrent.ExecutionException
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.core.runtime.Status
-import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.TransitionType
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 
 /**
  * @author ssm
  * 
  */
-class SCTGenerator {
+class ModelGenerator {
 
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsExtension
+    @Inject extension SCTGenerator
 
-    private static val ID_PREFIX = "model"
     private static val STATE_PREFIX = "S"
     private static val REGION_PREFIX = "R"
     private static val INPUT_PREFIX = "I"
     private static val OUTPUT_PREFIX = "O"
 
-    private static val MODEL_EXTENSION = "sct"
-
-    def createModels(SCTGeneratorDialog dialog, IProject project) {
-
-        val job = new Job("Creating Models") {
-
-            override protected run(IProgressMonitor monitor) {
-                val numberOfModels = dialog.numberOfModels
-                monitor.beginTask("Creating Models", numberOfModels)
-                for (var int i = 0; i < numberOfModels; i++) {
-                    var String is = "" + i
-                    while (is.length < numberOfModels.toString.length) {
-                        is = "0" + is
-                    }
-                    createModel(dialog, project, ID_PREFIX + is)
-                    if (i % 2 == 0) {
-                        monitor.worked(2)
-                    }
-                    if (monitor.canceled) {
-                        return Status.CANCEL_STATUS
-                    }
-                }
-                project.refreshLocal(1, monitor)
-                return Status.OK_STATUS
-            }
-
-        }
-
-        job.setUser(true)
-        job.schedule
-    }
-
-    private def createModel(SCTGeneratorDialog dialog, IProject project, String id) {
-        var int statesLeft = random(dialog.numberOfStatesMin, dialog.numberOfStatesMax)
-        val int inputs = random(dialog.numberOfInputsMin, dialog.numberOfInputsMax)
-        val int outputs = random(dialog.numberOfInputsMin, dialog.numberOfInputsMax)
+    def createModel(String id) {
+        var int statesLeft = SCTGenerator.NUMBER_OF_STATES.random
+        val int inputs = SCTGenerator.NUMBER_OF_INPUTS.random
+        val int outputs = SCTGenerator.NUMBER_OF_INPUTS.random
 
         val rootState = createSCChart => [
             it.id = id
@@ -112,13 +77,13 @@ class SCTGenerator {
             ]
         ]
 
-        rootState.createRegions(dialog, 0, statesLeft)
+        rootState.createRegions(0, statesLeft)
 
-        rootState.saveModel(project)
+        rootState
     }
 
-    private def createRegions(State state, SCTGeneratorDialog dialog, int hierarchy, int statesLeft) {
-        val regionCount = 1 + dialog.chanceForConcurrency.chance(dialog.maxConcurrency)
+    private def void createRegions(State state, int hierarchy, int statesLeft) {
+        val regionCount = 1 + SCTGenerator.CHANCE_FOR_CONCURRENCY.random
 
         var regionStateCounter = statesLeft
         for (var int i = 0; i < regionCount; i++) {
@@ -127,20 +92,20 @@ class SCTGenerator {
                 regionStateCount = random(2, regionStateCounter / regionCount)
             }
             val region = createControlflowRegion(state, REGION_PREFIX + i)
-            region.createStates(dialog, hierarchy + 1, regionStateCount)
+            region.createStates(hierarchy + 1, regionStateCount)
 
             val states = region.states.filter[final != true].toList
 
             for (s : states) {
-                val int transitions = 1 + dialog.chanceForNewTransition.chance(dialog.maxTransitions)
+                val int transitions = 1 + SCTGenerator.CHANCE_FOR_TRANSITION.random
                 for (var int t = 1; t < transitions; t++) {
                     s.createTransition(states.get(states.size.random)) =>
                         [
-                            it.createTransitionTrigger(dialog)
-                            it.createTransitionEffects(dialog)
+                            it.createTransitionTrigger
+                            it.createTransitionEffects                            
                             if (it.sourceState.isSuperstate)
                                 it.type = TransitionType.TERMINATION
-                            if (dialog.chanceForImmediate.chance) {
+                            if (SCTGenerator.CHANCE_FOR_IMMEDIATE.random != 0) {
                                 if ((it.eContainer.asState != it.targetState) &&
                                     !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
                                         (it.targetState.outgoingTransitions.filter[immediate].size > 0))) {
@@ -153,7 +118,7 @@ class SCTGenerator {
         }
     }
 
-    private def createStates(ControlflowRegion region, SCTGeneratorDialog dialog, int hierarchy, int statesLeft) {
+    private def createStates(ControlflowRegion region, int hierarchy, int statesLeft) {
         var stateCounter = 0
 
         var lastState = region.createState(STATE_PREFIX + stateCounter) => [initial = true]
@@ -165,15 +130,15 @@ class SCTGenerator {
             stateCounter++
 
             lastState.createTransition(newState) => [
-                it.createTransitionTrigger(dialog)
-                it.createTransitionEffects(dialog)
+                it.createTransitionTrigger
+                it.createTransitionEffects
                 if (it.sourceState.isSuperstate)
                     it.type = TransitionType.TERMINATION
             ]
 
-            if (dialog.chanceForSuperstate.chance && stateCounter + 2 < statesLeft) {
+            if (SCTGenerator.CHANCE_FOR_SUPERSTATE.random(hierarchy) && stateCounter + 2 < statesLeft) {
                 val stateCost = random(1, statesLeft - 1)
-                newState.createRegions(dialog, hierarchy, stateCost)
+                newState.createRegions(hierarchy, stateCost)
                 stateCounter += stateCost
             }
 
@@ -182,15 +147,15 @@ class SCTGenerator {
 
         var newState = region.createState(STATE_PREFIX + stateCounter) => [final = true]
         lastState.createTransition(newState) => [
-            it.createTransitionTrigger(dialog)
-            it.createTransitionEffects(dialog)
+            it.createTransitionTrigger
+            it.createTransitionEffects
             if (it.sourceState.isSuperstate)
                 it.type = TransitionType.TERMINATION
         ]
     }
 
-    private def createTransitionTrigger(Transition transition, SCTGeneratorDialog dialog) {
-        val triggerDepth = dialog.chanceForExpressions.chance(dialog.maxExpressionDepth)
+    private def createTransitionTrigger(Transition transition) {
+        val triggerDepth = SCTGenerator.CHANCE_FOR_EXPRESSION.random
         if(triggerDepth == 0) return transition
 
         val rootState = (transition.eContainer as State).getRootState
@@ -210,8 +175,8 @@ class SCTGenerator {
         }
     }
 
-    private def createTransitionEffects(Transition transition, SCTGeneratorDialog dialog) {
-        var effectCount = dialog.chanceForExpressions.chance(dialog.maxExpressionDepth)
+    private def createTransitionEffects(Transition transition) {
+        var effectCount = SCTGenerator.CHANCE_FOR_EXPRESSION.random
         if(effectCount == 0) return transition
 
         val rootState = (transition.eContainer as State).getRootState
@@ -226,46 +191,6 @@ class SCTGenerator {
             declaration.valuedObjects.get(declaration.valuedObjects.size.random),
             if(Math.random < 0.5) TRUE else TRUE
         )
-    }
-
-    private def saveModel(State rootState, IProject project) {
-        var output = URI.createURI(project.locationURI.toString() + "/" + rootState.id);
-        output = output.appendFileExtension(MODEL_EXTENSION);
-
-        try {
-            val resSet = new ResourceSetImpl();
-            val saveRes = resSet.createResource(output);
-
-            saveRes.getContents().add(rootState);
-            saveRes.save(null)
-        } catch (IOException e) {
-            throw new ExecutionException("Cannot write output model file: " + e.getMessage());
-        }
-    }
-
-    private def int random(int min, int max) {
-        (min + (max + 1 - min) * Math.random) as int
-    }
-
-    private def int random(int count) {
-        (count * Math.random) as int
-    }
-
-    private def boolean chance(double rnd) {
-        Math.random < rnd
-    }
-
-    private def int chance(double rnd, int max) {
-        var count = 0
-        var boolean repeat
-        do {
-            repeat = false
-            if (rnd.chance && count < max) {
-                count++
-                repeat = true
-            }
-        } while (repeat)
-        count
     }
 
     private def createTransition(State sourceState, State targetState) {

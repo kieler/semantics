@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.text.ui.SCTGenerator;
+package de.cau.cs.kieler.sccharts.text.ui.sctgenerator;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -25,6 +25,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator;
 
 /**
  * @author ssm
@@ -56,13 +57,17 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
                         SCTGeneratorDialog dialog = new SCTGeneratorDialog(null);
                         if (dialog.open() == Window.OK) {
                             SCTGenerator generator = injector.getInstance(SCTGenerator.class);
-                            generator.createModels(dialog, (IProject) element);
+                            generator.createModels((IProject) element);
                         }
                     }
                 }
             }
         }
         return null;
+    }
+    
+    public static Injector getInjector() {
+        return injector;
     }
 
 }
