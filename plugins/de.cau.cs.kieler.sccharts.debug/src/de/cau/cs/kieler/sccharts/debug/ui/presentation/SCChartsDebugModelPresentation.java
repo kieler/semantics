@@ -12,48 +12,42 @@
  */
 package de.cau.cs.kieler.sccharts.debug.ui.presentation;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.debug.core.model.ILineBreakpoint;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.IValueDetailListener;
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.part.FileEditorInput;
 
 /**
+ * TODO: Not quite sure, when this class methods are used.
+ * 
  * @author lgr
  *
  */
 public class SCChartsDebugModelPresentation extends LabelProvider implements IDebugModelPresentation {
 
-	 public static String ID = "de.cau.cs.kieler.sccharts.debug.ui.presentation.scchartsDebugModelPresentation";
-	
+	/**
+	 * The ID of the debug context. Breakpoints are added to this ID and it will
+	 * be searched only for breakpoints with this ID.
+	 */
+	public static String ID = "de.cau.cs.kieler.sccharts.debug.ui.presentation.scchartsDebugModelPresentation";
+
 	@Override
 	public IEditorInput getEditorInput(Object element) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getEditorId(IEditorInput input, Object element) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setAttribute(String attribute, Object value) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void computeDetail(IValue value, IValueDetailListener listener) {
-		// TODO Auto-generated method stub
-		
 	}
-    
 
 }

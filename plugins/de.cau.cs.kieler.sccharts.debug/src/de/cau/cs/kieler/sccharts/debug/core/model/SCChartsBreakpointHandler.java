@@ -15,48 +15,42 @@ package de.cau.cs.kieler.sccharts.debug.core.model;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExecutableExtension;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.model.IBreakpoint;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter;
 import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapterFactory;
-import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
 
 /**
+ * This class is used as the Handler for the TextRulerContext command 'Toggle Breakpoint'.
+ * 
  * @author lgr
  *
  */
 public class SCChartsBreakpointHandler extends AbstractHandler {
-        
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor();
 
-        SCChartsBreakpointTargetAdapterFactory factory = new SCChartsBreakpointTargetAdapterFactory();
-        SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory.getAdapter(editor, SCChartsBreakpointTargetAdapter.class);
-        try{
-        target.toggleLineBreakpoints(HandlerUtil.getActivePart(event), HandlerUtil.getActiveMenuSelection(event));
-        } catch(CoreException e) {}  
-        IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(SCChartsDebugModelPresentation.ID);
-        for (int i = 0; i < bs.length; i++) {
-            System.out.print(bs[i] + " " + bs[i].getMarker().LINE_NUMBER);
-        }
-        
-        
-        return null; // must be null
-    }
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * This class is the entry point when starting a 'Toggle Breakpoint' event
+	 * from the editor's ruler context.
+	 */
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+
+		SCChartsBreakpointTargetAdapterFactory factory = new SCChartsBreakpointTargetAdapterFactory();
+		SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory.getAdapter(editor,
+				SCChartsBreakpointTargetAdapter.class);
+
+		try {
+			target.toggleLineBreakpoints(HandlerUtil.getActivePart(event), HandlerUtil.getActiveMenuSelection(event));
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+
+		return null; // Reserved for future use, must be null.
+	}
 }

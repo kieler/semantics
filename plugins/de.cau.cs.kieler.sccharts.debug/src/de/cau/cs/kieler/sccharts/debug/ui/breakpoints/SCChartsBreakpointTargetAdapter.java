@@ -28,89 +28,91 @@ import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
 import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
 
 /**
- * An Adapter to create breakpoints in .sct-files using the XText Editor. This 
- * class gets instantiated by the {@code SCChartsBreakpointTargetAdapterFactory} 
- * adapter factory for the XText editor. 
+ * An Adapter to create breakpoints in .sct-files using the XText Editor. This
+ * class gets instantiated by the
+ * {@link SCChartsBreakpointTargetAdapterFactory#getAdapter(Object, Class)}
+ * adapter factory for the XText editor.
  * 
  * @author lgr
  */
 public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-        
-        if (editor != null) {
-        	// Get needed information to reach breakpoints.
-            IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
-            ITextSelection textSelection = (ITextSelection) selection;
-            int lineNumber = textSelection.getStartLine();
-            IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints(SCChartsDebugModelPresentation.ID);
-            
-            // Look for existing breakpoints and delete them if needed.
-            for (int i = 0; i < breakpoints.length; i++) {
-                IBreakpoint breakpoint = breakpoints[i];
-                if (resource.equals(breakpoint.getMarker().getResource())) {
-                    int bl;
-                    bl = ((LineBreakpoint) breakpoint).getLineNumber();
-                    if (bl == (lineNumber + 1)) {
-                        breakpoint.delete();
-                        return;
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 
-                    }
-                }
-            }
-            
-            // Create a new breakpoint in the specified line.
-            SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
-            DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
-            DebugPlugin.getDefault().getBreakpointManager().fireBreakpointChanged(breakpoint);
-        }
-    }
+		if (editor != null) {
+			// Get needed information to reach breakpoints.
+			IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
+			ITextSelection textSelection = (ITextSelection) selection;
+			int lineNumber = textSelection.getStartLine();
+			IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
+					.getBreakpoints(SCChartsDebugModelPresentation.ID);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canToggleLineBreakpoints(IWorkbenchPart part, ISelection selection) {
-        return true;
-    }
+			// Look for existing breakpoints and delete them if needed.
+			for (int i = 0; i < breakpoints.length; i++) {
+				IBreakpoint breakpoint = breakpoints[i];
+				if (resource.equals(breakpoint.getMarker().getResource())) {
+					int bl;
+					bl = ((LineBreakpoint) breakpoint).getLineNumber();
+					if (bl == (lineNumber + 1)) {
+						breakpoint.delete();
+						return;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-        // NOT SUPPORTED
-    }
+					}
+				}
+			}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canToggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) {
-        // NOT SUPPORTED
-        return false;
-    }
+			// Create a new breakpoint in the specified line.
+			SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
+			DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
+			DebugPlugin.getDefault().getBreakpointManager().fireBreakpointChanged(breakpoint);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
-     // NOT SUPPORTED
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canToggleLineBreakpoints(IWorkbenchPart part, ISelection selection) {
+		return true;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canToggleWatchpoints(IWorkbenchPart part, ISelection selection) {
-        // NOT SUPPORTED
-        return false;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void toggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+		// NOT SUPPORTED
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canToggleMethodBreakpoints(IWorkbenchPart part, ISelection selection) {
+		// NOT SUPPORTED
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void toggleWatchpoints(IWorkbenchPart part, ISelection selection) throws CoreException {
+		// NOT SUPPORTED
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canToggleWatchpoints(IWorkbenchPart part, ISelection selection) {
+		// NOT SUPPORTED
+		return false;
+	}
 
 }
