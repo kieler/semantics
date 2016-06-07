@@ -18,7 +18,6 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.MinMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import java.util.List
-import java.util.Map
 import org.eclipse.jface.dialogs.IMessageProvider
 import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.swt.SWT
