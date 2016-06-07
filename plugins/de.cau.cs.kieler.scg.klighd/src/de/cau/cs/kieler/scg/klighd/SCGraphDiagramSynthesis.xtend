@@ -87,6 +87,7 @@ import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.LinkedList
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
@@ -365,6 +366,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 255; it.green = 30; it.blue = 30;]
     private static val KColor OPT_PRIORITY_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
         [it.red = 30; it.green = 30; it.blue = 255;]
+    private static val KColor STRONGLY_CONNECTED_COMPONENT_COLOR = KRenderingFactory::eINSTANCE.createKColor() =>
+        [it.red = 180; it.green = 50; it.blue = 180;]
     private static val int PROBLEM_WIDTH = 4    
 
     /** Constants for semantic object mapping */
@@ -433,6 +436,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Optimized priority ID of each node */
     private HashMap<Node, Integer> optPrioIDs
 
+    /** List of all strongly connected components of the SCG */
+    private LinkedList<LinkedList<Node>> scc
+    
+    /** Optimized priority ID of each node */
+    private HashMap<Node, Integer> sccMap
+
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
     // -------------------------------------------------------------------------
@@ -459,6 +468,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 nodePrios = prioAuxData.nodePrio
                 threadSegmentIDs = prioAuxData.threadSegmentID
                 optPrioIDs = prioAuxData.optimizedPrioID
+                scc = prioAuxData.stronglyConnectedComponents
+                sccMap = prioAuxData.sccMap
                 
             }
         }
@@ -619,7 +630,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 }
                                 
                                 addInsideTopRightNodeLabel(threadSegmentIDText, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                    it.KRendering.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                                    it.KRendering.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                                 ]
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
@@ -642,6 +653,43 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
                 ]
             }
+            
+            //Draw strongly connected components (?)
+            if(scc != null && sccMap != null) {
+                for(component : scc) {
+                    if(component.size > 1) {
+                        for(n : component) {
+                            
+//                            for(e : n.allEdges) {
+//                                if(component.contains(e.target)) {
+//                                    KEdgeExtensions.getEdge(e).KRendering.foreground = STRONGLY_CONNECTED_COMPONENT_COLOR.copy
+//                                }
+//                            }
+                            
+                            for(n2CF : n.allNext) {
+                                val n2 = n2CF.target
+                                if(component.contains(n2)) {
+                                    n2CF.thickenControlFlow(4)
+                                    n2CF.colorControlFlow(STRONGLY_CONNECTED_COMPONENT_COLOR.copy)
+                                    
+                                }
+//                               if(component.contains(n2)) {
+//                                   println("HELLO")
+//                                   node.createNewEdge() => [ edge |
+//                                       edge.source = n.node
+//                                       edge.target = n2.node
+//                                       edge.addRoundedBendsPolyline(8, 2) => [
+//                                           it.foreground = STRONGLY_CONNECTED_COMPONENT_COLOR.copy
+//                                           it.lineStyle = LineStyle::SOLID
+//                                       ]
+//                                   ]
+//                               } 
+                            }
+                        }
+                    }
+                }
+            }
+            
             // Draw analysis visualization if present.
             scg.synthesizeAnalyses
         ]
@@ -715,7 +763,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -724,12 +772,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(assignment)) {
-                    prio = nodePrios.get(assignment)
+                if(optPrioIDs.containsKey(assignment)) {
+                    prio = optPrioIDs.get(assignment)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -860,7 +908,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -870,12 +918,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(conditional)) {
-                    prio = nodePrios.get(conditional)
+                if(optPrioIDs.containsKey(conditional)) {
+                    prio = optPrioIDs.get(conditional)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -935,7 +983,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -945,12 +993,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(surface)) {
-                    prio = nodePrios.get(surface)
+                if(optPrioIDs.containsKey(surface)) {
+                    prio = optPrioIDs.get(surface)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -1013,7 +1061,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -1023,12 +1071,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(depth)) {
-                    prio = nodePrios.get(depth)
+                if(optPrioIDs.containsKey(depth)) {
+                    prio = optPrioIDs.get(depth)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -1078,7 +1126,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -1088,12 +1136,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(entry)) {
-                    prio = nodePrios.get(entry)
+                if(optPrioIDs.containsKey(entry)) {
+                    prio = optPrioIDs.get(entry)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -1143,7 +1191,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -1153,12 +1201,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(exit)) {
-                    prio = nodePrios.get(exit)
+                if(optPrioIDs.containsKey(exit)) {
+                    prio = optPrioIDs.get(exit)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -1220,7 +1268,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -1230,12 +1278,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(fork)) {
-                    prio = nodePrios.get(fork)
+                if(optPrioIDs.containsKey(fork)) {
+                    prio = optPrioIDs.get(fork)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
@@ -1299,7 +1347,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
                 
@@ -1309,12 +1357,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(optPrioIDs != null) {
                 val container = node.KContainerRendering
                 var prio = -1
-                if(nodePrios.containsKey(join)) {
-                    prio = nodePrios.get(join)
+                if(optPrioIDs.containsKey(join)) {
+                    prio = optPrioIDs.get(join)
                 }
                 val txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
-                txt.setForeground(de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
+                txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }

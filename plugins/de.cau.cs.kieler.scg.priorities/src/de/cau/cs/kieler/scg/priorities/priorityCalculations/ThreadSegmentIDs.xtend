@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
 import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import java.util.HashMap
@@ -88,6 +87,8 @@ class ThreadSegmentIDs {
     /**
      *  Method to calculate the thread segment IDs of the nodes. Executes a depth-first search 
      *  of the nodes. If we reach the end of an execution, the thread is given the ID threadID. 
+     * 
+     *  Non-reachable nodes are ignored (currently).
      * 
      * @param node
      *              The current node. Calculates the thread segment ID for all his children and then 

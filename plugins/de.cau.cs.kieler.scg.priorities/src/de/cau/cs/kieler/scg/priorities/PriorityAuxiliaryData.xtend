@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.priorities
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.scg.Node
 import java.util.HashMap
+import java.util.LinkedList
 
 /**
  * @author lpe
@@ -25,6 +26,8 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     private HashMap<Node, Integer> nodePrio
     private HashMap<Node, Integer> threadSegmentID
     private HashMap<Node, Integer> optimizedPrioID
+    private LinkedList<LinkedList<Node>> stronglyConnectedComponents
+    private HashMap<Node, Integer> sccMap
     
     new(HashMap<Node, Integer> npr) {
         nodePrio = npr.clone as HashMap<Node, Integer>
@@ -54,4 +57,19 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
         optimizedPrioID
     }
     
+    public def LinkedList<LinkedList<Node>> getStronglyConnectedComponents() {
+        stronglyConnectedComponents
+    }
+    
+    public def void setStronglyConnectedComponents(LinkedList<LinkedList<Node>> scc) {
+        this.stronglyConnectedComponents = scc
+    }
+    
+    public def void setSccMap(HashMap<Node, Integer> sccMap) {
+        this.sccMap = sccMap.clone as HashMap<Node, Integer>
+    }
+    
+    public def HashMap<Node, Integer> getSccMap() {
+        sccMap
+    }
 }

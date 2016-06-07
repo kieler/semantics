@@ -53,7 +53,7 @@ class OptimizedPrioIDs {
         for(node : nodes) {
             val pID = prioIDs.get(node)
             if(pID != null) {
-                optPrioIDs.put(node, sortedIds.indexOf(pID))
+                optPrioIDs.put(node, 1 + sortedIds.indexOf(pID))
                 
             }
         }
