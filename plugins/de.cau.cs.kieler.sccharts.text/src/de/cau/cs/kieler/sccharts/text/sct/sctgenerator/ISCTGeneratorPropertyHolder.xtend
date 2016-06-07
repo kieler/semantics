@@ -16,10 +16,25 @@ import de.cau.cs.kieler.core.properties.IProperty
 import java.util.List
 
 /**
+ * Common property holder interface for SCT Generator classes
+ * All SCT Generator classes must return their category and a list of properties.
+ * 
  * @author ssm
- *
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 interface ISCTGeneratorPropertyHolder {
-    def String getTab()
+    /**
+     * Returns the ID of the category for this property holder.
+     * 
+     * @returns the ID of the category for this property holder.
+     */
+    def String getCategory()
+    
+    /**
+     * Retrieves the list of SCT Generator properties.
+     * 
+     * @returns the list of SCT Generator properties.
+     */
     def List<IProperty<?>> getProperties()    
 }

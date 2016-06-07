@@ -21,21 +21,26 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator;
 
 /**
+ * Abort extension for the SCT Generator This class adds abort transition to the model creation. It
+ * serves as core example for adding extensions to the SCT Generator.
+ * 
  * @author ssm
- *
+ * @kieler.design 2016-06-07 proposed
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 public class SCTGeneratorDialogHandler extends AbstractHandler {
 
-    public static final String SCT_GENERATOR_OPENDIALOG =
+    /** ID of the open dialog command */
+    public static final String SCT_GENERATOR_OPENDIALOG_COMMAND =
             "de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog";
 
+    /** The SCT injector */
     private static Injector injector =
             new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
 
@@ -44,18 +49,22 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
      */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+        // Retrieve the command and check if it is the open dialog command.
         String commandString = event.getCommand().getId().toString();
-        final ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getSelectionService().getSelection();
+        if (commandString.equals(SCT_GENERATOR_OPENDIALOG_COMMAND)) {
+            /*
+             * If it is the right command, open the dialog and retrieve the selection and check if a
+             * project was selected. For each project, run the SCT Generator.
+             */
+            SCTGeneratorDialog dialog = new SCTGeneratorDialog(null);
+            if (dialog.open() == Window.OK) {
+                final ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getSelectionService().getSelection();
 
-        if (commandString.equals(SCT_GENERATOR_OPENDIALOG)) {
-
-            if (selection instanceof IStructuredSelection) {
-                final Object[] elements = ((IStructuredSelection) selection).toArray();
-                for (Object element : elements) {
-                    if (element instanceof IProject) {
-                        SCTGeneratorDialog dialog = new SCTGeneratorDialog(null);
-                        if (dialog.open() == Window.OK) {
+                if (selection instanceof IStructuredSelection) {
+                    final Object[] elements = ((IStructuredSelection) selection).toArray();
+                    for (Object element : elements) {
+                        if (element instanceof IProject) {
                             SCTGenerator generator = injector.getInstance(SCTGenerator.class);
                             generator.createModels((IProject) element);
                         }
@@ -65,7 +74,12 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
         }
         return null;
     }
-    
+
+    /**
+     * Returns the SCT injector that was created in this class.
+     * 
+     * @returns the injector.
+     */
     public static Injector getInjector() {
         return injector;
     }

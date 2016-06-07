@@ -17,8 +17,8 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ChanceMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.MinMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
-import java.util.HashMap
 import java.util.List
+import java.util.Map
 import org.eclipse.jface.dialogs.IMessageProvider
 import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.swt.SWT
@@ -31,56 +31,83 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.swt.widgets.Text
-import static extension java.lang.Integer.parseInt
+
 import static extension java.lang.Double.parseDouble
+import static extension java.lang.Integer.parseInt
 
 /**
- * @author ssm
+ * Creates a generic dialog for the SCT Generator.
+ * Therefore, for each property a appropriate input mask is created. 
+ * Subsequent to user confirmation, the values are written back to their properties.  
  * 
+ * @author ssm
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 class SCTGeneratorDialog extends TitleAreaDialog {
 
-    private static val DIALOG_WIDTH = (Display.getDefault.getMonitors.get(0).getBounds.width * 0.66) as int 
+    /** Default dialog width is {@code DIALOG_WIDTH} pixels. */
+    private static val DIALOG_WIDTH = (Display.getDefault.getMonitors.get(0).getBounds.width * 0.6) as int 
     
+    /** {@code propertyInputs} maps all properties to corresponding {@code Text} SWT widgets. */
     private val propertyInputs = <IProperty<?>, List<Text>>newHashMap
 
+    /**
+     * {@inheritDoc}
+     */
     new(Shell parentShell) {
         super(parentShell)
         propertyInputs.clear
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override create() {
         super.create();
         setTitle("SCT Generator");
         setMessage("Specify the generation parameter of the SCT models.", IMessageProvider.INFORMATION);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override boolean isResizable() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override void okPressed() {
         saveInput()
         super.okPressed()
     }    
     
+    /**
+     * {@inheritDoc}
+     */    
     override Control createDialogArea(Composite parent) {
+        // Create the parent area widget.
         val area = super.createDialogArea(parent) as Composite
         val composite = new Composite(area, SWT.NONE)
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true) => [ minimumWidth = DIALOG_WIDTH ])
         composite.setLayout(new GridLayout(2, false))
         
+        // Retrieve the SCT Generator to query all properties. 
         val generator = SCTGeneratorDialogHandler.getInjector.getInstance(SCTGenerator)
-        val HashMap<String, List<IProperty<?>>> tabbedProperties = generator.getTabbedProperties
+        val categorizedProperties = generator.getCategorizedProperties
 
-        for(key : tabbedProperties.keySet) {
+        // Create a SWT group for each category.
+        for(key : categorizedProperties.keySet) {
             val group = new Group(composite, SWT.NONE)
             group.setText(key.split("\\.").last)
             group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
             val layout = new GridLayout(5, false)
             group.setLayout(layout)
             
-            for(property : tabbedProperties.get(key)) {
+            // Add corresponding inputs for each property data.
+            for(property : categorizedProperties.get(key)) {
                 val propertyData = generator.getProperty(property)
                 if (propertyData instanceof Value<?>) {
                     propertyInputs.put(property, propertyData.createCountInput(group))
@@ -95,8 +122,13 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         area
     }
     
-    
-    private def void saveInput() {
+    /**
+     * Save the inputs back to the properties.
+     * 
+     * @returns void
+     */
+    protected def void saveInput() {
+        // Use the property input list to assign the SWT Text values back to their properties. 
         val generator = SCTGeneratorDialogHandler.getInjector.getInstance(SCTGenerator)
         for(property : propertyInputs.keySet) {
             val propertyData = generator.getProperty(property)
@@ -136,10 +168,15 @@ class SCTGeneratorDialog extends TitleAreaDialog {
             }
         }
     }
-
     
-    
-    private def createCountInput(Value<?> data, Composite container) {
+    /**
+     * Creates an input field for values.
+     * 
+     * @param data gives an SCT Generator Value property.
+     * @param container defines the SWT container.
+     * @returns a list of Text widgets.
+     */
+    protected def List<Text> createCountInput(Value<?> data, Composite container) {
         <Text>newLinkedList => [
             container.createLabel(data.caption) 
             container.insertDummy(1)
@@ -148,7 +185,14 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         ]
     }    
     
-    private def createMinMaxInput(MinMax<?> data, Composite container) {
+    /**
+     * Create input fields for MinMax properties.
+     * 
+     * @param data gives an SCT Generator MinMax property.
+     * @param container defines the SWT container.
+     * @returns a list of Text widgets.
+     */
+    protected def createMinMaxInput(MinMax<?> data, Composite container) {
         <Text>newLinkedList => [
             container.createLabel(data.caption) 
             container.createLabel("min")
@@ -158,7 +202,14 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         ]
     }
 
-    private def createChanceMaxInput(ChanceMax<?, ?> data, Composite container) {
+    /**
+     * Create input fields for ChanceMax properties.
+     * 
+     * @param data gives an SCT Generator ChanceMax property.
+     * @param container defines the SWT container.
+     * @returns a list of Text widgets.
+     */    
+     protected def createChanceMaxInput(ChanceMax<?, ?> data, Composite container) {
         <Text>newLinkedList => [
             container.createLabel(data.caption) 
             container.createLabel("rnd")
@@ -168,11 +219,26 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         ]
     }
 
-    private def createLabel(Composite container, String text) {
-        val lbtDummy = new Label(container, SWT.NONE)
-        lbtDummy.setText(text)
+    /**
+     * Creates a new SWT {@link Label}.
+     * 
+     * @param container defines the SWT container.
+     * @param text holds the text.
+     * @returns the newly created {@link Label}.
+     */
+    private def Label createLabel(Composite container, String text) {
+        new Label(container, SWT.NONE) => [
+            setText(text)
+        ]
     }
 
+    /**
+     * Creates a new SWT {@link Text}.
+     * 
+     * @param container defines the SWT container.
+     * @param defaultText holds the initial text.
+     * @returns the newly created {@link Text}.
+     */
     private def Text createText(Composite container, String defaultText) {
         val data = new GridData()
         data.grabExcessHorizontalSpace = true
@@ -184,10 +250,19 @@ class SCTGeneratorDialog extends TitleAreaDialog {
         text
     }
 
+    /**
+     * Creates one or more dummy SWT element(s) to fill the grid layout. 
+     * Therefore, a empty SWT {@link Label} is created.
+     * 
+     * @param container defines the SWT container.
+     * @param count holds the number of dummy elements.
+     * @returns the newly created {@link Label}.
+     */
     private def insertDummy(Composite container, int count) {
         for (var int i = 0; i < count; i++) {
-            val lbtDummy = new Label(container, SWT.NONE);
-            lbtDummy.setText("")
+            new Label(container, SWT.NONE) => [
+                setText("")
+            ]
         }
     }   
 

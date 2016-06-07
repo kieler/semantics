@@ -15,11 +15,15 @@ package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Data holder for {@code MinMax} SCT Generator properties
+ * {@code MinMax} properties include two values. One for the minimum and one for the maximum value. 
+ * 
  * @author ssm
- *
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 @Data
 class MinMax<T> extends SCTGeneratorProperty {
-    T min;
-    T max;    
+    T min   // The minimum value
+    T max   // The maximum value
 }

@@ -28,28 +28,53 @@ import com.google.inject.Singleton
 import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.isSuperstate
 
 /**
- * @author ssm
+ * Abort extension for the SCT Generator
+ * This class adds abort transition to the model creation.
+ * It serves as core example for adding extensions to the SCT Generator.
  * 
+ * @author ssm
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 @Singleton
 class AbortExtension implements ISCTGeneratorExtension {
     
-    @Inject extension SCTGenerator
-
-    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = new Property<Value<Double>>(
-        SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
-        new Value("Chance for Strong Abort", 0.0d)
-    )
-
-    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = new Property<Value<Double>>(
-        SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
-        new Value("Chance for Weak Abort", 0.0d)
-    )
+    /* Injections */
+    @Inject extension SCTGenerator      // You can simply inject the SCT Generator.
     
-    override getTab() {
+    /* 
+     * Additionally, you can add static extensions to enrich your class. 
+     * For example, you simply may add 
+     *   import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.isSuperstate
+     * to the list of imports to enable the superstate check within this class.
+     */
+
+    /* Abort properties */
+    public static val IProperty<Value<Double>> CHANCE_FOR_STRONG_ABORTS = 
+        new Property<Value<Double>>(
+            SCTGenerator.SCTGENERATOR_ID + ".chanceForStrongAbort",
+            new Value("Chance for Strong Abort", 0.0d)
+        )
+
+    public static val IProperty<Value<Double>> CHANCE_FOR_WEAK_ABORTS = 
+        new Property<Value<Double>>(
+            SCTGenerator.SCTGENERATOR_ID + ".chanceForWeakAbort",
+            new Value("Chance for Weak Abort", 0.0d)
+        )
+
+
+    /* Satisfy property holder interface */
+    
+    /**
+     * {@inheritDoc}
+     */
+    override getCategory() {
         SCTGenerator.SCTGENERATOR_EXTENSIONS_TAB
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override getProperties() {
         <IProperty<?>>newArrayList(
             CHANCE_FOR_STRONG_ABORTS,
@@ -57,7 +82,12 @@ class AbortExtension implements ISCTGeneratorExtension {
         )
     }
 
+    /**
+     * {@inheritDoc}
+     */
     override onTransitionCreate(Transition transition) {
+        /* If the source state of the transition is a superstate,
+         * check whether or not it should get marked as strong or weak abort. */
         if (transition.sourceState.isSuperstate) {
             if (CHANCE_FOR_STRONG_ABORTS.random != 0) {
                 transition.type = TransitionType.STRONGABORT
@@ -68,18 +98,23 @@ class AbortExtension implements ISCTGeneratorExtension {
     }
     
     override onStateCreate(State state) {
+        // Do nothing.
     }
 
     override onRegionCreate(Region region) {
+        // Do nothing.
     }
 
     override onExpressionCreate(Expression expression) {
+        // Do nothing.
     }
 
     override onModelCreate(State rootState) {
+        // Do nothing.
     }
     
     override onDeclarationCreate(Declaration declaration) {
+        // Do nothing.
     }
 
 }

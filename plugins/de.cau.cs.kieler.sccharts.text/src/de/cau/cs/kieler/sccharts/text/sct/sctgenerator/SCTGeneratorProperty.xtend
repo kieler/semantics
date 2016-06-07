@@ -15,10 +15,15 @@ package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Common data holder for SCT Generator properties  
+ * 
  * @author ssm
- *
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 @Data
 class SCTGeneratorProperty {
+    
+    // All SCT Generator properties have a caption.
     String caption;
 }

@@ -16,10 +16,13 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGeneratorProperty
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Data holder for SCT Generator properties with primitive values  
+ * 
  * @author ssm
- *
+ * @kieler.design 2016-06-07 proposed 
+ * @kieler.rating 2016-06-07 proposed yellow
  */
 @Data
 class Value<T> extends SCTGeneratorProperty {
-    T value
+    T value     // The value
 }
