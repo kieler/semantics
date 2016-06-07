@@ -276,7 +276,11 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
              * return 1 if the die roll is successful.
              * Otherwise, return 0. */
             if (propertyValue.value instanceof Double) {
-                return if ((propertyValue.value as Double).chance) 1 else 0
+                if ((propertyValue.value as Double).chance) {
+                    return 1 
+                 } else {
+                    return 0
+                 }
             } 
         }
         throw new Exception("SCT Generator random: The property value is not supported.")
@@ -340,11 +344,11 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
      * Retrieves true, if a random value is lower than a given value.
      * Used to calculate chances.
      * 
-     * @param defines a limit.
+     * @param chance defines a limit.
      * @returns true if random does not exceed the limit.
      */
-    def boolean chance(double rnd) {
-        Math.random < rnd
+    def boolean chance(double chance) {
+        Math.random < chance
     }
 
     /**
