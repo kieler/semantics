@@ -51,7 +51,8 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
     // Constants
     
     public static val String ID = "de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolderSynthesis";
-    static val int maxPreviewLines = 50;
+    static val maxPreviewLines = 50;
+    static val tabSpaces = "  ";
 
     // -------------------------------------------------------------------------
     // Synthesis
@@ -112,7 +113,12 @@ class CodePlaceHolderSynthesis extends AbstractDiagramSynthesis<CodePlaceHolder>
             preview.setLength(index + 1);
             preview.append("\n...");
         }
-        
+        // Replace tabs with spaces
+        var nextTab = preview.indexOf("\t")
+        while (nextTab > -1) {
+            preview.replace(nextTab, nextTab+1, tabSpaces)
+            nextTab = preview.indexOf("\t")
+        }
         return preview.toString();
     }
 }
