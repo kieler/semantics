@@ -320,8 +320,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SynthesisOption::createSeparator("Priority"),
             SHOW_SCC,
             SHOW_NODE_PRIORITY,
-            SHOW_OPT_PRIO_ID,
-            SHOW_THREAD_PRIO
+            SHOW_THREAD_PRIO,
+            SHOW_OPT_PRIO_ID
         );
     }
 
