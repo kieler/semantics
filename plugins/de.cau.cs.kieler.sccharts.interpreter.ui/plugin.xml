@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.klighd.modelUpdateController.extension">
+      <ModelUpdateControllerExtension
+            class="de.cau.cs.kieler.sccharts.interpreter.ui.ModelUpdateControllerInterpreterExtension">
+      </ModelUpdateControllerExtension>
+   </extension>
+
+</plugin>

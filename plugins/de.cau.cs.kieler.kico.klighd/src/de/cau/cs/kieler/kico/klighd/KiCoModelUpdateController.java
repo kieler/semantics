@@ -120,7 +120,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController";
     
     /** Extension's Extension Point ID. */
-    private static final String EXTENSION_ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.extension";
+    private static final String EXTENSION_ID = "de.cau.cs.kieler.kico.klighd.modelUpdateController.extension";
     
     /** Extension's Extension Point property name. */
     private static final String EXTENSION_PROPERTY_NAME = "class";
