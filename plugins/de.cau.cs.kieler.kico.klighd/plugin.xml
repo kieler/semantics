@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.kico.klighd.modelUpdateController.extension" name="Model Update Controller Extension" schema="schema/de.cau.cs.kieler.kico.klighd.modelUpdateController.extension.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis

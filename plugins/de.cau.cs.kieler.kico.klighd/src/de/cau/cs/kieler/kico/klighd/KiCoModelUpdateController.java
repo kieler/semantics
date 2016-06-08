@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
@@ -23,9 +25,11 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -56,6 +60,9 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.StringInputStream;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Key;
 
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
@@ -91,7 +98,7 @@ import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
 /**
  * Controller for XText and ECore model editors interacting with KiCo.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
@@ -111,6 +118,12 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     // -- CONSTANTS --
     /** Controller ID. */
     private static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController";
+    
+    /** Extension's Extension Point ID. */
+    private static final String EXTENSION_ID = "de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.extension";
+    
+    /** Extension's Extension Point property name. */
+    private static final String EXTENSION_PROPERTY_NAME = "class";
 
     /** Path to notify Simulation component. */
     private static final IPath modelViewPath = new Path(DiagramView.ID);
@@ -211,6 +224,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** The last editor synchronized with the view. */
     private IEditorPart recentEditor = null;
+    
+    /** List of all registered extensions. */
+    private List<IKiCoModelUpdateControllerExtension> registeredExtensions;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -220,6 +236,9 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     public KiCoModelUpdateController() {
         CompilerSelectionStore.register(this);
+        
+        // Retrieve registered extensions.
+        registeredExtensions = getRegisteredExtensions();
 
         // Save Button
         saveAction = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
@@ -339,6 +358,28 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         CompilerSelectionStore.unregister(this);
     }
 
+    /**
+     * Retrieves the classes that are using the extension point.
+     * 
+     * @returns a {@code List<ISCTGeneratorExtension>} containing the classes that use the extension point.
+     */
+    private List<IKiCoModelUpdateControllerExtension> getRegisteredExtensions() {
+        List<IKiCoModelUpdateControllerExtension> regExtensions = new LinkedList<IKiCoModelUpdateControllerExtension>();
+        Injector injector = Guice.createInjector();
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_ID);
+        for (IConfigurationElement extension : extensions) {
+            try {
+                Object executable = extension.createExecutableExtension(EXTENSION_PROPERTY_NAME);
+                IKiCoModelUpdateControllerExtension instance = 
+                        (IKiCoModelUpdateControllerExtension) (injector.getInstance(executable.getClass()));
+                regExtensions.add(instance);
+            } catch (CoreException e) {
+                System.err.print("Could not load model update controller extension: " + extension.getName());
+            }
+        }
+        return regExtensions;
+    }     
+    
     // -- Controller
     // -------------------------------------------------------------------------
 
@@ -482,6 +523,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(diagramPlaceholderToggleAction);
         menu.add(tracingChainToggleAction);
         menu.add(tracingToggleAction);
+
+        // Call add contribution hooks.
+        for (IKiCoModelUpdateControllerExtension extension : registeredExtensions) {
+            extension.addContributions(toolBar, menu);
+        }
     }
 
     // -- Save model
@@ -643,6 +689,11 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             warnings.setLength(warnings.length() - 1);
             addWarningComposite(getDiagramView().getViewer(), warnings.toString());
         }
+        
+        // Call diagram update hooks.
+        for (IKiCoModelUpdateControllerExtension extension : registeredExtensions) {
+            extension.onDiagramUpdate(model, properties);
+        }        
     }
 
     // -- Model Update
