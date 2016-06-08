@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
+import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 /**
  * @author als
  * @kieler.design proposed
@@ -86,7 +86,7 @@ class SSASCL2SSASignalSCL extends AbstractProductionTransformation {
                 var newStatements = newLinkedList
                 val fc = asm.expression as FunctionCall
                 // TODO present case is better but not supported in scl
-                if (fc.functionName == SEQ) {
+                if (fc.functionName == SEQ.symbol) {
                     val paramIter = fc.parameters.map[expression].reverseView.listIterator
                     val cond = createConditional => [
                         val first = paramIter.next
@@ -133,7 +133,7 @@ class SSASCL2SSASignalSCL extends AbstractProductionTransformation {
                         ]
                         instruction = cond
                     ]
-                } else if (fc.functionName == CONC) {
+                } else if (fc.functionName == CONC.symbol) {
                     // TODO handle ineffective write
                     val paramIter = fc.parameters.map[expression].listIterator
                     val first = paramIter.next

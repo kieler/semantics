@@ -18,12 +18,17 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static com.google.common.collect.Maps.*
+import de.cau.cs.kieler.scg.Surface
 
 /**
  * This class computes dominator information using the Lengauer-Tarjan method.
@@ -35,7 +40,12 @@ import static com.google.common.collect.Maps.*
  * @kieler.rating proposed yellow
  */
 class DominatorTree {
-
+    
+    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
+    
+    // The SCG
+    @Accessors
+    val SCGraph scg
     // These fields represent the structure of the SCG
     val Multimap<BasicBlock, BasicBlock> successors = LinkedHashMultimap.create
     // These fields represent the structure of the SCG in depth first form
@@ -53,6 +63,8 @@ class DominatorTree {
     val Multimap<BasicBlock, BasicBlock> dominanceFrontiers = HashMultimap.create
 
     new(SCGraph scg) {
+        this.scg = scg
+        
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
         if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
@@ -61,11 +73,33 @@ class DominatorTree {
         }
         val entryBB = scg.basicBlocks.head
         
+        // Add additional predecessors for tick borders
+        val depthPredecessors = newHashMap
+        val surfaces = newHashMap
         // Calculate BB successors
         for (bb : scg.basicBlocks) {
             for (preBB : bb.predecessors.map[basicBlock]) {
                 successors.put(preBB, bb)
             }
+            for (sb : bb.schedulingBlocks) {
+                for (node : sb.nodes) {
+                    if (node instanceof Depth) {
+                        val pred = createPredecessor
+                        depthPredecessors.put(node, pred)
+                        bb.predecessors.add(pred)
+                        successors.put(pred.basicBlock, bb)
+                    }else if (node instanceof Surface) {
+                        surfaces.put(node, bb)
+                    }
+                }
+            }
+        }
+        for (depthPredPair : depthPredecessors.entrySet) {
+            val depth = depthPredPair.key
+            val pred = depthPredPair.value
+            val surfaceBB = surfaces.get(depth.surface)
+            pred.basicBlock = surfaceBB
+            successors.put(surfaceBB, pred.eContainer as BasicBlock)
         }
  
         // Start with DFS

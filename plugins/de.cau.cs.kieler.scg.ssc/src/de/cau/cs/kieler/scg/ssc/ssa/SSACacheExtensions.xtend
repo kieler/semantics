@@ -15,38 +15,38 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.Annotatable
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory
-import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 import java.util.Collection
+import java.util.Map
 
 import static com.google.common.collect.Lists.*
+import static com.google.common.collect.Sets.*
+import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SSAHelperExtensions {
+class SSACacheExtensions {
 
     // -------------------------------------------------------------------------
-    public static val SSA = "ssa"
-    public static val PHI = "seq"
-    public static val READ = "read"
-    public static val JOIN = "join"
+
     public static val DOMINATOR_TREE = new Property<Pair<SCGraph, DominatorTree>>("de.cau.cs.kieler.scg.ssa.domtree")
     public static val SHARED_VARIABLES = new Property<Pair<SCGraph, ? extends Multimap<Fork, ValuedObject>>>(
         "de.cau.cs.kieler.scg.ssa.sharedvariables")
@@ -60,17 +60,25 @@ class SSAHelperExtensions {
         "de.cau.cs.kieler.scg.ssa.joindef")
     public static val READ_DEF = new Property<Pair<SCGraph, ? extends Collection<Assignment>>>(
         "de.cau.cs.kieler.scg.ssa.readdef")
+    public static val DEF = new Property<Pair<SCGraph, ? extends Map<ValuedObject, Assignment>>>(
+        "de.cau.cs.kieler.scg.ssa.def")
+    public static val USE = new Property<Pair<SCGraph, ? extends Multimap<ValuedObject, Node>>>(
+        "de.cau.cs.kieler.scg.ssa.use")
+                
     // -------------------------------------------------------------------------
     @Inject
     extension SCGCoreExtensions
-
     @Inject
     extension SCGThreadExtensions
-
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
     @Inject
     extension AnnotationsExtensions
     
-    extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
+    @Inject
+    extension SSACoreExtensions
     
     // -------------------------------------------------------------------------
     def getDominatorTree(KielerCompilerContext context, SCGraph scg) {
@@ -87,6 +95,8 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.analyseSCG(scg)
             pair = context.getProperty(SHARED_VARIABLES)
+        } else {       
+            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
         }
         return pair.value
     }
@@ -96,6 +106,8 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.analyseSCG(scg)
             pair = context.getProperty(SHARED_VARIABLES_START)
+        } else {        
+            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
         }
         return pair.value
     }
@@ -105,6 +117,8 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.analyseSCG(scg)
             pair = context.getProperty(DEFSITE)
+        } else {  
+            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
         }
         return pair.value
     }
@@ -143,6 +157,8 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.setProperty(SEQ_DEF, new Pair(scg, scg.nodes.filter(Assignment).filter[isSSA(PHI)].toSet))
             pair = context.getProperty(SEQ_DEF)
+        } else {  
+            pair.value.removeIf[it.eContainer == null]
         }
         return pair.value
     }
@@ -156,6 +172,8 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.setProperty(JOIN_DEF, new Pair(scg, scg.nodes.filter(Assignment).filter[isSSA(JOIN)].toSet))
             pair = context.getProperty(JOIN_DEF)
+        } else {  
+            pair.value.removeIf[it.eContainer == null]
         }
         return pair.value
     }
@@ -169,33 +187,64 @@ class SSAHelperExtensions {
         if (pair == null || pair.key != scg) {
             context.setProperty(READ_DEF, new Pair(scg, scg.nodes.filter(Assignment).filter[isSSA(READ)].toSet))
             pair = context.getProperty(READ_DEF)
+        } else {
+            pair.value.removeIf[it.eContainer == null]
+        }
+        return pair.value
+    }
+    
+    def getReadAndJoinDef(KielerCompilerContext context, SCGraph scg) {
+        val readDefs = context.getReadDef(scg)
+        val joinDefs = context.getJoinDef(scg)
+        val readJoinDefs = newHashSetWithExpectedSize(readDefs.size + joinDefs.size)
+        readJoinDefs += readDefs
+        readJoinDefs += joinDefs
+        return readJoinDefs
+    }
+    
+    def getDef(KielerCompilerContext context, SCGraph scg) {
+        var pair = context.getProperty(DEF)
+        if (pair == null || pair.key != scg) {
+            context.analyseDefUse(scg)
+            pair = context.getProperty(DEF)
+        } else {          
+            pair.value.entrySet.removeIf[key.eContainer == null || value.eContainer == null]
         }
         return pair.value
     }
 
-    def isSSA(Annotatable anno) {
-        return anno.hasAnnotation(SSA)
+    def getUse(KielerCompilerContext context, SCGraph scg) {
+        var pair = context.getProperty(USE)
+        if (pair == null || pair.key != scg) {
+            context.analyseDefUse(scg)
+            pair = context.getProperty(USE)
+        } else {
+            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
+        }
+        return pair.value
     }
 
-    def isSSA(Annotatable anno, String function) {
-        return anno.annotations.filter(StringAnnotation).exists[it.name == SSA && it.values.head == function]
-    }
-    
-    def <T extends Annotatable> T markSSA(T anno) {
-        anno.annotations += createAnnotation => [
-            name = SSA
-        ]
-        return anno
-    }
-
-    def <T extends Annotatable> T markSSA(T anno, String function) {
-        anno.createStringAnnotation(SSA, function)
-        return anno
-    }
-    
-    def ssaParameterFunction(FunctionCall fc, String fname) {
-        return fc.parameters.findFirst [
-            expression instanceof FunctionCall && (expression as FunctionCall).functionName == fname
-        ]?.expression as FunctionCall
+    private def analyseDefUse(KielerCompilerContext context, SCGraph scg) {
+        if (!scg.hasAnnotation(SSAFeature.ID)) {
+            throw new IllegalArgumentException("Given SCG is not in SSA form")
+        }
+        val def = <ValuedObject, Assignment>newHashMap
+        val use = HashMultimap.<ValuedObject, Node>create
+        // Analyse graph for def use
+        for (node : scg.nodes) {
+            if (node instanceof Assignment) {
+                def.put(node.valuedObject, node)
+                node.assignment.allReferences.map[valuedObject].forEach [
+                    use.put(it, node)
+                ]
+            } else if (node instanceof Conditional) {
+                node.condition.allReferences.map[valuedObject].forEach [
+                    use.put(it, node)
+                ]
+            }
+        }
+        // save results
+        context.setProperty(DEF, new Pair(scg, def))
+        context.setProperty(USE, new Pair(scg, use))
     }
 }

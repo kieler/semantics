@@ -18,8 +18,6 @@ import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
-import de.cau.cs.kieler.core.annotations.Annotatable
-import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -36,7 +34,6 @@ import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
@@ -60,12 +57,11 @@ import javax.inject.Inject
 
 import static com.google.common.collect.Lists.*
 import static com.google.common.collect.Maps.*
+import static de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions.*
+import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAHelperExtensions.*
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer
 
 /**
  * The SSA transformation for SCGs
@@ -96,15 +92,7 @@ class SSATransformation extends AbstractProductionTransformation {
     }
 
     // -------------------------------------------------------------------------
-    
-
-    public static val PHI_SYMBOL = "\u03A6"
-    public static val PSI_SYMBOL = "\u03A8"
-    public static val PI_SYMBOL = "\u03A0"
-    public static val PROTECTED = "scg.ssa.renaming.protected"
-
     // -------------------------------------------------------------------------
-    
     @Inject
     extension SCGCoreExtensions
 
@@ -115,7 +103,6 @@ class SSATransformation extends AbstractProductionTransformation {
     extension SCGThreadExtensions
 
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
-    
 
     @Inject
     extension KExpressionsValuedObjectExtensions
@@ -126,23 +113,19 @@ class SSATransformation extends AbstractProductionTransformation {
     @Inject
     extension KExpressionsDeclarationExtensions
 
-
     @Inject
     extension AnnotationsExtensions
-    
-    
-    @Inject
-    extension SSAHelperExtensions
 
     @Inject
-    extension SSAOptimizer ssaOptimizer
-    
-    @Inject
-    extension SeqConcTransformer seqConc
+    extension SSACoreExtensions
 
-    
+    @Inject
+    extension SSACacheExtensions
+
+    @Inject
+    extension SSAVariablePreserverExtensions
+
     // -------------------------------------------------------------------------
-
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
@@ -151,109 +134,94 @@ class SSATransformation extends AbstractProductionTransformation {
                 "The SSA analysis expects an entry node as first node in the first basic block!")
         }
         val entryBB = scg.basicBlocks.head
-
-//TODO        scg.preserveOutput
-
-        // ---------------
-        // 1. Placing Phi
-        // ---------------
-        // Build dominator tree
-        val dt = context.getDominatorTree(scg)
-        // Find shared variables
-        val sharedVariables = context.getsharedVariables(scg)
-        val sharedVariableStart = context.getsharedVariableStart(scg)
-        // Find definitions
-        val defsite = context.getDefsite(scg)
         // map for saving parameter references
         val ssaReferences = HashMultimap.<Assignment, Parameter>create
 
-        val seqDef = scg.placePhi(dt, defsite, sharedVariables)
+        // ---------------
+        // 1. Preserve output behavior
+        // ---------------
+        scg.preserveOutput(entryNode as Entry)
+
+        // ---------------
+        // 2. Place Phi
+        // ---------------
+        val seqDef = scg.placePhi(context)
         context.storeSeqDef(scg, seqDef)
-        val joinDef = scg.placeSharedJoin(ssaReferences, sharedVariables, sharedVariableStart)
+
+        // ---------------
+        // 3. Place Phi at thread Join
+        // ---------------
+        val joinDef = scg.placeSharedJoin(context, ssaReferences)
         context.storeJoinDef(scg, joinDef)
-        val readDef = scg.placeSharedRead(dt, ssaReferences, sharedVariables, sharedVariableStart)
+
+        // ---------------
+        // 4. Place Phi at thread Read access on shared variables
+        // ---------------
+        val readDef = scg.placeSharedRead(context, ssaReferences)
         context.storeReadDef(scg, readDef)
 
         // ---------------
-        // 2. Renaming
+        // 5. Renaming
         // ---------------
-        val ssaDeclarations = HashBiMap.create(scg.declarations.size)
-        for (decl : scg.declarations) {
-            for (vo : decl.valuedObjects) {
-                ssaDeclarations.put(vo, createDeclaration => [
-                    markSSA
-                    type = decl.type
-                    valuedObjects += vo.copy
-                ])
-            }
-        }
-        scg.declarations.addAll(ssaDeclarations.values)
-
-        // rename
-        entryBB.rename(dt, ssaDeclarations, ssaReferences, sharedVariables, sharedVariableStart)
-//TODO         scg.preserveInputValues
-//TODO         scg.preservePreValues
-
-        // rename VOs
-        for (decl : ssaDeclarations.values) {
-            for (vo : decl.valuedObjects.indexed) {
-                // TODO handle variable names which contain numbers
-                vo.value.name = vo.value.name.replaceAll("[0-9]*$", "") + vo.key
-            }
+        scg.rename(context, entryBB, scg.createSSADeclarations, ssaReferences)
+        // Order phi nodes to match the sequential phi definition by rvh
+        for (phi : seqDef) {
+            val fc = (phi.assignment as FunctionCall)
+            val sorted = fc.parameters.sortBy[SSAVersion]
+            fc.parameters.clear
+            fc.parameters.addAll(sorted)
         }
 
-        // TODO remove unused declarations maybe fix rename vo initalization ecpression
-        // TODO dont if scg has pause
-//        for (declPair : ssaDeclarations.entrySet) {
-//            if (declPair.value.valuedObjects.size > 1) {
-//                val decl = declPair.key.eContainer as Declaration
-//                decl.valuedObjects.remove(declPair.key)
-//                if (decl.valuedObjects.empty) {
-//                    scg.declarations.remove(decl)
-//                }
-//            } else {
-//                declPair.value.valuedObjects.head.name = declPair.key.name
-//                val decl = declPair.key.eContainer as Declaration
-//                decl.valuedObjects.remove(declPair.key)
-//                if (decl.valuedObjects.empty) {
-//                    scg.declarations.remove(decl)
-//                }
-//            }
-//        }
+        // ---------------
+        // 6. Read Pre or Input Values
+        // ---------------
+        scg.preservePreValues
+        scg.preserveInputVariables
 
-        // FIXME Post Processors
-//        ssaOptimizer.process(scg, context)
-//        seqConc.process(scg, context)
-        
+        // ---------------
+        // 7. Read Pre Values
+        // ---------------           
+        scg.removeUnusedSSADeclarations
+
+        // ---------------
+        // 8. Update SSA VO version numbering
+        // ---------------   
+        scg.updateSSAVersions
+
+        // FIXME Post Processors: optimizer + seq/conc
         scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
         return scg
     }
 
     // -------------------------------------------------------------------------
-    
-    private def Collection<Assignment> placePhi(SCGraph scg, DominatorTree dt, Multimap<ValuedObject, BasicBlock> defsite,
-        Multimap<Fork, ValuedObject> sharedVariables) {
+    /**
+     * Places phi nodes.
+     */
+    private def Collection<Assignment> placePhi(SCGraph scg, KielerCompilerContext context) {
+        val dt = context.getDominatorTree(scg)
+        val defsite = context.getDefsite(scg)
+        val sharedVariables = context.getsharedVariables(scg)
         val placedAssignment = newLinkedHashSet
         val hasPhi = newHashMap
         val work = newHashMap
+        val workStack = <BasicBlock>newLinkedList
+        var iterCount = 0
         // Init with bb and 0
         hasPhi.putAll(scg.basicBlocks.toInvertedMap[0])
         work.putAll(hasPhi)
 
-        var iterCount = 0
-        val w = <BasicBlock>newLinkedList
         for (vo : scg.declarations.allValuedObjectsOrdered.reverseView) {
             iterCount++
             for (n : defsite.get(vo)) {
                 work.put(n, iterCount)
-                w.push(n)
-                while (!w.empty) {
-                    w.pop
+                workStack.push(n)
+                while (!workStack.empty) {
+                    workStack.pop
                     for (m : dt.getDominanceFrontiers(n)) {
                         // insert phi
                         if (hasPhi.get(m) < iterCount) {
-                            // Find first node in BB
                             var bbHead = m.firstNode
+                            // Only add phi nodes for non shared variables and in threads but not on thread join
                             if (!(bbHead instanceof Join) && !sharedVariables.get(bbHead.ancestorFork).contains(vo)) {
                                 // Create Phi assignment
                                 val asm = createAssignment
@@ -263,19 +231,15 @@ class SSATransformation extends AbstractProductionTransformation {
                                 placedAssignment.add(asm)
                                 asm.valuedObject = vo
                                 asm.markSSA(PHI)
-                                asm.assignment = createFunctionCall => [
-                                    functionName = PHI_SYMBOL
-                                // handled in renameing
-                                // m.predecessors.forEach[fc.createParameter(vo.reference)]
-                                ]
-
+                                asm.assignment = PHI.createFunction
                                 // Insert before
                                 bbHead.allPrevious.toList.forEach[target = asm]
                                 asm.createControlFlow.target = bbHead
+                                // Add to work
                                 hasPhi.put(m, iterCount)
                                 if (work.get(m) < iterCount) {
                                     work.put(m, iterCount)
-                                    w.add(m)
+                                    workStack.add(m)
                                 }
                             }
                         }
@@ -286,8 +250,13 @@ class SSATransformation extends AbstractProductionTransformation {
         return placedAssignment
     }
 
-    private def Collection<Assignment> placeSharedJoin(SCGraph scg, Multimap<Assignment, Parameter> ssaReferences,
-        Multimap<Fork, ValuedObject> sharedVariables, Multimap<ValuedObject, Fork> sharedVariableStart) {
+    /**
+     * Places phi nodes at join nodes when they are no longer shared variables 
+     */
+    private def Collection<Assignment> placeSharedJoin(SCGraph scg, KielerCompilerContext context,
+        Multimap<Assignment, Parameter> ssaReferences) {
+        val sharedVariables = context.getsharedVariables(scg)
+        val sharedVariableStart = context.getsharedVariableStart(scg)
         val placedAssignment = newLinkedHashSet
         val voOrder = scg.declarations.allValuedObjectsOrdered.reverseView
         for (fork : sharedVariableStart.values.toSet) {
@@ -301,17 +270,15 @@ class SSATransformation extends AbstractProductionTransformation {
                     placedAssignment.add(asm)
                     asm.valuedObject = vo
                     asm.markSSA(JOIN)
-                    val fc = createFunctionCall
-                    fc.functionName = PHI_SYMBOL
+                    val fc = JOIN.createFunction
                     // This is the sequential reaching def
                     fc.createParameter(vo.reference)
                     // IU parameter
-                    val ifc = createFunctionCall
-                    ifc.functionName = PI_SYMBOL
-                    val ufc = createFunctionCall
-                    ufc.functionName = PSI_SYMBOL
-                    for (sharedAssignment : join.fork.allSharedVariableAssignments(vo).filter[!isSSA].
-                        sortBy[scg.nodes.indexOf(it)]) {
+                    val ifc = INIT.createFunction
+                    val ufc = UPDATE.createFunction
+                    for (sharedAssignment : join.fork.allSharedVariableAssignments(vo).filter[!isSSA].sortBy [
+                        scg.nodes.indexOf(it)
+                    ]) {
                         val f = if (sharedAssignment.dependencies.exists[!(it instanceof RelativeWrite_Read)]) {
                                 ifc
                             } else {
@@ -345,8 +312,10 @@ class SSATransformation extends AbstractProductionTransformation {
         return placedAssignment
     }
 
-    private def Collection<Assignment> placeSharedRead(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences,
-        Multimap<Fork, ValuedObject> sharedVariables, Multimap<ValuedObject, Fork> sharedVariableStart) {
+    private def Collection<Assignment> placeSharedRead(SCGraph scg, KielerCompilerContext context,
+        Multimap<Assignment, Parameter> ssaReferences) {
+        val sharedVariables = context.getsharedVariables(scg)
+        val sharedVariableStart = context.getsharedVariableStart(scg)
         val voOrder = scg.declarations.allValuedObjectsOrdered
         val placedNodes = LinkedHashMultimap.create
         for (node : scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))).filter[!isSSA]) {
@@ -354,7 +323,10 @@ class SSATransformation extends AbstractProductionTransformation {
                 val expr = node.eContents.filter(Expression).head
                 if (expr.allReferences.exists[valuedObject == vo]) {
                     val sharedVariableStartFork = node.ancestorForks.findFirst[sharedVariableStart.get(vo).contains(it)]
-                    val sharedDefs = sharedVariableStartFork.allSharedVariableAssignments(vo).filter [!isSSA].sortBy[scg.nodes.indexOf(it)]
+                    val sharedDefs = sharedVariableStartFork.allSharedVariableAssignments(vo).filter[!isSSA].sortBy [
+                        scg.nodes.indexOf(it)
+                    ]
+                    // remove self
                     sharedDefs.remove(node)
                     if (!sharedDefs.empty) {
                         // Create Pi assignment
@@ -363,15 +335,12 @@ class SSATransformation extends AbstractProductionTransformation {
                         node.schedulingBlock.nodes.add(node.schedulingBlock.nodes.indexOf(node), asm)
                         asm.valuedObject = vo
                         asm.markSSA(READ)
-                        val fc = createFunctionCall
-                        fc.functionName = PHI_SYMBOL
+                        val fc = READ.createFunction
                         // This is the sequential reaching def
                         fc.createParameter(vo.reference)
                         // IU Parameter
-                        val ifc = createFunctionCall
-                        ifc.functionName = PI_SYMBOL
-                        val ufc = createFunctionCall
-                        ufc.functionName = PSI_SYMBOL
+                        val ifc = INIT.createFunction
+                        val ufc = UPDATE.createFunction
                         for (sharedAssignment : sharedDefs) {
                             val f = if (sharedAssignment.dependencies.exists[!(it instanceof RelativeWrite_Read)]) {
                                     ifc
@@ -409,9 +378,11 @@ class SSATransformation extends AbstractProductionTransformation {
         return placedNodes.values
     }
 
-    private def void rename(BasicBlock start, DominatorTree dt, BiMap<ValuedObject, Declaration> ssaDecl,
-        Multimap<Assignment, Parameter> ssaReferences, Multimap<Fork, ValuedObject> sharedVariables,
-        Multimap<ValuedObject, Fork> sharedVariableStart) {
+    private def void rename(SCGraph scg, KielerCompilerContext context, BasicBlock start,
+        BiMap<ValuedObject, Declaration> ssaDecl, Multimap<Assignment, Parameter> ssaReferences) {
+        val dt = context.getDominatorTree(scg)
+        val sharedVariables = context.getsharedVariables(scg)
+        val sharedVariableStart = context.getsharedVariableStart(scg)
         val versionStack = <ValuedObject, LinkedList<Integer>>newHashMap
         val versionStackFunc = [ ValuedObject vo |
             var voStack = versionStack.get(vo)
@@ -461,17 +432,19 @@ class SSATransformation extends AbstractProductionTransformation {
                     }
                 }
                 if (s instanceof Assignment) {
-                    // create new version
-                    var vo = s.valuedObject
-                    val version = ssaDecl.get(vo).valuedObjects.size
-                    val newVO = vo.copy
-                    ssaDecl.get(vo).valuedObjects.add(newVO)
-                    stack.get(vo).push(version)
-                    s.valuedObject = newVO
-                    renamedDefs.add(vo)
-                    for (param : ssaReferences.get(s)) {
-                        val ref = param.expression as ValuedObjectReference
-                        ref.valuedObject = newVO
+                    if (!s.outputPreserver) {
+                        // create new version
+                        var vo = s.valuedObject
+                        val version = ssaDecl.get(vo).valuedObjects.size
+                        val newVO = vo.copy
+                        ssaDecl.get(vo).valuedObjects.add(newVO)
+                        stack.get(vo).push(version)
+                        s.valuedObject = newVO
+                        renamedDefs.add(vo)
+                        for (param : ssaReferences.get(s)) {
+                            val ref = param.expression as ValuedObjectReference
+                            ref.valuedObject = newVO
+                        }
                     }
                 } else if (s instanceof Fork) {
                     // save incoming versions
@@ -501,10 +474,10 @@ class SSATransformation extends AbstractProductionTransformation {
             for (sb : m.schedulingBlocks) {
                 for (asm : sb.nodes.filter(Assignment).filter[isSSA(PHI)]) {
                     val vo = if (ssaDecl.containsKey(asm.valuedObject)) {
-                        asm.valuedObject
-                    } else {
-                        ssaDecl.inverse.get(asm.valuedObject.declaration)
-                    }
+                            asm.valuedObject
+                        } else {
+                            ssaDecl.inverse.get(asm.valuedObject.declaration)
+                        }
                     (asm.assignment as FunctionCall).createParameter(
                         ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek).reference)
                 }
@@ -533,7 +506,6 @@ class SSATransformation extends AbstractProductionTransformation {
         return vars
     }
 
-
     private def allSharedVariableAssignments(Fork fork, ValuedObject vo) {
         val list = newLinkedHashSet
         fork.allNext.map[target as Entry].map[allThreadNodes].map[values].forEach [
@@ -547,7 +519,7 @@ class SSATransformation extends AbstractProductionTransformation {
     def firstNode(BasicBlock block) {
         // Assuming the nodes are ordered correctly
         return block.schedulingBlocks.head.nodes.head
-    // TODO otheriwse cuncomment
+    // TODO otheriwse uncomment
 //        var bbHead = block.schedulingBlocks.head.nodes.head
 //        var bbHeadPrev = bbHead.allPrevious.map[eContainer as Node].head
 //        while (bbHead.allPrevious.size == 1 && bbHeadPrev.basicBlock == m && !bbHeadPrev.hasAnnotation(SSA)) {

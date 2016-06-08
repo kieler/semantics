@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2016 by
@@ -16,13 +16,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.ssc.ssa.SSATransformation
+import de.cau.cs.kieler.scg.ssc.ssa.SSACacheExtensions
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.transformations.SCGToSCLTransformation
-import de.cau.cs.kieler.scg.ssc.ssa.SSAHelperExtensions
-import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author als
@@ -31,16 +30,16 @@ import de.cau.cs.kieler.scg.SCGraph
  */
 class SSAbasedSCG2SCL extends SCGToSCLTransformation {
     public var KielerCompilerContext context
-    
+
     @Inject
     extension SCGCoreExtensions
-    
+
     @Inject
-    extension SSAHelperExtensions    
-    // ASSUMES no jumps into/beteen branches
-    
+    extension SSACacheExtensions
+
+    // ASSUMES no jumps into/between branches
     override dispatch StatementSequence transform(Conditional conditional, StatementSequence sSeq) {
-        if (conditional.marked) return sSeq
+        if(conditional.marked) return sSeq
         sSeq.createLabel(conditional.label)
         // find branch join with dominator tree
         val dt = context.getDominatorTree(conditional.eContainer as SCGraph)

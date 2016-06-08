@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.scg.ssc.ssa.processors
 
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
@@ -26,14 +27,11 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssc.features.SSAOptFeature
 import de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature
-import de.cau.cs.kieler.scg.ssc.ssa.SSAHelperExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.SSACacheExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import javax.inject.Inject
-
-import static de.cau.cs.kieler.scg.ssc.ssa.SSATransformation.*
-
+import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.Declaration
-
 /**
  * The SSA transformation for SCGs
  * 
@@ -63,20 +61,6 @@ class SeqConcTransformer extends AbstractProductionTransformation {
     }
 
     // -------------------------------------------------------------------------
-    // --                 K I C O      C O N F I G U R A T I O N              --
-    // -------------------------------------------------------------------------
-//    override getId() {
-//        return "scg.ssa.optimizer"
-//    }
-//
-//    override getName() {
-//        return "Seq Conc Transformer"
-//    }
-    // -------------------------------------------------------------------------
-    public static val SEQ = "seq"
-    public static val CONC = "conc"
-
-    // -------------------------------------------------------------------------
     @Inject
     extension SCGCoreExtensions
 
@@ -89,7 +73,9 @@ class SeqConcTransformer extends AbstractProductionTransformation {
     extension KExpressionsValuedObjectExtensions
 
     @Inject
-    extension SSAHelperExtensions
+    extension SSACoreExtensions
+    @Inject
+    extension SSACacheExtensions
     @Inject
     extension AnnotationsExtensions
 
@@ -102,32 +88,32 @@ class SeqConcTransformer extends AbstractProductionTransformation {
         val readJoinDef = newHashSet
         readJoinDef += readDef
         readJoinDef += joinDef
-       
 
         // Rename phi function
         for (asm : seqDef) {
-            (asm.assignment as FunctionCall).functionName = SEQ
+            (asm.assignment as FunctionCall).functionName = SEQ.symbol
         }
 
         // Rename separate conc from seq
         for (asm : readJoinDef) {
             val fc = asm.assignment as FunctionCall
-            val psi = fc.ssaParameterFunction(PSI_SYMBOL)
-            if (psi != null) {
-                fc.parameters.remove(psi.eContainer)
-                fc.parameters.addAll(psi.parameters.sortBy[(expression as ValuedObjectReference).versionIndex])
+            val updateFC = fc.ssaParameterFunction(UPDATE)
+            if (updateFC != null) {
+                // FIXME this is WRONG
+//                fc.parameters.remove(updateFC.eContainer)
+//                fc.parameters.addAll(updateFC.parameters.sortBy[(expression as ValuedObjectReference).versionIndex])
             }
-            val pi = fc.ssaParameterFunction(PI_SYMBOL)
-            if (pi != null) {
+            val initFC = fc.ssaParameterFunction(INIT)
+            if (initFC != null) {
                 if (fc.parameters.size == 1) {
-                    fc.functionName = CONC
+                    fc.functionName = CONC.symbol
                     fc.parameters.clear
-                    fc.parameters += pi.parameters
-                } else if (pi.parameters.size == 1) {
-                    (pi.eContainer as Parameter).expression = pi.parameters.head.expression
-                    fc.functionName = SEQ
+                    fc.parameters += initFC.parameters
+                } else if (initFC.parameters.size == 1) {
+                    (initFC.eContainer as Parameter).expression = initFC.parameters.head.expression
+                    fc.functionName = SEQ.symbol
                 } else {
-                    // Prepend pi function
+                    // Prepend conc function
                     val piAsm = createAssignment
                     val sbNodes = asm.schedulingBlock.nodes
                     sbNodes.add(sbNodes.indexOf(asm), piAsm)
@@ -138,29 +124,20 @@ class SeqConcTransformer extends AbstractProductionTransformation {
                     vos.add(vos.indexOf(vo), newVO)
                     piAsm.valuedObject = newVO
                     piAsm.markSSA(CONC)
-                    (pi.eContainer as Parameter).expression = newVO.reference
-                    piAsm.assignment = pi
+                    (initFC.eContainer as Parameter).expression = newVO.reference
+                    piAsm.assignment = initFC
                     // Insert before
                     asm.allPrevious.toList.forEach[target = piAsm]
                     piAsm.createControlFlow.target = asm
-                    pi.functionName = CONC
-                    fc.functionName = SEQ
+                    initFC.functionName = CONC.symbol
+                    fc.functionName = SEQ.symbol
                 }
             } else {
-                fc.functionName = SEQ
-            }
-            if (fc.parameters.size == 1) {
-                asm.assignment = fc.parameters.head.expression
+                fc.functionName = SEQ.symbol
             }
         }
 
-        // rename VOs
-        for (decl : scg.declarations.filter[isSSA]) {
-            for (vo : decl.valuedObjects.indexed) {
-                // TODO handle variable names which contain numbers
-                vo.value.name = vo.value.name.replaceAll("[0-9]*$", "") + vo.key
-            }
-        }
+        scg.updateSSAVersions
 
         scg.createStringAnnotation(SSASeqConcFeature.ID, SSASeqConcFeature.ID)
         return scg

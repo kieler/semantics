@@ -10,9 +10,6 @@
             class="de.cau.cs.kieler.scg.ssc.features.SSASCLFeature">
       </featureClass>
       <featureClass
-            class="de.cau.cs.kieler.scg.ssc.features.SSASignalSCLFeature">
-      </featureClass>
-      <featureClass
             class="de.cau.cs.kieler.scg.ssc.features.SSAEstFeature">
       </featureClass>
       <featureClass
@@ -20,6 +17,9 @@
       </featureClass>
       <featureClass
             class="de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.DominatorTreeFeature">
       </featureClass>
       <featureGroupClass
             class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
@@ -34,10 +34,7 @@
             class="de.cau.cs.kieler.scg.ssc.scl.SSASCG2SSASCL">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.scl.SSASCL2SSASignalSCL">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.strl.SSASignalSCL2SSAEst">
+            class="de.cau.cs.kieler.scg.ssc.strl.SSASCL2SSAEsterel">
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer">
@@ -45,6 +42,16 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.ssa.domtree.DomTreeTransformation">
+      </productionTransformationClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTreeSynthesis"
+            id="de.cau.cs.kieler.scg.ssc.domtree">
+      </diagramSynthesis>
    </extension>
 
 </plugin>

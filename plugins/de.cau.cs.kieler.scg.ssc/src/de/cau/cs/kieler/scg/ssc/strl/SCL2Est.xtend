@@ -17,11 +17,8 @@ import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.scl.transformations.SclToEsterelTransformation
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scl.features.SCLFeatures
-import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
-import de.cau.cs.kieler.scg.ssc.features.SSASCEstFeature
-import de.cau.cs.kieler.esterel.features.Esterel
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
  * @author als

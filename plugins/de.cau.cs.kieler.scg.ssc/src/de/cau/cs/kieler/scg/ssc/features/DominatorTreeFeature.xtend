@@ -12,11 +12,11 @@
  */
 package de.cau.cs.kieler.scg.ssc.features
 
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.scg.SCGraph
 import javax.inject.Inject
+import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 
 /**
  * The SSA feature fore SCGs.
@@ -25,9 +25,9 @@ import javax.inject.Inject
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SSASignalSCLFeature extends Feature {
+class DominatorTreeFeature extends Feature {
     
-    public static val ID = "scl.ssa.signal"
+    public static val ID = "scg.domtree"
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -37,16 +37,16 @@ class SSASignalSCLFeature extends Feature {
     }
 
     override getName() {
-        return "SSA Signal SCL"
+        return "Dominator Tree"
     }
 
     //-------------------------------------------------------------------------
     @Inject
-    extension SSACoreExtensions
+    extension AnnotationsExtensions
 
     // This method checks, if this feature is contained in a model
-    def isContained(SCLProgram p) {
-        return p.declarations.exists[isSSA] && p.declarations.exists[type == ValueType.PURE]
+    def isContained(DominatorTree dt) {
+        return true
     }
     
 }

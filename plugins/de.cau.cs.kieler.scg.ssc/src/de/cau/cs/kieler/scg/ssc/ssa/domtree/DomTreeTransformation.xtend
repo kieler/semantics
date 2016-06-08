@@ -12,21 +12,13 @@
  */
 package de.cau.cs.kieler.scg.ssc.ssa.domtree
 
-import com.google.common.collect.LinkedHashMultimap
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.ssc.features.SSAFeature
+import de.cau.cs.kieler.scg.ssc.features.DominatorTreeFeature
+import de.cau.cs.kieler.scg.ssc.ssa.SSACacheExtensions
 import javax.inject.Inject
-
-import static com.google.common.collect.Maps.*
 
 /**
  * The SSA transformation for SCGs
@@ -45,11 +37,11 @@ class DomTreeTransformation extends AbstractProductionTransformation {
     }
 
     override getName() {
-        return "Dominator tree"
+        return "Dominator Tree"
     }
 
     override getProducedFeatureId() {
-        return SSAFeature.ID
+        return DominatorTreeFeature.ID
     }
 
     override getRequiredFeatureIds() {
@@ -59,50 +51,11 @@ class DomTreeTransformation extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension SCGCoreExtensions
-
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
+    extension SSACacheExtensions
 
     // -------------------------------------------------------------------------
 
-    def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-        // It is expected that this node is an entry node.
-        if (!(scg.nodes.head instanceof Entry))
-            throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
-        val entryBB = scg.nodes.head.basicBlock
-
-        // Calculate BB successors
-        val bbSuccessors = LinkedHashMultimap.create
-        for (bb : scg.basicBlocks) {
-            for (preBB : bb.predecessors.map[basicBlock]) {
-                bbSuccessors.put(preBB, bb)
-            }
-        }
-        val dt = new DominatorTree(entryBB, bbSuccessors)
-        val dtSCG = createSCGraph
-        val map = newHashMap
-        scg.basicBlocks.forEach[ bb |
-            val ass = createAssignment
-            ass.assignment = createTextExpression(bb.schedulingBlocks.head.guard.valuedObject.name)
-            map.put(bb, ass)
-            dtSCG.nodes += ass
-        ]
-        scg.basicBlocks.forEach[ bb |
-            val edge = dt.idom(bb)
-            if (edge != null) {
-               map.get(edge).dependencies += createAbsoluteWrite_Read => [
-                   target = map.get(bb)
-               ]
-            }
-            dt.getDominanceFrontiers(bb).forEach[
-                map.get(it).dependencies += createControlDependency => [
-                    target = map.get(bb)
-                ]
-            ]
-        ]
-        return dtSCG
+    def DominatorTreeModel transform(SCGraph scg, KielerCompilerContext context) {
+        return new DominatorTreeModel(context.getDominatorTree(scg))
     }
 }

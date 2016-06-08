@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.scg.ssc.features
 
 import de.cau.cs.kieler.kico.features.Feature
-import de.cau.cs.kieler.scg.ssc.ssa.SSAHelperExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class SSASCLFeature extends Feature {
 
     //-------------------------------------------------------------------------
     @Inject
-    extension SSAHelperExtensions
+    extension SSACoreExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(SCLProgram p) {
