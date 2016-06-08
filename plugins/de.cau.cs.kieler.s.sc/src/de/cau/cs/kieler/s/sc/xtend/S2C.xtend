@@ -49,6 +49,8 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,6 +63,11 @@ class S2C {
     
     public static String bufferSize;
     public static String includeHeader;
+    
+    private static val ANNOTATION_HOSTCODE = "hostcode"
+    
+    @Inject
+    extension AnnotationsExtensions        
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
@@ -113,9 +120,12 @@ class S2C {
     /*                                                                           */
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
-
     «includeHeader»
-
+    «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
+    «(hostcode as StringAnnotation).values.head»
+    
+    «ENDFOR»
+    
    «/* Variables */»
     «sVariables(program)»    
     
