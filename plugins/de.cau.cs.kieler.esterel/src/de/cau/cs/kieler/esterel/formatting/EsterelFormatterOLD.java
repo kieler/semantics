@@ -21,7 +21,7 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  */
-public class EsterelFormatter extends AbstractDeclarativeFormatter {
+public class EsterelFormatterOLD extends AbstractDeclarativeFormatter {
 
     @Override
     protected void configureFormatting(FormattingConfig c) {
