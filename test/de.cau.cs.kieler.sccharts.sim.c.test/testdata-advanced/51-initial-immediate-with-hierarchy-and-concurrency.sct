@@ -6,7 +6,7 @@ scchart _51_initial_immediate_with_hierarchy_and_concurrency2
   initial state A {
 
     initial state B
-    --> C immediate / L;
+    --> C immediate with / L;
 
     state C;
   };

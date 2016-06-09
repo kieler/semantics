@@ -4,7 +4,7 @@ scchart _108_hiearchy_final "108-hiearchy-final" {
   initial state A {
 
     initial state B2 "B"
-    --> F / O;
+    --> F with / O;
 
     final state F;
   };

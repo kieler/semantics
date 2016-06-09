@@ -29,11 +29,22 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect
+import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
@@ -63,15 +74,6 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -100,6 +102,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     override getRequiredFeatureIds() {
         return newHashSet(SCChartsFeatureGroup::CORE_ID)
     }
+    
+    // Property to disable SuperflousForkRemover because KiCo has no proper support for processors
+    public static val IProperty<Boolean> ENABLE_SFR = 
+            new Property<Boolean>("de.cau.cs.kieler.sccharts.scg.sfr", true);
 
     //-------------------------------------------------------------------------
     @Inject
@@ -238,7 +244,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
   //    newSCG
   //}
 
-    def SCGraph transform(State rootState) {
+    def SCGraph transform(State rootState, KielerCompilerContext context) {
 
         System.out.print("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
@@ -351,12 +357,17 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Remove superfluous fork constructs 
         // ssm, 04.05.2014
-        timestamp = System.currentTimeMillis
-        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
-            typeof(SuperfluousForkRemover))
-        val scg = superfluousForkRemover.optimize(sCGraph)
-        time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("SCG optimization completed (additional time elapsed: " + (time / 1000) + "s).")
+        val scg = if (context?.getProperty(ENABLE_SFR)) {
+            timestamp = System.currentTimeMillis
+            val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(
+                typeof(SuperfluousForkRemover))
+            val optimizedSCG = superfluousForkRemover.optimize(sCGraph)
+            time = (System.currentTimeMillis - timestamp) as float
+            System.out.println("SCG optimization completed (additional time elapsed: " + (time / 1000) + "s).")
+            optimizedSCG
+        } else {
+            sCGraph
+        }
 
         // SCG thread path types
         val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes

@@ -1,0 +1,47 @@
+
+@Transformation COMPLEXFINALSTATE
+scchart ComplexFinalSuperstate {
+  input bool I1;
+  input bool I2;
+  output bool O;
+
+  initial state A {
+    bool _abort = false;
+    bool _term = false;
+    bool _term2 = false;
+
+    region R1:
+
+    initial state A0
+    --> A1 with I1 / _term = true;
+
+    final state A1;
+
+    region R2:
+
+    initial state A2
+    --> A3 with / _term2 = true;
+
+    state A3 {
+
+      initial state A3_1
+      --> A3_2 with / O = true;
+
+      final state A3_2;
+    }
+    --> A2 immediate with I2 / _term2 = false
+    --> _Final immediate with _abort;
+
+    final state _Final;
+
+    region _Watch:
+
+    initial state _Watch
+    --> _Aborted immediate with _term && _term2 / _abort = true;
+
+    final state _Aborted;
+  }
+  >-> F;
+
+  final state F;
+}

@@ -19,7 +19,7 @@ scchart Module_tcint_debug01 {
     region R1:
 
     initial state init1 "I"
-    --> ParallelStatementList51state immediate / R;
+    --> ParallelStatementList51state immediate with / R;
 
     state ParallelStatementList51state {
 
@@ -29,7 +29,7 @@ scchart Module_tcint_debug01 {
       --> S67 immediate;
 
       state S67 "67"
-      --> S95 / T;
+      --> S95 with / T;
 
       state S95 "95";
 

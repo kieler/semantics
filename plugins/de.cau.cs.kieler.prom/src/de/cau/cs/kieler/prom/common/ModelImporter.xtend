@@ -17,7 +17,6 @@ import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.Path
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -58,9 +57,6 @@ class ModelImporter {
         
         val resourceSet = new XtextResourceSet();
         
-        val uri2 = URI.createFileURI("/home/aas/Proggen/Java/kieler-dev/runtime-KIELERTest/Ref/Referenced1062.sct")
-        resourceSet.getResource(uri2, true);
-        
         // Collect possibly referenced resources and resolve references
         if(resolveReferences){
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
@@ -79,15 +75,15 @@ class ModelImporter {
     }
     
     /**
-     * Searches in the project of the model file for files with the same file extension as the given model file.
-     * All findings are added to the resource that, such that they can be resolved when loading the model file.
+     * Searches in the project of the model file for files with the same file extension.
+     * All findings are added to the resource set, such that they can be resolved when loading the model file.
      * 
      * @param modelFileLocation Fully qualified path to a model file
      * @param resourceSet The ResourceSet to which possible references should be added
      */
     private static def collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
         val modelFile = getFile(modelFileLocation)
-        if(modelFile.exists) {
+        if(modelFile != null && modelFile.exists) {
             val fileExtensionOfModelFiles = modelFile.fileExtension
             // Search in project for other files with the model file extension
             // and add them to the resource set.
@@ -96,7 +92,7 @@ class ModelImporter {
                 val fileExtension = res.fileExtension
                 if(fileExtension != null && fileExtension.equals(fileExtensionOfModelFiles) ){
                     val location = res.location.toOSString
-                    // Don't add resource of model file that shall be loaded
+                    // Don't add resource of model file itself
                     if(!modelFileLocation.equals(location)) {
                         val uri = URI.createFileURI(res.location.toOSString)
                         resourceSet.getResource(uri, true)
@@ -110,14 +106,14 @@ class ModelImporter {
      * Creates a file handle to a resource in the Eclipse workspace from an absolute file path.
      * 
      * @param fullPath The fully qualified file path to a resource in the Eclipse workspace.
-     * @return the loaded file handle
+     * @return the loaded file handle or null if the file path is invalid
      */
     private static def IFile getFile(String fullPath) {
-        // The separator at the end is important for URI.deresolve(...)
-        val workspaceURI = URI.createFileURI(ResourcesPlugin.workspace.root.location.toOSString + File.separator)
-        val absoluteURI = URI.createFileURI(fullPath)
-        // Make absolute file location relative w.r.t. workspace location
-        val relativeURI = absoluteURI.deresolve(workspaceURI)
-        return ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(relativeURI.toFileString))   
+        val uri = new File(fullPath).toURI();
+        val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)
+        if (files.isEmpty)
+            return null
+        else
+            return files.get(0)
     }
 }

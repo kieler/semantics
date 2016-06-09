@@ -59,6 +59,9 @@ class StateStyles {
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.content", false);
+    /** This property is set a rendering and indicates the redering is not visible and only present for layout purpose */
+    public static final IProperty<Boolean> IS_LAYOUT_ELEMENT = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.style.layout", false);
     /** This property is set on the content container rendering and points to the container holding the action labels */
     public static final IProperty<KContainerRendering> ACTIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.actions", null);
@@ -203,6 +206,7 @@ class StateStyles {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
+            setProperty(IS_LAYOUT_ELEMENT, true)
             addRectangle() => [
                 invisible = true;
                 // Add left alignment

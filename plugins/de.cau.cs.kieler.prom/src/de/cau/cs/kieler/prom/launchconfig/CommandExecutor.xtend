@@ -13,18 +13,15 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import com.google.common.base.Strings
 import de.cau.cs.kieler.prom.common.CommandData
 import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.DebugPlugin
-import org.eclipse.debug.core.ILaunch
 
 /**
  * This class handles the execution of shell commands in the context of a project launch.
@@ -77,7 +74,7 @@ class CommandExecutor {
      * @param command The command to be executed
      */
     private def void executeSingle(CommandData command) {
-        if (command != null && !Strings.isNullOrEmpty(command.command)) {
+        if (command != null && !command.command.isNullOrEmpty()) {
             val man = VariablesPlugin.getDefault.stringVariableManager
             command.fullCommand = man.performStringSubstitution(command.command)
             val commandWithParameters = splitStringOnWhitespace(command.fullCommand)

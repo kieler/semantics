@@ -20,6 +20,9 @@ import org.eclipse.xtext.validation.Check
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.SCChartsPackage
+import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
 
 /**
  * @author ssm
@@ -126,5 +129,36 @@ class SctValidator extends SctJavaValidator {
                 warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
         }
+    } 
+    
+    /**
+     * Checks binding for reference states.
+     */
+    @Check
+    public def void checkReferenceBinding(de.cau.cs.kieler.sccharts.State state) {
+    	if(state.referencedState) {
+    		val variables = newHashSet()
+    		var scope = state as Scope
+    		// Collect all accessible variables
+    		while (scope != null) {
+	    		for ( delc : scope.declarations) {
+	    			for (vo : delc.valuedObjects) {
+	    				variables.add(vo.name)
+	    			}
+	    		}
+    			scope = scope.eContainer as Scope
+    		}
+    		// Added binding to accessable variables
+    		for (bind : state.bindings) {
+    			variables.add(bind.formal.name)
+    		}
+    		for ( delc : state.referencedScope.declarations.filter[input || output]) {
+    			for (vo : delc.valuedObjects) {
+    				if (!variables.contains(vo.name)) {
+    					error(MISSING_BINDING_FOR+vo.name, state, (state.eClass.EPackage as SCChartsPackageImpl).scope_ReferencedScope, -1);
+    				}
+    			}
+    		}
+    	}
     } 
 }

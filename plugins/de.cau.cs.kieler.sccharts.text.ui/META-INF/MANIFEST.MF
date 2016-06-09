@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Textual Editor
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.1.2.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.ui,
@@ -34,5 +34,7 @@ Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.actions.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
- de.cau.cs.kieler.sccharts.text.sct.ui.quickfix
+ de.cau.cs.kieler.sccharts.text.sct.ui.quickfix,
+ de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.sccharts.text.sct.ui.internal.SctActivator

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER S 2 SJ Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sj;singleton:=true
-Bundle-Version: 0.1.2.qualifier
+Bundle-Version: 0.1.3.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sj.S2SJPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.kexpressions.keffects,
- de.cau.cs.kieler.core.model
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.sccharts
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sj,

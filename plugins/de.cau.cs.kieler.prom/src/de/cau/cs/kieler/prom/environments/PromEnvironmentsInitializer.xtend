@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * This class handles initialization of default environments.
@@ -81,62 +83,63 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      */
     override getDefaultEnvironments(){
         val datas = new ArrayList<EnvironmentData>()
-        
         // Generic
-        var env = new EnvironmentData("Generic")
-        
-        env.targetLanguage = "s.c"
-        env.targetFileExtension = ".c"
-        env.targetTemplate = ""
-        
-        env.wrapperCodeTemplate = ""
-        env.wrapperCodeSnippetsDirectory = ""
-        env.wrapperCodeSnippetsOrigin = ""
-        
-        env.relatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-        
-        env.mainFile = ""
-        env.mainFileOrigin = ""
-        
-        datas += env
-        
+        datas += getGenericEnvironment()
         // Generic Java
-        env = new EnvironmentData("Generic Java")
-        
-        env.targetLanguage = "s.java"
-        env.targetFileExtension = ".java"
-        env.targetTemplate = ""
-        
-        env.wrapperCodeTemplate = ""
-        env.wrapperCodeSnippetsDirectory = ""
-        env.wrapperCodeSnippetsOrigin = ""
-        
-        env.relatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
-        
-        env.mainFile = ""
-        env.mainFileOrigin = ""
-        
-        datas += env
-        
+        datas += getGenericJavaEnvironment()
         // Generic C
-        env = new EnvironmentData("Generic C")
-        
-        env.targetLanguage = "s.c"
-        env.targetFileExtension = ".c"
-        env.targetTemplate = ""
-        
-        env.wrapperCodeTemplate = ""
-        env.wrapperCodeSnippetsDirectory = ""
-        env.wrapperCodeSnippetsOrigin = ""
-        
-        env.relatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
-        
-        env.mainFile = ""
-        env.mainFileOrigin = ""
-        
-        datas += env
-        
+        datas += getGenericCEnvironment()
         return datas
+    }
+    
+    /**
+     * Creates a default environment for general projects.
+     * @return the created environment
+     */
+    private static def EnvironmentData getGenericEnvironment() {
+        var launchData = new KiCoLaunchData()
+        
+        launchData.targetLanguage = "s.c"
+        launchData.targetLanguageFileExtension = ".c"
+        
+        var env = new EnvironmentData("Generic")
+        env.launchData = launchData
+        env.modelFile = "${project_name}"
+        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
+        return env
+    }
+    
+    /**
+     * Creates a default environment for Java projects.
+     * @return the created environment
+     */
+    private static def EnvironmentData getGenericJavaEnvironment() {
+        var launchData = new KiCoLaunchData()
+        launchData.targetLanguage = "s.java"
+        launchData.targetLanguageFileExtension = ".java"
+        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+        
+        var env = new EnvironmentData("Generic Java")
+        env.launchData = launchData
+        env.modelFile = "src/${project_name}"
+        env.associatedProjectWizardClass = "org.eclipse.jdt.internal.ui.wizards.JavaProjectWizard"
+        return env
+    }
+    
+    /**
+     * Creates a default environment for C projects.
+     * @return the created environment
+     */
+    private static def EnvironmentData getGenericCEnvironment() {
+        var launchData = new KiCoLaunchData()
+        launchData.targetLanguage = "s.c"
+        launchData.targetLanguageFileExtension = ".c"
+        
+        var env = new EnvironmentData("Generic C")
+        env.launchData = launchData
+        env.modelFile = "${project_name}"
+        env.associatedProjectWizardClass = "org.eclipse.cdt.ui.wizards.CProjectWizard"
+        return env
     }
     
     /**

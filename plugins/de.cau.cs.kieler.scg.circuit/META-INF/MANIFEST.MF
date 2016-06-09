@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Circuit
+Bundle-Name: KIELER SCG to Circuit Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.scg.circuit;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.circuit.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -20,4 +20,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.circuit,
  de.cau.cs.kieler.scg.circuit.features
+Bundle-Vendor: Kiel University
 

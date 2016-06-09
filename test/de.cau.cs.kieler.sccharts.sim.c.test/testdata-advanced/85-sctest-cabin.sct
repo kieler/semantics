@@ -17,7 +17,7 @@ scchart Cabin {
   region R0:
 
   initial state I
-  --> Open immediate / OpenDoorMotorOn;
+  --> Open immediate with / OpenDoorMotorOn;
 
   state Open
   --> S0 with DoorIsOpen / OpenDoorMotorOff;
@@ -27,7 +27,7 @@ scchart Cabin {
     region R0:
 
     initial state Initial
-    --> S0 immediate / StartTimer;
+    --> S0 immediate with / StartTimer;
 
     state S0
     --> S1 with TimerExpired | DoorClose / CloseDoorMotorOn;
@@ -38,7 +38,7 @@ scchart Cabin {
     final state S2;
   }
   o-> I with DoorOpen | DoorSensor / CloseDoorMotorOff
-  >-> S1 / CloseDoorMotorOff;
+  >-> S1 with / CloseDoorMotorOff;
 
   state S1
   --> S2 with Stop;

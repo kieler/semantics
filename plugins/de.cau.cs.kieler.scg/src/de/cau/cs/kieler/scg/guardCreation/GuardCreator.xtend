@@ -95,7 +95,7 @@ class GuardCreator extends AbstractGuardCreator implements Traceable {
     //-------------------------------------------------------------------------
 
 
-    //TODO Fix this shitty logging stuff
+    //TODO Fix logging
     static final boolean DEBUG = true;
 
     def static void debug(String debugText) {

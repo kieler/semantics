@@ -1,0 +1,29 @@
+// Edge case from Semantics Meeting 2015-11-24
+@Transformation WEAKSUSPEND
+scchart WeakSuspensionAndHierarchy {
+
+    input bool WS;
+    input bool I;
+    output signal O;
+    output signal O2;
+    output signal O3;
+    weak suspend WS;
+    
+    initial state S1
+    --> S2;
+    
+    state S2 {
+      initial state S21A
+      --> S22A with / O;
+      
+      state S22A;
+    }
+    --> S3 immediate with I / O2;
+    
+    state S3 {
+      initial state S31A
+      --> S32A immediate with / O3;
+      
+      state S32A;
+    }; 
+}

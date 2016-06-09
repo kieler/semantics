@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.Collections
@@ -27,6 +29,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
@@ -60,8 +63,6 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.IDE
-
-import static de.cau.cs.kieler.prom.common.ui.UIUtil.*
 
 /**
  * Factory class to create SWT widgets
@@ -111,6 +112,17 @@ class UIUtil {
         * Flag to indicate that a text field should be created with a button to open a folder selection dialog of the file system.
         */
         FILE_SYSTEM_DIRECTORY_BUTTON
+    }
+    
+    enum KiCoLaunchTargetDirectoryOptions {
+        /**
+         * Value to indicate that the default directory should be used as target
+         */
+        KIELER_GEN,
+        /**
+         * Value to indicate that output should be saved in the same folder as the input files
+         */
+        SAME_AS_INPUT
     }
     
     /**
@@ -319,7 +331,7 @@ class UIUtil {
         button.addSelectionListener(
             new SelectionAdapter() {
                 override void widgetSelected(SelectionEvent e) {
-                    val rootElement = if (projectHolder == null && projectHolder.project != null)
+                    val rootElement = if (projectHolder != null && projectHolder.project != null)
                             projectHolder.project
                         else
                             ResourcesPlugin.getWorkspace().getRoot()
@@ -438,6 +450,63 @@ class UIUtil {
     }
 
     /**
+     * Creates a radio group to set the target directory for compilation results.
+     * 
+     * @param parent The parent composite
+     */
+    public static def List<Button> createTargetDirectoryButtons(Composite parent) {
+        val group = UIUtil.createComposite(parent, 3)
+        
+        createLabel(group, "Target directory")
+        val button1 = SWTFactory.createRadioButton(group, LaunchConfiguration.BUILD_DIRECTORY)
+        button1.data = KiCoLaunchTargetDirectoryOptions.KIELER_GEN
+        button1.toolTipText = "Save compilation output to the "+LaunchConfiguration.BUILD_DIRECTORY+" directory."
+         
+        val button2 = SWTFactory.createRadioButton(group, "Same as input files")
+        button2.data = KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT
+        button2.toolTipText = "Save compilation output in the same folder as the corresponding input files."
+        return #[button1, button2]
+    }
+    
+    
+    /**
+     * Creates the combo viewer with configuration elements that define launch shortcuts.
+     * 
+     * @param parent The parent composite
+     */
+    public static def ComboViewer createLaunchShortcutCombo(Composite parent){
+        val viewer = new ComboViewer(parent, SWT.DEFAULT)
+        viewer.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
+        
+        // Fill combo
+        viewer.contentProvider = ArrayContentProvider.instance
+        
+        val ArrayList<Object> input = new ArrayList<Object>()
+        input.add(StructuredSelection.EMPTY)
+        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
+        viewer.input = input
+        
+        // Debug log, which launch shortcuts are currently installed 
+//        for (e : ExtensionLookupUtil.getLaunchShortcutConfigurationElements()){
+//            println(e.getAttribute("class"))
+//        }
+
+        // Select first element as default 
+        viewer.selection = new StructuredSelection(StructuredSelection.EMPTY)
+
+        // Create label provider
+        viewer.labelProvider = new LabelProvider() {
+            override String getText(Object element) {
+                if(element != null && element instanceof IConfigurationElement)
+                    return (element as IConfigurationElement).getAttribute("label")
+                else
+                    return ""
+            }
+        }
+        return viewer       
+    }
+    
+    /**
      * Creates a combobox with the environments.
      * 
      * @param parent The parent composite
@@ -529,7 +598,7 @@ class UIUtil {
         }
 
         // Create columns
-        val nameColumn = createTableColumn(viewer, "Name", 150)
+        val nameColumn = createTableColumn(viewer, "Name", 75)
         nameColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 val c = element as CommandData
@@ -537,7 +606,7 @@ class UIUtil {
             }
         };
 
-        val commandColumn = createTableColumn(viewer, "Command", 300)
+        val commandColumn = createTableColumn(viewer, "Command", 150)
         commandColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 val c = element as CommandData

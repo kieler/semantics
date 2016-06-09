@@ -42,8 +42,8 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
@@ -67,8 +67,8 @@ import de.cau.cs.kieler.klighd.viewers.ContextViewer;
 public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
 
     /** Map of diagram viewers and their status which have active tracing capabilities. */
-    private static WeakHashMap<ContextViewer, TracingSynthesisOption.TracingMode> enabledContextViewer =
-            new WeakHashMap<ContextViewer, TracingSynthesisOption.TracingMode>();
+    private static WeakHashMap<ContextViewer, TracingSynthesisOptions.TracingMode> enabledContextViewer =
+            new WeakHashMap<ContextViewer, TracingSynthesisOptions.TracingMode>();
 
     /** TracingVisualizer to apply tracing visualization to diagrams. */
     private static TracingVisualizer tracingVisualizer = Guice.createInjector(new Module() {
@@ -149,7 +149,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
      * {@inheritDoc}
      */
     public boolean requiresDiagramSynthesisReRun(ViewContext viewContext) {
-        SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
+        SynthesisOption option = TracingSynthesisOptions.TRACING_OPTION;
         // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on configuring
         if (viewContext.getDisplayedSynthesisOptions().contains(option)
                 && lastInputModel.containsKey(viewContext)
@@ -180,7 +180,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         }
 
         if (baseModel != null && !baseModel.getChildren().isEmpty()) {
-            SynthesisOption option = TracingSynthesisOption.getSynthesisOption();
+            SynthesisOption option = TracingSynthesisOptions.TRACING_OPTION;
             // Assumption: DisplayedSynthesisOptions are already loaded into ViewContext on
             // configuring
             if (viewContext.getDisplayedSynthesisOptions().contains(option)) {

@@ -49,6 +49,10 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,6 +65,11 @@ class S2C {
     
     public static String bufferSize;
     public static String includeHeader;
+    
+    private static val ANNOTATION_HOSTCODE = "hostcode"
+    
+    @Inject
+    extension AnnotationsExtensions        
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
@@ -113,9 +122,12 @@ class S2C {
     /*                                                                           */
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
-
     «includeHeader»
-
+    «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
+    «(hostcode as StringAnnotation).values.head.removeEscapeChars»
+    
+    «ENDFOR»
+    
    «/* Variables */»
     «sVariables(program)»    
     
@@ -204,6 +216,8 @@ class S2C {
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
            return '''char'''
+       } else if (valueType == ValueType::STRING) {
+           return '''char*'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''
@@ -237,12 +251,10 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    void tick(){
-       if (!_GO) {
-            «program.setPreVariables»
-       }
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
+       «program.setPreVariables»
        _GO = 0;
        return;
     }
@@ -620,6 +632,11 @@ class S2C {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
+   // Expand a string expression value.
+   def dispatch CharSequence expand(StringValue expression) {
+        '''"«expression.value.toString»"'''
+   }
+   
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
        if (!valuedObjectReference.indices.nullOrEmpty) {

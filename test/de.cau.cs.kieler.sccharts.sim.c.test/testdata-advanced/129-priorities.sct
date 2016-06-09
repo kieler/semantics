@@ -8,7 +8,7 @@ scchart transitions_and_signals {
   initial state s1
   --> s2 with I1 & I2 / O1
   --> s3 with I1 / O2
-  --> s4 / O3;
+  --> s4 with / O3;
 
   state s2;
 

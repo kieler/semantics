@@ -21,106 +21,106 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class KextFactoryImpl extends EFactoryImpl implements KextFactory
 {
   /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public static KextFactory init()
   {
-        try {
-            KextFactory theKextFactory = (KextFactory)EPackage.Registry.INSTANCE.getEFactory(KextPackage.eNS_URI);
-            if (theKextFactory != null) {
-                return theKextFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new KextFactoryImpl();
-    }
+		try {
+			KextFactory theKextFactory = (KextFactory)EPackage.Registry.INSTANCE.getEFactory(KextPackage.eNS_URI);
+			if (theKextFactory != null) {
+				return theKextFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new KextFactoryImpl();
+	}
 
   /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public KextFactoryImpl()
   {
-        super();
-    }
+		super();
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   public EObject create(EClass eClass)
   {
-        switch (eClass.getClassifierID()) {
-            case KextPackage.KEXT: return createKext();
-            case KextPackage.TEST_ENTITY: return createTestEntity();
-            case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case KextPackage.KEXT: return createKext();
+			case KextPackage.TEST_ENTITY: return createTestEntity();
+			case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public Kext createKext()
   {
-        KextImpl kext = new KextImpl();
-        return kext;
-    }
+		KextImpl kext = new KextImpl();
+		return kext;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public TestEntity createTestEntity()
   {
-        TestEntityImpl testEntity = new TestEntityImpl();
-        return testEntity;
-    }
+		TestEntityImpl testEntity = new TestEntityImpl();
+		return testEntity;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public AnnotatedExpression createAnnotatedExpression()
   {
-        AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
-        return annotatedExpression;
-    }
+		AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
+		return annotatedExpression;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public KextPackage getKextPackage()
   {
-        return (KextPackage)getEPackage();
-    }
+		return (KextPackage)getEPackage();
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
+	 * @deprecated
+	 * @generated
+	 */
   @Deprecated
   public static KextPackage getPackage()
   {
-        return KextPackage.eINSTANCE;
-    }
+		return KextPackage.eINSTANCE;
+	}
 
 } //KextFactoryImpl
