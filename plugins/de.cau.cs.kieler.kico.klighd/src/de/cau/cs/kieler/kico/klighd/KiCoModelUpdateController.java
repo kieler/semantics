@@ -226,7 +226,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private IEditorPart recentEditor = null;
     
     /** List of all registered extensions. */
-    private List<IKiCoModelUpdateControllerExtension> registeredExtensions;
+    private static List<IKiCoModelUpdateControllerExtension> registeredExtensions = getRegisteredExtensions();
+
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -236,9 +237,6 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     public KiCoModelUpdateController() {
         CompilerSelectionStore.register(this);
-        
-        // Retrieve registered extensions.
-        registeredExtensions = getRegisteredExtensions();
 
         // Save Button
         saveAction = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
@@ -363,7 +361,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * 
      * @returns a {@code List<ISCTGeneratorExtension>} containing the classes that use the extension point.
      */
-    private List<IKiCoModelUpdateControllerExtension> getRegisteredExtensions() {
+    private static List<IKiCoModelUpdateControllerExtension> getRegisteredExtensions() {
         List<IKiCoModelUpdateControllerExtension> regExtensions = new LinkedList<IKiCoModelUpdateControllerExtension>();
         Injector injector = Guice.createInjector();
         IConfigurationElement[] extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_ID);

@@ -29,195 +29,195 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class OperatorExpressionImpl extends ExpressionImpl implements OperatorExpression {
     /**
-	 * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getOperator()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOperator()
+     * @generated
+     * @ordered
+     */
     protected static final OperatorType OPERATOR_EDEFAULT = OperatorType.EQ;
 
     /**
-	 * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getOperator()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getOperator()
+     * @generated
+     * @ordered
+     */
     protected OperatorType operator = OPERATOR_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getSubExpressions() <em>Sub Expressions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSubExpressions() <em>Sub Expressions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getSubExpressions()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getSubExpressions()
+     * @generated
+     * @ordered
+     */
     protected EList<Expression> subExpressions;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected OperatorExpressionImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.OPERATOR_EXPRESSION;
-	}
+        return KExpressionsPackage.Literals.OPERATOR_EXPRESSION;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public OperatorType getOperator() {
-		return operator;
-	}
+        return operator;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setOperator(OperatorType newOperator) {
-		OperatorType oldOperator = operator;
-		operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR, oldOperator, operator));
-	}
+        OperatorType oldOperator = operator;
+        operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR, oldOperator, operator));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Expression> getSubExpressions() {
-		if (subExpressions == null) {
-			subExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
-		}
-		return subExpressions;
-	}
+        if (subExpressions == null) {
+            subExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
+        }
+        return subExpressions;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
-				return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
+                return ((InternalEList<?>)getSubExpressions()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
-				return getOperator();
-			case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
-				return getSubExpressions();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
+                return getOperator();
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
+                return getSubExpressions();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
-				setOperator((OperatorType)newValue);
-				return;
-			case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
-				getSubExpressions().clear();
-				getSubExpressions().addAll((Collection<? extends Expression>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
+                setOperator((OperatorType)newValue);
+                return;
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
+                getSubExpressions().clear();
+                getSubExpressions().addAll((Collection<? extends Expression>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
-				setOperator(OPERATOR_EDEFAULT);
-				return;
-			case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
-				getSubExpressions().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
+                setOperator(OPERATOR_EDEFAULT);
+                return;
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
+                getSubExpressions().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
-				return operator != OPERATOR_EDEFAULT;
-			case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
-				return subExpressions != null && !subExpressions.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case KExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
+                return operator != OPERATOR_EDEFAULT;
+            case KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS:
+                return subExpressions != null && !subExpressions.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (operator: ");
-		result.append(operator);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (operator: ");
+        result.append(operator);
+        result.append(')');
+        return result.toString();
+    }
 
 } //OperatorExpressionImpl

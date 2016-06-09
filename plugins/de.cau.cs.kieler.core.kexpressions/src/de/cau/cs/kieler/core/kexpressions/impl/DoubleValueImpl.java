@@ -1,12 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
-import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -17,18 +13,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Float Value</b></em>'.
+ * An implementation of the model object '<em><b>Double Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.FloatValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DoubleValueImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FloatValueImpl extends ValueImpl implements FloatValue {
+public class DoubleValueImpl extends ValueImpl implements DoubleValue {
     /**
      * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -37,7 +33,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected static final Float VALUE_EDEFAULT = null;
+    protected static final Double VALUE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -47,14 +43,14 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected Float value = VALUE_EDEFAULT;
+    protected Double value = VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected FloatValueImpl() {
+    protected DoubleValueImpl() {
         super();
     }
 
@@ -65,7 +61,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
      */
     @Override
     protected EClass eStaticClass() {
-        return KExpressionsPackage.Literals.FLOAT_VALUE;
+        return KExpressionsPackage.Literals.DOUBLE_VALUE;
     }
 
     /**
@@ -73,7 +69,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Float getValue() {
+    public Double getValue() {
         return value;
     }
 
@@ -82,11 +78,11 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(Float newValue) {
-        Float oldValue = value;
+    public void setValue(Double newValue) {
+        Double oldValue = value;
         value = newValue;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.FLOAT_VALUE__VALUE, oldValue, value));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DOUBLE_VALUE__VALUE, oldValue, value));
     }
 
     /**
@@ -97,7 +93,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.FLOAT_VALUE__VALUE:
+            case KExpressionsPackage.DOUBLE_VALUE__VALUE:
                 return getValue();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -111,8 +107,8 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.FLOAT_VALUE__VALUE:
-                setValue((Float)newValue);
+            case KExpressionsPackage.DOUBLE_VALUE__VALUE:
+                setValue((Double)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -126,7 +122,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.FLOAT_VALUE__VALUE:
+            case KExpressionsPackage.DOUBLE_VALUE__VALUE:
                 setValue(VALUE_EDEFAULT);
                 return;
         }
@@ -141,7 +137,7 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.FLOAT_VALUE__VALUE:
+            case KExpressionsPackage.DOUBLE_VALUE__VALUE:
                 return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
         }
         return super.eIsSet(featureID);
@@ -163,4 +159,4 @@ public class FloatValueImpl extends ValueImpl implements FloatValue {
         return result.toString();
     }
 
-} //FloatValueImpl
+} //DoubleValueImpl

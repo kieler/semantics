@@ -13,14 +13,13 @@
 package de.cau.cs.kieler.sccharts.interpreter.ui
 
 import de.cau.cs.kieler.kico.klighd.IKiCoModelUpdateControllerExtension
-import org.eclipse.jface.action.IToolBarManager
-import org.eclipse.jface.action.IMenuManager
+import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
-import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent
+import org.eclipse.jface.action.IMenuManager
+import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.resource.ImageDescriptor
-import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin
 
 /**
  * @author ssm
@@ -30,7 +29,7 @@ class ModelUpdateControllerInterpreterExtension implements IKiCoModelUpdateContr
 
     /** The action for toggling simulation. */
     private Action simulateToggleAction;
-    private static final boolean SIMULATE_TOGGLE_ACTION_DEFAULT_STATE = true;
+    private static final boolean SIMULATE_TOGGLE_ACTION_DEFAULT_STATE = false;
     
     /** The icon for toggling compile mode button. */
     private static final ImageDescriptor SIMULATE_ICON =

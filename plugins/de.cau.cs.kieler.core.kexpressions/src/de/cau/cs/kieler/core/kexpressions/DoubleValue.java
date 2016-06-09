@@ -9,15 +9,15 @@ package de.cau.cs.kieler.core.kexpressions;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * An Double value object.
+ * An Real value object represented by a float.
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.DoubleValue#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDoubleValue()
  * @model

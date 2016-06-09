@@ -12,6 +12,7 @@ Export-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.featuregroups,
  de.cau.cs.kieler.sccharts.features,
  de.cau.cs.kieler.sccharts.impl,
+ de.cau.cs.kieler.sccharts.iterators,
  de.cau.cs.kieler.sccharts.transformations,
  de.cau.cs.kieler.sccharts.util
 Require-Bundle: org.eclipse.core.runtime,
