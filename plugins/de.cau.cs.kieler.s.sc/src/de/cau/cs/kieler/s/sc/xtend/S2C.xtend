@@ -52,6 +52,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kexpressions.StringValue
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -123,7 +124,7 @@ class S2C {
     /*****************************************************************************/
     «includeHeader»
     «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
-    «(hostcode as StringAnnotation).values.head»
+    «(hostcode as StringAnnotation).values.head.removeEscapeChars»
     
     «ENDFOR»
     
