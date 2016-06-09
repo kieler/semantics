@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sccharts.feature"
       label="KIELER SCCharts"
-      version="0.1.1.qualifier"
+      version="0.1.2.qualifier"
       provider-name="Kiel University"
       plugin="de.cau.cs.kieler.sccharts">
 
@@ -228,6 +228,28 @@ litigation.
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
    </requires>
 
+
+   <plugin
+         id="de.cau.cs.kieler.circuit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+   <plugin
+         id="de.cau.cs.kieler.circuit.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.circuit.klighd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
    <plugin
          id="de.cau.cs.kieler.core.annotations"
          download-size="0"
@@ -640,6 +662,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+		 
+	<plugin
+         id="de.cau.cs.kieler.sccharts.timing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>		 
 
    <plugin
          id="de.cau.cs.kieler.scg"
@@ -647,6 +676,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+		 
+   <plugin
+         id="de.cau.cs.kieler.scg.circuit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>		 
 
    <plugin
          id="de.cau.cs.kieler.scg.edit"
@@ -675,6 +711,27 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+		 
+   <plugin
+         id="de.cau.cs.kieler.scl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.scl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>		 
+		 
+   <plugin
+         id="de.cau.cs.kieler.esterel.scl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>			 
 
    <plugin
          id="org.json"

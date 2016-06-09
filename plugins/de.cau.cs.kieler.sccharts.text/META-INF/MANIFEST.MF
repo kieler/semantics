@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Textual Editing Infrastructure
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.1.1.qualifier
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text;singleton:=true
+Bundle-Version: 0.1.2.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,

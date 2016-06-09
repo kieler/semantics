@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Edit
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.edit;singleton:=true
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.1.2.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.sccharts.provider.SCChartsEditPlugin$Implementation
 Bundle-Vendor: Kiel University

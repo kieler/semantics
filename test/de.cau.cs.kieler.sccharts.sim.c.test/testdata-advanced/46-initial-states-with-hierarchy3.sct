@@ -9,7 +9,7 @@ scchart _46_initial_states_with_hierarchy3 "46-initial-states-with-hierarchy3" {
     state BB;
 
     initial state AA
-    --> BB / ExitSetC;
+    --> BB with / ExitSetC;
   }
   --> Z with I
   --> Y with I2;

@@ -25,7 +25,7 @@ scchart S0 "TokenRingArbiter" {
     --> tt2 with T2;
 
     state tt2
-    --> t2 / T3;
+    --> t2 with / T3;
   };
 
   region:
@@ -42,7 +42,7 @@ scchart S0 "TokenRingArbiter" {
     --> tt3 with T3;
 
     state tt3
-    --> t3 / T1;
+    --> t3 with / T1;
   };
 
   region:
@@ -59,6 +59,6 @@ scchart S0 "TokenRingArbiter" {
     --> tt2 with T1 | InitialToken;
 
     state tt2
-    --> t2 / T2;
+    --> t2 with / T2;
   };
 }

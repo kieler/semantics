@@ -17,11 +17,11 @@ scchart _77_several_same_state_ids_empty_region_ids
       region:
 
       initial state ^state
-      --> state2 / O2;
+      --> state2 with / O2;
 
       state state2;
     }
-    --> state2 / O3;
+    --> state2 with / O3;
 
     state state2;
   };
