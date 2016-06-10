@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import java.util.logging.Logger
 
 /**
  * Main SCT Generator class  
@@ -59,7 +60,9 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
     /* Private constants */
     private static val MODEL_ID_PREFIX = "model"    // Name prefix of the generated model files    
     private static val EXTENTION_NAME = "class"     // Name of the extension point child
-
+    
+    /* Storage for the extensions */
+    private static var List<ISCTGeneratorExtension> registeredExtensions = null
 
     /* Core properties */
     public static val IProperty<Value<Integer>> NUMBER_OF_MODELS = 
@@ -160,19 +163,23 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
      * @returns a {@code List<ISCTGeneratorExtension>} containing the classes that use the extension point.
      */
     def List<ISCTGeneratorExtension> getRegisteredExtensions() {
-        val regExt = <ISCTGeneratorExtension>newArrayList
-        val extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(
-            SCTGENERATOR_EXTENSION_POINT);
-        for (ext : extensions) {
-            try {
-                val exeExt = ext.createExecutableExtension(EXTENTION_NAME) 
-                val instance = injector.getInstance(exeExt.class) as ISCTGeneratorExtension
-                regExt += instance
-            } catch (CoreException e) {
-                System.err.print("Could not load SCT Generator extension: " + ext.getName )
+        if (registeredExtensions == null) {
+            val regExt = <ISCTGeneratorExtension>newArrayList
+            val extensions = Platform.getExtensionRegistry().getConfigurationElementsFor(
+                SCTGENERATOR_EXTENSION_POINT);
+            for (ext : extensions) {
+                try {
+                    val exeExt = ext.createExecutableExtension(EXTENTION_NAME) 
+                    val instance = injector.getInstance(exeExt.class) as ISCTGeneratorExtension
+                    regExt += instance
+                } catch (CoreException e) {
+                    Logger.getLogger(this.class.name).warning("Could not load SCT Generator extension: " + ext.getName)
+                }
             }
+            
+            registeredExtensions = regExt
         }
-        regExt
+        return registeredExtensions
     }         
     
     /**

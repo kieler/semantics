@@ -79,7 +79,12 @@ class SCTGeneratorDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     override void okPressed() {
-        saveInput()
+        try
+            saveInput()
+        catch (NumberFormatException e) {
+            setMessage("Some of your inputs are ill-formed!", IMessageProvider.WARNING);
+            return;
+        }
         super.okPressed()
     }    
     

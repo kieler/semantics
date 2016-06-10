@@ -27,8 +27,7 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator;
 
 /**
- * Abort extension for the SCT Generator This class adds abort transition to the model creation. It
- * serves as core example for adding extensions to the SCT Generator.
+ * Handler class for the SCT Generator menu command.
  * 
  * @author ssm
  * @kieler.design 2016-06-07 proposed
@@ -63,9 +62,9 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
 
                 if (selection instanceof IStructuredSelection) {
                     final Object[] elements = ((IStructuredSelection) selection).toArray();
+                    SCTGenerator generator = injector.getInstance(SCTGenerator.class);
                     for (Object element : elements) {
                         if (element instanceof IProject) {
-                            SCTGenerator generator = injector.getInstance(SCTGenerator.class);
                             generator.createModels((IProject) element);
                         }
                     }

@@ -30,10 +30,11 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.emf.ecore.EObject
 import com.google.inject.Singleton
+import static de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator.*
 
 /**
  * The Model Generator class
- * Usually, it is injected an called by the SCT Generator. 
+ * Usually, it is injected and called by the SCT Generator. 
  * The actual default model creation takes place in this class.
  * 
  * @author ssm
@@ -75,9 +76,9 @@ class ModelGenerator {
         generatorExtensions += registeredExtensions
         
         // Use the SCT Generator properties to define root model properties.
-        var int statesLeft = SCTGenerator.NUMBER_OF_STATES.random
-        val int inputs = SCTGenerator.NUMBER_OF_INPUTS.random
-        val int outputs = SCTGenerator.NUMBER_OF_INPUTS.random
+        var int statesLeft = NUMBER_OF_STATES.random
+        val int inputs = NUMBER_OF_INPUTS.random
+        val int outputs = NUMBER_OF_INPUTS.random
 
         // Create a basic SCCharts, set the id, label, and input and output declarations.
         val rootState = createSCChart => [
@@ -120,7 +121,7 @@ class ModelGenerator {
      */
     protected def void createRegions(State state, int hierarchy, int statesLeft) {
         // Use the SCT Generator property to define a number of regions.
-        val regionCount = 1 + SCTGenerator.CHANCE_FOR_CONCURRENCY.random
+        val regionCount = 1 + CHANCE_FOR_CONCURRENCY.random
 
         // regionStateCounter defines how many states will be enclosed by this region. 
         var regionStateCounter = statesLeft
@@ -143,7 +144,7 @@ class ModelGenerator {
             val states = region.states.filter[!final].toList
             for (s : states) {
                 // Use the SCT Generator property to generate a specific number of transitions.
-                val int transitions = 1 + SCTGenerator.CHANCE_FOR_TRANSITION.random
+                val int transitions = 1 + CHANCE_FOR_TRANSITION.random
                 for (var int t = 1; t < transitions; t++) {
                     // The target of the transition is a randomly chosen state. 
                     s.createCoreTransition(states.get(states.size.random)) => [
@@ -151,7 +152,7 @@ class ModelGenerator {
                          * Avoid creating instantaneous loops. Therefore, self-loops are forbidden.
                          * Furthermore, if the source state and the target state already possess 
                          * immediate transition, the immediate transition will not be created. */
-                        if (SCTGenerator.CHANCE_FOR_IMMEDIATE.random != 0) {
+                        if (CHANCE_FOR_IMMEDIATE.random != 0) {
                             if ((it.eContainer.asState != it.targetState) &&
                                 !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
                                     (it.targetState.outgoingTransitions.filter[immediate].size > 0))) {
@@ -226,7 +227,7 @@ class ModelGenerator {
      */
     protected def Transition createTransitionTrigger(Transition transition) {
         // Calculate the trigger depth. Each level beyond 1 creates a new operator expression.
-        val triggerDepth = SCTGenerator.CHANCE_FOR_EXPRESSION.random
+        val triggerDepth = CHANCE_FOR_EXPRESSION.random
         if (triggerDepth == 0) return transition
 
         // Create a new trigger for this transition.
@@ -268,7 +269,7 @@ class ModelGenerator {
      */
     protected def createTransitionEffects(Transition transition) {
         // Calculate the number of effects.
-        var effectCount = SCTGenerator.CHANCE_FOR_EXPRESSION.random
+        var effectCount = CHANCE_FOR_EXPRESSION.random
         if(effectCount == 0) return transition
 
         // Create the effects.
