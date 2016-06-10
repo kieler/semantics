@@ -19,10 +19,12 @@ import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.debug.ui.actions.IToggleBreakpointsTarget;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
 import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
@@ -45,10 +47,13 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
 		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 
 		if (editor != null) {
+		    IVerticalRulerInfo ruler = (IVerticalRulerInfo) ((ITextEditor) editor).getAdapter(IVerticalRulerInfo.class);
+		    
 			// Get needed information to reach breakpoints.
 			IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
-			ITextSelection textSelection = (ITextSelection) selection;
-			int lineNumber = textSelection.getStartLine();
+//			ITextSelection textSelection = (ITextSelection) selection;
+//			int lineNumber = textSelection.getStartLine();
+			int lineNumber = ruler.getLineOfLastMouseButtonActivity();
 			IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
 					.getBreakpoints(SCChartsDebugModelPresentation.ID);
 
