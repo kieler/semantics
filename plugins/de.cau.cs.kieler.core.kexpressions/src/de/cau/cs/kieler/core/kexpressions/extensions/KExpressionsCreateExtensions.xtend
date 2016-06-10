@@ -38,6 +38,11 @@ class KExpressionsCreateExtensions {
     }
 
     // Create an Operator Expression.
+    def OperatorExpression createOperatorExpression() {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression()
+    }
+
+    // Create an Operator Expression with type.
     def OperatorExpression createOperatorExpression(OperatorType operatorType) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression() => [
             setOperator(operatorType)
