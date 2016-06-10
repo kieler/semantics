@@ -19,8 +19,7 @@ import org.eclipse.xtend.lib.annotations.Data
  * {@code MinMax} properties include two values. One for the minimum and one for the maximum value. 
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 @Data
 class MinMax<T> extends SCTGeneratorProperty {

@@ -20,8 +20,7 @@ import org.eclipse.xtend.lib.annotations.Data
  * and a maximum value of allowed occurrences.   
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 @Data
 class ChanceMax<T, S> extends SCTGeneratorProperty {

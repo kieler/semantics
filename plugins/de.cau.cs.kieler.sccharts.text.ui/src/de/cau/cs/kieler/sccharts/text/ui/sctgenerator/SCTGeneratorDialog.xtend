@@ -40,8 +40,7 @@ import static extension java.lang.Integer.parseInt
  * Subsequent to user confirmation, the values are written back to their properties.  
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 class SCTGeneratorDialog extends TitleAreaDialog {
 

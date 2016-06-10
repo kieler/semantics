@@ -30,8 +30,7 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator;
  * Handler class for the SCT Generator menu command.
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 public class SCTGeneratorDialogHandler extends AbstractHandler {
 

@@ -38,8 +38,7 @@ import static de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator.*
  * The actual default model creation takes place in this class.
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 @Singleton
 class ModelGenerator {

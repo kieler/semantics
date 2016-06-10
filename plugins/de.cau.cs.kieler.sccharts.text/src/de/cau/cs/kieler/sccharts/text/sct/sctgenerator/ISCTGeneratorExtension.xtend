@@ -26,8 +26,7 @@ import de.cau.cs.kieler.sccharts.Transition
  * can be hooked to add own features in customized extensions.  
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 interface ISCTGeneratorExtension extends ISCTGeneratorPropertyHolder {
     /**

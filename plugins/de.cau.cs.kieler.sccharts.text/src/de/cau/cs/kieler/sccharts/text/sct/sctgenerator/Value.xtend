@@ -19,8 +19,7 @@ import org.eclipse.xtend.lib.annotations.Data
  * Data holder for SCT Generator properties with primitive values  
  * 
  * @author ssm
- * @kieler.design 2016-06-07 proposed 
- * @kieler.rating 2016-06-07 proposed yellow
+ * @kieler.rating 2016-06-10 yellow KI-125 als
  */
 @Data
 class Value<T> extends SCTGeneratorProperty {
