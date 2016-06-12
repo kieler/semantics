@@ -53,7 +53,7 @@ import de.cau.cs.kieler.sccharts.State
 class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
 	public static String KEXT_CHECK_ANNOTATION="check"
 	public static String KEXT_EXPECT_ANNOTATION="expect"
-	static FileWriter fw = new FileWriter("results.csv", true);
+	static FileWriter fw = new FileWriter("/tmp/results.csv", true);
     static BufferedWriter bw = new BufferedWriter(fw);
     static PrintWriter out = new PrintWriter(bw)
 	ArrayList<Result> results=new ArrayList()

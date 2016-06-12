@@ -15,33 +15,24 @@ import de.cau.cs.kieler.scg.impl.ConditionalImpl
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import java.util.Map.Entry
-import org.eclipse.emf.common.util.EList
 
 class ReuseVariables extends AbstractProductionTransformation {
-    private static final val DEBUG = false
-    private static final val INSTRUMENTED = true
+    ArrayList<Node> visited = new ArrayList() 
+    Iterable<AssignmentImpl> assignments;
     private static final val MAX_SEARCH_DEPTH = 100 // good value for big and small models to achieve fast output
-
     override getProducedFeatureId() {
         return OptimizerFeatures::RV_ID
     }
-
     override getRequiredFeatureIds() {
         return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID/* , OptimizerFeatures::CP_ID */)
     }
-
     override getId() {
         return OptimizerFeatures::RV_ID
     }
-
     override getName() {
         return OptimizerFeatures::RV_NAME
     }
-    
-    Iterable<AssignmentImpl> assignments;
-
     def SCGraph transform(SCGraph scg) {
-        val startTime = System.nanoTime()
         /* SET FILTER */
         val nodes = scg.nodes
         val declarations = scg.declarations
@@ -53,21 +44,7 @@ class ReuseVariables extends AbstractProductionTransformation {
             }
             it.valuedObject.getName().startsWith("g")
         ]
-        if (INSTRUMENTED) {
-            System.out.println("#START VARIABLE RECYCLING INSTRUMENTATION#")
-            System.out.println("#BEFORE OPTIMIZATION")
-            System.out.println("NodeCount: " + nodes.size)
-            System.out.println("DeclarationCount: " + CountDeclarations(declarations))
-            System.out.println("AssignmentCount: " + assignments.size)
-        }
-
         val lastUse = new TreeMap<String, Pair<Node, Node>>()
-        if (DEBUG) {
-            System.out.println("ASSIGNMENTS")
-            assignments.forEach [
-                System.out.println(it.valuedObject.name)
-            ]
-        }
         /* GET LAST USE */
         val uses = new ArrayList<Pair<ValuedObjectReferenceImpl, Node>>() // use and node
         val preUses = new ArrayList<ValuedObjectReferenceImpl>()
@@ -100,14 +77,6 @@ class ReuseVariables extends AbstractProductionTransformation {
                 uses.remove(it)
             ]
         ]
-
-        if (DEBUG) {
-            System.out.println("USES")
-            uses.forEach [
-                System.out.println(it.key.valuedObject.name + " in " + it.value)
-            ]
-        }
-
         uses.forEach [
             val name = it.key.valuedObject.name
             if (lastUse.containsKey(name)) {
@@ -121,21 +90,12 @@ class ReuseVariables extends AbstractProductionTransformation {
             }
         ]
         do {
-            if (DEBUG) {
-                System.out.println("LAST USE")
-                lastUse.forEach [ K, V |
-                    System.out.println(K + " firstNode: " + V.key + " | lastNode: " + V.value)
-                ]
-            }
             // get first element of last use
             val firstElem = lastUse.pollFirstEntry
             // get second element which is not a pre-node from firstElem
             val secondElem = GetSecondElem(lastUse, firstElem)
             if (secondElem != null) {
                 lastUse.remove(secondElem.key)
-                if (DEBUG) {
-                    System.out.println("FirstElem: " + firstElem.key + " | SecondElem: " + secondElem.key)
-                }
                 // get all occures / assigments of secondElem
                 val valuedObjRep = new ArrayList<ValuedObjectReferenceImpl>()
                 nodes.forEach[
@@ -157,12 +117,6 @@ class ReuseVariables extends AbstractProductionTransformation {
                         ]
                     }
                 ]
-                if (DEBUG) {
-                    System.out.println("Replacements")
-                    valuedObjRep.forEach [
-                        System.out.println(it.valuedObject.name)
-                    ]
-                }
                 valuedObjRep.forEach[
                     //it.valuedObject.name = firstElem.key
                     val firstAss = assignments.findFirst[
@@ -188,35 +142,17 @@ class ReuseVariables extends AbstractProductionTransformation {
                     ]
                 ]
                 declChanges.forEach[
-                    if(INSTRUMENTED) {
-                        System.out.println("Removed: " + it.value.name);
-                    }
                     it.key.valuedObjects.remove(it.value)
                 ]
             }
         } while (lastUse.size > 0)
 
-        val endTime = System.nanoTime()
-        val duration = (endTime - startTime) as long
-        if (INSTRUMENTED) {
-            System.out.println("#AFTER OPTIMIZATION")
-            System.out.println("NodeCount: " + nodes.size)
-            System.out.println("DeclarationCount: " + CountDeclarations(declarations))
-            System.out.println("AssignmentCount: " + assignments.size)
-            System.out.println("#END VARIABLE RECYCLING INSTRUMENTATION#")
-        }
-        System.out.println("Variable Recycling elapsed time: " + (duration as double) / 1000000000 + " s")
-
         return scg
     }
-    
-    ArrayList<Node> visited = new ArrayList() 
-    
     def boolean InNextPointerChain(Node needle, Node nextP, boolean hard) {
         visited.clear()
         return InNextPointerChain(needle, nextP, false, 0)
     }
-
     def boolean InNextPointerChain(Node needle, Node nextP, boolean hard, int hops) {
         if(visited.contains(nextP)) {
             return false
@@ -253,7 +189,6 @@ class ReuseVariables extends AbstractProductionTransformation {
         }
         return false
     }
-
     def Entry<String, Pair<Node,Node>> GetSecondElem(TreeMap<String, Pair<Node,Node>> map, Entry<String, Pair<Node,Node>> firstEntry) {
         val tmp = new ArrayList<String>()
         map.forEach [ K, V |
@@ -266,14 +201,5 @@ class ReuseVariables extends AbstractProductionTransformation {
             }
         }
         return null
-    }
-    
-    def int CountDeclarations(EList<Declaration> decl) {
-        var count = 0;
-        for(var i = 0; i < decl.size; i++) {
-            val tmpDecl = decl.get(i)
-            count += tmpDecl.valuedObjects.size
-        }
-        return count
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class SimulateModels extends KiemAutomatedJUnitTest {
+	static int runs = 50;
     public SimulateModels(final IPath esoFile) {
         super(esoFile);
     }
@@ -19,6 +20,7 @@ public class SimulateModels extends KiemAutomatedJUnitTest {
     protected List<IPath> getBundleTestPaths() {
         List paths = new ArrayList<IPath>();
         paths.add(new Path("/tests/"));
+        //paths.add(new Path("/longtest/"));
         return paths;
     }
     protected String getModelFileExtension() {
@@ -28,8 +30,7 @@ public class SimulateModels extends KiemAutomatedJUnitTest {
         return "test-sccharts-c";
     }
     protected String getExecutionFileName() {
-        //return "sccharts_c_validation_headless.execution";
-    	// TODO: build execution per optimization
+    	// seq_scg, cp, rv, cprv, rvcp
     	return "rvcp.execution";
     }
     @Override
@@ -42,6 +43,9 @@ public class SimulateModels extends KiemAutomatedJUnitTest {
     }
     @Override
     public void kiemAutomatedJUnitTestExecution() {
-    	super.kiemAutomatedJUnitTestExecution();
+    	for(int i = 0; i < runs; i++) // to secure a correct value
+    	{
+        	super.kiemAutomatedJUnitTestExecution();
+    	}
     }
 }

@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,10 +19,7 @@ IJSONObjectDataComponent {
 	static FileWriter fw;
     static BufferedWriter bw;
     static PrintWriter out;
-	private double max;
-	private double min;
-	private double sum;
-	private int count;
+    ArrayList<Double> data;
 	private static boolean wrote;
 	
     public void initialize() throws KiemInitializationException {
@@ -33,6 +31,7 @@ IJSONObjectDataComponent {
 		}
 		bw = new BufferedWriter(fw);
 	    out = new PrintWriter(bw);
+	    data = new ArrayList<>();
 	}
 	
 	@Override
@@ -40,14 +39,7 @@ IJSONObjectDataComponent {
 		// benchTime, benchSource, benchExecutable, benchCompileTime
 		try {
 			double benchTime = jSONObject.getDouble("benchTime");
-			sum += benchTime;
-			count++;
-			if(benchTime > max) {
-				max = benchTime;
-			}
-			if(benchTime < min || min == 0) {
-				min = benchTime;
-			}
+			data.add(benchTime);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +52,11 @@ IJSONObjectDataComponent {
 			return;
 		// TODO: Write csv file
 		String modelName = this.getModelFilePath().toString();
-		out.println(modelName + ";" + min + ";" + max + ";" + (sum / count));
+		String benchtimes = "";
+		for (int i = 0; i < data.size(); i++) {
+			benchtimes += ";" + data.get(i);
+		}
+		out.println(modelName + benchtimes);
 		out.flush();
 		try {
 			bw.flush();
@@ -72,11 +68,7 @@ IJSONObjectDataComponent {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("DataCollectorResult: min = " + min + " | max = " + max + " | avg = " + (sum / count));
 		wrote = true;
-		min = 0.0;
-		max = 0.0;
-		sum = 0.0;
-		count = 0;
+	    data = new ArrayList<>();
 	}
 }
