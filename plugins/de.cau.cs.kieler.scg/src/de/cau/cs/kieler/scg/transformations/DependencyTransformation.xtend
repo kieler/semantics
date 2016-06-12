@@ -110,9 +110,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_DEPENDENCYTRANSFORMATION = "dependencies"
-    
+        
     /** 
      * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
      * The entry node list is mainly used to speed up the efficiency of concurrency tests.
