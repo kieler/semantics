@@ -513,7 +513,7 @@ class SCGThreadExtensions {
         		threadTypes.putAll(childMap)
         		newType = threadTypes.get(entry).combineThreadType(newType)
         	}
-        	fork.join.next.accumulateThreadControlFlowsTypes(
+        	fork.join.next?.accumulateThreadControlFlowsTypes(
         		localFlow, newType, threadTypes, source
         	)
         } else {
