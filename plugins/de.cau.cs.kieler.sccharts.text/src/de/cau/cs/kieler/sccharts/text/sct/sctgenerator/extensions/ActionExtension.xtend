@@ -44,17 +44,47 @@ class ActionExtension implements ISCTGeneratorExtension {
             SCTGenerator.SCTGENERATOR_ID + ".chanceForEntryAction",
             new ChanceMax<Double, Integer>("Chance for Entry Action", 0.0d, 3)
         )    
+
+    public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_DURING_ACTION = 
+        new Property<ChanceMax<Double, Integer>>(
+            SCTGenerator.SCTGENERATOR_ID + ".chanceForEntryAction",
+            new ChanceMax<Double, Integer>("Chance for During Action", 0.0d, 3)
+        )    
+
+    public static val IProperty<ChanceMax<Double, Integer>> CHANCE_FOR_EXIT_ACTION = 
+        new Property<ChanceMax<Double, Integer>>(
+            SCTGenerator.SCTGENERATOR_ID + ".chanceForEntryAction",
+            new ChanceMax<Double, Integer>("Chance for Exit Action", 0.0d, 3)
+        )    
+
     
     override onDeclarationCreate(Declaration declaration) {
     }
     
     override onStateCreate(State state) {
         if (state.isSuperstate) {
-            val actionCount = CHANCE_FOR_ENTRY_ACTION.random
+            var actionCount = CHANCE_FOR_ENTRY_ACTION.random
             for(var i = 0; i < actionCount; i++) {
                 SCChartsFactory.eINSTANCE.createEntryAction => [
                     trigger = createTriggerExpression(state.getRootState.declarations.filter[input].head, 1)
                     effects += createAssignmentEffect(state.getRootState.declarations.filter[output].head)
+                    state.localActions += it
+                ]
+            }
+            actionCount = CHANCE_FOR_DURING_ACTION.random
+            for(var i = 0; i < actionCount; i++) {
+                SCChartsFactory.eINSTANCE.createDuringAction => [
+                    trigger = createTriggerExpression(state.getRootState.declarations.filter[input].head, 1)
+                    effects += createAssignmentEffect(state.getRootState.declarations.filter[output].head)
+                    state.localActions += it
+                ]
+            }
+            actionCount = CHANCE_FOR_EXIT_ACTION.random
+            for(var i = 0; i < actionCount; i++) {
+                SCChartsFactory.eINSTANCE.createExitAction => [
+                    trigger = createTriggerExpression(state.getRootState.declarations.filter[input].head, 1)
+                    effects += createAssignmentEffect(state.getRootState.declarations.filter[output].head)
+                    state.localActions += it
                 ]
             }
         }
@@ -77,7 +107,11 @@ class ActionExtension implements ISCTGeneratorExtension {
     }
     
     override getProperties() {
-        <IProperty<?>> newArrayList(CHANCE_FOR_ENTRY_ACTION)
+        <IProperty<?>> newArrayList(
+            CHANCE_FOR_ENTRY_ACTION,
+            CHANCE_FOR_DURING_ACTION,
+            CHANCE_FOR_EXIT_ACTION
+        )
     }
     
 }

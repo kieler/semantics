@@ -10,6 +10,9 @@
       <SCTGeneratorExtension
             class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.AbortExtension">
       </SCTGeneratorExtension>
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.ActionExtension">
+      </SCTGeneratorExtension>
    </extension>
    
 </plugin>
