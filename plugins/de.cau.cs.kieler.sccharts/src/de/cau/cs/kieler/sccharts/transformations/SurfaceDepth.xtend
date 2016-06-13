@@ -105,9 +105,9 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         targetRootState
               .fixAllTextualOrdersByPriorities
-//              .optimizeSuperflousConditionalStates
-//              .optimizeSuperflousImmediateTransitions
-//              .fixDeadCode
+              .optimizeSuperflousConditionalStates
+              .optimizeSuperflousImmediateTransitions
+              .fixDeadCode
 //            optimizeSuperflousImmediateTransitions.fixDeadCode;
             
 //        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
