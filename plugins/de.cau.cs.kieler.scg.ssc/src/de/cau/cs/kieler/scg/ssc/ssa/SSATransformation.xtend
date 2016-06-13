@@ -62,6 +62,8 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer
+import de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer
 
 /**
  * The SSA transformation for SCGs
@@ -124,6 +126,12 @@ class SSATransformation extends AbstractProductionTransformation {
 
     @Inject
     extension SSAVariablePreserverExtensions
+    
+    @Inject
+    extension SSAOptimizer optimizer
+    
+    @Inject
+    extension SeqConcTransformer seqConc    
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
@@ -171,6 +179,7 @@ class SSATransformation extends AbstractProductionTransformation {
             fc.parameters.clear
             fc.parameters.addAll(sorted)
         }
+        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
 
         // ---------------
         // 6. Read Pre or Input Values
@@ -187,9 +196,12 @@ class SSATransformation extends AbstractProductionTransformation {
         // 8. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
-
+        context.markSSACreatedAssignmentVariables(scg)
+        
         // FIXME Post Processors: optimizer + seq/conc
-        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
+        optimizer.transform(scg, context)
+        seqConc.transform(scg, context)
+        
         return scg
     }
 

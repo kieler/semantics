@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2016 by
@@ -20,17 +20,19 @@ import de.cau.cs.kieler.kico.features.FeatureGroup
  * @kieler.rating proposed yellow
  */
 class SSCFeatureGroup extends FeatureGroup {
-    
+
     override getId() {
         "ssc"
     }
-    
+
     override getName() {
         "Strict Sequential Constructiveness"
     }
-    
+
     override getFeatureIds() {
-        newHashSet("scg.domtree", "scg.ssa", "scg.ssa.opt", "scg.ssa.seqconc", "scl.ssa", "scl.ssa.signal", "esterel.ssa")
+//        newHashSet("scg.domtree", "scg.ssa", "scg.ssa.opt", "scg.ssa.seqconc", "scl.ssa", "scl.ssa.signal", "esterel.ssa")
+        newHashSet("scg.domtree", "scg.ssa", "scg.signals", "scl.ssa", "esterel.ssa")
+
     }
-    
+
 }

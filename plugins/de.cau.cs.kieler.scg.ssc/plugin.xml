@@ -13,17 +13,14 @@
             class="de.cau.cs.kieler.scg.ssc.features.SSAEstFeature">
       </featureClass>
       <featureClass
-            class="de.cau.cs.kieler.scg.ssc.features.SSAOptFeature">
-      </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature">
-      </featureClass>
-      <featureClass
             class="de.cau.cs.kieler.scg.ssc.features.DominatorTreeFeature">
       </featureClass>
       <featureGroupClass
             class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
       </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.PureSignalsFeature">
+      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -37,13 +34,10 @@
             class="de.cau.cs.kieler.scg.ssc.strl.SSASCL2SSAEsterel">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer">
-      </productionTransformationClass>
-      <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.ssa.domtree.DomTreeTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.types.PureSignalTransformation">
       </productionTransformationClass>
    </extension>
    <extension

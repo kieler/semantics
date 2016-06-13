@@ -247,4 +247,12 @@ class SSACacheExtensions {
         context.setProperty(DEF, new Pair(scg, def))
         context.setProperty(USE, new Pair(scg, use))
     }
+    
+    
+    def markSSACreatedAssignmentVariables(KielerCompilerContext context, SCGraph scg) {
+        val def = context.getDef(scg)
+        for (asm : def.values.filter[isSSA]) {
+            asm.valuedObject.name = asm.valuedObject.name + "phi"
+        }
+    }
 }

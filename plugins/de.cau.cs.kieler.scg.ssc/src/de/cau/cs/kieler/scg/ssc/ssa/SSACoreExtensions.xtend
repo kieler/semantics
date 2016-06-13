@@ -28,7 +28,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExte
 import de.cau.cs.kieler.scg.SCGraph
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-
+import de.cau.cs.kieler.core.annotations.ReferenceAnnotation
+import static extension java.lang.Character.*
 /**
  * @author als
  * @kieler.design proposed
@@ -75,6 +76,24 @@ class SSACoreExtensions {
         return anno
     }
     
+    def <T extends Annotatable> T markSSADecl(T anno, ValuedObject vo) {
+        anno.annotations.removeIf[name == SSA]
+        anno.annotations += createReferenceAnnotation => [
+            name = SSA
+            it.object = vo
+        ]
+        return anno
+    }
+    
+    def ssaOrigVO(Declaration decl) {
+        val origAnno = decl.annotations.findFirst[it.name == SSA && it instanceof ReferenceAnnotation]
+        if (origAnno != null) {
+            return (origAnno as ReferenceAnnotation).object as ValuedObject
+        } else {
+            return null
+        }
+    }
+    
     def createFunction(SSAFunction function) {
         return createFunctionCall => [
             functionName = function.symbol
@@ -89,19 +108,20 @@ class SSACoreExtensions {
     
     def updateSSAVersions(SCGraph scg) {
         for (decl : scg.declarations.filter[isSSA]) {
+            // TODO handle nimberted variables e.g. term, term1, etc
             for (vo : decl.valuedObjects.indexed) {
-                // TODO handle variable names which contain numbers
-                vo.value.name = vo.value.name.replaceAll("[0-9]*$", "") + vo.key
+//                vo.value.name = vo.value.name.replaceAll("[0-9]*$", "") + vo.key
+                vo.value.name = decl.ssaOrigVO.name + vo.key
             }
         }
     }
-    
+        
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
         for (decl : scg.declarations) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
-                    markSSA
+                    markSSADecl(vo)
                     type = decl.type
                     valuedObjects += vo.copy
                 ])

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
@@ -29,9 +30,13 @@ import de.cau.cs.kieler.scg.ssc.features.SSAOptFeature
 import de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature
 import de.cau.cs.kieler.scg.ssc.ssa.SSACacheExtensions
 import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
+import java.util.Collection
 import javax.inject.Inject
+
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 /**
  * The SSA transformation for SCGs
  * 
@@ -90,9 +95,7 @@ class SeqConcTransformer extends AbstractProductionTransformation {
         readJoinDef += joinDef
 
         // Rename phi function
-        for (asm : seqDef) {
-            (asm.assignment as FunctionCall).functionName = SEQ.symbol
-        }
+        seqDef.renamePhi()
 
         // Rename separate conc from seq
         for (asm : readJoinDef) {
@@ -138,9 +141,17 @@ class SeqConcTransformer extends AbstractProductionTransformation {
         }
 
         scg.updateSSAVersions
+        context.markSSACreatedAssignmentVariables(scg)
 
         scg.createStringAnnotation(SSASeqConcFeature.ID, SSASeqConcFeature.ID)
         return scg
+    }
+    
+    def renamePhi(Collection<Assignment> phiNodes){
+        // Rename phi function
+        for (asm : phiNodes) {
+            (asm.assignment as FunctionCall).functionName = SEQ.symbol
+        } 
     }
 
     private def int versionIndex(ValuedObjectReference ref) {

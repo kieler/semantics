@@ -99,7 +99,7 @@ class SSAOptimizer extends AbstractProductionTransformation {
         // ---------------
         // 2. Remove superflouse sequential reaching parameter
         // ---------------
-        scg.removeSequentialReachingDef(context)
+//        scg.removeSequentialReachingDef(context)
 
         // Schedule Sequential access of updates?
 
@@ -122,6 +122,7 @@ class SSAOptimizer extends AbstractProductionTransformation {
         // 5. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
+        context.markSSACreatedAssignmentVariables(scg)
 
         scg.createStringAnnotation(SSAOptFeature.ID, SSAOptFeature.ID)
         return scg

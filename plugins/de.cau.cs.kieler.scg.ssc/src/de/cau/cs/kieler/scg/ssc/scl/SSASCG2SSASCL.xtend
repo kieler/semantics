@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
 import de.cau.cs.kieler.scg.ssc.features.SSASeqConcFeature
+import de.cau.cs.kieler.scg.ssc.features.PureSignalsFeature
 
 /**
  * @author als
@@ -42,7 +43,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SSASeqConcFeature.ID)
+        return newHashSet(PureSignalsFeature.ID)
     }
 
     // -------------------------------------------------------------------------
@@ -59,6 +60,10 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     
     def transform(SCGraph scg, KielerCompilerContext context) {
         trans.context = context
+        
+        // Remove incompatible ssa annotation in declarations
+        scg.declarations.forEach[annotations.clear]
+        
         val scl = scg.transformSCGToSCL
         return scl
     }
