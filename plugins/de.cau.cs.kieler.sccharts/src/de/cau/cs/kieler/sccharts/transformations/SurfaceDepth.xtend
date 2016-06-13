@@ -27,6 +27,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
 
+
 /**
  * SCCharts SurfaceDepth Transformation.
  * 
@@ -77,6 +78,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     //-------------------------------------------------------------------------
     //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
     //                                 macro state, hence we just consider simple states here)
+    //
     // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
     // Create an auxiliary valuedObject isDepth_S that indicates that the state was
     // entered in an earlier tick and add it to the parent state P of the parent region R of S.
@@ -101,8 +103,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
-        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
-            optimizeSuperflousImmediateTransitions.fixDeadCode;
+        targetRootState
+              .fixAllTextualOrdersByPriorities
+//              .optimizeSuperflousConditionalStates
+//              .optimizeSuperflousImmediateTransitions
+//              .fixDeadCode
+//            optimizeSuperflousImmediateTransitions.fixDeadCode;
+            
+//        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
+
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
@@ -134,7 +143,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             var State previousState = surfaceState
             var State currentState = surfaceState
 
-            surfaceState.setDefaultTrace //All following states etc. will be traced to surfaceState if not traced to transition
+            surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
 
             for (transition : orderedTransitionList) {
 
@@ -232,17 +241,18 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                         val K1 = T1.sourceState
                         val K2 = T2.sourceState
                         if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
-                            !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
-                            val TK1s = K2.outgoingTransitions.filter(e|e != T2)
+                            !K2.outgoingTransitions.filter(e|e != T2).nullOrEmpty) {
+                            val TK1s = K1.outgoingTransitions.filter(e|e != T1)
                             val TK2s = K2.outgoingTransitions.filter(e|e != T2)
                             if (TK1s.size > 0 && TK2s.size > 0) {
                                 val TK1 = TK1s.get(0)
                                 val TK2 = TK2s.get(0)
                                 if ((TK1.targetState == TK2.targetState) &&
-                                    ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals(TK2.trigger)))) {
+                                    //TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
+                                    ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
                                     stateAfterDepth = K1
 
-                                    //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+                                    System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                     val t = K2.incomingTransitions.get(0)
                                     t.setTargetState(stateAfterDepth)
                                     for (transition : K2.outgoingTransitions) {
