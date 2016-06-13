@@ -3,12 +3,18 @@
 <plugin>
    <extension-point id="de.cau.cs.kieler.prom.environmentInitializer" name="Environment Initializer" schema="schema/de.cau.cs.kieler.prom.environmentInitializer.exsd"/>
    <extension-point id="de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer" name="Wrapper Code Annotation Analyzer" schema="schema/de.cau.cs.kieler.prom.wrapperCodeAnnotationAnalyzer.exsd"/>
+   <extension-point id="de.cau.cs.kieler.prom.simulator" name="KIELER Simulator" schema="schema/de.cau.cs.kieler.prom.simulator.exsd"/>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
             configTypeID="de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.prom.launchconfig.launchConfigurationImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            configTypeID="de.cau.cs.kieler.prom.simulation.simulationConfiguration"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.prom.simulation.simulationConfigurationImage">
       </launchConfigurationTypeImage>
    </extension>
    <extension
@@ -18,6 +24,13 @@
             id="de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
             modes="run,debug"
             name="KiCo Compilation"
+            public="true">
+      </launchConfigurationType>
+      <launchConfigurationType
+            delegate="de.cau.cs.kieler.prom.simulation.SimulationLaunchConfig"
+            id="de.cau.cs.kieler.prom.simulation.simulationConfiguration"
+            modes="run,debug"
+            name="KiCo Simulation"
             public="true">
       </launchConfigurationType>
    </extension>
@@ -94,6 +107,15 @@
                id="org.eclipse.ui.wizards.new.folder">
          </newWizardShortcut>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.prom.simulator">
+      <simulator
+            class="de.cau.cs.kieler.prom.simulation.CoreSCChartsSimulator">
+      </simulator>
+      <simulator
+            class="de.cau.cs.kieler.prom.simulation.JavaCodeSimulator">
+      </simulator>
    </extension>
 
 </plugin>

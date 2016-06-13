@@ -29,6 +29,7 @@ Export-Package: de.cau.cs.kieler.prom.common,
  de.cau.cs.kieler.prom.filewizard,
  de.cau.cs.kieler.prom.launchconfig,
  de.cau.cs.kieler.prom.launchconfig.ui,
- de.cau.cs.kieler.prom.projectwizard
+ de.cau.cs.kieler.prom.projectwizard,
+ de.cau.cs.kieler.prom.simulation
 Bundle-Vendor: Kiel University
 
