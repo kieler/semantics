@@ -72,6 +72,7 @@ class ModelGenerator {
      */
     def State createModel(String id) {
         // Retrieve the list of classes which use the extension point.
+        generatorExtensions.clear
         generatorExtensions += registeredExtensions
         
         // Use the SCT Generator properties to define root model properties.
