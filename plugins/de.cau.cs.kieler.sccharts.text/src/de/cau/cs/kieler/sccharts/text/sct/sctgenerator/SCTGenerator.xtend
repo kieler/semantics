@@ -151,7 +151,12 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
         <String, List<IProperty<?>>>newLinkedHashMap => [ 
             put(getCategory, getProperties)
             for(ext : getRegisteredExtensions) {
-                put(ext.category, ext.properties)
+                put(ext.category,
+                    if (it.containsKey(ext.category))
+                        get(ext.category) => [ it += ext.properties ]
+                    else 
+                        ext.properties
+                )
             }
         ]
     }

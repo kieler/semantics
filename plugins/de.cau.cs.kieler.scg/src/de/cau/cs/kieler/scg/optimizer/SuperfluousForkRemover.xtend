@@ -106,7 +106,10 @@ class SuperfluousForkRemover extends AbstractOptimizer {
         }
 
         // Remove all marked control flows.
-        removeControlFlows.forEach[target.incoming -= it; remove]
+        removeControlFlows.filterNull.forEach[
+            target?.incoming?.remove(it) 
+            remove
+        ]
         
         scg
     }
