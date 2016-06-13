@@ -237,7 +237,7 @@ class ModelGenerator {
         generatorExtensions.forEach[ onExpressionCreate(transition.trigger) ]
         transition
     }
-
+    
     /**
      * Create an expression using a declaration depending on the trigger depth.
      * 
@@ -245,7 +245,7 @@ class ModelGenerator {
      * @param triggerDepth defines the actual expression depth.
      * @returns a newly generated expression.
      */
-    protected def Expression createTriggerExpression(Declaration declaration, int triggerDepth) {
+    public def Expression createTriggerExpression(Declaration declaration, int triggerDepth) {
         if (triggerDepth > 1) {
             // As long as the triggerDepth is greater than 1, create new operator expressions.
             createOperatorExpression => [
@@ -289,7 +289,7 @@ class ModelGenerator {
      * @param declaration gives a declaration that is used as valued object source.
      * @returns a newly created assignment.
      */
-    protected def Assignment createAssignmentEffect(Declaration declaration) {
+    public def Assignment createAssignmentEffect(Declaration declaration) {
         createAssignment(
             declaration.valuedObjects.get(declaration.valuedObjects.size.random),
             TRUE
