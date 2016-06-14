@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * @author fry
@@ -44,7 +46,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * Modifies a given SCG.
  */
-class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
+class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation implements Traceable{
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -192,7 +194,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 			// create a new assignment node on the "else"-branch
 			if (isSSArelevant) {
 
-				val newNode = ScgFactory::eINSTANCE.createAssignment
+				val newNode = ScgFactory::eINSTANCE.createAssignment.trace(thisNode)
 				newNode.valuedObject = thisNode.valuedObject
 
 				// if this is the first assignment to an Output x, use pre(x) as assignment on the "else"-branch
