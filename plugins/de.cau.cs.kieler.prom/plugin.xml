@@ -12,9 +12,9 @@
             id="de.cau.cs.kieler.prom.launchconfig.launchConfigurationImage">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
-            configTypeID="de.cau.cs.kieler.prom.simulation.simulationConfiguration"
+            configTypeID="de.cau.cs.kieler.prom.simulation.simulationLaunchConfig"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.prom.simulation.simulationConfigurationImage">
+            id="de.cau.cs.kieler.prom.simulation.simulationLaunchConfigImage">
       </launchConfigurationTypeImage>
    </extension>
    <extension
@@ -28,7 +28,7 @@
       </launchConfigurationType>
       <launchConfigurationType
             delegate="de.cau.cs.kieler.prom.simulation.SimulationLaunchConfig"
-            id="de.cau.cs.kieler.prom.simulation.simulationConfiguration"
+            id="de.cau.cs.kieler.prom.simulation.simulationLaunchConfig"
             modes="run,debug"
             name="KiCo Simulation"
             public="true">
@@ -40,6 +40,17 @@
             class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchConfigurationTabGroup"
             id="de.cau.cs.kieler.prom.launchconfig.ui.launchConfigurationTabGroup"
             type="de.cau.cs.kieler.prom.launchconfig.launchConfiguration">
+         <launchMode
+               mode="run">
+         </launchMode>
+         <launchMode
+               mode="debug">
+         </launchMode>
+      </launchConfigurationTabGroup>
+      <launchConfigurationTabGroup
+            class="de.cau.cs.kieler.prom.simulation.ui.SimulationLaunchConfigTabGroup"
+            id="de.cau.cs.kieler.prom.simulation.ui.simulationLaunchConfigTabGroup"
+            type="de.cau.cs.kieler.prom.simulation.simulationLaunchConfig">
          <launchMode
                mode="run">
          </launchMode>

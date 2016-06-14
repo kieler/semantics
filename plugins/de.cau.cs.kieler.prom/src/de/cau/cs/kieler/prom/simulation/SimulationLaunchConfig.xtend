@@ -8,6 +8,8 @@ import org.eclipse.core.runtime.CoreException
 
 class SimulationLaunchConfig implements ILaunchConfigurationDelegate {
     
+    public static String LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.simulation.simulationLaunchConfig"
+    
     override launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         println("Launching simulation "+configuration.name + " in "+ mode +" mode.")
     }

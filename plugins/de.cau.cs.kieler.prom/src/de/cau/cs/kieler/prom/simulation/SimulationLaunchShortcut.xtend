@@ -1,10 +1,18 @@
 package de.cau.cs.kieler.prom.simulation
 
+import de.cau.cs.kieler.prom.common.SimulationLaunchData
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
+import org.eclipse.debug.core.DebugPlugin
+import org.eclipse.debug.core.ILaunchConfiguration
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
+import org.eclipse.debug.core.ILaunchManager
+import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
@@ -16,6 +24,10 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
 
 class SimulationLaunchShortcut implements ILaunchShortcut {
+    
+    private static String SIMULATOR_ID = "de.cau.cs.kieler.prom.simulator"
+    
+    var IProject project
     
     /**
      * {@inheritDoc}
@@ -40,14 +52,24 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
     private def void launch(List<IFile> files, String mode) {
         println("simulation shortcut:" + files)
         
+        // A launch shortcut is performed on files, so that there is at least one.
+        project = files.get(0).project
+        
         // TODO: guess which files are models that should be compiled (sct, esterel)
-        // and which files are data for the simulation (eso, sct with @Environment annotation?)
+        // and which files are data for the simulation (eso)
         
-        // Selection dialog for environment that is used for compilation?
+        // Dialog to check and set settings if not obvious (e.g. environment and mapping which files are models / data)
         
-        // TODO: compile via prom and get compilation result
-         
-        // Get and start simulator
+        // Find or create config that matches the specified files
+        val configuration = findLaunchConfiguration(mode)
+        if (configuration != null) {
+            // Launch the config
+            DebugUITools.launch(configuration, mode)
+        }
+        
+        // TODO (in launch config): compile via prom and get compilation result
+
+        // TODO: Move to launch config start simulator        
         val simulator = getSimulatorFromDialog()
         if(simulator != null) {
             simulator.simulate(files, #[], #[]);
@@ -56,7 +78,7 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
     
     private def ISimulator getSimulatorFromDialog() {
         // Get simulators from extensions
-        val config = Platform.getExtensionRegistry().getConfigurationElementsFor("de.cau.cs.kieler.prom.simulator");
+        val config = Platform.getExtensionRegistry().getConfigurationElementsFor(SIMULATOR_ID);
         
         // Label provider to display environment
         val labelProvider = new LabelProvider() {
@@ -91,5 +113,100 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
             }
         }
         return null
+    }
+    
+    /**
+     * Searches for a launch configuration in the project. Creates a new one if none found.
+     * 
+     * @param mode The mode the launch should be performed in (e.g. 'run' or 'debug')
+     * @return launch configuration for the project. 
+     */
+    private def ILaunchConfiguration findLaunchConfiguration(String mode) {
+        val configs = getLaunchConfigurations()
+        var ILaunchConfiguration configuration
+        if (configs.isEmpty) 
+            configuration = createNewConfiguration()
+        else 
+            configuration = configs.get(0)
+        
+        return configuration
+    }
+
+    /**
+     * Creates and initializes a new launch config for the project.
+     * 
+     * @return the new launch configuration
+     */
+    private def ILaunchConfiguration createNewConfiguration() {
+        try {
+            val lm = DebugPlugin.getDefault().getLaunchManager()
+            val type = lm.getLaunchConfigurationType(SimulationLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
+            val name = getUniqueNameForLaunchConfig(lm, project.name + " ("+type.name+")", -1)
+            val wc = type.newInstance(null, name)
+            initializeConfiguration(wc)
+            return wc.doSave()
+        } catch (CoreException ce) {
+            ce.printStackTrace()
+        }
+        return null
+    }
+    
+    private def String getUniqueNameForLaunchConfig(ILaunchManager lm, String name, int suffixNumber) {
+        val uniqueName = if(suffixNumber > 0)
+            name + " ("+suffixNumber+")"
+        else 
+            name
+            
+        // Check if name is really unique
+        for(config : lm.launchConfigurations) {
+            // Name is not unique. Increase suffix number and check again.
+            if(config.name.equals(uniqueName)) {
+                return getUniqueNameForLaunchConfig(lm, name, suffixNumber+1)
+            }
+        }
+        // Return unique name
+        return uniqueName
+    }
+
+    private def void initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
+        val launchData = new SimulationLaunchData()
+        
+        // Set project
+        launchData.projectName = project.name
+
+        // Flush to configuration 
+        SimulationLaunchData.saveToConfiguration(config, launchData)
+    }
+
+    /**
+     * Searches for all applicable launch configurations for this project.
+     * 
+     * @return list with the launch configurations.
+     */
+    private def ArrayList<ILaunchConfiguration> getLaunchConfigurations() {
+        val result = new ArrayList<ILaunchConfiguration>()
+        try {
+            val manager = DebugPlugin.getDefault().getLaunchManager()
+            val type = manager.getLaunchConfigurationType(SimulationLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
+            val configurations = manager.getLaunchConfigurations(type)
+            for (var i = 0; i < configurations.length; i++) {
+                val config = configurations.get(i)
+                if (!DebugUITools.isPrivate(config) && isGoodMatch(config)) {
+                    result.add(config)
+                }
+            }
+        } catch (CoreException e) {
+        }
+        return result
+    }
+
+    /**
+     * Checks if the launch configuration is for this project and the files.
+     * 
+     * @param configuration The configuration to be checked
+     */
+    private def boolean isGoodMatch(ILaunchConfiguration configuration) {
+        val launchData = SimulationLaunchData.loadFromConfiguration(configuration)
+        return launchData.projectName == project.name
     }
 }
