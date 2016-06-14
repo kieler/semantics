@@ -35,13 +35,17 @@ import java.util.HashMap
 import java.util.LinkedList
 import de.cau.cs.kieler.circuit.Port
 
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kitt.tracing.Traceable
+
 /**
  * @author fry
  * 
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable{
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -112,8 +116,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		 */
 		val newCircuit = CircuitFactory::eINSTANCE.createActor
 		newCircuit.name = scg.label
+		
+		 //Tell KITT that this is not an in-place transformation from here on
+		creationalTransformation(scg, newCircuit)
+		newCircuit.trace(scg)
 
-		val logicRegion = CircuitFactory::eINSTANCE.createActor
+		val logicRegion = CircuitFactory::eINSTANCE.createActor.trace(scg)
 		logicRegion.name = "Program Logic"
 		newCircuit.innerActors += logicRegion
 
@@ -192,7 +200,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				
 
 				// --           Create new MUX           --
-				val newMUX = CircuitFactory::eINSTANCE.createActor
+				val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source,thenNode)
 				newMUX.type = "MUX"
 				newMUX.name = thenNode.valuedObject.name
 				
@@ -279,7 +287,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
 			// Create actor for guard gX
 			var guardname = assignment.valuedObject.name
-			val actor = CircuitFactory::eINSTANCE.createActor
+			val actor = CircuitFactory::eINSTANCE.createActor.trace(assignment)
 			actor.name = guardname
 //			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! add for no red regions
 
