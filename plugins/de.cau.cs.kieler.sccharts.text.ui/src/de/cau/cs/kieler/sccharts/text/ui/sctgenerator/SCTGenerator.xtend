@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.text.ui.SCTGenerator
+package de.cau.cs.kieler.sccharts.text.ui.sctgenerator
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
@@ -57,7 +57,7 @@ class SCTGenerator {
 
     private static val MODEL_EXTENSION = "sct"
 
-    def createModels(SCTGeneratorDialog dialog, IProject project) {
+    def createModels(de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog, IProject project) {
 
         val job = new Job("Creating Models") {
 
@@ -70,7 +70,9 @@ class SCTGenerator {
                         is = "0" + is
                     }
                     createModel(dialog, project, ID_PREFIX + is)
-                    if (i % 2 == 0 ) { monitor.worked(2) }
+                    if (i % 2 == 0) {
+                        monitor.worked(2)
+                    }
                     if (monitor.canceled) {
                         return Status.CANCEL_STATUS
                     }
@@ -85,7 +87,8 @@ class SCTGenerator {
         job.schedule
     }
 
-    private def createModel(SCTGeneratorDialog dialog, IProject project, String id) {
+    private def createModel(de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog, IProject project,
+        String id) {
         var int statesLeft = random(dialog.numberOfStatesMin, dialog.numberOfStatesMax)
         val int inputs = random(dialog.numberOfInputsMin, dialog.numberOfInputsMax)
         val int outputs = random(dialog.numberOfInputsMin, dialog.numberOfInputsMax)
@@ -114,7 +117,8 @@ class SCTGenerator {
         rootState.saveModel(project)
     }
 
-    private def createRegions(State state, SCTGeneratorDialog dialog, int hierarchy, int statesLeft) {
+    private def createRegions(State state, de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog,
+        int hierarchy, int statesLeft) {
         val regionCount = 1 + dialog.chanceForConcurrency.chance(dialog.maxConcurrency)
 
         var regionStateCounter = statesLeft
@@ -138,8 +142,7 @@ class SCTGenerator {
                             if (dialog.chanceForImmediate.chance) {
                                 if ((it.eContainer.asState != it.targetState) &&
                                     !((it.eContainer.asState.incomingTransitions.filter[immediate].size > 0) &&
-                                      (it.targetState.outgoingTransitions.filter[immediate].size > 0))
-                                ) {
+                                        (it.targetState.outgoingTransitions.filter[immediate].size > 0))) {
                                     it.immediate = true
                                 }
                             }
@@ -149,7 +152,8 @@ class SCTGenerator {
         }
     }
 
-    private def createStates(ControlflowRegion region, SCTGeneratorDialog dialog, int hierarchy, int statesLeft) {
+    private def createStates(ControlflowRegion region,
+        de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog, int hierarchy, int statesLeft) {
         var stateCounter = 0
 
         var lastState = region.createState(STATE_PREFIX + stateCounter) => [initial = true]
@@ -181,7 +185,8 @@ class SCTGenerator {
         ]
     }
 
-    private def createTransitionTrigger(Transition transition, SCTGeneratorDialog dialog) {
+    private def createTransitionTrigger(Transition transition,
+        de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog) {
         val triggerDepth = dialog.chanceForExpressions.chance(dialog.maxExpressionDepth)
         if(triggerDepth == 0) return transition
 
@@ -202,7 +207,8 @@ class SCTGenerator {
         }
     }
 
-    private def createTransitionEffects(Transition transition, SCTGeneratorDialog dialog) {
+    private def createTransitionEffects(Transition transition,
+        de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialog dialog) {
         var effectCount = dialog.chanceForExpressions.chance(dialog.maxExpressionDepth)
         if(effectCount == 0) return transition
 

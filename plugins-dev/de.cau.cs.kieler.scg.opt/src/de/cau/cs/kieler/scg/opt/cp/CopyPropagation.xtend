@@ -50,11 +50,21 @@ class CopyPropagation extends AbstractProductionTransformation {
                 return (
                     it.valuedObject.getName().startsWith("g")
                         || it.valuedObject.getName().startsWith("PRE_g")
+                        || it.valuedObject.getName().startsWith("_condg") // condition NEW!!
                 )
             ]
         // X = Y
         val one2oneAssignments = assignments.filter[
             it.assignment.class.typeName.equals(ValuedObjectReferenceImpl.typeName)
+        ]
+        // condg
+        val condAssignments = assignments.filter[
+            it.assignment.class.typeName.equals(OperatorExpressionImpl.typeName)
+                && (it.assignment as OperatorExpressionImpl).operator.getName().equals("LOGICAL_OR")
+                && (it.assignment as OperatorExpressionImpl).subExpressions.length == 1
+        ]
+        condAssignments.forEach[
+            System.out.println(it.valuedObject.name)
         ]
         // X = PRE_Y
         val preAssignments = assignments.filter[
@@ -71,6 +81,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         val relevantAssignments = one2oneAssignments.toList()
         relevantAssignments.addAll(preAssignments)
         relevantAssignments.addAll(notAssignments)
+        relevantAssignments.addAll(condAssignments)
         /* CHECK IF THE ASSIGNMENT IS ONLY ASSIGNED ONCE */
         val cleanedRelevantAssignments = new ArrayList<AssignmentImpl>();
         // check if an assignment is used multiple times
