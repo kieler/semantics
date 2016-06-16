@@ -1,26 +1,23 @@
 package de.cau.cs.kieler.sccharts.debug;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class SCChartsDebugPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.debug"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
+	private static SCChartsDebugPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SCChartsDebugPlugin() {
 	}
 
 	/*
@@ -47,7 +44,7 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SCChartsDebugPlugin getDefault() {
 		return plugin;
 	}
 

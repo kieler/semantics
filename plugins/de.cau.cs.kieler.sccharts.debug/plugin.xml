@@ -36,5 +36,18 @@
          </adapter>
       </factory>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.toolbarContributor">
+      <content
+            class="de.cau.cs.kieler.sccharts.debug.core.SCChartsDebugView"
+            name="SCChartsDebugViewContributor">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sccharts.debug.core.SCChartsDebugEventListener">
+      </content>
+   </extension>
 
 </plugin>

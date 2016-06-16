@@ -18,7 +18,6 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.debug.ui.actions.IToggleBreakpointsTarget;
-import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
@@ -28,12 +27,15 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
 import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This
  * class gets instantiated by the
  * {@link SCChartsBreakpointTargetAdapterFactory#getAdapter(Object, Class)}
  * adapter factory for the XText editor.
+ * 
+ * TODO: filter if breakpoint position is reasonable
  * 
  * @author lgr
  */
@@ -51,8 +53,6 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
 		    
 			// Get needed information to reach breakpoints.
 			IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
-//			ITextSelection textSelection = (ITextSelection) selection;
-//			int lineNumber = textSelection.getStartLine();
 			int lineNumber = ruler.getLineOfLastMouseButtonActivity();
 			IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
 					.getBreakpoints(SCChartsDebugModelPresentation.ID);
@@ -70,6 +70,8 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
 					}
 				}
 			}
+			
+			KiemPlugin.getOpenedModelRootObjects().get(0);
 
 			// Create a new breakpoint in the specified line.
 			SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);

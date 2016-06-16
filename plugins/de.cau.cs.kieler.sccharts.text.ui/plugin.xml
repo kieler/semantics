@@ -398,7 +398,7 @@
             locationURI="popup:#TextRulerContext">
          <command
                commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
-               icon="platform:/plugin/org.eclipse.jdt.doc.user/images/org.eclipse.debug.ui/obj16/brkp_obj.png"
+               icon="platform:/plugin/de.cau.cs.kieler.sccharts.debug/icons/brkp_obj.png"
                label="Toggle Breakpoint"
                style="toggle">
             <visibleWhen
