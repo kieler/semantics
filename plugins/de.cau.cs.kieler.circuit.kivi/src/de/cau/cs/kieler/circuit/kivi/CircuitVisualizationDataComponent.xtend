@@ -54,7 +54,10 @@ import org.json.JSONObject
 import java.util.List
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener
 import de.cau.cs.kieler.sim.kiem.KiemEvent
-
+import de.cau.cs.kieler.kico.KiCoProperties
+import de.cau.cs.kieler.kitt.tracing.Tracing
+import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
+import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author fry 
@@ -70,6 +73,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	]
 	val injector = Guice.createInjector(configure)
 	extension KRenderingExtensions = injector.getInstance(typeof(KRenderingExtensions))
+	
+	
 	
 	
 	
@@ -137,11 +142,20 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		
 		// grab the circuit view from all active views 
 		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
+		
+		
 
 		val Runnable run = [|
 			for (context : contextsCirc) {
 				System.out.println("-- Initialize circuit simulation... --")
 				val circuit = context.inputModel as Actor
+				
+				val compRes = context.getProperty(KiCoProperties.COMPILATION_RESULT)
+				val ssascg = compRes.transformationIntermediateResults.findFirst[id == CircuitFeatures::SCG2SSASCG_ID].result as SCGraph
+				//auf null testen
+				
+				val tracing = compRes.getAuxiliaryData(Tracing).head
+				tracing.getMapping(circuit, ssascg )
 
 				// -------------------------------------------------------------
 				// Store all KEdges and their source port names               --
@@ -170,6 +184,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 				// Store all KRendering information for gate highlighting           --
 				// -------------------------------------------------------------------
 				for (node : circuit.eAllContents.filter(Actor).toList) {
+
 					val atomicActor = node.innerActors.empty
 
 					if (atomicActor && (node.name != null) && (node.type != null)) {

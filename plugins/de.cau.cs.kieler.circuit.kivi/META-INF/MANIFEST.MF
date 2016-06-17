@@ -27,7 +27,10 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.klighd.kivi
+ de.cau.cs.kieler.klighd.kivi,
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.scg.circuit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Kiel University
