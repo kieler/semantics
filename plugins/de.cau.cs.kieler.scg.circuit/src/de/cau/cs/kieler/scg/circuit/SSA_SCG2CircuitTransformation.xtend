@@ -200,17 +200,17 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 				
 
 				// --           Create new MUX           --
-				val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source,thenNode)
+				val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source,thenNode, thenNode.valuedObject, thenNode.assignment)
 				newMUX.type = "MUX"
 				newMUX.name = thenNode.valuedObject.name
 				
 				//add MUX to logic region
 				logic.innerActors += newMUX
 				
-				val truePort = CircuitFactory::eINSTANCE.createPort
-				val falsePort = CircuitFactory::eINSTANCE.createPort
-				val selectPort = CircuitFactory::eINSTANCE.createPort
-				val outputPort = CircuitFactory::eINSTANCE.createPort
+				val truePort = CircuitFactory::eINSTANCE.createPort.trace(thenNode.assignment)
+				val falsePort = CircuitFactory::eINSTANCE.createPort //no tracing, because input happens out of nowhere
+				val selectPort = CircuitFactory::eINSTANCE.createPort.trace(source)
+				val outputPort = CircuitFactory::eINSTANCE.createPort.trace(thenNode, thenNode.valuedObject)
 
 				newMUX.ports.add(truePort)
 				newMUX.ports.add(falsePort)
@@ -231,10 +231,10 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 				// if an expression is assigned: call transformExpression to create all necessary gates
 				if (thenNode.assignment.serialize.toString == "true") {
 					truePort.name = "const1_" + newMUX.name
-					circuitInitialization.createConstantOne(logic, truePort.name)
+					circuitInitialization.createConstantOne(logic, truePort.name, thenNode)
 				} else if (thenNode.assignment.serialize.toString == "false") {
 					truePort.name = "const0_" + newMUX.name
-					circuitInitialization.createConstantZero(logic, truePort.name)
+					circuitInitialization.createConstantZero(logic, truePort.name, thenNode)
 				} else {
 					val exp = thenNode.assignment
 					if (exp instanceof ValuedObjectReference) {
@@ -243,7 +243,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 					} else {
 						checkForVOassignments(thenNode.assignment)
 						truePort.name = thenNode.assignment.serialize.toString
-						transformExpressions(thenNode.assignment, logic)
+						transformExpressions(thenNode.assignment, logic, thenNode)
 					}
 				}
 
@@ -252,7 +252,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 
 				// e.g. O_1 = pre(O)
 				if (!(elseNode.assignment instanceof ValuedObjectReference)) {
-					transformExpressions(elseNode.assignment, logic)
+					transformExpressions(elseNode.assignment, logic, elseNode)
 				}
 				
 				// call this method again if the target of then- and else-branch is not the same
@@ -287,13 +287,13 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 
 			// Create actor for guard gX
 			var guardname = assignment.valuedObject.name
-			val actor = CircuitFactory::eINSTANCE.createActor.trace(assignment)
+			val actor = CircuitFactory::eINSTANCE.createActor.trace(assignment, assignment.valuedObject, expr)
 			actor.name = guardname
 //			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! add for no red regions
 
 			assignmentActor.add(actor.name)
 			// Create output port of guard actor gX
-			val outputPort = CircuitFactory::eINSTANCE.createPort
+			val outputPort = CircuitFactory::eINSTANCE.createPort.trace(assignment, assignment.valuedObject, expr)
 			outputPort.type = "Out"
 			outputPort.name = guardname
 			actor.ports += outputPort
@@ -314,7 +314,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 				}
 			}
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
-			val actorRegion = CircuitFactory::eINSTANCE.createActor
+			val actorRegion = CircuitFactory::eINSTANCE.createActor.trace(assignment)
 			actorRegion.innerActors += actor
 			actorRegion.name = guardname
 			logic.innerActors += actorRegion
@@ -323,13 +323,13 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 			// the created actor gate gX gets an input port for each subExpression
 			// and for each subExpression is transformed into gates with method transformExpressions
 			for (Expression subexpr : expr.subExpressions) {
-				val inputPort = CircuitFactory::eINSTANCE.createPort
+				val inputPort = CircuitFactory::eINSTANCE.createPort.trace(subexpr)
 				actor.ports += inputPort
 				inputPort.type = "In"
 
 				if (!(expr.operator.getName == "PRE")) {
 					checkForVOassignments(subexpr) //this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
-					transformExpressions(subexpr, actorRegion) //!!!!!!!!!!!!!!!!!!!! change back to logic as 2nd argument,  add for no red regions
+					transformExpressions(subexpr, actorRegion, assignment) //!!!!!!!!!!!!!!!!!!!! change back to logic as 2nd argument,  add for no red regions
 					
 				} 
 				//else { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  add for no red regions
@@ -392,7 +392,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 	 * Transforms right sides of assignment nodes.
 	 * 
 	 */
-	def void transformExpressions(Expression expr, Actor logic) {
+	def void transformExpressions(Expression expr, Actor logic, Assignment originalNode) {
 
 		// has to be checked due to recursion
 		if (expr instanceof OperatorExpression) {
@@ -400,13 +400,13 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 			// check if this actor already exists
 			if (!assignmentActor.contains(expr.serialize.toString)) {
 				// create actor for expression
-				val actor = CircuitFactory::eINSTANCE.createActor
+				val actor = CircuitFactory::eINSTANCE.createActor.trace(originalNode, expr)
 				actor.name = expr.serialize.toString
 				logic.innerActors += actor
 				assignmentActor.add(actor.name)
 
 				// create output port for actor
-				val p = CircuitFactory::eINSTANCE.createPort
+				val p = CircuitFactory::eINSTANCE.createPort.trace(expr)
 				p.type = "Out"
 				p.name = expr.serialize.toString
 				actor.ports += p
@@ -431,22 +431,22 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 				// the created actor needs an input port for each subexpression
 				// and the subexpressions are transformed, too.
 				for (Expression subExpr : expr.subExpressions) {
-					val port = CircuitFactory::eINSTANCE.createPort
+					val port = CircuitFactory::eINSTANCE.createPort.trace(subExpr)
 					actor.ports += port
 					port.type = "In"
 					port.name = subExpr.serialize.toString
 
 					if (subExpr instanceof OperatorExpression) {
-						transformExpressions(subExpr, logic)
+						transformExpressions(subExpr, logic, originalNode)
 					} else if (subExpr instanceof BoolValue) {
 						switch (subExpr.value.toString) {
 							case "true": {
 								port.name = "const1_" + expr.serialize.toString
-								circuitInitialization.createConstantOne(logic, port.name)
+								circuitInitialization.createConstantOne(logic, port.name, originalNode)
 							}
 							case "false": {
 								port.name = "const0_" + expr.serialize.toString
-								circuitInitialization.createConstantZero(logic, port.name)
+								circuitInitialization.createConstantZero(logic, port.name, originalNode)
 							}
 						}
 					}
