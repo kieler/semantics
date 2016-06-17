@@ -27,7 +27,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
 import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This
@@ -71,8 +70,6 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
 				}
 			}
 			
-			KiemPlugin.getOpenedModelRootObjects().get(0);
-
 			// Create a new breakpoint in the specified line.
 			SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
 			DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
