@@ -28,41 +28,41 @@ import junit.framework.TestCase;
 public abstract class LinkableTest extends TestCase {
 
 	/**
-	 * The fixture for this Linkable test case.
-	 * <!-- begin-user-doc -->
+     * The fixture for this Linkable test case.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected Linkable fixture = null;
 
 	/**
-	 * Constructs a new Linkable test case with the given name.
-	 * <!-- begin-user-doc -->
+     * Constructs a new Linkable test case with the given name.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public LinkableTest(String name) {
-		super(name);
-	}
+        super(name);
+    }
 
 	/**
-	 * Sets the fixture for this Linkable test case.
-	 * <!-- begin-user-doc -->
+     * Sets the fixture for this Linkable test case.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void setFixture(Linkable fixture) {
-		this.fixture = fixture;
-	}
+        this.fixture = fixture;
+    }
 
 	/**
-	 * Returns the fixture for this Linkable test case.
-	 * <!-- begin-user-doc -->
+     * Returns the fixture for this Linkable test case.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected Linkable getFixture() {
-		return fixture;
-	}
+        return fixture;
+    }
 
 } //LinkableTest

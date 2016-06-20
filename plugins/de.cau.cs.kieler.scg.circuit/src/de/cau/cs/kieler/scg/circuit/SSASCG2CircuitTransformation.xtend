@@ -15,6 +15,7 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
+
 import de.cau.cs.kieler.circuit.CircuitFactory
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -33,11 +34,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
-import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.circuit.properties.IActorTypeProvider
 
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.circuit.properties.IPortTypeProvider
 
 /**
  * @author fry
@@ -45,7 +47,7 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSASCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable{
+class SSASCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable, IActorTypeProvider, IPortTypeProvider{
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -205,7 +207,7 @@ class SSASCG2CircuitTransformation extends AbstractProductionTransformation impl
 
 				// --           Create new MUX           --
 				val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source,thenNode, thenNode.valuedObject, thenNode.assignment)
-				newMUX.type = "MUX"
+				newMUX.type = IActorTypeProvider.MUX
 				newMUX.name = thenNode.valuedObject.name
 				
 				//add MUX to logic region
@@ -222,10 +224,10 @@ class SSASCG2CircuitTransformation extends AbstractProductionTransformation impl
 				newMUX.ports.add(outputPort)
 				
 				//TODO: maybe there is a better solution than using strings as port types to differentiate between ports.
-				truePort.type = "In_1"
-				falsePort.type = "In_0"
-				selectPort.type = "Sel"
-				outputPort.type = "Out"
+				truePort.type = IPortTypeProvider.SEL_TRUE_INPUT
+				falsePort.type = IPortTypeProvider.SEL_FALSE_INPUT
+				selectPort.type = IPortTypeProvider.SELECTION
+				outputPort.type = IPortTypeProvider.OUT
 
 				outputPort.name = thenNode.valuedObject.name
 				selectPort.name = source.condition.serialize.toString
@@ -234,10 +236,10 @@ class SSASCG2CircuitTransformation extends AbstractProductionTransformation impl
 				// create constant 0 and 1 or take the whole expression as input for the true case of the condition
 				// if an expression is assigned: call transformExpression to create all necessary gates
 				if (thenNode.assignment.serialize.toString == "true") {
-					truePort.name = "const1_" + newMUX.name
+					truePort.name = IActorTypeProvider.VCC + newMUX.name
 					circuitInitialization.createConstantOne(logic, truePort.name, thenNode)
 				} else if (thenNode.assignment.serialize.toString == "false") {
-					truePort.name = "const0_" + newMUX.name
+					truePort.name = IActorTypeProvider.GND + newMUX.name
 					circuitInitialization.createConstantZero(logic, truePort.name, thenNode)
 				} else {
 					val exp = thenNode.assignment
@@ -304,14 +306,14 @@ class SSASCG2CircuitTransformation extends AbstractProductionTransformation impl
 
 			switch (expr.operator) {
 				case LOGICAL_AND:
-					actor.type = "AND"
+					actor.type = IActorTypeProvider.AND
 				case LOGICAL_OR:
-					actor.type = "OR"
+					actor.type = IActorTypeProvider.OR
 				case NOT:
-					actor.type = "NOT"
+					actor.type = IActorTypeProvider.NOT
 				case PRE: {
-					actor.type = "REG"
-					addRegisterPorts(actor, "Reset_pre")
+					actor.type = IActorTypeProvider.REG
+					addRegisterPorts(actor, IPortTypeProvider.RESET_PRE)
 				}
 				default: {
 					System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
@@ -319,6 +321,7 @@ class SSASCG2CircuitTransformation extends AbstractProductionTransformation impl
 			}
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
 			val actorRegion = CircuitFactory::eINSTANCE.createActor.trace(assignment)
+			actorRegion.type = IActorTypeProvider.GUARD_REGION
 			actorRegion.innerActors += actor
 			actorRegion.name = guardname
 			logic.innerActors += actorRegion

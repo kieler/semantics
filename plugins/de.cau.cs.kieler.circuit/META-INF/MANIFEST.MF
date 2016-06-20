@@ -8,6 +8,7 @@ Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.circuit,
+ de.cau.cs.kieler.circuit.properties,
  de.cau.cs.kieler.circuit.impl,
  de.cau.cs.kieler.circuit.util
 Require-Bundle: org.eclipse.core.runtime,

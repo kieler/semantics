@@ -6,10 +6,10 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.circuit.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.circuit;bundle-version="0.1.0",
+ com.google.inject,
+ de.cau.cs.kieler.circuit,
  de.cau.cs.kieler.core.kexpressions,
- de.cau.cs.kieler.scg;bundle-version="0.1.1",
+ de.cau.cs.kieler.scg,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,

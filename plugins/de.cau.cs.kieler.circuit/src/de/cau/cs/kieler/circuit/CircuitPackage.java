@@ -38,435 +38,453 @@ import org.eclipse.emf.ecore.EReference;
  */
 public interface CircuitPackage extends EPackage {
 	/**
-	 * The package name.
-	 * <!-- begin-user-doc -->
+     * The package name.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String eNAME = "circuit";
 
 	/**
-	 * The package namespace URI.
-	 * <!-- begin-user-doc -->
+     * The package namespace URI.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String eNS_URI = "http://kieler.cs.cau.de/circuit";
 
 	/**
-	 * The package namespace name.
-	 * <!-- begin-user-doc -->
+     * The package namespace name.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String eNS_PREFIX = "circuit";
 
 	/**
-	 * The singleton instance of the package.
-	 * <!-- begin-user-doc -->
+     * The singleton instance of the package.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	CircuitPackage eINSTANCE = de.cau.cs.kieler.circuit.impl.CircuitPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
-	 * <!-- begin-user-doc -->
+     * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
-	 * @generated
-	 */
+     * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
+     * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
+     * @generated
+     */
 	int LINKABLE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINKABLE__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINKABLE__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE__INCOMING_LINKS = 0;
+     * @generated
+     * @ordered
+     */
+	int LINKABLE__INCOMING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE__OUTGOING_LINKS = 1;
+     * @generated
+     * @ordered
+     */
+	int LINKABLE__OUTGOING_LINKS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Linkable</em>' class.
-	 * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Linkable</em>' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LINKABLE_FEATURE_COUNT = 2;
+     * @generated
+     * @ordered
+     */
+	int LINKABLE_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.ActorImpl <em>Actor</em>}' class.
-	 * <!-- begin-user-doc -->
+     * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.ActorImpl <em>Actor</em>}' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.ActorImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getActor()
-	 * @generated
-	 */
+     * @see de.cau.cs.kieler.circuit.impl.ActorImpl
+     * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getActor()
+     * @generated
+     */
 	int ACTOR = 0;
 
 	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+     * @generated
+     * @ordered
+     */
+	int ACTOR__ANNOTATIONS = LINKABLE__ANNOTATIONS;
 
 	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
+	int ACTOR__NAME = LINKABLE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int ACTOR__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
 	int ACTOR__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
 
 	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Inner Actors</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__ANNOTATIONS = LINKABLE_FEATURE_COUNT + 0;
+     * @generated
+     * @ordered
+     */
+	int ACTOR__INNER_ACTORS = LINKABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Inner Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__NAME = LINKABLE_FEATURE_COUNT + 1;
+     * @generated
+     * @ordered
+     */
+	int ACTOR__INNER_LINKS = LINKABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Inner Actors</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__INNER_ACTORS = LINKABLE_FEATURE_COUNT + 2;
+     * @generated
+     * @ordered
+     */
+	int ACTOR__TYPE = LINKABLE_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Inner Links</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Ports</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__INNER_LINKS = LINKABLE_FEATURE_COUNT + 3;
+     * @generated
+     * @ordered
+     */
+	int ACTOR__PORTS = LINKABLE_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Actor</em>' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__TYPE = LINKABLE_FEATURE_COUNT + 4;
+     * @generated
+     * @ordered
+     */
+	int ACTOR_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Ports</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR__PORTS = LINKABLE_FEATURE_COUNT + 5;
-
-	/**
-	 * The number of structural features of the '<em>Actor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTOR_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 6;
-
-	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.LinkImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
-	 * @generated
-	 */
+     * @see de.cau.cs.kieler.circuit.impl.LinkImpl
+     * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
+     * @generated
+     */
 	int LINK = 2;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
-	 * <!-- begin-user-doc -->
+     * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.circuit.impl.PortImpl
-	 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
-	 * @generated
-	 */
+     * @see de.cau.cs.kieler.circuit.impl.PortImpl
+     * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
+     * @generated
+     */
 	int PORT = 1;
 
 	/**
-	 * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+     * @generated
+     * @ordered
+     */
+	int PORT__ANNOTATIONS = LINKABLE__ANNOTATIONS;
 
 	/**
-	 * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
+	int PORT__NAME = LINKABLE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int PORT__INCOMING_LINKS = LINKABLE__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
 	int PORT__OUTGOING_LINKS = LINKABLE__OUTGOING_LINKS;
 
 	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__ANNOTATIONS = LINKABLE_FEATURE_COUNT + 0;
+     * @generated
+     * @ordered
+     */
+	int PORT__TYPE = LINKABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Port</em>' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__NAME = LINKABLE_FEATURE_COUNT + 1;
+     * @generated
+     * @ordered
+     */
+	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT__TYPE = LINKABLE_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Port</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
 	int LINK__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT__ANNOTATIONS;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
 	int LINK__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
 	int LINK__SOURCE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
 	int LINK__TARGET = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Link</em>' class.
-	 * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Link</em>' class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
+     * @generated
+     * @ordered
+     */
 	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Actor <em>Actor</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Actor <em>Actor</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Actor</em>'.
-	 * @see de.cau.cs.kieler.circuit.Actor
-	 * @generated
-	 */
+     * @return the meta object for class '<em>Actor</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor
+     * @generated
+     */
 	EClass getActor();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getInnerActors <em>Inner Actors</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getInnerActors <em>Inner Actors</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Inner Actors</em>'.
-	 * @see de.cau.cs.kieler.circuit.Actor#getInnerActors()
-	 * @see #getActor()
-	 * @generated
-	 */
+     * @return the meta object for the containment reference list '<em>Inner Actors</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor#getInnerActors()
+     * @see #getActor()
+     * @generated
+     */
 	EReference getActor_InnerActors();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getInnerLinks <em>Inner Links</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getInnerLinks <em>Inner Links</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Inner Links</em>'.
-	 * @see de.cau.cs.kieler.circuit.Actor#getInnerLinks()
-	 * @see #getActor()
-	 * @generated
-	 */
+     * @return the meta object for the containment reference list '<em>Inner Links</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor#getInnerLinks()
+     * @see #getActor()
+     * @generated
+     */
 	EReference getActor_InnerLinks();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getPorts <em>Ports</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.circuit.Actor#getPorts <em>Ports</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Ports</em>'.
-	 * @see de.cau.cs.kieler.circuit.Actor#getPorts()
-	 * @see #getActor()
-	 * @generated
-	 */
+     * @return the meta object for the containment reference list '<em>Ports</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor#getPorts()
+     * @see #getActor()
+     * @generated
+     */
 	EReference getActor_Ports();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Actor#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Actor#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see de.cau.cs.kieler.circuit.Actor#getType()
-	 * @see #getActor()
-	 * @generated
-	 */
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor#getType()
+     * @see #getActor()
+     * @generated
+     */
 	EAttribute getActor_Type();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Link <em>Link</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Link <em>Link</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Link</em>'.
-	 * @see de.cau.cs.kieler.circuit.Link
-	 * @generated
-	 */
+     * @return the meta object for class '<em>Link</em>'.
+     * @see de.cau.cs.kieler.circuit.Link
+     * @generated
+     */
 	EClass getLink();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Source</em>'.
-	 * @see de.cau.cs.kieler.circuit.Link#getSource()
-	 * @see #getLink()
-	 * @generated
-	 */
+     * @return the meta object for the reference '<em>Source</em>'.
+     * @see de.cau.cs.kieler.circuit.Link#getSource()
+     * @see #getLink()
+     * @generated
+     */
 	EReference getLink_Source();
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see de.cau.cs.kieler.circuit.Link#getTarget()
-	 * @see #getLink()
-	 * @generated
-	 */
+     * @return the meta object for the reference '<em>Target</em>'.
+     * @see de.cau.cs.kieler.circuit.Link#getTarget()
+     * @see #getLink()
+     * @generated
+     */
 	EReference getLink_Target();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Port</em>'.
-	 * @see de.cau.cs.kieler.circuit.Port
-	 * @generated
-	 */
+     * @return the meta object for class '<em>Port</em>'.
+     * @see de.cau.cs.kieler.circuit.Port
+     * @generated
+     */
 	EClass getPort();
 
 	/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Port#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Port#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see de.cau.cs.kieler.circuit.Port#getType()
-	 * @see #getPort()
-	 * @generated
-	 */
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.circuit.Port#getType()
+     * @see #getPort()
+     * @generated
+     */
 	EAttribute getPort_Type();
 
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Linkable</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable
-	 * @generated
-	 */
+     * @return the meta object for class '<em>Linkable</em>'.
+     * @see de.cau.cs.kieler.circuit.Linkable
+     * @generated
+     */
 	EClass getLinkable();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Incoming Links</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks()
-	 * @see #getLinkable()
-	 * @generated
-	 */
+     * @return the meta object for the reference list '<em>Incoming Links</em>'.
+     * @see de.cau.cs.kieler.circuit.Linkable#getIncomingLinks()
+     * @see #getLinkable()
+     * @generated
+     */
 	EReference getLinkable_IncomingLinks();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}'.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Outgoing Links</em>'.
-	 * @see de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks()
-	 * @see #getLinkable()
-	 * @generated
-	 */
+     * @return the meta object for the reference list '<em>Outgoing Links</em>'.
+     * @see de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks()
+     * @see #getLinkable()
+     * @generated
+     */
 	EReference getLinkable_OutgoingLinks();
 
 	/**
-	 * Returns the factory that creates the instances of the model.
-	 * <!-- begin-user-doc -->
+     * Returns the factory that creates the instances of the model.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the factory that creates the instances of the model.
-	 * @generated
-	 */
+     * @return the factory that creates the instances of the model.
+     * @generated
+     */
 	CircuitFactory getCircuitFactory();
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * Defines literals for the meta objects that represent
 	 * <ul>
 	 *   <li>each class,</li>
@@ -475,119 +493,119 @@ public interface CircuitPackage extends EPackage {
 	 *   <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.ActorImpl <em>Actor</em>}' class.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.ActorImpl <em>Actor</em>}' class.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.ActorImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getActor()
-		 * @generated
-		 */
+         * @see de.cau.cs.kieler.circuit.impl.ActorImpl
+         * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getActor()
+         * @generated
+         */
 		EClass ACTOR = eINSTANCE.getActor();
 
 		/**
-		 * The meta object literal for the '<em><b>Inner Actors</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Inner Actors</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference ACTOR__INNER_ACTORS = eINSTANCE.getActor_InnerActors();
 
 		/**
-		 * The meta object literal for the '<em><b>Inner Links</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Inner Links</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference ACTOR__INNER_LINKS = eINSTANCE.getActor_InnerLinks();
 
 		/**
-		 * The meta object literal for the '<em><b>Ports</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Ports</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference ACTOR__PORTS = eINSTANCE.getActor_Ports();
 
 		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EAttribute ACTOR__TYPE = eINSTANCE.getActor_Type();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.LinkImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
-		 * @generated
-		 */
+         * @see de.cau.cs.kieler.circuit.impl.LinkImpl
+         * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLink()
+         * @generated
+         */
 		EClass LINK = eINSTANCE.getLink();
 
 		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference LINK__SOURCE = eINSTANCE.getLink_Source();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.PortImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
-		 * @generated
-		 */
+         * @see de.cau.cs.kieler.circuit.impl.PortImpl
+         * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getPort()
+         * @generated
+         */
 		EClass PORT = eINSTANCE.getPort();
 
 		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EAttribute PORT__TYPE = eINSTANCE.getPort_Type();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
-		 * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
-		 * @generated
-		 */
+         * @see de.cau.cs.kieler.circuit.impl.LinkableImpl
+         * @see de.cau.cs.kieler.circuit.impl.CircuitPackageImpl#getLinkable()
+         * @generated
+         */
 		EClass LINKABLE = eINSTANCE.getLinkable();
 
 		/**
-		 * The meta object literal for the '<em><b>Incoming Links</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Incoming Links</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference LINKABLE__INCOMING_LINKS = eINSTANCE.getLinkable_IncomingLinks();
 
 		/**
-		 * The meta object literal for the '<em><b>Outgoing Links</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
+         * The meta object literal for the '<em><b>Outgoing Links</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @generated
-		 */
+         * @generated
+         */
 		EReference LINKABLE__OUTGOING_LINKS = eINSTANCE.getLinkable_OutgoingLinks();
 
 	}
