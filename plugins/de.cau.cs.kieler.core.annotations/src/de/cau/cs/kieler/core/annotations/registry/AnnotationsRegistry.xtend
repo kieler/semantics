@@ -13,10 +13,11 @@
 package de.cau.cs.kieler.core.annotations.registry
 
 import de.cau.cs.kieler.core.annotations.Annotation
+import java.util.List
 import java.util.Set
 import javax.inject.Singleton
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Data
-import java.util.List
 
 /**
  * @author ssm
@@ -28,8 +29,10 @@ class AnnotationsRegistry {
     
     private static val annotationsMap = <String, List<AnnotationEntry>> newHashMap
     
-    def static String register(String name, AnnotationsType type, Class<? extends Annotation> clazz, String description) {
-        val newAnnotationsEntry = new AnnotationEntry(name, type, clazz, description)
+    def static String register(String name, AnnotationsType type, Class<? extends Annotation> annotationClass, 
+        Class<? extends EObject> eClass, String description
+    ) {
+        val newAnnotationsEntry = new AnnotationEntry(name, type, annotationClass, eClass, description)
         val annotationsList = 
             if (annotationsMap.containsKey(name)) annotationsMap.get(name)
                 else <AnnotationEntry> newLinkedList
@@ -63,5 +66,6 @@ class AnnotationEntry {
     val String name
     val AnnotationsType type
     val Class<? extends Annotation> clazz
+    val Class<? extends EObject> eClass
     val String description
 }
