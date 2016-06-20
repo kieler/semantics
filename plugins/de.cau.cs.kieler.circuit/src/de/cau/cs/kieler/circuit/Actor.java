@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.circuit.Actor#getInnerLinks <em>Inner Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Actor#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Actor#getPorts <em>Ports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Actor#getId <em>Id</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.circuit.CircuitPackage#getActor()
@@ -85,6 +86,33 @@ public interface Actor extends Linkable {
 	EList<Port> getPorts();
 
 	/**
+     * Returns the value of the '<em><b>Id</b></em>' attribute.
+     * The default value is <code>"-1"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Id</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Id</em>' attribute.
+     * @see #setId(int)
+     * @see de.cau.cs.kieler.circuit.CircuitPackage#getActor_Id()
+     * @model default="-1" required="true"
+     * @generated
+     */
+    int getId();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.circuit.Actor#getId <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Id</em>' attribute.
+     * @see #getId()
+     * @generated
+     */
+    void setId(int value);
+
+    /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <p>

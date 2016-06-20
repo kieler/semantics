@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.circuit.impl.ActorImpl#getInnerLinks <em>Inner Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.ActorImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.ActorImpl#getPorts <em>Ports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.ActorImpl#getId <em>Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -103,6 +104,26 @@ public class ActorImpl extends LinkableImpl implements Actor {
 	protected EList<Port> ports;
 
 	/**
+     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected static final int ID_EDEFAULT = -1;
+
+    /**
+     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected int id = ID_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -159,6 +180,27 @@ public class ActorImpl extends LinkableImpl implements Actor {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setId(int newId) {
+        int oldId = id;
+        id = newId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.ACTOR__ID, oldId, id));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -212,6 +254,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
                 return getType();
             case CircuitPackage.ACTOR__PORTS:
                 return getPorts();
+            case CircuitPackage.ACTOR__ID:
+                return getId();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -240,6 +284,9 @@ public class ActorImpl extends LinkableImpl implements Actor {
                 getPorts().clear();
                 getPorts().addAll((Collection<? extends Port>)newValue);
                 return;
+            case CircuitPackage.ACTOR__ID:
+                setId((Integer)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -264,6 +311,9 @@ public class ActorImpl extends LinkableImpl implements Actor {
             case CircuitPackage.ACTOR__PORTS:
                 getPorts().clear();
                 return;
+            case CircuitPackage.ACTOR__ID:
+                setId(ID_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -284,6 +334,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
                 return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
             case CircuitPackage.ACTOR__PORTS:
                 return ports != null && !ports.isEmpty();
+            case CircuitPackage.ACTOR__ID:
+                return id != ID_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -300,6 +352,8 @@ public class ActorImpl extends LinkableImpl implements Actor {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (type: ");
         result.append(type);
+        result.append(", id: ");
+        result.append(id);
         result.append(')');
         return result.toString();
     }

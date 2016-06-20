@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getId <em>Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -65,6 +66,26 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	protected Linkable target;
 
 	/**
+     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected static final int ID_EDEFAULT = -1;
+
+    /**
+     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected int id = ID_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -205,6 +226,27 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 
 	/**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setId(int newId) {
+        int oldId = id;
+        id = newId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__ID, oldId, id));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -253,6 +295,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
             case CircuitPackage.LINK__TARGET:
                 if (resolve) return getTarget();
                 return basicGetTarget();
+            case CircuitPackage.LINK__ID:
+                return getId();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -270,6 +314,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
                 return;
             case CircuitPackage.LINK__TARGET:
                 setTarget((Linkable)newValue);
+                return;
+            case CircuitPackage.LINK__ID:
+                setId((Integer)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -289,6 +336,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
             case CircuitPackage.LINK__TARGET:
                 setTarget((Linkable)null);
                 return;
+            case CircuitPackage.LINK__ID:
+                setId(ID_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -305,8 +355,26 @@ public class LinkImpl extends NamedObjectImpl implements Link {
                 return source != null;
             case CircuitPackage.LINK__TARGET:
                 return target != null;
+            case CircuitPackage.LINK__ID:
+                return id != ID_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (id: ");
+        result.append(id);
+        result.append(')');
+        return result.toString();
     }
 
 } //LinkImpl

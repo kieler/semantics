@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Link#getId <em>Id</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink()
@@ -88,5 +89,32 @@ public interface Link extends NamedObject {
      * @generated
      */
 	void setTarget(Linkable value);
+
+    /**
+     * Returns the value of the '<em><b>Id</b></em>' attribute.
+     * The default value is <code>"-1"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Id</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Id</em>' attribute.
+     * @see #setId(int)
+     * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Id()
+     * @model default="-1" required="true"
+     * @generated
+     */
+    int getId();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getId <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Id</em>' attribute.
+     * @see #getId()
+     * @generated
+     */
+    void setId(int value);
 
 } // Link

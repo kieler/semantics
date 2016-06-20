@@ -57,6 +57,7 @@ public class PortItemProvider extends LinkableItemProvider {
             super.getPropertyDescriptors(object);
 
             addTypePropertyDescriptor(object);
+            addIdPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -84,6 +85,28 @@ public class PortItemProvider extends LinkableItemProvider {
     }
 
 	/**
+     * This adds a property descriptor for the Id feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIdPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Port_id_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Port_id_feature", "_UI_Port_type"),
+                 CircuitPackage.Literals.PORT__ID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This returns Port.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,6 +145,7 @@ public class PortItemProvider extends LinkableItemProvider {
 
         switch (notification.getFeatureID(Port.class)) {
             case CircuitPackage.PORT__TYPE:
+            case CircuitPackage.PORT__ID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

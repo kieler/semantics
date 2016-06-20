@@ -61,6 +61,7 @@ public class ActorItemProvider extends LinkableItemProvider {
             super.getPropertyDescriptors(object);
 
             addTypePropertyDescriptor(object);
+            addIdPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -88,6 +89,28 @@ public class ActorItemProvider extends LinkableItemProvider {
     }
 
 	/**
+     * This adds a property descriptor for the Id feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIdPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Actor_id_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Actor_id_feature", "_UI_Actor_type"),
+                 CircuitPackage.Literals.ACTOR__ID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -158,6 +181,7 @@ public class ActorItemProvider extends LinkableItemProvider {
 
         switch (notification.getFeatureID(Actor.class)) {
             case CircuitPackage.ACTOR__TYPE:
+            case CircuitPackage.ACTOR__ID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case CircuitPackage.ACTOR__INNER_ACTORS:

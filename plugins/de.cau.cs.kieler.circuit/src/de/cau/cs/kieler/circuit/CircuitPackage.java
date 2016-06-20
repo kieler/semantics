@@ -207,13 +207,22 @@ public interface CircuitPackage extends EPackage {
 	int ACTOR__PORTS = LINKABLE_FEATURE_COUNT + 3;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTOR__ID = LINKABLE_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Actor</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ACTOR_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 4;
+	int ACTOR_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 5;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.circuit.impl.LinkImpl <em>Link</em>}' class.
@@ -281,13 +290,22 @@ public interface CircuitPackage extends EPackage {
 	int PORT__TYPE = LINKABLE_FEATURE_COUNT + 0;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PORT__ID = LINKABLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Port</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 1;
+	int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -326,13 +344,22 @@ public interface CircuitPackage extends EPackage {
 	int LINK__TARGET = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Link</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
+	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 
 	/**
@@ -379,6 +406,17 @@ public interface CircuitPackage extends EPackage {
 	EReference getActor_Ports();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Actor#getId <em>Id</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see de.cau.cs.kieler.circuit.Actor#getId()
+     * @see #getActor()
+     * @generated
+     */
+    EAttribute getActor_Id();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Actor#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -422,6 +460,17 @@ public interface CircuitPackage extends EPackage {
 	EReference getLink_Target();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Link#getId <em>Id</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see de.cau.cs.kieler.circuit.Link#getId()
+     * @see #getLink()
+     * @generated
+     */
+    EAttribute getLink_Id();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -443,6 +492,17 @@ public interface CircuitPackage extends EPackage {
 	EAttribute getPort_Type();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Port#getId <em>Id</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see de.cau.cs.kieler.circuit.Port#getId()
+     * @see #getPort()
+     * @generated
+     */
+    EAttribute getPort_Id();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -531,6 +591,14 @@ public interface CircuitPackage extends EPackage {
 		EReference ACTOR__PORTS = eINSTANCE.getActor_Ports();
 
 		/**
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ACTOR__ID = eINSTANCE.getActor_Id();
+
+        /**
          * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -565,6 +633,14 @@ public interface CircuitPackage extends EPackage {
 		EReference LINK__TARGET = eINSTANCE.getLink_Target();
 
 		/**
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LINK__ID = eINSTANCE.getLink_Id();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -583,6 +659,14 @@ public interface CircuitPackage extends EPackage {
 		EAttribute PORT__TYPE = eINSTANCE.getPort_Type();
 
 		/**
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PORT__ID = eINSTANCE.getPort_Id();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.LinkableImpl <em>Linkable</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

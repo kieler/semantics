@@ -32,12 +32,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * @generated
  */
 public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
-	/**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
+    
+    /**
+     * Give each Port, Actor and Link object its own ID.
      */
+    private static int portID = 0;
+    private static int actorID = 0;
+    private static int linkID = 0;
+    
 	public static CircuitFactory init() {
         try {
             CircuitFactory theCircuitFactory = (CircuitFactory)EPackage.Registry.INSTANCE.getEFactory(CircuitPackage.eNS_URI);
@@ -60,7 +62,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
 	public CircuitFactoryImpl() {
         super();
     }
-
+	
+	
 	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,6 +87,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
      */
 	public Actor createActor() {
         ActorImpl actor = new ActorImpl();
+        actor.id = actorID;
+        actorID++;
         return actor;
     }
 
@@ -94,6 +99,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
      */
 	public Link createLink() {
         LinkImpl link = new LinkImpl();
+        link.id = linkID;
+        linkID++;
         return link;
     }
 
@@ -104,6 +111,8 @@ public class CircuitFactoryImpl extends EFactoryImpl implements CircuitFactory {
      */
 	public Port createPort() {
         PortImpl port = new PortImpl();
+        port.id = portID;
+        portID++;
         return port;
     }
 
