@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.Node
 import org.eclipse.emf.common.util.URI
 import java.util.ArrayList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.Entry
 
 /**
  * Transformation of Circuit into VHDL code.
@@ -77,7 +78,8 @@ class SSASCG2VHDL extends AbstractProductionTransformation {
         val modelOutputs = new ArrayList<ValuedObject>
         val modelLocalVariables = new ArrayList<ValuedObject>
         
-        val entryNode = scg.
+        val entryNode = scg.eAllContents.filter(Entry).head
+        
         
         '''
         «/* Generate the header */»

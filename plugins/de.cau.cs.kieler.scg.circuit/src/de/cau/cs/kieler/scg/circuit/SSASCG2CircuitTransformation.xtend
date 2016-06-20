@@ -45,7 +45,7 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable{
+class SSASCG2CircuitTransformation extends AbstractProductionTransformation implements Traceable{
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --
@@ -83,11 +83,15 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 	// -------------------------------------------------------------------------
 	// --                             LISTS/MAPS                              --
 	// -------------------------------------------------------------------------
-
+    
+    
 	protected var KielerCompilerContext compilerContext
-		
+	
+	//Stores names of all variables which have already been created by a assignment node transformation.
+	// This can happen if expressions are transformed.
 	val LinkedList<String> assignmentActor = new LinkedList<String>
 	
+	//Stores all valuedObject which shall be linked to one specific named wire. 
 	val voExpressions = new HashMap<String, ValuedObject>
 	
 	// -------------------------------------------------------------------------
@@ -117,7 +121,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 		val newCircuit = CircuitFactory::eINSTANCE.createActor
 		newCircuit.name = scg.label
 		
-		 //Tell KITT that this is not an in-place transformation from here on
+		 //Tell KITT that this is not an in-place transformation from here on.
 		creationalTransformation(scg, newCircuit)
 		newCircuit.trace(scg)
 
@@ -353,7 +357,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 		 * g0 = _GO is an exception. Key and value are interchanged. 
 		 * This is done because in the simulation is only g0 present and not _GO.... Maybe this changes if C Code generation is changed.
 		 * 
-		 * TODO: Find a better solution!!! 
+		 * 
 		 * */
 		else if (expr instanceof ValuedObjectReference) {
 			if (assignment.valuedObject.name == "g0") {
