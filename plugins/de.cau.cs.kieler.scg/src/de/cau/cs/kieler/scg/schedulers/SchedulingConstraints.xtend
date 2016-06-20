@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.scg.schedulers
 
-import java.util.List
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.Guard
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Data holder for scheduling constraints.
@@ -27,13 +27,11 @@ import de.cau.cs.kieler.scg.Guard
 class SchedulingConstraints {
 	
 	/** Field for all present scheduling blocks. */
-	@Property
+	@Accessors
 	List<SchedulingBlock> schedulingBlocks
 	
 	/** Field for scheduling clusters. */
-	@Property
+	@Accessors
 	List<List<SchedulingBlock>> schedulingBlockClusters
 	
-//	@Property
-//	List<Guard> guards
 }
