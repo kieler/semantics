@@ -15,9 +15,9 @@ package de.cau.cs.kieler.core.annotations.registry
 import de.cau.cs.kieler.core.annotations.Annotation
 import java.util.List
 import java.util.Set
-import javax.inject.Singleton
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Data
+import com.google.inject.Singleton
 
 /**
  * @author ssm
