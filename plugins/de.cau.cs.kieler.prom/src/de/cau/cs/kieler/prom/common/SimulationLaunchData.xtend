@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.prom.common
 
+import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -28,6 +29,12 @@ class SimulationLaunchData extends ConfigurationSerializable{
      */
     @Accessors
     protected String environmentName = ""
+    
+    /**
+     * The files used in this simulation.
+     */
+    @Accessors
+    protected List<SimulationFileData> files = newArrayList()
     
     /**
      * {inheritDoc}
@@ -65,6 +72,8 @@ class SimulationLaunchData extends ConfigurationSerializable{
         // Load attribute map
         val attributeMap = configuration.getAttribute(IDENTIFIER_ATTR, newHashMap());
         loadAttributesFromMap(attributeMap)
+        // Load files
+        files = SimulationFileData.loadAllFromConfiguration(configuration)
     }
 
     /**
@@ -76,5 +85,7 @@ class SimulationLaunchData extends ConfigurationSerializable{
     public static def saveToConfiguration(ILaunchConfigurationWorkingCopy configuration, SimulationLaunchData data) {
         // Save attribute map
         configuration.setAttribute(IDENTIFIER_ATTR, data.attributeMap)
+        // Save files
+        SimulationFileData.saveAllToConfiguration(configuration, data.files)
     }
 }

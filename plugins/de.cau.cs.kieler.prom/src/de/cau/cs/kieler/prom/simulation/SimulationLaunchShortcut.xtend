@@ -1,13 +1,12 @@
 package de.cau.cs.kieler.prom.simulation
 
+import de.cau.cs.kieler.prom.common.SimulationFileData
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.Platform
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
@@ -16,18 +15,16 @@ import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
-import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.jface.window.Window
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.ide.ResourceUtil
+import org.eclipse.jface.window.Window
 
 class SimulationLaunchShortcut implements ILaunchShortcut {
-    
-    private static String SIMULATOR_ID = "de.cau.cs.kieler.prom.simulator"
-    
+        
     var IProject project
+    
+    val List<SimulationFileData> simulationFiles = newArrayList()
     
     /**
      * {@inheritDoc}
@@ -55,64 +52,47 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
         // A launch shortcut is performed on files, so that there is at least one.
         project = files.get(0).project
         
-        // TODO: guess which files are models that should be compiled (sct, esterel)
+        // Guess which files are models that should be compiled (sct, esterel)
         // and which files are data for the simulation (eso)
+        classifyFiles(files)
         
-        // Dialog to check and set settings if not obvious (e.g. environment and mapping which files are models / data)
-        
-        // Find or create config that matches the specified files
-        val configuration = findLaunchConfiguration(mode)
-        if (configuration != null) {
-            // Launch the config
-            DebugUITools.launch(configuration, mode)
-        }
-        
-        // TODO (in launch config): compile via prom and get compilation result
-
-        // TODO: Move to launch config start simulator        
-        val simulator = getSimulatorFromDialog()
-        if(simulator != null) {
-            simulator.simulate(files, #[], #[]);
+        // Find or create config that matches the specified files and settings
+        val config = findLaunchConfiguration(mode)
+        if (config != null) {
+            // Open launch configuration dialog
+            // so the user can check and set settings.
+            val returnCode = DebugUITools.openLaunchConfigurationDialog(
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                config,
+                DebugUITools.getLaunchGroup(config, mode).getIdentifier(),
+                null)
+              
+            // Launch the config  
+//            DebugUITools.launch(config, mode)
         }
     }
     
-    private def ISimulator getSimulatorFromDialog() {
-        // Get simulators from extensions
-        val config = Platform.getExtensionRegistry().getConfigurationElementsFor(SIMULATOR_ID);
-        
-        // Label provider to display environment
-        val labelProvider = new LabelProvider() {
-            override getText(Object o) {
-                return (o as IConfigurationElement).getAttribute("class")
-            }
-        }
-        
-        // Selection dialog
-        val dialog = new ElementListSelectionDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-            labelProvider)
-        dialog.title = "Simulator selection"
-        dialog.message = "Select a simulator."
-        dialog.setElements(config)
-
-        // Check result
-        val returnCode = dialog.open()
-        if (returnCode == Window.OK) {
-            val results = dialog.result
-            if (results != null && results.size > 0) {
-                val result = results.get(0) as IConfigurationElement
-                
-                // Instantiate simulator
-                try {
-                    val o = result.createExecutableExtension("class");
-                    if (o instanceof ISimulator) {
-                        return o
-                    }
-                } catch (CoreException ex) {
-                    System.err.println(ex.getMessage());
+    private def void classifyFiles(List<IFile> files) {
+        simulationFiles.clear()
+        for(file : files) {
+            val path = file.projectRelativePath
+            val fileExtension = path.fileExtension
+            
+            val f = new SimulationFileData(path.toOSString)
+            simulationFiles += f
+            switch(fileExtension.toLowerCase) {
+                case "eso": {
+                    f.providesInputs = true                    
                 }
-            }
+                default: {
+                    // Model files that ends with "environment" are assumed to provide values for the simulation. 
+                    val nameWithoutExtension = path.removeFileExtension.lastSegment
+                    if(nameWithoutExtension.toLowerCase.endsWith("environment")) {
+                        f.providesInputs = true
+                    }                                     
+                }       
+            }          
         }
-        return null
     }
     
     /**
@@ -174,6 +154,12 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
         // Set project
         launchData.projectName = project.name
 
+        // Set files
+        launchData.files = simulationFiles
+
+        // TODO: set simulator
+        // TODO: set environment
+        
         // Flush to configuration 
         SimulationLaunchData.saveToConfiguration(config, launchData)
     }
@@ -207,6 +193,17 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
      */
     private def boolean isGoodMatch(ILaunchConfiguration configuration) {
         val launchData = SimulationLaunchData.loadFromConfiguration(configuration)
+        // The launch configuration must have the same number of files 
+        if(simulationFiles.size != launchData.files.size) {
+            return false            
+        }
+        // The files must be equal
+        for(var i=0; i < simulationFiles.size; i++) {
+            if(!simulationFiles.get(i).equals(launchData.files.get(i))) {
+                return false
+            }
+        }
+        // The project must be equal
         return launchData.projectName == project.name
     }
 }
