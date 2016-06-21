@@ -3,7 +3,7 @@ scchart S0 "non_reactive" {
 
   initial state S0 "s1"
   --> S1 with A
-  --> S1 / A;
+  --> S1 with / A;
 
   state S1 "s2";
 }

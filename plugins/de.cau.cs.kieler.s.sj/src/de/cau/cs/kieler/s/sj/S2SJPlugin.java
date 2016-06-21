@@ -20,6 +20,8 @@ import java.io.IOException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
 import de.cau.cs.kieler.s.sj.xtend.S2SJ;
@@ -94,7 +96,8 @@ public class S2SJPlugin extends AbstractUIPlugin {
         
         String outputFile2 = outputFile;
         String ccode;
-        S2SJ s2SJ = new S2SJ();
+        S2SJ s2SJ = Guice.createInjector().getInstance(S2SJ.class);
+        //S2SJ s2SJ = new S2SJ();
         outputFile2.replace(".c", ".java");
         S2SJ.debug = debug;
         ccode = s2SJ.transform(transformedProgram, className, packageName).toString();

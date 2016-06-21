@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.scg.transformations.schedulers
 
-import java.util.List
 import de.cau.cs.kieler.scg.SchedulingBlock
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**

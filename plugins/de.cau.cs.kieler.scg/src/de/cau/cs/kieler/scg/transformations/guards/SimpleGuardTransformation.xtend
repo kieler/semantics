@@ -24,7 +24,10 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
@@ -37,9 +40,6 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.SCGAnnotations
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Fork
 
 /** 
  * @author ssm
@@ -113,9 +113,9 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         scg.setDefaultTrace
         newSCG.trace(scg)
         
-        val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(SCGAnnotations.HOSTCODE, (it as StringAnnotation).values.head)
+            newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
         val schedulingBlockCache = scg.createSchedulingBlockCache
@@ -135,8 +135,8 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         for(bb : scg.basicBlocks) {
         	for(sb : bb.schedulingBlocks) {
         		val assignment = GAMap.get(sb.guards.head)
-        		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE, "Join")
-        		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE, "Fork")
+        		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
+        		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
         	}
         }
         

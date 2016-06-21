@@ -55,21 +55,21 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q.equals(syntax))
+			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_5_0_p__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_LeftParenthesisKeyword_5_0_a.equals(syntax))
+			else if (match_AtomicExpression_LeftParenthesisKeyword_5_0_a.equals(syntax))
 				emit_AtomicExpression_LeftParenthesisKeyword_5_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_LeftParenthesisKeyword_5_0_p.equals(syntax))
+			else if (match_AtomicExpression_LeftParenthesisKeyword_5_0_p.equals(syntax))
 				emit_AtomicExpression_LeftParenthesisKeyword_5_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
+			else if (match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
+			else if (match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Sequence_SemicolonKeyword_2_q.equals(syntax))
+			else if (match_Sequence_SemicolonKeyword_2_q.equals(syntax))
 				emit_Sequence_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a.equals(syntax))
+			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a.equals(syntax))
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p.equals(syntax))
+			else if (match_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p.equals(syntax))
 				emit_SignalAtomicExpression_LeftParenthesisKeyword_1_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}

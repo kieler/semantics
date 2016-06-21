@@ -1,0 +1,20 @@
+
+@Transformation SIGNAL
+scchart Signals {
+  bool S;
+  immediate during / S = false;
+
+  region R1:
+
+  initial state A
+  --> B with / S = S || true;
+
+  final state B;
+
+  region R2:
+
+  initial state C
+  --> D with S;
+
+  final state D;
+}

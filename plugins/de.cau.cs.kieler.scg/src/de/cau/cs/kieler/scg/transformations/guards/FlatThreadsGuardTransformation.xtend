@@ -13,27 +13,23 @@
  */
 package de.cau.cs.kieler.scg.transformations.guards
 
-import de.cau.cs.kieler.scg.transformations.guards.AbstractGuardTransformation
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import de.cau.cs.kieler.scg.features.SCGFeatures
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.ExpressionDependency
+import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.transformations.SCGTransformations
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGAnnotations
-import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.scg.ExpressionDependency
 
 /** 
  * @author ssm
@@ -77,9 +73,6 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
     extension KExpressionsValuedObjectExtensions	
     
     @Inject 
-    extension KExpressionsCreateExtensions	    
-
-    @Inject 
     extension KExpressionsReplacementExtensions 
     
     @Inject
@@ -94,7 +87,7 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
      	
      	val go = scg.findValuedObjectByName("_GO")
      	
-     	val nodes = scg.nodes.filter[ it instanceof Assignment && it.hasAnnotation(SCGAnnotations.SCHEDULINGBLOCK_HEADNODE)].toList
+     	val nodes = scg.nodes.filter[ it instanceof Assignment && it.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE)].toList
      	for(node : nodes) {
      		for(dependency : node.dependencies.filter[ it instanceof ExpressionDependency ]) {
      			var targetAssignment = dependency.target as Assignment

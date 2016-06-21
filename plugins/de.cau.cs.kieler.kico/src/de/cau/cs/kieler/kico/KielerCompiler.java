@@ -210,6 +210,7 @@ public class KielerCompiler {
             hook.preCompilation(context);
         }
 
+        context.setProperty(KiCoProperties.RAW_INPUT_MODEL, transformationEObject);
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = copy(transformationEObject, context);
@@ -493,7 +494,7 @@ public class KielerCompiler {
 
         for (IHook hook : getHooks()) {
             EObject hookCopy = hook.copy(original, context);
-            if (copy != null) {
+            if (copy != null && hookCopy != null) {
                 throw new IllegalStateException("Multiple hooks try to perfom model copy");
             }
             if (hookCopy != null) {

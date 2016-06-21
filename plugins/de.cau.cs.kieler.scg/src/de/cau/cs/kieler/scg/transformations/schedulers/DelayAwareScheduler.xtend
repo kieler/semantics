@@ -14,7 +14,6 @@
  package de.cau.cs.kieler.scg.transformations.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join
@@ -23,14 +22,12 @@ import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.List
-import java.util.Set
 import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
+import java.util.List
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -81,16 +78,7 @@ class DelayAwareScheduler extends SimpleScheduler {
     extension SCGCoreExtensions
     
     @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGCacheExtensions      
-       
-    @Inject
     extension SynchronizerSelector    
-    
-    @Inject
-    extension AnnotationsExtensions
     
     protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
     protected val schizophrenicEntry = <SchedulingBlock> newHashSet

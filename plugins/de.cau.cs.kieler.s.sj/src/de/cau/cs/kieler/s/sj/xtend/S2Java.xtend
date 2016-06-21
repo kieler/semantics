@@ -51,6 +51,7 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -126,7 +127,7 @@ class S2Java {
 
     «includeHeader»
     «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
-        «(hostcode as StringAnnotation).values.head»
+        «(hostcode as StringAnnotation).values.head.removeEscapeChars»
     «ENDFOR»
     
     

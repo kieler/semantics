@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Expressions Effect UI Plugin
 Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.keffects.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,

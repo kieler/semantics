@@ -25,7 +25,7 @@ public class KExpressionsRuntimeModule extends
     }
     
     public Class<? extends de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator> bindKExpressionsJavaValidator() {
-            return de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator.class;
+            return de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidatorXtend.class;
     }    
 
 }

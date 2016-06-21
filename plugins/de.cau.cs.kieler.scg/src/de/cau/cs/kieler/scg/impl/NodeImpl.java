@@ -35,235 +35,235 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class NodeImpl extends AnnotatableImpl implements Node {
     /**
-	 * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getIncoming()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getIncoming()
+     * @generated
+     * @ordered
+     */
     protected EList<Link> incoming;
 
     /**
-	 * The default value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #isIsInitial()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsInitial()
+     * @generated
+     * @ordered
+     */
     protected static final boolean IS_INITIAL_EDEFAULT = false;
 
     /**
-	 * The cached value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #isIsInitial()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isIsInitial()
+     * @generated
+     * @ordered
+     */
     protected boolean isInitial = IS_INITIAL_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getDependencies()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getDependencies()
+     * @generated
+     * @ordered
+     */
     protected EList<Dependency> dependencies;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected NodeImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.NODE;
-	}
+        return ScgPackage.Literals.NODE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Link> getIncoming() {
-		if (incoming == null) {
-			incoming = new EObjectWithInverseResolvingEList<Link>(Link.class, this, ScgPackage.NODE__INCOMING, ScgPackage.LINK__TARGET);
-		}
-		return incoming;
-	}
+        if (incoming == null) {
+            incoming = new EObjectWithInverseResolvingEList<Link>(Link.class, this, ScgPackage.NODE__INCOMING, ScgPackage.LINK__TARGET);
+        }
+        return incoming;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public boolean isIsInitial() {
-		return isInitial;
-	}
+        return isInitial;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setIsInitial(boolean newIsInitial) {
-		boolean oldIsInitial = isInitial;
-		isInitial = newIsInitial;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__IS_INITIAL, oldIsInitial, isInitial));
-	}
+        boolean oldIsInitial = isInitial;
+        isInitial = newIsInitial;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__IS_INITIAL, oldIsInitial, isInitial));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Dependency> getDependencies() {
-		if (dependencies == null) {
-			dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
-		}
-		return dependencies;
-	}
+        if (dependencies == null) {
+            dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
+        }
+        return dependencies;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncoming()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncoming()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				return ((InternalEList<?>)getIncoming()).basicRemove(otherEnd, msgs);
-			case ScgPackage.NODE__DEPENDENCIES:
-				return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                return ((InternalEList<?>)getIncoming()).basicRemove(otherEnd, msgs);
+            case ScgPackage.NODE__DEPENDENCIES:
+                return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				return getIncoming();
-			case ScgPackage.NODE__IS_INITIAL:
-				return isIsInitial();
-			case ScgPackage.NODE__DEPENDENCIES:
-				return getDependencies();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                return getIncoming();
+            case ScgPackage.NODE__IS_INITIAL:
+                return isIsInitial();
+            case ScgPackage.NODE__DEPENDENCIES:
+                return getDependencies();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				getIncoming().clear();
-				getIncoming().addAll((Collection<? extends Link>)newValue);
-				return;
-			case ScgPackage.NODE__IS_INITIAL:
-				setIsInitial((Boolean)newValue);
-				return;
-			case ScgPackage.NODE__DEPENDENCIES:
-				getDependencies().clear();
-				getDependencies().addAll((Collection<? extends Dependency>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                getIncoming().clear();
+                getIncoming().addAll((Collection<? extends Link>)newValue);
+                return;
+            case ScgPackage.NODE__IS_INITIAL:
+                setIsInitial((Boolean)newValue);
+                return;
+            case ScgPackage.NODE__DEPENDENCIES:
+                getDependencies().clear();
+                getDependencies().addAll((Collection<? extends Dependency>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				getIncoming().clear();
-				return;
-			case ScgPackage.NODE__IS_INITIAL:
-				setIsInitial(IS_INITIAL_EDEFAULT);
-				return;
-			case ScgPackage.NODE__DEPENDENCIES:
-				getDependencies().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                getIncoming().clear();
+                return;
+            case ScgPackage.NODE__IS_INITIAL:
+                setIsInitial(IS_INITIAL_EDEFAULT);
+                return;
+            case ScgPackage.NODE__DEPENDENCIES:
+                getDependencies().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ScgPackage.NODE__INCOMING:
-				return incoming != null && !incoming.isEmpty();
-			case ScgPackage.NODE__IS_INITIAL:
-				return isInitial != IS_INITIAL_EDEFAULT;
-			case ScgPackage.NODE__DEPENDENCIES:
-				return dependencies != null && !dependencies.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.NODE__INCOMING:
+                return incoming != null && !incoming.isEmpty();
+            case ScgPackage.NODE__IS_INITIAL:
+                return isInitial != IS_INITIAL_EDEFAULT;
+            case ScgPackage.NODE__DEPENDENCIES:
+                return dependencies != null && !dependencies.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isInitial: ");
-		result.append(isInitial);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (isInitial: ");
+        result.append(isInitial);
+        result.append(')');
+        return result.toString();
+    }
 
 } //NodeImpl

@@ -21,17 +21,17 @@
 
    <!-- KIELER SEMANTICS -->
 
-   <feature url="features/de.cau.cs.kieler.esterel_0.3.1.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.3.1.qualifier">
+   <feature url="features/de.cau.cs.kieler.esterel_0.3.2.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.3.2.qualifier">
       <category name="kieler-sem"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.esterel.source_0.3.1.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.3.1.qualifier">
+   <feature url="features/de.cau.cs.kieler.esterel.source_0.3.2.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.3.2.qualifier">
       <category name="kieler-sources"/>
    </feature>
 
-   <feature url="features/de.cau.cs.kieler.sccharts_0.1.1.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.1.1.qualifier">
+   <feature url="features/de.cau.cs.kieler.sccharts_0.1.2.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.1.2.qualifier">
       <category name="kieler-sem"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.sccharts.source_0.1.1.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.1.1.qualifier">
+   <feature url="features/de.cau.cs.kieler.sccharts.source_0.1.2.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.1.2.qualifier">
       <category name="kieler-sources"/>
    </feature>
 

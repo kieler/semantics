@@ -27,7 +27,7 @@ scchart _151_pre_referenced_signals_no_signal_dependency
 
     state fb;
   }
-  --> C immediate / B(4);
+  --> C immediate with / B(4);
 
   state B
   --> EB with I;

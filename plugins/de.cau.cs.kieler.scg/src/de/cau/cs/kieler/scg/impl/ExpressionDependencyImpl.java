@@ -27,22 +27,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ExpressionDependencyImpl extends DependencyImpl implements ExpressionDependency {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ExpressionDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgPackage.Literals.EXPRESSION_DEPENDENCY;
-	}
+        return ScgPackage.Literals.EXPRESSION_DEPENDENCY;
+    }
 
 } //ExpressionDependencyImpl

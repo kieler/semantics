@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
 
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
  * whenever multiple threads join again. <br>

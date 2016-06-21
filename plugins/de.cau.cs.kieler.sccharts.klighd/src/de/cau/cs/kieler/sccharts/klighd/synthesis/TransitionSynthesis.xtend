@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -58,7 +59,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         val edge = transition.createEdge().associateWith(transition);
 
         edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 3.0f);
+        if (USE_KLAY.booleanValue) {
+            edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 3.0f);
+        } else {
+            edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 2.0f);
+        }
         
         // Connect with states
         edge.source = transition.sourceState.node;

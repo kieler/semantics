@@ -10,10 +10,10 @@ scchart _81_preemption_basic_test "81-preemption-basic-test" {
   state B {
 
     initial state C
-    --> D / O1;
+    --> D with / O1;
 
     state D
-    --> C / O2;
+    --> C with / O2;
   }
   o-> E with I / O3;
 
