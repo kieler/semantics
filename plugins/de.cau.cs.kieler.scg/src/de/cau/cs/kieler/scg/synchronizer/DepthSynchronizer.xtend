@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeE
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Fork
+import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler

@@ -43,7 +43,6 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
-import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
 import java.util.Set
@@ -52,6 +51,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -118,16 +118,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SynchronizerSelector
-    
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-    
+        
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
 

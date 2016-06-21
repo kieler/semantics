@@ -15,13 +15,11 @@ package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -50,18 +48,12 @@ abstract class AbstractSequentializer extends AbstractProductionTransformation {
     @Inject
     extension KExpressionsDeclarationExtensions
         
-    @Inject
-    extension SCGDeclarationExtensions        
-    
     // -------------------------------------------------------------------------
     // -- Constants 
     // -------------------------------------------------------------------------
     
     /** Name of the go signal. */
-    protected static val String GOGUARDNAME = "_GO"
-    
-    public static val String ANNOTATION_CONDITIONALASSIGNMENT = "conditional"
-    
+    protected static val String GOGUARDNAME = "_GO"    
     
     // -------------------------------------------------------------------------
     // -- Sequentializer 
