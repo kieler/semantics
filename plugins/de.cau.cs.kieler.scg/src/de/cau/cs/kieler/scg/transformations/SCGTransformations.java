@@ -58,4 +58,7 @@ public class SCGTransformations {
     
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";
+    
+    public final static String SCG2C_ID = "scg.c";
+    public final static String SCG2C_NAME = "C";    
 }

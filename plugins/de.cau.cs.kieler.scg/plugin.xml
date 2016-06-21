@@ -66,6 +66,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.sequentializer.DCGuardSequentializer">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
@@ -98,6 +101,9 @@
       </featureClass>
       <featureClass
             class="de.cau.cs.kieler.scg.features.DCSequentialize">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.C">
       </featureClass>
    </extension>
 

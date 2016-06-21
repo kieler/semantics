@@ -49,4 +49,8 @@ public class SCGFeatures {
     
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";
+    
+    public final static String C_ID = "scg.c";
+    public final static String C_NAME = "C";
+    
 }
