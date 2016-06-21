@@ -1368,7 +1368,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
                     val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-                    if (basicBlock.deadBlock) {
+                    if (basicBlock.deadBlock && (guard == null || guard.expression == null)) {
                         expText = "<null>"
                     } else {
                         val exp = guard.expression.copy
@@ -1395,7 +1395,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
 	                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guards.head != null && !schedulingBlock.basicBlock.deadBlock) {
+	                    if (schedulingBlock.guards.head != null /* && !schedulingBlock.basicBlock.deadBlock */) {
         	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
 						sbName = sbName + "\n" + expText       

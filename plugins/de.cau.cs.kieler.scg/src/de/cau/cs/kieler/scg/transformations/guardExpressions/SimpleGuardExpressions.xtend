@@ -207,12 +207,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
         for (basicBlock : scg.basicBlocks) {
-            if (basicBlock.isDeadBlock) {
-// FIXME: Removed dead flag in guards
-//                for (schedulingBlock : basicBlock.schedulingBlocks) {
-//                    schedulingBlock.guard.dead = true
-//                }
-            } else {
+//            if (basicBlock.isDeadBlock) {
                 predecessorList += basicBlock.predecessors
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
                     schedulingBlocks += schedulingBlock
@@ -221,7 +216,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
                         schedulingBlockGuardCache.put(schedulingBlock.guards.head, schedulingBlock)
                     }
                 }
-            }
+//            }
         }
 
         var time = (System.currentTimeMillis - timestamp) as float
