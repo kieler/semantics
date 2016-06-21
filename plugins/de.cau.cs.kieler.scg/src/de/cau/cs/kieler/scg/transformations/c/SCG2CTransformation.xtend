@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2016 by
@@ -17,6 +17,12 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * @author ssm
@@ -25,7 +31,11 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
  * 
  */
 class SCG2CTransformation extends AbstractProductionTransformation {
-    
+
+    @Inject extension AnnotationsExtensions
+
+    @Inject extension KExpressionsValuedObjectExtensions
+
     override getId() {
         return SCGTransformations.SCG2C_ID
     }
@@ -41,9 +51,31 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     override getRequiredFeatureIds() {
         return newHashSet(SCGFeatures.SEQUENTIALIZE_ID)
     }
-    
-     public def String transform(SCGraph scg, KielerCompilerContext context) {
-         "cout \"Hello World!\";"
-     }    
-    
+
+    public def String transform(SCGraph scg, KielerCompilerContext context) {
+        val sb = new StringBuilder
+
+        sb.addHeader
+        sb.addGlobalHostcodeAnnotations(scg)
+
+        sb.toString
+    }
+
+    def addGlobalHostcodeAnnotations(StringBuilder sb, SCGraph scg) {
+        for (annotation : scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)) {
+            sb.append(annotation.asStringAnnotation.values.head.removeEscapeChars);
+            sb.append("\n")
+        }
+    }
+
+    protected def void addHeader(StringBuilder sb) {
+        sb.append(
+            "/*\n" + 
+            " * Automatically generated C code by\n" + 
+            " * KIELER SCCharts - The Key to Efficient Modeling\n" +
+            " *\n" + 
+            " * http://rtsys.informatik.uni-kiel.de/kieler\n" + 
+            " */\n")
+    }
+
 }
