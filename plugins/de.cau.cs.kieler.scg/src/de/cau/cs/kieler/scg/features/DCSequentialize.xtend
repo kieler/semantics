@@ -19,24 +19,24 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
 
 /**
- * SCG Scheduling Feature.
+ * SCG Sequentialize Feature.
  * 
  * @author ssm
- * @kieler.design 2016-04-07 proposed 
- * @kieler.rating 2016-04-07 proposed yellow
+ * @kieler.design 2016-06-21 proposed 
+ * @kieler.rating 2016-06-21 proposed yellow
  *
  */
-class DCScheduling extends Feature {
+class DCSequentialize extends Feature {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCGFeatures::DC_SCHEDULING_ID
+        return SCGFeatures::DC_SEQUENTIALIZE_ID
     }
 
     override getName() {
-        return SCGFeatures::DC_SCHEDULING_NAME
+        return SCGFeatures::DC_SEQUENTIALIZE_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -45,6 +45,6 @@ class DCScheduling extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(SCGraph scg) {
-        return scg.hasAnnotation(SCGFeatures::DC_SCHEDULING_ID)
+        return scg.hasAnnotation(SCGFeatures::DC_SEQUENTIALIZE_ID)
     }
 }

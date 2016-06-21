@@ -63,6 +63,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.guards.FlatThreadsGuardTransformation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.sequentializer.DCGuardSequentializer">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
@@ -90,18 +93,12 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.features.SCGraphGroup">
       </featureGroupClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.features.DCScheduling">
-      </featureClass>    
       <featureClass 
             class="de.cau.cs.kieler.scg.features.SCPDG">
       </featureClass>
       <featureClass
-            class="de.cau.cs.kieler.scg.features.FTGuards">
+            class="de.cau.cs.kieler.scg.features.DCSequentialize">
       </featureClass>
-      <featureGroupClass
-            class="de.cau.cs.kieler.scg.features.SCGraphGroup3">
-      </featureGroupClass>
    </extension>
 
 

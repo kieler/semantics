@@ -38,17 +38,14 @@ public class SCGFeatures {
     public final static String GUARDS_ID = "scg.guards";
     public final static String GUARDS_NAME = "Guards";
 
-    public final static String FT_GUARDS_ID = "scg.guards.ft";
-    public final static String FT_GUARDS_NAME = "RTF Guards";
-    
     public final static String SCHEDULING_ID = "scg.scheduling";
     public final static String SCHEDULING_NAME = "Scheduling";
 
-    public final static String DC_SCHEDULING_ID = "scg.scheduling.dc";
-    public final static String DC_SCHEDULING_NAME = "DC Scheduling";
-    
     public final static String SEQUENTIALIZE_ID = "scg.sequentialize";
     public final static String SEQUENTIALIZE_NAME = "Sequentialize";
+
+    public final static String DC_SEQUENTIALIZE_ID = "scg.sequentialize.dc";
+    public final static String DC_SEQUENTIALIZE_NAME = "Sequentialize.dc";
     
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";

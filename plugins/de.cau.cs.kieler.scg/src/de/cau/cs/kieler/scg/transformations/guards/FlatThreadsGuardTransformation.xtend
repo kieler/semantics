@@ -30,6 +30,7 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.inject.Injector
 
 /** 
  * @author ssm
@@ -52,11 +53,11 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
     }
 
     override getProducedFeatureId() {
-        return SCGFeatures::FT_GUARDS_ID
+        return SCGFeatures::GUARDS_ID
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::GUARDS_ID)
+        return newHashSet(SCGFeatures::GUARD_EXPRESSIONS_ID)
     }
 
     // -------------------------------------------------------------------------
@@ -82,12 +83,17 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
     // -- Guard Transformation
     // -------------------------------------------------------------------------    
       
-     public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-       	scg.createStringAnnotation(SCGFeatures.FT_GUARDS_ID, SCGFeatures.FT_GUARDS_NAME)
+    @Inject private Injector injector      
+      
+    public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+         
+        val simpleGuardTransformation = injector.getInstance(SimpleGuardTransformation)
+        
+        val mySCG = simpleGuardTransformation.transform(scg, context)    
+         
+     	val go = mySCG.findValuedObjectByName("_GO")
      	
-     	val go = scg.findValuedObjectByName("_GO")
-     	
-     	val nodes = scg.nodes.filter[ it instanceof Assignment && it.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE)].toList
+     	val nodes = mySCG.nodes.filter[ it instanceof Assignment && it.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE)].toList
      	for(node : nodes) {
      		for(dependency : node.dependencies.filter[ it instanceof ExpressionDependency ]) {
      			var targetAssignment = dependency.target as Assignment
@@ -100,9 +106,9 @@ class FlatThreadsGuardTransformation extends AbstractGuardTransformation impleme
      		for(id : incomingDependencies) {
      			id.remove
      		}
-     		scg.nodes -= node
+     		mySCG.nodes -= node
      	}
      	
-     	scg	
+     	mySCG	
      }
 }

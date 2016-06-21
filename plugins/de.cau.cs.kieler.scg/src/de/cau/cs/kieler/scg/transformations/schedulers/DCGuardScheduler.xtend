@@ -33,11 +33,11 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     }
 
     override getProducedFeatureId() {
-        return SCGFeatures::DC_SCHEDULING_ID
+        return SCGFeatures::SCHEDULING_ID
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::FT_GUARDS_ID)
+        return newHashSet(SCGFeatures::GUARDS_ID)
     }
 
     // -------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
 	 * {@inherited}
 	 */
     public override SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-    	scg.createStringAnnotation(SCGFeatures.DC_SCHEDULING_ID, SCGFeatures.DC_SCHEDULING_NAME)
+    	scg.createStringAnnotation(SCGFeatures.SCHEDULING_ID, SCGFeatures.SCHEDULING_NAME)
  
     	/** 
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
