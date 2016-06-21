@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.GuardDependency
+import de.cau.cs.kieler.scg.ControlDependency
 
 /** 
  * @author ssm
@@ -70,6 +71,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
     // -------------------------------------------------------------------------
     
     @Inject 
+    extension SCGCoreExtensions
+    
+    @Inject 
     extension SCGDeclarationExtensions
          
     @Inject 
@@ -77,6 +81,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
     
     @Inject
     extension AnnotationsExtensions
+
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -133,9 +140,47 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             
             // Connect assignments
             for(schedule : scheduleDependencies) {
-            	val sourceAssignment = AAMap.get((schedule.eContainer as Assignment))
-            	val targetAssignment = AAMap.get(schedule.target) 
-            	sourceAssignment.createControlFlow.target = targetAssignment 
+                val originalAssignment = schedule.eContainer as Assignment
+            	val sourceAssignment = AAMap.get(originalAssignment)
+                val targetAssignment = AAMap.get(schedule.target) 
+            	
+            	// Check for guarded assignments
+            	val guardDependencies = originalAssignment.dependencies.filter(GuardDependency)
+            	if (!guardDependencies.empty) {
+            	    val guardConditional = ScgFactory.eINSTANCE.createConditional
+                    newSCG.nodes += guardConditional
+                    guardConditional.condition = sourceAssignment.valuedObject.reference  
+                    sourceAssignment.createControlFlow.target = guardConditional
+  
+                    var Assignment nextAssignment = null
+                    for(gd : guardDependencies) {
+                        (gd.target as Assignment).copySCGAssignment(valuedObjectMap) => [
+                            newSCG.nodes += it
+                            AAMap.put(gd.target as Assignment, it)
+                        ]                    
+                        if (gd.target.asAssignment.dependencies.filter(ControlDependency).empty) {
+                            nextAssignment = gd.target as Assignment
+                        }
+                    }
+                    
+                    if (nextAssignment == null) {
+                        throw new NullPointerException("Next assignment must not be null! Maybe your control dependencies are wrong?");
+                    }
+                    guardConditional.createControlFlow.target = AAMap.get(nextAssignment)
+                    
+                    var next = nextAssignment
+                    while (next != null) {
+                        next = nextAssignment.dependencies.filter(ControlDependency).head?.target?.asAssignment
+                        if (next != null) {
+                            AAMap.get(nextAssignment).createControlFlow.target = AAMap.get(next)
+                            nextAssignment = next
+                        }
+                    }
+                    AAMap.get(nextAssignment).createControlFlow.target = targetAssignment 
+                    guardConditional.createControlFlow.target = targetAssignment         	    
+            	} else {
+                	sourceAssignment.createControlFlow.target = targetAssignment
+               	} 
             }
         }
         
