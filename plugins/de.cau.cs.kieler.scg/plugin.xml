@@ -99,6 +99,9 @@
       <featureClass
             class="de.cau.cs.kieler.scg.features.FTGuards">
       </featureClass>
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.features.SCGraphGroup3">
+      </featureGroupClass>
    </extension>
 
 

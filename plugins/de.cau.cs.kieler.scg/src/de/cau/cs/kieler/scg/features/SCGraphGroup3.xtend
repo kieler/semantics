@@ -16,20 +16,20 @@ package de.cau.cs.kieler.scg.features
 import de.cau.cs.kieler.kico.features.FeatureGroup
 
 /**
- * @author als
+ * @author ssm
  *
  */
-class SCGraphGroup extends FeatureGroup {
+class SCGraphGroup3 extends FeatureGroup {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCGFeatureGroups::SCG_ID
+        return SCGFeatureGroups::SCG3_ID
     }
 
     override getName() {
-        return SCGFeatureGroups::SCG_NAME
+        return SCGFeatureGroups::SCG3_NAME
     }
 
     override getFeatureIds() {
@@ -39,8 +39,8 @@ class SCGraphGroup extends FeatureGroup {
         	SCGFeatures::BASICBLOCK_ID, 
         	SCGFeatures::GUARD_EXPRESSIONS_ID, 
         	SCGFeatures::GUARDS_ID,
-        	SCGFeatures::SCHEDULING_ID, 
-        	SCGFeatures::SEQUENTIALIZE_ID
+        	SCGFeatures::FT_GUARDS_ID,
+        	SCGFeatures::DC_SCHEDULING_ID
         )
     }
     
