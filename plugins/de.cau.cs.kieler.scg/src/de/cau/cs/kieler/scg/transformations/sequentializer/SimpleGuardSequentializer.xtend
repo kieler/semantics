@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.GuardDependency
 
 /** 
  * @author ssm
@@ -110,26 +111,32 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
         
-        val assignmentNodes = scg.nodes.filter[ incoming.filter(ScheduleDependency).empty ].head.
-        	getSchedule.filter(Assignment)
+        val assignmentHeadNodes = scg.nodes.filter[ 
+            incoming.filter(ScheduleDependency).empty &&
+            incoming.filter(GuardDependency).empty
+        ]
         
-        val AAMap = <Assignment, Assignment> newHashMap
-        val scheduleDependencies = <ScheduleDependency> newArrayList
-        
-     	// Create new assignments
-        for(assignment : assignmentNodes) {
-        	assignment.copySCGAssignment(valuedObjectMap) => [
-        		newSCG.nodes += it
-        		AAMap.put(assignment, it)
-        	]
-        	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
-        }
-        
-        // Connect assignments
-        for(schedule : scheduleDependencies) {
-        	val sourceAssignment = AAMap.get((schedule.eContainer as Assignment))
-        	val targetAssignment = AAMap.get(schedule.target) 
-        	sourceAssignment.createControlFlow.target = targetAssignment 
+        for(headNode : assignmentHeadNodes) {
+            val assignmentNodes = headNode.getSchedule.filter(Assignment)
+            
+            val AAMap = <Assignment, Assignment> newHashMap
+            val scheduleDependencies = <ScheduleDependency> newArrayList
+            
+         	// Create new assignments
+            for(assignment : assignmentNodes) {
+            	assignment.copySCGAssignment(valuedObjectMap) => [
+            		newSCG.nodes += it
+            		AAMap.put(assignment, it)
+            	]
+            	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
+            }
+            
+            // Connect assignments
+            for(schedule : scheduleDependencies) {
+            	val sourceAssignment = AAMap.get((schedule.eContainer as Assignment))
+            	val targetAssignment = AAMap.get(schedule.target) 
+            	sourceAssignment.createControlFlow.target = targetAssignment 
+            }
         }
         
         newSCG
