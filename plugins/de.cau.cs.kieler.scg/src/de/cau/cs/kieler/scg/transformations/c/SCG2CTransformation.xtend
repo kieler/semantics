@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
+import java.util.Stack
 
 /**
  * @author ssm
@@ -114,6 +115,8 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         
         val VOSet = <ValuedObject> newHashSet
         val PRESet = <ValuedObject> newHashSet
+        val conditionalStack = new Stack<Conditional>
+        val conditionalSet = <Conditional> newHashSet
         
         tickLogicFunction.append("void ")
         tickLogicFunction.append(TICK_LOGIC_FUNCTION_NAME).append(functionSuffix).append("(");
@@ -141,6 +144,20 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             val PREs = <ValuedObject> newHashSet      
             
             if (node instanceof Assignment) {
+                val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+                if (incomingControlFlows.size>1) {
+                    val conditional = conditionalStack.pop
+                    
+                    if (conditional.^else.target == node || conditionalSet.contains(conditional)) {
+                        indent = indent.substring(0, indent.length - 2)
+                        tickLogicFunction.append(indent).append("}\n")
+                    } else {
+                        tickLogicFunction.append(indent.substring(0, indent.length - 2)).append("} else {\n")
+                        conditionalStack.push(conditional)
+                        conditionalSet += conditional
+                    }
+                }                
+                
                 valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "."
                 tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
                 expression = node.expression
@@ -148,8 +165,11 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                 
                 node = node.next?.target
             } else if (node instanceof Conditional) {
-                expression = node.condition
-                node = node.^else?.target
+                tickLogicFunction.append(indent).append("if (").append(node.condition.serializeHR).append(") {\n")
+                indent = indent + DEFAULT_INDENTATION
+                conditionalStack.push(node) 
+                expression = node.condition                
+                node = node.then?.target
             } else {
                 throw new Exception("C code generation backend cannot handle nodes that are not of type assignment or conditional.")
             }
@@ -183,10 +203,6 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             
         }
         
-        tickLogicFunction.append("}\n");
-        resetFunction.append("}\n");
-        tickStruct.append("} ").append(TICK_STRUCT_NAME).append(functionSuffix).append(";\n")
- 
         
         tickFunction.append("void ")
         tickFunction.append(TICK_FUNCTION_NAME).append(functionSuffix).append("(")
@@ -198,8 +214,10 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         
         tickFunction.append(DEFAULT_INDENTATION).
             append(TICK_LOGIC_FUNCTION_NAME).append("(").append(TICK_LOCAL_DATA_POINTER_NAME).append(");\n\n")
-        if (!VOSet.filter[ it.name.equals("_GO")].empty) 
+        if (!VOSet.filter[ it.name.equals("_GO")].empty) {
             tickFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("._GO = 0;\n")
+            resetFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("._GO = 1;\n")            
+        }
 
         for(pre : PRESet) {
             valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "." + DEFAULT_PRE_PREFIX
@@ -209,6 +227,10 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             tickFunction.append(pre.serializeHR).append(";\n")
         }                              
         
+        
+        tickLogicFunction.append("}\n");
+        resetFunction.append("}\n");
+        tickStruct.append("} ").append(TICK_STRUCT_NAME).append(functionSuffix).append(";\n")
         tickFunction.append("}\n");   
             
         initSB.append(tickStruct).append("\n")
