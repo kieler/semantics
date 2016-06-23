@@ -325,10 +325,14 @@ class CDTProcessor {
         connectorStates.add(connectorState)
         val switchVar = statement.children.filter(typeof(CASTIdExpression)).head.syntax.toString
         var lastState = state;
+        var breakState = state;
         var Expression kExp = null;
         var parent = state;
         var Boolean defaultExpression = false;
         var Boolean casebefore = false;
+        var Boolean noBreakBefore = false;
+        
+        
         
         for (caseExpression : f.children.filter(typeof(CASTCompoundStatement)).head.children.filter(
             typeof(IASTStatement))) {
@@ -352,26 +356,28 @@ class CDTProcessor {
                     kExp = (switchVar + " == " + caseExpression.children.filter(typeof(IASTExpression)).head.toString).
                         createTextExpression
                     if (lastState != parent && !parent.final) {
-                        val notBreakState = scc.createState => [ s |
-                            s.id = trC.toString + "_noBreak"
-                            s.label = createLabel(statement) + "_noBreak"
-                            
-                            state.parentRegion.states += s 
-                        ]
-                        
-                        
-                        val backConnector = scc.createTransition => [
-                            targetState = notBreakState
-                            immediate = true
-                        ]
-                         val connector = scc.createTransition => [
-                            targetState = notBreakState
-                            immediate = true
-                        ]
-                        lastState.outgoingTransitions+=connector
-                        parent.outgoingTransitions += backConnector
-                    lastState = notBreakState;
-                    parent = notBreakState
+//                        val notBreakState = scc.createState => [ s |
+//                            s.id = trC.toString + "_noBreak"
+//                            s.label = createLabel(statement) + "_noBreak"
+//                            
+//                            state.parentRegion.states += s 
+//                        ]
+//                        
+//                        
+//                        val backConnector = scc.createTransition => [
+//                            targetState = notBreakState
+//                            immediate = false
+//                        ]
+//                         val connector = scc.createTransition => [
+//                            targetState = notBreakState
+//                            immediate = false
+//                        ]
+//                        lastState.outgoingTransitions+=connector
+//                        parent.outgoingTransitions += backConnector
+                    
+                    breakState = parent
+                    noBreakBefore = true
+//                    parent = notBreakState
                     casebefore=true;
                     
                     }
@@ -392,10 +398,24 @@ class CDTProcessor {
                 defaultExpression = true;
 
             } else {
-
+                // hier kommt man auch rein, wenn statement ein SwitchStatement ist.
+                // parent wird hier auf einen neuen state gesetzt
                 parent = caseExpression.transformStatement(parent);
+                println("PARENT: " +  parent)
                 if (!defaultExpression) {
                     lastState.outgoingTransitions.last.trigger = kExp
+                }
+                
+                // Das hier funktioniert glaube ich. Das Problem ist noch, dass dieser Teil hier erst dran kommt,
+                // nachdem der case 3 schon gezeichnet wurde. Dieser wird halt mit falschen Transitionen gezeichnet.
+                if (noBreakBefore) {
+                    val noBreakTrans = scc.createTransition => [
+                        immediate = true
+                    ]
+                    breakState.outgoingTransitions += noBreakTrans
+                    parent.incomingTransitions += noBreakTrans
+                    noBreakBefore = false
+                    parent = state
                 }
 
                 // lastTransition.targetState=trueState
@@ -403,7 +423,13 @@ class CDTProcessor {
             }
 
         // caseExpression.children.filter(typeof(IASTStatement)).head.transformStatement(state)
-        }
+
+
+        }  // ENDE DER FOR-SCHLEIFE
+        
+               
+        // hier wird der letzte state des switch-case Graphen mit dem connectorState verbunden, falls dieser
+        // nicht final ist.
         if (!parent.final) {
             var backConnector = scc.createTransition => [
                 targetState = connectorState
@@ -412,6 +438,8 @@ class CDTProcessor {
             parent.outgoingTransitions += backConnector
         }
 
+        // Falls kein default-case im switch vorhanden ist, wird diese Transition genommen.
+        // defaultExpression = true heißt, dass es einen default-case gibt.
         if (!defaultExpression) {
             var backConnector = scc.createTransition => [
                 targetState = connectorState
@@ -448,7 +476,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
-            s.label = createLabel(statement) + "_cond"
+            s.label = createLabel(statement) + "cond"
             s.initial = true
             // s.setTypeConnector
 //            s.regions += scc.createControlflowRegion => [
@@ -464,6 +492,8 @@ class CDTProcessor {
             if(state.id.contains("_cond")) {
                 trigger = kExp
                 immediate = false
+            } else if(state.hasInnerStatesOrControlflowRegions) {
+                type = TransitionType::TERMINATION
             } else {
                 immediate = true
             }
@@ -584,7 +614,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
-            s.label = createLabel(statement) + "_cond"
+            s.label = createLabel(statement) + "cond"
             // s.setTypeConnector
 //            s.regions += scc.createControlflowRegion => [
 //                id = s.id + "_r"
@@ -596,7 +626,10 @@ class CDTProcessor {
         // Connect body to condState to check condition after body
         val condTrans = scc.createTransition => [
             targetState = condState
-            if (bodyState.hasInnerStatesOrControlflowRegions) {
+            if(state.id.contains("_cond")) {
+                trigger = kExp
+                immediate = false
+            } else if (bodyState.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
             } else {
                 immediate = true
@@ -611,6 +644,8 @@ class CDTProcessor {
             if(state.id.contains("_cond")) {
                 trigger = kExp
                 immediate = false
+            } else if(state.hasInnerStatesOrControlflowRegions) {
+                type = TransitionType::TERMINATION
             } else {
                 immediate = true
             }
@@ -700,7 +735,7 @@ class CDTProcessor {
                        // Separate state
                         val initVarState = scc.createState => [ s |
                             s.id = parent.id + "T"
-                            s.label = createLabel(statement) + "HALLO"
+                            s.label = createLabel(statement)
         
                             parent.parentRegion.states += s
                         ]
@@ -717,7 +752,7 @@ class CDTProcessor {
                             // Separate state
                         val initVarState = scc.createState => [ s |
                             s.id = parent.id + "T"
-                            s.label = createLabel(statement) + "HALLO"
+                            s.label = createLabel(statement)
         
                             parent.parentRegion.states += s
                         ]
@@ -738,7 +773,7 @@ class CDTProcessor {
                         // Separate state
                         val initVarState = scc.createState => [ s |
                             s.id = parent.id + "T"
-                            s.label = createLabel(statement) + "HALLO"
+                            s.label = createLabel(statement)
         
                             parent.parentRegion.states += s
                         ]
@@ -832,6 +867,8 @@ class CDTProcessor {
             if(state.id.contains("_cond")) {
                 trigger = kExp
                 immediate = false
+            } else if(state.hasInnerStatesOrControlflowRegions) {
+                type = TransitionType::TERMINATION
             } else {
                 immediate = true
             }
@@ -842,7 +879,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
-            s.label = createLabel(ifs) + "_cond"
+            s.label = createLabel(ifs) + "cond"
             s.initial = true
             // s.setTypeConnector
 //            s.regions += scc.createControlflowRegion => [
@@ -1023,7 +1060,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = trC + "_cond"
-            s.label = trC + "_cond"
+            s.label = "cond"
             s.initial = true
             //s.setTypeConnector
 
@@ -1036,6 +1073,8 @@ class CDTProcessor {
             if(state.id.contains("_cond")) {
                 trigger = kExp
                 immediate = false
+            } else if(state.hasInnerStatesOrControlflowRegions) {
+                type = TransitionType::TERMINATION
             } else {
                 immediate = true
             }
@@ -1185,8 +1224,13 @@ class CDTProcessor {
 
             // create binary expression
             val exp = es.expression as CASTBinaryExpression
+            if (state.id.contains("_binEx")) {
+                val entryact = state.createEntryAction
+                entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+                    exp.operand2.createKExpression)
+            } else {
             val codeState = scc.createState => [ s |
-                s.id = trC + "T"
+                s.id = trC + "_binEx"
                 s.label = createLabel(es)
 
                 state.parentRegion.states += s
@@ -1226,7 +1270,9 @@ class CDTProcessor {
             state.outgoingTransitions += trans
 
             return codeState
-
+            
+            }
+            return state
         }
 
         if (es.expression instanceof CASTFunctionCallExpression) {
@@ -1533,7 +1579,7 @@ class CDTProcessor {
     }
 
     private def int getLabelOption() {
-        return 1;
+        return 2;
     }
 
     private def int getMultiEntryOption() {
