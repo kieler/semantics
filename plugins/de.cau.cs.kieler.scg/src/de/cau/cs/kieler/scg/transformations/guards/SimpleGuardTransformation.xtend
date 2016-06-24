@@ -121,9 +121,19 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
+        val deadGuards = <Guard> newHashSet
+
+        for(bb : scg.basicBlocks) {
+            if (bb.deadBlock) {
+                for(sb : bb.schedulingBlocks) {
+                    deadGuards += sb.guards
+                }
+            }
+        }
         
         // Create assignments
         for(guard : scg.guards) {
+            if (!deadGuards.contains(guard))
         	guard.createAssignment(valuedObjectMap) => [
         		newSCG.nodes += it
         		GAMap.put(guard, it)
@@ -135,8 +145,11 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         for(bb : scg.basicBlocks) {
         	for(sb : bb.schedulingBlocks) {
         		val assignment = GAMap.get(sb.guards.head)
-        		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
-        		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
+        		if (assignment != null) {
+        		    // Can be null if removed because the bb is dead
+            		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
+            		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
+        		}
         	}
         }
         
