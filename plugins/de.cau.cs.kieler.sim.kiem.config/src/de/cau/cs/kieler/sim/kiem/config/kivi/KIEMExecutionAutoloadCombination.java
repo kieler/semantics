@@ -122,7 +122,7 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
         // if an editor is opened
         if (editor != null) {
             // get the attributes from the editor
-            editorId = new EditorIdWrapper(editor.getId());
+            editorId = new EditorIdWrapper(editor.getId());  
             editorName = editor.getRegisteredName();
             
             // only if editor has been changed to a valid one (OR schedules are still empty because of first selection)

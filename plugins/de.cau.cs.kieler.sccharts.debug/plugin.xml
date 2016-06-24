@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.debug.core.breakpoints">
       <breakpoint
-            class="de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint"
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint"
             id="scchartsBreakpoint"
             markerType="de.cau.cs.kieler.sccharts.debug.scchartsBreakpointMarker">
       </breakpoint>
@@ -22,7 +22,7 @@
    <extension
          point="org.eclipse.debug.ui.debugModelPresentations">
       <debugModelPresentation
-            class="de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation"
+            class="de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation"
             id="scchartsDebugModelPresentation">
       </debugModelPresentation>
    </extension>
@@ -39,15 +39,44 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.toolbarContributor">
       <content
-            class="de.cau.cs.kieler.sccharts.debug.core.SCChartsDebugView"
+            class="de.cau.cs.kieler.sccharts.debug.ui.ViewDebugContributor"
             name="SCChartsDebugViewContributor">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sccharts.debug.DataComponent"
+            id="de.cau.cs.kieler.sccharts.debug.datacomponent"
+            name="Debugger">
       </content>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.eventListener">
       <content
-            class="de.cau.cs.kieler.sccharts.debug.core.SCChartsDebugEventListener">
+            class="de.cau.cs.kieler.sccharts.debug.EventListener">
       </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/sccharts_c_debug.execution">
+            <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
    </extension>
 
 </plugin>

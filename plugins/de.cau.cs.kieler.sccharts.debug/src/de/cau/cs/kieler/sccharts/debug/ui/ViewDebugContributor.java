@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.core;
+package de.cau.cs.kieler.sccharts.debug.ui;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ControlContribution;
@@ -23,8 +23,10 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import de.cau.cs.kieler.sccharts.debug.DataComponent;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
+import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
  * This class uses the contribution extention point of the KIEM view. A new
@@ -34,7 +36,7 @@ import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
  * @author lgr
  *
  */
-public class SCChartsDebugView implements IKiemToolbarContributor {
+public class ViewDebugContributor implements IKiemToolbarContributor {
 
 	public static final ImageDescriptor DEBUG = AbstractUIPlugin
 			.imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/debug_exc.png");
@@ -52,17 +54,18 @@ public class SCChartsDebugView implements IKiemToolbarContributor {
 			protected Control createControl(final Composite parent) {
 
 				Button toggleDebug = new Button(parent, SWT.TOGGLE);
-				toggleDebug.setSelection(SCChartsDebugPlugin.DEBUG_MODE);
+				toggleDebug.setSelection(DataComponent.DEBUG_MODE);
 				toggleDebug.setImage(DEBUG.createImage());
 				toggleDebug.setBackground(null);
 				toggleDebug.addListener(SWT.Selection, new Listener() {
 					@Override
 					public void handleEvent(Event event) {
 						if (toggleDebug.getSelection()) {
-							SCChartsDebugPlugin.DEBUG_MODE = true;
+						    DataComponent.DEBUG_MODE = true;
 						} else {
-							SCChartsDebugPlugin.DEBUG_MODE = false;
+						    DataComponent.DEBUG_MODE = false;
 						}
+						SCChartsDebugPlugin.getDefault().scheduleDefaultDebugExecution();
 					}
 				});
 				return toggleDebug;

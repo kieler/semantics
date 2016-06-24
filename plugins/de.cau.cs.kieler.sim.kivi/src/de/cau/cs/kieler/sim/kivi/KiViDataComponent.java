@@ -78,8 +78,6 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  */
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
-	
-	public static List<EObject> activeStatesAndTransitions;
 
     private static final int DEFAULT_STEPS = 0; // changed by cmot upon rvh's request
 
@@ -389,9 +387,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
                 List<EObject> currentStatesAndTransitions = Iterables.getLast(statesByStep, null);
                 if (currentStatesAndTransitions != null) {
-                	
-                	activeStatesAndTransitions = currentStatesAndTransitions;
-                	hightLightStates(currentStatesAndTransitions);
+
+                    hightLightStates(currentStatesAndTransitions);
                     hightLightTransitions(currentStatesAndTransitions);
 
                 }

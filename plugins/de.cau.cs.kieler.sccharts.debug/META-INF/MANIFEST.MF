@@ -20,6 +20,10 @@ Import-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.impl,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config,
+ de.cau.cs.kieler.sim.kiem.config.data,
+ de.cau.cs.kieler.sim.kiem.config.exception,
+ de.cau.cs.kieler.sim.kiem.config.kivi,
+ de.cau.cs.kieler.sim.kiem.config.managers,
  de.cau.cs.kieler.sim.kiem.execution,
  de.cau.cs.kieler.sim.kiem.ui.views,
  de.cau.cs.kieler.sim.kivi,
@@ -28,4 +32,4 @@ Import-Package: de.cau.cs.kieler.sccharts,
  org.eclipse.ui,
  org.eclipse.ui.part,
  org.eclipse.ui.texteditor
-Export-Package: de.cau.cs.kieler.sccharts.debug.core.model
+Export-Package: de.cau.cs.kieler.sccharts.debug

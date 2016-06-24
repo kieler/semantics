@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.core.model;
+package de.cau.cs.kieler.sccharts.debug;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAd
  * @author lgr
  *
  */
-public class SCChartsBreakpointHandler extends AbstractHandler {
+public class TextRulerHandler extends AbstractHandler {
 
 	/**
 	 * {@inheritDoc}

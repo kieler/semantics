@@ -413,7 +413,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="de.cau.cs.kieler.sccharts.debug.core.model.SCChartsBreakpointHandler"
+            defaultHandler="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
             description="Toggle Breakpoint in specified Line."
             id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
             name="Toggle Breakpoint Command">

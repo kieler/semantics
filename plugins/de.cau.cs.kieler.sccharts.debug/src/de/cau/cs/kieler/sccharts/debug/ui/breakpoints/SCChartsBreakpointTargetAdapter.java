@@ -25,8 +25,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import de.cau.cs.kieler.sccharts.debug.core.breakpoints.SCChartsBreakpoint;
-import de.cau.cs.kieler.sccharts.debug.ui.presentation.SCChartsDebugModelPresentation;
+import de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint;
+import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
 
 /**
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This
