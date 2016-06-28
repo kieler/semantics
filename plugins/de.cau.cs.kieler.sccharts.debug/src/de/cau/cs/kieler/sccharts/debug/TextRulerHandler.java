@@ -16,6 +16,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -47,6 +48,7 @@ public class TextRulerHandler extends AbstractHandler {
 
 		try {
 			target.toggleLineBreakpoints(HandlerUtil.getActivePart(event), HandlerUtil.getActiveMenuSelection(event));
+			Display.getDefault().update();
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}

@@ -178,7 +178,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      */
     public boolean isProducer() {
         // we must be sure not to miss any values
-        return false;
+        // due to missing values, turned into a producer
+        return true;
     }
 
     // -------------------------------------------------------------------------

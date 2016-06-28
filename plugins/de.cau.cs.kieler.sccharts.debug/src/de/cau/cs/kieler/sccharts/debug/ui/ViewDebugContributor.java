@@ -21,65 +21,109 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.sccharts.debug.DataComponent;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
- * This class uses the contribution extention point of the KIEM view. A new
- * toggle button is added through which the debug mode can be enabled or
- * disabled.
+ * This class uses the contribution extention point of the KIEM view. A new toggle button is added
+ * through which the debug mode can be enabled or disabled.
  * 
  * @author lgr
  *
  */
 public class ViewDebugContributor implements IKiemToolbarContributor {
 
-	public static final ImageDescriptor DEBUG = AbstractUIPlugin
-			.imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/debug_exc.png");
+    public static final ImageDescriptor DEBUG = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/debug_exc.png");
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ControlContribution[] provideToolbarContributions(Object info) {
+    public static final ImageDescriptor FAST_FORWARD = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/fastForward.png");
 
-		ControlContribution[] result = new ControlContribution[1];
-		result[0] = new ControlContribution("debugMode.toggle") {
+    public static final String CONTRIBUTION_ID = "Debugging";
 
-			@Override
-			protected Control createControl(final Composite parent) {
+    public static Button buttonDebug; 
+    public static Button buttonFastForward;
 
-				Button toggleDebug = new Button(parent, SWT.TOGGLE);
-				toggleDebug.setSelection(DataComponent.DEBUG_MODE);
-				toggleDebug.setImage(DEBUG.createImage());
-				toggleDebug.setBackground(null);
-				toggleDebug.addListener(SWT.Selection, new Listener() {
-					@Override
-					public void handleEvent(Event event) {
-						if (toggleDebug.getSelection()) {
-						    DataComponent.DEBUG_MODE = true;
-						} else {
-						    DataComponent.DEBUG_MODE = false;
-						}
-						SCChartsDebugPlugin.getDefault().scheduleDefaultDebugExecution();
-					}
-				});
-				return toggleDebug;
-			}
-		};
-		return result;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ControlContribution[] provideToolbarContributions(Object info) {
+        ControlContribution[] result = new ControlContribution[2];
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Action[] provideToolbarActions(Object info) {
-		return null; // not needed
-	}
+        result[0] = new ControlContribution(CONTRIBUTION_ID) {
+            @Override
+            protected Control createControl(final Composite parent) {
+                createDebugButton(parent);
+                return buttonDebug;
+            }
+        };
+
+        result[1] = new ControlContribution(CONTRIBUTION_ID) {
+            @Override
+            protected Control createControl(final Composite parent) {
+                createFastForwardButton(parent);
+                return buttonFastForward;
+            }
+        };
+
+        return result;
+    }
+
+    private void createDebugButton(final Composite parent) {
+        buttonDebug = new Button(parent, SWT.TOGGLE);
+        buttonDebug.setSelection(DataComponent.DEBUG_MODE);
+        buttonDebug.setImage(DEBUG.createImage());
+        buttonDebug.setBackground(null);
+        buttonDebug.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                if (buttonDebug.getSelection()) {
+                    DataComponent.DEBUG_MODE = true;
+                    buttonFastForward.setEnabled(true);
+                } else {
+                    DataComponent.DEBUG_MODE = false;
+                    buttonFastForward.setEnabled(false);
+
+                }
+                SCChartsDebugPlugin.getDefault().scheduleDefaultDebugExecution();
+            }
+        });
+    }
+
+    private void createFastForwardButton(final Composite parent) {
+        buttonFastForward = new Button(parent, SWT.TOGGLE);
+        buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
+        buttonFastForward.setImage(FAST_FORWARD.createImage());
+        buttonFastForward.setBackground(null);
+        buttonFastForward.addListener(SWT.Selection, new Listener() {
+            private int oldStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
+            @Override
+            public void handleEvent(Event event) {
+                if (buttonFastForward.getSelection()) {
+                    DataComponent.FAST_FORWARD = true;
+                    oldStepDuration = KiemPlugin.getDefault().getAimedStepDuration();
+                    KiemPlugin.getDefault().setAimedStepDuration(0);
+                } else {
+                    DataComponent.FAST_FORWARD = false;
+                    KiemPlugin.getDefault().setAimedStepDuration(oldStepDuration);
+                }
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Action[] provideToolbarActions(Object info) {
+        return null; // not needed
+    }
 
 }

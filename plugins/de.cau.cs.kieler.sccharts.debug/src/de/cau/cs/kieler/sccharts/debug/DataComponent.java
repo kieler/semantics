@@ -47,7 +47,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * Shows the current activity of the debug mode. In case it's activated, the debug data
      * component is added to the execution schedule.
      */
-    public static boolean DEBUG_MODE = false;
+    public static boolean DEBUG_MODE = true;
+    public static boolean FAST_FORWARD = false;
 
     private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
     private String stateKey = "state";

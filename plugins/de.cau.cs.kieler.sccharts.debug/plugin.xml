@@ -78,5 +78,21 @@
          </editor>
       </executionFile>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <view
+               id="org.eclipse.debug.ui.BreakpointView"
+               minimized="false"
+               ratio="0.8"
+               relationship="right"
+               relative="de.cau.cs.kieler.kico.selection">
+         </view>
+         <actionSet
+               id=" org.eclipse.jdt.debug.ui.JDTDebugActionSet">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+ 
 </plugin>
