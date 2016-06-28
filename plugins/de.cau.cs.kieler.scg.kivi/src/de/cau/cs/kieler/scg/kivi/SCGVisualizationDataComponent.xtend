@@ -40,14 +40,6 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
@@ -59,6 +51,12 @@ import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
 import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author ssm als cmot
@@ -124,15 +122,16 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
                         }
                     }
                 }
-                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
-                    for (guard : scg.guards) {
-                        val schedulingBlock = guard.schedulingBlockLink
-                        if (schedulingBlock != null) {
-                            guardMapping.putAll(guard.valuedObject.name,
-                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
-                        }
-                    }
-                }
+// FIXME
+//                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
+//                    for (guard : scg.guards) {
+//                        val schedulingBlock = guard.schedulingBlockLink
+//                        if (schedulingBlock != null) {
+//                            guardMapping.putAll(guard.valuedObject.name,
+//                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
+//                        }
+//                    }
+//                }
                 LightDiagramServices.layoutDiagram(context)
             }
         ] 

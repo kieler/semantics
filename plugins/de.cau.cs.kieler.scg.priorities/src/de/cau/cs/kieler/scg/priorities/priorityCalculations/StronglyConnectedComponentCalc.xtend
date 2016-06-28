@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import java.util.LinkedList
 import java.util.List
@@ -154,7 +154,7 @@ class StronglyConnectedComponentCalc {
                     if(dependency instanceof DataDependency) {
                         val dep = dependency as DataDependency
                         if(dep.concurrent && !dep.confluent) {
-                            if(dep instanceof Write_Write || scc.contains(dep.target)) {
+                            if(dep.type == DataDependencyType.WRITE_WRITE || scc.contains(dep.target)) {
                                 //println(node + " has a dependency issue with " + dep.target)
                                 return false
                             }

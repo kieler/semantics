@@ -352,32 +352,12 @@
 
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
-      <!--<editor
-            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            label="ARDOINO"
-            priority="80"
-            priorized="S2ARDUINO"
-            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCGRAPH, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, CODEGENERATION, SCG2S, S2TARGET, S2C, S2JAVA, S2ARDUINO"
-            preferred="ABORT, S2ARDUINO">
-      </editor>-->
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Netlist Compilation"
-            priority="100"
-            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java"
+            priority="90"
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, T_scg.guards, T_scg.guards.ft, T_scg.scheduling, T_scg.scheduling.dc, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java, scg.c"
             preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION"></editor>
-      <!--<editor
-            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            label="Demo Compilation"
-            priority="90"
-            features="ABORT,INITIALIZATION,ENTRY,EXIT,CONNECTOR, STATECHARTS"
-            preferred="ABORT"></editor>-->
-      <!--<editor
-            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            label="Priority Based Compilation"
-            priority="90"
-            features="SCCHARTSPRIO2S"
-            preferred=""></editor>-->
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="All Transformations"

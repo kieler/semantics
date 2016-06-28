@@ -81,7 +81,7 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     	if (parent instanceof SCGraph) {
     		(parent as SCGraph).getBasicBlocks.forEach[
     		    schedulingBlocks.forEach[
-                    scopeObjects += guard.valuedObject
+                    scopeObjects += guards.head.valuedObject
     		    ]
     		]
     	}
