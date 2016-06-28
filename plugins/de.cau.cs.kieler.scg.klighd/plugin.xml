@@ -25,5 +25,13 @@
             class="de.cau.cs.kieler.scg.klighd.actions.SCCActions"
             id="de.cau.cs.kieler.scg.klighd.actions.sccActions">
       </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.optPrioActions">
+      </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions">
+      </action>
    </extension>
 </plugin>

@@ -12,7 +12,9 @@
  */
 package de.cau.cs.kieler.scg.priorities.sclp
 
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author lpe
@@ -35,4 +37,11 @@ class SCLPTransformation extends AbstractProductionTransformation{
     override getRequiredFeatureIds() {
         return newHashSet("scg.scgPrio");
     }
+    
+    
+    public def Object transform(SCGraph scg, KielerCompilerContext context) {
+        return scg
+    }
+    
+    
 }

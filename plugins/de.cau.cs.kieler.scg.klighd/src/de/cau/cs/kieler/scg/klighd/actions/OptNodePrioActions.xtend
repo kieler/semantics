@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -25,29 +25,19 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
  * @author lpe
- *
+ * 
  */
-class NodePriorityActions implements IAction {
-    
-    private static final String NODE_ID    = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-//    private static final String OPT_ID     = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-//    private static final String THREAD_ID  = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-    
+class OptNodePrioActions implements IAction {
+
     @Inject
     extension KRenderingExtensions
     
-    public static final SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption("Node Priorities", 
-        true).setUpdateAction(NODE_ID);
+    
+    private static final String OPT_ID = "de.cau.cs.kieler.scg.klighd.actions.optPrioActions"
 
-//    public static final SynthesisOption SHOW_OPT_PRIO_ID = SynthesisOption::createCheckOption("Optimized Priority IDs", 
-//        true).setUpdateAction(OPT_ID);
-    
-    
-//    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption("Thread Priority IDs", 
-//        true).setUpdateAction(THREAD_ID);
-    
-    
-        
+    public static final SynthesisOption SHOW_OPT_PRIO_ID = SynthesisOption::createCheckOption("Optimized Priority IDs",
+        true).setUpdateAction(OPT_ID);
+
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
@@ -55,38 +45,20 @@ class NodePriorityActions implements IAction {
             if (viewContext.getSourceElement(node) != null) {
                 val container = node.KContainerRendering
                 for (text : container.children) {
-                    if (text.getProperty(SCGraphDiagramSynthesis.NODE_PRIO_PROPERTY)) {
-                        if (SHOW_NODE_PRIORITY.booleanValue(viewContext)) {
+                    if (text.getProperty(SCGraphDiagramSynthesis.OPT_PRIO_PROPERTY)) {
+                        if (SHOW_OPT_PRIO_ID.booleanValue(viewContext)) {
                             text.invisible = false
                         } else {
                             text.invisible = true
                         }
                     }
-                    
-//                    if(text.getProperty(SCGraphDiagramSynthesis.OPT_PRIO_PROPERTY)) {
-//                        if(SHOW_OPT_PRIO_ID.booleanValue(viewContext)) {
-//                            text.invisible = false
-//                        } else {
-//                            text.invisible = true
-//                        }
-//                    }
-                }
-//            } else {
-//                for(label : node.labels) {
-//                    if(label.KRendering.getProperty(SCGraphDiagramSynthesis.THREAD_PRIO_PROPERTY)) {
-//                        if(SHOW_THREAD_PRIO.booleanValue(viewContext)) {
-//                            label.KRendering.invisible = false
-//                        } else {
-//                            label.KRendering.invisible = true
-//                        }
-//                    }
-//                }
+                }    
             }
         }
-        
+
         ActionResult.createResult(true)
-        
     }
+    
     
     def booleanValue(SynthesisOption option, ViewContext viewContext) {
         val value = viewContext.getOptionValue(option)
@@ -103,10 +75,9 @@ class NodePriorityActions implements IAction {
                     + option.getName() + " expecting a Boolean value.");
         }
     }
-    
+
     new(){
         Guice.createInjector.injectMembers(this)
     }
-    
-    
+
 }

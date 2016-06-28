@@ -80,9 +80,10 @@ import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
+import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
+import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
 import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
 import java.util.ArrayList
 import java.util.HashMap
@@ -93,8 +94,9 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -110,15 +112,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- Guice
     // -------------------------------------------------------------------------
     // Retrieve an injector and instances for the serialization.
-    private static var Injector guiceInjector;
+//    private static var Injector guiceInjector;
 
 //    @SuppressWarnings("unused")
 //    private static val KExpressionsStandaloneSetup standAloneSetup = new KExpressionsStandaloneSetup() => [
 //        guiceInjector = Guice.createInjector(new SCGRuntimeModule);
 //        it.register(guiceInjector);
 //    ]
-    private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
-        typeof(SCGKExpressionsScopeProvider));
+//    private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
+//        typeof(SCGKExpressionsScopeProvider));
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -312,9 +314,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             LAYOUT_SEPARATE_CC,
             ORIENTATION,
             SynthesisOption::createSeparator("Priority"),
+            OptNodePrioActions.SHOW_OPT_PRIO_ID,
             NodePriorityActions.SHOW_NODE_PRIORITY,
-            NodePriorityActions.SHOW_OPT_PRIO_ID,
-            NodePriorityActions.SHOW_THREAD_PRIO,
+            ThreadPriorityActions.SHOW_THREAD_PRIO,
             SCCActions.SHOW_SCC
         );
     }
@@ -453,7 +455,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     override transform(SCGraph model) {
 
         // Connect the model to the scope provider for the serialization.
-        scopeProvider.parent = model;
+//        scopeProvider.parent = model;
 
         compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
