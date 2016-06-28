@@ -1,0 +1,11 @@
+@Transformation ENTRY
+scchart EntryAction {
+	output bool O;
+	
+    initial state A{
+      entry / O = false;
+    }
+    --> F;
+    
+    final state F;    
+}

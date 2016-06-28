@@ -97,7 +97,7 @@ ruleSCCharts returns [EObject current=null]
        			$current, 
        			"rootStates",
         		lv_rootStates_0_0, 
-        		"RootState");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.RootState");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -136,7 +136,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -159,7 +159,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"id",
         		lv_id_2_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -177,7 +177,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_3_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -198,7 +198,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_5_0, 
-        		"DeclarationWOSemicolon");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -216,7 +216,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"localActions",
         		lv_localActions_6_0, 
-        		"LocalAction");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.LocalAction");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -234,7 +234,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_7_0, 
-        		"SingleControlflowRegion");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.SingleControlflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -253,7 +253,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_8_0, 
-        		"SingleDataflowRegion");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.SingleDataflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -272,7 +272,7 @@ ruleRootState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_9_0, 
-        		"Region");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.Region");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -315,7 +315,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -383,7 +383,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"id",
         		lv_id_5_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -401,7 +401,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_6_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -422,7 +422,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_8_0, 
-        		"DeclarationWOSemicolon");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -440,7 +440,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"localActions",
         		lv_localActions_9_0, 
-        		"LocalAction");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.LocalAction");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -458,7 +458,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_10_0, 
-        		"SingleControlflowRegion");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.SingleControlflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -477,7 +477,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_11_0, 
-        		"SingleDataflowRegion");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.SingleDataflowRegion");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -496,7 +496,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"regions",
         		lv_regions_12_0, 
-        		"Region");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.Region");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -518,7 +518,7 @@ ruleState returns [EObject current=null]
        			$current, 
        			"outgoingTransitions",
         		lv_outgoingTransitions_14_0, 
-        		"Transition");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.Transition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -557,7 +557,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"RestrictedTypeAnnotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.RestrictedTypeAnnotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -575,7 +575,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_1_0, 
-        		"TransitionType");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.TransitionType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -639,7 +639,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"history",
         		lv_history_5_0, 
-        		"HistoryType");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.HistoryType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -662,7 +662,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_7_0, 
-        		"INT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
 	    }
 
 )
@@ -679,7 +679,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_8_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -701,7 +701,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_10_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -723,7 +723,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_12_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -747,7 +747,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_14_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -913,7 +913,7 @@ ruleEntryAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_3_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -935,7 +935,7 @@ ruleEntryAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_5_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -957,7 +957,7 @@ ruleEntryAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_7_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1028,7 +1028,7 @@ ruleDuringAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_4_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1050,7 +1050,7 @@ ruleDuringAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_6_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1072,7 +1072,7 @@ ruleDuringAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_8_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1128,7 +1128,7 @@ ruleExitAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_3_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1150,7 +1150,7 @@ ruleExitAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_5_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1172,7 +1172,7 @@ ruleExitAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_7_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1258,7 +1258,7 @@ ruleSuspendAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_5_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1329,7 +1329,7 @@ ruleIterateAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_4_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1351,7 +1351,7 @@ ruleIterateAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_6_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1373,7 +1373,7 @@ ruleIterateAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_8_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1429,7 +1429,7 @@ ruleInitAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_3_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1451,7 +1451,7 @@ ruleInitAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_5_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1473,7 +1473,7 @@ ruleInitAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_7_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1529,7 +1529,7 @@ ruleFinalAction returns [EObject current=null]
        			$current, 
        			"trigger",
         		lv_trigger_3_0, 
-        		"BoolExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1551,7 +1551,7 @@ ruleFinalAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_5_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1573,7 +1573,7 @@ ruleFinalAction returns [EObject current=null]
        			$current, 
        			"effects",
         		lv_effects_7_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1667,7 +1667,7 @@ ruleSingleControlflowRegion returns [EObject current=null]
        			$current, 
        			"states",
         		lv_states_1_0, 
-        		"State");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.State");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1715,7 +1715,7 @@ ruleSingleDataflowRegion returns [EObject current=null]
        			$current, 
        			"equations",
         		lv_equations_1_0, 
-        		"Equation");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.Equation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1763,7 +1763,7 @@ ruleControlflowRegion returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_1_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1786,7 +1786,7 @@ ruleControlflowRegion returns [EObject current=null]
        			$current, 
        			"id",
         		lv_id_3_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -1804,7 +1804,7 @@ ruleControlflowRegion returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_4_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -1825,7 +1825,7 @@ ruleControlflowRegion returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_6_0, 
-        		"DeclarationWOSemicolon");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1843,7 +1843,7 @@ ruleControlflowRegion returns [EObject current=null]
        			$current, 
        			"states",
         		lv_states_7_0, 
-        		"State");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.State");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1891,7 +1891,7 @@ ruleDataflowRegion returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_1_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1914,7 +1914,7 @@ ruleDataflowRegion returns [EObject current=null]
        			$current, 
        			"id",
         		lv_id_3_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -1932,7 +1932,7 @@ ruleDataflowRegion returns [EObject current=null]
        			$current, 
        			"label",
         		lv_label_4_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -1953,7 +1953,7 @@ ruleDataflowRegion returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_6_0, 
-        		"DeclarationWOSemicolon");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1971,7 +1971,7 @@ ruleDataflowRegion returns [EObject current=null]
        			$current, 
        			"equations",
         		lv_equations_7_0, 
-        		"Equation");
+        		"de.cau.cs.kieler.sccharts.text3.Sct3.Equation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2041,7 +2041,7 @@ ruleEquation returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2190,7 +2190,7 @@ ruleRootScope returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_1_0, 
-        		"Declaration");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Declaration");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2208,7 +2208,7 @@ ruleRootScope returns [EObject current=null]
        			$current, 
        			"entities",
         		lv_entities_2_0, 
-        		"TestEntity");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.TestEntity");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2230,7 +2230,7 @@ ruleRootScope returns [EObject current=null]
        			$current, 
        			"scopes",
         		lv_scopes_4_0, 
-        		"Scope");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Scope");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2279,7 +2279,7 @@ ruleScope returns [EObject current=null]
        			$current, 
        			"id",
         		lv_id_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -2300,7 +2300,7 @@ ruleScope returns [EObject current=null]
        			$current, 
        			"declarations",
         		lv_declarations_3_0, 
-        		"Declaration");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Declaration");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2318,7 +2318,7 @@ ruleScope returns [EObject current=null]
        			$current, 
        			"entities",
         		lv_entities_4_0, 
-        		"TestEntity");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.TestEntity");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2340,7 +2340,7 @@ ruleScope returns [EObject current=null]
        			$current, 
        			"scopes",
         		lv_scopes_6_0, 
-        		"Scope");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Scope");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2383,7 +2383,7 @@ ruleTestEntity returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_0_0, 
-        		"AnnotatedExpression");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.AnnotatedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2402,7 +2402,7 @@ ruleTestEntity returns [EObject current=null]
        			$current, 
        			"effect",
         		lv_effect_1_0, 
-        		"Effect");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2441,7 +2441,7 @@ ruleAnnotatedExpression returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2463,7 +2463,7 @@ ruleAnnotatedExpression returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_2_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2594,7 +2594,7 @@ ruleVariableDeclaration returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2687,7 +2687,7 @@ ruleVariableDeclaration returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_6_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2721,7 +2721,7 @@ ruleVariableDeclaration returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_8_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2743,7 +2743,7 @@ ruleVariableDeclaration returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_10_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2786,7 +2786,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2879,7 +2879,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_6_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2913,7 +2913,7 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_8_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2935,13 +2935,54 @@ ruleVariableDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_10_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
 ))*)
 ;
+
+
+
+
+
+// Entry rule entryRuleNamespaceID
+entryRuleNamespaceID returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getNamespaceIDRule()); } 
+	 iv_ruleNamespaceID=ruleNamespaceID 
+	 { $current=$iv_ruleNamespaceID.current.getText(); }  
+	 EOF 
+;
+
+// Rule NamespaceID
+ruleNamespaceID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_ID_0=RULE_ID    {
+		$current.merge(this_ID_0);
+    }
+
+    { 
+    newLeafNode(this_ID_0, grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_0()); 
+    }
+(
+	kw=':' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getNamespaceIDAccess().getColonKeyword_1_0()); 
+    }
+    this_ID_2=RULE_ID    {
+		$current.merge(this_ID_2);
+    }
+
+    { 
+    newLeafNode(this_ID_2, grammarAccess.getNamespaceIDAccess().getIDTerminalRuleCall_1_1()); 
+    }
+)*)
+    ;
 
 
 
@@ -2974,7 +3015,7 @@ ruleReferenceDeclaration returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2996,7 +3037,7 @@ ruleReferenceDeclaration returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getReferenceDeclarationAccess().getReferenceIdentifiableCrossReference_2_0()); 
 	    }
-		ruleQualifiedID		{ 
+		ruleNamespaceID		{ 
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3014,7 +3055,7 @@ ruleReferenceDeclaration returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_3_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3036,7 +3077,7 @@ ruleReferenceDeclaration returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_5_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3079,7 +3120,7 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3101,7 +3142,7 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceIdentifiableCrossReference_2_0()); 
 	    }
-		ruleQualifiedID		{ 
+		ruleNamespaceID		{ 
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3119,7 +3160,7 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_3_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3141,7 +3182,7 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
        			$current, 
        			"valuedObjects",
         		lv_valuedObjects_5_0, 
-        		"ValuedObject");
+        		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3180,7 +3221,7 @@ ruleValuedObject returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"QuotedStringAnnotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.QuotedStringAnnotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3199,7 +3240,7 @@ ruleValuedObject returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -3221,7 +3262,7 @@ ruleValuedObject returns [EObject current=null]
        			$current, 
        			"cardinalities",
         		lv_cardinalities_3_0, 
-        		"INT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
 	    }
 
 )
@@ -3246,7 +3287,7 @@ ruleValuedObject returns [EObject current=null]
        			$current, 
        			"initialValue",
         		lv_initialValue_6_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3268,7 +3309,7 @@ ruleValuedObject returns [EObject current=null]
        			$current, 
        			"combineOperator",
         		lv_combineOperator_8_0, 
-        		"CombineOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.CombineOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3392,7 +3433,7 @@ ruleEmission returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"QuotedStringAnnotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.QuotedStringAnnotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3430,7 +3471,7 @@ ruleEmission returns [EObject current=null]
        			$current, 
        			"newValue",
         		lv_newValue_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3473,7 +3514,7 @@ ruleAssignment returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3511,7 +3552,7 @@ ruleAssignment returns [EObject current=null]
        			$current, 
        			"indices",
         		lv_indices_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3533,7 +3574,7 @@ ruleAssignment returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_5_0, 
-        		"AssignOperator");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.AssignOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3551,7 +3592,7 @@ ruleAssignment returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_6_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3590,7 +3631,7 @@ rulePostfixEffect returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3628,7 +3669,7 @@ rulePostfixEffect returns [EObject current=null]
        			$current, 
        			"indices",
         		lv_indices_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3650,7 +3691,7 @@ rulePostfixEffect returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_5_0, 
-        		"PostfixOperator");
+        		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.PostfixOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3689,7 +3730,7 @@ ruleHostcodeEffect returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3708,7 +3749,7 @@ ruleHostcodeEffect returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_1_0, 
-        		"HOSTCODE");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.HOSTCODE");
 	    }
 
 )
@@ -3746,7 +3787,7 @@ ruleFunctionCallEffect returns [EObject current=null]
        			$current, 
        			"annotations",
         		lv_annotations_0_0, 
-        		"Annotation");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3768,7 +3809,7 @@ ruleFunctionCallEffect returns [EObject current=null]
        			$current, 
        			"functionName",
         		lv_functionName_2_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3790,7 +3831,7 @@ ruleFunctionCallEffect returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_4_0, 
-        		"Parameter");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3812,7 +3853,7 @@ ruleFunctionCallEffect returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_6_0, 
-        		"Parameter");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3966,7 +4007,7 @@ ruleLogicalOrExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"LogicalOrOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalOrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3984,7 +4025,7 @@ ruleLogicalOrExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"LogicalAndExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalAndExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4044,7 +4085,7 @@ ruleLogicalAndExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"LogicalAndOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalAndOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4062,7 +4103,7 @@ ruleLogicalAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"BitwiseOrExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseOrExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4122,7 +4163,7 @@ ruleBitwiseOrExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"BitwiseOrOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseOrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4140,7 +4181,7 @@ ruleBitwiseOrExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"BitwiseAndExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseAndExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4200,7 +4241,7 @@ ruleBitwiseAndExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"BitwiseAndOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseAndOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4218,7 +4259,7 @@ ruleBitwiseAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"CompareOperation");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.CompareOperation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4278,7 +4319,7 @@ ruleCompareOperation returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"CompareOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.CompareOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4296,7 +4337,7 @@ ruleCompareOperation returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"NotOrValuedExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotOrValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4390,7 +4431,7 @@ ruleNotExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"NotOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4408,7 +4449,7 @@ ruleNotExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_2_0, 
-        		"NotExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4514,7 +4555,7 @@ ruleAddExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"AddOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.AddOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4532,7 +4573,7 @@ ruleAddExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"SubExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4592,7 +4633,7 @@ ruleSubExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"SubOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4610,7 +4651,7 @@ ruleSubExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"MultExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.MultExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4670,7 +4711,7 @@ ruleMultExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"MultOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.MultOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4688,7 +4729,7 @@ ruleMultExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"DivExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.DivExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4748,7 +4789,7 @@ ruleDivExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"DivOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.DivOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4766,7 +4807,7 @@ ruleDivExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"ModExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ModExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4826,7 +4867,7 @@ ruleModExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"ModOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ModOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4844,7 +4885,7 @@ ruleModExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"AtomicValuedExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.AtomicValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4892,7 +4933,7 @@ ruleNegExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"SubOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4910,7 +4951,7 @@ ruleNegExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_2_0, 
-        		"NegExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.NegExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5065,7 +5106,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_1, 
-        		"PreOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.PreOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5080,7 +5121,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_2, 
-        		"ValOperator");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5104,7 +5145,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"ValuedObjectTestExpression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectTestExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5157,39 +5198,59 @@ ruleValuedObjectReference returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getValuedObjectReferenceRule());
 	        }
         }
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
-	    }
-		ruleQualifiedID		{ 
-	        afterParserOrEnumRuleCall();
-	    }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
+	}
 
 )
-)(	otherlv_1='[' 
+)(	otherlv_1='.' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
+    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); 
 	    }
-		lv_indices_2_0=ruleExpression		{
+		lv_subReference_2_0=ruleValuedObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
+	        }
+       		set(
+       			$current, 
+       			"subReference",
+        		lv_subReference_2_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?(	otherlv_3='[' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
+	    }
+		lv_indices_4_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
        			"indices",
-        		lv_indices_2_0, 
-        		"Expression");
+        		lv_indices_4_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_3=']' 
+)	otherlv_5=']' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
+    	newLeafNode(otherlv_5, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2());
     }
 )*)
 ;
@@ -5229,7 +5290,7 @@ ruleFunctionCall returns [EObject current=null]
        			$current, 
        			"functionName",
         		lv_functionName_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5251,7 +5312,7 @@ ruleFunctionCall returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_3_0, 
-        		"Parameter");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5273,7 +5334,7 @@ ruleFunctionCall returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_5_0, 
-        		"Parameter");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5355,7 +5416,7 @@ ruleParameter returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_2_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5395,7 +5456,7 @@ ruleTextExpression returns [EObject current=null]
        			$current, 
        			"text",
         		lv_text_0_0, 
-        		"HOSTCODE");
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.HOSTCODE");
 	    }
 
 )
@@ -5434,7 +5495,7 @@ ruleIntValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"INT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
 	    }
 
 )
@@ -5473,7 +5534,7 @@ ruleFloatValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"FLOAT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.FLOAT");
 	    }
 
 )
@@ -5512,7 +5573,7 @@ ruleBoolValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"BOOLEAN");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.BOOLEAN");
 	    }
 
 )
@@ -5551,7 +5612,7 @@ ruleStringValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -5810,7 +5871,7 @@ ruleCommentAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_0_0, 
-        		"COMMENT_ANNOTATION");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.COMMENT_ANNOTATION");
 	    }
 
 )
@@ -5852,7 +5913,7 @@ ruleTagAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5895,7 +5956,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5913,7 +5974,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_2_0, 
-        		"EStringAllTypes");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5935,7 +5996,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_4_0, 
-        		"EStringAllTypes");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5978,7 +6039,7 @@ ruleRestrictedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5996,7 +6057,7 @@ ruleRestrictedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_2_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6018,7 +6079,7 @@ ruleRestrictedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_4_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6061,7 +6122,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6083,7 +6144,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6105,7 +6166,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"EStringAllTypes");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6127,7 +6188,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"EStringAllTypes");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6170,7 +6231,7 @@ ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6192,7 +6253,7 @@ ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6214,7 +6275,7 @@ ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6236,7 +6297,7 @@ ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6279,7 +6340,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6298,7 +6359,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_2_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -6320,7 +6381,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_4_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -6362,7 +6423,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6384,7 +6445,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6407,7 +6468,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -6429,7 +6490,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
 	    }
 
 )
@@ -6613,45 +6674,6 @@ ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToke
     ;
 
 
-
-
-
-// Entry rule entryRuleQualifiedID
-entryRuleQualifiedID returns [String current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getQualifiedIDRule()); } 
-	 iv_ruleQualifiedID=ruleQualifiedID 
-	 { $current=$iv_ruleQualifiedID.current.getText(); }  
-	 EOF 
-;
-
-// Rule QualifiedID
-ruleQualifiedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-(    this_ID_0=RULE_ID    {
-		$current.merge(this_ID_0);
-    }
-
-    { 
-    newLeafNode(this_ID_0, grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_0()); 
-    }
-(
-	kw='.' 
-    {
-        $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getQualifiedIDAccess().getFullStopKeyword_1_0()); 
-    }
-    this_ID_2=RULE_ID    {
-		$current.merge(this_ID_2);
-    }
-
-    { 
-    newLeafNode(this_ID_2, grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_1_1()); 
-    }
-)*)
-    ;
 
 
 

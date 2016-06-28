@@ -1,0 +1,11 @@
+@Transformation PRE
+scchart PreOperator {
+  int x = 1;
+  int y = 0;
+  
+  initial state A
+  --> B with / x = x + 1;
+   
+  state B
+  --> A with / y = pre(x);
+}

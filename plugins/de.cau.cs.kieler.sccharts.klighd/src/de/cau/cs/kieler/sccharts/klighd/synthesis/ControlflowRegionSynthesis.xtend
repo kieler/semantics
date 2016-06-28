@@ -33,6 +33,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
+
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
@@ -90,6 +92,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             // Expanded
             node.addRegionFigure => [
                 setAsExpandedView
+                associateWith(region)
                 if (region.declarations.empty) {
                     addStatesArea(label.nullOrEmpty);
                 } else {
@@ -110,6 +113,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView
+                associateWith(region)
                 addButton("[+]" + label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
             ]
 

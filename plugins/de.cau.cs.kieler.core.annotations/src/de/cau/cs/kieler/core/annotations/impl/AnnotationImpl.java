@@ -27,22 +27,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class AnnotationImpl extends NamedObjectImpl implements Annotation {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AnnotationImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return AnnotationsPackage.Literals.ANNOTATION;
-	}
+        return AnnotationsPackage.Literals.ANNOTATION;
+    }
 
 } //AnnotationImpl

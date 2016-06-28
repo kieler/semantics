@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.sim.syncsignalreset.DataComponent"
             id="de.cau.cs.kieler.sim.syncsignalreset.content1"
-            name="Synchrounous Signal Resetter">
+            name="Synchronous Signal Resetter">
       </content>
    </extension>
 

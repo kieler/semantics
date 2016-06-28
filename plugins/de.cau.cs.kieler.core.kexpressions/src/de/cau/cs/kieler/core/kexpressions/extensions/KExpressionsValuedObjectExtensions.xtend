@@ -145,13 +145,14 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        val list = <ValuedObjectReference>newArrayList
-        if (expression instanceof ValuedObjectReference) {
-            list += expression as ValuedObjectReference
-        } else {
-            list += expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        }
-        return list
+        <ValuedObjectReference> newArrayList => [
+        	if (expression == null) {
+        	} else if (expression instanceof ValuedObjectReference) { 
+        		it += expression
+        	} else { 
+        		it += expression.eAllContents.filter(ValuedObjectReference).toList
+        	}
+        ]  
     }    
     
     def void deleteAndCleanup(ValuedObject valuedObject) {

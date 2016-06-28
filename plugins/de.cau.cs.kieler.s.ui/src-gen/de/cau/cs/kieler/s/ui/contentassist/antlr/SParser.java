@@ -106,6 +106,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup(), "rule__VariableDeclarationWOSemicolon__Group__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_5_0(), "rule__VariableDeclarationWOSemicolon__Group_5_0__0");
 					put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGroup_7(), "rule__VariableDeclarationWOSemicolon__Group_7__0");
+					put(grammarAccess.getNamespaceIDAccess().getGroup(), "rule__NamespaceID__Group__0");
+					put(grammarAccess.getNamespaceIDAccess().getGroup_1(), "rule__NamespaceID__Group_1__0");
 					put(grammarAccess.getReferenceDeclarationAccess().getGroup(), "rule__ReferenceDeclaration__Group__0");
 					put(grammarAccess.getReferenceDeclarationAccess().getGroup_4(), "rule__ReferenceDeclaration__Group_4__0");
 					put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getGroup(), "rule__ReferenceDeclarationWOSemicolon__Group__0");
@@ -180,6 +182,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_2(), "rule__ExtendedID__Group_2__0");
+					put(grammarAccess.getQualifiedIDAccess().getGroup(), "rule__QualifiedID__Group__0");
+					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getProgramAccess().getAnnotationsAssignment_0(), "rule__Program__AnnotationsAssignment_0");

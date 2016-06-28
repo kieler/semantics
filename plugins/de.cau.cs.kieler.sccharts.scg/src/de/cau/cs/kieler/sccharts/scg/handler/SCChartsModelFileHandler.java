@@ -56,7 +56,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transform((State) model);
+            transformed = transformation.transform((State) model, null);
         } 
         return transformed;
     }

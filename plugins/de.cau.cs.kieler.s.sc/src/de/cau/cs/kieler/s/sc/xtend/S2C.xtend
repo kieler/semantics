@@ -16,7 +16,6 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
@@ -28,7 +27,6 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -51,6 +49,10 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.kexpressions.StringValue
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -64,15 +66,17 @@ class S2C {
     public static String bufferSize;
     public static String includeHeader;
     
+    private static val ANNOTATION_HOSTCODE = "hostcode"
+    
+    @Inject
+    extension AnnotationsExtensions        
+    
     @Inject
     extension KExpressionsValuedObjectExtensions    
     
     @Inject
     extension KExpressionsDeclarationExtensions       
 
-    @Inject
-    extension SExtension
-    
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
@@ -118,9 +122,12 @@ class S2C {
     /*                                                                           */
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
-
     «includeHeader»
-
+    «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
+    «(hostcode as StringAnnotation).values.head.removeEscapeChars»
+    
+    «ENDFOR»
+    
    «/* Variables */»
     «sVariables(program)»    
     
@@ -190,7 +197,6 @@ class S2C {
    def resetVariables(Program program) {
        '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-       
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = 0;
@@ -209,6 +215,8 @@ class S2C {
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
            return '''char'''
+       } else if (valueType == ValueType::STRING) {
+           return '''char*'''
        }
        else if (valueType != ValueType::HOST) {
            return '''«valueType»'''
@@ -623,6 +631,11 @@ class S2C {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
+   // Expand a string expression value.
+   def dispatch CharSequence expand(StringValue expression) {
+        '''"«expression.value.toString»"'''
+   }
+   
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
        if (!valuedObjectReference.indices.nullOrEmpty) {

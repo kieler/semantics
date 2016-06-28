@@ -68,6 +68,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Strong abort transition with lower priority than non-strong-abort transition";
     
+    public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
+    
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
 

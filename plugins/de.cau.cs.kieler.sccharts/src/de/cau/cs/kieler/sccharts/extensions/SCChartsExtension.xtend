@@ -319,7 +319,7 @@ class SCChartsExtension {
     }
 
     def State createState(ControlflowRegion region, String id, String label) {
-        val state = createState(id)
+        val state = createState(id) => [ it.label = label ]
         region.states.add(state)
         state
     }
@@ -810,9 +810,6 @@ class SCChartsExtension {
     def DuringAction createDuringAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createDuringAction
         state.localActions.add(action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }
 
@@ -838,9 +835,6 @@ class SCChartsExtension {
     def EntryAction createEntryAction(State state) { 
         val action = SCChartsFactory::eINSTANCE.createEntryAction
         state.localActions.add(action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }
     
@@ -848,9 +842,6 @@ class SCChartsExtension {
     def EntryAction createEntryAction(State state, int index) {
         val action = SCChartsFactory::eINSTANCE.createEntryAction
         state.localActions.add(index, action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }    
 
@@ -872,9 +863,6 @@ class SCChartsExtension {
     def ExitAction createExitAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createExitAction
         state.localActions.add(action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }
 
@@ -889,9 +877,6 @@ class SCChartsExtension {
     def SuspendAction createSuspendAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createSuspendAction
         state.localActions.add(action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }
 
@@ -906,9 +891,6 @@ class SCChartsExtension {
     def IterateAction createIterateAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createIterateAction
         state.localActions.add(action);
-        if (state.regions.isNullOrEmpty) { // Create implicit region if necessary
-            state.createControlflowRegion("");
-        }
         action
     }
 

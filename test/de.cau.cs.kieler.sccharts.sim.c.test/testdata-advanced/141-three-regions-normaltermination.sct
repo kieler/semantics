@@ -22,7 +22,7 @@ scchart threeregionsnormaltermination {
 
     final state B;
   }
-  >-> D / O;
+  >-> D with / O;
 
   state D;
 }

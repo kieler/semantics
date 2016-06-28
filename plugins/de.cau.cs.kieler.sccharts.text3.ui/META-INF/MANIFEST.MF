@@ -29,4 +29,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: de.cau.cs.kieler.sccharts.text3.ui.internal.Sct3Activator
 Export-Package: de.cau.cs.kieler.sccharts.text3.ui.contentassist,
  de.cau.cs.kieler.sccharts.text3.ui.quickfix,
- de.cau.cs.kieler.sccharts.text3.ui.contentassist.antlr
+ de.cau.cs.kieler.sccharts.text3.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text3.ui.contentassist.antlr.internal

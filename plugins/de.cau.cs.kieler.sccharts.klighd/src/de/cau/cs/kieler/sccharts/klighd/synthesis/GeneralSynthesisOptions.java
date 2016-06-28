@@ -26,8 +26,13 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
-public interface GeneralSynthesisOptions {
-	
+public final class GeneralSynthesisOptions {
+    /**
+     * Prevent Instantiation.
+     */
+    private GeneralSynthesisOptions() {
+    }
+    
     //-- CATEGORIES --
     
     /** The appearance category */

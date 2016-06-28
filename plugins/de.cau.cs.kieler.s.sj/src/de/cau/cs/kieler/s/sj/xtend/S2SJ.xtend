@@ -46,6 +46,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 //import static de.cau.cs.kieler.s.sj.xtend.S2SJ.*
 
@@ -58,8 +59,12 @@ import org.eclipse.emf.ecore.EObject
  */
 class S2SJ { 
     
+//    @Inject
+//    extension KExpressionsValuedObjectExtensions    
+
     @Inject
-    extension KExpressionsValuedObjectExtensions    
+    extension SCChartsTransformationExtension    
+
 
     @Inject
     extension SExtension 

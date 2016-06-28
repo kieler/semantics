@@ -48,14 +48,15 @@ Workflow {
 			// generates Java API for the generated EPackages 
 			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel" }
             // generates Java API for the generated EPackages 
-            fragment = ecore.EcoreGeneratorFragment {
-            // referencedGenModels = "uri to genmodel, uri to next genmodel"
-//             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
-//             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
-//                generateEdit = true
-                genModel = "model/KEXT.genmodel"
-                xmiModelDirectory = "${runtimeProject}/model"
-            }
+//            fragment = ecore.EcoreGeneratorFragment {
+//            // referencedGenModels = "uri to genmodel, uri to next genmodel"
+////             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+////             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+////                generateEdit = true
+//                genModel = "model/KEXT.genmodel"
+//                xmiModelDirectory = "${runtimeProject}/model"
+//                
+//            }
 			// the serialization component
 			// Old serializer			
 			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
@@ -70,9 +71,9 @@ Workflow {
 			// the Antlr parser
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
 				options = {
-//					classSplitting = true
+					classSplitting = true
 					backtrack = true
-					memoize = true
+//					memoize = true
 				}
 			}
 
@@ -111,9 +112,9 @@ Workflow {
 			// antlr parser generator tailored for content assist 
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
 				options = {
-//					classSplitting = true
+					classSplitting = true
 					backtrack = true
-                    memoize = true
+//                    memoize = true
 				}
 			}
 

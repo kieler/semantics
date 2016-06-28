@@ -24,7 +24,7 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="de.cau.cs.kieler.prom.launchconfig.ui.LaunchConfigurationTabGroup"
+            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchConfigurationTabGroup"
             id="de.cau.cs.kieler.prom.launchconfig.ui.launchConfigurationTabGroup"
             type="de.cau.cs.kieler.prom.launchconfig.launchConfiguration">
          <launchMode

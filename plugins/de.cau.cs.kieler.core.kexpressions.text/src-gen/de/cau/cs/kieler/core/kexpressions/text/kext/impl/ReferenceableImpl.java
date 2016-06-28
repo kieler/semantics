@@ -15,23 +15,23 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public class ReferenceableImpl extends IdentifiableImpl implements Referenceable {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ReferenceableImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReferenceableImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return KextPackage.Literals.REFERENCEABLE;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return KextPackage.Literals.REFERENCEABLE;
+    }
 
 } //ReferenceableImpl

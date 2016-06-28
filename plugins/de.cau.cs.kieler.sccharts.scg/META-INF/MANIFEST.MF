@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCCharts 2 SCG Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.scg;singleton:=true
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.1.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;bundle-version="3.8.1",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kitt,
- de.cau.cs.kieler.sccharts.text3
+ de.cau.cs.kieler.sccharts.text3,
+ de.cau.cs.kieler.core;bundle-version="0.15.0"
 Export-Package: de.cau.cs.kieler.sccharts.scg
 Bundle-Vendor: Kiel University
 

@@ -60,25 +60,25 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a.equals(syntax))
+			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__p.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a__q.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a__q.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__p.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
+			else if (match_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
 				emit_FunctionCallEffect_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
+			else if (match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q.equals(syntax))
+			else if (match_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q.equals(syntax))
 				emit_State___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
@@ -94,7 +94,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|QualifiedID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_3_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -140,7 +140,7 @@ public abstract class AbstractSct3SyntacticSequencer extends AbstractSyntacticSe
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
-	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|QualifiedID]
+	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

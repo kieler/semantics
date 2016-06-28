@@ -8,7 +8,7 @@ package de.cau.cs.kieler.core.kexpressions.validation;
  *
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
-public class KExpressionsJavaValidator extends KExpressionsJavaValidatorX {
+public class KExpressionsJavaValidator extends de.cau.cs.kieler.core.kexpressions.validation.AbstractKExpressionsJavaValidator {
 
 //	@Check
 //	public void checkGreetingStartsWithCapital(Greeting greeting) {

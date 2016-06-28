@@ -27,22 +27,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class CommentAnnotationImpl extends StringAnnotationImpl implements CommentAnnotation {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected CommentAnnotationImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return AnnotationsPackage.Literals.COMMENT_ANNOTATION;
-	}
+        return AnnotationsPackage.Literals.COMMENT_ANNOTATION;
+    }
 
 } //CommentAnnotationImpl

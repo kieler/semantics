@@ -4,7 +4,6 @@
 package de.cau.cs.kieler.sccharts.text3.serializer;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
@@ -16,7 +15,6 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.core.kexpressions.Parameter;
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
@@ -50,13 +48,15 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text3.services.Sct3GrammarAccess;
+import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
-import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
-import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Parameter;
+import org.eclipse.xtext.ParserRule;
+import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequencer {
@@ -65,8 +65,13 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	private Sct3GrammarAccess grammarAccess;
 	
 	@Override
-	public void createSequence(EObject context, EObject semanticObject) {
-		if(semanticObject.eClass().getEPackage() == AnnotationsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+	public void sequence(ISerializationContext context, EObject semanticObject) {
+		EPackage epackage = semanticObject.eClass().getEPackage();
+		ParserRule rule = context.getParserRule();
+		Action action = context.getAssignedAction();
+		Set<Parameter> parameters = context.getEnabledBooleanParameters();
+		if (epackage == AnnotationsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case AnnotationsPackage.ANNOTATION:
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
@@ -74,57 +79,58 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getValuedAnnotationRule()) {
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getQuotedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getQuotedStringAnnotationRule()) {
+				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getRestrictedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypeAnnotationRule()) {
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
 					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if(context == grammarAccess.getQuotedStringAnnotationRule() ||
-				   context == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
+				if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getRestrictedTypeAnnotationRule() ||
-				   context == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
 					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
-				   context == grammarAccess.getValuedAnnotationRule()) {
+				else if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == KEffectsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+		else if (epackage == KEffectsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				if(context == grammarAccess.getAssignmentRule()) {
+				if (rule == grammarAccess.getAssignmentRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getEffectRule()) {
-					sequence_Assignment_Effect_PostfixEffect(context, (Assignment) semanticObject); 
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getDFAssignmentRule()) {
+				else if (rule == grammarAccess.getDFAssignmentRule()) {
 					sequence_DFAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getPostfixEffectRule()) {
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
@@ -139,7 +145,8 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 				return; 
 			}
-		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+		else if (epackage == KExpressionsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.BOOL_VALUE:
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
 				return; 
@@ -153,54 +160,54 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_IntValue(context, (IntValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if(context == grammarAccess.getAddExpressionRule() ||
-				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAtomicExpressionRule() ||
-				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getBoolExpressionRule() ||
-				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getDivExpressionRule() ||
-				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getModExpressionRule() ||
-				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getMultExpressionRule() ||
-				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getNegExpressionRule() ||
-				   context == grammarAccess.getNotExpressionRule() ||
-				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSubExpressionRule() ||
-				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+				if (rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseOrExpressionRule()
+						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getMultExpressionRule()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getDivExpressionRule()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getModExpressionRule()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
+				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (Parameter) semanticObject); 
+				sequence_Parameter(context, (de.cau.cs.kieler.core.kexpressions.Parameter) semanticObject); 
 				return; 
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				if(context == grammarAccess.getDeclarationWOSemicolonRule() ||
-				   context == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getReferenceDeclarationRule()) {
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
 					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
@@ -218,28 +225,29 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if(context == grammarAccess.getDeclarationWOSemicolonRule() ||
-				   context == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getVariableDeclarationRule()) {
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == KextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+		else if (epackage == KextPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case KextPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KextPackage.KEXT_SCOPE:
-				if(context == grammarAccess.getRootScopeRule()) {
+				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KEXTScope) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getScopeRule()) {
+				else if (rule == grammarAccess.getScopeRule()) {
 					sequence_Scope(context, (KEXTScope) semanticObject); 
 					return; 
 				}
@@ -251,28 +259,29 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
 			}
-		else if(semanticObject.eClass().getEPackage() == SCChartsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+		else if (epackage == SCChartsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
 			case SCChartsPackage.BINDING:
 				sequence_Binding(context, (Binding) semanticObject); 
 				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
-				if(context == grammarAccess.getControlflowRegionRule() ||
-				   context == grammarAccess.getRegionRule()) {
+				if (rule == grammarAccess.getRegionRule()
+						|| rule == grammarAccess.getControlflowRegionRule()) {
 					sequence_ControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getSingleControlflowRegionRule()) {
+				else if (rule == grammarAccess.getSingleControlflowRegionRule()) {
 					sequence_SingleControlflowRegion(context, (ControlflowRegion) semanticObject); 
 					return; 
 				}
 				else break;
 			case SCChartsPackage.DATAFLOW_REGION:
-				if(context == grammarAccess.getDataflowRegionRule() ||
-				   context == grammarAccess.getRegionRule()) {
+				if (rule == grammarAccess.getRegionRule()
+						|| rule == grammarAccess.getDataflowRegionRule()) {
 					sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getSingleDataflowRegionRule()) {
+				else if (rule == grammarAccess.getSingleDataflowRegionRule()) {
 					sequence_SingleDataflowRegion(context, (DataflowRegion) semanticObject); 
 					return; 
 				}
@@ -302,11 +311,11 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_SCCharts(context, (SCCharts) semanticObject); 
 				return; 
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getRootStateRule()) {
+				if (rule == grammarAccess.getRootStateRule()) {
 					sequence_RootState(context, (State) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getStateRule()) {
+				else if (rule == grammarAccess.getStateRule()) {
 					sequence_State(context, (State) semanticObject); 
 					return; 
 				}
@@ -318,109 +327,163 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 				sequence_Transition(context, (Transition) semanticObject); 
 				return; 
 			}
-		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
+		if (errorAcceptor != null)
+			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
 	/**
+	 * Contexts:
+	 *     Binding returns Binding
+	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* formal=[ValuedObject|ID] actual=[ValuedObject|ID])
 	 */
-	protected void sequence_Binding(EObject context, Binding semanticObject) {
+	protected void sequence_Binding(ISerializationContext context, Binding semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Region returns ControlflowRegion
+	 *     ControlflowRegion returns ControlflowRegion
+	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* states+=State+)
 	 */
-	protected void sequence_ControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+	protected void sequence_ControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     DFAssignment returns Assignment
+	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
 	 */
-	protected void sequence_DFAssignment(EObject context, Assignment semanticObject) {
+	protected void sequence_DFAssignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Region returns DataflowRegion
+	 *     DataflowRegion returns DataflowRegion
+	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=DeclarationWOSemicolon* equations+=Equation+)
 	 */
-	protected void sequence_DataflowRegion(EObject context, DataflowRegion semanticObject) {
+	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns DuringAction
+	 *     DuringAction returns DuringAction
+	 *
 	 * Constraint:
 	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_DuringAction(EObject context, DuringAction semanticObject) {
+	protected void sequence_DuringAction(ISerializationContext context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns EntryAction
+	 *     EntryAction returns EntryAction
+	 *
 	 * Constraint:
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_EntryAction(EObject context, EntryAction semanticObject) {
+	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Equation returns Equation
+	 *
 	 * Constraint:
 	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
 	 */
-	protected void sequence_Equation(EObject context, Equation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.EQUATION__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.EQUATION__VALUED_OBJECT));
+			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.EQUATION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.EQUATION__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEquationAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_1_2_0(), semanticObject.getExpression());
+		feeder.finish();
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns ExitAction
+	 *     ExitAction returns ExitAction
+	 *
 	 * Constraint:
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_ExitAction(EObject context, ExitAction semanticObject) {
+	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns FinalAction
+	 *     FinalAction returns FinalAction
+	 *
 	 * Constraint:
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_FinalAction(EObject context, FinalAction semanticObject) {
+	protected void sequence_FinalAction(ISerializationContext context, FinalAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns InitAction
+	 *     InitAction returns InitAction
+	 *
 	 * Constraint:
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_InitAction(EObject context, InitAction semanticObject) {
+	protected void sequence_InitAction(ISerializationContext context, InitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns IterateAction
+	 *     IterateAction returns IterateAction
+	 *
 	 * Constraint:
 	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
-	protected void sequence_IterateAction(EObject context, IterateAction semanticObject) {
+	protected void sequence_IterateAction(ISerializationContext context, IterateAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     RootState returns State
+	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
@@ -428,42 +491,54 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *         label=STRING? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         localActions+=LocalAction* 
-	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
+	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)?
 	 *     )
 	 */
-	protected void sequence_RootState(EObject context, State semanticObject) {
+	protected void sequence_RootState(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     SCCharts returns SCCharts
+	 *
 	 * Constraint:
-	 *     rootStates+=RootState*
+	 *     rootStates+=RootState+
 	 */
-	protected void sequence_SCCharts(EObject context, SCCharts semanticObject) {
+	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     SingleControlflowRegion returns ControlflowRegion
+	 *
 	 * Constraint:
 	 *     states+=State+
 	 */
-	protected void sequence_SingleControlflowRegion(EObject context, ControlflowRegion semanticObject) {
+	protected void sequence_SingleControlflowRegion(ISerializationContext context, ControlflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     SingleDataflowRegion returns DataflowRegion
+	 *
 	 * Constraint:
 	 *     equations+=Equation+
 	 */
-	protected void sequence_SingleDataflowRegion(EObject context, DataflowRegion semanticObject) {
+	protected void sequence_SingleDataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     State returns State
+	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
@@ -472,29 +547,34 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *         connector?='connector'? 
 	 *         id=ID 
 	 *         label=STRING? 
-	 *         (
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             localActions+=LocalAction* 
-	 *             (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
-	 *         )? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         localActions+=LocalAction* 
+	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */
-	protected void sequence_State(EObject context, State semanticObject) {
+	protected void sequence_State(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     LocalAction returns SuspendAction
+	 *     SuspendAction returns SuspendAction
+	 *
 	 * Constraint:
 	 *     (immediate?='immediate'? weak?='weak'? trigger=BoolExpression?)
 	 */
-	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
+	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
+	 * Contexts:
+	 *     Transition returns Transition
+	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=RestrictedTypeAnnotation* 
@@ -503,10 +583,12 @@ public abstract class AbstractSct3SemanticSequencer extends KEXTSemanticSequence
 	 *         immediate?='immediate'? 
 	 *         deferred?='deferred'? 
 	 *         history=HistoryType? 
-	 *         (((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *         ((delay=INT? trigger=BoolExpression (effects+=Effect effects+=Effect*)) | (effects+=Effect effects+=Effect*) | label=STRING)?
 	 *     )
 	 */
-	protected void sequence_Transition(EObject context, Transition semanticObject) {
+	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
+	
+	
 }

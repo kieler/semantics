@@ -31,6 +31,8 @@ import java.util.LinkedHashSet
 import java.util.List
 import java.util.logging.Logger
 
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
+
 /**
  * Main diagram synthesis for SCCharts.
  * 
@@ -39,7 +41,7 @@ import java.util.logging.Logger
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements GeneralSynthesisOptions {
+class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject 
     extension KNodeExtensions
@@ -65,7 +67,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
     
     // -------------------------------------------------------------------------
     // Fields
-    val logger = Logger.getLogger(this.class.name);
+    val logger = Logger.getLogger(this.class.name)
+    public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
        
     // -------------------------------------------------------------------------
     // Sidebar Options
@@ -130,7 +133,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> implements Gener
         logger.info(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
-
+		
         return rootNode;
     }
 

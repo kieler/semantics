@@ -2,11 +2,6 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
-import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,7 +13,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Kext extends KEXTScope
-{
-
+public interface Kext extends KEXTScope {
 } // Kext

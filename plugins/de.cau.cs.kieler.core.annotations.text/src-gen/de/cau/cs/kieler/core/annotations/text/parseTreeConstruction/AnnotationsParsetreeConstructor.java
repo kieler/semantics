@@ -54,14 +54,12 @@ protected class ThisRootNode extends RootToken {
  *  * @author ssm
  *  * @kieler.design 2015-08-21 proposed 
  *  * @kieler.rating 2015-08-21 proposed yellow
- *  * /
+ *  * / // ------------------ //
+ * //  Annotation Rules  // 
  * // ------------------ //
- *  //  Annotation Rules  // 
- *  // ------------------ //
- *  // General rule for annotations
- * 
+ * // General rule for annotations
  * // The different annotation sub rules are tested in order. Hence, order matters! 
- *  Annotation:
+ * Annotation:
  * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
  *
  **/
@@ -252,13 +250,11 @@ protected class Annotation_TagAnnotationParserRuleCall_3 extends RuleCallToken {
 /************ begin Rule ValuedAnnotation ****************
  *
  * // Valued Annotation Rule
- *  // Valued annotations must have a value. For instance, tag annotations are not allowed.
- * 
+ * // Valued annotations must have a value. For instance, tag annotations are not allowed.
  * // Derived grammars may use this rule if the general annotation rules compromises the grammar
- *  // due to ambiguities.
- * 
- * ValuedAnnotation returns Annotation:
- * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
+ * // due to ambiguities.
+ * ValuedAnnotation Annotation:
+ * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation
  *
  **/
 
@@ -410,12 +406,10 @@ protected class ValuedAnnotation_TypedKeyStringValueAnnotationParserRuleCall_2 e
 /************ begin Rule RestrictedTypeAnnotation ****************
  *
  * // Restricted Type Annotation Rule
- *  // The restricted type annotation rule does not allow typed string annotations. 
- * 
+ * // The restricted type annotation rule does not allow typed string annotations. 
  * // You can use this rule in derived grammars if you don't want to permit typed strings. 
- *  RestrictedTypeAnnotation
- * returns Annotation:
- * 	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation;
+ * RestrictedTypeAnnotation Annotation:
+ * 	CommentAnnotation | RestrictedKeyStringValueAnnotation | RestrictedTypedKeyStringValueAnnotation | TagAnnotation
  *
  **/
 
@@ -605,16 +599,12 @@ protected class RestrictedTypeAnnotation_TagAnnotationParserRuleCall_3 extends R
 /************ begin Rule QuotedStringAnnotation ****************
  *
  * // Quoted String Annotation Rule
- * 
  * // The quoted string annotation rules uses quoted key string annotations. You can use this rule in 
- * 
  * // derived grammars if you don't want to permit unquoted strings. 
- * 
  * // (If you are looking for an example, the keffects grammar uses this rule for their emission
- * 
  * // rule and to avoid grammar ambiguities.)  
- *  QuotedStringAnnotation returns Annotation:
- * 	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
+ * QuotedStringAnnotation Annotation:
+ * 	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation
  *
  **/
 
@@ -804,8 +794,8 @@ protected class QuotedStringAnnotation_TagAnnotationParserRuleCall_3 extends Rul
 /************ begin Rule CommentAnnotation ****************
  *
  * // CommentAnnotation
- *  // e.g.: / ** semantic comment * /
- *  CommentAnnotation:
+ * // e.g.: / ** semantic comment * /
+ * CommentAnnotation:
  * 	values+=COMMENT_ANNOTATION;
  *
  **/
@@ -851,13 +841,13 @@ protected class CommentAnnotation_ValuesAssignment extends AssignmentToken  {
 /************ begin Rule TagAnnotation ****************
  *
  * // TagAnnotation
- *  // e.g.: @HVlayout
- *  TagAnnotation returns Annotation:
- * 	"@" name=ExtendedID;
+ * // e.g.: @HVlayout
+ * TagAnnotation Annotation:
+ * 	'@' name=ExtendedID
  *
  **/
 
-// "@" name=ExtendedID
+// '@' name=ExtendedID
 protected class TagAnnotation_Group extends GroupToken {
 	
 	public TagAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -886,7 +876,7 @@ protected class TagAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class TagAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public TagAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -948,15 +938,14 @@ protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 /************ begin Rule KeyStringValueAnnotation ****************
  *
  * // KeyStringValueAnnotation
- *  // e.g.: @layouter dot
- *  // You may separate different values via comma.   
- * 
- * KeyStringValueAnnotation returns StringAnnotation:
- * 	"@" name=ExtendedID values+=EStringAllTypes ("," values+=EStringAllTypes)*;
+ * // e.g.: @layouter dot
+ * // You may separate different values via comma.   
+ * KeyStringValueAnnotation StringAnnotation:
+ * 	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
  *
  **/
 
-// "@" name=ExtendedID values+=EStringAllTypes ("," values+=EStringAllTypes)*
+// '@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
 protected class KeyStringValueAnnotation_Group extends GroupToken {
 	
 	public KeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -986,7 +975,7 @@ protected class KeyStringValueAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class KeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public KeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1075,7 +1064,7 @@ protected class KeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentTo
 
 }
 
-// ("," values+=EStringAllTypes)*
+// (',' values+=EStringAllTypes)*
 protected class KeyStringValueAnnotation_Group_3 extends GroupToken {
 	
 	public KeyStringValueAnnotation_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1097,7 +1086,7 @@ protected class KeyStringValueAnnotation_Group_3 extends GroupToken {
 
 }
 
-// ","
+// ','
 protected class KeyStringValueAnnotation_CommaKeyword_3_0 extends KeywordToken  {
 	
 	public KeyStringValueAnnotation_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1161,12 +1150,12 @@ protected class KeyStringValueAnnotation_ValuesAssignment_3_1 extends Assignment
 
 /************ begin Rule RestrictedKeyStringValueAnnotation ****************
  *
- * RestrictedKeyStringValueAnnotation returns StringAnnotation:
- * 	"@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*;
+ * RestrictedKeyStringValueAnnotation StringAnnotation:
+ * 	'@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
  *
  **/
 
-// "@" name=ExtendedID values+=EStringBoolean ("," values+=EStringBoolean)*
+// '@' name=ExtendedID values+=EStringBoolean (',' values+=EStringBoolean)*
 protected class RestrictedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public RestrictedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1196,7 +1185,7 @@ protected class RestrictedKeyStringValueAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class RestrictedKeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public RestrictedKeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1285,7 +1274,7 @@ protected class RestrictedKeyStringValueAnnotation_ValuesAssignment_2 extends As
 
 }
 
-// ("," values+=EStringBoolean)*
+// (',' values+=EStringBoolean)*
 protected class RestrictedKeyStringValueAnnotation_Group_3 extends GroupToken {
 	
 	public RestrictedKeyStringValueAnnotation_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1307,7 +1296,7 @@ protected class RestrictedKeyStringValueAnnotation_Group_3 extends GroupToken {
 
 }
 
-// ","
+// ','
 protected class RestrictedKeyStringValueAnnotation_CommaKeyword_3_0 extends KeywordToken  {
 	
 	public RestrictedKeyStringValueAnnotation_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1372,14 +1361,13 @@ protected class RestrictedKeyStringValueAnnotation_ValuesAssignment_3_1 extends 
 /************ begin Rule TypedKeyStringValueAnnotation ****************
  *
  * // TypedKeyStringValueAnnotation
- *  // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
- * 
- * TypedKeyStringValueAnnotation returns TypedStringAnnotation:
- * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringAllTypes ("," values+=EStringAllTypes)*;
+ * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+ * TypedKeyStringValueAnnotation TypedStringAnnotation:
+ * 	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
  *
  **/
 
-// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringAllTypes ("," values+=EStringAllTypes)*
+// '@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
 protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1409,7 +1397,7 @@ protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class TypedKeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public TypedKeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1464,7 +1452,7 @@ protected class TypedKeyStringValueAnnotation_NameAssignment_1 extends Assignmen
 
 }
 
-// "["
+// '['
 protected class TypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2 extends KeywordToken  {
 	
 	public TypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1520,7 +1508,7 @@ protected class TypedKeyStringValueAnnotation_TypeAssignment_3 extends Assignmen
 
 }
 
-// "]"
+// ']'
 protected class TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4 extends KeywordToken  {
 	
 	public TypedKeyStringValueAnnotation_RightSquareBracketKeyword_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1576,7 +1564,7 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_5 extends Assignm
 
 }
 
-// ("," values+=EStringAllTypes)*
+// (',' values+=EStringAllTypes)*
 protected class TypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1598,7 +1586,7 @@ protected class TypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 
 }
 
-// ","
+// ','
 protected class TypedKeyStringValueAnnotation_CommaKeyword_6_0 extends KeywordToken  {
 	
 	public TypedKeyStringValueAnnotation_CommaKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1662,12 +1650,12 @@ protected class TypedKeyStringValueAnnotation_ValuesAssignment_6_1 extends Assig
 
 /************ begin Rule RestrictedTypedKeyStringValueAnnotation ****************
  *
- * RestrictedTypedKeyStringValueAnnotation returns TypedStringAnnotation:
- * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*;
+ * RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
+ * 	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
  *
  **/
 
-// "@" name=ExtendedID "[" type=ExtendedID "]" values+=EStringBoolean ("," values+=EStringBoolean)*
+// '@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
 protected class RestrictedTypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public RestrictedTypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1697,7 +1685,7 @@ protected class RestrictedTypedKeyStringValueAnnotation_Group extends GroupToken
 
 }
 
-// "@"
+// '@'
 protected class RestrictedTypedKeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public RestrictedTypedKeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1752,7 +1740,7 @@ protected class RestrictedTypedKeyStringValueAnnotation_NameAssignment_1 extends
 
 }
 
-// "["
+// '['
 protected class RestrictedTypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2 extends KeywordToken  {
 	
 	public RestrictedTypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1808,7 +1796,7 @@ protected class RestrictedTypedKeyStringValueAnnotation_TypeAssignment_3 extends
 
 }
 
-// "]"
+// ']'
 protected class RestrictedTypedKeyStringValueAnnotation_RightSquareBracketKeyword_4 extends KeywordToken  {
 	
 	public RestrictedTypedKeyStringValueAnnotation_RightSquareBracketKeyword_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1864,7 +1852,7 @@ protected class RestrictedTypedKeyStringValueAnnotation_ValuesAssignment_5 exten
 
 }
 
-// ("," values+=EStringBoolean)*
+// (',' values+=EStringBoolean)*
 protected class RestrictedTypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 	
 	public RestrictedTypedKeyStringValueAnnotation_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1886,7 +1874,7 @@ protected class RestrictedTypedKeyStringValueAnnotation_Group_6 extends GroupTok
 
 }
 
-// ","
+// ','
 protected class RestrictedTypedKeyStringValueAnnotation_CommaKeyword_6_0 extends KeywordToken  {
 	
 	public RestrictedTypedKeyStringValueAnnotation_CommaKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1951,16 +1939,14 @@ protected class RestrictedTypedKeyStringValueAnnotation_ValuesAssignment_6_1 ext
 /************ begin Rule QuotedKeyStringValueAnnotation ****************
  *
  * // QuotedKeyStringValueAnnotation
- *  // The quoted key string value annotation is a replacement derived grammars may use
- * 
+ * // The quoted key string value annotation is a replacement derived grammars may use
  * // if they want to disallow quote-less strings in a key string annotation. 
- *  QuotedKeyStringValueAnnotation returns
- * StringAnnotation:
- * 	"@" name=ExtendedID values+=STRING ("," values+=STRING)*;
+ * QuotedKeyStringValueAnnotation StringAnnotation:
+ * 	'@' name=ExtendedID values+=STRING (',' values+=STRING)*
  *
  **/
 
-// "@" name=ExtendedID values+=STRING ("," values+=STRING)*
+// '@' name=ExtendedID values+=STRING (',' values+=STRING)*
 protected class QuotedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public QuotedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1990,7 +1976,7 @@ protected class QuotedKeyStringValueAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class QuotedKeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public QuotedKeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2079,7 +2065,7 @@ protected class QuotedKeyStringValueAnnotation_ValuesAssignment_2 extends Assign
 
 }
 
-// ("," values+=STRING)*
+// (',' values+=STRING)*
 protected class QuotedKeyStringValueAnnotation_Group_3 extends GroupToken {
 	
 	public QuotedKeyStringValueAnnotation_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2101,7 +2087,7 @@ protected class QuotedKeyStringValueAnnotation_Group_3 extends GroupToken {
 
 }
 
-// ","
+// ','
 protected class QuotedKeyStringValueAnnotation_CommaKeyword_3_0 extends KeywordToken  {
 	
 	public QuotedKeyStringValueAnnotation_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2166,17 +2152,14 @@ protected class QuotedKeyStringValueAnnotation_ValuesAssignment_3_1 extends Assi
 /************ begin Rule QuotedTypedKeyStringValueAnnotation ****************
  *
  * // QuotedTypedKeyStringValueAnnotation
- * 
  * // The quoted typed key string value annotation is a replacement derived grammars may use
- * 
  * // if they want to disallow quote-less strings in a key string annotation. 
- *  QuotedTypedKeyStringValueAnnotation
- * returns TypedStringAnnotation:
- * 	"@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*;
+ * QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
+ * 	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
  *
  **/
 
-// "@" name=ExtendedID "[" type=ExtendedID "]" values+=STRING ("," values+=STRING)*
+// '@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
 protected class QuotedTypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public QuotedTypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2206,7 +2189,7 @@ protected class QuotedTypedKeyStringValueAnnotation_Group extends GroupToken {
 
 }
 
-// "@"
+// '@'
 protected class QuotedTypedKeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
 	public QuotedTypedKeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2261,7 +2244,7 @@ protected class QuotedTypedKeyStringValueAnnotation_NameAssignment_1 extends Ass
 
 }
 
-// "["
+// '['
 protected class QuotedTypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2 extends KeywordToken  {
 	
 	public QuotedTypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2317,7 +2300,7 @@ protected class QuotedTypedKeyStringValueAnnotation_TypeAssignment_3 extends Ass
 
 }
 
-// "]"
+// ']'
 protected class QuotedTypedKeyStringValueAnnotation_RightSquareBracketKeyword_4 extends KeywordToken  {
 	
 	public QuotedTypedKeyStringValueAnnotation_RightSquareBracketKeyword_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2373,7 +2356,7 @@ protected class QuotedTypedKeyStringValueAnnotation_ValuesAssignment_5 extends A
 
 }
 
-// ("," values+=STRING)*
+// (',' values+=STRING)*
 protected class QuotedTypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 	
 	public QuotedTypedKeyStringValueAnnotation_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2395,7 +2378,7 @@ protected class QuotedTypedKeyStringValueAnnotation_Group_6 extends GroupToken {
 
 }
 
-// ","
+// ','
 protected class QuotedTypedKeyStringValueAnnotation_CommaKeyword_6_0 extends KeywordToken  {
 	
 	public QuotedTypedKeyStringValueAnnotation_CommaKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {

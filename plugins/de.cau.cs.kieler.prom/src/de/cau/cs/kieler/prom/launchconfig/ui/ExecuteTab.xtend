@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 import java.util.ArrayList
@@ -21,17 +23,17 @@ import java.util.EnumSet
 import java.util.List
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab
 import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
-import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
@@ -43,13 +45,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.jface.viewers.ComboViewer
-import org.eclipse.jface.viewers.ArrayContentProvider
-import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
-import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.core.runtime.IConfigurationElement
-import com.google.common.collect.Lists
-import org.eclipse.core.internal.registry.ConfigurationElement
 
 /** 
  * The tab with the controls to set shell commands which will be executed
@@ -57,7 +52,7 @@ import org.eclipse.core.internal.registry.ConfigurationElement
  * 
  * @author aas
  */
-class ExecuteTab extends AbstractLaunchConfigurationTab {
+class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
 
     /**
      * The control to show all commands and enable/disable them. 
@@ -89,6 +84,13 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      */
     private var IProject project
 
+    /**
+     * Constructor
+     */
+    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+        super(tabGroup)
+    }
+    
     /** 
      * {@inheritDoc}
      */
@@ -221,7 +223,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                 }
             }
         })
-        command.toolTipText = "Shell command to be executed when preceding command finished successful."
+        command.toolTipText = "Shell command to be executed when the preceding commands finished successfully."
         
         // Create buttons
         val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)
@@ -255,33 +257,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
     private def void createAssociatedLaunchShortcutComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
         
-        val combo = new ComboViewer(group, SWT.DEFAULT)
-        launchShortcuts = combo
-        launchShortcuts.combo.toolTipText = "Launch shortcut that is started after the KiCo Compilation"
-        
-        // Fill combo
-        combo.contentProvider = ArrayContentProvider.instance
-        
-        val ArrayList<Object> input = new ArrayList<Object>()
-        input.add(StructuredSelection.EMPTY)
-        input.addAll(ExtensionLookupUtil.getLaunchShortcutConfigurationElements())
-        combo.input = input
-        
-        // Select first element as default 
-        combo.selection = new StructuredSelection(StructuredSelection.EMPTY)
-
-        // Create label provider
-        combo.labelProvider = new LabelProvider() {
-            override String getText(Object element) {
-                if(element != null && element instanceof IConfigurationElement)
-                    return (element as IConfigurationElement).getAttribute("label")
-                else
-                    return ""
-            }
-        }
-        
+        launchShortcuts = UIUtil.createLaunchShortcutCombo(group)
         // Selection event
-        combo.addSelectionChangedListener(new ISelectionChangedListener {
+        launchShortcuts.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
                 checkConsistency()
@@ -289,51 +267,48 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
             }
         })        
     }
-    
-    /**
+ 
+     /**
      * {@inheritDoc}
      */
-    override activated(ILaunchConfigurationWorkingCopy workingCopy) {
-        super.activated(workingCopy)
+    override initializeFrom(ILaunchConfiguration configuration) {
+        super.initializeFrom(configuration)
+        // Ignore the following changes in the UI
+        doNotApplyUIChanges = true
         
-        // Update project reference
-        val projectName = workingCopy.getAttribute(LaunchConfiguration.ATTR_PROJECT, "")
-        project = LaunchConfiguration.findProject(projectName)
+        // Update project reference        
+        project = LaunchConfiguration.findProject(launchData.projectName)
         
-        updateEnabled()
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    override void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    override void initializeFrom(ILaunchConfiguration configuration) {
-        viewer.input = CommandData.loadAllFromConfiguration(configuration)
+        // Set commands
+        viewer.input = launchData.commands
         
         // Select associated launch shortcut in combo viewer
-        val launchShortcutClass = configuration.getAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, "")
-        launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
-        for(o : launchShortcuts.input as ArrayList<Object>){
-            if(o instanceof IConfigurationElement){
-                if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == launchShortcutClass) {
+        var selected = false
+        for(o : launchShortcuts.input as ArrayList<Object>) {
+            if(o instanceof IConfigurationElement) {
+                val shortcutImplementation = o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
+                if(shortcutImplementation == launchData.associatedLaunchShortcut) {
                     launchShortcuts.selection = new StructuredSelection(o)
+                    selected = true
                 }
             }
         }
+        if(selected = false)
+            launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
         
         updateEnabled()
+        
+         // Don't ignore UI changes anymore
+        doNotApplyUIChanges = false
     }
- 
+    
     /** 
      * {@inheritDoc}
      */
     override void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        CommandData.saveAllToConfiguration(configuration, viewer.input as List<CommandData>)
+        if(doNotApplyUIChanges) {
+            return
+        }
         
         // Set associated launch shortcut
         val selection = (launchShortcuts.selection as StructuredSelection).firstElement
@@ -341,8 +316,9 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
                                     (selection as IConfigurationElement).getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME)
                                 else
                                     ""
-        configuration.setAttribute(LaunchConfiguration.ATTR_ASSOCIATED_LAUNCH_SHORTCUT, shortcutClassName)
-        System.err.println(shortcutClassName)
+        launchData.associatedLaunchShortcut = shortcutClassName
+        // Flush to configuration
+        KiCoLaunchData.saveToConfiguration(configuration, launchData)
     }
 
     /** 
@@ -403,7 +379,7 @@ class ExecuteTab extends AbstractLaunchConfigurationTab {
      * Enable or disable all controls depending on this launch configuration's project. 
      */
     private def void updateEnabled(){
-        val List<Control> controls = #[viewer.table, name, command]
+        val List<Control> controls = #[viewer.table, name, command, launchShortcuts.combo]
         UIUtil.enableControlsOnSameLevel(controls, project != null)
     }
 }

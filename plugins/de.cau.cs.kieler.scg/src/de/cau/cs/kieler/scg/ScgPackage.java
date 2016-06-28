@@ -116,22 +116,13 @@ public interface ScgPackage extends EPackage {
 	int SC_GRAPH__BASIC_BLOCKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
-     * The feature id for the '<em><b>Schedules</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SC_GRAPH__SCHEDULES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
-
-	/**
      * The feature id for the '<em><b>Guards</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+	int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -140,7 +131,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+	int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 	/**
      * The number of structural features of the '<em>SC Graph</em>' class.
@@ -149,7 +140,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+	int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.NodeImpl <em>Node</em>}' class.
@@ -472,31 +463,22 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
-     * The feature id for the '<em><b>Next</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 0;
-
-	/**
-     * The feature id for the '<em><b>Assignment</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ASSIGNMENT__ASSIGNMENT = NODE_FEATURE_COUNT + 1;
-
-	/**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__VALUED_OBJECT = NODE_FEATURE_COUNT + 2;
+	int ASSIGNMENT__VALUED_OBJECT = NODE_FEATURE_COUNT + 0;
+
+	/**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int ASSIGNMENT__EXPRESSION = NODE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Indices</b></em>' containment reference list.
@@ -505,7 +487,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int ASSIGNMENT__INDICES = NODE_FEATURE_COUNT + 3;
+	int ASSIGNMENT__INDICES = NODE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -514,7 +496,16 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 4;
+    int ASSIGNMENT__OPERATOR = NODE_FEATURE_COUNT + 3;
+
+	/**
+     * The feature id for the '<em><b>Next</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Assignment</em>' class.
@@ -679,34 +670,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getLink()
      * @generated
      */
-	int LINK = 8;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int LINK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-	/**
-     * The number of structural features of the '<em>Link</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+	int LINK = 14;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
@@ -716,7 +680,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getEntry()
      * @generated
      */
-	int ENTRY = 9;
+	int ENTRY = 8;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -789,7 +753,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExit()
      * @generated
      */
-	int EXIT = 10;
+	int EXIT = 9;
 
 	/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -862,34 +826,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlFlow()
      * @generated
      */
-	int CONTROL_FLOW = 11;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_FLOW__ANNOTATIONS = LINK__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_FLOW__TARGET = LINK__TARGET;
-
-	/**
-     * The number of structural features of the '<em>Control Flow</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_FLOW_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+	int CONTROL_FLOW = 15;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DependencyImpl <em>Dependency</em>}' class.
@@ -899,34 +836,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDependency()
      * @generated
      */
-    int DEPENDENCY = 12;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEPENDENCY__TARGET = LINK__TARGET;
-
-    /**
-     * The number of structural features of the '<em>Dependency</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+    int DEPENDENCY = 16;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl <em>Data Dependency</em>}' class.
@@ -936,52 +846,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependency()
      * @generated
      */
-    int DATA_DEPENDENCY = 13;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
-
-    /**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_DEPENDENCY__CONCURRENT = DEPENDENCY_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_DEPENDENCY__CONFLUENT = DEPENDENCY_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Data Dependency</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 2;
+    int DATA_DEPENDENCY = 17;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
@@ -991,256 +856,9 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
      * @generated
      */
-    int CONTROL_DEPENDENCY = 14;
+    int CONTROL_DEPENDENCY = 18;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROL_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROL_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
-
-    /**
-     * The number of structural features of the '<em>Control Dependency</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_Read()
-     * @generated
-     */
-	int ABSOLUTE_WRITE_READ = 15;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_READ__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_READ__TARGET = DATA_DEPENDENCY__TARGET;
-
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_READ__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_READ__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
-
-	/**
-     * The number of structural features of the '<em>Absolute Write Read</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_READ_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.RelativeWrite_ReadImpl <em>Relative Write Read</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.RelativeWrite_ReadImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getRelativeWrite_Read()
-     * @generated
-     */
-	int RELATIVE_WRITE_READ = 16;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int RELATIVE_WRITE_READ__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int RELATIVE_WRITE_READ__TARGET = DATA_DEPENDENCY__TARGET;
-
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int RELATIVE_WRITE_READ__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int RELATIVE_WRITE_READ__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
-
-	/**
-     * The number of structural features of the '<em>Relative Write Read</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int RELATIVE_WRITE_READ_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_RelativeWriteImpl <em>Absolute Write Relative Write</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.AbsoluteWrite_RelativeWriteImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_RelativeWrite()
-     * @generated
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE = 17;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__TARGET = DATA_DEPENDENCY__TARGET;
-
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
-
-	/**
-     * The number of structural features of the '<em>Absolute Write Relative Write</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int ABSOLUTE_WRITE_RELATIVE_WRITE_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.Write_WriteImpl <em>Write Write</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.Write_WriteImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getWrite_Write()
-     * @generated
-     */
-	int WRITE_WRITE = 18;
-
-	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int WRITE_WRITE__ANNOTATIONS = DATA_DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int WRITE_WRITE__TARGET = DATA_DEPENDENCY__TARGET;
-
-	/**
-     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int WRITE_WRITE__CONCURRENT = DATA_DEPENDENCY__CONCURRENT;
-
-	/**
-     * The feature id for the '<em><b>Confluent</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int WRITE_WRITE__CONFLUENT = DATA_DEPENDENCY__CONFLUENT;
-
-	/**
-     * The number of structural features of the '<em>Write Write</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int WRITE_WRITE_FEATURE_COUNT = DATA_DEPENDENCY_FEATURE_COUNT + 0;
-
-	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1248,7 +866,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBasicBlock()
      * @generated
      */
-	int BASIC_BLOCK = 19;
+	int BASIC_BLOCK = 10;
 
 	/**
      * The feature id for the '<em><b>Scheduling Blocks</b></em>' containment reference list.
@@ -1339,7 +957,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedulingBlock()
      * @generated
      */
-	int SCHEDULING_BLOCK = 20;
+	int SCHEDULING_BLOCK = 11;
 
 	/**
      * The feature id for the '<em><b>Nodes</b></em>' reference list.
@@ -1360,13 +978,13 @@ public interface ScgPackage extends EPackage {
 	int SCHEDULING_BLOCK__DEPENDENCIES = 1;
 
 	/**
-     * The feature id for the '<em><b>Guard</b></em>' reference.
+     * The feature id for the '<em><b>Guards</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SCHEDULING_BLOCK__GUARD = 2;
+	int SCHEDULING_BLOCK__GUARDS = 2;
 
 	/**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1394,7 +1012,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getPredecessor()
      * @generated
      */
-	int PREDECESSOR = 21;
+	int PREDECESSOR = 12;
 
 	/**
      * The feature id for the '<em><b>Basic Block</b></em>' reference.
@@ -1433,69 +1051,24 @@ public interface ScgPackage extends EPackage {
 	int PREDECESSOR_FEATURE_COUNT = 3;
 
 	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleBlockImpl <em>Schedule Block</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl <em>Expression Dependency</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.ScheduleBlockImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleBlock()
+     * @see de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
      * @generated
      */
-	int SCHEDULE_BLOCK = 22;
+	int EXPRESSION_DEPENDENCY = 19;
 
 	/**
-     * The feature id for the '<em><b>Scheduling Block</b></em>' reference.
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SCHEDULE_BLOCK__SCHEDULING_BLOCK = 0;
-
-	/**
-     * The feature id for the '<em><b>Additional Guards</b></em>' reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SCHEDULE_BLOCK__ADDITIONAL_GUARDS = 1;
-
-	/**
-     * The number of structural features of the '<em>Schedule Block</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SCHEDULE_BLOCK_FEATURE_COUNT = 2;
-
-	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleImpl <em>Schedule</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.ScheduleImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedule()
+     * @see de.cau.cs.kieler.scg.impl.GuardDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
      * @generated
      */
-	int SCHEDULE = 23;
-
-	/**
-     * The feature id for the '<em><b>Schedule Blocks</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SCHEDULE__SCHEDULE_BLOCKS = 0;
-
-	/**
-     * The number of structural features of the '<em>Schedule</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SCHEDULE_FEATURE_COUNT = 1;
+	int GUARD_DEPENDENCY = 20;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -1505,16 +1078,52 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuard()
      * @generated
      */
-	int GUARD = 24;
+	int GUARD = 13;
 
 	/**
-     * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD__VALUED_OBJECT = 0;
+	int GUARD__ANNOTATIONS = NODE__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD__INCOMING = NODE__INCOMING;
+
+	/**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD__IS_INITIAL = NODE__IS_INITIAL;
+
+	/**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD__DEPENDENCIES = NODE__DEPENDENCIES;
+
+	/**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD__VALUED_OBJECT = NODE_FEATURE_COUNT + 0;
 
 	/**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1523,61 +1132,287 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int GUARD__EXPRESSION = 1;
+	int GUARD__EXPRESSION = NODE_FEATURE_COUNT + 1;
 
 	/**
-     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD__SCHIZOPHRENIC = 2;
+	int GUARD__INDICES = NODE_FEATURE_COUNT + 2;
 
 	/**
-     * The feature id for the '<em><b>Scheduling Block Link</b></em>' reference.
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD__SCHEDULING_BLOCK_LINK = 3;
+	int GUARD__OPERATOR = NODE_FEATURE_COUNT + 3;
 
 	/**
-     * The feature id for the '<em><b>Original Object</b></em>' reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int GUARD__ORIGINAL_OBJECT = 4;
-
-	/**
-     * The feature id for the '<em><b>Sequentialize</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int GUARD__SEQUENTIALIZE = 5;
-
-	/**
-     * The feature id for the '<em><b>Dead</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int GUARD__DEAD = 6;
-
-    /**
      * The number of structural features of the '<em>Guard</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int GUARD_FEATURE_COUNT = 7;
+	int GUARD_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
+
+	/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int LINK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+	/**
+     * The number of structural features of the '<em>Link</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+	/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_FLOW__ANNOTATIONS = LINK__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_FLOW__TARGET = LINK__TARGET;
+
+	/**
+     * The number of structural features of the '<em>Control Flow</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_FLOW_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+
+	/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DEPENDENCY__ANNOTATIONS = LINK__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DEPENDENCY__TARGET = LINK__TARGET;
+
+	/**
+     * The number of structural features of the '<em>Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DEPENDENCY_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+
+	/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+	/**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY__CONCURRENT = DEPENDENCY_FEATURE_COUNT + 0;
+
+	/**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY__CONFLUENT = DEPENDENCY_FEATURE_COUNT + 1;
+
+	/**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY__TYPE = DEPENDENCY_FEATURE_COUNT + 2;
+
+	/**
+     * The number of structural features of the '<em>Data Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 3;
+
+	/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+	/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+	/**
+     * The number of structural features of the '<em>Control Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int CONTROL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int EXPRESSION_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int EXPRESSION_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+				/**
+     * The number of structural features of the '<em>Expression Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int EXPRESSION_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+				/**
+     * The number of structural features of the '<em>Guard Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+
+	/**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl <em>Schedule Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
+     * @generated
+     */
+	int SCHEDULE_DEPENDENCY = 21;
+
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SCHEDULE_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SCHEDULE_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+				/**
+     * The number of structural features of the '<em>Schedule Dependency</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SCHEDULE_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
@@ -1587,7 +1422,18 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-	int BRANCH_TYPE = 25;
+	int BRANCH_TYPE = 22;
+
+
+	/**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}' enum.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.DataDependencyType
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependencyType()
+     * @generated
+     */
+	int DATA_DEPENDENCY_TYPE = 23;
 
 
 	/**
@@ -1632,17 +1478,6 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
 	EReference getSCGraph_BasicBlocks();
-
-	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getSchedules <em>Schedules</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Schedules</em>'.
-     * @see de.cau.cs.kieler.scg.SCGraph#getSchedules()
-     * @see #getSCGraph()
-     * @generated
-     */
-	EReference getSCGraph_Schedules();
 
 	/**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getGuards <em>Guards</em>}'.
@@ -1827,50 +1662,6 @@ public interface ScgPackage extends EPackage {
 	EReference getAssignment_Next();
 
 	/**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Assignment</em>'.
-     * @see de.cau.cs.kieler.scg.Assignment#getAssignment()
-     * @see #getAssignment()
-     * @generated
-     */
-	EReference getAssignment_Assignment();
-
-	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Assignment#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.scg.Assignment#getValuedObject()
-     * @see #getAssignment()
-     * @generated
-     */
-	EReference getAssignment_ValuedObject();
-
-	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.Assignment#getIndices <em>Indices</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Indices</em>'.
-     * @see de.cau.cs.kieler.scg.Assignment#getIndices()
-     * @see #getAssignment()
-     * @generated
-     */
-	EReference getAssignment_Indices();
-
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Assignment#getOperator <em>Operator</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Operator</em>'.
-     * @see de.cau.cs.kieler.scg.Assignment#getOperator()
-     * @see #getAssignment()
-     * @generated
-     */
-    EAttribute getAssignment_Operator();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Fork <em>Fork</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2072,6 +1863,17 @@ public interface ScgPackage extends EPackage {
     EAttribute getDataDependency_Confluent();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.DataDependency#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.scg.DataDependency#getType()
+     * @see #getDataDependency()
+     * @generated
+     */
+	EAttribute getDataDependency_Type();
+
+				/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2082,46 +1884,6 @@ public interface ScgPackage extends EPackage {
     EClass getControlDependency();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Absolute Write Read</em>'.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
-     * @generated
-     */
-	EClass getAbsoluteWrite_Read();
-
-	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Relative Write Read</em>'.
-     * @see de.cau.cs.kieler.scg.RelativeWrite_Read
-     * @generated
-     */
-	EClass getRelativeWrite_Read();
-
-	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Absolute Write Relative Write</em>'.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
-     * @generated
-     */
-	EClass getAbsoluteWrite_RelativeWrite();
-
-	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Write Write</em>'.
-     * @see de.cau.cs.kieler.scg.Write_Write
-     * @generated
-     */
-	EClass getWrite_Write();
-
-	/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2252,15 +2014,15 @@ public interface ScgPackage extends EPackage {
 	EReference getSchedulingBlock_Dependencies();
 
 	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuards <em>Guards</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Guard</em>'.
-     * @see de.cau.cs.kieler.scg.SchedulingBlock#getGuard()
+     * @return the meta object for the reference list '<em>Guards</em>'.
+     * @see de.cau.cs.kieler.scg.SchedulingBlock#getGuards()
      * @see #getSchedulingBlock()
      * @generated
      */
-	EReference getSchedulingBlock_Guard();
+	EReference getSchedulingBlock_Guards();
 
 	/**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.SchedulingBlock#getLabel <em>Label</em>}'.
@@ -2317,57 +2079,34 @@ public interface ScgPackage extends EPackage {
 	EAttribute getPredecessor_BranchType();
 
 	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ExpressionDependency <em>Expression Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Schedule Block</em>'.
-     * @see de.cau.cs.kieler.scg.ScheduleBlock
+     * @return the meta object for class '<em>Expression Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.ExpressionDependency
      * @generated
      */
-	EClass getScheduleBlock();
+	EClass getExpressionDependency();
 
 	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock <em>Scheduling Block</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.GuardDependency <em>Guard Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Scheduling Block</em>'.
-     * @see de.cau.cs.kieler.scg.ScheduleBlock#getSchedulingBlock()
-     * @see #getScheduleBlock()
+     * @return the meta object for class '<em>Guard Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.GuardDependency
      * @generated
      */
-	EReference getScheduleBlock_SchedulingBlock();
+	EClass getGuardDependency();
 
 	/**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.ScheduleBlock#getAdditionalGuards <em>Additional Guards</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduleDependency <em>Schedule Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Additional Guards</em>'.
-     * @see de.cau.cs.kieler.scg.ScheduleBlock#getAdditionalGuards()
-     * @see #getScheduleBlock()
+     * @return the meta object for class '<em>Schedule Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.ScheduleDependency
      * @generated
      */
-	EReference getScheduleBlock_AdditionalGuards();
-
-	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Schedule</em>'.
-     * @see de.cau.cs.kieler.scg.Schedule
-     * @generated
-     */
-	EClass getSchedule();
-
-	/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.Schedule#getScheduleBlocks <em>Schedule Blocks</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Schedule Blocks</em>'.
-     * @see de.cau.cs.kieler.scg.Schedule#getScheduleBlocks()
-     * @see #getSchedule()
-     * @generated
-     */
-	EReference getSchedule_ScheduleBlocks();
+	EClass getScheduleDependency();
 
 	/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
@@ -2380,83 +2119,6 @@ public interface ScgPackage extends EPackage {
 	EClass getGuard();
 
 	/**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#getValuedObject()
-     * @see #getGuard()
-     * @generated
-     */
-	EReference getGuard_ValuedObject();
-
-	/**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#getExpression()
-     * @see #getGuard()
-     * @generated
-     */
-	EReference getGuard_Expression();
-
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Schizophrenic</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#isSchizophrenic()
-     * @see #getGuard()
-     * @generated
-     */
-	EAttribute getGuard_Schizophrenic();
-
-	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Scheduling Block Link</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink()
-     * @see #getGuard()
-     * @generated
-     */
-	EReference getGuard_SchedulingBlockLink();
-
-	/**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Guard#getOriginalObject <em>Original Object</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Original Object</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#getOriginalObject()
-     * @see #getGuard()
-     * @generated
-     */
-	EReference getGuard_OriginalObject();
-
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Sequentialize</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#isSequentialize()
-     * @see #getGuard()
-     * @generated
-     */
-	EAttribute getGuard_Sequentialize();
-
-	/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Guard#isDead <em>Dead</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Dead</em>'.
-     * @see de.cau.cs.kieler.scg.Guard#isDead()
-     * @see #getGuard()
-     * @generated
-     */
-    EAttribute getGuard_Dead();
-
-    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2465,6 +2127,16 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
 	EEnum getBranchType();
+
+	/**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Data Dependency Type</em>'.
+     * @see de.cau.cs.kieler.scg.DataDependencyType
+     * @generated
+     */
+	EEnum getDataDependencyType();
 
 	/**
      * Returns the factory that creates the instances of the model.
@@ -2521,14 +2193,6 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
 		EReference SC_GRAPH__BASIC_BLOCKS = eINSTANCE.getSCGraph_BasicBlocks();
-
-		/**
-         * The meta object literal for the '<em><b>Schedules</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference SC_GRAPH__SCHEDULES = eINSTANCE.getSCGraph_Schedules();
 
 		/**
          * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
@@ -2677,38 +2341,6 @@ public interface ScgPackage extends EPackage {
 		EReference ASSIGNMENT__NEXT = eINSTANCE.getAssignment_Next();
 
 		/**
-         * The meta object literal for the '<em><b>Assignment</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
-
-		/**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
-
-		/**
-         * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference ASSIGNMENT__INDICES = eINSTANCE.getAssignment_Indices();
-
-		/**
-         * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute ASSIGNMENT__OPERATOR = eINSTANCE.getAssignment_Operator();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ForkImpl <em>Fork</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2877,6 +2509,14 @@ public interface ScgPackage extends EPackage {
         EAttribute DATA_DEPENDENCY__CONFLUENT = eINSTANCE.getDataDependency_Confluent();
 
         /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute DATA_DEPENDENCY__TYPE = eINSTANCE.getDataDependency_Type();
+
+								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2887,46 +2527,6 @@ public interface ScgPackage extends EPackage {
         EClass CONTROL_DEPENDENCY = eINSTANCE.getControlDependency();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.AbsoluteWrite_ReadImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_Read()
-         * @generated
-         */
-		EClass ABSOLUTE_WRITE_READ = eINSTANCE.getAbsoluteWrite_Read();
-
-		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.RelativeWrite_ReadImpl <em>Relative Write Read</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.RelativeWrite_ReadImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getRelativeWrite_Read()
-         * @generated
-         */
-		EClass RELATIVE_WRITE_READ = eINSTANCE.getRelativeWrite_Read();
-
-		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.AbsoluteWrite_RelativeWriteImpl <em>Absolute Write Relative Write</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.AbsoluteWrite_RelativeWriteImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getAbsoluteWrite_RelativeWrite()
-         * @generated
-         */
-		EClass ABSOLUTE_WRITE_RELATIVE_WRITE = eINSTANCE.getAbsoluteWrite_RelativeWrite();
-
-		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.Write_WriteImpl <em>Write Write</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.Write_WriteImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getWrite_Write()
-         * @generated
-         */
-		EClass WRITE_WRITE = eINSTANCE.getWrite_Write();
-
-		/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3027,12 +2627,12 @@ public interface ScgPackage extends EPackage {
 		EReference SCHEDULING_BLOCK__DEPENDENCIES = eINSTANCE.getSchedulingBlock_Dependencies();
 
 		/**
-         * The meta object literal for the '<em><b>Guard</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Guards</b></em>' reference list feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
          * @generated
          */
-		EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
+		EReference SCHEDULING_BLOCK__GUARDS = eINSTANCE.getSchedulingBlock_Guards();
 
 		/**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
@@ -3077,48 +2677,34 @@ public interface ScgPackage extends EPackage {
 		EAttribute PREDECESSOR__BRANCH_TYPE = eINSTANCE.getPredecessor_BranchType();
 
 		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleBlockImpl <em>Schedule Block</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl <em>Expression Dependency</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.ScheduleBlockImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleBlock()
+         * @see de.cau.cs.kieler.scg.impl.ExpressionDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
          * @generated
          */
-		EClass SCHEDULE_BLOCK = eINSTANCE.getScheduleBlock();
+		EClass EXPRESSION_DEPENDENCY = eINSTANCE.getExpressionDependency();
 
 		/**
-         * The meta object literal for the '<em><b>Scheduling Block</b></em>' reference feature.
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.GuardDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
          * @generated
          */
-		EReference SCHEDULE_BLOCK__SCHEDULING_BLOCK = eINSTANCE.getScheduleBlock_SchedulingBlock();
+		EClass GUARD_DEPENDENCY = eINSTANCE.getGuardDependency();
 
 		/**
-         * The meta object literal for the '<em><b>Additional Guards</b></em>' reference list feature.
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl <em>Schedule Dependency</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.ScheduleDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
          * @generated
          */
-		EReference SCHEDULE_BLOCK__ADDITIONAL_GUARDS = eINSTANCE.getScheduleBlock_AdditionalGuards();
-
-		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduleImpl <em>Schedule</em>}' class.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.ScheduleImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getSchedule()
-         * @generated
-         */
-		EClass SCHEDULE = eINSTANCE.getSchedule();
-
-		/**
-         * The meta object literal for the '<em><b>Schedule Blocks</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference SCHEDULE__SCHEDULE_BLOCKS = eINSTANCE.getSchedule_ScheduleBlocks();
+		EClass SCHEDULE_DEPENDENCY = eINSTANCE.getScheduleDependency();
 
 		/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -3131,62 +2717,6 @@ public interface ScgPackage extends EPackage {
 		EClass GUARD = eINSTANCE.getGuard();
 
 		/**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference GUARD__VALUED_OBJECT = eINSTANCE.getGuard_ValuedObject();
-
-		/**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference GUARD__EXPRESSION = eINSTANCE.getGuard_Expression();
-
-		/**
-         * The meta object literal for the '<em><b>Schizophrenic</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EAttribute GUARD__SCHIZOPHRENIC = eINSTANCE.getGuard_Schizophrenic();
-
-		/**
-         * The meta object literal for the '<em><b>Scheduling Block Link</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference GUARD__SCHEDULING_BLOCK_LINK = eINSTANCE.getGuard_SchedulingBlockLink();
-
-		/**
-         * The meta object literal for the '<em><b>Original Object</b></em>' reference list feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EReference GUARD__ORIGINAL_OBJECT = eINSTANCE.getGuard_OriginalObject();
-
-		/**
-         * The meta object literal for the '<em><b>Sequentialize</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @generated
-         */
-		EAttribute GUARD__SEQUENTIALIZE = eINSTANCE.getGuard_Sequentialize();
-
-		/**
-         * The meta object literal for the '<em><b>Dead</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute GUARD__DEAD = eINSTANCE.getGuard_Dead();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3195,6 +2725,16 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
 		EEnum BRANCH_TYPE = eINSTANCE.getBranchType();
+
+		/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.DataDependencyType <em>Data Dependency Type</em>}' enum.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.DataDependencyType
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getDataDependencyType()
+         * @generated
+         */
+		EEnum DATA_DEPENDENCY_TYPE = eINSTANCE.getDataDependencyType();
 
 	}
 

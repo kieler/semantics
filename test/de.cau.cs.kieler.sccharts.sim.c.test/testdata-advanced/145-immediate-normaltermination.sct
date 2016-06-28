@@ -10,7 +10,7 @@ scchart ImmediateNormalTermination {
 
     final state D;
   }
-  >-> E / O;
+  >-> E with / O;
 
   state E;
 

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.text.kext;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -24,20 +25,20 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface DeclarationScope extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declarations</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getDeclarationScope_Declarations()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Declaration> getDeclarations();
+    /**
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getDeclarationScope_Declarations()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Declaration> getDeclarations();
 
 } // DeclarationScope

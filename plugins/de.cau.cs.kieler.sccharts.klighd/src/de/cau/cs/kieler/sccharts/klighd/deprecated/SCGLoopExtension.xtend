@@ -26,11 +26,11 @@ import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 
 /**
  * @author als
@@ -44,7 +44,7 @@ class SCGLoopExtension {
     def addSCGLoopHighlighting(KNode rootNode, State scc, SourceModelTrackingAdapter tracking) {
 
         //TODO This transformation selection should be sensetive to the user selection in KiCoSelectionView regarding its editor
-        val context = new KielerCompilerContext(SCGFeatures.GUARD_ID + ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION", scc);
+        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID + ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION", scc);
         context.setProperty(Tracing.ACTIVE_TRACING, true);
         context.advancedSelect = true;
         val result = KielerCompiler.compile(context);

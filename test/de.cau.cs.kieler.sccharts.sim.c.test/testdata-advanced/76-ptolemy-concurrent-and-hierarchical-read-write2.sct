@@ -18,11 +18,11 @@ scchart _76ptolemyconcurrecntandhierarchicalreadwrite
       region:
 
       initial state state3
-      --> state4 / OutB;
+      --> state4 with / OutB;
 
       state state4;
     }
-    --> state2 / Out2;
+    --> state2 with / Out2;
 
     state state2;
   };

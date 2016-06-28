@@ -31,32 +31,51 @@
 'const'=74
 'else'=58
 'end'=57
+<<<<<<< HEAD
 'expression'=66
+=======
+'expression'=65
+'extern'=74
+>>>>>>> ssm/scg
 'float'=41
 'fork'=61
 'goto'=59
 'host'=43
 'if'=55
+<<<<<<< HEAD
 'input'=75
+=======
+'input'=76
+>>>>>>> ssm/scg
 'int'=40
 'join'=62
 'max'=45
 'min'=46
 'module'=47
 'none'=44
+<<<<<<< HEAD
 'output'=76
+=======
+'output'=77
+>>>>>>> ssm/scg
 'par'=63
 'pause'=64
 'pre'=16
 'pure'=37
+<<<<<<< HEAD
 'scope'=65
 'signal'=78
 'static'=77
+=======
+'signal'=79
+'static'=78
+>>>>>>> ssm/scg
 'string'=42
 'then'=56
 'thread'=60
 'unsigned'=39
 'val'=25
+'volatile'=75
 '{'=48
 '|'=17
 '||'=26
@@ -136,3 +155,7 @@ T__75=75
 T__76=76
 T__77=77
 T__78=78
+<<<<<<< HEAD
+=======
+T__79=79
+>>>>>>> ssm/scg

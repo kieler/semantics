@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.esterel.feature"
       label="KIELER Esterel"
-      version="0.3.1.qualifier"
+      version="0.3.2.qualifier"
       provider-name="Kiel University"
       plugin="de.cau.cs.kieler.esterel.ui">
 

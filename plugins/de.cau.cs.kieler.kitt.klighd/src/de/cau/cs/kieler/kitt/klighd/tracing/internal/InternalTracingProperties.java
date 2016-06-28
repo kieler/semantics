@@ -18,7 +18,7 @@ import java.util.Set;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions.TracingMode;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**

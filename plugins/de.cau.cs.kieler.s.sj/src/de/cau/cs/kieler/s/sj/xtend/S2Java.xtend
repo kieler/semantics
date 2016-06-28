@@ -30,7 +30,6 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -52,6 +51,7 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -76,9 +76,6 @@ class S2Java {
     @Inject
     extension KExpressionsDeclarationExtensions       
 
-    @Inject
-    extension SExtension
-    
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
@@ -130,13 +127,12 @@ class S2Java {
 
     «includeHeader»
     «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
-        «(hostcode as StringAnnotation).values.head»
+        «(hostcode as StringAnnotation).values.head.removeEscapeChars»
     «ENDFOR»
     
     
     class «className» {
 
-   «/* Variables */»
     «sVariables(program)»    
     
     ''' 
