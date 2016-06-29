@@ -183,7 +183,7 @@ AtomicExpression returns kexpressions::Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
-    | FunctionCall
+    | ReferenceCall
 //    | ScopeCall
     | TextExpression;
 

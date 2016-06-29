@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall
 
 /**
  * @author ssm
@@ -254,9 +255,9 @@ class KExpressionsCreateExtensions {
     def TextExpression createTextExpression() {
         KExpressionsFactory::eINSTANCE.createTextExpression()
     }
-
-    def FunctionCall createFunctionCall() {
-        KExpressionsFactory::eINSTANCE.createFunctionCall()
+    
+    def ReferenceCall createReferenceCall() {
+        KExpressionsFactory::eINSTANCE.createReferenceCall()
     }
 
     def Parameter createParameter() {

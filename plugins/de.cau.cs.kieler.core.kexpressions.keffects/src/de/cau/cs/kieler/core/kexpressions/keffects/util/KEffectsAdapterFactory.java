@@ -6,9 +6,10 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Call;
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.FunctionCall;
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.keffects.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -91,8 +92,8 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
                 return createHostcodeEffectAdapter();
             }
             @Override
-            public Adapter caseFunctionCallEffect(FunctionCallEffect object) {
-                return createFunctionCallEffectAdapter();
+            public Adapter caseReferenceCallEffect(ReferenceCallEffect object) {
+                return createReferenceCallEffectAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -107,12 +108,16 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
                 return createTextExpressionAdapter();
             }
             @Override
+            public Adapter caseValuedObjectReference(ValuedObjectReference object) {
+                return createValuedObjectReferenceAdapter();
+            }
+            @Override
             public Adapter caseCall(Call object) {
                 return createCallAdapter();
             }
             @Override
-            public Adapter caseFunctionCall(FunctionCall object) {
-                return createFunctionCallAdapter();
+            public Adapter caseReferenceCall(ReferenceCall object) {
+                return createReferenceCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -191,16 +196,16 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect <em>Function Call Effect</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect <em>Reference Call Effect</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect
      * @generated
      */
-    public Adapter createFunctionCallEffectAdapter() {
+    public Adapter createReferenceCallEffectAdapter() {
         return null;
     }
 
@@ -247,6 +252,20 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+     * @generated
+     */
+    public Adapter createValuedObjectReferenceAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Call <em>Call</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -261,16 +280,16 @@ public class KEffectsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ReferenceCall <em>Reference Call</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall
+     * @see de.cau.cs.kieler.core.kexpressions.ReferenceCall
      * @generated
      */
-    public Adapter createFunctionCallAdapter() {
+    public Adapter createReferenceCallAdapter() {
         return null;
     }
 

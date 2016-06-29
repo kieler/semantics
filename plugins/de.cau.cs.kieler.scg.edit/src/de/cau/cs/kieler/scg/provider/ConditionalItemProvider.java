@@ -165,7 +165,7 @@ public class ConditionalItemProvider extends NodeItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__CONDITION,
-                 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+                 KEffectsFactory.eINSTANCE.createReferenceCallEffect()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -210,12 +210,17 @@ public class ConditionalItemProvider extends NodeItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__CONDITION,
-                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__CONDITION,
-                 KExpressionsFactory.eINSTANCE.createStringValue()));
+                 KExpressionsFactory.eINSTANCE.createCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createReferenceCall()));
     }
 
     /**

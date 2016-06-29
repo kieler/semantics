@@ -1544,7 +1544,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	super::Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect
+	//	super::Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -1603,16 +1603,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//FunctionCallEffect keffects::FunctionCallEffect:
+	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	'>'
-	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return gaKEffects.getFunctionCallEffectAccess();
+	//	valuedObject=[kexpressions::ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
+		return gaKEffects.getReferenceCallEffectAccess();
 	}
 	
-	public ParserRule getFunctionCallEffectRule() {
-		return getFunctionCallEffectAccess().getRule();
+	public ParserRule getReferenceCallEffectRule() {
+		return getReferenceCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -1915,7 +1914,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	BoolValue
 	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
-	//	| FunctionCall
+	//	| ReferenceCall
 	//	| TextExpression
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1973,15 +1972,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//FunctionCall:
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	'>';
-	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
-		return gaKExpressions.getFunctionCallAccess();
+	//ReferenceCall:
+	//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
+		return gaKExpressions.getReferenceCallAccess();
 	}
 	
-	public ParserRule getFunctionCallRule() {
-		return getFunctionCallAccess().getRule();
+	public ParserRule getReferenceCallRule() {
+		return getReferenceCallAccess().getRule();
 	}
 
 	//// Parameter Rule

@@ -1361,19 +1361,19 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final RuleCall cFunctionCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//AtomicExpression kexpressions::Expression:
 		//	BoolValue
 		//	| ValuedObjectTestExpression
 		//	| '(' BoolExpression ')'
-		//	| FunctionCall
+		//	| ReferenceCall
 		//	//    | ScopeCall
 		//	| TextExpression
 		@Override public ParserRule getRule() { return rule; }
 
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | FunctionCall //    | ScopeCall
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall //    | ScopeCall
 		//| TextExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -1395,8 +1395,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 
-		//FunctionCall
-		public RuleCall getFunctionCallParserRuleCall_3() { return cFunctionCallParserRuleCall_3; }
+		//ReferenceCall
+		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
 
 		//TextExpression
 		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
@@ -1859,7 +1859,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	BoolValue
 	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
-	//	| FunctionCall
+	//	| ReferenceCall
 	//	//    | ScopeCall
 	//	| TextExpression
 	public AtomicExpressionElements getAtomicExpressionAccess() {
@@ -2083,7 +2083,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | FunctionCallEffect
+	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -2159,16 +2159,15 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// Function Call Effect Rule
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
-	//FunctionCallEffect keffects::FunctionCallEffect:
+	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	'>'
-	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return gaKEffects.getFunctionCallEffectAccess();
+	//	valuedObject=[kexpressions::ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
+		return gaKEffects.getReferenceCallEffectAccess();
 	}
 	
-	public ParserRule getFunctionCallEffectRule() {
-		return getFunctionCallEffectAccess().getRule();
+	public ParserRule getReferenceCallEffectRule() {
+		return getReferenceCallEffectAccess().getRule();
 	}
 
 	//enum AssignOperator returns keffects::AssignOperator:
@@ -2511,15 +2510,15 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
-	//FunctionCall:
-	//	'<' functionName=ExtendedID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
-	//	'>';
-	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
-		return gaKExpressions.getFunctionCallAccess();
+	//ReferenceCall:
+	//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	| '()');
+	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
+		return gaKExpressions.getReferenceCallAccess();
 	}
 	
-	public ParserRule getFunctionCallRule() {
-		return getFunctionCallAccess().getRule();
+	public ParserRule getReferenceCallRule() {
+		return getReferenceCallAccess().getRule();
 	}
 
 	//// Parameter Rule

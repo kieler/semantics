@@ -43,71 +43,71 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ValuedObjectReference extends Expression {
     /**
-	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Object</em>' reference.
-	 * @see #setValuedObject(ValuedObject)
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_ValuedObject()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_ValuedObject()
+     * @model required="true"
+     * @generated
+     */
     ValuedObject getValuedObject();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Valued Object</em>' reference.
-	 * @see #getValuedObject()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
+     * @generated
+     */
     void setValuedObject(ValuedObject value);
 
     /**
-	 * Returns the value of the '<em><b>Indices</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Indices</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Indices</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Indices</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_Indices()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Indices</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_Indices()
+     * @model containment="true"
+     * @generated
+     */
     EList<Expression> getIndices();
 
 				/**
-	 * Returns the value of the '<em><b>Sub Reference</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Sub Reference</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sub Reference</em>' containment reference.
-	 * @see #setSubReference(ValuedObjectReference)
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_SubReference()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Sub Reference</em>' containment reference.
+     * @see #setSubReference(ValuedObjectReference)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_SubReference()
+     * @model containment="true"
+     * @generated
+     */
 	ValuedObjectReference getSubReference();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getSubReference <em>Sub Reference</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getSubReference <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Sub Reference</em>' containment reference.
-	 * @see #getSubReference()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Sub Reference</em>' containment reference.
+     * @see #getSubReference()
+     * @generated
+     */
 	void setSubReference(ValuedObjectReference value);
 
 } // ValuedObjectReference

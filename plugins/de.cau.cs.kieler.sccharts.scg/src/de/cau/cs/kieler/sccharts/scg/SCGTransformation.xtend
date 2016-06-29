@@ -20,10 +20,10 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall
 import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -806,9 +806,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         textExpression
     }
 
-    def dispatch Expression convertToSCGExpression(FunctionCall expression) {
-        createFunctionCall.trace(expression) => [ fc |
-            fc.functionName = expression.functionName
+    def dispatch Expression convertToSCGExpression(ReferenceCall expression) {
+        createReferenceCall.trace(expression) => [ fc |
+            fc.valuedObject = expression.valuedObject.SCGValuedObject
             expression.parameters.forEach[fc.parameters += it.convertToSCGParameter]
         ]
     }

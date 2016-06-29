@@ -24,19 +24,19 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Declaration extends Annotatable {
     /**
-	 * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Objects</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration_ValuedObjects()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Valued Objects</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration_ValuedObjects()
+     * @model containment="true"
+     * @generated
+     */
     EList<ValuedObject> getValuedObjects();
 
 } // Declaration

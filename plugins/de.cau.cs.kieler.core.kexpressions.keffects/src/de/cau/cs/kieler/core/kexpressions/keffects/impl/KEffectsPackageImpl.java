@@ -10,11 +10,11 @@ import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
-import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -63,7 +63,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass functionCallEffectEClass = null;
+    private EClass referenceCallEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -231,8 +231,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getFunctionCallEffect() {
-        return functionCallEffectEClass;
+    public EClass getReferenceCallEffect() {
+        return referenceCallEffectEClass;
     }
 
     /**
@@ -286,7 +286,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         hostcodeEffectEClass = createEClass(HOSTCODE_EFFECT);
 
-        functionCallEffectEClass = createEClass(FUNCTION_CALL_EFFECT);
+        referenceCallEffectEClass = createEClass(REFERENCE_CALL_EFFECT);
 
         // Create enums
         assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
@@ -329,8 +329,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         emissionEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
-        functionCallEffectEClass.getESuperTypes().add(this.getEffect());
-        functionCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getFunctionCall());
+        referenceCallEffectEClass.getESuperTypes().add(this.getEffect());
+        referenceCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(effectEClass, Effect.class, "Effect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -347,7 +347,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
         initEClass(hostcodeEffectEClass, HostcodeEffect.class, "HostcodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(referenceCallEffectEClass, ReferenceCallEffect.class, "ReferenceCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");

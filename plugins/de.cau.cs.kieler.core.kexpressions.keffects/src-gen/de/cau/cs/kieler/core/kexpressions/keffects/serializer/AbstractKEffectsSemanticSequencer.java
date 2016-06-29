@@ -11,18 +11,18 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
-import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
 import java.util.Set;
@@ -109,11 +109,11 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
 				return; 
-			case KEffectsPackage.FUNCTION_CALL_EFFECT:
-				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
-				return; 
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
 				return; 
 			}
 		else if (epackage == KExpressionsPackage.eINSTANCE)
@@ -123,9 +123,6 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.FUNCTION_CALL:
-				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
@@ -170,6 +167,9 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 				else break;
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.core.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
@@ -227,19 +227,6 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	
 	/**
 	 * Contexts:
-	 *     Effect returns FunctionCallEffect
-	 *     FunctionCallEffect returns FunctionCallEffect
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
-	 */
-	protected void sequence_FunctionCallEffect(ISerializationContext context, FunctionCallEffect semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Effect returns HostcodeEffect
 	 *     HostcodeEffect returns HostcodeEffect
 	 *
@@ -259,6 +246,19 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
 	 */
 	protected void sequence_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns ReferenceCallEffect
+	 *     ReferenceCallEffect returns ReferenceCallEffect
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

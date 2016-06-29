@@ -58,13 +58,13 @@ public interface KEffectsFactory extends EFactory {
     HostcodeEffect createHostcodeEffect();
 
     /**
-     * Returns a new object of class '<em>Function Call Effect</em>'.
+     * Returns a new object of class '<em>Reference Call Effect</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Function Call Effect</em>'.
+     * @return a new object of class '<em>Reference Call Effect</em>'.
      * @generated
      */
-    FunctionCallEffect createFunctionCallEffect();
+    ReferenceCallEffect createReferenceCallEffect();
 
     /**
      * Returns the package supported by this factory.

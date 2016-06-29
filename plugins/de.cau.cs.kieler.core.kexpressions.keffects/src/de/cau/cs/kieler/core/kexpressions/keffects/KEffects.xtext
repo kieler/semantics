@@ -42,7 +42,7 @@ Effect returns keffects::Effect:
 	PostfixEffect | 
 	Emission |
 	HostcodeEffect | 
-	FunctionCallEffect;
+	ReferenceCallEffect;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -85,11 +85,11 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
 // preceded by a list of annotations.
-FunctionCallEffect returns keffects::FunctionCallEffect:
+ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-    '<' functionName=ExtendedID 
-      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+     valuedObject=[kexpressions::ValuedObject|ID]
+      (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+    ;
 
 // ---------------- //
 //  KEffects Enums  // 

@@ -234,14 +234,14 @@ public interface KEffectsPackage extends EPackage {
     int HOSTCODE_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.ReferenceCallEffectImpl <em>Reference Call Effect</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl
-     * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getFunctionCallEffect()
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.ReferenceCallEffectImpl
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getReferenceCallEffect()
      * @generated
      */
-    int FUNCTION_CALL_EFFECT = 4;
+    int REFERENCE_CALL_EFFECT = 4;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -250,7 +250,34 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FUNCTION_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+    int REFERENCE_CALL_EFFECT__ANNOTATIONS = EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__INDICES = EFFECT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_CALL_EFFECT__SUB_REFERENCE = EFFECT_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -259,25 +286,16 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FUNCTION_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 0;
+    int REFERENCE_CALL_EFFECT__PARAMETERS = EFFECT_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Function Name</b></em>' attribute.
+     * The number of structural features of the '<em>Reference Call Effect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FUNCTION_CALL_EFFECT__FUNCTION_NAME = EFFECT_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Function Call Effect</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FUNCTION_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
+    int REFERENCE_CALL_EFFECT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
@@ -397,14 +415,14 @@ public interface KEffectsPackage extends EPackage {
     EClass getHostcodeEffect();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect <em>Function Call Effect</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect <em>Reference Call Effect</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Function Call Effect</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
+     * @return the meta object for class '<em>Reference Call Effect</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect
      * @generated
      */
-    EClass getFunctionCallEffect();
+    EClass getReferenceCallEffect();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
@@ -527,14 +545,14 @@ public interface KEffectsPackage extends EPackage {
         EClass HOSTCODE_EFFECT = eINSTANCE.getHostcodeEffect();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.ReferenceCallEffectImpl <em>Reference Call Effect</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.FunctionCallEffectImpl
-         * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getFunctionCallEffect()
+         * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.ReferenceCallEffectImpl
+         * @see de.cau.cs.kieler.core.kexpressions.keffects.impl.KEffectsPackageImpl#getReferenceCallEffect()
          * @generated
          */
-        EClass FUNCTION_CALL_EFFECT = eINSTANCE.getFunctionCallEffect();
+        EClass REFERENCE_CALL_EFFECT = eINSTANCE.getReferenceCallEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.

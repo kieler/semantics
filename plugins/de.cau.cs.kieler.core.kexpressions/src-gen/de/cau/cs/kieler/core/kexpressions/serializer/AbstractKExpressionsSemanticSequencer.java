@@ -12,10 +12,10 @@ import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
@@ -95,9 +95,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
 				return; 
-			case KExpressionsPackage.FUNCTION_CALL:
-				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
-				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
 				return; 
@@ -141,6 +138,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.core.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
@@ -306,47 +306,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Contexts:
-	 *     Root returns FunctionCall
-	 *     Expression returns FunctionCall
-	 *     BoolExpression returns FunctionCall
-	 *     LogicalOrExpression returns FunctionCall
-	 *     LogicalOrExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     LogicalAndExpression returns FunctionCall
-	 *     LogicalAndExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     BitwiseOrExpression returns FunctionCall
-	 *     BitwiseOrExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     BitwiseAndExpression returns FunctionCall
-	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     CompareOperation returns FunctionCall
-	 *     CompareOperation.OperatorExpression_1_0 returns FunctionCall
-	 *     NotOrValuedExpression returns FunctionCall
-	 *     NotExpression returns FunctionCall
-	 *     ValuedExpression returns FunctionCall
-	 *     AddExpression returns FunctionCall
-	 *     AddExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     SubExpression returns FunctionCall
-	 *     SubExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     MultExpression returns FunctionCall
-	 *     MultExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     DivExpression returns FunctionCall
-	 *     DivExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     ModExpression returns FunctionCall
-	 *     ModExpression.OperatorExpression_1_0 returns FunctionCall
-	 *     NegExpression returns FunctionCall
-	 *     AtomicExpression returns FunctionCall
-	 *     AtomicValuedExpression returns FunctionCall
-	 *     FunctionCall returns FunctionCall
-	 *
-	 * Constraint:
-	 *     (functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
-	 */
-	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Root returns IntValue
 	 *     Expression returns IntValue
 	 *     BoolExpression returns IntValue
@@ -400,6 +359,47 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression)
 	 */
 	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.core.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Root returns ReferenceCall
+	 *     Expression returns ReferenceCall
+	 *     BoolExpression returns ReferenceCall
+	 *     LogicalOrExpression returns ReferenceCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     LogicalAndExpression returns ReferenceCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     BitwiseOrExpression returns ReferenceCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     BitwiseAndExpression returns ReferenceCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     CompareOperation returns ReferenceCall
+	 *     CompareOperation.OperatorExpression_1_0 returns ReferenceCall
+	 *     NotOrValuedExpression returns ReferenceCall
+	 *     NotExpression returns ReferenceCall
+	 *     ValuedExpression returns ReferenceCall
+	 *     AddExpression returns ReferenceCall
+	 *     AddExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     SubExpression returns ReferenceCall
+	 *     SubExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     MultExpression returns ReferenceCall
+	 *     MultExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     DivExpression returns ReferenceCall
+	 *     DivExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     ModExpression returns ReferenceCall
+	 *     ModExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     NegExpression returns ReferenceCall
+	 *     AtomicExpression returns ReferenceCall
+	 *     AtomicValuedExpression returns ReferenceCall
+	 *     ReferenceCall returns ReferenceCall
+	 *
+	 * Constraint:
+	 *     (valuedObject=[ValuedObject|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
