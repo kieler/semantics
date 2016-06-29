@@ -1,3 +1,25 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2016 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
+/**
+ * Optimizer Reuse Variables.
+ * 
+ * @author jbus
+ * @kieler.design 
+ * @kieler.rating 
+ */
+
 package de.cau.cs.kieler.scg.opt.reusevars
 
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -19,12 +41,12 @@ import java.util.Map.Entry
 class ReuseVariables extends AbstractProductionTransformation {
     ArrayList<Node> visited = new ArrayList() 
     Iterable<AssignmentImpl> assignments;
-    private static final val MAX_SEARCH_DEPTH = 100 // good value for big and small models to achieve fast output
+    private static final val MAX_SEARCH_DEPTH = 100 // maximum search depth for next pointer search
     override getProducedFeatureId() {
         return OptimizerFeatures::RV_ID
     }
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID/* , OptimizerFeatures::CP_ID */)
+        return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID)
     }
     override getId() {
         return OptimizerFeatures::RV_ID
@@ -99,6 +121,7 @@ class ReuseVariables extends AbstractProductionTransformation {
                 // get all occures / assigments of secondElem
                 val valuedObjRep = new ArrayList<ValuedObjectReferenceImpl>()
                 nodes.forEach[
+                    // find all occures of the element that we want to replace
                     if (it instanceof AssignmentImpl) {
                         val assNode = it as AssignmentImpl
                         val objects = assNode.eAllContents.filter(typeof(ValuedObjectReferenceImpl)).filter[
@@ -118,7 +141,6 @@ class ReuseVariables extends AbstractProductionTransformation {
                     }
                 ]
                 valuedObjRep.forEach[
-                    //it.valuedObject.name = firstElem.key
                     val firstAss = assignments.findFirst[
                         it.valuedObject.name.equals(firstElem.key)
                     ]
@@ -131,6 +153,7 @@ class ReuseVariables extends AbstractProductionTransformation {
                         secondAss.valuedObject = firstAss.valuedObject   
                     }
                 ]
+                // cleanup the removed variable
                 val declChanges = new ArrayList<Pair<Declaration, ValuedObjectImpl>>()
                 declarations.forEach[
                     val decl = it
@@ -145,25 +168,27 @@ class ReuseVariables extends AbstractProductionTransformation {
                     it.key.valuedObjects.remove(it.value)
                 ]
             }
-        } while (lastUse.size > 0)
+        } while (lastUse.size > 0) // loop until there is no replacement for a variable left
 
         return scg
     }
+    // check if needle is in the next pointer chain of nextP. if hard is set, also needle == nextP returns true
     def boolean InNextPointerChain(Node needle, Node nextP, boolean hard) {
         visited.clear()
         return InNextPointerChain(needle, nextP, false, 0)
     }
     def boolean InNextPointerChain(Node needle, Node nextP, boolean hard, int hops) {
-        if(visited.contains(nextP)) {
+        if(visited.contains(nextP)) { // terminates if we searched the node already
             return false
         }
-        visited.add(nextP)
-        if(MAX_SEARCH_DEPTH != 0 && hops > MAX_SEARCH_DEPTH) {
+        visited.add(nextP) // add node to the searched ones
+        if(MAX_SEARCH_DEPTH != 0 && hops > MAX_SEARCH_DEPTH) { // terminate if the maximum of depth is reached //this is a tradeoff between speed and possible next pointer after max depth
             return false
         }
         if (hard && nextP.equals(needle)) {
             return true
         }
+        // search in the node types for the needle
         if (nextP instanceof ConditionalImpl) {
             val condNode = nextP as ConditionalImpl
             var one = false
@@ -189,6 +214,7 @@ class ReuseVariables extends AbstractProductionTransformation {
         }
         return false
     }
+    // search a suitable variable to be replaced by an element
     def Entry<String, Pair<Node,Node>> GetSecondElem(TreeMap<String, Pair<Node,Node>> map, Entry<String, Pair<Node,Node>> firstEntry) {
         val tmp = new ArrayList<String>()
         map.forEach [ K, V |

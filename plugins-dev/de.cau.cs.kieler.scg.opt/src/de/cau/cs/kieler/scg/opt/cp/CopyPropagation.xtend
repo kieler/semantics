@@ -1,3 +1,25 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2016 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
+/**
+ * Optimizer Copy Propagation.
+ * 
+ * @author jbus
+ * @kieler.design 
+ * @kieler.rating 
+ */
+
 package de.cau.cs.kieler.scg.opt.cp
 
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -22,25 +44,33 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import java.util.HashMap
 
 class CopyPropagation extends AbstractProductionTransformation {
-    /* INJECT STUFF */  
+    // Inject fro SCGDeclarations
     @Inject 
     extension SCGDeclarationExtensions
+    // Set Feature ID
     override getProducedFeatureId() {
         return OptimizerFeatures::CP_ID
     }
+    // Set Required Feature IDs
     override getRequiredFeatureIds() {
         return newHashSet(SCGFeatures::SEQUENTIALIZE_ID, SCGFeatureGroups::SCG_ID)
     }
+    // Set Feature ID
     override getId() {
         return OptimizerFeatures::CP_ID
     }
+    // Set Feature Name
     override getName() {
         return OptimizerFeatures::CP_NAME
     }
+    /*
+     * Optimization is implemented as transformation
+     */
     def SCGraph transform(SCGraph scg) {
         /* SET FILTER */
         val nodes = scg.nodes
         val declarations = scg.declarations
+        // get all assigments for given criteria
         val assignments = nodes.filter(typeof(AssignmentImpl)).filter[
                 it.operator.getName().equals("ASSIGN")
             ].filter[
@@ -50,28 +80,25 @@ class CopyPropagation extends AbstractProductionTransformation {
                 return (
                     it.valuedObject.getName().startsWith("g")
                         || it.valuedObject.getName().startsWith("PRE_g")
-                        || it.valuedObject.getName().startsWith("_condg") // condition NEW!!
+                        || it.valuedObject.getName().startsWith("_condg")
                 )
             ]
-        // X = Y
+        // extract 1-o-1 assignemts like X = Y
         val one2oneAssignments = assignments.filter[
             it.assignment.class.typeName.equals(ValuedObjectReferenceImpl.typeName)
         ]
-        // condg
+        // extract  condg variables
         val condAssignments = assignments.filter[
             it.assignment.class.typeName.equals(OperatorExpressionImpl.typeName)
                 && (it.assignment as OperatorExpressionImpl).operator.getName().equals("LOGICAL_OR")
                 && (it.assignment as OperatorExpressionImpl).subExpressions.length == 1
         ]
-        condAssignments.forEach[
-            System.out.println(it.valuedObject.name)
-        ]
-        // X = PRE_Y
+        // extract pre assignemts like X = PRE_Y
         val preAssignments = assignments.filter[
             it.assignment.class.typeName.equals(OperatorExpressionImpl.typeName)
                 && (it.assignment as OperatorExpressionImpl).operator.getName().equals("PRE")
         ]
-        // X = !(Y)
+        // extract not assignemnts like  X = !(Y)
         val notAssignments = assignments.filter[
             it.assignment.class.typeName.equals(OperatorExpressionImpl.typeName)
                 && (it.assignment as OperatorExpressionImpl).operator.getName().equals("NOT")
@@ -161,6 +188,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         return scg
     }
     def void findOccuresInNodes (EList<Node> nodes, Assignment assignment) {
+        // search and replace in all nodes
         nodes.forEach[
             findOccuresInNode(it, assignment)
         ]
@@ -171,18 +199,21 @@ class CopyPropagation extends AbstractProductionTransformation {
         val expressions = node.eAllContents().filter(typeof(ValuedObjectReferenceImpl))
         expressions.forEach[
             val container = it.eContainer
+            // search and replace in normal assignments
             if(container instanceof AssignmentImpl) {
                 val assContainer = container as AssignmentImpl
                 if(assContainer.valuedObject.getName().equals(search)) {
                     assContainer.assignment = expression.copySCGExpression
                 }
             }
+            // search and replace in conditionals
             else if (container instanceof ConditionalImpl) {
                 val condContainer = container as ConditionalImpl
                 if(it.valuedObject.getName().equals(search)) {
                     condContainer.condition = expression.copySCGExpression
                 }
             }
+            // search and replace in complex assignments with operators
             else if (container instanceof OperatorExpressionImpl) {
                 val operContainer = container as OperatorExpressionImpl
                 if(!operContainer.operator.getName().equals("PRE") && it.valuedObject.getName().equals(search)) {
@@ -191,7 +222,9 @@ class CopyPropagation extends AbstractProductionTransformation {
                     operContainer.subExpressions.remove(it)
                 }
             }
+            // print error for unsupported nodetype. actually only the three types above are present in a scg
             else {
+                System.out.println("Unsupported Nodetype")
                 System.out.println(it)
             }
         ]
