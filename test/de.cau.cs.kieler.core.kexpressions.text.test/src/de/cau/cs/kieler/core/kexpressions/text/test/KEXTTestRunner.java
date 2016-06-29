@@ -95,11 +95,25 @@ public class KEXTTestRunner extends ModelCollectionTestRunner {
     
     protected void runTestRunnerForScope(KEXTScope scope, Object object, List<String> textFile) throws Throwable {
 		for (TestEntity entity : scope.getEntities()) {
-			StringAnnotation checkAnnotation;
+			StringAnnotation checkAnnotation = null;
 			if (entity.getEffect() != null) {
-				checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+			    if (entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
+			        checkAnnotation = (StringAnnotation) entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION);
+			    } else {
+			        throw new Exception("Cannot cast annotation to string annotation: " + 
+			                entity.getEffect().getAnnotation(KEXT_CHECK_ANNOTATION).toString() + 
+			                " of effect " + 
+			                entity.getEffect().toString()); 
+			    }
 			} else {
-				checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
+                if (entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION) instanceof StringAnnotation) {
+                    checkAnnotation = (StringAnnotation) entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION);
+                } else {
+                    throw new Exception("Cannot cast annotation to string annotation: " + 
+                            entity.getExpression().getAnnotation(KEXT_CHECK_ANNOTATION).toString() + 
+                            " of expression " + 
+                            entity.getExpression().toString()); 
+                }
 			}
 			if (checkAnnotation != null && checkAnnotation.getValues().size() > 0) {
 				runTestRunnerForObject(entity, checkAnnotation.getValues().get(0), (EObject) object, textFile);
