@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * @author fry
@@ -126,7 +127,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// -------------------------------------------------------
 
 		// filter all input/output declarations to initialize the circuit
-		val inputsAndOutputs = scg.declarations.filter[isInput || isOutput].toList
+		val inputsAndOutputs = scg.declarations.filter(VariableDeclaration).filter[isInput || isOutput].toList
 
 		// initialize circuit creates all inputs/outputs and a tick and reset input
 		circuitInitialization.initialize(inputsAndOutputs, initializationRegian, logicRegion, newCircuit)
