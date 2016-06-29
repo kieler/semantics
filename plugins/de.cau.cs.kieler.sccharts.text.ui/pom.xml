@@ -9,22 +9,6 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.sccharts.text.ui</artifactId>
-  <version>0.1.2-SNAPSHOT</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.xtend</groupId>
-        <artifactId>xtend-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>   
 </project>

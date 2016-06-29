@@ -21,7 +21,7 @@
       <package
             uri="http://kieler.cs.cau.de/sccharts/0.3.0"
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
-            genModel="model/sccharts3.genmodel"/>
+            genModel="model/sccharts.genmodel"/>
    </extension>
 
      <extension

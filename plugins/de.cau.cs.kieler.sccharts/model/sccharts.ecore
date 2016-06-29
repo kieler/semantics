@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccharts" nsURI="http://kieler.cs.cau.de/sccharts/0.1.0" nsPrefix="sccharts">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccharts" nsURI="http://kieler.cs.cau.de/sccharts/0.3.0" nsPrefix="sccharts">
   <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
@@ -20,13 +20,13 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A State is the main entity in a SyncChart. States are located in a {@link Region}.&#xA;A SyncChart itself is represented by a top-level root Region that contains&#xA;exactly one root State. Every State may contain multiple parallel Regions&#xA;whereas a Region contains multiple States. This allows nested State&#xA;machines with parallelism.&#xA;&lt;p>&#xA;A State may be initial or final or both. An initial State is the entry State of a Region.&#xA;sccharts may only have one initial State per Region. A final State indcates that&#xA;its parent Region has terminated and nothing needs to be done in that Region&#xA;and its parent State may be left via a normal termination transition.&#xA;&lt;p>&#xA;A State is also a Scope and hence may carry an interface declaration and is&#xA;identified by id and label.&#xA;&lt;p>&#xA;States have a type to indicate different properties of States. See {@link StateType}."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
-        eType="#//Region" containment="true" eOpposite="#//Region/parentState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//ControlflowRegion"
         eOpposite="#//ControlflowRegion/states"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
+        eType="#//Region" containment="true" eOpposite="#//Region/parentState"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="connector" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
         eType="#//Transition" containment="true" eOpposite="#//Transition/sourceState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
@@ -99,31 +99,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="formal" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actual" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="StateType">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A type for a State to specify some special properties.&#xA;&#xA;  "/>
-    </eAnnotations>
-    <eLiterals name="NORMAL">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Simple or&#xA;macro States are of type NORMAL."/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="CONNECTOR" value="1">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A CONDITIONAL State is only a&#xA;pseudostate in a sense that it will be left immediately within&#xA;one tick. Its outgoing transitions have to be immediate."/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="REFERENCE">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A REFERENCE&#xA;state carries a bodyReference to an arbitrary EObject. If this object is another&#xA;State, e.g. from another file, this reference can be used to modularize&#xA;sccharts. In such case all original interface of the referenced state&#xA;needs to be redefined by {@link Substitution} objects."/>
-      </eAnnotations>
-    </eLiterals>
-    <eLiterals name="TEXTUAL">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="A TEXTUAL&#xA;state will be defined not by child Regions but by bodyText that represents&#xA;its behavior, e.g. in the language Esterel or something similar. "/>
-      </eAnnotations>
-    </eLiterals>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Transition represents a connection between two {@link State}s and the&#xA;shift from the source to the target State. In sccharts Transitions may&#xA;only be specified between States on the same Regions. Inter-level&#xA;Transitions are not allowed.&#xA;&lt;p>&#xA;A Transition is an {@link Action} and therefore may contain a trigger condition&#xA;which guards the Transition and effects that get executed when the transition&#xA;is taken.&#xA;&lt;p>&#xA;Transitions have an integer priority. If there are multiple outgoing &#xA;transitions of a States and multiple triggers are evaluated to true, then&#xA;the transition with lowest priority is taken.&#xA;&lt;p>&#xA;A history transition will enter its source state in its containing Regions at the states that&#xA;it has left them before. So it does not start at the initial states in all circumstances but&#xA;in the states that the source state was left in some earlier tick. Only when a State is entered&#xA;for the first time (i.e. there is no history) then it is always entered in its initial States.&#xA;&lt;p>&#xA;A transition has a type {@link TransitionType}."/>
@@ -174,11 +149,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Parsable" instanceClassName="java.lang.String">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A Parsable is a String that represents model information&#xA;that can be parsed by some external parser. It is used to&#xA;technically distinguish simple Strings from information&#xA;that will be post processed by a parser and hence does not&#xA;carry semantical information in its own.&#xA;"/>
-    </eAnnotations>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalAction" abstract="true" eSuperTypes="#//Action">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
@@ -206,6 +176,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IterateAction" eSuperTypes="#//LocalAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitAction" eSuperTypes="#//LocalAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FinalAction" eSuperTypes="#//LocalAction">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
     </eAnnotations>

@@ -8,14 +8,10 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
-import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
-//import org.eclipse.xtext.Constants;
-//import org.eclipse.xtext.resource.SaveOptions;
-//import org.eclipse.xtext.serializer.ISerializer;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -30,7 +26,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.SCGTransformation";
 
     // Create an injector to load the transformation via guice.
-    private static Injector injector = new Sct3StandaloneSetup()
+    private static Injector injector = new SCTStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
     
     // -------------------------------------------------------------------------
