@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.core.kexpressions.text/src-gen"
+    editDirectory="/de.cau.cs.kieler.core.kexpressions.text.edit/src" editorDirectory="/de.cau.cs.kieler.core.kexpressions.text.editor/src"
+    modelPluginID="de.cau.cs.kieler.core.kexpressions.text" forceOverwrite="true"
+    modelName="KEXT" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.core.kexpressions.text.edit"
+    editorPluginID="de.cau.cs.kieler.core.kexpressions.text.editor" runtimeVersion="2.10"
+    usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.genmodel#//keffects platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+  <genPackages prefix="Kext" basePackage="de.cau.cs.kieler.core.kexpressions.text"
+      disposableProviderFactory="true" ecorePackage="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#/">
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/declarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//Kext/entities"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//TestEntity">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//TestEntity/effect"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//TestEntity/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.core.kexpressions.text/model/KEXT.ecore#//AnnotatedExpression/expression"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
