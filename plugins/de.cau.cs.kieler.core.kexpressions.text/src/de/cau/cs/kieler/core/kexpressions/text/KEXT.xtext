@@ -103,12 +103,14 @@ NamespaceID returns ecore::EString:
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    '&' reference = [kext::Identifiable|NamespaceID]
+    ('&' reference = [kext::Identifiable|NamespaceID]
+    |'extern' extern = STRING)
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    '&' reference = [kext::Identifiable|NamespaceID] 
+    ('&' reference = [kext::Identifiable|NamespaceID]
+    |'extern' extern = STRING)
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;       
 
 // Valued Object Rule

@@ -11,6 +11,7 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
@@ -23,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
+import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect;
@@ -117,6 +119,9 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
 				return; 
+			case KEffectsPackage.FUNCTION_CALL_EFFECT:
+				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+				return; 
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 				return; 
@@ -131,6 +136,9 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FUNCTION_CALL:
+				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
@@ -272,7 +280,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclarationWOSemicolon returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* reference=[Identifiable|NamespaceID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -285,7 +293,7 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 	 *     ReferenceDeclaration returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* reference=[Identifiable|NamespaceID] valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
 	protected void sequence_ReferenceDeclaration(ISerializationContext context, ReferenceDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -30,6 +30,8 @@ import java.util.Iterator
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall
 
 /**
  * Serialization of KExpressions.
@@ -283,26 +285,34 @@ class KExpressionsSerializeExtensions {
         if(expression.value == true) return "true"
         return "false"
     }
+    
+    def dispatch CharSequence serialize(ReferenceCall referenceCall) {
+        return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+    }
 
     def dispatch CharSequence serialize(FunctionCall functionCall) {
-        var funcCall = functionCall.functionName + "("
-
+        return "<" + functionCall.functionName + functionCall.parameters.serializeParameters + ">"
+    }
+    
+    def protected CharSequence serializeParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
         var cnt = 0
-        for (par : functionCall.parameters) {
+        for (par : parameters) {
             if (cnt > 0) {
-                funcCall = funcCall + ", "
+                sb.append(", ")
             }
             if (par.pureOutput) {
-                funcCall = funcCall + "!"
+                sb.append("!")
             }
             if (par.callByReference) {
-                funcCall = funcCall + "&"
+                sb.append("&")
             }
-            funcCall = funcCall + par.expression.serialize
+            sb.append(par.expression.serialize)
             cnt = cnt + 1
         }
-        funcCall = funcCall + ")"
-        return "<" + funcCall + ">"
+        sb.append(")") 
+        return sb.toString      
     }
 
     def dispatch CharSequence serialize(String s) {

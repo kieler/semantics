@@ -67,6 +67,15 @@ public interface KEffectsFactory extends EFactory {
     ReferenceCallEffect createReferenceCallEffect();
 
     /**
+     * Returns a new object of class '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Function Call Effect</em>'.
+     * @generated
+     */
+    FunctionCallEffect createFunctionCallEffect();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

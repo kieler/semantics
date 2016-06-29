@@ -62,6 +62,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
             case KEffectsPackage.EMISSION: return createEmission();
             case KEffectsPackage.HOSTCODE_EFFECT: return createHostcodeEffect();
             case KEffectsPackage.REFERENCE_CALL_EFFECT: return createReferenceCallEffect();
+            case KEffectsPackage.FUNCTION_CALL_EFFECT: return createFunctionCallEffect();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -145,6 +146,16 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
     public ReferenceCallEffect createReferenceCallEffect() {
         ReferenceCallEffectImpl referenceCallEffect = new ReferenceCallEffectImpl();
         return referenceCallEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCallEffect createFunctionCallEffect() {
+        FunctionCallEffectImpl functionCallEffect = new FunctionCallEffectImpl();
+        return functionCallEffect;
     }
 
     /**

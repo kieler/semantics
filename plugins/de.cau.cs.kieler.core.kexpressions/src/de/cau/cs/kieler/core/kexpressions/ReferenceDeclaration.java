@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration()
@@ -34,7 +35,7 @@ public interface ReferenceDeclaration extends Declaration {
      * @return the value of the '<em>Reference</em>' reference.
      * @see #setReference(EObject)
      * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration_Reference()
-     * @model required="true"
+     * @model
      * @generated
      */
     EObject getReference();
@@ -48,4 +49,30 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     void setReference(EObject value);
+
+    /**
+     * Returns the value of the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Extern</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Extern</em>' attribute.
+     * @see #setExtern(String)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration_Extern()
+     * @model
+     * @generated
+     */
+    String getExtern();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Extern</em>' attribute.
+     * @see #getExtern()
+     * @generated
+     */
+    void setExtern(String value);
 } // ReferenceDeclaration

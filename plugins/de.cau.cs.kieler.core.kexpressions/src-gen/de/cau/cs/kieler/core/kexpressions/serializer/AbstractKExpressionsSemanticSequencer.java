@@ -12,6 +12,7 @@ import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
@@ -94,6 +95,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FUNCTION_CALL:
+				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.INT_VALUE:
 				sequence_IntValue(context, (IntValue) semanticObject); 
@@ -301,6 +305,47 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0(), semanticObject.getValue());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Root returns FunctionCall
+	 *     Expression returns FunctionCall
+	 *     BoolExpression returns FunctionCall
+	 *     LogicalOrExpression returns FunctionCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     LogicalAndExpression returns FunctionCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     BitwiseOrExpression returns FunctionCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     BitwiseAndExpression returns FunctionCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     CompareOperation returns FunctionCall
+	 *     CompareOperation.OperatorExpression_1_0 returns FunctionCall
+	 *     NotOrValuedExpression returns FunctionCall
+	 *     NotExpression returns FunctionCall
+	 *     ValuedExpression returns FunctionCall
+	 *     AddExpression returns FunctionCall
+	 *     AddExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     SubExpression returns FunctionCall
+	 *     SubExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     MultExpression returns FunctionCall
+	 *     MultExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     DivExpression returns FunctionCall
+	 *     DivExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     ModExpression returns FunctionCall
+	 *     ModExpression.OperatorExpression_1_0 returns FunctionCall
+	 *     NegExpression returns FunctionCall
+	 *     AtomicExpression returns FunctionCall
+	 *     AtomicValuedExpression returns FunctionCall
+	 *     FunctionCall returns FunctionCall
+	 *
+	 * Constraint:
+	 *     ((functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | (functionName=ID (parameters+=Parameter parameters+=Parameter*)?))
+	 */
+	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

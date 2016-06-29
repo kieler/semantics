@@ -3,8 +3,9 @@
 package de.cau.cs.kieler.core.kexpressions.provider;
 
 
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -17,19 +18,19 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.FunctionCall} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ReferenceDeclarationItemProvider extends DeclarationItemProvider {
+public class FunctionCallItemProvider extends CallItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public ReferenceDeclarationItemProvider(AdapterFactory adapterFactory) {
+    public FunctionCallItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -44,48 +45,25 @@ public class ReferenceDeclarationItemProvider extends DeclarationItemProvider {
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addReferencePropertyDescriptor(object);
-            addExternPropertyDescriptor(object);
+            addFunctionNamePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Reference feature.
+     * This adds a property descriptor for the Function Name feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addReferencePropertyDescriptor(Object object) {
+    protected void addFunctionNamePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ReferenceDeclaration_reference_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceDeclaration_reference_feature", "_UI_ReferenceDeclaration_type"),
-                 KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Extern feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addExternPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ReferenceDeclaration_extern_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ReferenceDeclaration_extern_feature", "_UI_ReferenceDeclaration_type"),
-                 KExpressionsPackage.Literals.REFERENCE_DECLARATION__EXTERN,
+                 getString("_UI_FunctionCall_functionName_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_FunctionCall_functionName_feature", "_UI_FunctionCall_type"),
+                 KExpressionsPackage.Literals.FUNCTION_CALL__FUNCTION_NAME,
                  true,
                  false,
                  false,
@@ -95,14 +73,14 @@ public class ReferenceDeclarationItemProvider extends DeclarationItemProvider {
     }
 
     /**
-     * This returns ReferenceDeclaration.gif.
+     * This returns FunctionCall.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ReferenceDeclaration"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/FunctionCall"));
     }
 
     /**
@@ -113,10 +91,10 @@ public class ReferenceDeclarationItemProvider extends DeclarationItemProvider {
      */
     @Override
     public String getText(Object object) {
-        String label = ((ReferenceDeclaration)object).getExtern();
+        String label = ((FunctionCall)object).getFunctionName();
         return label == null || label.length() == 0 ?
-            getString("_UI_ReferenceDeclaration_type") :
-            getString("_UI_ReferenceDeclaration_type") + " " + label;
+            getString("_UI_FunctionCall_type") :
+            getString("_UI_FunctionCall_type") + " " + label;
     }
     
 
@@ -131,8 +109,8 @@ public class ReferenceDeclarationItemProvider extends DeclarationItemProvider {
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(ReferenceDeclaration.class)) {
-            case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
+        switch (notification.getFeatureID(FunctionCall.class)) {
+            case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

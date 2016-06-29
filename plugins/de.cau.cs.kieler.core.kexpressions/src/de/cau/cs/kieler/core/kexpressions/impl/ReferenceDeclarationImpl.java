@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceDeclarationImpl#getExtern <em>Extern</em>}</li>
  * </ul>
  *
  * @generated
@@ -34,6 +35,25 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @ordered
      */
     protected EObject reference;
+
+    /**
+     * The default value of the '{@link #getExtern() <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getExtern()
+     * @generated
+     * @ordered
+     */
+    protected static final String EXTERN_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getExtern() <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getExtern()
+     * @generated
+     * @ordered
+     */
+    protected String extern = EXTERN_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -97,12 +117,35 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getExtern() {
+        return extern;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setExtern(String newExtern) {
+        String oldExtern = extern;
+        extern = newExtern;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.REFERENCE_DECLARATION__EXTERN, oldExtern, extern));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
+            case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
+                return getExtern();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -117,6 +160,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
+                setExtern((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -133,6 +179,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 setReference((EObject)null);
                 return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
+                setExtern(EXTERN_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -147,8 +196,26 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
         switch (featureID) {
             case KExpressionsPackage.REFERENCE_DECLARATION__REFERENCE:
                 return reference != null;
+            case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
+                return EXTERN_EDEFAULT == null ? extern != null : !EXTERN_EDEFAULT.equals(extern);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (extern: ");
+        result.append(extern);
+        result.append(')');
+        return result.toString();
     }
 
 } //ReferenceDeclarationImpl

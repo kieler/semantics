@@ -224,6 +224,11 @@ public class ValuedObjectReferenceItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__SUB_REFERENCE,
                  KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 

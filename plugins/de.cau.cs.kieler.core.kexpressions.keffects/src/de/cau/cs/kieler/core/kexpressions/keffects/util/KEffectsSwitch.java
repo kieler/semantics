@@ -6,6 +6,7 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Call;
 import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
@@ -119,6 +120,17 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KEffectsPackage.FUNCTION_CALL_EFFECT: {
+                FunctionCallEffect functionCallEffect = (FunctionCallEffect)theEObject;
+                T result = caseFunctionCallEffect(functionCallEffect);
+                if (result == null) result = caseEffect(functionCallEffect);
+                if (result == null) result = caseFunctionCall(functionCallEffect);
+                if (result == null) result = caseAnnotatable(functionCallEffect);
+                if (result == null) result = caseCall(functionCallEffect);
+                if (result == null) result = caseExpression(functionCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -195,6 +207,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReferenceCallEffect(ReferenceCallEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFunctionCallEffect(FunctionCallEffect object) {
         return null;
     }
 
@@ -285,6 +312,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReferenceCall(ReferenceCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFunctionCall(FunctionCall object) {
         return null;
     }
 

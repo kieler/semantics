@@ -208,6 +208,7 @@ AtomicExpression returns Expression:
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
+    | FunctionCall
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -237,8 +238,8 @@ ValuedObjectReference returns ValuedObjectReference:
 	('.' subReference=ValuedObjectReference)? 
 	('[' indices+=Expression ']')*;
 
-// Function Call Rule
-// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+// Reference Call Rule
+// Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
     valuedObject=[ValuedObject|ID] 
     (
@@ -246,6 +247,23 @@ ReferenceCall returns ReferenceCall:
             (',' parameters += Parameter)* ')'
         ) | '()'
     );
+    
+// Function Call Rule
+// Calls to functions are indicated by angle brackets. They may include a parameter list. 
+// Deprecated?
+FunctionCall returns FunctionCall:
+    ('extern' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    )
+    |
+    ('<' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    '>')
+    ;    
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.

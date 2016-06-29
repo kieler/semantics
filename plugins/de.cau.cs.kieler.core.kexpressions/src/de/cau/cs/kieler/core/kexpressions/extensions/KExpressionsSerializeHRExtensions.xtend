@@ -8,6 +8,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import org.eclipse.emf.ecore.EObject
 import java.util.Iterator
+import java.util.List
+import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -56,27 +59,35 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         }
         vo
     }
+    
+    def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
+        return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+    }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
-        var funcCall = functionCall.functionName + "("
-
+        return "<" + functionCall.functionName + functionCall.parameters.serializeHRParameters + ">"
+    }
+    
+    def protected CharSequence serializeHRParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
         var cnt = 0
-        for (par : functionCall.parameters) {
+        for (par : parameters) {
             if (cnt > 0) {
-                funcCall = funcCall + ", "
+                sb.append(", ")
             }
             if (par.pureOutput) {
-                funcCall = funcCall + "!"
+                sb.append("!")
             }
             if (par.callByReference) {
-                funcCall = funcCall + "&"
+                sb.append("&")
             }
-            funcCall = funcCall + par.expression.serializeHR
+            sb.append(par.expression.serializeHR)
             cnt = cnt + 1
         }
-        funcCall = funcCall + ")"
-        return "<" + funcCall + ">"
-    }
+        sb.append(")") 
+        return sb.toString      
+    }    
 
 
 //    protected def CharSequence serializeHROperatorExpressionVAL(OperatorExpression expression) {

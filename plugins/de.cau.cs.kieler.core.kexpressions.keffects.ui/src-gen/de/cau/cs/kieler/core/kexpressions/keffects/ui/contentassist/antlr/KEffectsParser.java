@@ -39,6 +39,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 					put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_2(), "rule__ReferenceCallEffect__Alternatives_2");
+					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives(), "rule__FunctionCallEffect__Alternatives");
+					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_0_1_2(), "rule__FunctionCallEffect__Alternatives_0_1_2");
+					put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -48,6 +51,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 					put(grammarAccess.getReferenceCallAccess().getAlternatives_1(), "rule__ReferenceCall__Alternatives_1");
+					put(grammarAccess.getFunctionCallAccess().getAlternatives(), "rule__FunctionCall__Alternatives");
+					put(grammarAccess.getFunctionCallAccess().getAlternatives_0_2(), "rule__FunctionCall__Alternatives_0_2");
+					put(grammarAccess.getFunctionCallAccess().getAlternatives_1_2(), "rule__FunctionCall__Alternatives_1_2");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
@@ -71,6 +77,13 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallEffectAccess().getGroup(), "rule__ReferenceCallEffect__Group__0");
 					put(grammarAccess.getReferenceCallEffectAccess().getGroup_2_0(), "rule__ReferenceCallEffect__Group_2_0__0");
 					put(grammarAccess.getReferenceCallEffectAccess().getGroup_2_0_2(), "rule__ReferenceCallEffect__Group_2_0_2__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_0(), "rule__FunctionCallEffect__Group_0__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_0_1(), "rule__FunctionCallEffect__Group_0_1__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_0_1_2_0(), "rule__FunctionCallEffect__Group_0_1_2_0__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_0_1_2_0_2(), "rule__FunctionCallEffect__Group_0_1_2_0_2__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1(), "rule__FunctionCallEffect__Group_1__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0(), "rule__FunctionCallEffect__Group_1_2_0__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0_2(), "rule__FunctionCallEffect__Group_1_2_0_2__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -111,6 +124,12 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
 					put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_0(), "rule__FunctionCall__Group_0__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_0_2_0(), "rule__FunctionCall__Group_0_2_0__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_0_2_0_2(), "rule__FunctionCall__Group_0_2_0_2__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_1(), "rule__FunctionCall__Group_1__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_1_2_0(), "rule__FunctionCall__Group_1_2_0__0");
+					put(grammarAccess.getFunctionCallAccess().getGroup_1_2_0_2(), "rule__FunctionCall__Group_1_2_0_2__0");
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
@@ -151,6 +170,13 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallEffectAccess().getValuedObjectAssignment_1(), "rule__ReferenceCallEffect__ValuedObjectAssignment_1");
 					put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_2_0_1(), "rule__ReferenceCallEffect__ParametersAssignment_2_0_1");
 					put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_2_0_2_1(), "rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAssignment_0_0(), "rule__FunctionCallEffect__AnnotationsAssignment_0_0");
+					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_0_1_1(), "rule__FunctionCallEffect__FunctionNameAssignment_0_1_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_0_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_0_1_2_0_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_0_1_2_0_2_1(), "rule__FunctionCallEffect__ParametersAssignment_0_1_2_0_2_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_2_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1");
 					put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 					put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 					put(grammarAccess.getLogicalAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalAndExpression__OperatorAssignment_1_1_0");
@@ -183,6 +209,12 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");
+					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_0_1(), "rule__FunctionCall__FunctionNameAssignment_0_1");
+					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_0_2_0_1(), "rule__FunctionCall__ParametersAssignment_0_2_0_1");
+					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_0_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_0_2_0_2_1");
+					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1_1(), "rule__FunctionCall__FunctionNameAssignment_1_1");
+					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCall__ParametersAssignment_1_2_0_1");
+					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_1_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_1_2_0_2_1");
 					put(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0(), "rule__Parameter__PureOutputAssignment_0_0");
 					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1(), "rule__Parameter__CallByReferenceAssignment_0_1");
 					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");

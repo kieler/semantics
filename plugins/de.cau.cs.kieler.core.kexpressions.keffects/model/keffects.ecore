@@ -32,4 +32,5 @@
     <eLiterals name="POSTFIXADD" value="9"/>
     <eLiterals name="POSTFIXSUB" value="10"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionCallEffect" eSuperTypes="#//Effect ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//FunctionCall"/>
 </ecore:EPackage>

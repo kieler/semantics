@@ -85,6 +85,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
@@ -126,6 +128,8 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator

@@ -77,6 +77,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.CALL: return createCall();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
+            case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -278,6 +279,16 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ReferenceCall createReferenceCall() {
         ReferenceCallImpl referenceCall = new ReferenceCallImpl();
         return referenceCall;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCall createFunctionCall() {
+        FunctionCallImpl functionCall = new FunctionCallImpl();
+        return functionCall;
     }
 
                 /**

@@ -187,6 +187,29 @@ public class KEffectsItemProviderAdapterFactory extends KEffectsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FunctionCallEffectItemProvider functionCallEffectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFunctionCallEffectAdapter() {
+        if (functionCallEffectItemProvider == null) {
+            functionCallEffectItemProvider = new FunctionCallEffectItemProvider(this);
+        }
+
+        return functionCallEffectItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -290,6 +313,7 @@ public class KEffectsItemProviderAdapterFactory extends KEffectsAdapterFactory i
         if (emissionItemProvider != null) emissionItemProvider.dispose();
         if (hostcodeEffectItemProvider != null) hostcodeEffectItemProvider.dispose();
         if (referenceCallEffectItemProvider != null) referenceCallEffectItemProvider.dispose();
+        if (functionCallEffectItemProvider != null) functionCallEffectItemProvider.dispose();
     }
 
 }

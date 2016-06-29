@@ -260,6 +260,10 @@ class KExpressionsCreateExtensions {
         KExpressionsFactory::eINSTANCE.createReferenceCall()
     }
 
+    def FunctionCall createFunctionCall() {
+        KExpressionsFactory::eINSTANCE.createFunctionCall()
+    }
+
     def Parameter createParameter() {
         KExpressionsFactory::eINSTANCE.createParameter()
     }

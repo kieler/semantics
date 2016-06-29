@@ -164,6 +164,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass functionCallEClass = null;
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -573,6 +580,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getReferenceDeclaration_Extern() {
+        return (EAttribute)referenceDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getParameter() {
         return parameterEClass;
     }
@@ -647,6 +663,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     public EClass getReferenceCall() {
         return referenceCallEClass;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getFunctionCall() {
+        return functionCallEClass;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFunctionCall_FunctionName() {
+        return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
     }
 
                 /**
@@ -751,6 +785,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
+        createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
 
         parameterEClass = createEClass(PARAMETER);
         createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
@@ -764,6 +799,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEReference(callEClass, CALL__PARAMETERS);
 
         referenceCallEClass = createEClass(REFERENCE_CALL);
+
+        functionCallEClass = createEClass(FUNCTION_CALL);
+        createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
 
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -817,6 +855,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         callEClass.getESuperTypes().add(this.getExpression());
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
         referenceCallEClass.getESuperTypes().add(this.getCall());
+        functionCallEClass.getESuperTypes().add(this.getCall());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -865,7 +904,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getVariableDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 1, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getReferenceDeclaration_Extern(), ecorePackage.getEString(), "extern", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getParameter_CallByReference(), ecorePackage.getEBoolean(), "callByReference", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -879,6 +919,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getCall_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(referenceCallEClass, ReferenceCall.class, "ReferenceCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

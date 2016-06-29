@@ -254,6 +254,11 @@ public class ParameterItemProvider
             (createChildParameter
                 (KExpressionsPackage.Literals.PARAMETER__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.PARAMETER__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
     /**

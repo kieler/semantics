@@ -206,6 +206,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -257,6 +262,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -271,6 +281,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+                 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -322,6 +337,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
     /**

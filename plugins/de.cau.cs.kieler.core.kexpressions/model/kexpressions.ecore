@@ -244,8 +244,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceDeclaration" eSuperTypes="#//Declaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extern" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="callByReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -264,4 +264,7 @@
         eType="#//Parameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceCall" eSuperTypes="#//ValuedObjectReference #//Call"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionCall" eSuperTypes="#//Call">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

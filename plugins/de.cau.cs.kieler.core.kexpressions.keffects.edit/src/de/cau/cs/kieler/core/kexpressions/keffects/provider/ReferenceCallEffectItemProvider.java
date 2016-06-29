@@ -177,6 +177,11 @@ public class ReferenceCallEffectItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
+                 KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -228,6 +233,11 @@ public class ReferenceCallEffectItemProvider extends EffectItemProvider {
             (createChildParameter
                 (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
                  KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
         newChildDescriptors.add
             (createChildParameter
