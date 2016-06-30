@@ -98,6 +98,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * It is filled with the target features supported by KiCo.
      */
     private var ComboViewer targetLanguage
+    private var Button useCompileChain
+    private var Text compileChain
     /**
      * The input field for the file extension
      * of the selected target language (e.g. '.java' for Java Code).
@@ -403,13 +405,42 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private def void createTargetComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Compilation", 2)
         
+        // Create checkbox
+        useCompileChain = UIUtil.createCheckButton(group, "Use compile chain", false)
+        // Toggle enabled state
+        useCompileChain.addSelectionListener(new SelectionAdapter {
+            override widgetSelected(SelectionEvent e) {
+                compileChain.enabled = useCompileChain.selection
+                targetLanguage.combo.enabled = !useCompileChain.selection
+                
+                if(currentData != null) {
+                    if(useCompileChain.selection) {
+                        currentData.launchData.targetLanguage = compileChain.text
+                        checkConsistency()
+                    } else {
+                        val selection = targetLanguage.selection as IStructuredSelection
+                        if (selection != null) {
+                            val trans = selection.firstElement as Transformation
+                            if (trans != null) {
+                                currentData.launchData.targetLanguage = trans.id
+                                checkConsistency()
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Add space
+        UIUtil.createSpace(group, 1)
+        
         // Create target language control
-        SWTFactory.createLabel(group, "Language", 1)
+        SWTFactory.createLabel(group, "Target", 1)
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
 
             override selectionChanged(SelectionChangedEvent event) {
-                if(currentData != null){
+                if(currentData != null && !useCompileChain.selection){
                     val selection = targetLanguage.selection as IStructuredSelection
                     if (selection != null) {
                         val trans = selection.firstElement as Transformation
@@ -422,6 +453,18 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
+
+        // Create compile chain control
+        compileChain = UIUtil.createTextField(group, "Compile chain")
+        compileChain.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                if(currentData != null && useCompileChain.selection){
+                    currentData.launchData.targetLanguage = compileChain.text
+                    checkConsistency()
+                }
+            }
+        })
+        compileChain.enabled = false
         
         // Create target language file extension control
         targetLanguageFileExtension = UIUtil.createTextField(group, "File extension", EnumSet.of(UIUtil.Buttons.NONE))
@@ -759,14 +802,23 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             mainFile.text = data.launchData.mainFile
             mainFileOrigin.text = data.mainFileOrigin
             
-            // Update target
+            // Update target language / compile chain
+            var isCompileChain = true
             if (targetLanguage.input != null) {
                 for (transformation : targetLanguage.input as Set<Transformation>) {
                     if (transformation.id == data.launchData.targetLanguage) {
                         targetLanguage.selection = new StructuredSelection(transformation)
+                        isCompileChain = false
                     }
                 }
             }
+            if(isCompileChain) {
+                compileChain.text = data.launchData.targetLanguage
+            }
+            useCompileChain.selection = isCompileChain
+            compileChain.enabled = isCompileChain
+            targetLanguage.combo.enabled = !isCompileChain
+            
             targetLanguageFileExtension.text = data.launchData.targetLanguageFileExtension
             targetTemplate.text = data.launchData.targetTemplate
             if(data.launchData.targetDirectory.isNullOrEmpty()) {
@@ -935,5 +987,13 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val controls = tabFolder.tabList
         for(control : controls)
             UIUtil.enableControls(controls, currentData != null)
+            
+        if(currentData != null) {
+            if(useCompileChain.selection) {
+                targetLanguage.combo.enabled = false
+            } else {
+                compileChain.enabled = false
+            }
+        }
     }
 }

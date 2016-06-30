@@ -82,6 +82,8 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
      * The control to select the target transformation (e.g. Java Code or C Code).
      */
     private var ComboViewer targetLanguage
+    private var Button useCompileChain
+    private var Text compileChain
 
     /**
      * The control to select the target language file extension (e.g. '.java' for Java).
@@ -178,7 +180,6 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
                 currentData = selection.firstElement as FileCompilationData
-                updateEnabled()
             }
         });
 
@@ -253,16 +254,36 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
     private def void createTargetComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Target", 1)
 
+        // Create checkbox
+        useCompileChain = UIUtil.createCheckButton(group, "Use compile chain", false)
+        // Toggle enabled state
+        useCompileChain.addSelectionListener(new SelectionAdapter {
+            override widgetSelected(SelectionEvent e) {
+                compileChain.enabled = useCompileChain.selection
+                targetLanguage.combo.enabled = !useCompileChain.selection
+                updateLaunchConfigurationDialog()
+            }
+        })
+        
         // Create language control
         targetLanguage = UIUtil.createKiCoTargetsCombo(group)
         targetLanguage.addSelectionChangedListener(new ISelectionChangedListener {
-
             override selectionChanged(SelectionChangedEvent event) {
                 updateLaunchConfigurationDialog()
             }
         })
         targetLanguage.combo.toolTipText = "Target transformation of the KIELER Compiler"
 
+        // Create compile chain control
+        val comp1 = UIUtil.createComposite(group, 2)
+        compileChain = UIUtil.createTextField(comp1, "Compile chain")
+        compileChain.addModifyListener(new ModifyListener() {
+            override modifyText(ModifyEvent e) {
+                updateLaunchConfigurationDialog()
+            }
+        })
+        compileChain.enabled = false
+        
         // Create file extension control
         val comp2 = UIUtil.createComposite(group, 2)
 
@@ -355,15 +376,23 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         // Set files to be compiled
         list.input = launchData.files
 
-        // Set target language
+        // Set target language / compile chain
+        var isCompileChain = true
         if (targetLanguage.input != null) {
-            for (transformation : targetLanguage.input as Set<Transformation>) {
-                if (transformation.id == launchData.targetLanguage) {
-                    targetLanguage.selection = new StructuredSelection(transformation)
+            for (trans : targetLanguage.input as Set<Transformation>) {
+                if (trans.id == launchData.targetLanguage) {
+                    targetLanguage.selection = new StructuredSelection(trans)
+                    isCompileChain = false
                 }
             }
         }
-
+        if(isCompileChain) {
+            compileChain.text = launchData.targetLanguage
+        }
+        useCompileChain.selection = isCompileChain
+        compileChain.enabled = isCompileChain
+        targetLanguage.combo.enabled = !isCompileChain
+        
         // Set file extension
         targetLanguageFileExtension.text = launchData.targetLanguageFileExtension
 
@@ -383,8 +412,6 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         
         // Reset current selection
         currentData = null
-
-        updateEnabled()
         
         // Don't ignore UI changes anymore
         doNotApplyUIChanges = false
@@ -398,15 +425,19 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
             return
         }
         
-        // Set target language
-        val selection = targetLanguage.selection as IStructuredSelection
-        if (selection != null) {
-            val trans = selection.firstElement as Transformation
-            if (trans != null) {
-                launchData.targetLanguage = trans.id
+        // Set target language / compile chain
+        if(useCompileChain.selection) {
+            launchData.targetLanguage = compileChain.text
+        } else {
+            val selection = targetLanguage.selection as IStructuredSelection
+            if (selection != null) {
+                val trans = selection.firstElement as Transformation
+                if (trans != null) {
+                    launchData.targetLanguage = trans.id
+                }
             }
         }
-
+        
         // Set file extension
         launchData.targetLanguageFileExtension = targetLanguageFileExtension.text
 
@@ -457,17 +488,6 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         }
         
         return null
-    }
-    
-    /**
-     * Enable or disable all controls that work on the currently selected file data.
-     * Enable list control iff the project is set correct.
-     */
-    private def void updateEnabled() {
-        // Enable controls that need an existing project specified
-        val List<Control> controls = #[list.list, targetLanguage.combo, targetLanguageFileExtension, targetTemplate,
-            wrapperCodeSnippets, wrapperCodeTemplate]
-        UIUtil.enableControlsOnSameLevel(controls, project != null)
     }
 
     /**

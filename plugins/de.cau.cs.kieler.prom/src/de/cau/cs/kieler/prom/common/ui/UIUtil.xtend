@@ -176,6 +176,13 @@ class UIUtil {
     /**
      * @see createTextField(Composite, String, EnumSet, IProjectHolder)
      */
+    public static def Text createTextField(Composite parent, String label) {
+        createTextField(parent, label, EnumSet.noneOf(Buttons))
+    }
+    
+    /**
+     * @see createTextField(Composite, String, EnumSet, IProjectHolder)
+     */
     public static def Text createTextField(Composite parent, String label, EnumSet<Buttons> buttonFlags) {
         createTextField(parent, label, buttonFlags, null)
     }

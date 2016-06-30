@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import com.google.common.base.Strings
+import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
@@ -21,6 +22,7 @@ import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import freemarker.template.Configuration
 import freemarker.template.Template
 import freemarker.template.TemplateExceptionHandler
@@ -28,7 +30,9 @@ import freemarker.template.Version
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
+import java.io.IOException
 import java.io.PrintWriter
+import java.util.Collections
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -45,7 +49,9 @@ import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
@@ -55,8 +61,6 @@ import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kico.CompilationResult
-import javax.xml.transform.OutputKeys
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -446,7 +450,22 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + launchData.targetLanguage, model)
+            val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+            var boolean isCompileChain = false
+            if (feature != null) {
+                val transformations = feature.expandingTransformations
+                // There is no transformation with the given id
+                // => the target is a compile chain and not a transformation.
+                isCompileChain = transformations.filter[it.id == launchData.targetLanguage].isEmpty
+            }
+            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION"
+            if(isCompileChain) {
+                compileChain += ", " + launchData.targetLanguage
+            } else {
+                // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
+                compileChain += ", T_"+ launchData.targetLanguage
+            }
+            val context = new KielerCompilerContext(compileChain, model)
             context.inplace = false
             context.advancedSelect = true
 
@@ -454,9 +473,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty() && !result.string.isNullOrEmpty() ) {
+            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty()) {
                 val targetLocation = computeTargetPath(data.projectRelativePath, false)
-                saveCompilationResult(result.string, targetLocation)
+                saveCompilationResult(result, targetLocation)
                 
                 // Remember compilation result
                 val targetPath = computeTargetPath(data.projectRelativePath, true)
@@ -530,17 +549,27 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     }
 
     /**
-     * Saves the result to the fully qualified target path,
-     * possibly using the target template for the output.
+     * Saves the result to the fully qualified target location.
+     * If the result string is not empty, this will be saved possibly using the target template for the output.
+     * Otherwise the result's EObject will be serialized to the target location.
      * 
-     * @param result The text to be saved
+     * @param result The KiCo compilation result to be saved
      * @param targetPath File path where the result should be saved
      */
-    private def void saveCompilationResult(String result, String targetPath) {
+    private def void saveCompilationResult(CompilationResult result, String targetLocation) {
         // Create directory for the output if none yet.
-        createDirectories(targetPath)
+        createDirectories(targetLocation)
         
-        // Compile with KiCo and save output
+        // Serialize Eobject
+        if(result.string.isNullOrEmpty) {
+            saveEObject(result.getEObject(), targetLocation)
+        } else {
+            saveTextWithTargetTemplate(result.string, targetLocation)   
+        }
+    }
+    
+    private def void saveTextWithTargetTemplate(String text, String targetLocation) {
+        // Save text using template
         val resolvedTargetTemplate = variableManager.performStringSubstitution(launchData.targetTemplate)
         if (resolvedTargetTemplate != "") {
             // Use template
@@ -551,15 +580,32 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
             // Write output to target path
             val template = new Template(resolvedTargetTemplate, reader, cfg)
-            val writer = new FileWriter(new File(targetPath))
-            template.process(#{COMPILED_CODE_PLACEHOLDER -> result}, writer)
+            val writer = new FileWriter(new File(targetLocation))
+            template.process(#{COMPILED_CODE_PLACEHOLDER -> text}, writer)
             writer.close()
             reader.close()
         } else {
             // Don't use template
-            val writer = new PrintWriter(targetPath, "UTF-8");
-            writer.print(result)
+            val writer = new PrintWriter(targetLocation, "UTF-8");
+            writer.print(text)
             writer.close()
+        }
+    }
+
+    private def void saveEObject(EObject eobject, String targetLocation) {
+        val resSet = new ResourceSetImpl();
+        
+        // create a resource
+        val resource = resSet.createResource(URI.createFileURI(targetLocation));
+        // Get the first model element and cast it to the right type, in my
+        // example everything is hierarchical included in this first node
+        resource.getContents().add(eobject);
+    
+        // now save the content.
+        try {
+          resource.save(Collections.EMPTY_MAP);
+        } catch (IOException e) {
+          e.printStackTrace();
         }
     }
 
