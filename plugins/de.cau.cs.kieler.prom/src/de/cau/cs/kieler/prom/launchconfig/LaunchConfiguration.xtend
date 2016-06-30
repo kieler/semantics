@@ -29,6 +29,8 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.PrintWriter
+import java.util.List
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -53,6 +55,8 @@ import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kico.CompilationResult
+import javax.xml.transform.OutputKeys
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -129,6 +133,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     @Accessors
     private KiCoLaunchData launchData
 
+    // Result of compilation
+    @Accessors
+    private val List<IFile> compiledFiles = newArrayList()
+    @Accessors
+    private val List<CompilationResult> compilationResults = newArrayList()
+
     /**
      * {@inheritDoc}
      */
@@ -139,14 +149,20 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         this.launch = launch
         this.monitor = monitor
         
+        // Load data object
+        launchData = KiCoLaunchData.loadFromConfiguration(configuration)
+        launch(launchData)
+    }
+    
+    public def IStatus launch(KiCoLaunchData launchData) {
+        this.launchData = launchData
+        this.project = findProject(launchData.projectName)
+        
         // Load variable manager
         this.variableManager = VariablesPlugin.getDefault.stringVariableManager
 
         // Init console for errors and messages
         clearConsole()
-
-        // Get data from config.
-        loadSettingsFromConfiguration()
 
         if (project != null) {
 
@@ -190,13 +206,26 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 // Run associated launch shortcut
                 runAssociatedLauchShortcut()
                 
-                // Execute command list 
-                getExecuteCommandsJob().schedule()
+                // Execute command list
+                val commandsJob = getExecuteCommandsJob()
+                commandsJob.schedule()
+                // Wait for finish
+                commandsJob.join()
+                
+                // Return error of commands
+                if(commandsJob.result.code != Status.OK) {
+                    return commandsJob.result
+                }
             }
         } else {
-            writeToConsole("Project of launch configuration '" + configuration.name +
-                "' does not exist.\n");
+            val message = "Project of launch configuration '" + configuration.name +
+                "' does not exist.\n"
+            writeToConsole(message);
+                
+            return new Status(Status.ERROR, PromPlugin.ID, message)
         }
+        
+        return Status.OK_STATUS
     }
 
     /**
@@ -332,7 +361,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 try {
                     for (data : launchData.files) {
                         compile(data)
-
+                        
                         if (monitor.isCanceled())
                             return Status.CANCEL_STATUS
                     }
@@ -426,9 +455,15 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
             // Flush compilation result to target
             if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty() && !result.string.isNullOrEmpty() ) {
-                saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
+                val targetLocation = computeTargetPath(data.projectRelativePath, false)
+                saveCompilationResult(result.string, targetLocation)
+                
+                // Remember compilation result
+                val targetPath = computeTargetPath(data.projectRelativePath, true)
+                compiledFiles += project.getFile(new Path(targetPath))
+                compilationResults += result
             } else {
-                var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
+                val errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
                                    Strings.nullToEmpty(result.allErrors) + "\n" +
                                    Strings.nullToEmpty(result.allWarnings)
 
@@ -536,18 +571,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private def void createDirectories(String filePath) {
         new File(filePath).parentFile.mkdirs()
     }
-
-    /**
-     * Loads all necessary data from the launch configuration.
-     */
-    private def void loadSettingsFromConfiguration() {
-        // Load data object
-        launchData = KiCoLaunchData.loadFromConfiguration(configuration)
     
-        // Set project handle
-        project = findProject(launchData.projectName)
-    }
-
     /**
      * Sets several eclipse string variables for this launch (e.g. ${main_name}, ${compiled_main_name}).
      * The variables can be used for example in the commands and file paths.
@@ -643,12 +667,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return myConsole;
     }
     
-    private def void clearConsole() {
+    static def void clearConsole() {
         initializeConsole()
         console.clearConsole()
     }
     
-    private static def void initializeConsole() {
+    static def void initializeConsole() {
         if (console == null || consoleStream == null) {
             console = findOrCreateConsole(CONSOLE_NAME)
             consoleStream = console.newMessageStream()

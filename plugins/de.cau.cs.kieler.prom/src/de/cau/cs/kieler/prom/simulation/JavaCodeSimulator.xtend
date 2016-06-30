@@ -11,7 +11,7 @@ class JavaCodeSimulator implements ISimulator {
     }
     
     override simulate(List<IFile> inputFiles, List<IFile> compiledFiles, List<CompilationResult> compilationResults) {
-        println("Simulating core sccharts with "+ inputFiles + ", "+compiledFiles + ", "+compilationResults)
+        println("Simulating java with "+ inputFiles + ", "+compiledFiles + ", "+compilationResults)
     }
     
 }

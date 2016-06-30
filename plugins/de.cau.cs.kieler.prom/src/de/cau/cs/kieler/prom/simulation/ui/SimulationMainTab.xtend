@@ -74,6 +74,11 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         val group = UIUtil.createGroup(parent, "Simulator", 1)
         
         simulator = createSimulatorComboViewer(group)
+        simulator.addSelectionChangedListener(new ISelectionChangedListener{
+            override selectionChanged(SelectionChangedEvent event) {
+                updateLaunchConfigurationDialog()
+            }
+        })
     }
     
     private def createEnvironmentComponent(Composite parent) {
@@ -100,7 +105,10 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         val table = new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-        table.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        val gd = new GridData(GridData.FILL_BOTH)
+        gd.heightHint = 150
+        table.setLayoutData(gd);
         
         // Create viewer
         val viewer = new CheckboxTableViewer(table)
@@ -128,7 +136,7 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
             }
         }
 
-        // Checked column
+        // Create columns
         val checkColumn = UIUtil.createTableColumn(viewer, "Provides Input", 100)
         checkColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
@@ -136,7 +144,6 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
             }
         };
 
-        // Create columns
         val pathColumn = UIUtil.createTableColumn(viewer, "Path", 250)
         pathColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
@@ -155,7 +162,8 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
     private def ComboViewer createSimulatorComboViewer(Composite parent) {
         // Create ComboViewer
         val combo = new ComboViewer(parent, SWT.DEFAULT)
-
+        combo.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+        
         // Get simulators from extensions
         val configs = Platform.getExtensionRegistry().getConfigurationElementsFor(SIMULATOR_ID);
         
@@ -188,7 +196,6 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
     
     override initializeFrom(ILaunchConfiguration configuration) {
         val launchData = SimulationLaunchData.loadFromConfiguration(configuration)
-        
         // Set project text
         project.text = launchData.projectName
         
@@ -204,10 +211,10 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         
         // Select simulator
         if(!launchData.simulatorClassName.isNullOrEmpty) {
-            val configElements = simulator.input as List<IConfigurationElement>
+            val configElements = simulator.input as IConfigurationElement[]
             for(e : configElements){
                 if(e.getAttribute("class") == launchData.simulatorClassName) {
-                    environment.selection = new StructuredSelection(e)
+                    simulator.selection = new StructuredSelection(e)
                 }
             }
         }
@@ -223,11 +230,20 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         launchData.projectName = project.text
         
         // Set environment name
-        val sel = environment.selection as StructuredSelection
+        var sel = environment.selection as StructuredSelection
         if(sel != null) {
             val env = sel.firstElement as EnvironmentData
             if(env != null){
                 launchData.environmentName = env.name    
+            }
+        }
+        
+        // Set simulator class name
+        sel = simulator.selection as StructuredSelection
+        if(sel != null) {
+            val config = sel.firstElement as IConfigurationElement
+            if(config != null){
+                launchData.simulatorClassName = config.getAttribute("class")    
             }
         }
         

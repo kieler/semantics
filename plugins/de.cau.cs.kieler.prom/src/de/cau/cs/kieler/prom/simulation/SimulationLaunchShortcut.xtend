@@ -18,13 +18,13 @@ import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.ide.ResourceUtil
-import org.eclipse.jface.window.Window
 
 class SimulationLaunchShortcut implements ILaunchShortcut {
         
     var IProject project
     
     val List<SimulationFileData> simulationFiles = newArrayList()
+    var boolean isNewLaunchConfiguration = false
     
     /**
      * {@inheritDoc}
@@ -59,16 +59,17 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
         // Find or create config that matches the specified files and settings
         val config = findLaunchConfiguration(mode)
         if (config != null) {
-            // Open launch configuration dialog
-            // so the user can check and set settings.
-            val returnCode = DebugUITools.openLaunchConfigurationDialog(
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                config,
-                DebugUITools.getLaunchGroup(config, mode).getIdentifier(),
-                null)
-              
-            // Launch the config  
-//            DebugUITools.launch(config, mode)
+            // Show dialog only if settings new. Directly launch the config otherwise.
+            if(isNewLaunchConfiguration) {
+                // Open launch configuration dialog so the user can modify settings.
+                DebugUITools.openLaunchConfigurationDialog(
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                    config,
+                    DebugUITools.getLaunchGroup(config, mode).getIdentifier(),
+                    null)
+            } else {
+              DebugUITools.launch(config, mode)
+            }
         }
     }
     
@@ -103,13 +104,12 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
      */
     private def ILaunchConfiguration findLaunchConfiguration(String mode) {
         val configs = getLaunchConfigurations()
-        var ILaunchConfiguration configuration
-        if (configs.isEmpty) 
-            configuration = createNewConfiguration()
-        else 
-            configuration = configs.get(0)
-        
-        return configuration
+        if (configs.isEmpty) {
+            return createNewConfiguration()
+        } else { 
+            return configs.get(0)
+            
+        }
     }
 
     /**
@@ -119,6 +119,7 @@ class SimulationLaunchShortcut implements ILaunchShortcut {
      */
     private def ILaunchConfiguration createNewConfiguration() {
         try {
+            isNewLaunchConfiguration = true
             val lm = DebugPlugin.getDefault().getLaunchManager()
             val type = lm.getLaunchConfigurationType(SimulationLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
             val name = getUniqueNameForLaunchConfig(lm, project.name + " ("+type.name+")", -1)

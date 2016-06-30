@@ -19,8 +19,8 @@ class SimulationFileData extends ConfigurationSerializable {
      * Flag to mark that a file provides inputs for the simulation,
      * in contrast to files that should be simulated.
      */
-    @Accessors
-    protected var boolean providesInputs
+    @Accessors(PRIVATE_GETTER, PRIVATE_SETTER)
+    protected var String providesInputs = ""
     
     
     
@@ -46,6 +46,23 @@ class SimulationFileData extends ConfigurationSerializable {
         return new Path(projectRelativePath).lastSegment
     }
 
+    /**
+     * Getter for the field.
+     * 
+     * @return the boolean value of the string.
+     */
+    public def boolean isProvidesInputs(){
+        return Boolean.valueOf(providesInputs)
+        
+    }
+    
+    /**
+     * Setter for the field.
+     */
+    public def void setProvidesInputs(boolean value){
+        providesInputs = String.valueOf(value)
+    }
+    
     /**
      * {@inheritDoc}
      */    
