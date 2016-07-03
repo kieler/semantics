@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:#TextRulerContext">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               icon="platform:/plugin/de.cau.cs.kieler.sccharts.debug/icons/brkp_obj.png"
+               label="Toggle Breakpoint"
+               style="toggle">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+            description="Toggle Breakpoint in specified Line."
+            id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+            name="Toggle Breakpoint Command">
+      </command>
+   </extension>
    <extension
          point="org.eclipse.debug.core.breakpoints">
       <breakpoint

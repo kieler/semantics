@@ -27,6 +27,7 @@ import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.editors.text.PreviousPulldownActionDelegate;
 
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
 import de.cau.cs.kieler.sccharts.debug.ui.ViewDebugContributor;
@@ -44,25 +45,75 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  */
 public class EventListener implements IKiemEventListener {
 
-//    private int oldStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
-
     /**
+     * On Load Event: Check if a debug schedule is choosen, if not update the recent non debug
+     * schedule and additionally schedule debug again, if the debug mode is enabled.
+     * 
+     * On Execution Event: Disable the debug mode button. 
+     * 
+     * On Execution Stop Event: Enable the debug mode button. 
+     * 
+     * On Step Event: Update the breakpoints map if needed. 
      * {@inheritDoc}
      */
     @Override
     public void notifyEvent(KiemEvent event) {
+        SCChartsDebugPlugin plugin = SCChartsDebugPlugin.getDefault();
 
         if (event.isEvent(KiemEvent.LOAD)) {
+
             IPath path = (IPath) event.getInfo();
-            if (!path.equals(new Path("/execution/sccharts_c_debug.execution"))) {
-                if (DataComponent.DEBUG_MODE) {
-                    SCChartsDebugPlugin.getDefault().scheduleDefaultDebugExecution();
+            Path defaultPath = new Path(
+                    "/execution/" + SCChartsDebugPlugin.DEFAULT_DEBUG_SCHEDULE + ".execution");
+            if (!path.equals(defaultPath)) {
+
+                String scheduleName;
+                if (plugin.getPreviousNonDebugSchedule() != null) {
+                    scheduleName = plugin.getPreviousNonDebugSchedule().getName();
+                } else {
+                    scheduleName = plugin.getDefaultNonDebugSchedule();
                 }
+
+                // choosen schedule is not the last known default schedule
+                if (!path.toString().contains(scheduleName)) {
+                    ScheduleManager scheduleManager = ScheduleManager.getInstance();
+
+                    List<ScheduleData> scheduledata = scheduleManager.getAllSchedules();
+                    for (ScheduleData schedule : scheduledata) {
+                        if (path.toString().contains(schedule.getName())) {
+                            plugin.setPreviousNonDebugSchedule(schedule);
+                            break;
+                        }
+                    }
+                }
+
+                if (DataComponent.DEBUG_MODE) {
+                    if (plugin.getLoaded()) {
+                        DataComponent.DEBUG_MODE = false;
+                        PlatformUI.createDisplay();
+                        Display.getDefault().asyncExec(new Runnable() {
+                            public void run() {
+                                ViewDebugContributor.buttonDebug
+                                        .setSelection(DataComponent.DEBUG_MODE);
+                            }
+                        });
+                    }
+
+                }
+            } else {
+                DataComponent.DEBUG_MODE = true;
+                PlatformUI.createDisplay();
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        ViewDebugContributor.buttonDebug.setSelection(DataComponent.DEBUG_MODE);
+                    }
+                });
+                plugin.setLoaded();
             }
             return;
         }
 
-        if (event.isEvent(KiemEvent.EXECUTION_START) || event.isEvent(KiemEvent.CMD_RUN)) {
+        if (event.isEvent(KiemEvent.EXECUTION_START)) {
 
             if (event.isEvent(KiemEvent.EXECUTION_START)) {
                 PlatformUI.createDisplay();
@@ -72,22 +123,10 @@ public class EventListener implements IKiemEventListener {
                     }
                 });
             }
-
-            SCChartsDebugPlugin.getDefault().updateBreakpointLines();
-//            if (DataComponent.FAST_FORWARD) {
-//                oldStepDuration = KiemPlugin.getDefault().getAimedStepDuration();
-//                KiemPlugin.getDefault().setAimedStepDuration(0);
-//            } else {
-//                KiemPlugin.getDefault().setAimedStepDuration(oldStepDuration);
-//            }
         }
 
-        if (event.isEvent(KiemEvent.EXECUTION_STOP) || event.isEvent(KiemEvent.CMD_PAUSE)) {
-            
-//            if (DataComponent.FAST_FORWARD) {
-//                KiemPlugin.getDefault().setAimedStepDuration(oldStepDuration);
-//            }
-            
+        if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
+
             if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
                 PlatformUI.createDisplay();
                 Display.getDefault().syncExec(new Runnable() {
@@ -99,6 +138,10 @@ public class EventListener implements IKiemEventListener {
             return;
         }
 
+        if (event.isEvent(KiemEvent.STEP_INFO)) {
+            plugin.updateBreakpointLines();
+        }
+
     }
 
     /**
@@ -106,8 +149,7 @@ public class EventListener implements IKiemEventListener {
      */
     @Override
     public KiemEvent provideEventOfInterest() {
-        int[] events = { KiemEvent.EXECUTION_START, KiemEvent.EXECUTION_STOP, KiemEvent.CMD_PAUSE,
-                KiemEvent.CMD_RUN, KiemEvent.LOAD };
+        int[] events = { KiemEvent.EXECUTION_START, KiemEvent.EXECUTION_STOP, KiemEvent.LOAD, KiemEvent.STEP_INFO };
         return new KiemEvent(events);
     }
 }
