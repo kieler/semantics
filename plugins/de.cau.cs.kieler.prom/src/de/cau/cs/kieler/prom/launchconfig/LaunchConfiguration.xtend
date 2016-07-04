@@ -450,16 +450,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            val feature = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
-            var boolean isCompileChain = false
-            if (feature != null) {
-                val transformations = feature.expandingTransformations
-                // There is no transformation with the given id
-                // => the target is a compile chain and not a transformation.
-                isCompileChain = transformations.filter[it.id == launchData.targetLanguage].isEmpty
-            }
             var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION"
-            if(isCompileChain) {
+            if(launchData.isCompileChain) {
                 compileChain += ", " + launchData.targetLanguage
             } else {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_

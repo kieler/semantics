@@ -4,6 +4,8 @@ import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 class KiCoLaunchData extends ConfigurationSerializable {
     
@@ -11,6 +13,12 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * Key for the attribute that holds a launch data object.
      */
     private static val LAUNCH_DATA_IDENTIFIER_ATTR = "launchdata"
+    
+    /**
+     * The features of the KIELER Compiler that produces finished code.
+     * The field is used to cache the features.
+     */
+    private static val codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
     
     /**
      * The name of the project that should be launched
@@ -33,8 +41,15 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * The target language for KiCo compilation.
      * This is the id of a KiCo transformation feature.
      */
-    @Accessors
+    @Accessors(PRIVATE_SETTER, PUBLIC_GETTER)
     protected String targetLanguage = ""
+    /**
+     * Flag that is infered from the target language and determines
+     * if the target is a single transformation for code generation (e.g. "s.java")
+     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
+     */
+     @Accessors(PRIVATE_SETTER, PUBLIC_GETTER)
+    private boolean isCompileChain = false
     /**
      * The file extension for the specified target language (e.g. '.java' for Java Code) 
      */
@@ -88,6 +103,27 @@ class KiCoLaunchData extends ConfigurationSerializable {
      */
     override setIdentifier(String value) {
         // The identifier is constant for this data class.
+    }
+    
+    /**
+     * Setter for the compilation target.
+     */
+    public def void setTargetLanguage(String value) {
+        targetLanguage = value;
+        updateIsCompileChain()
+    }
+    
+    /**
+     * Checkes if the compilation target is a single transformation or complex compile chain. 
+     */
+    private def void updateIsCompileChain() {
+        isCompileChain = false
+        if (codeGenerationFeatures != null) {
+            val transformations = codeGenerationFeatures.expandingTransformations
+            // There is no transformation with the given id
+            // => the target is a compile chain and not a transformation.
+            isCompileChain = transformations.filter[it.id == targetLanguage].isEmpty
+        }
     }
     
     /**

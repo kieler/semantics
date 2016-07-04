@@ -151,7 +151,7 @@ class EnvironmentData extends ConfigurationSerializable {
         // Load data
         val loadedLaunchData = KiCoLaunchData.loadFromConfiguration(config)
         // Copy values of fields
-        loadedLaunchData.targetLanguage = launchData.targetLanguage
+        loadedLaunchData.setTargetLanguage(launchData.targetLanguage)
         loadedLaunchData.targetLanguageFileExtension = launchData.targetLanguageFileExtension
         loadedLaunchData.targetTemplate = launchData.targetTemplate
         loadedLaunchData.targetDirectory = launchData.targetDirectory
