@@ -7,9 +7,9 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            configTypeID="de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+            configTypeID="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.prom.launchconfig.launchConfigurationImage">
+            id="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfigImage">
       </launchConfigurationTypeImage>
       <launchConfigurationTypeImage
             configTypeID="de.cau.cs.kieler.prom.simulation.simulationLaunchConfig"
@@ -20,8 +20,8 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration"
-            id="de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+            delegate="de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig"
+            id="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig"
             modes="run,debug"
             name="KiCo Compilation"
             public="true">
@@ -37,9 +37,9 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchConfigurationTabGroup"
-            id="de.cau.cs.kieler.prom.launchconfig.ui.launchConfigurationTabGroup"
-            type="de.cau.cs.kieler.prom.launchconfig.launchConfiguration">
+            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchConfigTabGroup"
+            id="de.cau.cs.kieler.prom.launchconfig.ui.kiCoLaunchConfigTabGroup"
+            type="de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig">
          <launchMode
                mode="run">
          </launchMode>
@@ -62,14 +62,14 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="de.cau.cs.kieler.prom.scchartsPage"
-            class="de.cau.cs.kieler.prom.environments.EnvironmentsPage"
+            category="de.cau.cs.kieler.prom.kielerPage"
+            class="de.cau.cs.kieler.prom.environments.ui.EnvironmentsPage"
             id="de.cau.cs.kieler.prom.environmentsPreferencePage"
             name="Environments">
       </page>
       <page
-            class="de.cau.cs.kieler.prom.environments.KielerPage"
-            id="de.cau.cs.kieler.prom.scchartsPage"
+            class="de.cau.cs.kieler.prom.environments.ui.KielerPage"
+            id="de.cau.cs.kieler.prom.kielerPage"
             name="KIELER">
       </page>
    </extension>
@@ -90,7 +90,7 @@
       <renameParticipant
             class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigRenameParticipant"
             id="de.cau.cs.kieler.prom.renameParticipant"
-            name="KiCo Launch Config Rename Participant">
+            name="Launch Config Rename Participant">
          <enablement>
             <instanceof
                   value="org.eclipse.core.resources.IResource">
@@ -103,7 +103,7 @@
       <deleteParticipant
             class="de.cau.cs.kieler.prom.launchconfig.LaunchConfigDeleteParticipant"
             id="de.cau.cs.kieler.prom.deleteParticipant"
-            name="KiCo Launch Config Delete Participant">
+            name="Launch Config Delete Participant">
          <enablement>
             <instanceof
                   value="org.eclipse.core.resources.IResource">

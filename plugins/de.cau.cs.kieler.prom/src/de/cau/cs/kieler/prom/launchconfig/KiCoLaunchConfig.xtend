@@ -22,7 +22,6 @@ import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import freemarker.template.Configuration
 import freemarker.template.Template
 import freemarker.template.TemplateExceptionHandler
@@ -37,7 +36,6 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
@@ -48,7 +46,6 @@ import org.eclipse.core.variables.IStringVariableManager
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
-import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -57,9 +54,6 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.widgets.Display
-import org.eclipse.ui.console.ConsolePlugin
-import org.eclipse.ui.console.MessageConsole
-import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -67,13 +61,13 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class LaunchConfiguration extends PromLaunchConfig {
+class KiCoLaunchConfig extends PromLaunchConfig {
 
     /**
      * The extension id of this launch config type.
      * It is set in the plugin.xml.
      */
-    public static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.launchConfiguration"
+    public static val LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.launchconfig.kiCoLaunchConfig"
 
     /**
      * The id for the wrapper code generator extension point.
@@ -220,31 +214,31 @@ class LaunchConfiguration extends PromLaunchConfig {
     public static def void initializeVariables() {
         val variableManager = VariablesPlugin.getDefault.stringVariableManager
         // Check if variables have been initialized already
-        var variable = variableManager.getValueVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE)
+        var variable = variableManager.getValueVariable(MAIN_FILE_NAME_VARIABLE)
         // Instantiate all variables if none yet
         if (variable == null) {
             // Project
-            initializeVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE,
+            initializeVariable(LAUNCHED_PROJECT_VARIABLE,
             "Fully qualified path to the launched application")
     
             // Main file
-            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE,
+            initializeVariable(MAIN_FILE_NAME_VARIABLE,
                 "Name of the main file of the launched application")
-            initializeVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE,
+            initializeVariable(MAIN_FILE_LOCATION_VARIABLE,
                 "Fully qualified location of the main file of the launched application")
-            initializeVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE,
+            initializeVariable(MAIN_FILE_PATH_VARIABLE,
                 "Project relative path of the main file of the launched application")
-            initializeVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+            initializeVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
                 "Project relative path of the main file of the launched application without file extension")
             
             // Compiled main file
-            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE,
+            initializeVariable(COMPILED_MAIN_FILE_NAME_VARIABLE,
                 "Name of the compiled main file of the launched application")
-            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE,
+            initializeVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE,
                 "Fully qualified location of the compiled main file of the launched application")
-            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE,
+            initializeVariable(COMPILED_MAIN_FILE_PATH_VARIABLE,
                 "Project relative path of the compiled main file of the launched application")
-            initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+            initializeVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
                 "Project relative path of the compiled main file of the launched application without file extension")
         }
     }    
@@ -564,7 +558,7 @@ class LaunchConfiguration extends PromLaunchConfig {
      */
     private def void setVariables() {
         // Set project
-        setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString)
+        setVariable(LAUNCHED_PROJECT_VARIABLE, project.location.toOSString)
 
         // Set main file
         val mainFileName = new File(launchData.mainFile).name
@@ -574,10 +568,10 @@ class LaunchConfiguration extends PromLaunchConfig {
                                    ""
         val mainFilePath = launchData.mainFile
         val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName)
-        setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
-        setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath)
-        setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
+        setVariable(MAIN_FILE_NAME_VARIABLE, mainFileName)
+        setVariable(MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
+        setVariable(MAIN_FILE_PATH_VARIABLE, mainFilePath)
+        setVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
 
         // Set compiled main file
         val mainTarget = computeTargetPath(launchData.mainFile, true)
@@ -588,10 +582,10 @@ class LaunchConfiguration extends PromLaunchConfig {
                                     ""
         val mainTargetPath = mainTarget
         val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
-        setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
+        setVariable(COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
+        setVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
+        setVariable(COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
+        setVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
     }
 
     /**

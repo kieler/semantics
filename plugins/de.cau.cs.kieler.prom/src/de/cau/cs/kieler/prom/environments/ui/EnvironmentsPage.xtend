@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.environments
+package de.cau.cs.kieler.prom.environments.ui
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
@@ -19,7 +19,8 @@ import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.ArrayList
 import java.util.EnumSet
 import java.util.Set
@@ -489,7 +490,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
-        + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+        + "Use ${" + KiCoLaunchConfig.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
         
         // Create target directory control
         val comp = UIUtil.createComposite(group, 3)
@@ -507,7 +508,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         targetDirectoryKielerGen.addSelectionListener(new SelectionAdapter() {
             override void widgetSelected(SelectionEvent e) {
                 if(currentData != null){
-                    currentData.launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+                    currentData.launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
                     checkConsistency()
                 }
             }
@@ -541,7 +542,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         wrapperCodeTemplate.toolTipText = "Path to a template of a file, which will contain wrapper code.\n.\n"
-            + "The path may contain placeholders such as ${" + LaunchConfiguration.MAIN_FILE_NAME_VARIABLE + "}."
+            + "The path may contain placeholders such as ${" + KiCoLaunchConfig.MAIN_FILE_NAME_VARIABLE + "}."
         
         // Create snippets directory control
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", EnumSet.of(UIUtil.Buttons.NONE))

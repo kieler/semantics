@@ -1,11 +1,24 @@
-package de.cau.cs.kieler.prom.simulation
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.prom.simulation
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import de.cau.cs.kieler.prom.launchconfig.PromLaunchConfig
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
@@ -45,7 +58,7 @@ class SimulationLaunchConfig extends PromLaunchConfig {
         loadSettingsFromConfiguration()
 
         if (project != null) {
-            val launchConfig = new LaunchConfiguration()
+            val launchConfig = new KiCoLaunchConfig()
             
             // Prepare launch data for KiCo launch configuration
             val store = PromPlugin.^default.preferenceStore

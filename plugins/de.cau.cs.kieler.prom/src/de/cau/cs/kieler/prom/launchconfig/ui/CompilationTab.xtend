@@ -18,7 +18,7 @@ import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.io.File
 import java.util.ArrayList
 import java.util.EnumSet
@@ -45,7 +45,6 @@ import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 
@@ -54,7 +53,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  * 
  * @author aas
  */
-class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHolder {
+class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHolder {
     
     /**
      * The currently selected data of the list control.
@@ -125,7 +124,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
     /**
      * Constructor
      */
-    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+    new(KiCoLaunchConfigTabGroup tabGroup) {
         super(tabGroup)
     }
 
@@ -305,7 +304,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
             }
         })
         targetTemplate.toolTipText = "Template for the compiled output.\n"
-            + "Use ${" + LaunchConfiguration.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+            + "Use ${" + KiCoLaunchConfig.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
             
         // Create target directory control
         val comp4 = UIUtil.createComposite(group, 1)
@@ -342,7 +341,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
             }
         })
         wrapperCodeTemplate.toolTipText =  "Path to a template of a file, which will contain wrapper code.\n"
-            + "The path may contain placeholders such as ${" + LaunchConfiguration.MAIN_FILE_NAME_VARIABLE + "}."
+            + "The path may contain placeholders such as ${" + KiCoLaunchConfig.MAIN_FILE_NAME_VARIABLE + "}."
 
         // Create control for directory with snippet definitions
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory",
@@ -371,7 +370,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
         doNotApplyUIChanges = true
         
         // Update project reference
-        project = LaunchConfiguration.findProject(launchData.projectName)
+        project = KiCoLaunchConfig.findProject(launchData.projectName)
         
         // Set files to be compiled
         list.input = launchData.files
@@ -446,7 +445,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigurationTab implements IProj
 
         // Set target directory
         if(targetDirectoryKielerGen.selection) {
-            launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+            launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         } else {
             launchData.targetDirectory = ""
         }

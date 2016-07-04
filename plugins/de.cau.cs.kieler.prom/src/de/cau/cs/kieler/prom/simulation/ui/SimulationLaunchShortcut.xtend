@@ -1,12 +1,24 @@
-package de.cau.cs.kieler.prom.simulation
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.prom.simulation.ui
 
 import de.cau.cs.kieler.prom.common.SimulationFileData
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
-import de.cau.cs.kieler.prom.launchconfig.PromLaunchShortcut
+import de.cau.cs.kieler.prom.launchconfig.ui.PromLaunchShortcut
+import de.cau.cs.kieler.prom.simulation.SimulationLaunchConfig
 import java.util.ArrayList
 import java.util.List
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.DebugUITools

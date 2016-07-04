@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
@@ -147,7 +147,7 @@ class EnvironmentData extends ConfigurationSerializable {
      */
     def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
         // Save which environment was used to initialize this launch config
-        config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
+        config.setAttribute(KiCoLaunchConfig.ATTR_ENVIRONMENT, name)
         // Load data
         val loadedLaunchData = KiCoLaunchData.loadFromConfiguration(config)
         // Copy values of fields

@@ -15,7 +15,7 @@ package de.cau.cs.kieler.prom.common
 
 import com.google.common.base.Charsets
 import com.google.common.io.CharStreams
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.io.ByteArrayInputStream
 import java.io.FileInputStream
 import java.io.IOException
@@ -69,7 +69,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         plugin = this
         
         // Initialize the variables that can be used in the launch configuration
-        LaunchConfiguration.initializeVariables()
+        KiCoLaunchConfig.initializeVariables()
     }
 
     /*

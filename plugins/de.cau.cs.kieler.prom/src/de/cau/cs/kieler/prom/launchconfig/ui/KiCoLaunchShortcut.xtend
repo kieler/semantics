@@ -11,16 +11,15 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.launchconfig
+package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.runtime.CoreException
-import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.DebugUITools
@@ -39,7 +38,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  * 
  * @author aas
  */
-class LaunchShortcut extends PromLaunchShortcut {
+class KiCoLaunchShortcut extends PromLaunchShortcut {
 
     /**
      * Launch the file by adding it to an existing launch config of this project
@@ -86,7 +85,7 @@ class LaunchShortcut extends PromLaunchShortcut {
      * {@inheritDoc}
      */
     override ILaunchConfiguration createNewConfiguration() {
-        return createNewConfiguration(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
+        return createNewConfiguration(KiCoLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
     }
 
     /**
@@ -105,7 +104,7 @@ class LaunchShortcut extends PromLaunchShortcut {
         }
 
         // Set KiCo target
-        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".c"
         
@@ -141,7 +140,7 @@ class LaunchShortcut extends PromLaunchShortcut {
      * {@inheritDoc}
      */
     override protected getLaunchConfigurations() {
-        return getLaunchConfigurations(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
+        return getLaunchConfigurations(KiCoLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
     }
     
     /**

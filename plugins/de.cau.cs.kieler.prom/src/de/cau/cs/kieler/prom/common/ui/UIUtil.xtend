@@ -18,7 +18,7 @@ import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.ArrayList
 import java.util.Collections
@@ -465,9 +465,9 @@ class UIUtil {
         val group = UIUtil.createComposite(parent, 3)
         
         createLabel(group, "Target directory")
-        val button1 = SWTFactory.createRadioButton(group, LaunchConfiguration.BUILD_DIRECTORY)
+        val button1 = SWTFactory.createRadioButton(group, KiCoLaunchConfig.BUILD_DIRECTORY)
         button1.data = KiCoLaunchTargetDirectoryOptions.KIELER_GEN
-        button1.toolTipText = "Save compilation output to the "+LaunchConfiguration.BUILD_DIRECTORY+" directory."
+        button1.toolTipText = "Save compilation output to the "+KiCoLaunchConfig.BUILD_DIRECTORY+" directory."
          
         val button2 = SWTFactory.createRadioButton(group, "Same as input files")
         button2.data = KiCoLaunchTargetDirectoryOptions.SAME_AS_INPUT

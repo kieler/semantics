@@ -34,9 +34,9 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
+            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.sccharts.prom.launchShortcut"
+            id="de.cau.cs.kieler.sccharts.prom.kiCoLaunchShortcut"
             label="KiCo Compilation"
             modes="run, debug"
             path="/kieler">
@@ -61,7 +61,7 @@
          </contextualLaunch>
       </shortcut>
       <shortcut
-            class="de.cau.cs.kieler.prom.simulation.SimulationLaunchShortcut"
+            class="de.cau.cs.kieler.prom.simulation.ui.SimulationLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.sccharts.prom.simulationLaunchShortcut"
             label="KiCo Simulation"

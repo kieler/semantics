@@ -15,10 +15,10 @@ package de.cau.cs.kieler.sccharts.prom
 
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
-import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
-import java.util.List
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
+import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
+import java.util.List
 
 /**
  * Returns a list with default environments ready to use.
@@ -56,8 +56,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_nxj"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
 
@@ -79,8 +79,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_ev3"
         launchData.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"
 
@@ -102,9 +102,9 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "main.ftl"
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".nxc"
-        launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_nxc"
-        launchData.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
+        launchData.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«KiCoLaunchConfig.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
         
         val env = new EnvironmentData("Mindstorms NXC")
         env.launchData = launchData
@@ -124,7 +124,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "${project_name}.ftl"
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".ino"
-        launchData.wrapperCodeTemplate = '''${«LaunchConfiguration.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets/arduino"
         launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
         val env = new EnvironmentData("Arduino")

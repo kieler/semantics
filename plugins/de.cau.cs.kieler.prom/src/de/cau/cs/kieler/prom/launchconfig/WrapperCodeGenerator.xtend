@@ -79,7 +79,7 @@ class WrapperCodeGenerator {
     /**
      * The launch config, which created this instance. 
      */
-    private LaunchConfiguration launchConfig
+    private KiCoLaunchConfig launchConfig
 
     /**
      * The name of the last processed model
@@ -91,7 +91,7 @@ class WrapperCodeGenerator {
     private String resolvedWrapperCodeSnippetDirectory
     private String resolvedWrapperCodeTargetLocation
     
-    new(LaunchConfiguration launchConfig) {
+    new(KiCoLaunchConfig launchConfig) {
         this.launchConfig = launchConfig
     }
     

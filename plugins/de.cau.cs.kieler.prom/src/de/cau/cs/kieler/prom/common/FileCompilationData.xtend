@@ -13,12 +13,12 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
+import org.eclipse.core.runtime.Path
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.core.runtime.Path
 
 /** 
  * Data container for files which should be compiled via KiCo.
@@ -76,7 +76,7 @@ class FileCompilationData extends ConfigurationSerializable {
      * @return list with the loaded compilation data objects.
      */
     static def List<FileCompilationData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializable.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_FILES,
+        return ConfigurationSerializable.loadAllFromConfiguration(configuration, KiCoLaunchConfig.ATTR_FILES,
             FileCompilationData) as List<FileCompilationData>
     }
 
@@ -88,7 +88,7 @@ class FileCompilationData extends ConfigurationSerializable {
      * @param datas The data objects to be saved
      */
     static def void saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<FileCompilationData> datas) {
-        ConfigurationSerializable.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_FILES, datas)
+        ConfigurationSerializable.saveAllToConfiguration(configuration, KiCoLaunchConfig.ATTR_FILES, datas)
     }
     
     /**

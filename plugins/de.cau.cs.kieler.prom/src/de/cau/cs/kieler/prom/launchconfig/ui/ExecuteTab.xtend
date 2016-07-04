@@ -17,7 +17,7 @@ import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.ArrayList
 import java.util.EnumSet
 import java.util.List
@@ -52,7 +52,7 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog
  * 
  * @author aas
  */
-class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
+class ExecuteTab extends AbstractKiCoLaunchConfigTab {
 
     /**
      * The control to show all commands and enable/disable them. 
@@ -87,7 +87,7 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
     /**
      * Constructor
      */
-    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+    new(KiCoLaunchConfigTabGroup tabGroup) {
         super(tabGroup)
     }
     
@@ -277,7 +277,7 @@ class ExecuteTab extends AbstractKiCoLaunchConfigurationTab {
         doNotApplyUIChanges = true
         
         // Update project reference        
-        project = LaunchConfiguration.findProject(launchData.projectName)
+        project = KiCoLaunchConfig.findProject(launchData.projectName)
         
         // Set commands
         viewer.input = launchData.commands
