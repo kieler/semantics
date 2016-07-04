@@ -457,6 +457,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
                 compileChain += ", T_"+ launchData.targetLanguage
             }
+            println(compileChain)
             val context = new KielerCompilerContext(compileChain, model)
             context.inplace = false
             context.advancedSelect = true

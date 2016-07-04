@@ -1,11 +1,14 @@
 package de.cau.cs.kieler.prom.common
 
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.List
+import java.util.Set
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 
 class KiCoLaunchData extends ConfigurationSerializable {
     
@@ -18,7 +21,12 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * The features of the KIELER Compiler that produces finished code.
      * The field is used to cache the features.
      */
-    private static val codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+    private static var Feature codeGenerationFeatures
+    /**
+     * The trasnformations of the KIELER Compiler that produces finished code.
+     * The field is used to cache the transformations.
+     */
+     private static var Set<Transformation> codeGenerationTransformations
     
     /**
      * The name of the project that should be launched
@@ -43,13 +51,6 @@ class KiCoLaunchData extends ConfigurationSerializable {
      */
     @Accessors(PRIVATE_SETTER, PUBLIC_GETTER)
     protected String targetLanguage = ""
-    /**
-     * Flag that is infered from the target language and determines
-     * if the target is a single transformation for code generation (e.g. "s.java")
-     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
-     */
-     @Accessors(PRIVATE_SETTER, PUBLIC_GETTER)
-    private boolean isCompileChain = false
     /**
      * The file extension for the specified target language (e.g. '.java' for Java Code) 
      */
@@ -110,20 +111,29 @@ class KiCoLaunchData extends ConfigurationSerializable {
      */
     public def void setTargetLanguage(String value) {
         targetLanguage = value;
-        updateIsCompileChain()
     }
     
     /**
-     * Checkes if the compilation target is a single transformation or complex compile chain. 
+     * Flag that is infered from the target language and determines
+     * if the target is a single transformation for code generation (e.g. "s.java")
+     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
      */
-    private def void updateIsCompileChain() {
-        isCompileChain = false
-        if (codeGenerationFeatures != null) {
-            val transformations = codeGenerationFeatures.expandingTransformations
+    public def boolean isCompileChain() {
+        var isCompileChain = false
+        // Get code transformations of KiCo
+        if(codeGenerationFeatures == null) {
+            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+            if(codeGenerationFeatures != null) {
+                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
+            }
+        }
+        // Check if target matches a transformation
+        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
             // There is no transformation with the given id
             // => the target is a compile chain and not a transformation.
-            isCompileChain = transformations.filter[it.id == targetLanguage].isEmpty
+            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
         }
+        return isCompileChain
     }
     
     /**
