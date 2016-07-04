@@ -67,7 +67,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class LaunchConfiguration implements ILaunchConfigurationDelegate {
+class LaunchConfiguration extends PromLaunchConfig {
 
     /**
      * The extension id of this launch config type.
@@ -111,24 +111,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
 
     private IStringVariableManager variableManager
 
-    // Message console
-    private static val CONSOLE_NAME = "KiCo Compilation"
-    private static MessageConsole console;
-    private static MessageConsoleStream consoleStream;
-
     // Jobs
     private Job compileJob;
     private Job wrapperCodeJob;
-    
-    // Objects from launch
-    @Accessors
-    private ILaunchConfiguration configuration
-    @Accessors
-    private String mode
-    @Accessors
-    private ILaunch launch
-    @Accessors
-    private IProgressMonitor monitor
 
     // Objects loaded from configuration
     @Accessors
@@ -148,11 +133,8 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     override void launch(ILaunchConfiguration configuration, String mode, ILaunch launch,
         IProgressMonitor monitor) throws CoreException {
-        this.configuration = configuration
-        this.mode = mode
-        this.launch = launch
-        this.monitor = monitor
         
+        super.launch(configuration, mode, launch, monitor)
         // Load data object
         launchData = KiCoLaunchData.loadFromConfiguration(configuration)
         launch(launchData)
@@ -265,41 +247,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             initializeVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
                 "Project relative path of the compiled main file of the launched application without file extension")
         }
-    }
-
-    /**
-     * Writes to the console view for a KiCo launch.
-     * @param message The message to print to the console
-     */
-    public static def void writeToConsole(String message){
-        // If there is nothing to write, we are done immediately.
-        if(message.isNullOrEmpty())
-            return;
-        
-        // Ensure the console exists.
-        initializeConsole()
-        
-        // Print message
-        consoleStream.println(message)
-        
-        // Bring console to front
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        consoleManager.showConsoleView(console)
-    }
-
-    public static def void writeToConsole(Exception e){
-        // Write exception to console of running Eclipse
-        var text = ""
-        text += Strings.nullToEmpty(e.toString())
-        if(text.length > 0 )
-            text += ":"
-        text += Strings.nullToEmpty(e.message)
-        writeToConsole(text)
-        
-        // Print stack trace
-        e.printStackTrace()
-    }
-    
+    }    
     
     /**
      * Creates the folder in which compilation results will be saved. 
@@ -457,7 +405,6 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
                 compileChain += ", T_"+ launchData.targetLanguage
             }
-            println(compileChain)
             val context = new KielerCompilerContext(compileChain, model)
             context.inplace = false
             context.advancedSelect = true
@@ -670,51 +617,5 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         val variable = manager.newValueVariable(name, description, false, "")
         variable.description = description
         manager.addVariables(#[variable])
-    }
-
-    /**
-     * Returns a project handle if the project exists in the current workspace.
-     * 
-     * @param name The name of a project to be found
-     */
-    static def IProject findProject(String name) {
-        if (!name.isNullOrEmpty() && new Path(name).isValidPath(name)) {
-            val p = ResourcesPlugin.workspace.root.getProject(name)
-            if (p.location != null)
-                return p
-        }
-        return null
-    }
-
-    /**
-     * Search for a console with a given name in the Console View.
-     * If the console can't be found it will be created.
-     * 
-     * @param name The name of a message console to be found or created
-     * @return The found or newly created message console
-     */
-    private static def MessageConsole findOrCreateConsole(String name) {
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        val existingConsoles = consoleManager.getConsoles();
-        for (var i = 0; i < existingConsoles.length; i++)
-            if (name.equals(existingConsoles.get(i).getName()))
-                return existingConsoles.get(i) as MessageConsole;
-
-        // No console found, so create a new one.
-        val myConsole = new MessageConsole(name, null);
-        consoleManager.addConsoles(#[myConsole]);
-        return myConsole;
-    }
-    
-    static def void clearConsole() {
-        initializeConsole()
-        console.clearConsole()
-    }
-    
-    static def void initializeConsole() {
-        if (console == null || consoleStream == null) {
-            console = findOrCreateConsole(CONSOLE_NAME)
-            consoleStream = console.newMessageStream()
-        }
     }
 }

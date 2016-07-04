@@ -6,6 +6,7 @@ import de.cau.cs.kieler.prom.common.FileCompilationData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.PromLaunchConfig
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IProgressMonitor
@@ -13,26 +14,15 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Status
 import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
-import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.xtend.lib.annotations.Accessors
 
-class SimulationLaunchConfig implements ILaunchConfigurationDelegate {
+class SimulationLaunchConfig extends PromLaunchConfig {
     
     /**
      * The extension id of this launch config type.
      * It is set in the plugin.xml.
      */
     public static String LAUNCH_CONFIGURATION_TYPE_ID = "de.cau.cs.kieler.prom.simulation.simulationLaunchConfig"
-    
-    // Objects from launch
-    @Accessors
-    private ILaunchConfiguration configuration
-    @Accessors
-    private String mode
-    @Accessors
-    private ILaunch launch
-    @Accessors
-    private IProgressMonitor monitor
     
     // Objects loaded from configuration
     @Accessors
@@ -46,13 +36,10 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate {
     
     override launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
         println("Launching simulation "+configuration.name + " in "+ mode +" mode.")
-        this.configuration = configuration
-        this.mode = mode
-        this.launch = launch
-        this.monitor = monitor
+        super.launch(configuration, mode, launch, monitor)
 
         // Init console for errors and messages
-        LaunchConfiguration.clearConsole()
+        clearConsole()
 
         // Get data from config.
         loadSettingsFromConfiguration()
@@ -85,19 +72,19 @@ class SimulationLaunchConfig implements ILaunchConfigurationDelegate {
                     val inputFiles = launchData.files.map[return project.getFile(new Path(it.projectRelativePath)) ]
                     simulator.simulate(inputFiles, launchConfig.compiledFiles, launchConfig.compilationResults);
                 } else {
-                    LaunchConfiguration.writeToConsole("Simulator '"+launchData.simulatorClassName
+                    writeToConsole("Simulator '"+launchData.simulatorClassName
                         + "' of launch configuration '" + configuration.name
                         + "' can not be instantiated.\n"); 
                 }
             }
         } else {
-            LaunchConfiguration.writeToConsole("Project of launch configuration '" + configuration.name
+            writeToConsole("Project of launch configuration '" + configuration.name
                 + "' does not exist.\n");
         }
     }
     
     def loadSettingsFromConfiguration() {
         launchData = SimulationLaunchData.loadFromConfiguration(configuration)
-        project = LaunchConfiguration.findProject(launchData.projectName)
+        project = findProject(launchData.projectName)
     }    
 }

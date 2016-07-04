@@ -15,28 +15,20 @@ package de.cau.cs.kieler.prom.launchconfig
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
-import java.util.ArrayList
-import org.eclipse.core.resources.IFile
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.ui.DebugUITools
-import org.eclipse.debug.ui.ILaunchShortcut
-import org.eclipse.jface.viewers.ISelection
-import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.window.Window
-import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
-import org.eclipse.ui.ide.ResourceUtil
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
 
 /**
  * An implementation for a launch shortcut
@@ -47,37 +39,7 @@ import de.cau.cs.kieler.prom.common.KiCoLaunchData
  * 
  * @author aas
  */
-class LaunchShortcut implements ILaunchShortcut {
-
-    /**
-     * The file handle from which this launch shortcut has been startet.
-     */
-    private IFile file
-    /**
-     * The project handle from which this launch shortcut has been startet.
-     */
-    private IProject project
-
-
-    /**
-     * {@inheritDoc}
-     */
-    override void launch(IEditorPart editor, String mode) {
-        val file = ResourceUtil.getFile(editor.editorInput)
-        if (file != null)
-            launch(file, mode)
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    override void launch(ISelection selection, String mode) {
-        if (selection instanceof IStructuredSelection) {
-            val structuredSelection = selection as IStructuredSelection
-            if (structuredSelection.firstElement instanceof IFile)
-                launch(structuredSelection.firstElement as IFile, mode)
-        }
-    }
+class LaunchShortcut extends PromLaunchShortcut {
 
     /**
      * Launch the file by adding it to an existing launch config of this project
@@ -88,13 +50,12 @@ class LaunchShortcut implements ILaunchShortcut {
      * @param file The file to be launched
      * @param mode The mode the launch should be performed in (e.g. 'run' or 'debug')
      */
-    private def void launch(IFile file, String mode) {
-        this.file = file
-        this.project = file.project
-
+    override def void launch() {
+        val file = files.get(0)
         // Find launch config for the project or initialize new one.
         val configuration = findLaunchConfiguration(mode)
-        if (configuration != null) {
+        if (configuration != null && file != null) {
+            
             // Add the input file to the list of files which should be compiled
             // unless it is already in the list
             val datas = FileCompilationData.loadAllFromConfiguration(configuration)
@@ -122,51 +83,16 @@ class LaunchShortcut implements ILaunchShortcut {
     }
 
     /**
-     * Searches for a launch configuration in the project. Creates a new one if none found.
-     * 
-     * @param mode The mode the launch should be performed in (e.g. 'run' or 'debug')
-     * @return launch configuration for the project. 
+     * {@inheritDoc}
      */
-    private def ILaunchConfiguration findLaunchConfiguration(String mode) {
-        val configs = getLaunchConfigurations()
-        var ILaunchConfiguration configuration
-        if (configs.isEmpty) 
-            configuration = createNewConfiguration()
-        else 
-            configuration = configs.get(0)
-        
-        return configuration
+    override ILaunchConfiguration createNewConfiguration() {
+        return createNewConfiguration(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
     }
 
     /**
-     * Creates and initializes a new launch config for the project.
-     * 
-     * @return the new launch configuration
+     * {@inheritDoc}
      */
-    private def ILaunchConfiguration createNewConfiguration() {
-        try {
-            val lm = DebugPlugin.getDefault().getLaunchManager()
-            val type = lm.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
-            val name = project.name
-            // To ensure a unique name w.r.t. other launches of the same project (e.g. for Arduino),
-            // we append the name of the launch type in brackets.
-            val wc = type.newInstance(null, name + " ("+type.name+")")
-            initializeConfiguration(wc)
-            return wc.doSave()
-        } catch (CoreException ce) {
-            ce.printStackTrace()
-        }
-        return null
-    }
-
-    /**
-     * Initializes a new launch config for the project.
-     * The main file and environment used are loaded from the project's properties
-     * if possible or from dialogs if not.
-     * 
-     * @param config The launch configuration to be initialized
-     */
-    private def void initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
+    override void initializeConfiguration(ILaunchConfigurationWorkingCopy config) {
         val launchData = new KiCoLaunchData()
         
         // Set project
@@ -203,6 +129,21 @@ class LaunchShortcut implements ILaunchShortcut {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    override boolean isGoodMatch(ILaunchConfiguration configuration) {
+        val launchData = KiCoLaunchData.loadFromConfiguration(configuration)
+        return launchData.projectName == project.name
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    override protected getLaunchConfigurations() {
+        return getLaunchConfigurations(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
+    }
+    
     /**
      * Opens a dialog such that the user can select this project's main file.
      * 
@@ -261,38 +202,6 @@ class LaunchShortcut implements ILaunchShortcut {
             }
         }
         return null
-    }
-
-    /**
-     * Searches for all applicable launch configurations for this project.
-     * 
-     * @return list with the launch configurations.
-     */
-    private def ArrayList<ILaunchConfiguration> getLaunchConfigurations() {
-        val result = new ArrayList<ILaunchConfiguration>()
-        try {
-            val manager = DebugPlugin.getDefault().getLaunchManager()
-            val type = manager.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
-            val configurations = manager.getLaunchConfigurations(type)
-            for (var i = 0; i < configurations.length; i++) {
-                val config = configurations.get(i)
-                if (!DebugUITools.isPrivate(config) && isGoodMatch(config)) {
-                    result.add(config)
-                }
-            }
-        } catch (CoreException e) {
-        }
-        return result
-    }
-
-    /**
-     * Checks if the launch configuration is for this project.
-     * 
-     * @param configuration The configuration to be checked
-     */
-    private def boolean isGoodMatch(ILaunchConfiguration configuration) {
-        val launchData = KiCoLaunchData.loadFromConfiguration(configuration)
-        return launchData.projectName == project.name
     }
 }
 
