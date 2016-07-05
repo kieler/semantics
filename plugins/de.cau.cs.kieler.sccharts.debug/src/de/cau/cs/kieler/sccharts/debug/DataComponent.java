@@ -126,6 +126,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
             }
         }
+        
+        String s = this.getCurrentComponentID() + propertiesId.hashCode();
         return this.getCurrentComponentID() + propertiesId.hashCode();
 
     }
@@ -226,11 +228,13 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * @return Returns true is there is a breakpoint associated with the object, otherwise false.
      */
     public boolean isEObjectInLine(EObject obj) {
+        plugin.updateBreakpointLines();
         ICompositeNode n = NodeModelUtils.getNode(obj);
         int line = n.getStartLine();
         System.out.print(obj + " ");
         try {
             IBreakpoint b = plugin.getBreakpointLines().get(line);
+            HashMap map = plugin.getBreakpointLines();
             if (b != null && b.isEnabled()) {
                 System.out.println(true);
                 return true;

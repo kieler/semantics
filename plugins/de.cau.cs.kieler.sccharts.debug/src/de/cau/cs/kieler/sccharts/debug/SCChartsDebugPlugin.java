@@ -78,7 +78,7 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     /**
      * If a Breakpoint is added or deleted, the map is dirty and needs to be refreshed. 
      */
-    private boolean dirtyBreakpointList;
+    private boolean dirtyBreakpointList = true;
 
     /**
      * The constructor
@@ -94,6 +94,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
+//        IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints();
+//        for (IBreakpoint b : bs) {
+//            
+//        }
     }
 
     /*
