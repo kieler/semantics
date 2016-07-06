@@ -104,20 +104,6 @@ import com.google.common.collect.Multimap
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     // -------------------------------------------------------------------------
-    // -- Guice
-    // -------------------------------------------------------------------------
-    // Retrieve an injector and instances for the serialization.
-    private static var Injector guiceInjector;
-
-//    @SuppressWarnings("unused")
-//    private static val KExpressionsStandaloneSetup standAloneSetup = new KExpressionsStandaloneSetup() => [
-//        guiceInjector = Guice.createInjector(new SCGRuntimeModule);
-//        it.register(guiceInjector);
-//    ]
-//    private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
-//        typeof(SCGKExpressionsScopeProvider));
-
-    // -------------------------------------------------------------------------
     // -- Extensions 
     // -------------------------------------------------------------------------
     //    extension KRenderingFactory = KRenderingFactory.eINSTANCE
@@ -422,9 +408,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the root KNode.
 	 */
     override transform(SCGraph model) {
-
-        // Connect the model to the scope provider for the serialization.
-//        scopeProvider.parent = model;
 
         compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
