@@ -89,21 +89,9 @@
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
             file="execution/sccharts_c_debug.execution">
-            <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
-               priority="100">
-         </editor>
-         <editor
-               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
-               name="SCG (Tree) Editor"
-               priority="100">
-         </editor>
-         <editor
-               id=" de.cau.cs.kieler.scl.SCL"
-               name="SCL (Textual) Editor"
-               priority="100">
-         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/scg_c_debug.execution">
       </executionFile>
    </extension>
    <extension
@@ -115,7 +103,8 @@
                minimized="false"
                ratio="0.8"
                relationship="right"
-               relative="de.cau.cs.kieler.kico.selection">
+               relative="de.cau.cs.kieler.kico.selection"
+               visible="true">
          </view>
          <actionSet
                id=" org.eclipse.jdt.debug.ui.JDTDebugActionSet">

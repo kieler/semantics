@@ -350,4 +350,33 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * It should not matter what internals this component provides, only its properties matter so
+     * overriding this method enables changes in this component without having to update the
+     * .execution files.
+     * 
+     * (added by lgr 7.7.16)
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getDataComponentId() {
+        String propertiesId = "";
+        if (this.provideProperties() != null) {
+            KiemProperty[] propertiesTmp = this.provideProperties();
+            for (int c = 0; c < propertiesTmp.length; c++) {
+                try {
+                    propertiesId = propertiesId + propertiesTmp[c].getKey();
+                    propertiesId = propertiesId + propertiesTmp[c].getType().getClass().getName();
+                } catch (Exception e) {
+                    // ignore properties that a key/type cannot be retrieved for
+                }
+            }
+        }
+
+        String s = this.getCurrentComponentID() + propertiesId.hashCode();
+        return this.getCurrentComponentID() + propertiesId.hashCode();
+
+    }
 }

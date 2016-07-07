@@ -14,10 +14,7 @@ package de.cau.cs.kieler.sccharts.debug;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.model.IBreakpoint;
@@ -30,11 +27,9 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sccharts.HistoryType;
+import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -42,7 +37,6 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
 
 /**
  * This class is the main entry point to the debugger. A datacomponent is defined, that needs to be
@@ -58,7 +52,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * Shows the current activity of the debug mode. In case it's activated, the debug data
      * component is added to the execution schedule.
      */
-    public static boolean DEBUG_MODE = true;
+    public static boolean DEBUG_MODE = false;
     public static boolean FAST_FORWARD = false;
 
     private SCChartsDebugPlugin plugin = SCChartsDebugPlugin.getDefault();
@@ -69,16 +63,14 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
     private EObject rootElement;
     private Resource resource;
 
-    // ------------------------------ DATA COMPONENT INTERN THINGS --------------------------------
+    // ------------------------------ DATA COMPONENT INTERN METHODS -------------------------------
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void initialize() throws KiemInitializationException {
-        currentModelFile = KiemPlugin.getCurrentModelFile();
-        rootElement = KiemPlugin.getOpenedModelRootObjects().get(currentModelFile);
-        resource = rootElement.eResource();
+        update();
     }
 
     /**
@@ -126,7 +118,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
             }
         }
-        
+
         String s = this.getCurrentComponentID() + propertiesId.hashCode();
         return this.getCurrentComponentID() + propertiesId.hashCode();
 
@@ -152,8 +144,10 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                     String[] transitions = transitionString.replaceAll("\\s", "").split(",");
 
                     for (String transition : transitions) {
-                        System.out.println();
                         if (transition.length() > 1) {
+                            if (resource == null) {
+                                update();
+                            }
                             EObject active = resource.getEObject(transition);
                             if (active == null) {
                                 // try alternative (compact) representation
@@ -193,16 +187,22 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
             for (EObject elem : currentStepObjects) {
                 if (elem instanceof Transition) {
                     boolean stop = false;
-                    // first check on transition breakpoint
+                    // Check on a transition breakpoint first.
                     if (isEObjectInLine(elem)) {
                         stop = true;
                     }
 
-                    // then check target states, important to check on possible hierarchy
+                    // Afterwards check the target states. It's important to check on possible
+                    // hierarchy.
                     if (!stop) {
                         State s = ((Transition) elem).getTargetState();
+
                         if (isEObjectInLine((EObject) s)) {
                             stop = true;
+                        } else {
+                            if (checkHierachicalNesting(s)) {
+                                stop = true;
+                            }
                         }
                     }
 
@@ -220,6 +220,73 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
     }
 
     /**
+     * Recursively calls for the regions of a state until the state is no hierarchical state any
+     * more. Also it's checked if there is a breakpoint associated with the state.
+     * 
+     * @param state
+     *            The state that is
+     * @return true if there is a breakpoint in an initial state
+     */
+    private boolean checkHierachicalNesting(State state) {
+        // Get the regions to check for a hierarchy.
+        EList<Region> regions = state.getRegions();
+
+        if (regions.isEmpty()) {
+            return false;
+        }
+
+        boolean stop = false;
+
+        ArrayList<State> initialStatesInRegions = new ArrayList<>();
+
+        // For every region check if there is a breakpoint on a initial state.
+        for (Region region : regions) {
+
+            if (region instanceof ControlflowRegion) {
+                ControlflowRegion cfregion = (ControlflowRegion) region;
+                EList<State> cfstates = cfregion.getStates();
+
+                for (State cfstate : cfstates) {
+                    if (cfstate.isInitial()) {
+                        if (isEObjectInLine((EObject) cfstate)) {
+                            stop = true;
+                        }
+                        initialStatesInRegions.add(cfstate);
+                    }
+                }
+            }
+
+            // A reason to stop was found, don't continue looking for other
+            // possible breakpoint occurrences.
+            if (stop) {
+                return true;
+            }
+        }
+        for (State initialState : initialStatesInRegions) {
+            if (!stop) {
+                stop |= checkHierachicalNesting(initialState);
+            } else {
+                break;
+            }
+        }
+
+        if (stop) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Gets the current active model elements that are saved in the {@link KiemPlugin}.
+     */
+    private void update() {
+        currentModelFile = KiemPlugin.getCurrentModelFile();
+        rootElement = KiemPlugin.getOpenedModelRootObjects().get(currentModelFile);
+        resource = rootElement.eResource();
+    }
+
+    /**
      * For a given EObject checks whether there is a breakpoint specified that is associated with
      * this object.
      * 
@@ -227,7 +294,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      *            The object of interest.
      * @return Returns true is there is a breakpoint associated with the object, otherwise false.
      */
-    public boolean isEObjectInLine(EObject obj) {
+    private boolean isEObjectInLine(EObject obj) {
         plugin.updateBreakpointLines();
         ICompositeNode n = NodeModelUtils.getNode(obj);
         int line = n.getStartLine();
@@ -272,7 +339,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
     /**
      * Refreshes the map.
      */
-    protected final void refreshEObjectMap() {
+    private final void refreshEObjectMap() {
         eObjectMap.clear();
         refreshEObjectMap(this.rootElement);
     }

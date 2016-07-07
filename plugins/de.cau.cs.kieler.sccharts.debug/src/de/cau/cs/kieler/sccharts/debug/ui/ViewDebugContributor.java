@@ -21,14 +21,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.sccharts.debug.DataComponent;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
  * This class uses the contribution extention point of the KIEM view. A new toggle button is added
@@ -47,9 +45,44 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
 
     public static final String CONTRIBUTION_ID = "Debugging";
 
-    public static Button buttonDebug; 
-    public static Button buttonFastForward;
+    private static Button buttonDebug; 
+    private static Button buttonFastForward;
 
+    private static boolean buttonDebugSelection = DataComponent.DEBUG_MODE;
+    private static boolean buttonFastForwardSelection = DataComponent.FAST_FORWARD;
+    
+    private static boolean buttonDebugEnabled = true; 
+    private static boolean buttonFastForwardEnabled = DataComponent.DEBUG_MODE;
+    
+    public static void setButtonDebugSelection() {
+        buttonDebugSelection = DataComponent.DEBUG_MODE;
+        if (buttonDebug != null) {
+            buttonDebug.setSelection(DataComponent.DEBUG_MODE);
+        }
+        setFastForwardEnable();
+    }
+    
+    public static void setButtonDebugEnable(boolean enabled) {
+        buttonDebugEnabled = enabled;
+        if (buttonDebug != null) {
+            buttonDebug.setEnabled(enabled);
+        }
+    }
+    
+//    private static void setFastForwardSelection() {
+//        buttonFastForwardSelection = DataComponent.FAST_FORWARD;
+//        if (!(buttonFastForward == null)) {
+//            buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
+//        }
+//    }
+    
+    private static void setFastForwardEnable() {
+        buttonFastForwardEnabled = DataComponent.DEBUG_MODE;
+        if (buttonFastForward != null) {
+            buttonFastForward.setEnabled(buttonFastForwardEnabled);
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -78,9 +111,11 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
 
     private void createDebugButton(final Composite parent) {
         buttonDebug = new Button(parent, SWT.TOGGLE);
-        buttonDebug.setSelection(DataComponent.DEBUG_MODE);
+        buttonDebugSelection = DataComponent.DEBUG_MODE;
+        buttonDebug.setSelection(buttonDebugSelection);
         buttonDebug.setImage(DEBUG.createImage());
         buttonDebug.setBackground(null);
+        buttonDebug.setEnabled(buttonDebugEnabled);
         buttonDebug.addListener(SWT.Selection, new Listener() {
             @Override
             public void handleEvent(Event event) {
@@ -92,16 +127,18 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
                     buttonFastForward.setEnabled(false);
 
                 }
-                SCChartsDebugPlugin.getDefault().scheduleDefaultDebugExecution();
+                SCChartsDebugPlugin.getDefault().scheduleExecution();
             }
         });
     }
 
     private void createFastForwardButton(final Composite parent) {
         buttonFastForward = new Button(parent, SWT.TOGGLE);
-        buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
+        buttonFastForwardSelection = DataComponent.FAST_FORWARD;
+        buttonFastForward.setSelection(buttonFastForwardSelection);
         buttonFastForward.setImage(FAST_FORWARD.createImage());
         buttonFastForward.setBackground(null);
+        buttonFastForward.setEnabled(buttonFastForwardEnabled);
         buttonFastForward.addListener(SWT.Selection, new Listener() {
             private int oldStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
             @Override
