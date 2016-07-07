@@ -2309,6 +2309,18 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//PragmaAnnotation Annotation:
+	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
+		return gaAnnotations.getPragmaAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaAnnotationRule() {
+		return getPragmaAnnotationAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -2375,6 +2387,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTagAnnotation PragmaAnnotation:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
+		return gaAnnotations.getPragmaTagAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaTagAnnotationRule() {
+		return getPragmaTagAnnotationAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -2396,6 +2418,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getPramgaKeyStringValueAnnotationRule() {
+		return getPramgaKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

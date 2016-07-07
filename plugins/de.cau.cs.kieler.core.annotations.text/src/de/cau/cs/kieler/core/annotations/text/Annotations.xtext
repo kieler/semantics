@@ -33,6 +33,12 @@ Annotation returns Annotation:
     KeyStringValueAnnotation |
     TypedKeyStringValueAnnotation |
     TagAnnotation;
+    
+// General rule for pragmas
+// We only have string and tag pragmas.    
+PragmaAnnotation returns Annotation:
+    PramgaKeyStringValueAnnotation |
+    PragmaTagAnnotation;
 
 
 // Valued Annotation Rule
@@ -78,6 +84,10 @@ CommentAnnotation returns CommentAnnotation:
 TagAnnotation returns Annotation:
     '@' name=ExtendedID;
     
+PragmaTagAnnotation returns PragmaAnnotation:
+    '#' name=ExtendedID;
+    
+    
 // KeyStringValueAnnotation
 // e.g.: @layouter dot
 // You may separate different values via comma.   
@@ -87,6 +97,8 @@ KeyStringValueAnnotation returns StringAnnotation:
 RestrictedKeyStringValueAnnotation returns StringAnnotation:
     '@' name=ExtendedID values += EStringBoolean (',' values += EStringBoolean)*;    
 
+PramgaKeyStringValueAnnotation returns PragmaStringAnnotation:
+    '#' name=ExtendedID values += EStringAllTypes (',' values += EStringAllTypes)*;
 
 // TypedKeyStringValueAnnotation
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"

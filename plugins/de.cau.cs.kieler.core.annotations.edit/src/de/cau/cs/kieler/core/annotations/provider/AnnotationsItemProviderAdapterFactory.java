@@ -45,238 +45,454 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-	 * This keeps track of the root adapter factory that delegates to this adapter factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the root adapter factory that delegates to this adapter factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-	 * <!-- begin-user-doc -->
+     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-	 * This constructs an instance.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public AnnotationsItemProviderAdapterFactory() {
-		supportedTypes.add(IEditingDomainItemProvider.class);
-		supportedTypes.add(IStructuredItemContentProvider.class);
-		supportedTypes.add(ITreeItemContentProvider.class);
-		supportedTypes.add(IItemLabelProvider.class);
-		supportedTypes.add(IItemPropertySource.class);
-	}
+        supportedTypes.add(IEditingDomainItemProvider.class);
+        supportedTypes.add(IStructuredItemContentProvider.class);
+        supportedTypes.add(ITreeItemContentProvider.class);
+        supportedTypes.add(IItemLabelProvider.class);
+        supportedTypes.add(IItemPropertySource.class);
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.Annotation} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.NamedObject} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    protected NamedObjectItemProvider namedObjectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.NamedObject}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createNamedObjectAdapter() {
+        if (namedObjectItemProvider == null) {
+            namedObjectItemProvider = new NamedObjectItemProvider(this);
+        }
+
+        return namedObjectItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.Annotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     protected AnnotationItemProvider annotationItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.Annotation}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.Annotation}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createAnnotationAdapter() {
-		if (annotationItemProvider == null) {
-			annotationItemProvider = new AnnotationItemProvider(this);
-		}
+        if (annotationItemProvider == null) {
+            annotationItemProvider = new AnnotationItemProvider(this);
+        }
 
-		return annotationItemProvider;
-	}
+        return annotationItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.StringAnnotation} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.StringAnnotation} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StringAnnotationItemProvider stringAnnotationItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.StringAnnotation}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.StringAnnotation}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createStringAnnotationAdapter() {
-		if (stringAnnotationItemProvider == null) {
-			stringAnnotationItemProvider = new StringAnnotationItemProvider(this);
-		}
+        if (stringAnnotationItemProvider == null) {
+            stringAnnotationItemProvider = new StringAnnotationItemProvider(this);
+        }
 
-		return stringAnnotationItemProvider;
-	}
+        return stringAnnotationItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    protected ReferenceAnnotationItemProvider referenceAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ReferenceAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReferenceAnnotationAdapter() {
+        if (referenceAnnotationItemProvider == null) {
+            referenceAnnotationItemProvider = new ReferenceAnnotationItemProvider(this);
+        }
+
+        return referenceAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.BooleanAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BooleanAnnotationItemProvider booleanAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.BooleanAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createBooleanAnnotationAdapter() {
+        if (booleanAnnotationItemProvider == null) {
+            booleanAnnotationItemProvider = new BooleanAnnotationItemProvider(this);
+        }
+
+        return booleanAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.IntAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IntAnnotationItemProvider intAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.IntAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createIntAnnotationAdapter() {
+        if (intAnnotationItemProvider == null) {
+            intAnnotationItemProvider = new IntAnnotationItemProvider(this);
+        }
+
+        return intAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.FloatAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FloatAnnotationItemProvider floatAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.FloatAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFloatAnnotationAdapter() {
+        if (floatAnnotationItemProvider == null) {
+            floatAnnotationItemProvider = new FloatAnnotationItemProvider(this);
+        }
+
+        return floatAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ContainmentAnnotationItemProvider containmentAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createContainmentAnnotationAdapter() {
+        if (containmentAnnotationItemProvider == null) {
+            containmentAnnotationItemProvider = new ContainmentAnnotationItemProvider(this);
+        }
+
+        return containmentAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ImportAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ImportAnnotationItemProvider importAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ImportAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createImportAnnotationAdapter() {
+        if (importAnnotationItemProvider == null) {
+            importAnnotationItemProvider = new ImportAnnotationItemProvider(this);
+        }
+
+        return importAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     protected TypedStringAnnotationItemProvider typedStringAnnotationItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createTypedStringAnnotationAdapter() {
-		if (typedStringAnnotationItemProvider == null) {
-			typedStringAnnotationItemProvider = new TypedStringAnnotationItemProvider(this);
-		}
+        if (typedStringAnnotationItemProvider == null) {
+            typedStringAnnotationItemProvider = new TypedStringAnnotationItemProvider(this);
+        }
 
-		return typedStringAnnotationItemProvider;
-	}
+        return typedStringAnnotationItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.CommentAnnotation} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.CommentAnnotation} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected CommentAnnotationItemProvider commentAnnotationItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.CommentAnnotation}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.CommentAnnotation}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createCommentAnnotationAdapter() {
-		if (commentAnnotationItemProvider == null) {
-			commentAnnotationItemProvider = new CommentAnnotationItemProvider(this);
-		}
+        if (commentAnnotationItemProvider == null) {
+            commentAnnotationItemProvider = new CommentAnnotationItemProvider(this);
+        }
 
-		return commentAnnotationItemProvider;
-	}
+        return commentAnnotationItemProvider;
+    }
 
     /**
-	 * This returns the root adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.PragmaAnnotation} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    protected PragmaAnnotationItemProvider pragmaAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.PragmaAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createPragmaAnnotationAdapter() {
+        if (pragmaAnnotationItemProvider == null) {
+            pragmaAnnotationItemProvider = new PragmaAnnotationItemProvider(this);
+        }
+
+        return pragmaAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.PragmaStringAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PragmaStringAnnotationItemProvider pragmaStringAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.PragmaStringAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createPragmaStringAnnotationAdapter() {
+        if (pragmaStringAnnotationItemProvider == null) {
+            pragmaStringAnnotationItemProvider = new PragmaStringAnnotationItemProvider(this);
+        }
+
+        return pragmaStringAnnotationItemProvider;
+    }
+
+    /**
+     * This returns the root adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-	}
+        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+    }
 
     /**
-	 * This sets the composed adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This sets the composed adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-		this.parentAdapterFactory = parentAdapterFactory;
-	}
+        this.parentAdapterFactory = parentAdapterFactory;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean isFactoryForType(Object type) {
-		return supportedTypes.contains(type) || super.isFactoryForType(type);
-	}
+        return supportedTypes.contains(type) || super.isFactoryForType(type);
+    }
 
     /**
-	 * This implementation substitutes the factory itself as the key for the adapter.
-	 * <!-- begin-user-doc -->
+     * This implementation substitutes the factory itself as the key for the adapter.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-		return super.adapt(notifier, this);
-	}
+        return super.adapt(notifier, this);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-				return adapter;
-			}
-		}
+        if (isFactoryForType(type)) {
+            Object adapter = super.adapt(object, type);
+            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+                return adapter;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * This adds a listener.
-	 * <!-- begin-user-doc -->
+     * This adds a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.addListener(notifyChangedListener);
-	}
+        changeNotifier.addListener(notifyChangedListener);
+    }
 
     /**
-	 * This removes a listener.
-	 * <!-- begin-user-doc -->
+     * This removes a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.removeListener(notifyChangedListener);
-	}
+        changeNotifier.removeListener(notifyChangedListener);
+    }
 
     /**
-	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-	 * <!-- begin-user-doc -->
+     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void fireNotifyChanged(Notification notification) {
-		changeNotifier.fireNotifyChanged(notification);
+        changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
-			parentAdapterFactory.fireNotifyChanged(notification);
-		}
-	}
+        if (parentAdapterFactory != null) {
+            parentAdapterFactory.fireNotifyChanged(notification);
+        }
+    }
 
     /**
-	 * This disposes all of the item providers created by this factory. 
-	 * <!-- begin-user-doc -->
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void dispose() {
-		if (annotationItemProvider != null) annotationItemProvider.dispose();
-		if (stringAnnotationItemProvider != null) stringAnnotationItemProvider.dispose();
-		if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
-		if (commentAnnotationItemProvider != null) commentAnnotationItemProvider.dispose();
-	}
+        if (namedObjectItemProvider != null) namedObjectItemProvider.dispose();
+        if (annotationItemProvider != null) annotationItemProvider.dispose();
+        if (stringAnnotationItemProvider != null) stringAnnotationItemProvider.dispose();
+        if (referenceAnnotationItemProvider != null) referenceAnnotationItemProvider.dispose();
+        if (booleanAnnotationItemProvider != null) booleanAnnotationItemProvider.dispose();
+        if (intAnnotationItemProvider != null) intAnnotationItemProvider.dispose();
+        if (floatAnnotationItemProvider != null) floatAnnotationItemProvider.dispose();
+        if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
+        if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
+        if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
+        if (commentAnnotationItemProvider != null) commentAnnotationItemProvider.dispose();
+        if (pragmaAnnotationItemProvider != null) pragmaAnnotationItemProvider.dispose();
+        if (pragmaStringAnnotationItemProvider != null) pragmaStringAnnotationItemProvider.dispose();
+    }
 
 }

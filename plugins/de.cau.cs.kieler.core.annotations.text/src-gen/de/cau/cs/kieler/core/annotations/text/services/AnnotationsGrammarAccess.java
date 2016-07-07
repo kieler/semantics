@@ -55,6 +55,28 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTagAnnotationParserRuleCall_3() { return cTagAnnotationParserRuleCall_3; }
 	}
 
+	public class PragmaAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.annotations.text.Annotations.PragmaAnnotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPramgaKeyStringValueAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cPragmaTagAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// General rule for pragmas
+		//// We only have string and tag pragmas.    
+		//PragmaAnnotation Annotation:
+		//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+		@Override public ParserRule getRule() { return rule; }
+
+		//PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PramgaKeyStringValueAnnotation
+		public RuleCall getPramgaKeyStringValueAnnotationParserRuleCall_0() { return cPramgaKeyStringValueAnnotationParserRuleCall_0; }
+
+		//PragmaTagAnnotation
+		public RuleCall getPragmaTagAnnotationParserRuleCall_1() { return cPragmaTagAnnotationParserRuleCall_1; }
+	}
+
 	public class ValuedAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.annotations.text.Annotations.ValuedAnnotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -191,6 +213,30 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 	}
 
+	public class PragmaTagAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.annotations.text.Annotations.PragmaTagAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//PragmaTagAnnotation PragmaAnnotation:
+		//	'#' name=ExtendedID
+		@Override public ParserRule getRule() { return rule; }
+
+		//'#' name=ExtendedID
+		public Group getGroup() { return cGroup; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
+
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+	}
+
 	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.annotations.text.Annotations.KeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -288,6 +334,54 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//EStringBoolean
 		public RuleCall getValuesEStringBooleanParserRuleCall_3_1_0() { return cValuesEStringBooleanParserRuleCall_3_1_0; }
+	}
+
+	public class PramgaKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.annotations.text.Annotations.PramgaKeyStringValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesEStringAllTypesParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cValuesEStringAllTypesParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
+		
+		//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+		//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		@Override public ParserRule getRule() { return rule; }
+
+		//'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		public Group getGroup() { return cGroup; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
+
+		//name=ExtendedID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ExtendedID
+		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
+
+		//values+=EStringAllTypes
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+
+		//EStringAllTypes
+		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
+
+		//(',' values+=EStringAllTypes)*
+		public Group getGroup_3() { return cGroup_3; }
+
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+
+		//values+=EStringAllTypes
+		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
+
+		//EStringAllTypes
+		public RuleCall getValuesEStringAllTypesParserRuleCall_3_1_0() { return cValuesEStringAllTypesParserRuleCall_3_1_0; }
 	}
 
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -734,13 +828,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final AnnotationElements pAnnotation;
+	private final PragmaAnnotationElements pPragmaAnnotation;
 	private final ValuedAnnotationElements pValuedAnnotation;
 	private final RestrictedTypeAnnotationElements pRestrictedTypeAnnotation;
 	private final QuotedStringAnnotationElements pQuotedStringAnnotation;
 	private final CommentAnnotationElements pCommentAnnotation;
 	private final TagAnnotationElements pTagAnnotation;
+	private final PragmaTagAnnotationElements pPragmaTagAnnotation;
 	private final KeyStringValueAnnotationElements pKeyStringValueAnnotation;
 	private final RestrictedKeyStringValueAnnotationElements pRestrictedKeyStringValueAnnotation;
+	private final PramgaKeyStringValueAnnotationElements pPramgaKeyStringValueAnnotation;
 	private final TypedKeyStringValueAnnotationElements pTypedKeyStringValueAnnotation;
 	private final RestrictedTypedKeyStringValueAnnotationElements pRestrictedTypedKeyStringValueAnnotation;
 	private final QuotedKeyStringValueAnnotationElements pQuotedKeyStringValueAnnotation;
@@ -770,13 +867,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pAnnotation = new AnnotationElements();
+		this.pPragmaAnnotation = new PragmaAnnotationElements();
 		this.pValuedAnnotation = new ValuedAnnotationElements();
 		this.pRestrictedTypeAnnotation = new RestrictedTypeAnnotationElements();
 		this.pQuotedStringAnnotation = new QuotedStringAnnotationElements();
 		this.pCommentAnnotation = new CommentAnnotationElements();
 		this.pTagAnnotation = new TagAnnotationElements();
+		this.pPragmaTagAnnotation = new PragmaTagAnnotationElements();
 		this.pKeyStringValueAnnotation = new KeyStringValueAnnotationElements();
 		this.pRestrictedKeyStringValueAnnotation = new RestrictedKeyStringValueAnnotationElements();
+		this.pPramgaKeyStringValueAnnotation = new PramgaKeyStringValueAnnotationElements();
 		this.pTypedKeyStringValueAnnotation = new TypedKeyStringValueAnnotationElements();
 		this.pRestrictedTypedKeyStringValueAnnotation = new RestrictedTypedKeyStringValueAnnotationElements();
 		this.pQuotedKeyStringValueAnnotation = new QuotedKeyStringValueAnnotationElements();
@@ -841,6 +941,18 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
+	}
+
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//PragmaAnnotation Annotation:
+	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+	public PragmaAnnotationElements getPragmaAnnotationAccess() {
+		return pPragmaAnnotation;
+	}
+	
+	public ParserRule getPragmaAnnotationRule() {
+		return getPragmaAnnotationAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -909,6 +1021,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTagAnnotation PragmaAnnotation:
+	//	'#' name=ExtendedID
+	public PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
+		return pPragmaTagAnnotation;
+	}
+	
+	public ParserRule getPragmaTagAnnotationRule() {
+		return getPragmaTagAnnotationAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -930,6 +1052,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	public PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
+		return pPramgaKeyStringValueAnnotation;
+	}
+	
+	public ParserRule getPramgaKeyStringValueAnnotationRule() {
+		return getPramgaKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

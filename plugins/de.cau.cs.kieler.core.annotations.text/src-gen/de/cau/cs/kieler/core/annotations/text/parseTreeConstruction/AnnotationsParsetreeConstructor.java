@@ -31,17 +31,20 @@ protected class ThisRootNode extends RootToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new Annotation_Alternatives(this, this, 0, inst);
-			case 1: return new ValuedAnnotation_Alternatives(this, this, 1, inst);
-			case 2: return new RestrictedTypeAnnotation_Alternatives(this, this, 2, inst);
-			case 3: return new QuotedStringAnnotation_Alternatives(this, this, 3, inst);
-			case 4: return new CommentAnnotation_ValuesAssignment(this, this, 4, inst);
-			case 5: return new TagAnnotation_Group(this, this, 5, inst);
-			case 6: return new KeyStringValueAnnotation_Group(this, this, 6, inst);
-			case 7: return new RestrictedKeyStringValueAnnotation_Group(this, this, 7, inst);
-			case 8: return new TypedKeyStringValueAnnotation_Group(this, this, 8, inst);
-			case 9: return new RestrictedTypedKeyStringValueAnnotation_Group(this, this, 9, inst);
-			case 10: return new QuotedKeyStringValueAnnotation_Group(this, this, 10, inst);
-			case 11: return new QuotedTypedKeyStringValueAnnotation_Group(this, this, 11, inst);
+			case 1: return new PragmaAnnotation_Alternatives(this, this, 1, inst);
+			case 2: return new ValuedAnnotation_Alternatives(this, this, 2, inst);
+			case 3: return new RestrictedTypeAnnotation_Alternatives(this, this, 3, inst);
+			case 4: return new QuotedStringAnnotation_Alternatives(this, this, 4, inst);
+			case 5: return new CommentAnnotation_ValuesAssignment(this, this, 5, inst);
+			case 6: return new TagAnnotation_Group(this, this, 6, inst);
+			case 7: return new PragmaTagAnnotation_Group(this, this, 7, inst);
+			case 8: return new KeyStringValueAnnotation_Group(this, this, 8, inst);
+			case 9: return new RestrictedKeyStringValueAnnotation_Group(this, this, 9, inst);
+			case 10: return new PramgaKeyStringValueAnnotation_Group(this, this, 10, inst);
+			case 11: return new TypedKeyStringValueAnnotation_Group(this, this, 11, inst);
+			case 12: return new RestrictedTypedKeyStringValueAnnotation_Group(this, this, 12, inst);
+			case 13: return new QuotedKeyStringValueAnnotation_Group(this, this, 13, inst);
+			case 14: return new QuotedTypedKeyStringValueAnnotation_Group(this, this, 14, inst);
 			default: return null;
 		}	
 	}	
@@ -245,6 +248,122 @@ protected class Annotation_TagAnnotationParserRuleCall_3 extends RuleCallToken {
 
 
 /************ end Rule Annotation ****************/
+
+
+/************ begin Rule PragmaAnnotation ****************
+ *
+ * // General rule for pragmas
+ * // We only have string and tag pragmas.    
+ * PragmaAnnotation Annotation:
+ * 	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+ *
+ **/
+
+// PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+protected class PragmaAnnotation_Alternatives extends AlternativesToken {
+
+	public PragmaAnnotation_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Alternatives getGrammarElement() {
+		return grammarAccess.getPragmaAnnotationAccess().getAlternatives();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PragmaAnnotation_PramgaKeyStringValueAnnotationParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new PragmaAnnotation_PragmaTagAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getPragmaTagAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPramgaKeyStringValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// PramgaKeyStringValueAnnotation
+protected class PragmaAnnotation_PramgaKeyStringValueAnnotationParserRuleCall_0 extends RuleCallToken {
+	
+	public PragmaAnnotation_PramgaKeyStringValueAnnotationParserRuleCall_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getPragmaAnnotationAccess().getPramgaKeyStringValueAnnotationParserRuleCall_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getPramgaKeyStringValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(PramgaKeyStringValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// PragmaTagAnnotation
+protected class PragmaAnnotation_PragmaTagAnnotationParserRuleCall_1 extends RuleCallToken {
+	
+	public PragmaAnnotation_PragmaTagAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getPragmaAnnotationAccess().getPragmaTagAnnotationParserRuleCall_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PragmaTagAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getPragmaTagAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(PragmaTagAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+
+/************ end Rule PragmaAnnotation ****************/
 
 
 /************ begin Rule ValuedAnnotation ****************
@@ -935,6 +1054,101 @@ protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 /************ end Rule TagAnnotation ****************/
 
 
+/************ begin Rule PragmaTagAnnotation ****************
+ *
+ * PragmaTagAnnotation PragmaAnnotation:
+ * 	'#' name=ExtendedID
+ *
+ **/
+
+// '#' name=ExtendedID
+protected class PragmaTagAnnotation_Group extends GroupToken {
+	
+	public PragmaTagAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getPragmaTagAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PragmaTagAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getPragmaTagAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// '#'
+protected class PragmaTagAnnotation_NumberSignKeyword_0 extends KeywordToken  {
+	
+	public PragmaTagAnnotation_NumberSignKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ExtendedID
+protected class PragmaTagAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public PragmaTagAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getPragmaTagAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PragmaTagAnnotation_NumberSignKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule PragmaTagAnnotation ****************/
+
+
 /************ begin Rule KeyStringValueAnnotation ****************
  *
  * // KeyStringValueAnnotation
@@ -1356,6 +1570,216 @@ protected class RestrictedKeyStringValueAnnotation_ValuesAssignment_3_1 extends 
 
 
 /************ end Rule RestrictedKeyStringValueAnnotation ****************/
+
+
+/************ begin Rule PramgaKeyStringValueAnnotation ****************
+ *
+ * PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+ * 	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+ *
+ **/
+
+// '#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+protected class PramgaKeyStringValueAnnotation_Group extends GroupToken {
+	
+	public PramgaKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new PramgaKeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getPramgaKeyStringValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// '#'
+protected class PramgaKeyStringValueAnnotation_NumberSignKeyword_0 extends KeywordToken  {
+	
+	public PramgaKeyStringValueAnnotation_NumberSignKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ExtendedID
+protected class PramgaKeyStringValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public PramgaKeyStringValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_NumberSignKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// values+=EStringAllTypes
+protected class PramgaKeyStringValueAnnotation_ValuesAssignment_2 extends AssignmentToken  {
+	
+	public PramgaKeyStringValueAnnotation_ValuesAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("values",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// (',' values+=EStringAllTypes)*
+protected class PramgaKeyStringValueAnnotation_Group_3 extends GroupToken {
+	
+	public PramgaKeyStringValueAnnotation_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_ValuesAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ','
+protected class PramgaKeyStringValueAnnotation_CommaKeyword_3_0 extends KeywordToken  {
+	
+	public PramgaKeyStringValueAnnotation_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new PramgaKeyStringValueAnnotation_ValuesAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// values+=EStringAllTypes
+protected class PramgaKeyStringValueAnnotation_ValuesAssignment_3_1 extends AssignmentToken  {
+	
+	public PramgaKeyStringValueAnnotation_ValuesAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new PramgaKeyStringValueAnnotation_CommaKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("values",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("values");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+
+/************ end Rule PramgaKeyStringValueAnnotation ****************/
 
 
 /************ begin Rule TypedKeyStringValueAnnotation ****************

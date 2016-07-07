@@ -14,7 +14,14 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
+    annotations += VersionPragma?
     rootStates+=RootState*;
+    
+VersionPragma returns annotations::PragmaStringAnnotation:
+    '#' name = 'version' values += SCXVersions;
+
+SCXVersions returns ecore::EString:
+    'SCX' | 'SCT';
 
 
 // ------------- //
@@ -193,7 +200,7 @@ AtomicExpression returns kexpressions::Expression:
 // ------------ //
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = '--' | STRONGABORT = '-- abort' | TERMINATION = '-- join';
+	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
 	
 
 enum HistoryType returns sccharts::HistoryType:
