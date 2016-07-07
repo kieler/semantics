@@ -8700,11 +8700,11 @@ rule__ReferenceDeclaration__Group_1_0__0__Impl
     }
 :
 (
-{ before(grammarAccess.getReferenceDeclarationAccess().getAmpersandKeyword_1_0_0()); }
+{ before(grammarAccess.getReferenceDeclarationAccess().getRefKeyword_1_0_0()); }
 
-	'&' 
+	'ref' 
 
-{ after(grammarAccess.getReferenceDeclarationAccess().getAmpersandKeyword_1_0_0()); }
+{ after(grammarAccess.getReferenceDeclarationAccess().getRefKeyword_1_0_0()); }
 )
 
 ;
@@ -9012,11 +9012,11 @@ rule__ReferenceDeclarationWOSemicolon__Group_1_0__0__Impl
     }
 :
 (
-{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAmpersandKeyword_1_0_0()); }
+{ before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_1_0_0()); }
 
-	'&' 
+	'ref' 
 
-{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAmpersandKeyword_1_0_0()); }
+{ after(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_1_0_0()); }
 )
 
 ;

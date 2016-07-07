@@ -931,9 +931,9 @@ ruleReferenceDeclaration returns [EObject current=null]
 	    }
 
 )
-)*((	otherlv_1='&' 
+)*((	otherlv_1='ref' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getAmpersandKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getRefKeyword_1_0_0());
     }
 (
 (
@@ -1059,9 +1059,9 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 	    }
 
 )
-)*((	otherlv_1='&' 
+)*((	otherlv_1='ref' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAmpersandKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_1_0_0());
     }
 (
 (

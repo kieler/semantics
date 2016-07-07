@@ -1095,7 +1095,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('&' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
@@ -1106,7 +1106,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('&' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
