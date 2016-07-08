@@ -69,12 +69,12 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
         }
     }
     
-//    private static void setFastForwardSelection() {
-//        buttonFastForwardSelection = DataComponent.FAST_FORWARD;
-//        if (!(buttonFastForward == null)) {
-//            buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
-//        }
-//    }
+    private static void setFastForwardSelection() {
+        buttonFastForwardSelection = DataComponent.FAST_FORWARD;
+        if (!(buttonFastForward == null)) {
+            buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
+        }
+    }
     
     private static void setFastForwardEnable() {
         buttonFastForwardEnabled = DataComponent.DEBUG_MODE;
@@ -121,11 +121,12 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
             public void handleEvent(Event event) {
                 if (buttonDebug.getSelection()) {
                     DataComponent.DEBUG_MODE = true;
-                    buttonFastForward.setEnabled(true);
+                    setFastForwardEnable();
                 } else {
                     DataComponent.DEBUG_MODE = false;
-                    buttonFastForward.setEnabled(false);
-
+                    DataComponent.FAST_FORWARD = false;
+                    setFastForwardEnable();
+                    setFastForwardSelection();
                 }
                 SCChartsDebugPlugin.getDefault().scheduleExecution();
             }
