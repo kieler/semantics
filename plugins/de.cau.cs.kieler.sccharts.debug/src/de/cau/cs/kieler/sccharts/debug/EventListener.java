@@ -50,62 +50,12 @@ public class EventListener implements IKiemEventListener {
             IPath path = (IPath) event.getInfo();
             boolean debug = SCChartsDebugPlugin.getDefault().updateDebugScheduleData(path);
             
-//            Path defaultPath = new Path("/execution/" + SCChartsDebugPlugin.DEFAULT_DEBUG_SCHEDULE + ".execution");
             
             if (debug ^ DataComponent.DEBUG_MODE) {
                 plugin.scheduleExecution();                
             }
             
-//            // A schedule is chosen that is no debug schedule.
-//            if (!path.equals(defaultPath)) {
-//
-//                // Save the previously known non-debug schedule.
-//                String scheduleName = plugin.getDefaultNonDebugSchedule();
-//                if (plugin.getPreviousNonDebugSchedule() != null) {
-//                    scheduleName = plugin.getPreviousNonDebugSchedule().getName();
-//                }
-//
-//                // Chosen schedule is not the last known default non-debug schedule, so update.
-//                if (!path.toString().contains(scheduleName)) {
-//                    ScheduleManager scheduleManager = ScheduleManager.getInstance();
-//
-//                    List<ScheduleData> scheduledata = scheduleManager.getAllSchedules();
-//                    for (ScheduleData schedule : scheduledata) {
-//                        // A schedule is found that corresponds to the given path for a schedule
-//                        if (path.toString().contains(schedule.getName())) {
-//                            plugin.setPreviousNonDebugSchedule(schedule);
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                // If we are in debug mode and the plugin is loaded properly, we want to deactivate
-//                // the debug mode.
-//                if (DataComponent.DEBUG_MODE && plugin.isLoaded()) {
-//                    DataComponent.DEBUG_MODE = false;
-//                    if (Display.getDefault() == null) {
-//                        PlatformUI.createDisplay();
-//                    }
-//                    Display.getDefault().asyncExec(new Runnable() {
-//                        public void run() {
-//                            ViewDebugContributor.setButtonDebugSelection();
-//                        }
-//                    });
-//                }
-//            } else {
-//                // A debug-schedule was chosen, so update all relevant values.
-//                DataComponent.DEBUG_MODE = true;
-//                if (Display.getDefault() == null) {
-//                    PlatformUI.createDisplay();
-//                }
-//                Display.getDefault().syncExec(new Runnable() {
-//                    public void run() {
-//                        ViewDebugContributor.setButtonDebugSelection();
-//                    }
-//                });
-//                plugin.setLoaded();
-//            }
-//            return;
+            return;
         }
 
         // --------------------------------- EXECUTION STARTED ------------------------------------

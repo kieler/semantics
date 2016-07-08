@@ -30,11 +30,6 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.debug"; //$NON-NLS-1$
 
-    // /**
-    // * The name of the default debug schedule.
-    // */
-    // public static final String DEFAULT_DEBUG_SCHEDULE = "sccharts_c_debug";
-
     public static final String DEFAULT_DEBUG_POSTFIX = "_debug.execution";
 
     public ScheduleData debugSchedule;
@@ -44,22 +39,6 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * The shared instance.
      */
     private static SCChartsDebugPlugin plugin;
-
-    //
-    // // ------------------------------- USED FOR HANDLING DEFAULT SCHEDULE
-    // -------------------------
-    // /**
-    // * Needed for schedule reasons. The previous non-debug schedule is saved as a restore point
-    // when
-    // * debug mode is disabled.
-    // */
-    // private ScheduleData previousNonDebugSchedule = null;
-    //
-    // /**
-    // * If no recent debug schedule exists ({@code previousNonDebugSchedule == null}) then this
-    // * schedule is taken.
-    // */
-    // private String defaultNonDebugSchedule = "sccharts_c";
 
     /**
      * Indicates if the initial loaded is terminated. Needed to allow the choosing of other
@@ -118,36 +97,6 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     public static SCChartsDebugPlugin getDefault() {
         return plugin;
     }
-
-    // /**
-    // * @return the previousNonDebugSchedule
-    // */
-    // public ScheduleData getPreviousNonDebugSchedule() {
-    // return previousNonDebugSchedule;
-    // }
-    //
-    // /**
-    // * @param previousNonDebugSchedule
-    // * the previousNonDebugSchedule to set
-    // */
-    // public void setPreviousNonDebugSchedule(ScheduleData previousNonDebugSchedule) {
-    // this.previousNonDebugSchedule = previousNonDebugSchedule;
-    // }
-    //
-    // /**
-    // * @return the defaultNonDebugSchedule
-    // */
-    // public String getDefaultNonDebugSchedule() {
-    // return defaultNonDebugSchedule;
-    // }
-    //
-    // /**
-    // * @param defaultNonDebugSchedule
-    // * the defaultNonDebugSchedule to set
-    // */
-    // public void setDefaultNonDebugSchedule(String defaultNonDebugSchedule) {
-    // this.defaultNonDebugSchedule = defaultNonDebugSchedule;
-    // }
 
     /**
      * @return the breakpointLines
@@ -247,35 +196,5 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
             e.printStackTrace();
         }
     }
-
-    // public void scheduleDefaultDebugExecution() {
-    // List<ScheduleData> scheduledata = ScheduleManager.getInstance().getAllSchedules();
-    //
-    // ScheduleData toScheudle = null;
-    //
-    // for (ScheduleData schedule : scheduledata) {
-    // // Search for a debug schedule in debug mode.
-    // if (DataComponent.DEBUG_MODE) {
-    // if (schedule.getName().equals(DEFAULT_DEBUG_SCHEDULE)) {
-    // toScheudle = schedule;
-    // break;
-    // }
-    // // Otherwise set the previous schedule that is not debug
-    // } else if (previousNonDebugSchedule == null
-    // && schedule.getName().equals(defaultNonDebugSchedule)) {
-    // previousNonDebugSchedule = schedule;
-    // break;
-    // }
-    // }
-    // if (toScheudle == null) {
-    // toScheudle = previousNonDebugSchedule;
-    // }
-    //
-    // try {
-    // ScheduleManager.getInstance().openSchedule(toScheudle);
-    // } catch (ScheduleFileMissingException e) {
-    // e.printStackTrace();
-    // }
-    // }
 
 }

@@ -81,16 +81,7 @@ class DelayAwareScheduler extends SimpleScheduler {
     extension SCGCoreExtensions
     
     @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGCacheExtensions      
-       
-    @Inject
     extension SynchronizerSelector    
-    
-    @Inject
-    extension AnnotationsExtensions
     
     protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
     protected val schizophrenicEntry = <SchedulingBlock> newHashSet

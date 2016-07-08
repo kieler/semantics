@@ -178,7 +178,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      */
     public boolean isProducer() {
         // we must be sure not to miss any values
-        // due to missing values, turned into a producer
+        // due to missing values turned into producer (lgr 7.7.16)
         return true;
     }
 
@@ -374,8 +374,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
             }
         }
-
-        String s = this.getCurrentComponentID() + propertiesId.hashCode();
         return this.getCurrentComponentID() + propertiesId.hashCode();
 
     }

@@ -13,18 +13,19 @@
  */
 package de.cau.cs.kieler.core.kexpressions.validation
 
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import org.eclipse.xtext.validation.Check
 
 /**
  * @author ssm
  *
  */
-class KExpressionsJavaValidator extends de.cau.cs.kieler.core.kexpressions.validation.AbstractKExpressionsJavaValidator {
+class KExpressionsJavaValidatorXtend extends KExpressionsJavaValidator {
 
     public static val CONST_DECLARATION_EXPECTS_INITIALIZATION = "A const declaration must have an initialization part!";    
     
     @Check
-    public def void checkConstInitialization(de.cau.cs.kieler.core.kexpressions.Declaration declaration) {
+    public override void checkConstInitialization(Declaration declaration) {
         if (declaration.isConst) {
             for(vo : declaration.valuedObjects) {
                 if (vo.initialValue == null) {
