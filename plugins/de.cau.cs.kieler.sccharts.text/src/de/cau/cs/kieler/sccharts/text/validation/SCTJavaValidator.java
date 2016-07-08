@@ -16,4 +16,5 @@ public class SCTJavaValidator extends de.cau.cs.kieler.sccharts.text.validation.
 //			warning("Name should start with a capital", MyDslPackage.Literals.GREETING__NAME);
 //		}
 //	}
+    
 }

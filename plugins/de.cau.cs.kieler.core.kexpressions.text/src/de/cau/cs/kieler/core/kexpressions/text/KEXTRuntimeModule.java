@@ -16,6 +16,6 @@ public class KEXTRuntimeModule extends de.cau.cs.kieler.core.kexpressions.text.A
 
     public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
         return KEXTQualifiedNameProvider.class;
-    }    
+    }  
     
 }

@@ -3,9 +3,15 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import de.cau.cs.kieler.sccharts.text.validation.SCTValidatorX;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCTRuntimeModule {
 
+    @org.eclipse.xtext.service.SingletonBinding(eager=true) 
+    public Class<? extends SCTValidatorX> bindSctJavaValidator() {
+        return SCTValidatorX.class;
+    }    
 }
