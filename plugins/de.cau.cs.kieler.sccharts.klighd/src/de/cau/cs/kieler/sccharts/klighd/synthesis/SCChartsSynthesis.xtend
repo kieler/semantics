@@ -32,6 +32,7 @@ import java.util.List
 import java.util.logging.Logger
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -114,7 +115,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
 
-        if (root instanceof State) {
+        if (root instanceof SCCharts) {
+            rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+        } else if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
         } else if (root instanceof ControlflowRegion) {
             //Adding all children to the root node will hide the graphical representation of the region itself.
