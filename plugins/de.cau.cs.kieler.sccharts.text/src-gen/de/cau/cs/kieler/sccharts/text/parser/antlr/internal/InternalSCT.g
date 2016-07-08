@@ -84,26 +84,136 @@ ruleSCCharts returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartsAccess().getRootStatesRootStateParserRuleCall_0()); 
+	        newCompositeNode(grammarAccess.getSCChartsAccess().getAnnotationsVersionPragmaParserRuleCall_0_0()); 
 	    }
-		lv_rootStates_0_0=ruleRootState		{
+		lv_annotations_0_0=ruleVersionPragma		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSCChartsRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_0, 
+        		"de.cau.cs.kieler.sccharts.text.SCT.VersionPragma");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSCChartsAccess().getRootStatesRootStateParserRuleCall_1_0()); 
+	    }
+		lv_rootStates_1_0=ruleRootState		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartsRule());
 	        }
        		add(
        			$current, 
        			"rootStates",
-        		lv_rootStates_0_0, 
+        		lv_rootStates_1_0, 
         		"de.cau.cs.kieler.sccharts.text.SCT.RootState");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*
+)*)
 ;
+
+
+
+
+
+// Entry rule entryRuleVersionPragma
+entryRuleVersionPragma returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getVersionPragmaRule()); }
+	 iv_ruleVersionPragma=ruleVersionPragma 
+	 { $current=$iv_ruleVersionPragma.current; } 
+	 EOF 
+;
+
+// Rule VersionPragma
+ruleVersionPragma returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='#' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getVersionPragmaAccess().getNumberSignKeyword_0());
+    }
+(
+(
+		lv_name_1_0=	'version' 
+    {
+        newLeafNode(lv_name_1_0, grammarAccess.getVersionPragmaAccess().getNameVersionKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVersionPragmaRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_1_0, "version");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getVersionPragmaAccess().getValuesSCXVersionsParserRuleCall_2_0()); 
+	    }
+		lv_values_2_0=ruleSCXVersions		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getVersionPragmaRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_2_0, 
+        		"de.cau.cs.kieler.sccharts.text.SCT.SCXVersions");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRuleSCXVersions
+entryRuleSCXVersions returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getSCXVersionsRule()); } 
+	 iv_ruleSCXVersions=ruleSCXVersions 
+	 { $current=$iv_ruleSCXVersions.current.getText(); }  
+	 EOF 
+;
+
+// Rule SCXVersions
+ruleSCXVersions returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	kw='SCX' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSCXVersionsAccess().getSCXKeyword_0()); 
+    }
+
+    |
+	kw='SCT' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getSCXVersionsAccess().getSCTKeyword_1()); 
+    }
+)
+    ;
 
 
 
@@ -3020,9 +3130,9 @@ ruleReferenceDeclaration returns [EObject current=null]
 	    }
 
 )
-)*((	otherlv_1='&' 
+)*((	otherlv_1='ref' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getAmpersandKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationAccess().getRefKeyword_1_0_0());
     }
 (
 (
@@ -3148,9 +3258,9 @@ ruleReferenceDeclarationWOSemicolon returns [EObject current=null]
 	    }
 
 )
-)*((	otherlv_1='&' 
+)*((	otherlv_1='ref' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAmpersandKeyword_1_0_0());
+    	newLeafNode(otherlv_1, grammarAccess.getReferenceDeclarationWOSemicolonAccess().getRefKeyword_1_0_0());
     }
 (
 (
@@ -5934,6 +6044,8 @@ ruleAnnotation returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleRestrictedTypeAnnotation
 entryRuleRestrictedTypeAnnotation returns [EObject current=null] 
 	:
@@ -6160,6 +6272,49 @@ ruleTagAnnotation returns [EObject current=null]
 
 
 
+// Entry rule entryRulePragmaTagAnnotation
+entryRulePragmaTagAnnotation returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPragmaTagAnnotationRule()); }
+	 iv_rulePragmaTagAnnotation=rulePragmaTagAnnotation 
+	 { $current=$iv_rulePragmaTagAnnotation.current; } 
+	 EOF 
+;
+
+// Rule PragmaTagAnnotation
+rulePragmaTagAnnotation returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='#' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getPragmaTagAnnotationAccess().getNumberSignKeyword_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmaTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+	    }
+		lv_name_1_0=ruleExtendedID		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmaTagAnnotationRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_1_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+;
+
+
+
+
+
 // Entry rule entryRuleKeyStringValueAnnotation
 entryRuleKeyStringValueAnnotation returns [EObject current=null] 
 	:
@@ -6315,6 +6470,89 @@ ruleRestrictedKeyStringValueAnnotation returns [EObject current=null]
        			"values",
         		lv_values_4_0, 
         		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)
+;
+
+
+
+
+
+// Entry rule entryRulePramgaKeyStringValueAnnotation
+entryRulePramgaKeyStringValueAnnotation returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationRule()); }
+	 iv_rulePramgaKeyStringValueAnnotation=rulePramgaKeyStringValueAnnotation 
+	 { $current=$iv_rulePramgaKeyStringValueAnnotation.current; } 
+	 EOF 
+;
+
+// Rule PramgaKeyStringValueAnnotation
+rulePramgaKeyStringValueAnnotation returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='#' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNumberSignKeyword_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
+	    }
+		lv_name_1_0=ruleExtendedID		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	        }
+       		set(
+       			$current, 
+       			"name",
+        		lv_name_1_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
+	    }
+		lv_values_2_0=ruleEStringAllTypes		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_2_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_3=',' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getPramgaKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
+	    }
+		lv_values_4_0=ruleEStringAllTypes		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPramgaKeyStringValueAnnotationRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_4_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6986,19 +7224,19 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 ruleTransitionType returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-((	enumLiteral_0='--' 
+((	enumLiteral_0='go to' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0()); 
     }
 )
-    |(	enumLiteral_1='-- abort' 
+    |(	enumLiteral_1='abort to' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_1, grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1()); 
     }
 )
-    |(	enumLiteral_2='-- join' 
+    |(	enumLiteral_2='join to' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_2, grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); 

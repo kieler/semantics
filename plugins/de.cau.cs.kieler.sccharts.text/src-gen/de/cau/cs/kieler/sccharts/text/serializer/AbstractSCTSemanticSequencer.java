@@ -7,6 +7,8 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
@@ -80,6 +82,20 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
+			case AnnotationsPackage.PRAGMA_ANNOTATION:
+				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
+				return; 
+			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
+				if (rule == grammarAccess.getPragmaAnnotationRule()
+						|| rule == grammarAccess.getPramgaKeyStringValueAnnotationRule()) {
+					sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getVersionPragmaRule()) {
+					sequence_VersionPragma(context, (PragmaStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
 						|| rule == grammarAccess.getValuedAnnotationRule()
@@ -512,7 +528,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     rootStates+=RootState+
+	 *     ((annotations+=VersionPragma rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -595,6 +611,18 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     VersionPragma returns PragmaStringAnnotation
+	 *
+	 * Constraint:
+	 *     (name='version' values+=SCXVersions)
+	 */
+	protected void sequence_VersionPragma(ISerializationContext context, PragmaStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

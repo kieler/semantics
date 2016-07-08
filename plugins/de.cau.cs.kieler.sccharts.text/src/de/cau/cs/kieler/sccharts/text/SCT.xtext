@@ -14,14 +14,18 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    annotations += VersionPragma?
+    annotations+=Pragmas*
     rootStates+=RootState*;
     
-VersionPragma returns annotations::PragmaStringAnnotation:
-    '#' name = 'version' values += SCXVersions;
+Pragmas returns annotations::PragmaStringAnnotation:
+    '#' name = 'version' values += SCXVersions |
+    '#' name = 'director' values += SCXDirectors;
 
 SCXVersions returns ecore::EString:
     'SCX' | 'SCT';
+    
+SCXDirectors returns ecore::EString:
+    'SCCharts' | 'Enforcer';
 
 
 // ------------- //

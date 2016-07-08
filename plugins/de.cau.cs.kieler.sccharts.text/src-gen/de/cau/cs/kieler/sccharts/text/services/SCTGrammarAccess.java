@@ -24,22 +24,87 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class SCChartsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.SCCharts");
-		private final Assignment cRootStatesAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cRootStatesRootStateParserRuleCall_0 = (RuleCall)cRootStatesAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsVersionPragmaParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cRootStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cRootStatesRootStateParserRuleCall_1_0 = (RuleCall)cRootStatesAssignment_1.eContents().get(0);
 		
 		////generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
 		//// ---------------- //
 		////  SCCharts Rules  // 
 		//// ---------------- //
 		//SCCharts sccharts::SCCharts:
+		//	annotations+=VersionPragma?
 		//	rootStates+=RootState*
 		@Override public ParserRule getRule() { return rule; }
 
+		//annotations+=VersionPragma? rootStates+=RootState*
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=VersionPragma?
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//VersionPragma
+		public RuleCall getAnnotationsVersionPragmaParserRuleCall_0_0() { return cAnnotationsVersionPragmaParserRuleCall_0_0; }
+
 		//rootStates+=RootState*
-		public Assignment getRootStatesAssignment() { return cRootStatesAssignment; }
+		public Assignment getRootStatesAssignment_1() { return cRootStatesAssignment_1; }
 
 		//RootState
-		public RuleCall getRootStatesRootStateParserRuleCall_0() { return cRootStatesRootStateParserRuleCall_0; }
+		public RuleCall getRootStatesRootStateParserRuleCall_1_0() { return cRootStatesRootStateParserRuleCall_1_0; }
+	}
+
+	public class VersionPragmaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.VersionPragma");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cNameVersionKeyword_1_0 = (Keyword)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuesSCXVersionsParserRuleCall_2_0 = (RuleCall)cValuesAssignment_2.eContents().get(0);
+		
+		//VersionPragma annotations::PragmaStringAnnotation:
+		//	'#' name='version' values+=SCXVersions
+		@Override public ParserRule getRule() { return rule; }
+
+		//'#' name='version' values+=SCXVersions
+		public Group getGroup() { return cGroup; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
+
+		//name='version'
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//'version'
+		public Keyword getNameVersionKeyword_1_0() { return cNameVersionKeyword_1_0; }
+
+		//values+=SCXVersions
+		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
+
+		//SCXVersions
+		public RuleCall getValuesSCXVersionsParserRuleCall_2_0() { return cValuesSCXVersionsParserRuleCall_2_0; }
+	}
+
+	public class SCXVersionsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.SCXVersions");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cSCXKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cSCTKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//SCXVersions:
+		//	'SCX' | 'SCT';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'SCX' | 'SCT'
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//'SCX'
+		public Keyword getSCXKeyword_0() { return cSCXKeyword_0; }
+
+		//'SCT'
+		public Keyword getSCTKeyword_1() { return cSCTKeyword_1; }
 	}
 
 	public class RootStateElements extends AbstractParserRuleElementFinder {
@@ -1407,36 +1472,36 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.TransitionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cWEAKABORTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cWEAKABORTHyphenMinusHyphenMinusKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cWEAKABORTGoToKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cSTRONGABORTAbortKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
+		private final Keyword cSTRONGABORTAbortToKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cTERMINATIONJoinKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
+		private final Keyword cTERMINATIONJoinToKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum TransitionType returns sccharts::TransitionType:
-		//	WEAKABORT='--' | STRONGABORT='-- abort' | TERMINATION='-- join';
+		//	WEAKABORT='go to' | STRONGABORT='abort to' | TERMINATION='join to';
 		public EnumRule getRule() { return rule; }
 
-		//WEAKABORT='--' | STRONGABORT='-- abort' | TERMINATION='-- join'
+		//WEAKABORT='go to' | STRONGABORT='abort to' | TERMINATION='join to'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//WEAKABORT='--'
+		//WEAKABORT='go to'
 		public EnumLiteralDeclaration getWEAKABORTEnumLiteralDeclaration_0() { return cWEAKABORTEnumLiteralDeclaration_0; }
 
-		//'--'
-		public Keyword getWEAKABORTHyphenMinusHyphenMinusKeyword_0_0() { return cWEAKABORTHyphenMinusHyphenMinusKeyword_0_0; }
+		//'go to'
+		public Keyword getWEAKABORTGoToKeyword_0_0() { return cWEAKABORTGoToKeyword_0_0; }
 
-		//STRONGABORT='-- abort'
+		//STRONGABORT='abort to'
 		public EnumLiteralDeclaration getSTRONGABORTEnumLiteralDeclaration_1() { return cSTRONGABORTEnumLiteralDeclaration_1; }
 
-		//'-- abort'
-		public Keyword getSTRONGABORTAbortKeyword_1_0() { return cSTRONGABORTAbortKeyword_1_0; }
+		//'abort to'
+		public Keyword getSTRONGABORTAbortToKeyword_1_0() { return cSTRONGABORTAbortToKeyword_1_0; }
 
-		//TERMINATION='-- join'
+		//TERMINATION='join to'
 		public EnumLiteralDeclaration getTERMINATIONEnumLiteralDeclaration_2() { return cTERMINATIONEnumLiteralDeclaration_2; }
 
-		//'-- join'
-		public Keyword getTERMINATIONJoinKeyword_2_0() { return cTERMINATIONJoinKeyword_2_0; }
+		//'join to'
+		public Keyword getTERMINATIONJoinToKeyword_2_0() { return cTERMINATIONJoinToKeyword_2_0; }
 	}
 
 	public class HistoryTypeElements extends AbstractEnumRuleElementFinder {
@@ -1476,6 +1541,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private final SCChartsElements pSCCharts;
+	private final VersionPragmaElements pVersionPragma;
+	private final SCXVersionsElements pSCXVersions;
 	private final RootStateElements pRootState;
 	private final StateElements pState;
 	private final TransitionElements pTransition;
@@ -1525,6 +1592,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAnnotations = gaAnnotations;
 		this.gaTerminals = gaTerminals;
 		this.pSCCharts = new SCChartsElements();
+		this.pVersionPragma = new VersionPragmaElements();
+		this.pSCXVersions = new SCXVersionsElements();
 		this.pRootState = new RootStateElements();
 		this.pState = new StateElements();
 		this.pTransition = new TransitionElements();
@@ -1597,6 +1666,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	////  SCCharts Rules  // 
 	//// ---------------- //
 	//SCCharts sccharts::SCCharts:
+	//	annotations+=VersionPragma?
 	//	rootStates+=RootState*
 	public SCChartsElements getSCChartsAccess() {
 		return pSCCharts;
@@ -1604,6 +1674,26 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSCChartsRule() {
 		return getSCChartsAccess().getRule();
+	}
+
+	//VersionPragma annotations::PragmaStringAnnotation:
+	//	'#' name='version' values+=SCXVersions
+	public VersionPragmaElements getVersionPragmaAccess() {
+		return pVersionPragma;
+	}
+	
+	public ParserRule getVersionPragmaRule() {
+		return getVersionPragmaAccess().getRule();
+	}
+
+	//SCXVersions:
+	//	'SCX' | 'SCT';
+	public SCXVersionsElements getSCXVersionsAccess() {
+		return pSCXVersions;
+	}
+	
+	public ParserRule getSCXVersionsRule() {
+		return getSCXVersionsAccess().getRule();
 	}
 
 	//// ------------- //
@@ -1871,7 +1961,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum TransitionType returns sccharts::TransitionType:
-	//	WEAKABORT='--' | STRONGABORT='-- abort' | TERMINATION='-- join';
+	//	WEAKABORT='go to' | STRONGABORT='abort to' | TERMINATION='join to';
 	public TransitionTypeElements getTransitionTypeAccess() {
 		return eTransitionType;
 	}
@@ -2031,7 +2121,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('&' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
@@ -2042,7 +2132,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('&' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
@@ -2846,6 +2936,18 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//PragmaAnnotation Annotation:
+	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
+		return gaAnnotations.getPragmaAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaAnnotationRule() {
+		return getPragmaAnnotationAccess().getRule();
+	}
+
 	//// Valued Annotation Rule
 	//// Valued annotations must have a value. For instance, tag annotations are not allowed.
 	//// Derived grammars may use this rule if the general annotation rules compromises the grammar
@@ -2912,6 +3014,16 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTagAnnotation PragmaAnnotation:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
+		return gaAnnotations.getPragmaTagAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaTagAnnotationRule() {
+		return getPragmaTagAnnotationAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -2933,6 +3045,16 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getPramgaKeyStringValueAnnotationRule() {
+		return getPramgaKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation
