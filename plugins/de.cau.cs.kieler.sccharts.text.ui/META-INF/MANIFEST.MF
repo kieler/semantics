@@ -23,10 +23,11 @@ Require-Bundle: org.eclipse.xtext.ui,
  de.cau.cs.kieler.core.kexpressions.text,
  org.eclipse.xtext.generator;bundle-version="2.8.3",
  org.eclipse.xtext.xtext.ui,
- de.cau.cs.kieler.sccharts.text
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.klighd.ui.view
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Activator: de.cau.cs.kieler.sccharts.text3.ui.internal.SCTActivator
+Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.internal.SCTActivator
 Export-Package: de.cau.cs.kieler.sccharts.text.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.ui.quickfix,
  de.cau.cs.kieler.sccharts.text.ui.contentassist.antlr,

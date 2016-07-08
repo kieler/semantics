@@ -37,6 +37,7 @@ public class SCTParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getSCXVersionsAccess().getAlternatives(), "rule__SCXVersions__Alternatives");
 					put(grammarAccess.getRootStateAccess().getAlternatives_7(), "rule__RootState__Alternatives_7");
 					put(grammarAccess.getStateAccess().getAlternatives_7_3(), "rule__State__Alternatives_7_3");
 					put(grammarAccess.getTransitionAccess().getAlternatives_6(), "rule__Transition__Alternatives_6");
@@ -68,6 +69,7 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getAlternatives_1_2(), "rule__FunctionCall__Alternatives_1_2");
 					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
 					put(grammarAccess.getAnnotationAccess().getAlternatives(), "rule__Annotation__Alternatives");
+					put(grammarAccess.getPragmaAnnotationAccess().getAlternatives(), "rule__PragmaAnnotation__Alternatives");
 					put(grammarAccess.getValuedAnnotationAccess().getAlternatives(), "rule__ValuedAnnotation__Alternatives");
 					put(grammarAccess.getRestrictedTypeAnnotationAccess().getAlternatives(), "rule__RestrictedTypeAnnotation__Alternatives");
 					put(grammarAccess.getQuotedStringAnnotationAccess().getAlternatives(), "rule__QuotedStringAnnotation__Alternatives");
@@ -81,6 +83,8 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
+					put(grammarAccess.getSCChartsAccess().getGroup(), "rule__SCCharts__Group__0");
+					put(grammarAccess.getVersionPragmaAccess().getGroup(), "rule__VersionPragma__Group__0");
 					put(grammarAccess.getRootStateAccess().getGroup(), "rule__RootState__Group__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_7(), "rule__State__Group_7__0");
@@ -216,10 +220,13 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getParameterAccess().getGroup_0(), "rule__Parameter__Group_0__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
+					put(grammarAccess.getPragmaTagAnnotationAccess().getGroup(), "rule__PragmaTagAnnotation__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3(), "rule__KeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup(), "rule__RestrictedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3(), "rule__RestrictedKeyStringValueAnnotation__Group_3__0");
+					put(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup(), "rule__PramgaKeyStringValueAnnotation__Group__0");
+					put(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getGroup_3(), "rule__PramgaKeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup(), "rule__TypedKeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__TypedKeyStringValueAnnotation__Group_6__0");
 					put(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup(), "rule__RestrictedTypedKeyStringValueAnnotation__Group__0");
@@ -235,7 +242,10 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 					put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-					put(grammarAccess.getSCChartsAccess().getRootStatesAssignment(), "rule__SCCharts__RootStatesAssignment");
+					put(grammarAccess.getSCChartsAccess().getAnnotationsAssignment_0(), "rule__SCCharts__AnnotationsAssignment_0");
+					put(grammarAccess.getSCChartsAccess().getRootStatesAssignment_1(), "rule__SCCharts__RootStatesAssignment_1");
+					put(grammarAccess.getVersionPragmaAccess().getNameAssignment_1(), "rule__VersionPragma__NameAssignment_1");
+					put(grammarAccess.getVersionPragmaAccess().getValuesAssignment_2(), "rule__VersionPragma__ValuesAssignment_2");
 					put(grammarAccess.getRootStateAccess().getAnnotationsAssignment_0(), "rule__RootState__AnnotationsAssignment_0");
 					put(grammarAccess.getRootStateAccess().getIdAssignment_2(), "rule__RootState__IdAssignment_2");
 					put(grammarAccess.getRootStateAccess().getLabelAssignment_3(), "rule__RootState__LabelAssignment_3");
@@ -432,12 +442,16 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
 					put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
+					put(grammarAccess.getPragmaTagAnnotationAccess().getNameAssignment_1(), "rule__PragmaTagAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__KeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__KeyStringValueAnnotation__ValuesAssignment_2");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_3_1(), "rule__KeyStringValueAnnotation__ValuesAssignment_3_1");
 					put(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__RestrictedKeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2");
 					put(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_3_1(), "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1");
+					put(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__PramgaKeyStringValueAnnotation__NameAssignment_1");
+					put(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_2(), "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_2");
+					put(grammarAccess.getPramgaKeyStringValueAnnotationAccess().getValuesAssignment_3_1(), "rule__PramgaKeyStringValueAnnotation__ValuesAssignment_3_1");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__TypedKeyStringValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_3");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5");
