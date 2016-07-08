@@ -37,9 +37,11 @@ public class SCTParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getPragmasAccess().getAlternatives(), "rule__Pragmas__Alternatives");
 					put(grammarAccess.getSCXVersionsAccess().getAlternatives(), "rule__SCXVersions__Alternatives");
+					put(grammarAccess.getSCXDirectorsAccess().getAlternatives(), "rule__SCXDirectors__Alternatives");
 					put(grammarAccess.getRootStateAccess().getAlternatives_7(), "rule__RootState__Alternatives_7");
-					put(grammarAccess.getStateAccess().getAlternatives_7_3(), "rule__State__Alternatives_7_3");
+					put(grammarAccess.getStateAccess().getAlternatives_8_3(), "rule__State__Alternatives_8_3");
 					put(grammarAccess.getTransitionAccess().getAlternatives_6(), "rule__Transition__Alternatives_6");
 					put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 					put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
@@ -84,10 +86,11 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getSCChartsAccess().getGroup(), "rule__SCCharts__Group__0");
-					put(grammarAccess.getVersionPragmaAccess().getGroup(), "rule__VersionPragma__Group__0");
+					put(grammarAccess.getPragmasAccess().getGroup_0(), "rule__Pragmas__Group_0__0");
+					put(grammarAccess.getPragmasAccess().getGroup_1(), "rule__Pragmas__Group_1__0");
 					put(grammarAccess.getRootStateAccess().getGroup(), "rule__RootState__Group__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
-					put(grammarAccess.getStateAccess().getGroup_7(), "rule__State__Group_7__0");
+					put(grammarAccess.getStateAccess().getGroup_8(), "rule__State__Group_8__0");
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 					put(grammarAccess.getTransitionAccess().getGroup_6_0(), "rule__Transition__Group_6_0__0");
 					put(grammarAccess.getTransitionAccess().getGroup_6_0_0(), "rule__Transition__Group_6_0_0__0");
@@ -244,8 +247,10 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 					put(grammarAccess.getSCChartsAccess().getAnnotationsAssignment_0(), "rule__SCCharts__AnnotationsAssignment_0");
 					put(grammarAccess.getSCChartsAccess().getRootStatesAssignment_1(), "rule__SCCharts__RootStatesAssignment_1");
-					put(grammarAccess.getVersionPragmaAccess().getNameAssignment_1(), "rule__VersionPragma__NameAssignment_1");
-					put(grammarAccess.getVersionPragmaAccess().getValuesAssignment_2(), "rule__VersionPragma__ValuesAssignment_2");
+					put(grammarAccess.getPragmasAccess().getNameAssignment_0_1(), "rule__Pragmas__NameAssignment_0_1");
+					put(grammarAccess.getPragmasAccess().getValuesAssignment_0_2(), "rule__Pragmas__ValuesAssignment_0_2");
+					put(grammarAccess.getPragmasAccess().getNameAssignment_1_1(), "rule__Pragmas__NameAssignment_1_1");
+					put(grammarAccess.getPragmasAccess().getValuesAssignment_1_2(), "rule__Pragmas__ValuesAssignment_1_2");
 					put(grammarAccess.getRootStateAccess().getAnnotationsAssignment_0(), "rule__RootState__AnnotationsAssignment_0");
 					put(grammarAccess.getRootStateAccess().getIdAssignment_2(), "rule__RootState__IdAssignment_2");
 					put(grammarAccess.getRootStateAccess().getLabelAssignment_3(), "rule__RootState__LabelAssignment_3");
@@ -257,15 +262,16 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 					put(grammarAccess.getStateAccess().getInitialAssignment_1(), "rule__State__InitialAssignment_1");
 					put(grammarAccess.getStateAccess().getFinalAssignment_2(), "rule__State__FinalAssignment_2");
-					put(grammarAccess.getStateAccess().getConnectorAssignment_3(), "rule__State__ConnectorAssignment_3");
-					put(grammarAccess.getStateAccess().getIdAssignment_5(), "rule__State__IdAssignment_5");
-					put(grammarAccess.getStateAccess().getLabelAssignment_6(), "rule__State__LabelAssignment_6");
-					put(grammarAccess.getStateAccess().getDeclarationsAssignment_7_1(), "rule__State__DeclarationsAssignment_7_1");
-					put(grammarAccess.getStateAccess().getLocalActionsAssignment_7_2(), "rule__State__LocalActionsAssignment_7_2");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_7_3_0(), "rule__State__RegionsAssignment_7_3_0");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_7_3_1(), "rule__State__RegionsAssignment_7_3_1");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_7_3_2(), "rule__State__RegionsAssignment_7_3_2");
-					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_8(), "rule__State__OutgoingTransitionsAssignment_8");
+					put(grammarAccess.getStateAccess().getViolationAssignment_3(), "rule__State__ViolationAssignment_3");
+					put(grammarAccess.getStateAccess().getConnectorAssignment_4(), "rule__State__ConnectorAssignment_4");
+					put(grammarAccess.getStateAccess().getIdAssignment_6(), "rule__State__IdAssignment_6");
+					put(grammarAccess.getStateAccess().getLabelAssignment_7(), "rule__State__LabelAssignment_7");
+					put(grammarAccess.getStateAccess().getDeclarationsAssignment_8_1(), "rule__State__DeclarationsAssignment_8_1");
+					put(grammarAccess.getStateAccess().getLocalActionsAssignment_8_2(), "rule__State__LocalActionsAssignment_8_2");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_8_3_0(), "rule__State__RegionsAssignment_8_3_0");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_8_3_1(), "rule__State__RegionsAssignment_8_3_1");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_8_3_2(), "rule__State__RegionsAssignment_8_3_2");
+					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_9(), "rule__State__OutgoingTransitionsAssignment_9");
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_0(), "rule__Transition__AnnotationsAssignment_0");
 					put(grammarAccess.getTransitionAccess().getTypeAssignment_1(), "rule__Transition__TypeAssignment_1");
 					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_2(), "rule__Transition__TargetStateAssignment_2");

@@ -47,6 +47,7 @@ State returns sccharts::State:
 	annotations+=Annotation*
 	initial?='initial'?
 	final?='final'?
+	violation?='violation'?
 	connector?='connector'?
 	'state' id=ID label=STRING?
 	('{'

@@ -86,13 +86,13 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
-				if (rule == grammarAccess.getPragmaAnnotationRule()
-						|| rule == grammarAccess.getPramgaKeyStringValueAnnotationRule()) {
-					sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
+				if (rule == grammarAccess.getPragmasRule()) {
+					sequence_Pragmas(context, (PragmaStringAnnotation) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getVersionPragmaRule()) {
-					sequence_VersionPragma(context, (PragmaStringAnnotation) semanticObject); 
+				else if (rule == grammarAccess.getPragmaAnnotationRule()
+						|| rule == grammarAccess.getPramgaKeyStringValueAnnotationRule()) {
+					sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
@@ -506,6 +506,18 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Pragmas returns PragmaStringAnnotation
+	 *
+	 * Constraint:
+	 *     ((name='version' values+=SCXVersions) | (name='director' values+=SCXDirectors))
+	 */
+	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     RootState returns State
 	 *
 	 * Constraint:
@@ -528,7 +540,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     ((annotations+=VersionPragma rootStates+=RootState+) | rootStates+=RootState+)?
+	 *     ((annotations+=Pragmas+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -568,6 +580,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *         annotations+=Annotation* 
 	 *         initial?='initial'? 
 	 *         final?='final'? 
+	 *         violation?='violation'? 
 	 *         connector?='connector'? 
 	 *         id=ID 
 	 *         label=STRING? 
@@ -611,18 +624,6 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     VersionPragma returns PragmaStringAnnotation
-	 *
-	 * Constraint:
-	 *     (name='version' values+=SCXVersions)
-	 */
-	protected void sequence_VersionPragma(ISerializationContext context, PragmaStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -106,6 +106,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isFinal) {
             node.setFinalStyle
         }
+        if (state.isViolation) {
+            node.setViolationStyle
+        }
 
         // Shadow
         if (!isConnector) {

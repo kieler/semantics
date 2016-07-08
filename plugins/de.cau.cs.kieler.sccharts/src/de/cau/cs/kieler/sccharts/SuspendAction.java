@@ -50,36 +50,36 @@ package de.cau.cs.kieler.sccharts;
  */
 public interface SuspendAction extends LocalAction {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
-	 * Returns the value of the '<em><b>Weak</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Weak</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Weak</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Weak</em>' attribute.
-	 * @see #setWeak(boolean)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSuspendAction_Weak()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Weak</em>' attribute.
+     * @see #setWeak(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSuspendAction_Weak()
+     * @model
+     * @generated
+     */
     boolean isWeak();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Weak</em>' attribute.
-	 * @see #isWeak()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Weak</em>' attribute.
+     * @see #isWeak()
+     * @generated
+     */
     void setWeak(boolean value);
 
 } // SuspendAction

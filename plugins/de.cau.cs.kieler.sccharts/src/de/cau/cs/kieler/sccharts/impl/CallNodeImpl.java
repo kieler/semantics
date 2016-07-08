@@ -50,184 +50,184 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class CallNodeImpl extends NodeImpl implements CallNode {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
-	 * The cached value of the '{@link #getCallReference() <em>Call Reference</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCallReference() <em>Call Reference</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getCallReference()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getCallReference()
+     * @generated
+     * @ordered
+     */
     protected DefineNode callReference;
 
     /**
-	 * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getParameters()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
     protected EList<ValuedObjectReference> parameters;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected CallNodeImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.CALL_NODE;
-	}
+        return SCChartsPackage.Literals.CALL_NODE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public DefineNode getCallReference() {
-		if (callReference != null && callReference.eIsProxy()) {
-			InternalEObject oldCallReference = (InternalEObject)callReference;
-			callReference = (DefineNode)eResolveProxy(oldCallReference);
-			if (callReference != oldCallReference) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.CALL_NODE__CALL_REFERENCE, oldCallReference, callReference));
-			}
-		}
-		return callReference;
-	}
+        if (callReference != null && callReference.eIsProxy()) {
+            InternalEObject oldCallReference = (InternalEObject)callReference;
+            callReference = (DefineNode)eResolveProxy(oldCallReference);
+            if (callReference != oldCallReference) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.CALL_NODE__CALL_REFERENCE, oldCallReference, callReference));
+            }
+        }
+        return callReference;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public DefineNode basicGetCallReference() {
-		return callReference;
-	}
+        return callReference;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setCallReference(DefineNode newCallReference) {
-		DefineNode oldCallReference = callReference;
-		callReference = newCallReference;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CALL_NODE__CALL_REFERENCE, oldCallReference, callReference));
-	}
+        DefineNode oldCallReference = callReference;
+        callReference = newCallReference;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CALL_NODE__CALL_REFERENCE, oldCallReference, callReference));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<ValuedObjectReference> getParameters() {
-		if (parameters == null) {
-			parameters = new EObjectContainmentEList<ValuedObjectReference>(ValuedObjectReference.class, this, SCChartsPackage.CALL_NODE__PARAMETERS);
-		}
-		return parameters;
-	}
+        if (parameters == null) {
+            parameters = new EObjectContainmentEList<ValuedObjectReference>(ValuedObjectReference.class, this, SCChartsPackage.CALL_NODE__PARAMETERS);
+        }
+        return parameters;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.CALL_NODE__PARAMETERS:
-				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CALL_NODE__PARAMETERS:
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
-				if (resolve) return getCallReference();
-				return basicGetCallReference();
-			case SCChartsPackage.CALL_NODE__PARAMETERS:
-				return getParameters();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
+                if (resolve) return getCallReference();
+                return basicGetCallReference();
+            case SCChartsPackage.CALL_NODE__PARAMETERS:
+                return getParameters();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
-				setCallReference((DefineNode)newValue);
-				return;
-			case SCChartsPackage.CALL_NODE__PARAMETERS:
-				getParameters().clear();
-				getParameters().addAll((Collection<? extends ValuedObjectReference>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
+                setCallReference((DefineNode)newValue);
+                return;
+            case SCChartsPackage.CALL_NODE__PARAMETERS:
+                getParameters().clear();
+                getParameters().addAll((Collection<? extends ValuedObjectReference>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
-				setCallReference((DefineNode)null);
-				return;
-			case SCChartsPackage.CALL_NODE__PARAMETERS:
-				getParameters().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
+                setCallReference((DefineNode)null);
+                return;
+            case SCChartsPackage.CALL_NODE__PARAMETERS:
+                getParameters().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
-				return callReference != null;
-			case SCChartsPackage.CALL_NODE__PARAMETERS:
-				return parameters != null && !parameters.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.CALL_NODE__CALL_REFERENCE:
+                return callReference != null;
+            case SCChartsPackage.CALL_NODE__PARAMETERS:
+                return parameters != null && !parameters.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //CallNodeImpl
