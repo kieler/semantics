@@ -13,9 +13,6 @@
 package de.cau.cs.kieler.sccharts.debug.ui.breakpoints;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -24,31 +21,19 @@ import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.debug.ui.actions.IToggleBreakpointsTarget;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.xtext.formatting.impl.NodeModelStreamer;
-import org.eclipse.xtext.formatting2.regionaccess.internal.NodeModelBasedRegionAccess;
-import org.eclipse.xtext.nodemodel.BidiIterable;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
-import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.nodemodel.impl.NodeModelBuilder;
+import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.serializer.sequencer.NodeModelSemanticSequencer;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.utils.EditorUtils;
-import org.eclipse.xtext.util.ITextRegionWithLineInformation;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
-
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
@@ -65,22 +50,30 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 
+    private IResource activeResource = null;
+    private HashMap<Integer, EObject> lineToModelElement = new HashMap<>();
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void toggleLineBreakpoints(IWorkbenchPart part, ISelection selection)
             throws CoreException {
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor();
+        IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        IEditorPart editor = workbenchWindow.getActivePage().getActiveEditor();
 
         if (editor != null) {
-            IVerticalRulerInfo ruler = (IVerticalRulerInfo) ((ITextEditor) editor)
-                    .getAdapter(IVerticalRulerInfo.class);
+            ITextEditor textEditor = (ITextEditor) editor;
+            IVerticalRulerInfo ruler = textEditor.getAdapter(IVerticalRulerInfo.class);
 
             // Get needed information to reach breakpoints.
             IResource resource = (IResource) editor.getEditorInput().getAdapter(IResource.class);
+
+            activeResource = resource;
+            updateLineEObjectMap();
+            
             int lineNumber = ruler.getLineOfLastMouseButtonActivity();
+
             IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
                     .getBreakpoints(SCChartsDebugModelPresentation.ID);
 
@@ -99,46 +92,34 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
                 }
             }
 
-            IPath p = KiemPlugin.getCurrentModelFile();
-            EObject e = KiemPlugin.getOpenedModelRootObjects().get(p);
-
-            ICompositeNode node = NodeModelUtils.findActualNodeFor(e);
-
-            Iterable<ILeafNode> leafs = node.getLeafNodes();
-            HashMap<Integer, String> map = new HashMap<Integer, String>();
-            StringBuffer text = new StringBuffer();
-
-            int counter = 1;
-            for (ILeafNode leaf : leafs) {
-                System.out.println();
-                if (counter < leaf.getEndLine()) {
-                    map.put(counter, text.toString().replaceAll("\\s", ""));
-                    text = new StringBuffer();
-                    counter++;
-                }
-                text.append(leaf.getText());
-            }
-            if (isValidString(map.get(lineNumber + 1))) {
+            if (lineToModelElement.containsKey(lineNumber + 1)) {
                 // Create a new breakpoint in the specified line.
                 SCChartsDebugPlugin.getDefault().setDirtyBreakpointList();
                 SCChartsBreakpoint breakpoint = new SCChartsBreakpoint(resource, lineNumber + 1);
                 DebugPlugin.getDefault().getBreakpointManager().addBreakpoint(breakpoint);
                 DebugPlugin.getDefault().getBreakpointManager().fireBreakpointChanged(breakpoint);
             }
-            
-            for (int i = 0; i < map.size(); i++) {
-                System.out.println(i + " " + map.get(i));
-            }
         }
     }
 
-    private boolean isValidString(String s) {
-        if (s.contains("state") || s.contains("-->") || s.contains(">->") || s.contains("o->")) {
-            return true;
-        } else {
-            return false;
-        }
+    private void updateLineEObjectMap() {
+        lineToModelElement.clear();
 
+        IPath p = activeResource.getFullPath();
+        HashMap<IPath, EObject> rootMap = KiemPlugin.getOpenedModelRootObjects();
+        EObject rootObject = rootMap.get(p);
+
+        ICompositeNode rootNode = NodeModelUtils.findActualNodeFor(rootObject);
+        Iterable<ILeafNode> leafs = rootNode.getLeafNodes();
+
+        for (ILeafNode leaf : leafs) {
+            boolean validLeaf = !(leaf instanceof HiddenLeafNode)
+                    && !lineToModelElement.containsValue(leaf.getSemanticElement());
+            boolean leafOfInterest = leaf.getSemanticElement() instanceof State
+                    || leaf.getSemanticElement() instanceof Transition;
+            if (validLeaf && leafOfInterest)
+                lineToModelElement.put(leaf.getStartLine(), leaf.getSemanticElement());
+        }
     }
 
     /**

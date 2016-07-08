@@ -16,7 +16,10 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -24,55 +27,74 @@ import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAd
 import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapterFactory;
 
 /**
- * This class is used as the Handler for the TextRulerContext command 'Toggle
- * Breakpoint'.
+ * This class is used as the Handler for the TextRulerContext command 'Toggle Breakpoint'.
+ * 
+ * Reaction to a double click enabled through {@link IEditorActionDelegate} but use of
+ * editorActions-action is deprecated (see plugin.xml). No other workaround found yet.
  * 
  * @author lgr
  *
  */
-public class TextRulerHandler extends AbstractHandler {
+public class TextRulerHandler extends AbstractHandler implements IEditorActionDelegate {
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * This class is the entry point when starting a 'Toggle Breakpoint' event
-	 * from the editor's ruler context.
-	 */
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+    /**
+     * {@inheritDoc}
+     * 
+     * This class is the entry point when starting a 'Toggle Breakpoint' event from the editor's
+     * ruler context.
+     */
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .getActiveEditor();
 
-		SCChartsBreakpointTargetAdapterFactory factory = new SCChartsBreakpointTargetAdapterFactory();
-		SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory.getAdapter(editor,
-				SCChartsBreakpointTargetAdapter.class);
+        SCChartsBreakpointTargetAdapterFactory factory =
+                new SCChartsBreakpointTargetAdapterFactory();
+        SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory
+                .getAdapter(editor, SCChartsBreakpointTargetAdapter.class);
 
-		try {
-			target.toggleLineBreakpoints(HandlerUtil.getActivePart(event), HandlerUtil.getActiveMenuSelection(event));
-			Display.getDefault().update();
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-//
-//		// Just some experimenting with the input file and the root model
-//		IPath p = KiemPlugin.getCurrentModelFile();
-//		List<IPath> lp = KiemPlugin.getOpenedModelFiles();
-//		EObject e = KiemPlugin.getOpenedModelRootObjects().get(p);
-//
-//		ICompositeNode node = NodeModelUtils. findActualNodeFor(e);
-//		StringBuffer text = new StringBuffer();
-//		Iterable<ILeafNode> leafs = node.getLeafNodes();
-//		int counter = 0;
-//		for (ILeafNode leaf : leafs) {
-//			counter++;
-//			System.out.println(leaf.getSemanticElement());
-//			System.out.println(leaf.getText() + " " + leaf.getStartLine() + " \n");
-//			text.append(leaf.getText());
-//		}
-//
-//		System.out.println(counter);
-//		System.out.println(KiemPlugin.DEBUG);
-//		System.out.println(text);
+        try {
+            target.toggleLineBreakpoints(HandlerUtil.getActivePart(event),
+                    HandlerUtil.getActiveMenuSelection(event));
+            Display.getDefault().update();
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
 
-		return null; // Reserved for future use, must be null.
-	}
+        return null; // Reserved for future use, must be null.
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void run(IAction action) {
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .getActiveEditor();
+
+        SCChartsBreakpointTargetAdapterFactory factory =
+                new SCChartsBreakpointTargetAdapterFactory();
+        SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory
+                .getAdapter(editor, SCChartsBreakpointTargetAdapter.class);
+        try {
+            target.toggleLineBreakpoints(null, null);
+            Display.getDefault().update();
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void selectionChanged(IAction action, ISelection selection) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+    }
 }

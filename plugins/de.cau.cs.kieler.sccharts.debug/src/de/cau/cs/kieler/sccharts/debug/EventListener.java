@@ -12,17 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.debug;
 
-import java.util.List;
-
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.sccharts.debug.ui.ViewDebugContributor;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
-import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
-import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
  * @author lgr

@@ -111,5 +111,17 @@
          </actionSet>
       </perspectiveExtension>
    </extension>
+    <extension point="org.eclipse.ui.editorActions">
+    <editorContribution
+          targetID="de.cau.cs.kieler.sccharts.text.sct.Sct"
+          id="de.cau.cs.kieler.sccharts.debug.doubleClick">
+       <action
+             label="Not Used"
+             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+             style="push"
+             actionID="RulerDoubleClick"
+             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
+    </editorContribution>
+ </extension>
  
 </plugin>

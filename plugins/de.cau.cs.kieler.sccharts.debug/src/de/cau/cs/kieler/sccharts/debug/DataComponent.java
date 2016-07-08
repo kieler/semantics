@@ -57,7 +57,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     private SCChartsDebugPlugin plugin = SCChartsDebugPlugin.getDefault();
     private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
-    private String stateKey = "state";
     private String transitionKey = "transition";
     private IPath currentModelFile;
     private EObject rootElement;
@@ -118,8 +117,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 }
             }
         }
-
-        String s = this.getCurrentComponentID() + propertiesId.hashCode();
         return this.getCurrentComponentID() + propertiesId.hashCode();
 
     }
@@ -298,12 +295,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         plugin.updateBreakpointLines();
         ICompositeNode n = NodeModelUtils.getNode(obj);
         int line = n.getStartLine();
-        System.out.print(obj + " ");
         try {
             IBreakpoint b = plugin.getBreakpointLines().get(line);
-            HashMap map = plugin.getBreakpointLines();
             if (b != null && b.isEnabled()) {
-                System.out.println(true);
                 return true;
             }
         } catch (CoreException e) {
