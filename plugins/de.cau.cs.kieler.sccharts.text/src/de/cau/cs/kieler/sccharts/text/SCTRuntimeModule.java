@@ -3,7 +3,10 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import org.eclipse.xtext.linking.ILinker;
+
 import de.cau.cs.kieler.sccharts.text.formatting.SctIndentionInformation;
+import de.cau.cs.kieler.sccharts.text.scoping.SctQualifiedNameProvider;
 import de.cau.cs.kieler.sccharts.text.validation.SCTValidatorX;
 
 /**
@@ -14,7 +17,19 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
     @org.eclipse.xtext.service.SingletonBinding(eager=true) 
     public Class<? extends SCTValidatorX> bindSctJavaValidator() {
         return SCTValidatorX.class;
-    }   
+    }
+    
+    public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+        return SctQualifiedNameProvider.class;
+    }    
+    
+    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+        return SctResource.class;
+    }    
+    
+    public Class<? extends ILinker> bindILinker() {
+        return SctLinker.class;
+    }     
     
     public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
         return SctIndentionInformation.class;

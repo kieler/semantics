@@ -3,6 +3,21 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import de.cau.cs.kieler.sccharts.Transition
+import org.eclipse.xtext.scoping.IScope
+import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.EObjectDescription
+import org.eclipse.xtext.naming.QualifiedName
+import java.util.Collections
+import org.eclipse.xtext.scoping.impl.SimpleScope
+
 /**
  * This class contains custom scoping description.
  * 
@@ -11,5 +26,33 @@ package de.cau.cs.kieler.sccharts.text.scoping
  *
  */
 class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.KEXTScopeProvider {
+    
+    @Inject extension SCChartsExtension
+
+    override getScope(EObject context, EReference reference) {
+        println(context + " " + reference)
+        if (context instanceof Transition) {
+            return getScopeForTransition(context, reference)
+        }
+        
+        return super.getScope(context, reference);
+    }
+    
+    protected def IScope getScopeForTransition(Transition transition, EReference reference) {
+        val states = <State> newArrayList
+        val parentState = transition.eContainer as State
+        val parentRegion = parentState.eContainer as ControlflowRegion
+        
+        val l = <IEObjectDescription>newLinkedList
+        
+        parentRegion.states.forEach[ 
+            states += it 
+            l += new EObjectDescription(QualifiedName.create(it.id), it,
+                    Collections.<String, String>emptyMap())
+        ]
+        
+//        return Scopes.scopeFor(states)
+        return new SimpleScope(l)
+    }
 
 }
