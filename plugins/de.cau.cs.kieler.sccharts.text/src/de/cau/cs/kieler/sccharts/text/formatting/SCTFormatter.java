@@ -24,8 +24,8 @@ public class SCTFormatter extends AbstractDeclarativeFormatter {
 		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
 			c.setIndentation(pair.getFirst(), pair.getSecond());
 			c.setLinewrap(1).after(pair.getFirst());
-			c.setLinewrap(1).before(pair.getSecond());
-			c.setLinewrap(1).after(pair.getSecond());
+            c.setLinewrap(1).before(pair.getSecond());
+			c.setLinewrap(2).after(pair.getSecond());
 		}
 		for(Keyword comma: f.findKeywords(",")) {
 			c.setNoLinewrap().before(comma);
@@ -35,5 +35,12 @@ public class SCTFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
+		
+		c.setNoSpace().after(f.getPragmasAccess().getNumberSignKeyword_0_0());
+        c.setNoSpace().after(f.getPragmasAccess().getNumberSignKeyword_1_0());
+        c.setLinewrap().after(f.getPragmasAccess().getValuesSCXVersionsParserRuleCall_0_2_0());
+        c.setLinewrap().after(f.getPragmasAccess().getValuesSCXDirectorsParserRuleCall_1_2_0());
+       
+        c.setLinewrap().before(f.getStateRule());
 	}
 }

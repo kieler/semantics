@@ -5,11 +5,17 @@ package de.cau.cs.kieler.sccharts.text.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import de.cau.cs.kieler.sccharts.text.ui.quickfix.SCTQuickfixProviderX;
+
 /**
  * Use this class to register components to be used within the IDE.
  */
 public class SCTUiModule extends de.cau.cs.kieler.sccharts.text.ui.AbstractSCTUiModule {
 	public SCTUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+	
+	public Class<? extends  org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
+	    return SCTQuickfixProviderX.class;
 	}
 }

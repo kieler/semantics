@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.sccharts.text;
 
+import de.cau.cs.kieler.sccharts.text.formatting.SctIndentionInformation;
 import de.cau.cs.kieler.sccharts.text.validation.SCTValidatorX;
 
 /**
@@ -13,5 +14,10 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
     @org.eclipse.xtext.service.SingletonBinding(eager=true) 
     public Class<? extends SCTValidatorX> bindSctJavaValidator() {
         return SCTValidatorX.class;
-    }    
+    }   
+    
+    public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
+        return SctIndentionInformation.class;
+    }
+    
 }
