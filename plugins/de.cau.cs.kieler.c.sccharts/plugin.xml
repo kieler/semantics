@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="editor" name="editor" schema="schema/editor.exsd"/>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
@@ -35,20 +36,43 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler.c.commands.category"
-            id="de.cau.cs.kieler.c.sccharts.commands.TransformC "
-            name="TransformC">
-      </command>
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController"
+            editorID="org.eclipse.cdt.ui.editor.CEditor">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.controller">
+      <controller
+            class="de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController">
+      </controller>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.klighd.hooks">
+      <hook
+            class="de.cau.cs.kieler.c.sccharts.synthesis.HideEntryKeywordHook">
+      </hook>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureClass
+            class="de.cau.cs.kieler.c.sccharts.transformation.TransitionFeature">
+      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.c.sccharts.CDTProcessor"
-            id="C2SCT"
-            method="transform"
-            name="C2SCT">
-      </transformationMethod>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.c.sccharts.transformation.ImmTransTransformation">
+      </productionTransformationClass>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            features="c.immediateTrans"
+            label="ImmediateTransitions org.eclipse.cdt.ui.editor.CEditor"
+            priority="101">
+      </editor>
+   </extension>>
 </plugin>

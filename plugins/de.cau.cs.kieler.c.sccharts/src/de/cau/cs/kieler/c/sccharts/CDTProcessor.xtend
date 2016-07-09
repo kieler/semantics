@@ -245,8 +245,9 @@ class CDTProcessor {
     def State transformCompound(CASTCompoundStatement cs, State state, State parentState) {
         var State newState
         if (state == null) {
+            // initial state of a function
             newState = scc.createState => [ s |
-                s.id = "_S" + trC
+                s.id = "_S" + trC + "_initFuncState"
                 s.label = s.id
                 s.initial = true
 
@@ -301,7 +302,7 @@ class CDTProcessor {
         }
         if (statement instanceof CASTDeclarationStatement) {
             // parentState.regions.filter(typeof(ControlflowRegion)).head.states += actualState
-            actualState = statement.castdeclaration(actualState)
+            actualState = statement.castDeclaration(actualState)
         }
 
         actualState
@@ -489,9 +490,17 @@ class CDTProcessor {
         // Connects while loop to the parent
         val whileConnector = scc.createTransition => [
             targetState = whileState
+            // Falls es geschachtelte Kontrollstrukturen sind, ohne dass nach dem cond State eine weitere Zeile kommt,
+            // fixt dies den Bug, dass die Condition der oberen for-Schleife richtig dargestellt wird.
             if(state.id.contains("_cond")) {
-                trigger = kExp
-                immediate = false
+                
+                 val condStatement = statement.parent.parent
+                    if (condStatement instanceof CASTForStatement) {
+                        val condCondition = (condStatement as CASTForStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        immediate = false
+                    }
             } else if(state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
             } else {
@@ -626,9 +635,17 @@ class CDTProcessor {
         // Connect body to condState to check condition after body
         val condTrans = scc.createTransition => [
             targetState = condState
+            // Falls es geschachtelte Kontrollstrukturen sind, ohne dass nach dem cond State eine weitere Zeile kommt,
+            // fixt dies den Bug, dass die Condition der oberen for-Schleife richtig dargestellt wird.
             if(state.id.contains("_cond")) {
-                trigger = kExp
-                immediate = false
+                
+                 val condStatement = statement.parent.parent
+                    if (condStatement instanceof CASTForStatement) {
+                        val condCondition = (condStatement as CASTForStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        immediate = false
+                    }
             } else if (bodyState.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
             } else {
@@ -684,7 +701,7 @@ class CDTProcessor {
     }
     
 
-    def State castdeclaration(CASTDeclarationStatement statement, State parent) {
+    def State castDeclaration(CASTDeclarationStatement statement, State parent) {
 
         // TODO verschachtelte Binary Expressions (a+2+3) => ((a+2)+3)
             
@@ -696,7 +713,10 @@ class CDTProcessor {
             val intParamater = kex.createDeclaration => [
                 type = parseCDTType(simpleDeclaration.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
                 input = false
-                funcGlobalState.declarations += it
+                //funcGlobalState.declarations += it
+                
+                // Füge die Variablendeklaration dem State eine Hierarchieebene drüber hinzu (z.B. int i)
+                parent.parentRegion.parentState.declarations += it
             ]
             
             val value = kex.createValuedObject => [
@@ -721,81 +741,104 @@ class CDTProcessor {
 //                ]
 
 
-                // Declaration, die eine Abhängigkeit zu einer anderen Variablen hat, soll nicht als entry action eingeführt werden
+                // Initialisierung, die eine Abhängigkeit zu einer anderen Variablen hat, soll nicht als entry action eingeführt werden
                 if (initializer.children.head instanceof IASTExpression) {
                     var exp = (initializer.children.head as IASTExpression)
                     
-                    // TODO Wenn man zwei verschachtelte for-Schleifen hat, wird die innere Zählvariable nicht als
-                    //      entryAction erstellt, sondern als separater State
-                    
+                   
                     val a = initializer.children.head
-                    val b = a.children.head
+                    val b = a.children.toList
                     
                     if (a instanceof CASTIdExpression) {
-                       // Separate state
-                        val initVarState = scc.createState => [ s |
-                            s.id = parent.id + "T"
-                            s.label = createLabel(statement)
-        
-                            parent.parentRegion.states += s
-                        ]
-                        val trans = scc.createTransition => [
-                            targetState = initVarState
-                            immediate = true
-                            parent.outgoingTransitions += it
-                        ]
-                        var entryAction = initVarState.createEntryAction
-                        entryAction.createAssignment(value, exp.createKExpression)
-                        return initVarState 
+                       // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
+                       if (parent.id.contains("_varInit")) {
+                           var entryAction = parent.createEntryAction
+                            entryAction.createAssignment(value, exp.createKExpression)
+                       } 
+                       // ... sonst separate state
+                       else {
+                            val initVarState = scc.createState => [ s |
+                                s.id = parent.id + "_varInit"
+                                s.label = createLabel(statement)
+            
+                                parent.parentRegion.states += s
+                            ]
+                            val trans = scc.createTransition => [
+                                targetState = initVarState
+                                immediate = true
+                                parent.outgoingTransitions += it
+                            ]
+                            var entryAction = initVarState.createEntryAction
+                            entryAction.createAssignment(value, exp.createKExpression)
+                            return initVarState 
+                            
+                       }
+                        
                     } else if (a instanceof CASTBinaryExpression) {
-                        if (b instanceof CASTIdExpression) {
-                            // Separate state
-                        val initVarState = scc.createState => [ s |
-                            s.id = parent.id + "T"
-                            s.label = createLabel(statement)
-        
-                            parent.parentRegion.states += s
-                        ]
-                        val trans = scc.createTransition => [
-                            targetState = initVarState
-                            immediate = true
-                            parent.outgoingTransitions += it
-                        ]
-                        var entryAction = initVarState.createEntryAction
-                        entryAction.createAssignment(value, exp.createKExpression)
-                        return initVarState 
+                        // Falls die Variablenzuweisung abhängig von einer anderen Variable ist...
+                        if (b.filter(typeof(CASTSimpleDeclSpecifier)) != []) {
+                            // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
+                       if (parent.id.contains("_varInit")) {
+                           var entryAction = parent.createEntryAction
+                            entryAction.createAssignment(value, exp.createKExpression)
+                       } 
+                       // ... sonst separate state
+                       else {
+                            val initVarState = scc.createState => [ s |
+                                s.id = parent.id + "_varInit"
+                                s.label = createLabel(statement)
+            
+                                parent.parentRegion.states += s
+                            ]
+                            val trans = scc.createTransition => [
+                                targetState = initVarState
+                                immediate = true
+                                parent.outgoingTransitions += it
+                            ]
+                            var entryAction = initVarState.createEntryAction
+                            entryAction.createAssignment(value, exp.createKExpression)
+                            return initVarState 
+                            
+                            }
                         }
                     }
                     
+           // DAS HIER, WAS BEREITS AUSKOMMENTIERT IST, IST GLAUBE ICH UNNÖTIG BIS ...
                     
-                    // Check if declaration can be a entryAction or needs to be a separat state
-                    if (parent.parent.id.contains("_while") || parent.parent.id.contains("_for") || parent.parent.id.contains("_doWhile")) {
-                        // Separate state
-                        val initVarState = scc.createState => [ s |
-                            s.id = parent.id + "T"
-                            s.label = createLabel(statement)
-        
-                            parent.parentRegion.states += s
-                        ]
-                        val trans = scc.createTransition => [
-                            targetState = initVarState
-                            immediate = true
-                            parent.outgoingTransitions += it
-                        ]
-                        var entryAction = initVarState.createEntryAction
-                        entryAction.createAssignment(value, exp.createKExpression)
-                        return initVarState
-                    } else {
+//                    // Check if initialization can be a entryAction or needs to be a separat state
+//                    if (parent.parent.id.contains("_while") || parent.parent.id.contains("_for") || parent.parent.id.contains("_doWhile")) {
+//                        // Separate state
+//                        val initVarState = scc.createState => [ s |
+//                            s.id = parent.id + "T"
+//                            s.label = createLabel(statement)
+//        
+//                            parent.parentRegion.states += s
+//                        ]
+//                        val trans = scc.createTransition => [
+//                            targetState = initVarState
+//                            immediate = true
+//                            parent.outgoingTransitions += it
+//                        ]
+//                        var entryAction = initVarState.createEntryAction
+//                        entryAction.createAssignment(value, exp.createKExpression)
+//                        return initVarState
+//                    } else {
                         
                     
                 //  var entryAction = initVarState.createEntryAction
                 
                     // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
                     var entryAction = parent.parentRegion.parentState.createEntryAction
+                    //var entryAction = parent.createEntryAction
+                    
+                    
 //                    var textExpression=kex.createTextExpression
 //                    textExpression.text = exp
                     entryAction.createAssignment(value, exp.createKExpression)
-                    }
+//                    }
+
+           // ... BIS HIER HIN
+
                 // return initVarState
 
                 // if (initializer.children.head instanceof CASTBinaryExpression){
@@ -833,28 +876,26 @@ class CDTProcessor {
     }
 
 
+    // TODO    BUG                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // Wenn im if oder im else ein return steht, muss man aus dem ifState raus und dann den returnState machen.
+    // Immoment wird der returnState noch im ifState gemacht, womit nur der ifState beendet und nicht der Funktionsaufruf
+    // BEI ALLEN ANDEREN KONTROLLSTRUKTUREN DAS GLEICHE PROBLEM
     def State transformIf(CASTIfStatement ifStatement, State state) {
+        
+        var needExtraEndState = false
         val ifs = ifStatement
         val exp = ifs.children.filter(typeof(CASTBinaryExpression)).head
-
         val kExp = exp.createKExpression
 
-//        val trueState = scc.createState => [ s |
-//            s.id = "T"
-//            s.label = s.id
-//
-//            state.parentRegion.states += s
-//        ]
-
         
-        // while loop state
+        // if construct state
         val ifState = scc.createState => [ s |
             s.id = trC + "_if"
             s.label = "if"
             state.parentRegion.states += s
         ]
         
-        // region of whileState. It contains all states of while loop                 
+        // region of ifState. It contains all states of the if statement
         val ifStateRegion = scc.createControlflowRegion => [ region |
                 region.id = ifState.id + "_region"
                 region.label = ""
@@ -864,10 +905,19 @@ class CDTProcessor {
         // Connects if construct to the parent
         val ifConnector = scc.createTransition => [
             targetState = ifState
-            if(state.id.contains("_cond")) {
-                trigger = kExp
-                immediate = false
-            } else if(state.hasInnerStatesOrControlflowRegions) {
+            // Falls es geschachtelte Kontrollstrukturen sind, ohne dass nach dem cond State eine weitere Zeile kommt,
+            // fixt dies den Bug, dass die Condition des oberen if-Statements richtig dargestellt wird.
+            if (state.id.contains("_cond")) {
+                
+                val condStatement = ifStatement.parent.parent
+                    if (condStatement instanceof CASTIfStatement) {
+                        val condCondition = (condStatement as CASTIfStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        immediate = false
+                    }
+            // If multiple if statements follow one after an other, wait for the previous to finish
+            } else if (state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
             } else {
                 immediate = true
@@ -875,21 +925,15 @@ class CDTProcessor {
             state.outgoingTransitions += it
         ]
         
-        
-
+        // The outgoing transitions of the condState check the condition of the if statement
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
             s.label = createLabel(ifs) + "cond"
             s.initial = true
-            // s.setTypeConnector
-//            s.regions += scc.createControlflowRegion => [
-//                id = s.id + "_r"
-//                label = ""
-//            ]
             ifStateRegion.states += s
         ]
 
-
+        // Connects states to the final End state of the if statement, if necessary
         val connectorState = scc.createState => [ s |
             s.id = trC.toString
             s.label = s.id
@@ -899,49 +943,33 @@ class CDTProcessor {
         ]
         connectorStates += connectorState
 
-//        val trueTrans = scc.createTransition => [
-//            targetState = trueState
-//            immediate = true
-//            state.outgoingTransitions += it
-//            trigger = kExp
-//        ]
-
         
-
+        // Body of statements if condition is met
         val trueBody = (ifs.thenClause as CASTCompoundStatement).transformCompound(condState, condState)
-        if (!trueBody.final) {
+        
+        // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+        if (trueBody.hasInnerStatesOrControlflowRegions) {
             val trueConnector = scc.createTransition => [
                 targetState = connectorState
                 immediate = true
+                type = TransitionType::TERMINATION
                 trueBody.outgoingTransitions += it
-                type == TransitionType::TERMINATION
             ]
+            needExtraEndState = true
+        } else {
+            // If no inner behavior, there is no need for an extra final state
+            trueBody.final = true
         }
         
-        // final state of loop. It is reached when loop condition is not met anymore
-        val endState = scc.createState => [s |
-            s.id = trC + "_end"
-            s.label = "End"
-            s.final = true
-            ifStateRegion.states += s
-        ]
         
-
+        
+        // Check whether a else clause exists
         if (ifs.elseClause != null) {
+            // Body of statements if condition is not met
             var State falseBody = null;
             
             if (ifs.elseClause instanceof CASTCompoundStatement) {
-//                val falseState = scc.createState => [ s |
-//                    s.id = "F"
-//                    s.label = s.id
-//
-//                    state.parentRegion.states += s
-//                ]
-//                val falseTrans = scc.createTransition => [
-//                    targetState = falseState
-//                    immediate = true
-//                    state.outgoingTransitions += it
-//                ]
+
                 val elseBody = scc.createState => [s |
                     s.id = trC + "_else"
                     s.label = ""
@@ -950,40 +978,46 @@ class CDTProcessor {
                 ]
                 
                 val conn = scc.createTransition => [
-                targetState = elseBody
-                immediate = false
-                condState.outgoingTransitions += it
-            ]
+                    targetState = elseBody
+                    immediate = false
+                    condState.outgoingTransitions += it
+                ]
                 
                 falseBody = (ifs.elseClause as CASTCompoundStatement).transformCompound(elseBody, elseBody)
                 
                 
-                
-                
-                
+            // Check for else if statement
             } else if (ifs.elseClause instanceof CASTIfStatement) {
                 falseBody = (ifs.elseClause as CASTIfStatement).transformIf(condState)
             }
             
             
-//            val falseState = falseBody
-//            val falseTrans = scc.createTransition => [
-//                    targetState = falseState
-//                    immediate = false
-//                    condState.outgoingTransitions += it
-//                ]
-            
-
-            if (!falseBody.final) {
+            // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+            if (falseBody.hasInnerStatesOrControlflowRegions) {
                 val falseConnector = scc.createTransition => [
                     targetState = connectorState
                     immediate = true
-
-                    type == TransitionType::TERMINATION
+                    type = TransitionType::TERMINATION
                 ]
+                needExtraEndState = true
                 falseBody.outgoingTransitions += falseConnector
+            } else {
+                // If no inner behavior, there is no need for an extra final state
+                falseBody.final = true
             }
-        } else {
+
+
+        } 
+        
+        if (ifs.elseClause == null || needExtraEndState) {
+            
+            // final state of statement. It is reached when condition is not met anymore
+            val endState = scc.createState => [s |
+                s.id = trC + "_end"
+                s.label = "End"
+                s.final = true
+                ifStateRegion.states += s
+            ]
             
             // transition to endState
             val defaultTrans = scc.createTransition => [
@@ -991,38 +1025,22 @@ class CDTProcessor {
             immediate = false
             condState.outgoingTransitions += it
             ]
+    
+            // transition to falseState
+            val falseTrans = scc.createTransition => [
+                targetState = endState
+                immediate = false
+                connectorState.outgoingTransitions += it
+            ]
+                
             
-//            val falseState = scc.createState => [ s |
-//                    s.id = "F"
-//                    s.label = s.id
-//
-//                    state.parentRegion.states += s
-//                ]
-//                val falseTrans = scc.createTransition => [
-//                    targetState = falseState
-//                    immediate = true
-//                    state.outgoingTransitions += it
-//                ]
-//            val falseConnector = scc.createTransition => [
-//                targetState = connectorState
-//                immediate = true
-//                falseState.outgoingTransitions += it
-//                type == TransitionType::TERMINATION
-//            ]
         }
-        
-        
-        
-        // transition to falseState
-        val falseTrans = scc.createTransition => [
-            targetState = endState
-            immediate = false
-            connectorState.outgoingTransitions += it
-        ]
-        
         
         ifState
     }
+    
+    
+    
 
     def State transformFor(CASTForStatement forStatement, State state) {
         val f = forStatement
@@ -1048,9 +1066,9 @@ class CDTProcessor {
         // initializer
         if (f.initializerStatement instanceof CASTDeclarationStatement) {
             val initializationExp = f.initializerStatement as CASTDeclarationStatement
-            actualState = initializationExp.castdeclaration(actualState) // add declaration to function head
+            initializationExp.castDeclaration(forState) // add declaration to function head
         } else {
-            actualState = (f.initializerStatement as CASTExpressionStatement).transformExpression(actualState)
+            (f.initializerStatement as CASTExpressionStatement).transformExpression(forState)
         }
 
         // condition
@@ -1070,17 +1088,27 @@ class CDTProcessor {
         // Connects for loop to the parent
         val forConnector = scc.createTransition => [
             targetState = forState
+            // Falls es geschachtelte Kontrollstrukturen sind, ohne dass nach dem cond State eine weitere Zeile kommt,
+            // fixt dies den Bug, dass die Condition der oberen for-Schleife richtig dargestellt wird.
             if(state.id.contains("_cond")) {
-                trigger = kExp
-                immediate = false
+                
+                 val condStatement = forStatement.parent.parent
+                    if (condStatement instanceof CASTForStatement) {
+                        val condCondition = (condStatement as CASTForStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        immediate = false
+                    }
+            // Falls davor eine Kontrollstruktur kam, muss man darauf warten, bis diese fertig ist
             } else if(state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
+                
             } else {
                 immediate = true
             }
             state.outgoingTransitions += it
         ]
-        actualState.outgoingTransitions += forConnector
+        //actualState.outgoingTransitions += forConnector
 
 //        // if condition of for loop is met
 //        val trueState = scc.createState => [ s |
@@ -1224,11 +1252,20 @@ class CDTProcessor {
 
             // create binary expression
             val exp = es.expression as CASTBinaryExpression
-            if (state.id.contains("_binEx")) {
+            // if variable assignment happens right after the initial state of the function -> entry action parent state
+            if(state.id.contains("_initFuncState")) {
+                val entryact = state.parent.createEntryAction
+                entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+                    exp.operand2.createKExpression)
+            }
+            // if variable assignments is follows by another variable assignment -> put them into one state
+            else if (state.id.contains("_binEx")) {
                 val entryact = state.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
-            } else {
+            }
+            // else -> create new state for variable assignment
+            else {
             val codeState = scc.createState => [ s |
                 s.id = trC + "_binEx"
                 s.label = createLabel(es)
@@ -1244,9 +1281,13 @@ class CDTProcessor {
                 if (state.hasInnerStatesOrControlflowRegions) {
                     type = TransitionType::TERMINATION
                 } else if (state.id.contains("_cond")) {
+                // ensure that all outgoing transitions of a cond-state are non-immediate to prevent instant loops       
                     immediate = false
                     // get condition of control structure (for, while, ect) for condition-transition
+                    var hlp = es.parent.parent
+                    println("ASDA " + hlp)
                     val condStatement = es.parent.parent
+                    // one case for each casting (-> optimize)
                     if (condStatement instanceof CASTWhileStatement) {
                         val condCondition = (condStatement as CASTWhileStatement).condition
                         val condKExp = condCondition.createKExpression
