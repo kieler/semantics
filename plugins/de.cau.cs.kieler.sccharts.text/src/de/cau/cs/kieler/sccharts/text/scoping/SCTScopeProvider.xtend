@@ -43,16 +43,11 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
         val parentState = transition.eContainer as State
         val parentRegion = parentState.eContainer as ControlflowRegion
         
-        val l = <IEObjectDescription>newLinkedList
-        
         parentRegion.states.forEach[ 
             states += it 
-            l += new EObjectDescription(QualifiedName.create(it.id), it,
-                    Collections.<String, String>emptyMap())
         ]
         
-//        return Scopes.scopeFor(states)
-        return new SimpleScope(l)
+        return SCTScopes.scopeFor(states)
     }
 
 }
