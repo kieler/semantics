@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.sccharts.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -96,6 +95,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseState(state);
                 if (result == null) result = caseScope(state);
                 if (result == null) result = caseAnnotatable(state);
+                if (result == null) result = caseDeclarationScope(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -104,6 +104,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseRegion(region);
                 if (result == null) result = caseScope(region);
                 if (result == null) result = caseAnnotatable(region);
+                if (result == null) result = caseDeclarationScope(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -113,6 +114,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseRegion(controlflowRegion);
                 if (result == null) result = caseScope(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
+                if (result == null) result = caseDeclarationScope(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -122,6 +124,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseRegion(dataflowRegion);
                 if (result == null) result = caseScope(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
+                if (result == null) result = caseDeclarationScope(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -181,6 +184,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 Scope scope = (Scope)theEObject;
                 T result = caseScope(scope);
                 if (result == null) result = caseAnnotatable(scope);
+                if (result == null) result = caseDeclarationScope(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -260,6 +264,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseSCCharts(scCharts);
                 if (result == null) result = caseScope(scCharts);
                 if (result == null) result = caseAnnotatable(scCharts);
+                if (result == null) result = caseDeclarationScope(scCharts);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -609,6 +614,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclarationScope(de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope object) {
         return null;
     }
 

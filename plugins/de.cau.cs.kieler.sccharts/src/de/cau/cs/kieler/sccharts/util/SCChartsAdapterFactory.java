@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.sccharts.*;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -176,6 +175,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseDeclarationScope(de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope object) {
+                return createDeclarationScopeAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -516,6 +519,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope <em>Declaration Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope
+     * @generated
+     */
+    public Adapter createDeclarationScopeAdapter() {
         return null;
     }
 

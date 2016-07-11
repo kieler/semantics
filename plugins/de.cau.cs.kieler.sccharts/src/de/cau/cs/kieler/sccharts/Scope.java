@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import org.eclipse.emf.common.util.EList;
 
@@ -52,7 +49,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -60,7 +56,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface Scope extends Annotatable {
+public interface Scope extends Annotatable, de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope {
     /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -179,22 +175,6 @@ public interface Scope extends Annotatable {
     EList<Binding> getBindings();
 
     /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Declarations()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Declaration> getDeclarations();
-
-				/**
      * Returns the value of the '<em><b>Expression</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <p>

@@ -168,13 +168,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -183,7 +192,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
@@ -192,7 +201,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -201,7 +210,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__REFERENCED_SCOPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__REFERENCED_SCOPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -210,16 +219,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BINDINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__BINDINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -257,6 +257,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int STATE__ANNOTATIONS = SCOPE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -302,15 +311,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int STATE__BINDINGS = SCOPE__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -422,6 +422,15 @@ public interface SCChartsPackage extends EPackage {
     int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -465,15 +474,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int REGION__BINDINGS = SCOPE__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -522,6 +522,15 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -565,15 +574,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__BINDINGS = REGION__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -631,6 +631,15 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -674,15 +683,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__BINDINGS = REGION__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1826,6 +1826,15 @@ public interface SCChartsPackage extends EPackage {
 	int SC_CHARTS__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
 				/**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__DECLARATIONS = SCOPE__DECLARATIONS;
+
+                /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1834,7 +1843,7 @@ public interface SCChartsPackage extends EPackage {
      */
 	int SC_CHARTS__ID = SCOPE__ID;
 
-				/**
+                /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1843,7 +1852,7 @@ public interface SCChartsPackage extends EPackage {
      */
 	int SC_CHARTS__LABEL = SCOPE__LABEL;
 
-				/**
+                /**
      * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1852,7 +1861,7 @@ public interface SCChartsPackage extends EPackage {
      */
 	int SC_CHARTS__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
-				/**
+                /**
      * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1861,7 +1870,7 @@ public interface SCChartsPackage extends EPackage {
      */
 	int SC_CHARTS__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
-				/**
+                /**
      * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1869,15 +1878,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
 	int SC_CHARTS__BINDINGS = SCOPE__BINDINGS;
-
-				/**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int SC_CHARTS__DECLARATIONS = SCOPE__DECLARATIONS;
 
 				/**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2541,17 +2541,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Bindings();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Declarations</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getDeclarations()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Declarations();
-
-    /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3197,14 +3186,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SCOPE__BINDINGS = eINSTANCE.getScope_Bindings();
-
-        /**
-         * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__DECLARATIONS = eINSTANCE.getScope_Declarations();
 
         /**
          * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
