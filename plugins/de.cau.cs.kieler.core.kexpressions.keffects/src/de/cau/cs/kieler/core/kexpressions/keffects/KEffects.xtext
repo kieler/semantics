@@ -88,7 +88,7 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-     valuedObject=[kexpressions::ValuedObject|ID]
+     valuedObject=[kexpressions::ValuedObject]
       (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
     ;
     

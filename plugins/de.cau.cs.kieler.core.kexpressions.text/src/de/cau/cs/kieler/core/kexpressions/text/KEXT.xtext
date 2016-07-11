@@ -99,7 +99,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
     
 NamespaceID returns ecore::EString:
-  ID (':' ID)*;    
+  ID (':' PrimeID)*;    
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
@@ -119,7 +119,7 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
 // Examples: array[10], initial = false, z = 0 combine max
 ValuedObject returns kexpressions::ValuedObject:
 	annotations+=QuotedStringAnnotation*
-    name=ID
+    name=PrimeID
     ('[' cardinalities+=INT ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'

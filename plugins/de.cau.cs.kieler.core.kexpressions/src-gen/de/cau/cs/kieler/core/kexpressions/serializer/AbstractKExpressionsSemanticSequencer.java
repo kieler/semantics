@@ -450,7 +450,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ReferenceCall returns ReferenceCall
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -586,7 +586,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ValuedObjectReference returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] subReference=ValuedObjectReference? indices+=Expression*)
+	 *     (valuedObject=[ValuedObject|PrimeID] subReference=ValuedObjectReference? indices+=Expression*)
 	 */
 	protected void sequence_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

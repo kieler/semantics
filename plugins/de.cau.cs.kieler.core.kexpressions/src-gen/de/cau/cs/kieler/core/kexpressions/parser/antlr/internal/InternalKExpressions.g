@@ -1503,6 +1503,40 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 
 
 
+// Entry rule entryRulePrimeID
+entryRulePrimeID returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPrimeIDRule()); } 
+	 iv_rulePrimeID=rulePrimeID 
+	 { $current=$iv_rulePrimeID.current.getText(); }  
+	 EOF 
+;
+
+// Rule PrimeID
+rulePrimeID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_ID_0=RULE_ID    {
+		$current.merge(this_ID_0);
+    }
+
+    { 
+    newLeafNode(this_ID_0, grammarAccess.getPrimeIDAccess().getIDTerminalRuleCall_0()); 
+    }
+(
+	kw='\'' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getPrimeIDAccess().getApostropheKeyword_1()); 
+    }
+)*)
+    ;
+
+
+
+
+
 // Entry rule entryRuleValuedObjectReference
 entryRuleValuedObjectReference returns [EObject current=null] 
 	:
@@ -1527,10 +1561,12 @@ ruleValuedObjectReference returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getValuedObjectReferenceRule());
 	        }
         }
-	otherlv_0=RULE_ID
-	{
-		newLeafNode(otherlv_0, grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )(	otherlv_1='.' 
@@ -1612,10 +1648,12 @@ ruleReferenceCall returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getReferenceCallRule());
 	        }
         }
-	otherlv_0=RULE_ID
-	{
-		newLeafNode(otherlv_0, grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )((	otherlv_1='(' 
@@ -3369,7 +3407,7 @@ ruleLogicalAndOperator returns [Enumerator current=null]
 
 
 
-RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
+RULE_HOSTCODE : '`' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'`')))* '`';
 
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
 

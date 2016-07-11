@@ -230,18 +230,22 @@ ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
 	| ValuedObjectReference;
 
+// ID with primes
+PrimeID returns ecore::EString:
+  ID ("'")*;
+
 // Valued Object Reference Rule
 // References a valued object with arbitrary (including none) indices part.
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID]
+	valuedObject=[ValuedObject|PrimeID]
 	('.' subReference=ValuedObjectReference)? 
 	('[' indices+=Expression ']')*;
 
 // Reference Call Rule
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
-    valuedObject=[ValuedObject|ID] 
+    valuedObject=[ValuedObject|PrimeID] 
     (
         ('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
@@ -387,4 +391,5 @@ enum CombineOperator returns CombineOperator:
 // Hostcode Terminals
 // Custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
-	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	"`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";
+

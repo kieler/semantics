@@ -119,6 +119,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_3(), "rule__AtomicValuedExpression__Group_3__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
+					put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_2(), "rule__ValuedObjectReference__Group_2__0");

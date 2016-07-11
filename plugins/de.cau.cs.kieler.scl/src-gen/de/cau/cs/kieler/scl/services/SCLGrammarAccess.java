@@ -1085,7 +1085,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//NamespaceID:
-	//	ID (':' ID)*;
+	//	ID (':' PrimeID)*;
 	public KEXTGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
 		return gaKEXT.getNamespaceIDAccess();
 	}
@@ -1122,7 +1122,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=ID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKEXT.getValuedObjectAccess();
@@ -1577,11 +1577,22 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
+		return gaKExpressions.getPrimeIDAccess();
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
@@ -1593,7 +1604,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -1888,7 +1899,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal HOSTCODE:
-	//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
 	} 
@@ -1910,6 +1921,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
+	}
+
+	//// General rule for pragmas
+	//// We only have string and tag pragmas.    
+	//PragmaAnnotation Annotation:
+	//	PramgaKeyStringValueAnnotation | PragmaTagAnnotation
+	public AnnotationsGrammarAccess.PragmaAnnotationElements getPragmaAnnotationAccess() {
+		return gaAnnotations.getPragmaAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaAnnotationRule() {
+		return getPragmaAnnotationAccess().getRule();
 	}
 
 	//// Valued Annotation Rule
@@ -1978,6 +2001,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getTagAnnotationAccess().getRule();
 	}
 
+	//PragmaTagAnnotation PragmaAnnotation:
+	//	'#' name=ExtendedID
+	public AnnotationsGrammarAccess.PragmaTagAnnotationElements getPragmaTagAnnotationAccess() {
+		return gaAnnotations.getPragmaTagAnnotationAccess();
+	}
+	
+	public ParserRule getPragmaTagAnnotationRule() {
+		return getPragmaTagAnnotationAccess().getRule();
+	}
+
 	//// KeyStringValueAnnotation
 	//// e.g.: @layouter dot
 	//// You may separate different values via comma.   
@@ -1999,6 +2032,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getRestrictedKeyStringValueAnnotationRule() {
 		return getRestrictedKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//PramgaKeyStringValueAnnotation PragmaStringAnnotation:
+	//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+	public AnnotationsGrammarAccess.PramgaKeyStringValueAnnotationElements getPramgaKeyStringValueAnnotationAccess() {
+		return gaAnnotations.getPramgaKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getPramgaKeyStringValueAnnotationRule() {
+		return getPramgaKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// TypedKeyStringValueAnnotation

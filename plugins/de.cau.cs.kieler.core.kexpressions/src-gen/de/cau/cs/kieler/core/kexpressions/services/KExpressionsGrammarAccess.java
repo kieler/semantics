@@ -889,12 +889,33 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValuedObjectReferenceParserRuleCall_1() { return cValuedObjectReferenceParserRuleCall_1; }
 	}
 
+	public class PrimeIDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cApostropheKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//// ID with primes
+		//PrimeID:
+		//	ID "'"*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ID "'"*
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//"'"*
+		public Keyword getApostropheKeyword_1() { return cApostropheKeyword_1; }
+	}
+
 	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cSubReferenceAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -909,20 +930,20 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// References a valued object with arbitrary (including none) indices part.
 		//// Example: A, B
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+		//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//valuedObject=[ValuedObject] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*
+		//valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*
 		public Group getGroup() { return cGroup; }
 
-		//valuedObject=[ValuedObject]
+		//valuedObject=[ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
-		//[ValuedObject]
+		//[ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
 
 		//('.' subReference=ValuedObjectReference)?
 		public Group getGroup_1() { return cGroup_1; }
@@ -957,7 +978,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
@@ -973,21 +994,21 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Reference Call Rule
 		//// Calls to references. They may include a parameter list. 
 		//ReferenceCall:
-		//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+		//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 		//	| '()');
 		@Override public ParserRule getRule() { return rule; }
 
-		//valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
 
-		//valuedObject=[ValuedObject]
+		//valuedObject=[ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
-		//[ValuedObject]
+		//[ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
 
 		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
@@ -1801,6 +1822,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
+	private final PrimeIDElements pPrimeID;
 	private final ValuedObjectReferenceElements pValuedObjectReference;
 	private final ReferenceCallElements pReferenceCall;
 	private final FunctionCallElements pFunctionCall;
@@ -1864,6 +1886,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
+		this.pPrimeID = new PrimeIDElements();
 		this.pValuedObjectReference = new ValuedObjectReferenceElements();
 		this.pReferenceCall = new ReferenceCallElements();
 		this.pFunctionCall = new FunctionCallElements();
@@ -2249,11 +2272,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public PrimeIDElements getPrimeIDAccess() {
+		return pPrimeID;
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return pValuedObjectReference;
 	}
@@ -2265,7 +2299,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public ReferenceCallElements getReferenceCallAccess() {
 		return pReferenceCall;
@@ -2560,7 +2594,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal HOSTCODE:
-	//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return tHOSTCODE;
 	} 
