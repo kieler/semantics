@@ -494,7 +494,7 @@ public class KielerCompiler {
 
         for (IHook hook : getHooks()) {
             EObject hookCopy = hook.copy(original, context);
-            if (copy != null) {
+            if (copy != null && hookCopy != null) {
                 throw new IllegalStateException("Multiple hooks try to perfom model copy");
             }
             if (hookCopy != null) {

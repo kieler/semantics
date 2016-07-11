@@ -25,7 +25,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
  */
 class KExpressionsCompareExtensions {
 
-    def dispatch equals(OperatorExpression expression1, OperatorExpression expression2) {
+    def dispatch boolean equals2(OperatorExpression expression1, OperatorExpression expression2) {
         var c = 0
         for (Expression subExpression1 : expression1.subExpressions) {
             val subExpression2 = expression2.subExpressions.get(c)
@@ -33,14 +33,14 @@ class KExpressionsCompareExtensions {
             if (expression1.operator != expression2.operator) {
                 return false
             }
-            if (!subExpression1.equals(subExpression2)) {
+            if (!(subExpression1.equals2(subExpression2))) {
                 return false
             }
         }
         return true
     }
 
-    def dispatch equals(ValuedObjectReference expression1, ValuedObjectReference expression2) {
+    def dispatch equals2(ValuedObjectReference expression1, ValuedObjectReference expression2) {
         if (expression1 == null && expression2 == null) {
             return true
         } else if (expression1 != null && expression2 == null) {
@@ -51,7 +51,7 @@ class KExpressionsCompareExtensions {
         return expression1.valuedObject == expression2.valuedObject
     }
 
-    def dispatch equals(TextExpression expression1, TextExpression expression2) {
+    def dispatch equals2(TextExpression expression1, TextExpression expression2) {
         if (expression1 == null && expression2 == null) {
             return true
         } else if (expression1 != null && expression2 == null) {
@@ -62,7 +62,7 @@ class KExpressionsCompareExtensions {
         return expression1.text.equals(expression2.text)
     }
 
-    def dispatch equals(Expression expression1, Expression expression2) {
+    def dispatch equals2(Expression expression1, Expression expression2) {
         if (expression1 == null && expression2 == null) {
             return true
         }

@@ -50,6 +50,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
