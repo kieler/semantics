@@ -12,22 +12,33 @@
  */
 package de.cau.cs.kieler.c.sccharts.transformation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author SL
  *
  */
-class TransitionFeature extends Feature {
+class CbasedSCChartFeature extends Feature {
+    
+    public static val ID = "CbasedSCChart"
     
     override getId() {
-        val String id = "c.immediateTrans"
-        return id
+        return ID
     }
     
     override getName() {
-        val String name = "ImmTrans"
-        return name
+        return "Immediate Transitions"
+    }
+    
+    //-------------------------------------------------------------------------
+    @Inject
+    extension AnnotationsExtensions
+    
+    def boolean isContained(State scchart) {
+        scchart.hasAnnotation(ID)
     }
     
 }

@@ -12,27 +12,29 @@
  */
 package de.cau.cs.kieler.c.sccharts.transformation
 
-import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import java.util.LinkedList
-
 
 /**
  * @author SL
  *
  */
-class ImmTransTransformation extends AbstractProductionTransformation {
+class ImmTransTransformation extends AbstractExpansionTransformation {
  
  
     LinkedList<State> nextStates = new LinkedList<State>();
     LinkedList<State> tmpList = new LinkedList<State>();
     
-    override getProducedFeatureId() {
-        val String featureId = "c.immediateTrans"
-        return featureId
-        
+    override getProducesFeatureIds() {
+        return newHashSet(SCChartsFeatureGroup.EXPANSION_ID)
+    }
+    
+    override getExpandsFeatureId() {
+        return CbasedSCChartFeature.ID
     }
      
     override getId() {

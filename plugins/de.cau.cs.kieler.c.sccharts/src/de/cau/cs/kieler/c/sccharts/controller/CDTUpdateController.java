@@ -13,40 +13,27 @@
 package de.cau.cs.kieler.c.sccharts.controller;
 
 import org.eclipse.cdt.internal.ui.editor.CEditor;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IMemento;
 
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.c.sccharts.CDTProcessor;
-import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
-import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter;
-import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter.EditorSafeListener;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
+import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
+import de.cau.cs.kieler.sccharts.State;
 
 /**
  * @author leo
  *
  */
-public class CDTUpdateController extends AbstractViewUpdateController implements EditorSafeListener  {
+public class CDTUpdateController extends KiCoModelUpdateController  {
     
     /** Controller ID. */
     private static final String ID =
             "de.cau.cs.kieler.c.sccharts.controller.CDTUpdateController";
-
-    // CHECKSTYLEOFF VisibilityModifier NEXT
-    /** The save adapter for the editor. */
-    protected final EditorSaveAdapter saveAdapter;
-
-    /**
-     * Default Constructor.
-     */
-    public CDTUpdateController() {
-        saveAdapter = new EditorSaveAdapter(this);
-    }
 
     /**
      * {@inheritDoc}
@@ -55,107 +42,19 @@ public class CDTUpdateController extends AbstractViewUpdateController implements
     public String getID() {
         return ID;
     }
-    
+   
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onActivate(final IEditorPart editor) {
-        updateModel(readModel(editor));
-        saveAdapter.activate(editor);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDeactivate() {
-        saveAdapter.deactivate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void selectionChanged(final SelectionChangedEvent event) {
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void copy(AbstractViewUpdateController source) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void reset() {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void saveState(IMemento memento) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadState(IMemento memento) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDispose() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addContributions(IToolBarManager toolBar, IMenuManager menu) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void onDiagramUpdate(Object model, KlighdSynthesisProperties properties) {        
-    }
-    
-    // -- Save Listener
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onEditorSaved(final IEditorPart editor) {
-        updateModel(readModel(editor));
-    }
-
-    // -- Utility
-    // -------------------------------------------------------------------------
-
-    /**
-     * Reads the model from given CDT editor.
-     * 
-     * @param editor
-     *            IEditorPart containing model
-     * @return  Object model
-     */
-    protected static Object readModel(final IEditorPart editor) {
+    protected EObject readModel_NON_STATIC(final IEditorPart editor) {
         if (editor instanceof CEditor) {
             CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
-            return CDTProcessor.createFromEditor(editor);
+            State scchart = CDTProcessor.createFromEditor(editor);
+            Annotation tag = AnnotationsFactory.eINSTANCE.createAnnotation();
+            tag.setName(CbasedSCChartFeature.ID);
+            scchart.getAnnotations().add(tag);
+            return scchart;
         }
         return null;
     }

@@ -116,7 +116,7 @@ class CDTProcessor {
     List<State> connectorStates = new ArrayList<State>();
     String parameterStr
 
-    def EObject createFromEditor(IEditorPart editor) {
+    def State createFromEditor(IEditorPart editor) {
         val cEditor = editor as CEditor
         val tu = cEditor.translationUnit
         tu.transform as State
