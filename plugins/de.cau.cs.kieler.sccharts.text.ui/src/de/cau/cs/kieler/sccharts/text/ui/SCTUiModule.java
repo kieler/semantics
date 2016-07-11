@@ -18,4 +18,14 @@ public class SCTUiModule extends de.cau.cs.kieler.sccharts.text.ui.AbstractSCTUi
 	public Class<? extends  org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
 	    return SCTQuickfixProviderX.class;
 	}
+	
+    /* introduces new highlighting profiles (e.g. annotationKey) */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration> bindIHighlightingConfiguration() {
+        return SCTHighlightingConfiguration.class;
+    }
+
+    /* provides a few additional highlighting rules */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        return SCTSemanticHighlightingCalculator.class;
+    }   	
 }
