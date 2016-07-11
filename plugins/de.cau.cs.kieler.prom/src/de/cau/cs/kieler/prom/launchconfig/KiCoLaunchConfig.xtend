@@ -425,7 +425,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                 throw new KielerCompilerException("", "", errorMessage) {
                     // Override toString to have a more readable error message and not twice the same.
                     override toString() {
-                        return class.name;
+                        return "KielerCompilerException"
                     }
                 }
             }

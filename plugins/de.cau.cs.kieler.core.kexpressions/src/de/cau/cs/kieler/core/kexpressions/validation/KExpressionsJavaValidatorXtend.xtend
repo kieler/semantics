@@ -25,7 +25,7 @@ class KExpressionsJavaValidatorXtend extends KExpressionsJavaValidator {
     public static val CONST_DECLARATION_EXPECTS_INITIALIZATION = "A const declaration must have an initialization part!";    
     
     @Check
-    public def void checkConstInitialization(Declaration declaration) {
+    public override void checkConstInitialization(Declaration declaration) {
         if (declaration.isConst) {
             for(vo : declaration.valuedObjects) {
                 if (vo.initialValue == null) {
