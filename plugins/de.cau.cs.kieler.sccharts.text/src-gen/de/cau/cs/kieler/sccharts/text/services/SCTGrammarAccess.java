@@ -431,7 +431,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_6_0_0_2 = (Assignment)cGroup_6_0_0.eContents().get(2);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0_0_2_0 = (RuleCall)cTriggerAssignment_6_0_0_2.eContents().get(0);
 		private final Group cGroup_6_0_1 = (Group)cGroup_6_0.eContents().get(1);
-		private final Keyword cThenKeyword_6_0_1_0 = (Keyword)cGroup_6_0_1.eContents().get(0);
+		private final Keyword cDoKeyword_6_0_1_0 = (Keyword)cGroup_6_0_1.eContents().get(0);
 		private final Assignment cEffectsAssignment_6_0_1_1 = (Assignment)cGroup_6_0_1.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_6_0_1_1_0 = (RuleCall)cEffectsAssignment_6_0_1_1.eContents().get(0);
 		private final Group cGroup_6_0_1_2 = (Group)cGroup_6_0_1.eContents().get(2);
@@ -451,12 +451,12 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//	type=TransitionType
 		//	targetState=[sccharts::State] immediate?='immediate'?
 		//	deferred?='deferred'?
-		//	history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//	history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	| 'if' label=STRING)?
 		@Override public ParserRule getRule() { return rule; }
 
 		//annotations+=RestrictedTypeAnnotation* type=TransitionType targetState=[sccharts::State] immediate?='immediate'?
-		//deferred?='deferred'? history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';'
+		//deferred?='deferred'? history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';'
 		//effects+=Effect)*)? | 'if' label=STRING)?
 		public Group getGroup() { return cGroup; }
 
@@ -499,10 +499,10 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
 
-		//(('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
+		//(('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)? | 'if' label=STRING)?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
-		//('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_6_0() { return cGroup_6_0; }
 
 		//('if' delay=INT? trigger=BoolExpression)?
@@ -523,11 +523,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0_0_2_0() { return cTriggerBoolExpressionParserRuleCall_6_0_0_2_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_6_0_1() { return cGroup_6_0_1; }
 
-		//'then'
-		public Keyword getThenKeyword_6_0_1_0() { return cThenKeyword_6_0_1_0; }
+		//'do'
+		public Keyword getDoKeyword_6_0_1_0() { return cDoKeyword_6_0_1_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_6_0_1_1() { return cEffectsAssignment_6_0_1_1; }
@@ -613,7 +613,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cThenKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
@@ -623,10 +623,10 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//EntryAction sccharts::EntryAction:
 		//	{sccharts::EntryAction}
-		//	'entry' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
@@ -647,11 +647,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'then'
-		public Keyword getThenKeyword_3_0() { return cThenKeyword_3_0; }
+		//'do'
+		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
@@ -684,7 +684,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_1_0 = (RuleCall)cTriggerAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cThenKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cDoKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_1_0 = (RuleCall)cEffectsAssignment_4_1.eContents().get(0);
 		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
@@ -693,11 +693,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		
 		//DuringAction sccharts::DuringAction:
-		//	{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';'
+		//	{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
 		//	effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';'
+		//{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
 		//effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -725,11 +725,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_3_1_0() { return cTriggerBoolExpressionParserRuleCall_3_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//'then'
-		public Keyword getThenKeyword_4_0() { return cThenKeyword_4_0; }
+		//'do'
+		public Keyword getDoKeyword_4_0() { return cDoKeyword_4_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_4_1() { return cEffectsAssignment_4_1; }
@@ -760,7 +760,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cThenKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
@@ -770,10 +770,10 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction sccharts::ExitAction:
 		//	{sccharts::ExitAction}
-		//	'exit' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
@@ -794,11 +794,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'then'
-		public Keyword getThenKeyword_3_0() { return cThenKeyword_3_0; }
+		//'do'
+		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
@@ -883,7 +883,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_1_0 = (RuleCall)cTriggerAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cThenKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cDoKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_1_0 = (RuleCall)cEffectsAssignment_4_1.eContents().get(0);
 		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
@@ -892,11 +892,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		
 		//IterateAction sccharts::IterateAction:
-		//	{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('then' effects+=Effect
-		//	(';' effects+=Effect)*)?
+		//	{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
+		//	effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';'
+		//{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
 		//effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -924,11 +924,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_3_1_0() { return cTriggerBoolExpressionParserRuleCall_3_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//'then'
-		public Keyword getThenKeyword_4_0() { return cThenKeyword_4_0; }
+		//'do'
+		public Keyword getDoKeyword_4_0() { return cDoKeyword_4_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_4_1() { return cEffectsAssignment_4_1; }
@@ -959,7 +959,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cThenKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
@@ -969,10 +969,10 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//InitAction sccharts::InitAction:
 		//	{sccharts::InitAction}
-		//	'init' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//	'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::InitAction} 'init' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::InitAction} 'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::InitAction}
@@ -993,11 +993,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'then'
-		public Keyword getThenKeyword_3_0() { return cThenKeyword_3_0; }
+		//'do'
+		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
@@ -1028,7 +1028,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_1_0 = (RuleCall)cTriggerAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cThenKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
 		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
@@ -1038,10 +1038,10 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//FinalAction sccharts::FinalAction:
 		//	{sccharts::FinalAction}
-		//	'final' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::FinalAction} 'final' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::FinalAction} 'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::FinalAction}
@@ -1062,11 +1062,11 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_2_1_0() { return cTriggerBoolExpressionParserRuleCall_2_1_0; }
 
-		//('then' effects+=Effect (';' effects+=Effect)*)?
+		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//'then'
-		public Keyword getThenKeyword_3_0() { return cThenKeyword_3_0; }
+		//'do'
+		public Keyword getDoKeyword_3_0() { return cDoKeyword_3_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
@@ -1813,7 +1813,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	type=TransitionType
 	//	targetState=[sccharts::State] immediate?='immediate'?
 	//	deferred?='deferred'?
-	//	history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+	//	history=HistoryType? (('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	| 'if' label=STRING)?
 	public TransitionElements getTransitionAccess() {
 		return pTransition;
@@ -1838,7 +1838,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//EntryAction sccharts::EntryAction:
 	//	{sccharts::EntryAction}
-	//	'entry' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+	//	'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public EntryActionElements getEntryActionAccess() {
 		return pEntryAction;
 	}
@@ -1848,7 +1848,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//DuringAction sccharts::DuringAction:
-	//	{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';'
+	//	{sccharts::DuringAction} immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
 	//	effects+=Effect)*)?
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
@@ -1860,7 +1860,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction sccharts::ExitAction:
 	//	{sccharts::ExitAction}
-	//	'exit' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+	//	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public ExitActionElements getExitActionAccess() {
 		return pExitAction;
 	}
@@ -1880,8 +1880,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IterateAction sccharts::IterateAction:
-	//	{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('then' effects+=Effect
-	//	(';' effects+=Effect)*)?
+	//	{sccharts::IterateAction} immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';'
+	//	effects+=Effect)*)?
 	public IterateActionElements getIterateActionAccess() {
 		return pIterateAction;
 	}
@@ -1892,7 +1892,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InitAction sccharts::InitAction:
 	//	{sccharts::InitAction}
-	//	'init' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+	//	'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public InitActionElements getInitActionAccess() {
 		return pInitAction;
 	}
@@ -1903,7 +1903,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//FinalAction sccharts::FinalAction:
 	//	{sccharts::FinalAction}
-	//	'final' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+	//	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public FinalActionElements getFinalActionAccess() {
 		return pFinalAction;
 	}
@@ -2184,7 +2184,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//NamespaceID:
-	//	ID (':' ID)*;
+	//	ID (':' PrimeID)*;
 	public KEXTGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
 		return gaKEXT.getNamespaceIDAccess();
 	}
@@ -2221,7 +2221,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: array[10], initial = false, z = 0 combine max
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
-	//	name=ID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
+	//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
 	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKEXT.getValuedObjectAccess();
@@ -2674,11 +2674,22 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectTestExpressionAccess().getRule();
 	}
 
+	//// ID with primes
+	//PrimeID:
+	//	ID "'"*;
+	public KExpressionsGrammarAccess.PrimeIDElements getPrimeIDAccess() {
+		return gaKExpressions.getPrimeIDAccess();
+	}
+	
+	public ParserRule getPrimeIDRule() {
+		return getPrimeIDAccess().getRule();
+	}
+
 	//// Valued Object Reference Rule
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
@@ -2690,7 +2701,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -2985,7 +2996,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal HOSTCODE:
-	//	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
 	} 

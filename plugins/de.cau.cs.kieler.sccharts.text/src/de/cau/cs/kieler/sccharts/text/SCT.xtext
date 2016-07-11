@@ -70,7 +70,7 @@ Transition returns sccharts::Transition:
 	deferred?='deferred'?
 	history=HistoryType?
 	(
-		('if' delay=INT? trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?
+		('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		|
 		('if' label=STRING)
 	)?;
@@ -85,15 +85,15 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;
+   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;
+    immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;  
+	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
@@ -101,15 +101,15 @@ SuspendAction returns sccharts::SuspendAction:
       
 IterateAction returns sccharts::IterateAction:
 	{sccharts::IterateAction}
-	immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;
+	immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
 
 InitAction returns sccharts::InitAction:
 	{sccharts::InitAction}
-   'init' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;
+   'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 FinalAction returns sccharts::FinalAction:
 	{sccharts::FinalAction}
-	'final' ('if' trigger=BoolExpression)? ('then' effects+=Effect (';' effects+=Effect)*)?;  
+	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
 
 
 // -------------- //
