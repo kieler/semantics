@@ -55,6 +55,7 @@ import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.widgets.Display
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -420,7 +421,13 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                                    Strings.nullToEmpty(result.allErrors) + "\n" +
                                    Strings.nullToEmpty(result.allWarnings)
 
-                throw new Exception(errorMessage)
+                // Throw exception
+                throw new KielerCompilerException("", "", errorMessage) {
+                    // Override toString to have a more readable error message and not twice the same.
+                    override toString() {
+                        return class.name;
+                    }
+                }
             }
         }
     }
