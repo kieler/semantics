@@ -99,6 +99,7 @@ import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.SCGAnnotations
+import com.google.common.collect.Multimap
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -374,6 +375,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHEDULING_DEADCODE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 128; it.blue = 128;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
+    private static val KColor SCHEDULEBORDER = RENDERING_FACTORY.createKColor() =>
+        [it.red = 0; it.green = 0; it.blue = 128;]
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 255; it.green = 0; it.blue = 0;]
@@ -404,6 +407,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int NODEGROUPING_BASICBLOCK = 1
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
     private static val int NODEGROUPING_GUARDBLOCK = 3
+    private static val int NODEGROUPING_SCHEDULE = 4
 
     /** Constants for the graph orientation */
     private static val int ORIENTATION_PORTRAIT = 0
@@ -520,7 +524,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.setLayoutOption(Properties::THOROUGHNESS, 100)
-            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+            node.setLayoutOption(LayoutOptions::SEPARATE_CC, LAYOUT_SEPARATE_CC.booleanValue);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
                 node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
                 node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
@@ -692,6 +696,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Draw analysis visualization if present.
             scg.synthesizeAnalyses
+            scg.synthesizeSchedule
+            scg.synthesizeScheduleGroups
             
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
@@ -710,7 +716,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
                 ]
             }
-            scg.synthesizeSchedule
         ]
     }
 
@@ -1631,7 +1636,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background = DEPENDENCY_GUARD.copy;
             kContainer.KRendering.background.alpha = Math.round(80f)
         }
-
+        if (nodeGrouping == NODEGROUPING_SCHEDULE) {
+            kContainer.addRoundedRectangle(1, 1, 7) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = SCHEDULEBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(196f)
+            kContainer.KRendering.background = SCCHARTSBLUE.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
+        
         // Add the nodes to the container.
         // They will be removed from the original parent!
         for (tn : nodes) {
@@ -1740,7 +1755,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+            	    if (!SHOW_BASICBLOCKS.booleanValue) {
+                	   sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+               	    }
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [
@@ -1756,9 +1773,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     private def void synthesizeSchedule(SCGraph scg) {
-        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
-        	for(node : scg.nodes.filter[ !dependencies.filter(ScheduleDependency).empty ]) {
-      			val sourceKNode = node.node 
+        if (!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
+        
+    	for(node : scg.nodes) {
+    	    // filter[ !dependencies.filter(ScheduleDependency).empty ]
+    	    if (!node.dependencies.filter(ScheduleDependency).empty) { 
+      		    val sourceKNode = node.node 
       			val targetNode = node.dependencies.filter(ScheduleDependency).head.target
        			val targetKNode = targetNode.node
 				val nonScheduleDependencies = node.dependencies.filter[ !(it instanceof ScheduleDependency) ].
@@ -1787,8 +1807,35 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     	}        			
 	        		]
         		}
-        	}
-        }    	
+            }
+        }
+    }
+    
+    private def void synthesizeScheduleGroups(SCGraph scg) {
+        if (!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
+        
+        val schedules = <List<Node>> newArrayList
+
+        for(node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
+            val newSchedule = <Node> newArrayList => [ s | 
+                s += node
+                node.dependencies.filter(GuardDependency).forEach[ s += it.target ]
+            ]
+            var next = node.dependencies.filter(ScheduleDependency).head?.target
+            while(next!=null) {
+                newSchedule += next
+                next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.target ]
+                next = next.dependencies.filter(ScheduleDependency).head?.target
+            }            
+            
+            schedules += newSchedule
+        }        
+        
+        System.out.println("Schedules " + schedules.size)
+        for(schedule : schedules) {
+            System.out.println(schedule)
+            schedule.createHierarchy(NODEGROUPING_SCHEDULE, null)
+        }        
     }
 
     /**

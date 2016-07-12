@@ -180,14 +180,16 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     protected def createDependencies(Assignment assignment, Multimap<ValuedObject, Assignment> writer,
     	Set<Assignment> relativeWriter, Multimap<ValuedObject, Node> reader, Map<Node, List<Entry>> nodeMapping
     ) {
-    	for(VOWriter : writer.get(assignment.valuedObject).filter[ !it.equals(assignment) ]
-    	) {
-    		val dependency = assignment.createDataDependency(VOWriter, 
-    			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
-    		)
-    		dependency.checkAndSetConfluence
-    		dependency.checkAndSetConcurrency(nodeMapping)
-    	}	
+        if (!relativeWriter.contains(assignment)) { 
+        	for(VOWriter : writer.get(assignment.valuedObject).filter[ !equals(assignment) ]
+        	) {
+        		val dependency = assignment.createDataDependency(VOWriter, 
+        			if (relativeWriter.contains(VOWriter)) DataDependencyType.WRITE_RELATIVEWRITE else DataDependencyType.WRITE_WRITE
+        		)
+        		dependency.checkAndSetConfluence
+        		dependency.checkAndSetConcurrency(nodeMapping)
+        	}	
+    	}
     	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     		dependency.checkAndSetConcurrency(nodeMapping)
