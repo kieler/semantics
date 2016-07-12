@@ -1,11 +1,13 @@
 /**
  */
-package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
+package de.cau.cs.kieler.core.kexpressions.impl;
 
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
-import de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
 
 import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class ReferenceableImpl extends IdentifiableImpl implements Referenceable {
+public class ReferenceableImpl extends EObjectImpl implements Referenceable {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -31,7 +33,7 @@ public class ReferenceableImpl extends IdentifiableImpl implements Referenceable
      */
     @Override
     protected EClass eStaticClass() {
-        return KextPackage.Literals.REFERENCEABLE;
+        return KExpressionsPackage.Literals.REFERENCEABLE;
     }
 
 } //ReferenceableImpl

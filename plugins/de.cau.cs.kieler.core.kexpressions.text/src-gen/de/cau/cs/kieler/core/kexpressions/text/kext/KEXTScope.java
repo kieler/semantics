@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text.kext;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -21,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface KEXTScope extends DeclarationScope, Referenceable {
+public interface KEXTScope extends DeclarationScope, Annotatable, Identifiable, Referenceable {
     /**
      * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity}.

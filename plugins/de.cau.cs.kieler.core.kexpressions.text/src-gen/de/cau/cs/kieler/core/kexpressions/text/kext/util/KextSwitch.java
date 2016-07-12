@@ -4,6 +4,8 @@ package de.cau.cs.kieler.core.kexpressions.text.kext.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
 import de.cau.cs.kieler.core.kexpressions.text.kext.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -73,9 +75,9 @@ public class KextSwitch<T> extends Switch<T> {
                 T result = caseKext(kext);
                 if (result == null) result = caseKEXTScope(kext);
                 if (result == null) result = caseDeclarationScope(kext);
-                if (result == null) result = caseReferenceable(kext);
-                if (result == null) result = caseIdentifiable(kext);
                 if (result == null) result = caseAnnotatable(kext);
+                if (result == null) result = caseIdentifiable(kext);
+                if (result == null) result = caseReferenceable(kext);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -92,13 +94,6 @@ public class KextSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KextPackage.IDENTIFIABLE: {
-                Identifiable identifiable = (Identifiable)theEObject;
-                T result = caseIdentifiable(identifiable);
-                if (result == null) result = caseAnnotatable(identifiable);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case KextPackage.DECLARATION_SCOPE: {
                 DeclarationScope declarationScope = (DeclarationScope)theEObject;
                 T result = caseDeclarationScope(declarationScope);
@@ -109,17 +104,9 @@ public class KextSwitch<T> extends Switch<T> {
                 KEXTScope kextScope = (KEXTScope)theEObject;
                 T result = caseKEXTScope(kextScope);
                 if (result == null) result = caseDeclarationScope(kextScope);
-                if (result == null) result = caseReferenceable(kextScope);
-                if (result == null) result = caseIdentifiable(kextScope);
                 if (result == null) result = caseAnnotatable(kextScope);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KextPackage.REFERENCEABLE: {
-                Referenceable referenceable = (Referenceable)theEObject;
-                T result = caseReferenceable(referenceable);
-                if (result == null) result = caseIdentifiable(referenceable);
-                if (result == null) result = caseAnnotatable(referenceable);
+                if (result == null) result = caseIdentifiable(kextScope);
+                if (result == null) result = caseReferenceable(kextScope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

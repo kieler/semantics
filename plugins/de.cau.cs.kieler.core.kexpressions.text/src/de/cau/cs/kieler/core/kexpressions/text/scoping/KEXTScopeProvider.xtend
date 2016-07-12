@@ -24,11 +24,10 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
+import de.cau.cs.kieler.core.kexpressions.Identifiable
 import java.util.Set
-import de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable
+import de.cau.cs.kieler.core.kexpressions.Referenceable
 
 /**
  * @author ssm
@@ -111,12 +110,8 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable
 		]
 	}
 
-	protected def Set<Identifiable> getReferenceables(EObject eObject) {
-		<Identifiable> newHashSet => [ set | 
-			val ids = eObject.eContents.filter(Referenceable).toSet
-			ids.forEach[ set += it.getIdentifiables ]
-			set += ids	
-		]
+	protected def Set<Referenceable> getReferenceables(EObject eObject) {
+	    eObject.eContents.filter(Referenceable).toSet
 	}
 
 }

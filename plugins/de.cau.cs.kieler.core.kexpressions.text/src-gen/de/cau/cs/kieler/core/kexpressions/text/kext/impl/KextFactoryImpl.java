@@ -59,10 +59,8 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
             case KextPackage.KEXT: return createKext();
             case KextPackage.TEST_ENTITY: return createTestEntity();
             case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-            case KextPackage.IDENTIFIABLE: return createIdentifiable();
             case KextPackage.DECLARATION_SCOPE: return createDeclarationScope();
             case KextPackage.KEXT_SCOPE: return createKEXTScope();
-            case KextPackage.REFERENCEABLE: return createReferenceable();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -103,16 +101,6 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Identifiable createIdentifiable() {
-        IdentifiableImpl identifiable = new IdentifiableImpl();
-        return identifiable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public DeclarationScope createDeclarationScope() {
         DeclarationScopeImpl declarationScope = new DeclarationScopeImpl();
         return declarationScope;
@@ -126,16 +114,6 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
     public KEXTScope createKEXTScope() {
         KEXTScopeImpl kextScope = new KEXTScopeImpl();
         return kextScope;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Referenceable createReferenceable() {
-        ReferenceableImpl referenceable = new ReferenceableImpl();
-        return referenceable;
     }
 
     /**

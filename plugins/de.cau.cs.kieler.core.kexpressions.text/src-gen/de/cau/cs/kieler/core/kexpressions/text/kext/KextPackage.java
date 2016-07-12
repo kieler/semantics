@@ -4,7 +4,6 @@ package de.cau.cs.kieler.core.kexpressions.text.kext;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -65,7 +64,7 @@ public interface KextPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getDeclarationScope()
      * @generated
      */
-    int DECLARATION_SCOPE = 4;
+    int DECLARATION_SCOPE = 3;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -93,7 +92,7 @@ public interface KextPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getKEXTScope()
      * @generated
      */
-    int KEXT_SCOPE = 5;
+    int KEXT_SCOPE = 4;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -287,80 +286,6 @@ public interface KextPackage extends EPackage {
      */
     int ANNOTATED_EXPRESSION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl <em>Identifiable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getIdentifiable()
-     * @generated
-     */
-    int IDENTIFIABLE = 3;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Identifiable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IDENTIFIABLE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl <em>Referenceable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getReferenceable()
-     * @generated
-     */
-    int REFERENCEABLE = 6;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCEABLE__ANNOTATIONS = IDENTIFIABLE__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCEABLE__ID = IDENTIFIABLE__ID;
-
-    /**
-     * The number of structural features of the '<em>Referenceable</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCEABLE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
-
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext <em>Kext</em>}'.
@@ -426,27 +351,6 @@ public interface KextPackage extends EPackage {
     EReference getAnnotatedExpression_Expression();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable <em>Identifiable</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Identifiable</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
-     * @generated
-     */
-    EClass getIdentifiable();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable#getId()
-     * @see #getIdentifiable()
-     * @generated
-     */
-    EAttribute getIdentifiable_Id();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope <em>Declaration Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -498,16 +402,6 @@ public interface KextPackage extends EPackage {
      * @generated
      */
     EReference getKEXTScope_Scopes();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable <em>Referenceable</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Referenceable</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable
-     * @generated
-     */
-    EClass getReferenceable();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -586,24 +480,6 @@ public interface KextPackage extends EPackage {
         EReference ANNOTATED_EXPRESSION__EXPRESSION = eINSTANCE.getAnnotatedExpression_Expression();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl <em>Identifiable</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl
-         * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getIdentifiable()
-         * @generated
-         */
-        EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
-
-        /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.DeclarationScopeImpl <em>Declaration Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -646,16 +522,6 @@ public interface KextPackage extends EPackage {
          * @generated
          */
         EReference KEXT_SCOPE__SCOPES = eINSTANCE.getKEXTScope_Scopes();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl <em>Referenceable</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.ReferenceableImpl
-         * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getReferenceable()
-         * @generated
-         */
-        EClass REFERENCEABLE = eINSTANCE.getReferenceable();
 
     }
 

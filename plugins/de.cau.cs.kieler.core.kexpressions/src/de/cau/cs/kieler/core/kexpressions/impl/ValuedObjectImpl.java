@@ -6,11 +6,16 @@
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
+import de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
@@ -24,6 +29,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +40,7 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
@@ -41,26 +48,16 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  *
  * @generated
  */
-public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
+public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
     /**
-     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getName()
+     * @see #getAnnotations()
      * @generated
      * @ordered
      */
-    protected static final String NAME_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getName()
-     * @generated
-     * @ordered
-     */
-    protected String name = NAME_EDEFAULT;
+    protected EList<Annotation> annotations;
 
     /**
      * The default value of the '{@link #getCombineOperator() <em>Combine Operator</em>}' attribute.
@@ -126,20 +123,11 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setName(String newName) {
-        String oldName = name;
-        name = newName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__NAME, oldName, name));
+    public EList<Annotation> getAnnotations() {
+        if (annotations == null) {
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS);
+        }
+        return annotations;
     }
 
     /**
@@ -202,9 +190,44 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Annotation getAnnotation(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Annotation> getAllAnnotations(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void removeAllAnnotations(String name) {
+        // TODO: implement this method
+        // Ensure that you remove @generated or mark it @generated NOT
+        throw new UnsupportedOperationException();
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
+                return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return basicSetInitialValue(null, msgs);
         }
@@ -240,8 +263,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.VALUED_OBJECT__NAME:
-                return getName();
+            case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
+                return getAnnotations();
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return getCombineOperator();
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
@@ -261,8 +284,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
 				@Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.VALUED_OBJECT__NAME:
-                setName((String)newValue);
+            case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
+                getAnnotations().clear();
+                getAnnotations().addAll((Collection<? extends Annotation>)newValue);
                 return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator((CombineOperator)newValue);
@@ -286,8 +310,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.VALUED_OBJECT__NAME:
-                setName(NAME_EDEFAULT);
+            case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
+                getAnnotations().clear();
                 return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator(COMBINE_OPERATOR_EDEFAULT);
@@ -310,8 +334,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.VALUED_OBJECT__NAME:
-                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
+                return annotations != null && !annotations.isEmpty();
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return combineOperator != COMBINE_OPERATOR_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
@@ -328,13 +352,53 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * @generated
      */
     @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (derivedFeatureID) {
+                case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == Referenceable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Annotatable.class) {
+            switch (baseFeatureID) {
+                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
+                default: return -1;
+            }
+        }
+        if (baseClass == Referenceable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: ");
-        result.append(name);
-        result.append(", combineOperator: ");
+        result.append(" (combineOperator: ");
         result.append(combineOperator);
         result.append(", cardinalities: ");
         result.append(cardinalities);

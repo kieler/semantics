@@ -6,10 +6,12 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
+
 import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
-import de.cau.cs.kieler.core.kexpressions.text.kext.Referenceable;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 
 import java.util.Collection;
@@ -328,7 +330,7 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
         }
         if (baseClass == Identifiable.class) {
             switch (derivedFeatureID) {
-                case KextPackage.KEXT_SCOPE__ID: return KextPackage.IDENTIFIABLE__ID;
+                case KextPackage.KEXT_SCOPE__ID: return KExpressionsPackage.IDENTIFIABLE__ID;
                 default: return -1;
             }
         }
@@ -355,7 +357,7 @@ public class KEXTScopeImpl extends DeclarationScopeImpl implements KEXTScope {
         }
         if (baseClass == Identifiable.class) {
             switch (baseFeatureID) {
-                case KextPackage.IDENTIFIABLE__ID: return KextPackage.KEXT_SCOPE__ID;
+                case KExpressionsPackage.IDENTIFIABLE__ID: return KextPackage.KEXT_SCOPE__ID;
                 default: return -1;
             }
         }

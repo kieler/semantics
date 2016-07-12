@@ -1,21 +1,10 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2010 by
- * + Kiel University
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.annotations.provider;
+package de.cau.cs.kieler.core.kexpressions.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +13,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -36,20 +26,26 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.NamedObject} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.Identifiable} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NamedObjectItemProvider
-    extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class IdentifiableItemProvider 
+    extends ItemProviderAdapter
+    implements
+        IEditingDomainItemProvider,
+        IStructuredItemContentProvider,
+        ITreeItemContentProvider,
+        IItemLabelProvider,
+        IItemPropertySource {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public NamedObjectItemProvider(AdapterFactory adapterFactory) {
+    public IdentifiableItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -64,31 +60,42 @@ public class NamedObjectItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
+            addIdPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Name feature.
+     * This adds a property descriptor for the Id feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor(Object object) {
+    protected void addIdPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_NamedObject_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_NamedObject_name_feature", "_UI_NamedObject_type"),
-                 AnnotationsPackage.Literals.NAMED_OBJECT__NAME,
+                 getString("_UI_Identifiable_id_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Identifiable_id_feature", "_UI_Identifiable_type"),
+                 KExpressionsPackage.Literals.IDENTIFIABLE__ID,
                  true,
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
+    }
+
+    /**
+     * This returns Identifiable.gif.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object getImage(Object object) {
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Identifiable"));
     }
 
     /**
@@ -99,11 +106,12 @@ public class NamedObjectItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((NamedObject)object).getName();
+        String label = ((Identifiable)object).getId();
         return label == null || label.length() == 0 ?
-            getString("_UI_NamedObject_type") :
-            getString("_UI_NamedObject_type") + " " + label;
+            getString("_UI_Identifiable_type") :
+            getString("_UI_Identifiable_type") + " " + label;
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -116,8 +124,8 @@ public class NamedObjectItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(NamedObject.class)) {
-            case AnnotationsPackage.NAMED_OBJECT__NAME:
+        switch (notification.getFeatureID(Identifiable.class)) {
+            case KExpressionsPackage.IDENTIFIABLE__ID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
@@ -144,7 +152,7 @@ public class NamedObjectItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return AnnotationsEditPlugin.INSTANCE;
+        return KExpressionsEditPlugin.INSTANCE;
     }
 
 }

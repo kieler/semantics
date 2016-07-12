@@ -1,8 +1,8 @@
 /**
  */
-package de.cau.cs.kieler.core.kexpressions.text.kext;
+package de.cau.cs.kieler.core.kexpressions;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,14 +13,14 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.Identifiable#getId <em>Id</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getIdentifiable()
+ * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getIdentifiable()
  * @model
  * @generated
  */
-public interface Identifiable extends Annotatable {
+public interface Identifiable extends EObject {
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -31,14 +31,14 @@ public interface Identifiable extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage#getIdentifiable_Id()
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getIdentifiable_Id()
      * @model
      * @generated
      */
     String getId();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable#getId <em>Id</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.Identifiable#getId <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Id</em>' attribute.
