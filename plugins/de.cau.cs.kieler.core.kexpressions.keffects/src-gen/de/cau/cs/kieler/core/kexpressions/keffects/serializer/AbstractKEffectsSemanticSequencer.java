@@ -206,7 +206,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=AssignOperator expression=Expression)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -219,8 +219,8 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *
 	 * Constraint:
 	 *     (
-	 *         (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=AssignOperator expression=Expression) | 
-	 *         (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
+	 *         (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=AssignOperator expression=Expression) | 
+	 *         (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator)
 	 *     )
 	 */
 	protected void sequence_Assignment_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
@@ -234,7 +234,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     Emission returns Emission
 	 *
 	 * Constraint:
-	 *     (annotations+=QuotedStringAnnotation* valuedObject=[ValuedObject|ID] newValue=Expression?)
+	 *     (annotations+=QuotedStringAnnotation* valuedObject=[ValuedObject|PrimeID] newValue=Expression?)
 	 */
 	protected void sequence_Emission(ISerializationContext context, Emission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -275,7 +275,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     PostfixEffect returns Assignment
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] indices+=Expression* operator=PostfixOperator)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] indices+=Expression* operator=PostfixOperator)
 	 */
 	protected void sequence_PostfixEffect(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -288,7 +288,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     ReferenceCallEffect returns ReferenceCallEffect
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|ID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

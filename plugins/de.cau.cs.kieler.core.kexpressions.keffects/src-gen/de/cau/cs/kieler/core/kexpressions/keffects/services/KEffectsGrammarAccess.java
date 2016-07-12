@@ -77,7 +77,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsQuotedStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cNewValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -93,10 +93,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// annotations defined in the annotations grammar.		
 		//Emission keffects::Emission:
 		//	annotations+=QuotedStringAnnotation*
-		//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=QuotedStringAnnotation* valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
+		//annotations+=QuotedStringAnnotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=QuotedStringAnnotation*
@@ -105,14 +105,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//QuotedStringAnnotation
 		public RuleCall getAnnotationsQuotedStringAnnotationParserRuleCall_0_0() { return cAnnotationsQuotedStringAnnotationParserRuleCall_0_0; }
 
-		//valuedObject=[kexpressions::ValuedObject]
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
-		//[kexpressions::ValuedObject]
+		//[kexpressions::ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 
 		//("(" newValue=Expression ")")?
 		public Group getGroup_2() { return cGroup_2; }
@@ -137,7 +137,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -155,11 +155,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Example: A = true, I[0] = I[1], I += 1     
 		//Assignment keffects::Assignment:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 		//	operator=AssignOperator expression=Expression
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 		//operator=AssignOperator expression=Expression
 		public Group getGroup() { return cGroup; }
 
@@ -169,14 +169,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//valuedObject=[kexpressions::ValuedObject]
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
-		//[kexpressions::ValuedObject]
+		//[kexpressions::ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 
 		//('[' indices+=Expression ']')*
 		public Group getGroup_2() { return cGroup_2; }
@@ -213,7 +213,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -228,11 +228,11 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// Example: I++, I-- 
 		//PostfixEffect keffects::Assignment:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 		//	operator=PostfixOperator
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 		//operator=PostfixOperator
 		public Group getGroup() { return cGroup; }
 
@@ -242,14 +242,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//valuedObject=[kexpressions::ValuedObject]
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
-		//[kexpressions::ValuedObject]
+		//[kexpressions::ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 
 		//('[' indices+=Expression ']')*
 		public Group getGroup_2() { return cGroup_2; }
@@ -311,7 +311,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
@@ -329,10 +329,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//// preceded by a list of annotations.
 		//ReferenceCallEffect keffects::ReferenceCallEffect:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject] ('(' parameters+=Parameter (','
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (','
 		//parameters+=Parameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
 
@@ -342,14 +342,14 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//valuedObject=[kexpressions::ValuedObject]
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
 		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
 
-		//[kexpressions::ValuedObject]
+		//[kexpressions::ValuedObject|PrimeID]
 		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
 
-		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_1; }
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 
 		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
@@ -761,7 +761,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// annotations defined in the annotations grammar.		
 	//Emission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ("(" newValue=Expression ")")?
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}
@@ -777,7 +777,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: A = true, I[0] = I[1], I += 1     
 	//Assignment keffects::Assignment:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 	//	operator=AssignOperator expression=Expression
 	public AssignmentElements getAssignmentAccess() {
 		return pAssignment;
@@ -793,7 +793,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: I++, I-- 
 	//PostfixEffect keffects::Assignment:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')*
 	//	operator=PostfixOperator
 	public PostfixEffectElements getPostfixEffectAccess() {
 		return pPostfixEffect;
@@ -821,7 +821,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 	public ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return pReferenceCallEffect;
 	}

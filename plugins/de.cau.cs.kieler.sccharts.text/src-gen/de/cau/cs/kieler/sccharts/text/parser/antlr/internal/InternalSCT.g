@@ -3708,10 +3708,12 @@ ruleEmission returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getEmissionRule());
 	        }
         }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )(	otherlv_2='(' 
@@ -3789,10 +3791,12 @@ ruleAssignment returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getAssignmentRule());
 	        }
         }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )(	otherlv_2='[' 
@@ -3906,10 +3910,12 @@ rulePostfixEffect returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getPostfixEffectRule());
 	        }
         }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )(	otherlv_2='[' 
@@ -4062,10 +4068,12 @@ ruleReferenceCallEffect returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getReferenceCallEffectRule());
 	        }
         }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
-	}
+		{ 
+	        newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
+	    }
+		rulePrimeID		{ 
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )((	otherlv_2='(' 

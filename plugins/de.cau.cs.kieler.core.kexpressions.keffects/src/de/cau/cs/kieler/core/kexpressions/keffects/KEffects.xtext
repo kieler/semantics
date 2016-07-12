@@ -54,7 +54,7 @@ Effect returns keffects::Effect:
 // annotations defined in the annotations grammar.		
 Emission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
-	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
+	valuedObject=[kexpressions::ValuedObject|PrimeID] ( "(" newValue = Expression ")" )?;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.
@@ -63,7 +63,7 @@ Emission returns keffects::Emission:
 // Example: A = true, I[0] = I[1], I += 1     
 Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
-	valuedObject=[kexpressions::ValuedObject]
+	valuedObject=[kexpressions::ValuedObject|PrimeID]
 	('[' indices+=Expression ']')*
 	 operator=AssignOperator expression = Expression;
 	 
@@ -73,7 +73,7 @@ Assignment returns keffects::Assignment:
 // Example: I++, I-- 
 PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
-    valuedObject=[kexpressions::ValuedObject]
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('[' indices+=Expression ']')*
      operator=PostfixOperator;
 
@@ -88,7 +88,7 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-     valuedObject=[kexpressions::ValuedObject]
+     valuedObject=[kexpressions::ValuedObject|PrimeID]
       (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
     ;
     

@@ -18222,8 +18222,8 @@ rule__Emission__ValuedObjectAssignment_1
 (
 { before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 (
-{ before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
-	RULE_ID{ after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
+{ before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
+	rulePrimeID{ after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
 )
 { after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 )
@@ -18271,8 +18271,8 @@ rule__PostfixEffect__ValuedObjectAssignment_1
 (
 { before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 (
-{ before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
-	RULE_ID{ after(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
+{ before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
+	rulePrimeID{ after(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
 )
 { after(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 )
@@ -18365,8 +18365,8 @@ rule__ReferenceCallEffect__ValuedObjectAssignment_1
 (
 { before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 (
-{ before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
-	RULE_ID{ after(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); }
+{ before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
+	rulePrimeID{ after(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); }
 )
 { after(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); }
 )

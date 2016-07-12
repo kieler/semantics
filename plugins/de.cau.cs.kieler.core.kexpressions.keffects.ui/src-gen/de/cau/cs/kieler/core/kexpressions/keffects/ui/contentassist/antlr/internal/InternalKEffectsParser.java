@@ -28990,30 +28990,34 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__Emission__ValuedObjectAssignment_1"
-    // InternalKEffects.g:10080:1: rule__Emission__ValuedObjectAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalKEffects.g:10080:1: rule__Emission__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
     public final void rule__Emission__ValuedObjectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:10084:1: ( ( ( RULE_ID ) ) )
-            // InternalKEffects.g:10085:1: ( ( RULE_ID ) )
+            // InternalKEffects.g:10084:1: ( ( ( rulePrimeID ) ) )
+            // InternalKEffects.g:10085:1: ( ( rulePrimeID ) )
             {
-            // InternalKEffects.g:10085:1: ( ( RULE_ID ) )
-            // InternalKEffects.g:10086:1: ( RULE_ID )
+            // InternalKEffects.g:10085:1: ( ( rulePrimeID ) )
+            // InternalKEffects.g:10086:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
             }
-            // InternalKEffects.g:10087:1: ( RULE_ID )
-            // InternalKEffects.g:10088:1: RULE_ID
+            // InternalKEffects.g:10087:1: ( rulePrimeID )
+            // InternalKEffects.g:10088:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rulePrimeID();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
 
             }
@@ -29133,30 +29137,34 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__Assignment__ValuedObjectAssignment_1"
-    // InternalKEffects.g:10129:1: rule__Assignment__ValuedObjectAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalKEffects.g:10129:1: rule__Assignment__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
     public final void rule__Assignment__ValuedObjectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:10133:1: ( ( ( RULE_ID ) ) )
-            // InternalKEffects.g:10134:1: ( ( RULE_ID ) )
+            // InternalKEffects.g:10133:1: ( ( ( rulePrimeID ) ) )
+            // InternalKEffects.g:10134:1: ( ( rulePrimeID ) )
             {
-            // InternalKEffects.g:10134:1: ( ( RULE_ID ) )
-            // InternalKEffects.g:10135:1: ( RULE_ID )
+            // InternalKEffects.g:10134:1: ( ( rulePrimeID ) )
+            // InternalKEffects.g:10135:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
             }
-            // InternalKEffects.g:10136:1: ( RULE_ID )
-            // InternalKEffects.g:10137:1: RULE_ID
+            // InternalKEffects.g:10136:1: ( rulePrimeID )
+            // InternalKEffects.g:10137:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               before(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rulePrimeID();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               after(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
 
             }
@@ -29366,30 +29374,34 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__PostfixEffect__ValuedObjectAssignment_1"
-    // InternalKEffects.g:10208:1: rule__PostfixEffect__ValuedObjectAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalKEffects.g:10208:1: rule__PostfixEffect__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
     public final void rule__PostfixEffect__ValuedObjectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:10212:1: ( ( ( RULE_ID ) ) )
-            // InternalKEffects.g:10213:1: ( ( RULE_ID ) )
+            // InternalKEffects.g:10212:1: ( ( ( rulePrimeID ) ) )
+            // InternalKEffects.g:10213:1: ( ( rulePrimeID ) )
             {
-            // InternalKEffects.g:10213:1: ( ( RULE_ID ) )
-            // InternalKEffects.g:10214:1: ( RULE_ID )
+            // InternalKEffects.g:10213:1: ( ( rulePrimeID ) )
+            // InternalKEffects.g:10214:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
             }
-            // InternalKEffects.g:10215:1: ( RULE_ID )
-            // InternalKEffects.g:10216:1: RULE_ID
+            // InternalKEffects.g:10215:1: ( rulePrimeID )
+            // InternalKEffects.g:10216:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               before(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rulePrimeID();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               after(grammarAccess.getPostfixEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
 
             }
@@ -29640,30 +29652,34 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
 
 
     // $ANTLR start "rule__ReferenceCallEffect__ValuedObjectAssignment_1"
-    // InternalKEffects.g:10302:1: rule__ReferenceCallEffect__ValuedObjectAssignment_1 : ( ( RULE_ID ) ) ;
+    // InternalKEffects.g:10302:1: rule__ReferenceCallEffect__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
     public final void rule__ReferenceCallEffect__ValuedObjectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKEffects.g:10306:1: ( ( ( RULE_ID ) ) )
-            // InternalKEffects.g:10307:1: ( ( RULE_ID ) )
+            // InternalKEffects.g:10306:1: ( ( ( rulePrimeID ) ) )
+            // InternalKEffects.g:10307:1: ( ( rulePrimeID ) )
             {
-            // InternalKEffects.g:10307:1: ( ( RULE_ID ) )
-            // InternalKEffects.g:10308:1: ( RULE_ID )
+            // InternalKEffects.g:10307:1: ( ( rulePrimeID ) )
+            // InternalKEffects.g:10308:1: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
             }
-            // InternalKEffects.g:10309:1: ( RULE_ID )
-            // InternalKEffects.g:10310:1: RULE_ID
+            // InternalKEffects.g:10309:1: ( rulePrimeID )
+            // InternalKEffects.g:10310:1: rulePrimeID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rulePrimeID();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_1()); 
+               after(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
             }
 
             }
@@ -34384,7 +34400,7 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             "\1\13",
             "",
             "",
-            "\1\7\2\uffff\2\7\21\uffff\14\11\6\uffff\1\11\1\uffff\1\11\1\uffff\2\7\1\uffff\3\7",
+            "\1\7\2\uffff\2\7\21\uffff\14\11\6\uffff\1\11\1\uffff\1\11\1\uffff\2\7\1\11\3\7",
             "",
             "\2\7\1\10\2\7\2\11\12\uffff\1\7\32\uffff\1\6\2\uffff\1\11\1\uffff\1\4\1\11\1\5",
             "\2\7\1\10\2\7\2\11\12\uffff\1\7\32\uffff\1\6\2\uffff\1\11\2\uffff\1\11"
@@ -34415,23 +34431,23 @@ public class InternalKEffectsParser extends AbstractInternalContentAssistParser 
             return "2319:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
-    static final String dfa_39s = "\3\uffff\1\7\5\uffff\2\7";
+    static final String dfa_39s = "\3\uffff\1\10\5\uffff\2\10";
     static final String dfa_40s = "\1\12\1\uffff\1\6\1\4\1\6\1\7\3\uffff\2\4";
     static final String dfa_41s = "\1\66\1\uffff\1\6\1\67\1\6\1\7\3\uffff\1\67\1\66";
-    static final String dfa_42s = "\1\uffff\1\1\4\uffff\1\2\1\4\1\3\2\uffff";
+    static final String dfa_42s = "\1\uffff\1\1\4\uffff\1\3\1\2\1\4\2\uffff";
     static final String dfa_43s = "\13\uffff}>";
     static final String[] dfa_44s = {
             "\1\1\53\uffff\1\2",
             "",
             "\1\3",
-            "\1\6\1\uffff\1\7\3\uffff\1\7\45\uffff\1\10\4\uffff\1\4\1\7\1\5",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\45\uffff\1\6\4\uffff\1\4\1\10\1\5",
             "\1\11",
             "\1\12",
             "",
             "",
             "",
-            "\1\6\1\uffff\1\7\3\uffff\1\7\45\uffff\1\10\4\uffff\1\4\1\7\1\5",
-            "\1\6\1\uffff\1\7\3\uffff\1\7\45\uffff\1\10\5\uffff\1\7"
+            "\1\7\1\uffff\1\10\3\uffff\1\10\45\uffff\1\6\4\uffff\1\4\1\10\1\5",
+            "\1\7\1\uffff\1\10\3\uffff\1\10\45\uffff\1\6\5\uffff\1\10"
     };
     static final short[] dfa_39 = DFA.unpackEncodedString(dfa_39s);
     static final char[] dfa_40 = DFA.unpackEncodedStringToUnsignedChars(dfa_40s);
