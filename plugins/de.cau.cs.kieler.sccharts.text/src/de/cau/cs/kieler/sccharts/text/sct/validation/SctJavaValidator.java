@@ -66,7 +66,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
     
     public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Strong abort transition with lower priority than non-strong-abort transition";
-    public static final String ABORT_WITHOUT_TRIGGER = "Aborts should have a trigger";
+    public static final String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
     
     public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
     
