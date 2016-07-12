@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.scg.priorities
 
+import de.cau.cs.kieler.core.annotations.AnnotationsFactory
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -49,6 +50,8 @@ class SCGPriority extends AbstractProductionTransformation{
     @Inject
     extension OptimizedPrioIDs
     
+    extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
+    
     override getProducedFeatureId() {
         "scg.scgPrio"
     }
@@ -81,20 +84,34 @@ class SCGPriority extends AbstractProductionTransformation{
             
             val sccMap = createNodeToSCCMap(scc)
             val nodePrios = calcNodePrios(scc, sccMap)
-            val auxData = new PriorityAuxiliaryData(nodePrios)
+            val auxData = new PriorityAuxiliaryData()
             auxData.stronglyConnectedComponents = scc
             auxData.sccMap = sccMap
            
             
             
             val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
-            auxData.threadSegmentID = threadSegmentIDs
             
             val prioIDs = calcPrioIDs(nodePrios, threadSegmentIDs, getNumberOfThreadSegmentIDs, nodes)
             
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
-            auxData.optimizedPrioID = optPrioIDs
             
+            for(node : scg.nodes) {
+                node.annotations += createIntAnnotation => [
+                    name  = "optPrioIDs"
+                    value = optPrioIDs.get(node)
+                ]
+                node.annotations += createIntAnnotation => [
+                    name  = "nodePrios"
+                    value = nodePrios.get(node)
+                ]
+                node.annotations += createIntAnnotation => [
+                    name  = "threadSegmentIDs"
+                    if(threadSegmentIDs.containsKey(node)) {
+                        value = threadSegmentIDs.get(node)                        
+                    }
+                ]
+            }
             
             context.compilationResult.addAuxiliaryData(auxData)
             

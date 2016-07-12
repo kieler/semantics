@@ -12,13 +12,11 @@
  */
 package de.cau.cs.kieler.scg.priorities.sclp
 
+import de.cau.cs.kieler.core.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.annotations.IntAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
@@ -32,10 +30,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
-import java.util.HashMap
 import javax.inject.Inject
-import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
@@ -87,7 +82,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
         
         val sb = new StringBuilder
 
-        nodePrios = context.getPriorities
         
         if(nodePrios == null) {
             //Throw some error!!
@@ -227,12 +221,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
         println(entry)
         //If entry is the root node
         if(entry.incoming.empty) {
-            println(nodePrios)
-            if(nodePrios.containsKey(entry)) {
-                val p = nodePrios.get(entry)
-                sb.append("tickstart(" + p + ");\n")
-            } else {
-                //what the fuuuck?
+            if(entry.hasAnnotation("optPrioIDs")) {
+                val p = entry.getAnnotation("id") as IntAnnotation
+                sb.append("tickstart(" + p.value + ");\n")
             }
             
         }
@@ -253,28 +244,5 @@ class SCLPTransformation extends AbstractProductionTransformation{
         
     }
     
-    /**
-     * Retrieves the required Node Priorities from the KielerCompilerContext
-     * 
-     * @param context
-     *          The context from which to retrieve the priorities
-     * @return
-     *          The previously calculated Node Priorities
-     */
-    private def HashMap<Node, Integer> getPriorities(KielerCompilerContext context) {
-        val compilationResult = context.compilationResult
-
-        if(compilationResult == null) {
-            //Do Something and exit
-            println("No compilation results!")
-            return null
-        }
-        val prioAuxData = compilationResult.getAuxiliaryData(PriorityAuxiliaryData).head
-        if(prioAuxData == null) {
-            println("No Priority Data compiled!")
-            return null
-        }
-        return prioAuxData.optimizedPrioID
-    }
     
 }
