@@ -24,6 +24,8 @@
         eOpposite="#//Linkable/incomingLinks"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//NamedObject">
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"

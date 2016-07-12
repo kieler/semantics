@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Link#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.Link#getType <em>Type</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink()
@@ -116,5 +117,32 @@ public interface Link extends NamedObject {
      * @generated
      */
     void setId(int value);
+
+    /**
+     * Returns the value of the '<em><b>Type</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type</em>' attribute.
+     * @see #setType(String)
+     * @see de.cau.cs.kieler.circuit.CircuitPackage#getLink_Type()
+     * @model default="" required="true"
+     * @generated
+     */
+    String getType();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.circuit.Link#getType <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type</em>' attribute.
+     * @see #getType()
+     * @generated
+     */
+    void setType(String value);
 
 } // Link

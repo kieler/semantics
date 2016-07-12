@@ -22,6 +22,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.circuit.properties.IPortTypeProvider
 
 /**
  * @author fry
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.scg.Assignment
  * This class creates the initialization region of the circuit containing reset logic and input registers.
  * 
  */
-class CircuitInitialization implements Traceable{
+class CircuitInitialization implements Traceable, IPortTypeProvider{
 
 	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
 		

@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -25,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -37,7 +37,7 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kitt.tracing.Traceable
+
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
@@ -46,7 +46,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * 
  * Modifies a given SCG.
  */
-class SeqSCG2SSASCGTransformation extends AbstractProductionTransformation implements Traceable{
+class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation implements Traceable{
 
 	// -------------------------------------------------------------------------
 	// --                 K I C O      C O N F I G U R A T I O N              --

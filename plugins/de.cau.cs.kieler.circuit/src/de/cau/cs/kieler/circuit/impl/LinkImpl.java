@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getSource <em>Source</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.circuit.impl.LinkImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -84,6 +85,26 @@ public class LinkImpl extends NamedObjectImpl implements Link {
      * @ordered
      */
     protected int id = ID_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected static final String TYPE_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+    protected String type = TYPE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -247,6 +268,27 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 
     /**
      * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setType(String newType) {
+        String oldType = type;
+        type = newType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, CircuitPackage.LINK__TYPE, oldType, type));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -297,6 +339,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
                 return basicGetTarget();
             case CircuitPackage.LINK__ID:
                 return getId();
+            case CircuitPackage.LINK__TYPE:
+                return getType();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -317,6 +361,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
                 return;
             case CircuitPackage.LINK__ID:
                 setId((Integer)newValue);
+                return;
+            case CircuitPackage.LINK__TYPE:
+                setType((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -339,6 +386,9 @@ public class LinkImpl extends NamedObjectImpl implements Link {
             case CircuitPackage.LINK__ID:
                 setId(ID_EDEFAULT);
                 return;
+            case CircuitPackage.LINK__TYPE:
+                setType(TYPE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -357,6 +407,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
                 return target != null;
             case CircuitPackage.LINK__ID:
                 return id != ID_EDEFAULT;
+            case CircuitPackage.LINK__TYPE:
+                return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
         }
         return super.eIsSet(featureID);
     }
@@ -373,6 +425,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (id: ");
         result.append(id);
+        result.append(", type: ");
+        result.append(type);
         result.append(')');
         return result.toString();
     }

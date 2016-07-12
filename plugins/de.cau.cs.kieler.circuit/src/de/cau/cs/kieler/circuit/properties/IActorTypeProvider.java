@@ -33,5 +33,7 @@ public interface IActorTypeProvider {
     public static final String GND = "GND";
     
     public static final String GUARD_REGION = "GUARD_REGION";
+    
+    public static final String CIRCUIT_REGION = "CIRCUIT_REGION";
 
 }

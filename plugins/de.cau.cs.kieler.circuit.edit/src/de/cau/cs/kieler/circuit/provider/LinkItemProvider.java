@@ -65,6 +65,7 @@ public class LinkItemProvider extends NamedObjectItemProvider {
             addSourcePropertyDescriptor(object);
             addTargetPropertyDescriptor(object);
             addIdPropertyDescriptor(object);
+            addTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -136,6 +137,28 @@ public class LinkItemProvider extends NamedObjectItemProvider {
     }
 
     /**
+     * This adds a property descriptor for the Type feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addTypePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Link_type_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Link_type_feature", "_UI_Link_type"),
+                 CircuitPackage.Literals.LINK__TYPE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This returns Link.gif.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -174,6 +197,7 @@ public class LinkItemProvider extends NamedObjectItemProvider {
 
         switch (notification.getFeatureID(Link.class)) {
             case CircuitPackage.LINK__ID:
+            case CircuitPackage.LINK__TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

@@ -353,13 +353,22 @@ public interface CircuitPackage extends EPackage {
     int LINK__ID = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__TYPE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Link</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
+	int LINK_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 4;
 
 
 	/**
@@ -469,6 +478,17 @@ public interface CircuitPackage extends EPackage {
      * @generated
      */
     EAttribute getLink_Id();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.circuit.Link#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.circuit.Link#getType()
+     * @see #getLink()
+     * @generated
+     */
+    EAttribute getLink_Type();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
@@ -639,6 +659,14 @@ public interface CircuitPackage extends EPackage {
          * @generated
          */
         EAttribute LINK__ID = eINSTANCE.getLink_Id();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute LINK__TYPE = eINSTANCE.getLink_Type();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.circuit.impl.PortImpl <em>Port</em>}' class.
