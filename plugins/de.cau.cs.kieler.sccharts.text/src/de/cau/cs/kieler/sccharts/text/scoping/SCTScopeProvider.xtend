@@ -20,6 +20,7 @@ import org.eclipse.xtext.scoping.impl.SimpleScope
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
 
 /**
  * This class contains custom scoping description.
@@ -59,13 +60,20 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
             
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                candidates += context.root.asSCCharts.rootStates
+                val root = context. root.asSCCharts
+                candidates += root.rootStates
+                val imports = root.annotations.filter(PragmaStringAnnotation).filter[ name.equals("import") ].toList
                 
                 val res = context.eResource      
                 if (res != null) {
                     val resSet = res.resourceSet
                     if (resSet != null) {
-                        for(r : resSet.resources) {
+                        val resSetFilter = resSet.resources.filter[ 
+                            val uri = it.URI.toPlatformString(true)
+                            println(uri)
+                            return imports.exists[ uri.endsWith(it.values.head) ]
+                        ]
+                        for(r : resSetFilter) {
                             candidates += r.contents.filter[ it instanceof State ].map[ it as Scope ]
                         }
                     }

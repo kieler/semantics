@@ -70,13 +70,20 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNameDirectorKeyword_1_1_0 = (Keyword)cNameAssignment_1_1.eContents().get(0);
 		private final Assignment cValuesAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cValuesSCXDirectorsParserRuleCall_1_2_0 = (RuleCall)cValuesAssignment_1_2.eContents().get(0);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cNumberSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final Keyword cNameImportKeyword_2_1_0 = (Keyword)cNameAssignment_2_1.eContents().get(0);
+		private final Assignment cValuesAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cValuesSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cValuesAssignment_2_2.eContents().get(0);
 		
 		//Pragmas annotations::PragmaStringAnnotation:
 		//	'#' name='version' values+=SCXVersions |
-		//	'#' name='director' values+=SCXDirectors
+		//	'#' name='director' values+=SCXDirectors |
+		//	'#' name='import' values+=STRING
 		@Override public ParserRule getRule() { return rule; }
 
-		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors
+		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors | '#' name='import' values+=STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'#' name='version' values+=SCXVersions
@@ -114,6 +121,24 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SCXDirectors
 		public RuleCall getValuesSCXDirectorsParserRuleCall_1_2_0() { return cValuesSCXDirectorsParserRuleCall_1_2_0; }
+
+		//'#' name='import' values+=STRING
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_2_0() { return cNumberSignKeyword_2_0; }
+
+		//name='import'
+		public Assignment getNameAssignment_2_1() { return cNameAssignment_2_1; }
+
+		//'import'
+		public Keyword getNameImportKeyword_2_1_0() { return cNameImportKeyword_2_1_0; }
+
+		//values+=STRING
+		public Assignment getValuesAssignment_2_2() { return cValuesAssignment_2_2; }
+
+		//STRING
+		public RuleCall getValuesSTRINGTerminalRuleCall_2_2_0() { return cValuesSTRINGTerminalRuleCall_2_2_0; }
 	}
 
 	public class SCXVersionsElements extends AbstractParserRuleElementFinder {
@@ -1685,7 +1710,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pragmas annotations::PragmaStringAnnotation:
 	//	'#' name='version' values+=SCXVersions |
-	//	'#' name='director' values+=SCXDirectors
+	//	'#' name='director' values+=SCXDirectors |
+	//	'#' name='import' values+=STRING
 	public PragmasElements getPragmasAccess() {
 		return pPragmas;
 	}
