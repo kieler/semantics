@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
  de.cau.cs.kieler.kico;bundle-version="0.1.0",
  de.cau.cs.kieler.scg;bundle-version="0.1.1",
- de.cau.cs.kieler.core;bundle-version="0.15.0"
+ de.cau.cs.kieler.core;bundle-version="0.15.0",
+ de.cau.cs.kieler.core.model;bundle-version="0.7.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.priorities,
