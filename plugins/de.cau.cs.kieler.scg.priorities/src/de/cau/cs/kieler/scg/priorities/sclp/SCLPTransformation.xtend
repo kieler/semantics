@@ -53,6 +53,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      
     val VOSet  = <ValuedObject> newHashSet
     val PRESet = <ValuedObject> newHashSet
+    var nodePrios = <Node, Integer> newHashMap
     
     
     override getProducedFeatureId() {
@@ -83,9 +84,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *          The program in the form of a String
      */
     public def Object transform(SCGraph scg, KielerCompilerContext context) {
-        val sb = new StringBuilder
         
-        val nodePrios = context.getCompilationResults
+        val sb = new StringBuilder
+
+        nodePrios = context.getPriorities
         
         if(nodePrios == null) {
             //Throw some error!!
@@ -93,20 +95,26 @@ class SCLPTransformation extends AbstractProductionTransformation{
         
         sb.addHeader;
         sb.addGlobalHostcodeAnnotations(scg);
-        sb.addProgram(scg, nodePrios);
+        sb.addProgram(scg);
         
         
         sb.toString
     }
     
     
-    protected def void addProgram(StringBuilder sb, SCGraph scg, HashMap<Node, Integer> nodePrios) {
+    protected def void addProgram(StringBuilder sb, SCGraph scg) {
         
         
         /*
          * A whole lot of something here!
          */
-         val Node node = scg.nodes.filter(Assignment).head
+         for(node : scg.nodes) {
+             if(nodePrios.containsKey(node)) {
+                 println("Success! " + node)
+             }
+         }
+         println(nodePrios)
+         val Node node = scg.nodes.filter(Entry).head
              if(node instanceof Assignment) {
                  sb.transformNode(node as Assignment)
              }
@@ -161,6 +169,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
 //        val PREs = <ValuedObject> newHashSet
         val VOs  = <ValuedObject> newHashSet
         val expression = ass.expression
+        
+        //Get the contents of the assignment
         expression.getAllReferences.forEach[VOs += it.valuedObject]
         
 //        if (expression instanceof OperatorExpression) {
@@ -168,7 +178,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
 //                PREs += expression.eAllContents.filter(ValuedObjectReference).map[valuedObject].toList
 //            }
 //        }
-        
+
+        //Append the contents to the StringBuilder
         for(vo : VOs.filter[!VOSet.contains(it)]) {
             sb.append(vo).append(";\n")
             VOSet += vo
@@ -186,19 +197,47 @@ class SCLPTransformation extends AbstractProductionTransformation{
     
     
     private def void transformNode(StringBuilder sb, Conditional cond) {
-        
+        //if "condition"
+        //then [translate then]
+        // }
+        //else [translate else]
+        // }
     }
     
     private def void transformNode(StringBuilder sb, Fork fork) {
+        //Create forkn(label1, prio1, label2, ..., labeln, prion);
         
+        //first fork path
+        
+        //par
+        
+        //Next fork path
+        
+        //...
+        
+        //joinn(prio1, ...prion); 
     }
     
     private def void transformNode(StringBuilder sb, Join join) {
+        //Eigentlich erst hier joinn
         
     }
     
     private def void transformNode(StringBuilder sb, Entry entry) {
-        
+        println(entry)
+        //If entry is the root node
+        if(entry.incoming.empty) {
+            println(nodePrios)
+            if(nodePrios.containsKey(entry)) {
+                val p = nodePrios.get(entry)
+                sb.append("tickstart(" + p + ");\n")
+            } else {
+                //what the fuuuck?
+            }
+            
+        }
+        //Wenn root, dann: tickstart(p);
+        //Ansonsten ignorieren
     }
     
     private def void transformNode(StringBuilder sb, Exit exit) {
@@ -222,8 +261,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      * @return
      *          The previously calculated Node Priorities
      */
-    private def HashMap<Node, Integer> getCompilationResults(KielerCompilerContext context) {
-        val compilationResult = context.getProperty(KiCoProperties.COMPILATION_RESULT)
+    private def HashMap<Node, Integer> getPriorities(KielerCompilerContext context) {
+        val compilationResult = context.compilationResult
+
         if(compilationResult == null) {
             //Do Something and exit
             println("No compilation results!")
