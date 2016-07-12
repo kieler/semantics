@@ -52,7 +52,7 @@ B = extern scanf("%d", !&I)
 B = extern scanf("%d", <getValue()>)
 
 @check functionCallAmp.returnValue.parameter.byPureOutput.hostcode
-@expect "B = <scanf(\"%d\", !&'x')>"
-B = extern scanf("%d", !&'x')
+@expect "B = <scanf(\"%d\", !&`x`)>"
+B = extern scanf("%d", !&`x`)
 
 

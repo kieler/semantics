@@ -28,7 +28,7 @@ expression printf("%s", S)
 expression srand(time())
 
 @check referenceCall.nested.^string
-expression printf("%s", 'getValue()')
+expression printf("%s", `getValue()`)
 
 
 
@@ -43,9 +43,9 @@ B = scanf("%d", &I)
 B = scanf("%d", !&I)
 
 @check referenceCall.returnValue.parameter.byReference.nested
-B = scanf("%d", 'getValue()')
+B = scanf("%d", `getValue()`)
 
 @check referenceCall.returnValue.parameter.byPureOutput.hostcode
-B = scanf("%d", !&'x')
+B = scanf("%d", !&`x`)
 
 

@@ -42,6 +42,6 @@ B = <scanf("%d", !&I)>
 B = <scanf("%d", <getValue()>)>
 
 @check functionCall.returnValue.parameter.byPureOutput.hostcode
-B = <scanf("%d", !&'x')>
+B = <scanf("%d", !&`x`)>
 
 

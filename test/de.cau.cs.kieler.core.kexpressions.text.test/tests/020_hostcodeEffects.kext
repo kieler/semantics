@@ -9,53 +9,53 @@ int I;
 bool A;
 
 @check hostcode#001
-expression 'printf("Hallo Welt!");'
+expression `printf("Hallo Welt!");`
 
 @check hostcode#002
-expression 'x = printf("Hallo Welt!");'
+expression `x = printf("Hallo Welt!");`
 
 @check hostcode#003
-expression 'x = printf("Hallo Welt! %s", charr);'
+expression `x = printf("Hallo Welt! %s", charr);`
 
 @check hostcode#004
-expression 'halt();'
+expression `halt();`
 
 @check hostcode#005
-expression 'expression'
+expression `expression`
 
 
 
 @check hostcode.assign#001
-S = 'printf("Hallo Welt!");'
+S = `printf("Hallo Welt!");`
 
 @check hostcode.assign#002
-S = 'x = printf("Hallo Welt!");'
+S = `x = printf("Hallo Welt!");`
 
 @check hostcode.assign#003
-I = '2'
+I = `2`
 
 @check hostcode.assign#004
-I = '2 + x'
+I = `2 + x`
 
 @check hostcode.assign#005
-A = 'true'
+A = `true`
 
 
 
 @check hostcode.operator#001
-A = A & 'x'
+A = A & `x`
 
 @check hostcode.operator#002
-A = A & 'x' & A
+A = A & `x` & A
 
 @check hostcode.operator#003
-A = 'x' & 'x'
+A = `x` & `x`
 
 @check hostcode.operator#004
-A = 'x' & 'x' & 'x'
+A = `x` & `x` & `x`
 
 @check hostcode.operator#005
-@expect "A = ('x' & 'x') | 'z'"
-@readable "A = 'x' & 'x' | 'z'"
-A = 'x' & 'x' | 'z'
+@expect "A = (`x` & `x`) | `z`"
+@readable "A = `x` & `x` | `z`"
+A = `x` & `x` | `z`
 
