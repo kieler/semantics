@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Joiner
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Action
@@ -27,7 +26,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
+import de.cau.cs.kieler.core.kexpressions.Identifiable
 
 /**
  * @author ssm

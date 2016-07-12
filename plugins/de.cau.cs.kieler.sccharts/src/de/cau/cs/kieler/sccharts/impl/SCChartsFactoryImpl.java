@@ -85,7 +85,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.CALL_NODE: return createCallNode();
             case SCChartsPackage.DEFINE_NODE: return createDefineNode();
             case SCChartsPackage.EQUATION: return createEquation();
-            case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
@@ -232,16 +231,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public Equation createEquation() {
         EquationImpl equation = new EquationImpl();
         return equation;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Binding createBinding() {
-        BindingImpl binding = new BindingImpl();
-        return binding;
     }
 
     /**

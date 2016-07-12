@@ -232,13 +232,13 @@ public interface State extends Scope {
      */
     EList<Transition> getOutgoingTransitions();
 
-    /**
+                /**
      * Returns the value of the '<em><b>Incoming Transitions</b></em>' reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.Transition}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Incoming Transitions</em>' reference list isn't clear,
+     * If the meaning of the '<em>Incoming Transitions</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->

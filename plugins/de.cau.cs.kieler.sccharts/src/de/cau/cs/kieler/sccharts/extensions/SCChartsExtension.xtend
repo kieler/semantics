@@ -65,6 +65,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Extensions.
@@ -264,6 +265,12 @@ class SCChartsExtension {
 
         // There should exactly be one state in the root region
         region.parentState.getRootState
+    }
+    
+    
+    def EObject getRoot(EObject eObject) {
+        if (eObject.eContainer == null) return eObject 
+            else eObject.eContainer.root
     }
 
     // Returns true iff the state contains regions.
@@ -1368,5 +1375,26 @@ class SCChartsExtension {
         ]
         newState
     }
+    
+    
+    
+    def asSCCharts(EObject eObject) {
+        eObject as SCCharts
+    }
+    
+    def asState(EObject eObject) {
+        eObject as State
+    }
 
+    def asControlflowRegion(EObject eObject) {
+        eObject as ControlflowRegion
+    }
+    
+    def asDataflowRegion(EObject eObject) {
+        eObject as DataflowRegion
+    }
+    
+    def asTransition(EObject eObject) {
+        eObject as Transition
+    }
 }

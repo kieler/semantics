@@ -180,7 +180,7 @@ public interface Transition extends Action {
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Target State</em>' reference isn't clear,
+     * If the meaning of the '<em>Target State</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->

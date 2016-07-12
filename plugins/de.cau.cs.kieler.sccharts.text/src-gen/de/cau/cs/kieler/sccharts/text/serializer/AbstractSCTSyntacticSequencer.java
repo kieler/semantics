@@ -29,7 +29,7 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p;
-	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q;
+	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
@@ -41,7 +41,7 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_3_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_State___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_8_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_4()));
+		match_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_8_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_4()));
 	}
 	
 	@Override
@@ -70,8 +70,8 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_State___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q.equals(syntax))
-				emit_State___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q.equals(syntax))
+				emit_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -81,6 +81,8 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' '('*)*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
 	 *     (rule start) (ambiguity) text=HOSTCODE
@@ -122,6 +124,8 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' | '(')*
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) '<' functionName=ID
+	 *     (rule start) (ambiguity) 'extern' functionName=ID
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -185,7 +189,7 @@ public abstract class AbstractSCTSyntacticSequencer extends AbstractSyntacticSeq
 	 *     label=STRING (ambiguity) (rule end)
 	 *     label=STRING (ambiguity) outgoingTransitions+=Transition
 	 */
-	protected void emit_State___LeftCurlyBracketKeyword_8_0_RightCurlyBracketKeyword_8_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_State___LeftCurlyBracketKeyword_8_1_0_RightCurlyBracketKeyword_8_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

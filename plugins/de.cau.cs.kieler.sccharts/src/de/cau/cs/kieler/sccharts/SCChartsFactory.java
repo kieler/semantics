@@ -129,15 +129,6 @@ public interface SCChartsFactory extends EFactory {
     Equation createEquation();
 
     /**
-     * Returns a new object of class '<em>Binding</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Binding</em>'.
-     * @generated
-     */
-    Binding createBinding();
-
-    /**
      * Returns a new object of class '<em>Transition</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

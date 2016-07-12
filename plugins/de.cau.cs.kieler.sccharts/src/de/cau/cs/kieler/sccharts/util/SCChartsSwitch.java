@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -96,6 +98,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(state);
                 if (result == null) result = caseAnnotatable(state);
                 if (result == null) result = caseDeclarationScope(state);
+                if (result == null) result = caseIdentifiable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -105,6 +108,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(region);
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
+                if (result == null) result = caseIdentifiable(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -115,6 +119,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
+                if (result == null) result = caseIdentifiable(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -125,6 +130,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
+                if (result == null) result = caseIdentifiable(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -165,13 +171,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.BINDING: {
-                Binding binding = (Binding)theEObject;
-                T result = caseBinding(binding);
-                if (result == null) result = caseAnnotatable(binding);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.TRANSITION: {
                 Transition transition = (Transition)theEObject;
                 T result = caseTransition(transition);
@@ -185,6 +184,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseScope(scope);
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = caseDeclarationScope(scope);
+                if (result == null) result = caseIdentifiable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -265,6 +265,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseScope(scCharts);
                 if (result == null) result = caseAnnotatable(scCharts);
                 if (result == null) result = caseDeclarationScope(scCharts);
+                if (result == null) result = caseIdentifiable(scCharts);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -419,21 +420,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseEquation(Equation object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Binding</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Binding</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseBinding(Binding object) {
         return null;
     }
 
@@ -628,11 +614,26 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDeclarationScope(de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope object) {
+    public T caseDeclarationScope(DeclarationScope object) {
         return null;
     }
 
-    /**
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+                /**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;

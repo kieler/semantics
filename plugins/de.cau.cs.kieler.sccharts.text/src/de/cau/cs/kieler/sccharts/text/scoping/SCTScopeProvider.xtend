@@ -17,6 +17,9 @@ import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.naming.QualifiedName
 import java.util.Collections
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * This class contains custom scoping description.
@@ -30,7 +33,7 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
     @Inject extension SCChartsExtension
 
     override getScope(EObject context, EReference reference) {
-        println(context + " " + reference)
+        println(context + "\n  " + reference)
         if (context instanceof Transition) {
             return getScopeForTransition(context, reference)
         }
@@ -49,5 +52,29 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
         
         return SCTScopes.scopeFor(states)
     }
+    
+    override def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
+        if (reference == KExpressionsPackage.Literals.REFERENCE_DECLARATION__REFERENCE) {
+            val candidates = <Scope> newArrayList 
+            
+            val declaration = context
+            if (declaration instanceof ReferenceDeclaration) {
+                candidates += context.root.asSCCharts.rootStates
+                
+                val res = context.eResource      
+                if (res != null) {
+                    val resSet = res.resourceSet
+                    if (resSet != null) {
+                        for(r : resSet.resources) {
+                            candidates += r.contents.filter[ it instanceof State ].map[ it as Scope ]
+                        }
+                    }
+                }      
+                
+                return SCTScopes.scopeFor(candidates)
+            }
+        }
+        return context.getScopeHierarchical(reference)
+    }       
 
 }

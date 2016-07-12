@@ -50,14 +50,16 @@ State returns sccharts::State:
 	violation?='violation'?
 	connector?='connector'?
 	'state' id=ID label=STRING?
-	('{'
+	((
+	    'is' referencedScope = [sccharts::State|ID]
+        ('(' parameters += Parameter (',' parameters += Parameter)* ')')?	    
+	)|('{'
 		declarations+=DeclarationWOSemicolon*
 		localActions+=LocalAction*
 		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
-	'}')?
+	'}'))?
 	outgoingTransitions+=Transition*;
     
-
 // ------------------ //
 //  Transition Rules  // 
 // ------------------ //
@@ -159,46 +161,8 @@ DFAssignment returns keffects::Assignment:
 Equation returns sccharts::Equation:
     {sccharts::Equation}
     (
-        (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
+        (valuedObject = [kexpressions::ValuedObject|PrimeID]) '=' (expression = Expression) 
     );
-
-
-
-
-
-    
-    
-    
-
-
-
-
-//ScopeReference returns sccharts::ScopeReference:
-//    scope=[sccharts::Scope|ID];
-//
-//ScopeCall returns sccharts::ScopeCall:
-//    '[' scope=[sccharts::Scope|ID]
-//    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-//    ']'
-//    ('.' valuedObject = [kexpressions::ValuedObject])
-//;
-
-
-Binding returns sccharts::Binding:
-    (annotations+=Annotation)*
-	formal = [kexpressions::ValuedObject|ID] 
-	'to' 
-	actual = [kexpressions::ValuedObject|ID]
-;
-
-AtomicExpression returns kexpressions::Expression:
-    BoolValue
-    | ValuedObjectTestExpression 
-    | '(' BoolExpression ')'
-    | ReferenceCall
-//    | ScopeCall
-    | TextExpression;
-
 
 // ------------ //
 //  Enum Rules  // 
