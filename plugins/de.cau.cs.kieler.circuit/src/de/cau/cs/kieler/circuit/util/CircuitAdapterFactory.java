@@ -16,8 +16,6 @@
 package de.cau.cs.kieler.circuit.util;
 
 import de.cau.cs.kieler.circuit.*;
-
-import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.NamedObject;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -37,190 +35,172 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class CircuitAdapterFactory extends AdapterFactoryImpl {
 	/**
-	 * The cached model package.
-	 * <!-- begin-user-doc -->
+     * The cached model package.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected static CircuitPackage modelPackage;
 
 	/**
-	 * Creates an instance of the adapter factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the adapter factory.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public CircuitAdapterFactory() {
-		if (modelPackage == null) {
-			modelPackage = CircuitPackage.eINSTANCE;
-		}
-	}
+        if (modelPackage == null) {
+            modelPackage = CircuitPackage.eINSTANCE;
+        }
+    }
 
 	/**
-	 * Returns whether this factory is applicable for the type of the object.
-	 * <!-- begin-user-doc -->
+     * Returns whether this factory is applicable for the type of the object.
+     * <!-- begin-user-doc -->
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
 	 * <!-- end-user-doc -->
-	 * @return whether this factory is applicable for the type of the object.
-	 * @generated
-	 */
+     * @return whether this factory is applicable for the type of the object.
+     * @generated
+     */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
-			return true;
-		}
-		if (object instanceof EObject) {
-			return ((EObject)object).eClass().getEPackage() == modelPackage;
-		}
-		return false;
-	}
+        if (object == modelPackage) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return ((EObject)object).eClass().getEPackage() == modelPackage;
+        }
+        return false;
+    }
 
 	/**
-	 * The switch that delegates to the <code>createXXX</code> methods.
-	 * <!-- begin-user-doc -->
+     * The switch that delegates to the <code>createXXX</code> methods.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected CircuitSwitch<Adapter> modelSwitch =
 		new CircuitSwitch<Adapter>() {
-			@Override
-			public Adapter caseActor(Actor object) {
-				return createActorAdapter();
-			}
-			@Override
-			public Adapter casePort(Port object) {
-				return createPortAdapter();
-			}
-			@Override
-			public Adapter caseLink(Link object) {
-				return createLinkAdapter();
-			}
-			@Override
-			public Adapter caseLinkable(Linkable object) {
-				return createLinkableAdapter();
-			}
-			@Override
-			public Adapter caseAnnotatable(Annotatable object) {
-				return createAnnotatableAdapter();
-			}
-			@Override
-			public Adapter caseNamedObject(NamedObject object) {
-				return createNamedObjectAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+            @Override
+            public Adapter caseActor(Actor object) {
+                return createActorAdapter();
+            }
+            @Override
+            public Adapter casePort(Port object) {
+                return createPortAdapter();
+            }
+            @Override
+            public Adapter caseLink(Link object) {
+                return createLinkAdapter();
+            }
+            @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
+            public Adapter caseNamedObject(NamedObject object) {
+                return createNamedObjectAdapter();
+            }
+            @Override
+            public Adapter defaultCase(EObject object) {
+                return createEObjectAdapter();
+            }
+        };
 
 	/**
-	 * Creates an adapter for the <code>target</code>.
-	 * <!-- begin-user-doc -->
+     * Creates an adapter for the <code>target</code>.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param target the object to adapt.
-	 * @return the adapter for the <code>target</code>.
-	 * @generated
-	 */
+     * @param target the object to adapt.
+     * @return the adapter for the <code>target</code>.
+     * @generated
+     */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject)target);
-	}
+        return modelSwitch.doSwitch((EObject)target);
+    }
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Actor <em>Actor</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Actor <em>Actor</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Actor
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.circuit.Actor
+     * @generated
+     */
 	public Adapter createActorAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Link <em>Link</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Link <em>Link</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Link
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.circuit.Link
+     * @generated
+     */
 	public Adapter createLinkAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Port <em>Port</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Port
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.circuit.Port
+     * @generated
+     */
 	public Adapter createPortAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.circuit.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.circuit.Linkable
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.circuit.Linkable
+     * @generated
+     */
 	public Adapter createLinkableAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.Annotatable
-	 * @generated
-	 */
-	public Adapter createAnnotatableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.NamedObject
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.annotations.NamedObject
+     * @generated
+     */
 	public Adapter createNamedObjectAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 	/**
-	 * Creates a new adapter for the default case.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for the default case.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @generated
+     */
 	public Adapter createEObjectAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 } //CircuitAdapterFactory
