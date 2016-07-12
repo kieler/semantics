@@ -52,7 +52,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     public static val TICK_STRUCT_NAME = "TickData"
     public static val TICK_LOCAL_DATA_NAME = "data"
     public static val TICK_LOCAL_DATA_POINTER_NAME = "tickdata"
-    public static val TICK_LOCAL_DATA_POINTER = "*" + TICK_LOCAL_DATA_POINTER_NAME
+    public static val TICK_LOCAL_DATA_POINTER = "*" + TICK_LOCAL_DATA_NAME
     public static val DEFAULT_INDENTATION = "  "
     public static val GUARD_TYPE = "char"
     public static val DEFAULT_PRE_PREFIX = "p"
@@ -122,17 +122,17 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         tickLogicFunction.append(TICK_LOGIC_FUNCTION_NAME).append(functionSuffix).append("(");
         tickLogicFunction.append(TICK_STRUCT_NAME).append(functionSuffix).append(" ").append(TICK_LOCAL_DATA_POINTER)
         tickLogicFunction.append(") {\n");
-        tickLogicFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
-            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
-            append(";\n\n")
+//        tickLogicFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
+//            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
+//            append(";\n\n")
         
         resetFunction.append("void ")
         resetFunction.append(RESET_FUNCTION_NAME).append(functionSuffix).append("(");
         resetFunction.append(TICK_STRUCT_NAME).append(functionSuffix).append(" ").append(TICK_LOCAL_DATA_POINTER)
         resetFunction.append(") {\n");
-        resetFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
-            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
-            append(";\n\n")
+//        resetFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
+//            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
+//            append(";\n\n")
         
         tickStruct.append("typedef struct {\n")      
         
@@ -158,13 +158,14 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                     }
                 }                
                 
-                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "."
+                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
                 tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
                 expression = node.expression
                 VOs += node.valuedObject
                 
                 node = node.next?.target
             } else if (node instanceof Conditional) {
+                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
                 tickLogicFunction.append(indent).append("if (").append(node.condition.serializeHR).append(") {\n")
                 indent = indent + DEFAULT_INDENTATION
                 conditionalStack.push(node) 
@@ -191,7 +192,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             }
             
             for(pre : PREs.filter[ !PRESet.contains(it) ]) {
-                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "." + DEFAULT_PRE_PREFIX
+                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->" + DEFAULT_PRE_PREFIX
                 resetFunction.append(DEFAULT_INDENTATION)
                 resetFunction.append(pre.serializeHR).append(" = 0").append(";\n")
                 
@@ -208,22 +209,23 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         tickFunction.append(TICK_FUNCTION_NAME).append(functionSuffix).append("(")
         tickFunction.append(TICK_STRUCT_NAME).append(functionSuffix).append(" ").append(TICK_LOCAL_DATA_POINTER)
         tickFunction.append(") {\n");
-        tickFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
-            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
-            append(";\n\n")        
+//        tickFunction.append(DEFAULT_INDENTATION).append(TICK_STRUCT_NAME).append(functionSuffix).
+//            append(" ").append(TICK_LOCAL_DATA_NAME).append(" = ").append(TICK_LOCAL_DATA_POINTER).
+//            append(";\n\n")        
         
         tickFunction.append(DEFAULT_INDENTATION).
-            append(TICK_LOGIC_FUNCTION_NAME).append("(").append(TICK_LOCAL_DATA_POINTER_NAME).append(");\n\n")
+            append(TICK_LOGIC_FUNCTION_NAME).append(functionSuffix).
+            append("(").append(TICK_LOCAL_DATA_NAME).append(");\n\n")
         if (!VOSet.filter[ it.name.equals("_GO")].empty) {
-            tickFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("._GO = 0;\n")
-            resetFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("._GO = 1;\n")            
+            tickFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("->_GO = 0;\n")
+            resetFunction.append(DEFAULT_INDENTATION).append(TICK_LOCAL_DATA_NAME).append("->_GO = 1;\n")            
         }
 
         for(pre : PRESet) {
-            valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "." + DEFAULT_PRE_PREFIX
+            valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->" + DEFAULT_PRE_PREFIX
             tickFunction.append(DEFAULT_INDENTATION)
             tickFunction.append(pre.serializeHR).append(" = ")
-            valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "."
+            valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
             tickFunction.append(pre.serializeHR).append(";\n")
         }                              
         
