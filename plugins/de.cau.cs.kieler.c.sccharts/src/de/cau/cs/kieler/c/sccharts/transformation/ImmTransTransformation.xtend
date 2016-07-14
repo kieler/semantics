@@ -55,7 +55,9 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
         }
         
 
-        // Make all outgoing transitions of all states in this region immediate transitions
+        /* Make marked all transitions, which are marked by the annotation "notImmediate" of all states in this region
+         * delayed transitions. 
+         */
         while (!nextStates.empty) {
             
             tmpList.clear
@@ -63,10 +65,18 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
             for (s : nextStates) {
                 // Change all transitions of State s
                 for (t : s.outgoingTransitions) {
-                    t.immediate = true
+                    if(t.annotations.head != null) {
+                        if(t.annotations.head.name.contains("notImmediate")) {
+                            t.immediate = false
+                        }
+                    }
                 }
                 for (t : s.incomingTransitions) {
-                    t.immediate = true
+                    if(t.annotations.head != null) {
+                        if(t.annotations.head.name.contains("notImmediate")) {
+                            t.immediate = false
+                        }
+                    }
                 }
                 // If State s contains additional states that need to be checked for transitions add them to Todo list
                 var tmpRegions = s.regions.filter(ControlflowRegion)
