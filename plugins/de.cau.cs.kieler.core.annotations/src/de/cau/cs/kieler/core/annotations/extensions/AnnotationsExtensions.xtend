@@ -8,6 +8,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.annotations.CommentAnnotation
 import java.util.List
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
 
 /**
  * Annotations extensions
@@ -23,7 +24,14 @@ class AnnotationsExtensions {
     def public Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
         annotatable.getAllAnnotations(name)
     } 
-	
+    
+    def public Annotation getPragma(Annotatable annotatable, String name) {
+        annotatable.getPragmas(name)?.head
+    } 
+
+    def public getPragmas(Annotatable annotatable, String name) {
+        annotatable.getAllAnnotations(name).filter(PragmaStringAnnotation).toList
+    }     
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
@@ -53,6 +61,10 @@ class AnnotationsExtensions {
 	def public boolean hasAnnotation(Annotatable annotatable, String name) {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
 	}
+
+    def public boolean hasPragma(Annotatable annotatable, String name) {
+        !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(PragmaStringAnnotation).filter[ it.name == name ].empty
+    }
 	
 	
 	def public boolean hasCommentAnnotation(Annotatable annotatable) {

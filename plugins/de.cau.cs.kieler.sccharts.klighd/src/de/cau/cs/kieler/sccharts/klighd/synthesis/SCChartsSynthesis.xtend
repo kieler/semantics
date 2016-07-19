@@ -36,6 +36,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -55,6 +56,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     @Inject
     extension SCChartsSerializeHRExtension
+    
+    @Inject
+    extension AnnotationsExtensions
     
     // -------------------------------------------------------------------------
     // SubSyntheses
@@ -78,6 +82,11 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     // -------------------------------------------------------------------------
     // Constants
     public static val PRAGMA_SYMBOLS = "symbols"       
+    public static val PRAGMA_SYMBOL = "symbol"       
+    public static val PRAGMA_SYMBOLS_GREEK = "greek"       
+    public static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
+    public static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
+    public static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"       
 
     // -------------------------------------------------------------------------
     // Fields
@@ -129,11 +138,16 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
         
         val scc = root.getSCCharts
-        if (scc.annotations.filter(PragmaStringAnnotation).exists[ name.equals(PRAGMA_SYMBOLS) ]) {
-            val symbolTable = scc.annotations.filter(PragmaStringAnnotation).filter[ name.equals(PRAGMA_SYMBOLS) ].head.values.head   
-            if (symbolTable.equals("greek")) {
-                defineGreekSymbols
-            }             
+        for(symbolTable : scc.getPragmas(PRAGMA_SYMBOLS)) {  
+            var prefix = ""
+            if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
+        }             
+        for(symbol : scc.getPragmas(PRAGMA_SYMBOL)) {
+            symbol.values.head.defineSymbol(symbol.values.get(1))
         }
 
         if (root instanceof SCCharts) {

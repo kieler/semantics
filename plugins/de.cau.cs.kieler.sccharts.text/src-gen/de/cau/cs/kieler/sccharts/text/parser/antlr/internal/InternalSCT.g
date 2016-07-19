@@ -292,6 +292,88 @@ rulePragmas returns [EObject current=null]
 	    }
 
 )
+)(	otherlv_12=',' 
+    {
+    	newLeafNode(otherlv_12, grammarAccess.getPragmasAccess().getCommaKeyword_3_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesPrimeIDParserRuleCall_3_3_1_0()); 
+	    }
+		lv_values_13_0=rulePrimeID		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_13_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(	otherlv_14='#' 
+    {
+    	newLeafNode(otherlv_14, grammarAccess.getPragmasAccess().getNumberSignKeyword_4_0());
+    }
+(
+(
+		lv_name_15_0=	'symbol' 
+    {
+        newLeafNode(lv_name_15_0, grammarAccess.getPragmasAccess().getNameSymbolKeyword_4_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_15_0, "symbol");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesPrimeIDParserRuleCall_4_2_0()); 
+	    }
+		lv_values_16_0=rulePrimeID		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_16_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_17=',' 
+    {
+    	newLeafNode(otherlv_17, grammarAccess.getPragmasAccess().getCommaKeyword_4_3());
+    }
+(
+(
+		lv_values_18_0=RULE_STRING
+		{
+			newLeafNode(lv_values_18_0, grammarAccess.getPragmasAccess().getValuesSTRINGTerminalRuleCall_4_4_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"values",
+        		lv_values_18_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+	    }
+
+)
 )))
 ;
 

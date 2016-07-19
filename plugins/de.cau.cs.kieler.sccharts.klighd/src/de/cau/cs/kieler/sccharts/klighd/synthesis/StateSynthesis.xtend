@@ -122,12 +122,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
+                            state.serializeHR + " @ " + (state.referencedScope as State).serializeHR ?: "UnresolvedReference").
                             associateWith(state)
                     case state.isMacroState:
-                        node.addMacroStateLabel(state.label).associateWith(state)
+                        node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
                     default:
-                        node.addSimpleStateLabel(state.label).associateWith(state)
+                        node.addSimpleStateLabel(state.serializeHR.toString).associateWith(state)
                 }
             }
 

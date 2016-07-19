@@ -21,7 +21,8 @@ Pragmas returns annotations::PragmaStringAnnotation:
     '#' name = 'version' values += SCXVersions |
     '#' name = 'director' values += SCXDirectors |
     '#' name = 'import' values += STRING |
-    '#' name = 'symbols' values += STRING;
+    '#' name = 'symbols' values += STRING (',' values += PrimeID)? |
+    '#' name = 'symbol' values += PrimeID ',' values += STRING;
 
 SCXVersions returns ecore::EString:
     'SCX' | 'SCT';

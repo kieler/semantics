@@ -82,16 +82,30 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNameSymbolsKeyword_3_1_0 = (Keyword)cNameAssignment_3_1.eContents().get(0);
 		private final Assignment cValuesAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
 		private final RuleCall cValuesSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cValuesAssignment_3_2.eContents().get(0);
+		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
+		private final Keyword cCommaKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
+		private final Assignment cValuesAssignment_3_3_1 = (Assignment)cGroup_3_3.eContents().get(1);
+		private final RuleCall cValuesPrimeIDParserRuleCall_3_3_1_0 = (RuleCall)cValuesAssignment_3_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Keyword cNumberSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cNameAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final Keyword cNameSymbolKeyword_4_1_0 = (Keyword)cNameAssignment_4_1.eContents().get(0);
+		private final Assignment cValuesAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cValuesPrimeIDParserRuleCall_4_2_0 = (RuleCall)cValuesAssignment_4_2.eContents().get(0);
+		private final Keyword cCommaKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Assignment cValuesAssignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
+		private final RuleCall cValuesSTRINGTerminalRuleCall_4_4_0 = (RuleCall)cValuesAssignment_4_4.eContents().get(0);
 		
 		//Pragmas annotations::PragmaStringAnnotation:
 		//	'#' name='version' values+=SCXVersions |
 		//	'#' name='director' values+=SCXDirectors |
 		//	'#' name='import' values+=STRING |
-		//	'#' name='symbols' values+=STRING
+		//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
+		//	'#' name='symbol' values+=PrimeID ',' values+=STRING
 		@Override public ParserRule getRule() { return rule; }
 
 		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors | '#' name='import' values+=STRING |
-		//'#' name='symbols' values+=STRING
+		//'#' name='symbols' values+=STRING (',' values+=PrimeID)? | '#' name='symbol' values+=PrimeID ',' values+=STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'#' name='version' values+=SCXVersions
@@ -148,7 +162,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_2_2_0() { return cValuesSTRINGTerminalRuleCall_2_2_0; }
 
-		//'#' name='symbols' values+=STRING
+		//'#' name='symbols' values+=STRING (',' values+=PrimeID)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'#'
@@ -165,6 +179,45 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_3_2_0() { return cValuesSTRINGTerminalRuleCall_3_2_0; }
+
+		//(',' values+=PrimeID)?
+		public Group getGroup_3_3() { return cGroup_3_3; }
+
+		//','
+		public Keyword getCommaKeyword_3_3_0() { return cCommaKeyword_3_3_0; }
+
+		//values+=PrimeID
+		public Assignment getValuesAssignment_3_3_1() { return cValuesAssignment_3_3_1; }
+
+		//PrimeID
+		public RuleCall getValuesPrimeIDParserRuleCall_3_3_1_0() { return cValuesPrimeIDParserRuleCall_3_3_1_0; }
+
+		//'#' name='symbol' values+=PrimeID ',' values+=STRING
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_4_0() { return cNumberSignKeyword_4_0; }
+
+		//name='symbol'
+		public Assignment getNameAssignment_4_1() { return cNameAssignment_4_1; }
+
+		//'symbol'
+		public Keyword getNameSymbolKeyword_4_1_0() { return cNameSymbolKeyword_4_1_0; }
+
+		//values+=PrimeID
+		public Assignment getValuesAssignment_4_2() { return cValuesAssignment_4_2; }
+
+		//PrimeID
+		public RuleCall getValuesPrimeIDParserRuleCall_4_2_0() { return cValuesPrimeIDParserRuleCall_4_2_0; }
+
+		//','
+		public Keyword getCommaKeyword_4_3() { return cCommaKeyword_4_3; }
+
+		//values+=STRING
+		public Assignment getValuesAssignment_4_4() { return cValuesAssignment_4_4; }
+
+		//STRING
+		public RuleCall getValuesSTRINGTerminalRuleCall_4_4_0() { return cValuesSTRINGTerminalRuleCall_4_4_0; }
 	}
 
 	public class SCXVersionsElements extends AbstractParserRuleElementFinder {
@@ -1738,7 +1791,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	'#' name='version' values+=SCXVersions |
 	//	'#' name='director' values+=SCXDirectors |
 	//	'#' name='import' values+=STRING |
-	//	'#' name='symbols' values+=STRING
+	//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
+	//	'#' name='symbol' values+=PrimeID ',' values+=STRING
 	public PragmasElements getPragmasAccess() {
 		return pPragmas;
 	}
