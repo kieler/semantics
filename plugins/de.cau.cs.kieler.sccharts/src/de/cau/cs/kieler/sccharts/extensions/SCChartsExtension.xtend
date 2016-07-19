@@ -133,6 +133,16 @@ class SCChartsExtension {
             return null;
         }
     }
+    
+    
+    def SCCharts getSCCharts(Scope scope) {
+        if (scope.eContainer != null) {
+            return (scope.eContainer as Scope).getSCCharts as SCCharts
+        } else {
+            return scope as SCCharts
+        }
+    }    
+    
 
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 

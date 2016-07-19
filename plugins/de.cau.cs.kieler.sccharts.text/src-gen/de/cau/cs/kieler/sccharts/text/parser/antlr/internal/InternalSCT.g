@@ -254,6 +254,44 @@ rulePragmas returns [EObject current=null]
 	    }
 
 )
+))
+    |(	otherlv_9='#' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getPragmasAccess().getNumberSignKeyword_3_0());
+    }
+(
+(
+		lv_name_10_0=	'symbols' 
+    {
+        newLeafNode(lv_name_10_0, grammarAccess.getPragmasAccess().getNameSymbolsKeyword_3_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_10_0, "symbols");
+	    }
+
+)
+)(
+(
+		lv_values_11_0=RULE_STRING
+		{
+			newLeafNode(lv_values_11_0, grammarAccess.getPragmasAccess().getValuesSTRINGTerminalRuleCall_3_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"values",
+        		lv_values_11_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+	    }
+
+)
 )))
 ;
 

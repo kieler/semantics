@@ -33,6 +33,9 @@ import java.util.logging.Logger
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -46,6 +49,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject 
     extension KNodeExtensions
+    
+    @Inject 
+    extension SCChartsExtension 
+    
+    @Inject
+    extension SCChartsSerializeHRExtension
     
     // -------------------------------------------------------------------------
     // SubSyntheses
@@ -65,7 +74,11 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Hooks
     @Inject
     SynthesisHooks hooks  
-    
+
+    // -------------------------------------------------------------------------
+    // Constants
+    public static val PRAGMA_SYMBOLS = "symbols"       
+
     // -------------------------------------------------------------------------
     // Fields
     val logger = Logger.getLogger(this.class.name)
@@ -114,6 +127,14 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
+        
+        val scc = root.getSCCharts
+        if (scc.annotations.filter(PragmaStringAnnotation).exists[ name.equals(PRAGMA_SYMBOLS) ]) {
+            val symbolTable = scc.annotations.filter(PragmaStringAnnotation).filter[ name.equals(PRAGMA_SYMBOLS) ].head.values.head   
+            if (symbolTable.equals("greek")) {
+                defineGreekSymbols
+            }             
+        }
 
         if (root instanceof SCCharts) {
             rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]

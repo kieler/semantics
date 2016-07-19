@@ -20,7 +20,8 @@ SCCharts returns sccharts::SCCharts:
 Pragmas returns annotations::PragmaStringAnnotation:
     '#' name = 'version' values += SCXVersions |
     '#' name = 'director' values += SCXDirectors |
-    '#' name = 'import' values += STRING;
+    '#' name = 'import' values += STRING |
+    '#' name = 'symbols' values += STRING;
 
 SCXVersions returns ecore::EString:
     'SCX' | 'SCT';

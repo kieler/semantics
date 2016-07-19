@@ -493,7 +493,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     Pragmas returns PragmaStringAnnotation
 	 *
 	 * Constraint:
-	 *     ((name='version' values+=SCXVersions) | (name='director' values+=SCXDirectors) | (name='import' values+=STRING))
+	 *     ((name='version' values+=SCXVersions) | (name='director' values+=SCXDirectors) | (name='import' values+=STRING) | (name='symbols' values+=STRING))
 	 */
 	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

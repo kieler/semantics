@@ -27,6 +27,9 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.core.kexpressions.Identifiable
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 
 /**
  * @author ssm
@@ -34,6 +37,7 @@ import de.cau.cs.kieler.core.kexpressions.Identifiable
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
+@ViewSynthesisShared
 class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Transition transition) {
@@ -257,4 +261,122 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
 
         return new Pair(keywords, content);
     }    
+    
+    
+    
+    private val nameSymbolTable = <String, String> newHashMap
+    
+    def defineSymbol(String startsWith, String symbol) {
+        nameSymbolTable.put(startsWith, symbol) 
+    }   
+    
+    def void clearSymbols() {
+        nameSymbolTable.clear
+    }
+    
+    def String applySymbolTable(String name) {
+        for(s : nameSymbolTable.keySet) {
+            if (name.startsWith(s))  {
+                return nameSymbolTable.get(s) + name.substring(s.length)
+            }
+        }
+        return name
+    } 
+    
+    override dispatch CharSequence serialize(ValuedObject valuedObject) {
+        var vo = valuedObject.name.applySymbolTable
+        
+        for (index : valuedObject.cardinalities) {
+            vo = vo + "[" + index.toString + "]"
+        }
+        vo
+    }
+
+    override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
+        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        for (index : valuedObjectReference.indices) {
+            vo = vo + "[" + index.serialize + "]"
+        }
+        vo
+    }    
+    
+    override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        for (index : valuedObjectReference.indices) {
+            vo = vo + "[" + index.serializeHR + "]"
+        }
+        vo
+    }    
+    
+    def void defineGreekSymbols() {
+        "Heta".defineSymbol("\u0370")       // Ͱ
+        "heta".defineSymbol("\u0371")       // ͱ       
+        "Yot".defineSymbol("\u037F")        // Ϳ
+        
+        "Alpha".defineSymbol("\u0391")      // Α
+        "Beta".defineSymbol("\u0392")       // Β
+        "Gamma".defineSymbol("\u0393")      // Γ
+        "Delta".defineSymbol("\u0394")      // Δ
+        "Epsilon".defineSymbol("\u0395")    // Ε
+        "Zeta".defineSymbol("\u0396")       // Ζ
+        "Eta".defineSymbol("\u0397")        // Η
+        "Theta".defineSymbol("\u0398")      // Θ
+        "Iota".defineSymbol("\u0399")       // Ι
+        "Kappa".defineSymbol("\u039A")      // Κ
+        "Lambda".defineSymbol("\u039B")     // Λ
+        "Mu".defineSymbol("\u039C")         // Μ
+        "Nu".defineSymbol("\u039D")         // Ν
+        "Xi".defineSymbol("\u039E")         // Ξ
+        "Omicron".defineSymbol("\u039F")    // Ο
+        "Pi".defineSymbol("\u03A0")         // Π
+        "Rho".defineSymbol("\u03A1")        // Ρ
+        "Sigma".defineSymbol("\u03A3")      // Σ
+        "Tau".defineSymbol("\u03A4")        // Τ
+        "Upsilon".defineSymbol("\u03A5")    // Υ
+        "Phi".defineSymbol("\u03A6")        // Φ
+        "Chi".defineSymbol("\u03A7")        // Χ
+        "Psi".defineSymbol("\u03A8")        // Ψ
+        "Omega".defineSymbol("\u03A9")      // Ω
+        
+        "alpha".defineSymbol("\u03B1")      // α
+        "beta".defineSymbol("\u03B2")       // β
+        "gamma".defineSymbol("\u03B3")      // γ
+        "delta".defineSymbol("\u03B4")      // δ
+        "epsilon".defineSymbol("\u03B5")    // ε
+        "zeta".defineSymbol("\u03B6")       // ζ
+        "eta".defineSymbol("\u03B7")        // η
+        "theta".defineSymbol("\u03B8")      // θ
+        "iota".defineSymbol("\u03B9")       // ι
+        
+        "kappa".defineSymbol("\u03BA")      // κ
+        "lambda".defineSymbol("\u03BB")     // λ
+        "mu".defineSymbol("\u03BC")         // μ
+        "nu".defineSymbol("\u03BD")         // ν
+        "xi".defineSymbol("\u03BE")         // ξ
+        "omicron".defineSymbol("\u03BF")    // ο
+        "pi".defineSymbol("\u03C0")         // π
+        "rho".defineSymbol("\u03C1")        // ρ
+        "sigma".defineSymbol("\u03C3")      // σ
+        
+        "tau".defineSymbol("\u03C4")        // τ
+        "upsilon".defineSymbol("\u03C5")    // υ
+        "phi".defineSymbol("\u03C6")        // φ
+        "chi".defineSymbol("\u03C7")        // χ
+        "psi".defineSymbol("\u03C8")        // ψ
+        "omega".defineSymbol("\u03C9")      // ω    
+        
+        "Stigma".defineSymbol("\u03DA")     // Ϛ
+        "stigma".defineSymbol("\u03DB")     // ϛ
+        "Digamma".defineSymbol("\u03DC")    // Ϝ
+        "digamma".defineSymbol("\u03DD")    // ϝ
+        "Koppa".defineSymbol("\u03DE")      // Ϟ
+        "koppa".defineSymbol("\u03DF")      // ϟ
+        "Sampi".defineSymbol("\u03E0")      // Ϡ
+        "sampi".defineSymbol("\u03E1")      // ϡ
+        
+        "Sho".defineSymbol("\u03F7")        // Ϸ
+        "sho".defineSymbol("\u03F8")        // ϸ
+        "San".defineSymbol("\u03FA")        // Ϻ
+        "san".defineSymbol("\u03FB")        // ϻ
+    }
 }
