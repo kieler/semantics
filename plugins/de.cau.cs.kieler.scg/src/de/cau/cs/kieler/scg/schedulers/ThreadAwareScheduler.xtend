@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
@@ -28,7 +28,6 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
