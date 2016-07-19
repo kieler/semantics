@@ -988,21 +988,35 @@ class CDTProcessor {
         // Body of statements if condition is met
         val trueBody = (ifs.thenClause as CASTCompoundStatement).transformCompound(condState, condState)
         
-        // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state
-        if (trueBody.hasInnerStatesOrControlflowRegions) {
-            val trueConnector = scc.createTransition => [
-                targetState = connectorState
-                immediate = true
-                type = TransitionType::TERMINATION
-                trueBody.outgoingTransitions += it
-            ]
-            needExtraEndState = true
+        
+        // If argument is set to true, then we only want an extra endState if necessary
+        if (ifTransformationOption) {
+            
+           // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+            if (trueBody.hasInnerStatesOrControlflowRegions) {
+                val trueConnector = scc.createTransition => [
+                    targetState = connectorState
+                    immediate = true
+                    type = TransitionType::TERMINATION
+                    trueBody.outgoingTransitions += it
+                ]
+                needExtraEndState = true
+            } else {
+                // If no inner behavior, there is no need for an extra final state
+                trueBody.final = true
+            }
+        
         } else {
-            // If no inner behavior, there is no need for an extra final state
-            trueBody.final = true
+            // Argument is set to false, so we want a extra endState for every if statement
+            if (!trueBody.final) {
+                val trueConnector = scc.createTransition => [
+                    targetState = connectorState
+                    immediate = true
+                    trueBody.outgoingTransitions += it
+                    type == TransitionType::TERMINATION
+                ]
+            }
         }
-        
-        
         
         // Check whether a else clause exists
         if (ifs.elseClause != null) {
@@ -1011,49 +1025,72 @@ class CDTProcessor {
             
             if (ifs.elseClause instanceof CASTCompoundStatement) {
 
-                val elseBody = scc.createState => [s |
-                    s.id = trC + "_else"
-                    s.label = ""
-                    s.setTypeConnector
-                    ifStateRegion.states += s
-                ]
+//                // TODO Der hier muss weg
+//                val elseBody = scc.createState => [s |
+//                    s.id = trC + "_else"
+//                    s.label = ""
+//                    s.setTypeConnector
+//                    ifStateRegion.states += s
+//                ]
+//                
+//                val conn = scc.createTransition => [
+//                    targetState = elseBody
+//                    immediate = true
+//                    annotations.add(createStringAnnotation("notImmediate",""))
+//                    condState.outgoingTransitions += it
+//                ]
                 
-                val conn = scc.createTransition => [
-                    targetState = elseBody
-                    immediate = true
-                    annotations.add(createStringAnnotation("notImmediate",""))
-                    condState.outgoingTransitions += it
-                ]
+                falseBody = (ifs.elseClause as CASTCompoundStatement).transformCompound(condState, condState)
                 
-                falseBody = (ifs.elseClause as CASTCompoundStatement).transformCompound(elseBody, elseBody)
-                
+//                falseBody.incomingTransitions.head.trigger = null
+//                falseBody.incomingTransitions.head.annotations.add(createStringAnnotation("notImmediate",""))
                 
             // Check for else if statement
             } else if (ifs.elseClause instanceof CASTIfStatement) {
                 falseBody = (ifs.elseClause as CASTIfStatement).transformIf(condState)
             }
             
-            
-            // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state
-            if (falseBody.hasInnerStatesOrControlflowRegions) {
-                val falseConnector = scc.createTransition => [
-                    targetState = connectorState
-                    immediate = true
-                    type = TransitionType::TERMINATION
-                ]
-                needExtraEndState = true
-                falseBody.outgoingTransitions += falseConnector
+            // Here we check whether there needs to be an extra endState due to the content of falseBody
+            if (ifTransformationOption) {
+                // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+                if (falseBody.hasInnerStatesOrControlflowRegions) {
+                    val falseConnector = scc.createTransition => [
+                        targetState = connectorState
+                        immediate = true
+                        type = TransitionType::TERMINATION
+                    ]
+                    // Therefore, we need an extra endState
+                    needExtraEndState = true
+                    falseBody.outgoingTransitions += falseConnector
+                } else {
+                    // As falseBody has no inner behavior, it can be final
+                    falseBody.final = true 
+                }
             } else {
-                // If no inner behavior, there is no need for an extra final state
-                falseBody.final = true
+                // We want an extra endState regardless of the content of falseBody
+                if (!falseBody.final) {
+                    val falseConnector = scc.createTransition => [
+                        targetState = connectorState
+                        immediate = true
+    
+                        type == TransitionType::TERMINATION
+                    ]
+                    falseBody.outgoingTransitions += falseConnector
+                }
             }
 
+            // TODO dies vll noch verbessern
+            // Here we ensure that the else condition transition has no trigger and is immediate
+            val elseTransition = condState.outgoingTransitions.last // condState's last transition in list is always the else transition
+            elseTransition.trigger = null
+            elseTransition.immediate = true
+            elseTransition.annotations.add(createStringAnnotation("notImmediate",""))
 
-        } 
+        }
         
-        if (ifs.elseClause == null || needExtraEndState) {
+        if ((ifs.elseClause == null || needExtraEndState) && ifTransformationOption) {
             
-            // final state of statement. It is reached when condition is not met anymore
+            // Final state of statement. It is reached when condition is not met anymore
             val endState = scc.createState => [s |
                 s.id = trC + "_end"
                 s.label = "End"
@@ -1061,15 +1098,18 @@ class CDTProcessor {
                 ifStateRegion.states += s
             ]
             
-            // transition to endState
-            val defaultTrans = scc.createTransition => [
-            targetState = endState
-            immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
-            condState.outgoingTransitions += it
-            ]
+            // This default transition from condState to endState is only needed if there is no else clause
+            if (ifs.elseClause == null) {
+                // transition to endState
+                val defaultTrans = scc.createTransition => [
+                targetState = endState
+                immediate = true
+                annotations.add(createStringAnnotation("notImmediate",""))
+                condState.outgoingTransitions += it
+                ]
+            }
     
-            // transition to falseState
+            // Transition to falseState
             val falseTrans = scc.createTransition => [
                 targetState = endState
                 immediate = true
@@ -1077,7 +1117,32 @@ class CDTProcessor {
                 connectorState.outgoingTransitions += it
             ]
                 
+        } else if (!ifTransformationOption) {
+            // Final state of loop. It is reached when loop condition is not met anymore
+            val endState = scc.createState => [s |
+                s.id = trC + "_end"
+                s.label = "End"
+                s.final = true
+                ifStateRegion.states += s
+            ]
+            if (ifs.elseClause == null) {
+                
+                val defaultTrans = scc.createTransition => [
+                    targetState = endState
+                    immediate = true
+                    annotations.add(createStringAnnotation("notImmediate",""))
+                    condState.outgoingTransitions += it
+                ]
             
+            }
+            
+            // Transition to falseState
+            val falseTrans = scc.createTransition => [
+                targetState = endState
+                immediate = true
+                annotations.add(createStringAnnotation("notImmediate",""))
+                connectorState.outgoingTransitions += it
+            ]
         }
         
         ifState
@@ -1088,7 +1153,6 @@ class CDTProcessor {
 
     def State transformFor(CASTForStatement forStatement, State state) {
         val f = forStatement
-        
         
         // for loop state
         val forState = scc.createState => [ s |
@@ -1671,6 +1735,15 @@ class CDTProcessor {
     private def int getMultiEntryOption() {
         return 0;
     // return 1;
+    }
+    
+    /* Toggle the transformation option for if control structures
+     * return false = create a separate endState for each if construct
+     * return true = create only a separate endState for each if construct if necessary
+     */
+    private def boolean getIfTransformationOption() {
+//        return false;
+        return true;
     }
 
     private def void removeConnectorStates() {
