@@ -741,8 +741,14 @@ class CDTProcessor {
                 input = false
                 //funcGlobalState.declarations += it
                 
-                // Füge die Variablendeklaration dem State eine Hierarchieebene drüber hinzu (z.B. int i)
-                parent.parentRegion.parentState.declarations += it
+                // If the declaration is the initializer of a for statement, it needs to be added to the forState
+                if (parent.id.contains("_for")) {
+                    parent.declarations += it
+                } else {
+                    // Füge die Variablendeklaration dem State eine Hierarchieebene drüber hinzu (z.B. int i)
+                    parent.parentRegion.parentState.declarations += it
+                }
+                
             ]
             
             val value = kex.createValuedObject => [
@@ -852,9 +858,15 @@ class CDTProcessor {
                         
                     
                 //  var entryAction = initVarState.createEntryAction
-                
-                    // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
-                    var entryAction = parent.parentRegion.parentState.createEntryAction
+                    var EntryAction entryAction = null
+                    // If the declaration is the initializer of a for statement, create entryAction for forState
+                    if (parent.id.contains("_for")) {
+                        entryAction = parent.createEntryAction
+                    } else {
+                        // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
+                        entryAction = parent.parentRegion.parentState.createEntryAction
+                    }
+                    
                     //var entryAction = parent.createEntryAction
                     
                     
@@ -1154,14 +1166,14 @@ class CDTProcessor {
     def State transformFor(CASTForStatement forStatement, State state) {
         val f = forStatement
         
-        // for loop state
+        // For loop state
         val forState = scc.createState => [ s |
             s.id = trC + "_for"
             s.label = "for"
             state.parentRegion.states += s
         ]
         
-        // region of forState. It contains all states of for loop                 
+        // Region of forState. It contains all states of the for loop                 
         val forStateRegion = scc.createControlflowRegion => [ region |
                 region.id = forState.id + "_region"
                 region.label = ""
@@ -1170,7 +1182,7 @@ class CDTProcessor {
         
         
         
-        // initializer
+        // Initializer
         if (f.initializerStatement instanceof CASTDeclarationStatement) {
             val initializationExp = f.initializerStatement as CASTDeclarationStatement
             initializationExp.castDeclaration(forState) // add declaration to function head
@@ -1178,7 +1190,7 @@ class CDTProcessor {
             (f.initializerStatement as CASTExpressionStatement).transformExpression(forState)
         }
 
-        // condition
+        // Condition
         val exp = f.conditionExpression
 
         val kExp = exp.createKExpression
@@ -1239,7 +1251,7 @@ class CDTProcessor {
             forStateRegion.states += s
         ]
 
-        // iterate-action
+        // Iterate-action
         val body = f.body as CASTCompoundStatement
 
         val bodyState = body.transformCompound(condState, condState)
@@ -1260,7 +1272,7 @@ class CDTProcessor {
             iterateExp.outgoingTransitions += it
         ]
         
-        // final state of loop. It is reached when loop condition is not met anymore
+        // Final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
             s.id = trC + "_end"
             s.label = "End"
@@ -1268,7 +1280,7 @@ class CDTProcessor {
             forStateRegion.states += s
         ]
         
-        // transition to falseState
+        // Transition to falseState
         val falseTrans = scc.createTransition => [
             targetState = falseState
             immediate = true
