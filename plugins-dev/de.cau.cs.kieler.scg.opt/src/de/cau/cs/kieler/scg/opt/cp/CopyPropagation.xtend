@@ -127,7 +127,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         /* REPLACE VARS */
         cleanedRelevantAssignments.forEach[
             System.out.println(it.valuedObject.name)
-            findOccuresInNodes(nodes, it)
+            findOccurrenceInNodes(nodes, it)
         ]
         /* CHECK ASSIGNMENTS */
         val endCheckAssignments = new ArrayList<AssignmentImpl>();
@@ -193,13 +193,13 @@ class CopyPropagation extends AbstractProductionTransformation {
         }
         return scg
     }
-    def void findOccuresInNodes (EList<Node> nodes, Assignment assignment) {
+    def void findOccurrenceInNodes (EList<Node> nodes, Assignment assignment) {
         // search and replace in all nodes
         nodes.forEach[
-            findOccuresInNode(it, assignment)
+            findOccurrenceInNode(it, assignment)
         ]
     }
-    def void findOccuresInNode (Node node, Assignment assignment) {
+    def void findOccurrenceInNode (Node node, Assignment assignment) {
         val search = assignment.valuedObject.name
         val expression = assignment.assignment
         val expressions = node.eAllContents().filter(typeof(ValuedObjectReferenceImpl))
