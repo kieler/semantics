@@ -42,9 +42,10 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.impl.ValueImpl
 
 class CopyPropagation extends AbstractProductionTransformation {
-    // Inject fro SCGDeclarations
+    // Inject from SCGDeclarations
     @Inject 
     extension SCGDeclarationExtensions
     // Set Feature ID
@@ -87,6 +88,9 @@ class CopyPropagation extends AbstractProductionTransformation {
         val one2oneAssignments = assignments.filter[
             it.assignment.class.typeName.equals(ValuedObjectReferenceImpl.typeName)
         ]
+        val constantAssignments = assignments.filter[
+           it.assignment instanceof ValueImpl
+        ]
         // extract  condg variables
         val condAssignments = assignments.filter[
             it.assignment.class.typeName.equals(OperatorExpressionImpl.typeName)
@@ -109,6 +113,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         relevantAssignments.addAll(preAssignments)
         relevantAssignments.addAll(notAssignments)
         relevantAssignments.addAll(condAssignments)
+        relevantAssignments.addAll(constantAssignments);
         /* CHECK IF THE ASSIGNMENT IS ONLY ASSIGNED ONCE */
         val cleanedRelevantAssignments = new ArrayList<AssignmentImpl>();
         // check if an assignment is used multiple times
@@ -121,6 +126,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         ]
         /* REPLACE VARS */
         cleanedRelevantAssignments.forEach[
+            System.out.println(it.valuedObject.name)
             findOccuresInNodes(nodes, it)
         ]
         /* CHECK ASSIGNMENTS */
