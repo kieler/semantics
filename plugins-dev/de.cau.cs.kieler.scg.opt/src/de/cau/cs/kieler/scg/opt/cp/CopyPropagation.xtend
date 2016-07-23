@@ -126,7 +126,6 @@ class CopyPropagation extends AbstractProductionTransformation {
         ]
         /* REPLACE VARS */
         cleanedRelevantAssignments.forEach[
-            System.out.println(it.valuedObject.name)
             findOccurrenceInNodes(nodes, it)
         ]
         /* CHECK ASSIGNMENTS */
