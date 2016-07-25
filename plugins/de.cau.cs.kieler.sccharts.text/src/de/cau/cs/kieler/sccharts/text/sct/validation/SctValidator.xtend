@@ -115,7 +115,7 @@ class SctValidator extends SctJavaValidator {
     } 
 
     /**
-     * Checks if the given state has abort transformations without trigger and adds a warning.
+     * Checks if the given state has abort transitions without trigger and adds a warning.
      * In most cases an abort without trigger is meant to be a termination transition.
      */
     @Check
