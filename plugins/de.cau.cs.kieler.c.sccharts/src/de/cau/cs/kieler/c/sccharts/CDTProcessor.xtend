@@ -178,8 +178,8 @@ class CDTProcessor {
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator@54f591bd
         // fib
         val returnDeclaration = kex.createDeclaration => [
-            type = parseCDTType(function.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
-            output = true
+//            type = parseCDTType(function.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
+//            output = true
         ]
 
         val returnValue = kex.createValuedObject => [
@@ -222,8 +222,8 @@ class CDTProcessor {
         declarator.children.filter(typeof(CASTParameterDeclaration)).forEach [ parameter |
             val iName = parameter.children.filter(typeof(CASTDeclarator)).head.children.head.toString
             val intParamater = kex.createDeclaration => [
-                type = parseCDTType(parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
-                input = true
+//                type = parseCDTType(parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
+//                input = true
                 model.declarations += it
 
             ]
@@ -815,8 +815,8 @@ class CDTProcessor {
 
             val iName = declarator.children.head.toString
             val intParamater = kex.createDeclaration => [
-                type = parseCDTType(simpleDeclaration.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
-                input = false
+//                type = parseCDTType(simpleDeclaration.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
+//                input = false
                 //funcGlobalState.declarations += it
                 
                 // If the declaration is the initializer of a for statement, it needs to be added to the forState
