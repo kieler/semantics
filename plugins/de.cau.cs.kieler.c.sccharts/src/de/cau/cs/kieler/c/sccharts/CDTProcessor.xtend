@@ -312,145 +312,217 @@ class CDTProcessor {
     // TODO Bei case ohne break soll beim "durchfallen" nicht nochmal die condition der anderen cases überprüft werden
     def State transformSwitch(CASTSwitchStatement statement, State state) {
         val f = statement
+        var Expression kExp = null;
+        val switchVar = statement.children.filter(typeof(CASTIdExpression)).head.syntax.toString
+        var Boolean defaultExpression = false; // Is there a default case?
+        var Boolean casebefore = false; // Is there a case before the case we are currently working on?
+        var Boolean noBreakBefore = false; // Does the case before not have a breate statement?
+
+        // Switch statement state.
+        val switchState = scc.createState => [ s |
+            s.id = trC + "_switch"
+            s.label = "switch"
+            state.parentRegion.states += s
+        ]
+        
+        // Region of switchState. It contains all states of the switch statement.
+        val switchStateRegion = scc.createControlflowRegion => [ region |
+                region.id = switchState.id + "_region"
+                region.label = ""
+                switchState.regions += region
+        ]
+
+        val condState = scc.createState => [ s |
+            s.id = trC.toString + "_cond"
+            s.label = createLabel(statement) + "cond"
+            s.initial = true
+            switchStateRegion.states += s
+        ]
+        
+        // Connects switch statement to the parent
+        val switchConnector = scc.createTransition => [
+            targetState = switchState
+            
+            // Falls es geschachtelte Kontrollstrukturen sind, ohne dass nach dem cond State eine weitere Zeile kommt,
+            // fixt dies den Bug, dass die Condition der oberen for-Schleife richtig dargestellt wird.
+            if(state.id.contains("_cond")) {
+                
+                 val condStatement = statement.parent.parent
+                    // TODO NOCH IRGENDWIE VERBESSERN
+                    if (condStatement instanceof CASTForStatement) {
+                        val condCondition = (condStatement as CASTForStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        annotations.add(createStringAnnotation("notImmediate",""))
+                        immediate = true
+                    } 
+                    else if (condStatement instanceof CASTIfStatement) {
+                        val condCondition = (condStatement as CASTIfStatement).conditionExpression
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        annotations.add(createStringAnnotation("notImmediate",""))
+                        immediate = true
+                    } 
+                    else if (condStatement instanceof CASTWhileStatement) {
+                        val condCondition = (condStatement as CASTWhileStatement).condition
+                        val condKExp = condCondition.createKExpression
+                        trigger = condKExp
+                        annotations.add(createStringAnnotation("notImmediate",""))
+                        immediate = true
+                    }
+                    else { // e.g. for switch statement
+                        immediate = true
+                    }
+                    
+            } else if(state.hasInnerStatesOrControlflowRegions) {
+                type = TransitionType::TERMINATION
+            } else {
+                immediate = true
+            }
+            state.outgoingTransitions += it
+        ]
+
 
         val connectorState = scc.createState => [ s |
             s.id = trC.toString
             s.label = s.id
             s.setTypeConnector
-//            s.regions += scc.createControlflowRegion => [
-//                id = s.id + "_r"
-//                label = ""
-//            ]
-            state.parentRegion.states += s
+            switchStateRegion.states += s
         ]
         connectorStates.add(connectorState)
-        val switchVar = statement.children.filter(typeof(CASTIdExpression)).head.syntax.toString
-        var lastState = state;
-        var breakState = state;
-        var Expression kExp = null;
-        var parent = state;
-        var Boolean defaultExpression = false;
-        var Boolean casebefore = false;
-        var Boolean noBreakBefore = false;
         
         
+        // Save condState ID, so we can reset the ID after the switch case statement is transformed
+        val condID = condState.id
+        // Last state of case where the break statement is missing
+        var missingBreakState = condState
+        // Last state we have worked on and we want to continue
+        var parent = condState
+        // Save last state of a case for connecting it to the connectorState
+        var lastState = condState
         
         for (caseExpression : f.children.filter(typeof(CASTCompoundStatement)).head.children.filter(
             typeof(IASTStatement))) {
-
             if (caseExpression instanceof CASTCaseStatement) {
-                // caseExpression.transformStatement(state)
-                if (!casebefore) { //Break
-                    kExp = (switchVar + " == " + caseExpression.children.filter(typeof(IASTExpression)).head.toString).
+                // If lastState is final, start at condState again for next cases.
+                if (lastState.final) {
+                    lastState = condState
+                }
+                // Always start at condState for each new case.
+                parent = condState
+
+                // Create kExpression for condition of case.
+                kExp = (switchVar + " == " + caseExpression.children.filter(typeof(IASTExpression)).head.toString).
                         createTextExpression
-                    if (lastState != parent && !parent.final) {  // ??? Passiert nie ???
+                casebefore = true
+                if (condState != lastState && !lastState.final) { // Break statement for last case does not exist.
+                    // Set missingBreakState accordingly, so we can connect it and the current state to each other.
+                    missingBreakState = lastState
+                    // Set id, so that transformStatement does not join CASTBinaryExpression states of the two cases.
+                    lastState = condState
+                    // Mark state so that transformStatement does not merge multiple binary statements of two cases.
+                    lastState.id = lastState.id + "fallthrough"
+                    noBreakBefore = true
+                    casebefore = true
+                }
+            } else if (caseExpression instanceof CASTBreakStatement) {
+                // This is not necessary for default state as default should be last case, so no break is needed.
+                if (!defaultExpression) {
+                    casebefore = false;
+                    if (!lastState.final) {
                         val backConnector = scc.createTransition => [
                             targetState = connectorState
                             immediate = true
                         ]
-                        parent.outgoingTransitions += backConnector
+                        // Check to determine transition type.
+                        if(lastState.hasInnerStatesOrControlflowRegions) {
+                            backConnector.type = TransitionType::TERMINATION
+                        }
+                        lastState.outgoingTransitions += backConnector
                     }
-                    parent = lastState
-                    casebefore = true;
-                
-                } else { //no break
-                    kExp = (switchVar + " == " + caseExpression.children.filter(typeof(IASTExpression)).head.toString).
-                        createTextExpression
-                    if (lastState != parent && !parent.final) {
-//                        val notBreakState = scc.createState => [ s |
-//                            s.id = trC.toString + "_noBreak"
-//                            s.label = createLabel(statement) + "_noBreak"
-//                            
-//                            state.parentRegion.states += s 
-//                        ]
-//                        
-//                        
-//                        val backConnector = scc.createTransition => [
-//                            targetState = notBreakState
-//                            immediate = false
-//                        ]
-//                         val connector = scc.createTransition => [
-//                            targetState = notBreakState
-//                            immediate = false
-//                        ]
-//                        lastState.outgoingTransitions+=connector
-//                        parent.outgoingTransitions += backConnector
-                    
-                    breakState = parent
-                    noBreakBefore = true
-//                    parent = notBreakState
-                    casebefore=true;
-                    
-                    }
+                    // Start again at condState for next case
+                    lastState = condState
                 }
-            } else if (caseExpression instanceof CASTBreakStatement) {
-                casebefore=false;
-                
-                //parent=lastState
             } else if (caseExpression instanceof CASTDefaultStatement) {
-                if (parent != lastState && !parent.final) {
-                    val backConnector = scc.createTransition => [
-                        targetState = connectorState
-                        immediate = true
-                    ]
-                    parent.outgoingTransitions += backConnector
-                }
-                parent = lastState;
-                defaultExpression = true;
-
-            } else {
-                // hier kommt man auch rein, wenn statement ein SwitchStatement ist.
-                // parent wird hier auf einen neuen state gesetzt
-                parent = caseExpression.transformStatement(parent);
-                println("PARENT: " +  parent)
-                if (!defaultExpression) {
-                    lastState.outgoingTransitions.last.trigger = kExp
+                
+                if (condState != lastState && !lastState.final) { // Break statement for last case does not exist.
+                    // Set missingBreakState accordingly, so we can connect it and the current state to each other.
+                    missingBreakState = lastState
+                    // Set id, so that transformStatement does not join CASTBinaryExpression states of the two cases.
+                    lastState = condState
+                    // Mark state so that transformStatement does not merge multiple binary statements of two cases.
+                    lastState.id = lastState.id + "fallthrough"
+                    noBreakBefore = true
+                    casebefore = true
                 }
                 
-                // Das hier funktioniert glaube ich. Das Problem ist noch, dass dieser Teil hier erst dran kommt,
-                // nachdem der case 3 schon gezeichnet wurde. Dieser wird halt mit falschen Transitionen gezeichnet.
+                parent = condState
+                defaultExpression = true
+            } else {
+                // Finish transforming the content of the case we are looking at.
+                parent = caseExpression.transformStatement(lastState)
+                // Save the state to determine the last state of the case later.
+                lastState = parent
+                
+                // If this is not a default case, we need the condition for the transition
+                if (!defaultExpression) {
+                    // This transition connects condState to the content of the case we are looking at
+                    condState.outgoingTransitions.last.trigger = kExp
+                }
+                
+                // If the case before the case we are looking at has no break statement...
                 if (noBreakBefore) {
+                    // ... create a transition between these two.
                     val noBreakTrans = scc.createTransition => [
                         immediate = true
                     ]
-                    breakState.outgoingTransitions += noBreakTrans
+                    // Check to determine transition type.
+                    if(missingBreakState.hasInnerStatesOrControlflowRegions) {
+                        noBreakTrans.type = TransitionType::TERMINATION
+                    }
+                    missingBreakState.outgoingTransitions += noBreakTrans
                     parent.incomingTransitions += noBreakTrans
                     noBreakBefore = false
-                    parent = state
+                    
                 }
-
-                // lastTransition.targetState=trueState
-                
             }
-
-        // caseExpression.children.filter(typeof(IASTStatement)).head.transformStatement(state)
-
-
-        }  // ENDE DER FOR-SCHLEIFE
+        }  // End of for loop
         
-               
-        // hier wird der letzte state des switch-case Graphen mit dem connectorState verbunden, falls dieser
-        // nicht final ist.
-        if (!parent.final) {
-            var backConnector = scc.createTransition => [
+        // Reset condState ID back to normal
+        condState.id = condID
+        
+        // If a default case exists and its last state is not already final, connect it to the connectorState. 
+        if (defaultExpression && !lastState.final) {
+            val backConnector = scc.createTransition => [
                 targetState = connectorState
                 immediate = true
             ]
-            parent.outgoingTransitions += backConnector
+            if(lastState.hasInnerStatesOrControlflowRegions) {
+                    backConnector.type = TransitionType::TERMINATION
+            }
+            lastState.outgoingTransitions += backConnector
         }
 
-        // Falls kein default-case im switch vorhanden ist, wird diese Transition genommen.
-        // defaultExpression = true heißt, dass es einen default-case gibt.
-        if (!defaultExpression) {
-            var backConnector = scc.createTransition => [
-                targetState = connectorState
-                immediate = true
-            ]
-            state.outgoingTransitions += backConnector
-        }
+        // Final state of switch statement.
+        val endState = scc.createState => [s |
+            s.id = trC + "_end"
+            s.label = "End"
+            s.final = true
+            switchStateRegion.states += s
+        ]
+    
+        // Transition from connectorState to endState.
+        val falseTrans = scc.createTransition => [
+            targetState = endState
+            immediate = true
+            annotations.add(createStringAnnotation("notImmediate",""))
+            connectorState.outgoingTransitions += it
+        ]
 
-        connectorState
+        switchState
     }
+    
+    
 
     def State transformWhile(CASTWhileStatement statement, State state) {
         val f = statement
@@ -498,28 +570,34 @@ class CDTProcessor {
             if(state.id.contains("_cond")) {
                 
                  val condStatement = statement.parent.parent
-                    // TODO NOCH IRGENDWIE VERBESSERN
-                    if (condStatement instanceof CASTForStatement) {
-                        val condCondition = (condStatement as CASTForStatement).conditionExpression
-                        val condKExp = condCondition.createKExpression
-                        trigger = condKExp
-                        annotations.add(createStringAnnotation("notImmediate",""))
+                // TODO NOCH IRGENDWIE VERBESSERN
+                if (condStatement instanceof CASTForStatement) {
+                    val condCondition = (condStatement as CASTForStatement).conditionExpression
+                    val condKExp = condCondition.createKExpression
+                    trigger = condKExp
+                    annotations.add(createStringAnnotation("notImmediate",""))
+                    immediate = true
+                    println("1")
+                } 
+                else if (condStatement instanceof CASTIfStatement) {
+                    val condCondition = (condStatement as CASTIfStatement).conditionExpression
+                    val condKExp = condCondition.createKExpression
+                    trigger = condKExp
+                    annotations.add(createStringAnnotation("notImmediate",""))
+                    immediate = true
+                    println("2")
+                } 
+                else if (condStatement instanceof CASTWhileStatement) {
+                    val condCondition = (condStatement as CASTWhileStatement).condition
+                    val condKExp = condCondition.createKExpression
+                    trigger = condKExp
+                    annotations.add(createStringAnnotation("notImmediate",""))
+                    immediate = true
+                    println("3")
+                }
+                else { // e.g. for switch statement
                         immediate = true
-                    } 
-                    else if (condStatement instanceof CASTIfStatement) {
-                        val condCondition = (condStatement as CASTIfStatement).conditionExpression
-                        val condKExp = condCondition.createKExpression
-                        trigger = condKExp
-                        annotations.add(createStringAnnotation("notImmediate",""))
-                        immediate = true
-                    } 
-                    else if (condStatement instanceof CASTWhileStatement) {
-                        val condCondition = (condStatement as CASTWhileStatement).condition
-                        val condKExp = condCondition.createKExpression
-                        trigger = condKExp
-                        annotations.add(createStringAnnotation("notImmediate",""))
-                        immediate = true
-                    } 
+                }
                     
             } else if(state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
@@ -968,7 +1046,10 @@ class CDTProcessor {
                         trigger = condKExp
                         annotations.add(createStringAnnotation("notImmediate",""))
                         immediate = true
-                    } 
+                    }
+                    else { // e.g. for switch statement
+                        immediate = true
+                    }
             // If multiple if statements follow one after an other, wait for the previous to finish
             } else if (state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
@@ -1232,6 +1313,9 @@ class CDTProcessor {
                         annotations.add(createStringAnnotation("notImmediate",""))
                         immediate = true
                     }
+                    else { // e.g. for switch statement
+                        immediate = true
+                    }
             // Falls davor eine Kontrollstruktur kam, muss man darauf warten, bis diese fertig ist
             } else if(state.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
@@ -1370,16 +1454,17 @@ class CDTProcessor {
         
         if (es.expression instanceof CASTBinaryExpression) {
 
-            // create binary expression
+            // Create binary expression
             val exp = es.expression as CASTBinaryExpression
-            // if variable assignment happens right after the initial state of the function -> entry action parent state
+            // If variable assignment happens right after the initial state of the function -> entry action parent state
             if(state.id.contains("_initFuncState")) {
                 val entryact = state.parent.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
             }
-            // if variable assignments is follows by another variable assignment -> put them into one state
-            else if (state.id.contains("_binEx")) {
+            // If variable assignments is follows by another variable assignment -> put them into one state
+            // This does not apply to "fallthrough" switch states.
+            else if (state.id.contains("_binEx") && !state.id.contains("fallthrough")) {
                 val entryact = state.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
@@ -1401,14 +1486,13 @@ class CDTProcessor {
                 if (state.hasInnerStatesOrControlflowRegions) {
                     type = TransitionType::TERMINATION
                 } else if (state.id.contains("_cond")) {
-                // ensure that all outgoing transitions of a cond-state are non-immediate to prevent instant loops       
+                // Ensure that all outgoing transitions of a condState are non-immediate to prevent instant loops       
                     immediate = true
                     annotations.add(createStringAnnotation("notImmediate",""))
-                    // get condition of control structure (for, while, ect) for condition-transition
+                    // Get condition of control structure (for, while, ect) for condition-transition
                     var hlp = es.parent.parent
-                    println("ASDA " + hlp)
                     val condStatement = es.parent.parent
-                    // one case for each casting (-> optimize)
+                    // One case for each casting (-> optimize)
                     if (condStatement instanceof CASTWhileStatement) {
                         val condCondition = (condStatement as CASTWhileStatement).condition
                         val condKExp = condCondition.createKExpression
@@ -1421,7 +1505,9 @@ class CDTProcessor {
                         val condCondition = (condStatement as CASTIfStatement).conditionExpression
                         val condKExp = condCondition.createKExpression
                         trigger = condKExp
-                    
+                    }
+                    else { // e.g. for switch statement
+                        immediate = true
                     }
                     
                 } else {
@@ -1754,8 +1840,8 @@ class CDTProcessor {
      * return true = create only a separate endState for each if construct if necessary
      */
     private def boolean getIfTransformationOption() {
-//        return false;
-        return true;
+        return false;
+//        return true;
     }
 
     private def void removeConnectorStates() {
