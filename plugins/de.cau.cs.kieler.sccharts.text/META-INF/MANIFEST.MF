@@ -2,36 +2,40 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Textual Editing Infrastructure
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.1.2.qualifier
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text; singleton:=true
+Bundle-Version: 0.3.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.apache.commons.logging;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
+ com.ibm.icu;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.eclipse.emf.edit,
  org.eclipse.emf.transaction,
+ org.antlr.runtime,
  de.cau.cs.kieler.sccharts;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.model;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.text,
  org.eclipse.xtext.xbase,
  org.eclipse.xtext.builder,
- de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport,
- de.cau.cs.kieler.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.cs.kieler.sccharts.text.actions,
- de.cau.cs.kieler.sccharts.text.actions.formatting,
- de.cau.cs.kieler.sccharts.text.actions.parser.antlr,
- de.cau.cs.kieler.sccharts.text.actions.parser.antlr.internal,
- de.cau.cs.kieler.sccharts.text.actions.scoping,
- de.cau.cs.kieler.sccharts.text.actions.serializer,
- de.cau.cs.kieler.sccharts.text.actions.services,
- de.cau.cs.kieler.sccharts.text.actions.validation,
- de.cau.cs.kieler.sccharts.text.sct,
- de.cau.cs.kieler.sccharts.text.sct.formatting,
- de.cau.cs.kieler.sccharts.text.sct.parser.antlr,
- de.cau.cs.kieler.sccharts.text.sct.parser.antlr.internal,
- de.cau.cs.kieler.sccharts.text.sct.scoping,
- de.cau.cs.kieler.sccharts.text.sct.sctgenerator,
- de.cau.cs.kieler.sccharts.text.sct.serializer,
- de.cau.cs.kieler.sccharts.text.sct.services,
- de.cau.cs.kieler.sccharts.text.sct.validation
+ de.cau.cs.kieler.core.kexpressions.keffects,
+ de.cau.cs.kieler.core.kexpressions.text,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.sccharts.text.formatting,
+ de.cau.cs.kieler.sccharts.text.scoping,
+ de.cau.cs.kieler.sccharts.text.serializer,
+ de.cau.cs.kieler.sccharts.text.validation,
+ de.cau.cs.kieler.sccharts.text.services,
+ de.cau.cs.kieler.sccharts.text.parser.antlr,
+ de.cau.cs.kieler.sccharts.text.parser.antlr.internal
 

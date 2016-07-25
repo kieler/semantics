@@ -68,6 +68,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.antlr.runtime,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.text,
- de.cau.cs.kieler.core.kexpressions;visibility:=reexport
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
+ org.eclipse.xtext.xbase.lib
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="1.2.15"

@@ -21,13 +21,13 @@ package de.cau.cs.kieler.core.annotations;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.NamedObject#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getNamedObject()
- * @model abstract="true"
+ * @model
  * @generated
  */
 public interface NamedObject extends Annotatable {

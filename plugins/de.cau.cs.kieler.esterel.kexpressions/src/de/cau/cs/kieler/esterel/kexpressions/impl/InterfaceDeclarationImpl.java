@@ -17,29 +17,27 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Interface Declaration</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
 public class InterfaceDeclarationImpl extends EObjectImpl implements InterfaceDeclaration {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected InterfaceDeclarationImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return KExpressionsPackage.Literals.INTERFACE_DECLARATION;
-    }
+		return KExpressionsPackage.Literals.INTERFACE_DECLARATION;
+	}
 
 } //InterfaceDeclarationImpl

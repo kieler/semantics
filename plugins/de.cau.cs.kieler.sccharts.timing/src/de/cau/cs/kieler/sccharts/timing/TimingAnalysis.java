@@ -46,6 +46,7 @@ import com.google.common.collect.HashMultimap;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KText;
@@ -507,13 +508,16 @@ public class TimingAnalysis extends Job {
 		Iterator<Declaration> declarationListIterator = declarationList.iterator();
 		while (declarationListIterator.hasNext()) {
 			Declaration currentDeclaration = declarationListIterator.next();
-			if (currentDeclaration.isInput()) {
-				ValueType type = currentDeclaration.getType();
-				if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-					stringBuilder
-							.append("\nGlobalVar " + currentDeclaration.getValuedObjects().get(0)
-									.getName() + " 0..1");
-				}
+			if (currentDeclaration instanceof VariableDeclaration) {
+			    VariableDeclaration varDeclaration = (VariableDeclaration) currentDeclaration;
+        		if (varDeclaration.isInput()) {
+        			ValueType type = varDeclaration.getType();
+        			if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+        				stringBuilder
+        						.append("\nGlobalVar " + varDeclaration.getValuedObjects().get(0)
+        								.getName() + " 0..1");
+        			}
+        		}
 			}
 		}
 		// read (optional) additional assumptions and timing assumptions for called functions into

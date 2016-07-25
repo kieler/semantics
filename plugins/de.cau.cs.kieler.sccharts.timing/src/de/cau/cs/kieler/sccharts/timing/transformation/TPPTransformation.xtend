@@ -477,7 +477,7 @@ class TPPTransformation extends AbstractProductionTransformation
                         val TextExpression tppText = KExpressionsFactory.eINSTANCE.
                             createTextExpression();
                         tppText.setText("TPP(" + tppNumber + ")");
-                        tpp.setAssignment(tppText);
+                        tpp.expression = tppText;
                         // insert the new assignment node in the edge
                         tpp.setNext(newEdge);
                         controlFlow.setTarget(tpp);

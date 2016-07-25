@@ -47,14 +47,6 @@ class AnnotationsExtensions {
             
             if (data != null) {
                 node.getData(typeof(KShapeLayout)).setProperty(data, switch(it.eClass) {
-                    case annotationsPackage.booleanAnnotation:
-                      (it as BooleanAnnotation).value
-                    case annotationsPackage.intAnnotation: {
-                      val value = (it as IntAnnotation).value;
-                      if (data.type == LayoutOptionData$Type::FLOAT) new Float(value) else value
-                    }
-                    case annotationsPackage.floatAnnotation:
-                     (it as FloatAnnotation).value
                     case annotationsPackage.stringAnnotation:
                      data.parseValue((it as StringAnnotation).values.head)
                     default:

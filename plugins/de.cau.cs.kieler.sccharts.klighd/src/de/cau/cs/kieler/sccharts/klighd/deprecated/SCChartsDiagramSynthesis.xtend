@@ -85,8 +85,8 @@ import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+//import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+//import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import java.util.List
 import javax.inject.Provider
 import org.eclipse.emf.ecore.EObject
@@ -94,6 +94,18 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtensions
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
@@ -107,9 +119,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Serialization of actions (state actions and transition labels)   
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+//    private static val Injector i = Sct3StandaloneSetup::doSetup();
+//    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+//    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
     // a global diagram option "@BlackWhite"
     private boolean globalBWOption = false;
@@ -149,6 +161,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
     
     @Inject
     extension SCChartsSerializeHRExtension
@@ -522,7 +537,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             if (s.isInitial) {
                 node.setParent(node.parent)
             }
-            val connector = s.type == StateType::CONNECTOR;
+            val connector = s.isConnector;
             val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) && !s.referencedState) 17 else 8;
             var lineWidth = if(s.isInitial) 3 else 1;
             if (PAPER_BW.booleanValue || globalBWOption) {
@@ -704,7 +719,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     }
                 }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                    for (tg : s.declarations) {
+                    for (tg : s.variableDeclarations) {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
@@ -713,7 +728,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
-                                scopeProvider.parent = s;
+//                                scopeProvider.parent = s;
                                 var declaration = "";
                                 var type = "";
                                 if (tg.type != ValueType::PURE) {
@@ -768,7 +783,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
                 }
                 if (SHOW_STATE_ACTIONS.booleanValue) {
-                    scopeProvider.parent = s;
+//                    scopeProvider.parent = s;
                     for (action : s.localActions) {
                         it.addRectangle => [
                             it.invisible = true;
@@ -883,7 +898,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 };
             ];
             if (SHOW_LABELS.booleanValue) {
-                scopeProvider.parent = t.sourceState;
+//                scopeProvider.parent = t.sourceState;
 
                 // For serialization set these flags to false to ommit them in the transition label
                 val tCopy = t.copy
@@ -1112,7 +1127,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     // if it's a ValuedObjectReference, it's just another variable
                     if (se instanceof ValuedObjectReference) {
                         val subVo = (se as ValuedObjectReference).valuedObject
-                        val decl = (subVo.eContainer as Declaration)
+                        val decl = (subVo.eContainer as VariableDeclaration)
                         // differ between input/output type of variable
                         if (decl.isInput) {
                             // create input node and shape
@@ -1475,13 +1490,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 LABELFONTSIZE,
                 KlighdConstants::DEFAULT_FONT_NAME
             )
-            refedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::WEST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
-            refedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::EAST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -1491,7 +1506,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // dNode is the dataflow KNode containing the reference node
             val dNode = refNode.eContainer.node
             val refInputs = <ValuedObject>newArrayList
-            refedScope.declarations.filter[it.input].forEach[
+            refedScope.variableDeclarations.filter[it.input].forEach[
                 refInputs += valuedObjects
             ]
             val refInputSize = refInputs.size

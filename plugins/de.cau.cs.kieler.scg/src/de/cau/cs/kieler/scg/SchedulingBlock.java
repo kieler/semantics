@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getLabel <em>Label</em>}</li>
  * </ul>
  *
@@ -69,32 +69,22 @@ public interface SchedulingBlock extends EObject {
     EList<Dependency> getDependencies();
 
     /**
-     * Returns the value of the '<em><b>Guard</b></em>' reference.
+     * Returns the value of the '<em><b>Guards</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Guard}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Guard</em>' reference.
-     * @see #setGuard(Guard)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Guard()
+	 * <p>
+	 * If the meaning of the '<em>Guards</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+     * @return the value of the '<em>Guards</em>' reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Guards()
      * @model required="true"
      * @generated
      */
-    Guard getGuard();
+	EList<Guard> getGuards();
 
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Guard</em>' reference.
-     * @see #getGuard()
-     * @generated
-     */
-    void setGuard(Guard value);
-
-    /**
+				/**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>

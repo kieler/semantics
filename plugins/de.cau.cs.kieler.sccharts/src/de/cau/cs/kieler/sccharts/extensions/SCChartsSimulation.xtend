@@ -127,7 +127,7 @@ class SCChartsSimulation {
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
-          createDeclaration(ValueType::PURE) => [
+          createVariableDeclaration(ValueType::PURE) => [
               signal = true
               input = false
               output = true
@@ -159,7 +159,7 @@ class SCChartsSimulation {
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
-               createDeclaration(ValueType::PURE) => [
+               createVariableDeclaration(ValueType::PURE) => [
                    signal = true
                    input = false
                    output = true

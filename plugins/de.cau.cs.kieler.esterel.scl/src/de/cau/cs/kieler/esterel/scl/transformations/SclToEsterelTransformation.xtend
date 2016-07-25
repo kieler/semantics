@@ -45,6 +45,9 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import org.eclipse.emf.ecore.util.EObjectEList
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import java.util.List
 
 /**
  * @author krat
@@ -57,6 +60,9 @@ class SclToEsterelTransformation {
 
     @Inject
     extension EsterelToSclExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     var LinkedList<ISignal> allSignals
     var LinkedList<TrapDecl> allTraps
@@ -80,7 +86,7 @@ class SclToEsterelTransformation {
         sclProgram.removeForwardJumps
 
         // Transform declarations
-        transformInterface(sclProgram.declarations, module)
+        transformInterface(sclProgram.variableDeclarations, module)
         
         val trap = EsterelFactory::eINSTANCE.createTrap => [
                                 trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
@@ -243,7 +249,7 @@ class SclToEsterelTransformation {
     /*
      * Transforms SCL declarations to Esterel module interface
      */
-    def Module transformInterface(EList<Declaration> decls, Module module) {
+    def Module transformInterface(List<VariableDeclaration> decls, Module module) {
         val interf = EsterelFactory::eINSTANCE.createModuleInterface
         for (decl : decls) {
             for (valObj : decl.valuedObjects) {

@@ -106,9 +106,6 @@ public class NewAnnotationDialog extends Dialog {
     
     private static final String[][] TYPE_LABELS = new String[][] {
             { "String", AnnotationType.STRING.toString() },
-            { "Integer", AnnotationType.INT.toString() },
-            { "Floating point", AnnotationType.FLOAT.toString() },
-            { "Boolean", AnnotationType.BOOLEAN.toString() },
             { "Typed string" , AnnotationType.TYPED_STRING.toString() }
     };
 

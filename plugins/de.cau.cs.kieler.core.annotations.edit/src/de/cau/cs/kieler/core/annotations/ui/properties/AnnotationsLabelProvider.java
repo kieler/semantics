@@ -70,16 +70,6 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
             case STRING:
             case TYPED_STRING:
                 return getImage("prop_text");
-            case INT:
-                return getImage("prop_int");
-            case BOOLEAN:
-                if (((BooleanAnnotation) element).isValue()) {
-                    return getImage("prop_true");
-                } else {
-                    return getImage("prop_false");
-                }
-            case FLOAT:
-                return getImage("prop_float");
             default:
                 throw new IllegalArgumentException(
                         "Annotation type must not be CONTAINMENT, REFERENCE, or NONE.");
@@ -107,22 +97,6 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
                 }
             case STRING:
                 return ((StringAnnotation) annotation).getValues().get(0);
-            case INT:
-                return Integer.toString(((IntAnnotation) annotation).getValue());
-            case BOOLEAN:
-                return Boolean.toString(((BooleanAnnotation) annotation).isValue());
-            case FLOAT:
-                return Float.toString(((FloatAnnotation) annotation).getValue());
-            case REFERENCE:
-                EObject object = ((ReferenceAnnotation) annotation).getObject();
-                if (object != null) {
-                    return object.eClass().getName();
-                }
-            case CONTAINMENT:
-                object = ((ContainmentAnnotation) annotation).getObject();
-                if (object != null) {
-                    return object.eClass().getName();
-                }
             default:
                 return null;
             }

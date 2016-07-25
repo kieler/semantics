@@ -10,29 +10,27 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Thread</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
 public class ThreadImpl extends StatementSequenceImpl implements de.cau.cs.kieler.scl.scl.Thread {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ThreadImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SclPackage.Literals.THREAD;
-    }
+		return SclPackage.Literals.THREAD;
+	}
 
 } //ThreadImpl

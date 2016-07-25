@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.core.kexpressions.keffects/src"
+    modelPluginID="de.cau.cs.kieler.core.kexpressions.keffects" modelName="KEffects"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="7.0" copyrightFields="false" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions"
+    importOrganizing="true">
+  <foreignModel>keffects.ecore</foreignModel>
+  <genPackages prefix="KEffects" basePackage="de.cau.cs.kieler.core.kexpressions"
+      disposableProviderFactory="true" ecorePackage="keffects.ecore#/">
+    <genClasses ecoreClass="keffects.ecore#//Effect"/>
+    <genClasses ecoreClass="keffects.ecore#//Assignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/indices"/>
+    </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//Emission">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Emission/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Emission/newValue"/>
+    </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//HostcodeEffect"/>
+    <genClasses ecoreClass="keffects.ecore#//FunctionCallEffect"/>
+  </genPackages>
+</genmodel:GenModel>

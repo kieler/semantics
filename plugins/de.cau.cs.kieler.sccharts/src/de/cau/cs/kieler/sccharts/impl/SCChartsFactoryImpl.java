@@ -33,12 +33,12 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
+				/**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -92,6 +92,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
             case SCChartsPackage.ITERATE_ACTION: return createIterateAction();
+            case SCChartsPackage.INIT_ACTION: return createInitAction();
+            case SCChartsPackage.FINAL_ACTION: return createFinalAction();
+            case SCChartsPackage.SC_CHARTS: return createSCCharts();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -105,14 +108,10 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-            case SCChartsPackage.STATE_TYPE:
-                return createStateTypeFromString(eDataType, initialValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return createTransitionTypeFromString(eDataType, initialValue);
             case SCChartsPackage.HISTORY_TYPE:
                 return createHistoryTypeFromString(eDataType, initialValue);
-            case SCChartsPackage.PARSABLE:
-                return createParsableFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -126,14 +125,10 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-            case SCChartsPackage.STATE_TYPE:
-                return convertStateTypeToString(eDataType, instanceValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return convertTransitionTypeToString(eDataType, instanceValue);
             case SCChartsPackage.HISTORY_TYPE:
                 return convertHistoryTypeToString(eDataType, instanceValue);
-            case SCChartsPackage.PARSABLE:
-                return convertParsableToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -311,25 +306,35 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public StateType createStateTypeFromString(EDataType eDataType, String initialValue) {
-        StateType result = StateType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
+	public InitAction createInitAction() {
+        InitActionImpl initAction = new InitActionImpl();
+        return initAction;
     }
 
-    /**
+				/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public String convertStateTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
+	public FinalAction createFinalAction() {
+        FinalActionImpl finalAction = new FinalActionImpl();
+        return finalAction;
     }
 
-    /**
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public SCCharts createSCCharts() {
+        SCChartsImpl scCharts = new SCChartsImpl();
+        return scCharts;
+    }
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -367,24 +372,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      */
     public String convertHistoryTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String createParsableFromString(EDataType eDataType, String initialValue) {
-        return (String)super.createFromString(eDataType, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertParsableToString(EDataType eDataType, Object instanceValue) {
-        return super.convertToString(eDataType, instanceValue);
     }
 
     /**

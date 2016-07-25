@@ -164,6 +164,29 @@ public class KEffectsItemProviderAdapterFactory extends KEffectsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReferenceCallEffectItemProvider referenceCallEffectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReferenceCallEffectAdapter() {
+        if (referenceCallEffectItemProvider == null) {
+            referenceCallEffectItemProvider = new ReferenceCallEffectItemProvider(this);
+        }
+
+        return referenceCallEffectItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -289,6 +312,7 @@ public class KEffectsItemProviderAdapterFactory extends KEffectsAdapterFactory i
         if (assignmentItemProvider != null) assignmentItemProvider.dispose();
         if (emissionItemProvider != null) emissionItemProvider.dispose();
         if (hostcodeEffectItemProvider != null) hostcodeEffectItemProvider.dispose();
+        if (referenceCallEffectItemProvider != null) referenceCallEffectItemProvider.dispose();
         if (functionCallEffectItemProvider != null) functionCallEffectItemProvider.dispose();
     }
 

@@ -1,3 +1,4 @@
+
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
@@ -259,3 +260,4 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
 }
+

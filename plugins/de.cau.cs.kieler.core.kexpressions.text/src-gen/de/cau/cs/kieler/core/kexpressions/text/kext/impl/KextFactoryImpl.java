@@ -18,109 +18,144 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class KextFactoryImpl extends EFactoryImpl implements KextFactory
-{
-  /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public static KextFactory init()
-  {
-		try {
-			KextFactory theKextFactory = (KextFactory)EPackage.Registry.INSTANCE.getEFactory(KextPackage.eNS_URI);
-			if (theKextFactory != null) {
-				return theKextFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new KextFactoryImpl();
-	}
+public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
+    /**
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static KextFactory init() {
+        try {
+            KextFactory theKextFactory = (KextFactory)EPackage.Registry.INSTANCE.getEFactory(KextPackage.eNS_URI);
+            if (theKextFactory != null) {
+                return theKextFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new KextFactoryImpl();
+    }
 
-  /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public KextFactoryImpl()
-  {
-		super();
-	}
+    /**
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public KextFactoryImpl() {
+        super();
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  @Override
-  public EObject create(EClass eClass)
-  {
-		switch (eClass.getClassifierID()) {
-			case KextPackage.KEXT: return createKext();
-			case KextPackage.TEST_ENTITY: return createTestEntity();
-			case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EObject create(EClass eClass) {
+        switch (eClass.getClassifierID()) {
+            case KextPackage.KEXT: return createKext();
+            case KextPackage.TEST_ENTITY: return createTestEntity();
+            case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
+            case KextPackage.IDENTIFIABLE: return createIdentifiable();
+            case KextPackage.DECLARATION_SCOPE: return createDeclarationScope();
+            case KextPackage.KEXT_SCOPE: return createKEXTScope();
+            case KextPackage.REFERENCEABLE: return createReferenceable();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public Kext createKext()
-  {
-		KextImpl kext = new KextImpl();
-		return kext;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Kext createKext() {
+        KextImpl kext = new KextImpl();
+        return kext;
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public TestEntity createTestEntity()
-  {
-		TestEntityImpl testEntity = new TestEntityImpl();
-		return testEntity;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TestEntity createTestEntity() {
+        TestEntityImpl testEntity = new TestEntityImpl();
+        return testEntity;
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public AnnotatedExpression createAnnotatedExpression()
-  {
-		AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
-		return annotatedExpression;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AnnotatedExpression createAnnotatedExpression() {
+        AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
+        return annotatedExpression;
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @generated
-	 */
-  public KextPackage getKextPackage()
-  {
-		return (KextPackage)getEPackage();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Identifiable createIdentifiable() {
+        IdentifiableImpl identifiable = new IdentifiableImpl();
+        return identifiable;
+    }
 
-  /**
-	 * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
-  @Deprecated
-  public static KextPackage getPackage()
-  {
-		return KextPackage.eINSTANCE;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DeclarationScope createDeclarationScope() {
+        DeclarationScopeImpl declarationScope = new DeclarationScopeImpl();
+        return declarationScope;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public KEXTScope createKEXTScope() {
+        KEXTScopeImpl kextScope = new KEXTScopeImpl();
+        return kextScope;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Referenceable createReferenceable() {
+        ReferenceableImpl referenceable = new ReferenceableImpl();
+        return referenceable;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public KextPackage getKextPackage() {
+        return (KextPackage)getEPackage();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @deprecated
+     * @generated
+     */
+    @Deprecated
+    public static KextPackage getPackage() {
+        return KextPackage.eINSTANCE;
+    }
 
 } //KextFactoryImpl

@@ -36,8 +36,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.core.util.Maybe
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
@@ -54,7 +52,8 @@ import org.json.JSONObject
 import java.util.List
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener
 import de.cau.cs.kieler.sim.kiem.KiemEvent
-
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author fry 

@@ -31,10 +31,10 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.impl.StringAnnotationImpl#getValues <em>Values</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

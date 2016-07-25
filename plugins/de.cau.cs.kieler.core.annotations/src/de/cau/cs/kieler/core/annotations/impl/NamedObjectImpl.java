@@ -28,14 +28,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public abstract class NamedObjectImpl extends AnnotatableImpl implements NamedObject {
+public class NamedObjectImpl extends AnnotatableImpl implements NamedObject {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->

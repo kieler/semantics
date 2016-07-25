@@ -30,10 +30,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.Annotatable#getAnnotations <em>Annotations</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getAnnotatable()
  * @model abstract="true"

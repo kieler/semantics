@@ -50,7 +50,7 @@ class Basic extends Feature {
         return !(
                 scg.hasAnnotation(SCGFeatures::DEPENDENCY_ID) ||
                 scg.hasAnnotation(SCGFeatures::BASICBLOCK_ID) || 
-                scg.hasAnnotation(SCGFeatures::GUARD_ID) ||
+                scg.hasAnnotation(SCGFeatures::GUARD_EXPRESSIONS_ID) ||
                 scg.hasAnnotation(SCGFeatures::SCHEDULING_ID) ||
                 scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)
                 )

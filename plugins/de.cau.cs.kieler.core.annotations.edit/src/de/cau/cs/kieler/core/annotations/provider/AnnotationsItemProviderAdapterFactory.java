@@ -83,6 +83,29 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.NamedObject} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected NamedObjectItemProvider namedObjectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.NamedObject}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createNamedObjectAdapter() {
+        if (namedObjectItemProvider == null) {
+            namedObjectItemProvider = new NamedObjectItemProvider(this);
+        }
+
+        return namedObjectItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.Annotation} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -313,6 +336,52 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.PragmaAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PragmaAnnotationItemProvider pragmaAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.PragmaAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createPragmaAnnotationAdapter() {
+        if (pragmaAnnotationItemProvider == null) {
+            pragmaAnnotationItemProvider = new PragmaAnnotationItemProvider(this);
+        }
+
+        return pragmaAnnotationItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.PragmaStringAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PragmaStringAnnotationItemProvider pragmaStringAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.PragmaStringAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createPragmaStringAnnotationAdapter() {
+        if (pragmaStringAnnotationItemProvider == null) {
+            pragmaStringAnnotationItemProvider = new PragmaStringAnnotationItemProvider(this);
+        }
+
+        return pragmaStringAnnotationItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -411,6 +480,7 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
      * @generated
      */
     public void dispose() {
+        if (namedObjectItemProvider != null) namedObjectItemProvider.dispose();
         if (annotationItemProvider != null) annotationItemProvider.dispose();
         if (stringAnnotationItemProvider != null) stringAnnotationItemProvider.dispose();
         if (referenceAnnotationItemProvider != null) referenceAnnotationItemProvider.dispose();
@@ -421,6 +491,8 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
         if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
         if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
         if (commentAnnotationItemProvider != null) commentAnnotationItemProvider.dispose();
+        if (pragmaAnnotationItemProvider != null) pragmaAnnotationItemProvider.dispose();
+        if (pragmaStringAnnotationItemProvider != null) pragmaStringAnnotationItemProvider.dispose();
     }
 
 }

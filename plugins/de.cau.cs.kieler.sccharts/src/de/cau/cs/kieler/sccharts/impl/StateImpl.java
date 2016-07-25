@@ -17,7 +17,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.Transition;
 
 import java.util.Collection;
@@ -43,48 +42,29 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getRegions <em>Regions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getParentRegion <em>Parent Region</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getRegions <em>Regions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isInitial <em>Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isFinal <em>Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isViolation <em>Violation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class StateImpl extends ScopeImpl implements State {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
-     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected static final StateType TYPE_EDEFAULT = StateType.NORMAL;
-
-    /**
-     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected StateType type = TYPE_EDEFAULT;
-
-    /**
+				/**
      * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -135,6 +115,46 @@ public class StateImpl extends ScopeImpl implements State {
     protected boolean final_ = FINAL_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isViolation() <em>Violation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isViolation()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean VIOLATION_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isViolation() <em>Violation</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isViolation()
+     * @generated
+     * @ordered
+     */
+    protected boolean violation = VIOLATION_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isConnector() <em>Connector</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #isConnector()
+     * @generated
+     * @ordered
+     */
+	protected static final boolean CONNECTOR_EDEFAULT = false;
+
+				/**
+     * The cached value of the '{@link #isConnector() <em>Connector</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #isConnector()
+     * @generated
+     * @ordered
+     */
+	protected boolean connector = CONNECTOR_EDEFAULT;
+
+				/**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -171,27 +191,6 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     protected EClass eStaticClass() {
         return SCChartsPackage.Literals.STATE;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public StateType getType() {
-        return type;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setType(StateType newType) {
-        StateType oldType = type;
-        type = newType == null ? TYPE_EDEFAULT : newType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__TYPE, oldType, type));
     }
 
     /**
@@ -294,6 +293,48 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isViolation() {
+        return violation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setViolation(boolean newViolation) {
+        boolean oldViolation = violation;
+        violation = newViolation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__VIOLATION, oldViolation, violation));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public boolean isConnector() {
+        return connector;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public void setConnector(boolean newConnector) {
+        boolean oldConnector = connector;
+        connector = newConnector;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__CONNECTOR, oldConnector, connector));
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<Transition> getOutgoingTransitions() {
         if (outgoingTransitions == null) {
             outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.TRANSITION__SOURCE_STATE);
@@ -322,12 +363,12 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.STATE__REGIONS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRegions()).basicAdd(otherEnd, msgs);
             case SCChartsPackage.STATE__PARENT_REGION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParentRegion((ControlflowRegion)otherEnd, msgs);
+            case SCChartsPackage.STATE__REGIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRegions()).basicAdd(otherEnd, msgs);
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -344,10 +385,10 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.STATE__REGIONS:
-                return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__PARENT_REGION:
                 return basicSetParentRegion(null, msgs);
+            case SCChartsPackage.STATE__REGIONS:
+                return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -378,16 +419,18 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.STATE__TYPE:
-                return getType();
-            case SCChartsPackage.STATE__REGIONS:
-                return getRegions();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion();
+            case SCChartsPackage.STATE__REGIONS:
+                return getRegions();
             case SCChartsPackage.STATE__INITIAL:
                 return isInitial();
             case SCChartsPackage.STATE__FINAL:
                 return isFinal();
+            case SCChartsPackage.STATE__VIOLATION:
+                return isViolation();
+            case SCChartsPackage.STATE__CONNECTOR:
+                return isConnector();
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -405,21 +448,24 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.STATE__TYPE:
-                setType((StateType)newValue);
+            case SCChartsPackage.STATE__PARENT_REGION:
+                setParentRegion((ControlflowRegion)newValue);
                 return;
             case SCChartsPackage.STATE__REGIONS:
                 getRegions().clear();
                 getRegions().addAll((Collection<? extends Region>)newValue);
-                return;
-            case SCChartsPackage.STATE__PARENT_REGION:
-                setParentRegion((ControlflowRegion)newValue);
                 return;
             case SCChartsPackage.STATE__INITIAL:
                 setInitial((Boolean)newValue);
                 return;
             case SCChartsPackage.STATE__FINAL:
                 setFinal((Boolean)newValue);
+                return;
+            case SCChartsPackage.STATE__VIOLATION:
+                setViolation((Boolean)newValue);
+                return;
+            case SCChartsPackage.STATE__CONNECTOR:
+                setConnector((Boolean)newValue);
                 return;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
@@ -441,20 +487,23 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.STATE__TYPE:
-                setType(TYPE_EDEFAULT);
+            case SCChartsPackage.STATE__PARENT_REGION:
+                setParentRegion((ControlflowRegion)null);
                 return;
             case SCChartsPackage.STATE__REGIONS:
                 getRegions().clear();
-                return;
-            case SCChartsPackage.STATE__PARENT_REGION:
-                setParentRegion((ControlflowRegion)null);
                 return;
             case SCChartsPackage.STATE__INITIAL:
                 setInitial(INITIAL_EDEFAULT);
                 return;
             case SCChartsPackage.STATE__FINAL:
                 setFinal(FINAL_EDEFAULT);
+                return;
+            case SCChartsPackage.STATE__VIOLATION:
+                setViolation(VIOLATION_EDEFAULT);
+                return;
+            case SCChartsPackage.STATE__CONNECTOR:
+                setConnector(CONNECTOR_EDEFAULT);
                 return;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
@@ -474,16 +523,18 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.STATE__TYPE:
-                return type != TYPE_EDEFAULT;
-            case SCChartsPackage.STATE__REGIONS:
-                return regions != null && !regions.isEmpty();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion() != null;
+            case SCChartsPackage.STATE__REGIONS:
+                return regions != null && !regions.isEmpty();
             case SCChartsPackage.STATE__INITIAL:
                 return initial != INITIAL_EDEFAULT;
             case SCChartsPackage.STATE__FINAL:
                 return final_ != FINAL_EDEFAULT;
+            case SCChartsPackage.STATE__VIOLATION:
+                return violation != VIOLATION_EDEFAULT;
+            case SCChartsPackage.STATE__CONNECTOR:
+                return connector != CONNECTOR_EDEFAULT;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -502,12 +553,14 @@ public class StateImpl extends ScopeImpl implements State {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (type: ");
-        result.append(type);
-        result.append(", initial: ");
+        result.append(" (initial: ");
         result.append(initial);
         result.append(", final: ");
         result.append(final_);
+        result.append(", violation: ");
+        result.append(violation);
+        result.append(", connector: ");
+        result.append(connector);
         result.append(')');
         return result.toString();
     }

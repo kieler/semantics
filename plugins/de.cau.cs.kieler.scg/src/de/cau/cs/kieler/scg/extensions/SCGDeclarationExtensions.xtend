@@ -24,6 +24,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -53,10 +55,6 @@ class SCGDeclarationExtensions {
 
     @Inject
     extension SCGCoreExtensions
-
-    /** Valued object mapping */
-    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
-
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -111,19 +109,24 @@ class SCGDeclarationExtensions {
     def SchedulingBlock findSchedulingBlockByVO(SCGraph scg, ValuedObject valuedObject) {
         for(bb : scg.basicBlocks) {
             for(sb : bb.schedulingBlocks) {
-                if (sb.guard.valuedObject == valuedObject) return sb
+                if (sb.guards.head.valuedObject == valuedObject) return sb
             }
         }
         return null
     }    
     
-    public def void copyDeclarations(SCGraph source, SCGraph target) {
+    public def HashMap<ValuedObject, ValuedObject> copyDeclarations(
+    	SCGraph source, SCGraph target) {
+    	val map = <ValuedObject, ValuedObject> newHashMap
     	for (declaration : source.declarations) {
     		val newDeclaration = createDeclaration(declaration).trace(declaration)
-    		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
+    		declaration.valuedObjects.forEach[ 
+    			map.put(it, it.copyValuedObject(newDeclaration))
+    		]
     		target.declarations += newDeclaration
     	}
-	}     
+    	map
+	}  
     
     public def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
         for (declaration : source.declarations) {
@@ -138,57 +141,78 @@ class SCGDeclarationExtensions {
         }
     }       
     
-    public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
-        val newValuedObject = sourceObject.copy
-        targetDeclaration.valuedObjects += newValuedObject
-        valuedObjectMapping.put(sourceObject, newValuedObject)
-    }    
+    public def ValuedObject copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        sourceObject.copy => [
+	        targetDeclaration.valuedObjects += it
+        ]
+    }
     
-    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
+    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject, 
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
         if (valuedObject == null) {
             throw new Exception("Valued Object is already null!")
         }
-        val vo = valuedObjectMapping.get(valuedObject)
+        val vo = map.get(valuedObject)
         if (vo == null) {
             throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
         vo
     }    
 
-    def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject) {
+    def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject,
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
         if (valuedObject == null) {
             return null
         }
-        val vo = valuedObjectMapping.get(valuedObject)
+        val vo = map.get(valuedObject)
         if (vo == null) {
             throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
         }
         vo
     }    
     
-    def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target) {
-		valuedObjectMapping.put(source, target)
+    def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target, 
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
+		map.put(source, target)
 		target    	
     }    
     
-    def Expression copySCGExpression(Expression expression) {
+    def Expression copySCGExpression(Expression expression,
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
     	// Use the ecore utils to copy the expression. 
         val newExpression = expression.copy
         
         if (newExpression instanceof ValuedObjectReference) {
 	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
             (newExpression as ValuedObjectReference).valuedObject = 
-                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy                    
+                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy(map)                    
         } else {
         	// Otherwise, query all references in the expression and replace the object with the new copy
         	// in the target SCG.
         	if (newExpression != null)
                 newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
-            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
+            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy(map) ]        
         }
         
         // Return the new expression.
         newExpression
-    }    
+    }   
+    
+    def Assignment copySCGAssignment(Assignment assignment, 
+    	HashMap<ValuedObject, ValuedObject> map
+    ) {
+    	ScgFactory::eINSTANCE.createAssignment => [ s |
+    		s.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL(map)
+    		s.expression = assignment.expression.copySCGExpression(map)
+    		s.operator = assignment.operator
+    		assignment.indices.forEach[
+    			s.indices += it.copySCGExpression(map)
+    		] 
+    	]
+    } 
 
 }

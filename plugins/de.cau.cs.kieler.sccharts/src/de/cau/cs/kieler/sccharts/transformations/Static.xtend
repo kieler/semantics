@@ -59,6 +59,9 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     // -------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -83,7 +86,7 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformStatic(State state, State targetRootState) {
-        val staticDeclarations = state.declarations.filter[isStatic]
+        val staticDeclarations = state.variableDeclarations.filter[isStatic]
         for (staticDeclaration : staticDeclarations.toList) {
             for (staticValuedObject : staticDeclaration.valuedObjects) {
                 staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX +

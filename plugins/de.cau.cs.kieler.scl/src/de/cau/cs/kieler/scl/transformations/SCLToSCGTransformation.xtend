@@ -277,7 +277,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation {
         new SCLContinuation => [
             node = ScgFactory::eINSTANCE.createAssignment.createNodeList(assignment) as Assignment => [
                 scg.nodes += it
-                it.assignment = assignment.expression.copyExpression
+                it.expression = assignment.expression.copyExpression
                 it.valuedObject = assignment.valuedObject.copyValuedObject
                 it.controlFlowTarget(incoming)
                 for(annotation : (assignment.eContainer as InstructionStatement).annotations) {

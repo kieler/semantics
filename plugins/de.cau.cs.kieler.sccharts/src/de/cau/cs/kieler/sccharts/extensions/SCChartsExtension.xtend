@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * SCCharts Extensions.
@@ -82,6 +83,9 @@ class SCChartsExtension {
 
     @Inject
     extension KExpressionsReplacementExtensions
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -543,22 +547,12 @@ class SCChartsExtension {
     }
 
     def State setTypeConnector(State state) {
-        state.setType(StateType::CONNECTOR);
+        state.connector = true
         state
     }
 
     def State setTypeNormal(State state) {
-        state.setType(StateType::NORMAL);
-        state
-    }
-
-    def State setTypeReference(State state) {
-        state.setType(StateType::REFERENCE);
-        state
-    }
-
-    def State setTypeTextual(State state) {
-        state.setType(StateType::TEXTUAL);
+        state.connector = false
         state
     }
 
@@ -794,7 +788,7 @@ class SCChartsExtension {
     // 1. the source state is a connector node, then the transition is always (implicityly) immediate OR
     // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
     def Boolean isImmediate2(Transition transition) {
-        (transition.immediate) || (transition.sourceState.type == StateType::CONNECTOR) || (transition.type ==
+        (transition.immediate) || (transition.sourceState.isConnector) || (transition.type ==
             TransitionType::TERMINATION && transition.trigger == null
         )
     }
@@ -1235,7 +1229,7 @@ class SCChartsExtension {
             return;
         }
         
-        val declarations = state.declarations.toList
+        val declarations = state.variableDeclarations
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
         for(declaration : declarations) {
             targetRootState.declarations += declaration
@@ -1273,7 +1267,7 @@ class SCChartsExtension {
         }
 
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
-        val declarations = scope.declarations.iterator.toList
+        val declarations = scope.variableDeclarations
         for(declaration : declarations) {
             targetScope.declarations.add(declaration)
             if (expose) declaration.output = true

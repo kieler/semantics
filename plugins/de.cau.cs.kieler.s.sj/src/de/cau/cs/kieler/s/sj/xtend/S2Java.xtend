@@ -30,7 +30,6 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
@@ -51,6 +50,7 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
@@ -72,10 +72,10 @@ class S2Java {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
-
-    @Inject
-    extension SExtension
     
+    @Inject
+    extension KExpressionsDeclarationExtensions       
+
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
@@ -133,7 +133,6 @@ class S2Java {
     
     class «className» {
 
-   «/* Variables */»
     «sVariables(program)»    
     
     ''' 
@@ -179,7 +178,7 @@ class S2Java {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF !declaration.volatile»
               «'''  '''»«signal.privateOrPublic» «signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
@@ -204,7 +203,7 @@ class S2Java {
    
    // Generate variables.
    def tickVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF declaration.volatile»
               «'''  '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
@@ -227,7 +226,7 @@ class S2Java {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
@@ -235,7 +234,7 @@ class S2Java {
    }
 
    def resetVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        
         «IF signal.isArray»

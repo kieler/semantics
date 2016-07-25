@@ -15,16 +15,15 @@ package de.cau.cs.kieler.sccharts.scg
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall
 import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -48,8 +47,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -62,15 +59,13 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
@@ -124,17 +119,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     extension KEffectsExtensions
 
     @Inject
-    extension SCGDeclarationExtensions
-
-    @Inject
     extension SCChartsExtension
 
     @Inject
     extension SCGThreadExtensions
-
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
     private val uniqueNameCache = <String>newArrayList
@@ -576,7 +564,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             val transition = state.outgoingTransitions.get(0)
             assignment.trace(state, transition)
             transition.setDefaultTrace
-            scopeProvider.parent = transition.sourceState
+//            scopeProvider.parent = transition.sourceState
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
@@ -592,7 +580,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 if (!effect.isPostfixOperation) {
-                    assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
                 }
                 if (!sCChartAssignment.indices.nullOrEmpty) {
                     sCChartAssignment.indices.forEach [
@@ -600,17 +588,17 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                     ]
                 }
             } else if (effect instanceof HostcodeEffect) {
-                assignment.setAssignment((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
-                assignment.setAssignment((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
-            scopeProvider.parent = state
+//            scopeProvider.parent = state
             val transition = state.outgoingTransitions.get(0)
             conditional.trace(state, transition)
-            scopeProvider.parent = transition.sourceState
+//            scopeProvider.parent = transition.sourceState
 
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
@@ -818,9 +806,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         textExpression
     }
 
-    def dispatch Expression convertToSCGExpression(FunctionCall expression) {
-        createFunctionCall.trace(expression) => [ fc |
-            fc.functionName = expression.functionName
+    def dispatch Expression convertToSCGExpression(ReferenceCall expression) {
+        createReferenceCall.trace(expression) => [ fc |
+            fc.valuedObject = expression.valuedObject.SCGValuedObject
             expression.parameters.forEach[fc.parameters += it.convertToSCGParameter]
         ]
     }

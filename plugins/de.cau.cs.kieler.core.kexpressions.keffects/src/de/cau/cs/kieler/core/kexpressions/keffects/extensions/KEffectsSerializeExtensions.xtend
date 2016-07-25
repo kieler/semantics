@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Serialization of KEffects.
@@ -48,6 +49,18 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         } else 
         if (operator == AssignOperator::ASSIGNDIV) {
             return " /= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNMOD) {
+            return " %= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNAND) {
+            return " &= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNOR) {
+            return " |= " 
+        } else 
+        if (operator == AssignOperator::ASSIGNXOR) {
+            return " ^= " 
         } else 
         if (operator == AssignOperator::POSTFIXADD) {
             return "++"
@@ -81,8 +94,8 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
+        if (objectContainer instanceof VariableDeclaration) {
+            if (objectContainer.type != ValueType::PURE) {
                 return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
             } else {
                 return emission.valuedObject.name

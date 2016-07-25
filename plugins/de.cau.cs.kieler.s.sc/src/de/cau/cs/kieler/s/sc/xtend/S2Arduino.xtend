@@ -47,6 +47,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transformation of S code into Arduino "C" code for be executed
@@ -59,6 +60,9 @@ class S2Arduino {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     @Inject
     extension SExtension
@@ -175,7 +179,7 @@ class S2Arduino {
        '''
        //  |   |   |   -------------------------------------------   |   |   | 
        // \|/ \|/ \|/  VOLATILE GENERATED CODE BELOW - DO NOT EDIT  \|/ \|/ \|/
-       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern && !e.input && !e.output]»
+       «FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern && !e.input && !e.output]»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
@@ -200,7 +204,7 @@ class S2Arduino {
    // Generate internal variables.
    def generateInterfaceVariables(Program program) {
        '''
-          «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR variable : declaration.valuedObjects»
             «IF variable.isInput»
                 int inputPin«variable.name» = >>ENTER_INPUT_PIN_HERE<<;
@@ -210,7 +214,7 @@ class S2Arduino {
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
-          «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR variable : declaration.valuedObjects»
             «IF variable.isInput»
                 «variable.type.expand» «variable.name»; 
@@ -227,7 +231,7 @@ class S2Arduino {
 
    // Used for initial reset function generation.
    def generateSetupCode(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR variable : declaration.valuedObjects»
             «IF variable.isInput»
                 pinMode(inputPin«variable.name», INPUT);
@@ -245,7 +249,7 @@ class S2Arduino {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
@@ -254,7 +258,7 @@ class S2Arduino {
 
    // Generate the reset for variables and arrays
    def resetVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
        
         «IF signal.isArray»
@@ -312,7 +316,7 @@ class S2Arduino {
    def generateTickFunction(Program program) {
        '''    void loop(){
        // Read inputs           
-       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       «FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
        «FOR variable : declaration.valuedObjects»
             «IF variable.isInput»
                 «variable.name» = digitalRead(inputPin«variable.name»);
@@ -324,7 +328,7 @@ class S2Arduino {
        _GO = 0;
        
        // Write outputs           
-       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       «FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
        «FOR variable : declaration.valuedObjects»
             «IF variable.isOutput»
                 digitalWrite(outputPin«variable.name», «variable.name»); 

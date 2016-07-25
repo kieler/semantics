@@ -167,6 +167,11 @@ public class EmissionItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
+                 KEffectsFactory.eINSTANCE.createReferenceCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
                  KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
 
         newChildDescriptors.add
@@ -212,12 +217,22 @@ public class EmissionItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createStringValue()));
+                 KExpressionsFactory.eINSTANCE.createCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
+                 KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.EMISSION__NEW_VALUE,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
 }

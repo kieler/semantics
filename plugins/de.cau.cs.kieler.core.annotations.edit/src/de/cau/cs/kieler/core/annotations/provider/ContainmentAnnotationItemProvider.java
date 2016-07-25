@@ -25,15 +25,8 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
 
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -42,8 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ContainmentAnnotationItemProvider
-    extends AnnotationItemProvider {
+public class ContainmentAnnotationItemProvider extends AnnotationItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -123,6 +115,7 @@ public class ContainmentAnnotationItemProvider
             getString("_UI_ContainmentAnnotation_type") :
             getString("_UI_ContainmentAnnotation_type") + " " + label;
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -153,6 +146,11 @@ public class ContainmentAnnotationItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+
+        newChildDescriptors.add
+            (createChildParameter
+                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
+                 AnnotationsFactory.eINSTANCE.createNamedObject()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -203,16 +201,26 @@ public class ContainmentAnnotationItemProvider
             (createChildParameter
                 (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
                  AnnotationsFactory.eINSTANCE.createCommentAnnotation()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
+                 AnnotationsFactory.eINSTANCE.createPragmaAnnotation()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
+                 AnnotationsFactory.eINSTANCE.createPragmaStringAnnotation()));
     }
 
-				/**
+    /**
      * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+    @Override
+    public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
         Object childFeature = feature;
         Object childObject = child;
 

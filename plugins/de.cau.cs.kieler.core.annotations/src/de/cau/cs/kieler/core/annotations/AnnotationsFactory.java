@@ -33,6 +33,15 @@ public interface AnnotationsFactory extends EFactory {
     AnnotationsFactory eINSTANCE = de.cau.cs.kieler.core.annotations.impl.AnnotationsFactoryImpl.init();
 
     /**
+     * Returns a new object of class '<em>Named Object</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Named Object</em>'.
+     * @generated
+     */
+    NamedObject createNamedObject();
+
+    /**
      * Returns a new object of class '<em>Annotation</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -121,6 +130,24 @@ public interface AnnotationsFactory extends EFactory {
      * @generated
      */
     CommentAnnotation createCommentAnnotation();
+
+    /**
+     * Returns a new object of class '<em>Pragma Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Pragma Annotation</em>'.
+     * @generated
+     */
+    PragmaAnnotation createPragmaAnnotation();
+
+    /**
+     * Returns a new object of class '<em>Pragma String Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Pragma String Annotation</em>'.
+     * @generated
+     */
+    PragmaStringAnnotation createPragmaStringAnnotation();
 
     /**
      * Returns the package supported by this factory.

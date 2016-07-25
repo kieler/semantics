@@ -67,6 +67,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
+            case AnnotationsPackage.NAMED_OBJECT: return createNamedObject();
             case AnnotationsPackage.ANNOTATION: return createAnnotation();
             case AnnotationsPackage.STRING_ANNOTATION: return createStringAnnotation();
             case AnnotationsPackage.REFERENCE_ANNOTATION: return createReferenceAnnotation();
@@ -77,9 +78,21 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
             case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
             case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
             case AnnotationsPackage.COMMENT_ANNOTATION: return createCommentAnnotation();
+            case AnnotationsPackage.PRAGMA_ANNOTATION: return createPragmaAnnotation();
+            case AnnotationsPackage.PRAGMA_STRING_ANNOTATION: return createPragmaStringAnnotation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NamedObject createNamedObject() {
+        NamedObjectImpl namedObject = new NamedObjectImpl();
+        return namedObject;
     }
 
     /**
@@ -180,6 +193,26 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     public CommentAnnotation createCommentAnnotation() {
         CommentAnnotationImpl commentAnnotation = new CommentAnnotationImpl();
         return commentAnnotation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PragmaAnnotation createPragmaAnnotation() {
+        PragmaAnnotationImpl pragmaAnnotation = new PragmaAnnotationImpl();
+        return pragmaAnnotation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PragmaStringAnnotation createPragmaStringAnnotation() {
+        PragmaStringAnnotationImpl pragmaStringAnnotation = new PragmaStringAnnotationImpl();
+        return pragmaStringAnnotation;
     }
 
     /**

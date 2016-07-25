@@ -65,23 +65,20 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.ASSIGNMENT: return createAssignment();
             case ScgPackage.FORK: return createFork();
             case ScgPackage.JOIN: return createJoin();
-            case ScgPackage.LINK: return createLink();
             case ScgPackage.ENTRY: return createEntry();
             case ScgPackage.EXIT: return createExit();
+            case ScgPackage.BASIC_BLOCK: return createBasicBlock();
+            case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
+            case ScgPackage.PREDECESSOR: return createPredecessor();
+            case ScgPackage.GUARD: return createGuard();
+            case ScgPackage.LINK: return createLink();
             case ScgPackage.CONTROL_FLOW: return createControlFlow();
             case ScgPackage.DEPENDENCY: return createDependency();
             case ScgPackage.DATA_DEPENDENCY: return createDataDependency();
             case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
-            case ScgPackage.ABSOLUTE_WRITE_READ: return createAbsoluteWrite_Read();
-            case ScgPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
-            case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
-            case ScgPackage.WRITE_WRITE: return createWrite_Write();
-            case ScgPackage.BASIC_BLOCK: return createBasicBlock();
-            case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
-            case ScgPackage.PREDECESSOR: return createPredecessor();
-            case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
-            case ScgPackage.SCHEDULE: return createSchedule();
-            case ScgPackage.GUARD: return createGuard();
+            case ScgPackage.EXPRESSION_DEPENDENCY: return createExpressionDependency();
+            case ScgPackage.GUARD_DEPENDENCY: return createGuardDependency();
+            case ScgPackage.SCHEDULE_DEPENDENCY: return createScheduleDependency();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -97,6 +94,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
         switch (eDataType.getClassifierID()) {
             case ScgPackage.BRANCH_TYPE:
                 return createBranchTypeFromString(eDataType, initialValue);
+            case ScgPackage.DATA_DEPENDENCY_TYPE:
+                return createDataDependencyTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -112,6 +111,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
         switch (eDataType.getClassifierID()) {
             case ScgPackage.BRANCH_TYPE:
                 return convertBranchTypeToString(eDataType, instanceValue);
+            case ScgPackage.DATA_DEPENDENCY_TYPE:
+                return convertDataDependencyTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -272,46 +273,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public AbsoluteWrite_Read createAbsoluteWrite_Read() {
-        AbsoluteWrite_ReadImpl absoluteWrite_Read = new AbsoluteWrite_ReadImpl();
-        return absoluteWrite_Read;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public RelativeWrite_Read createRelativeWrite_Read() {
-        RelativeWrite_ReadImpl relativeWrite_Read = new RelativeWrite_ReadImpl();
-        return relativeWrite_Read;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public AbsoluteWrite_RelativeWrite createAbsoluteWrite_RelativeWrite() {
-        AbsoluteWrite_RelativeWriteImpl absoluteWrite_RelativeWrite = new AbsoluteWrite_RelativeWriteImpl();
-        return absoluteWrite_RelativeWrite;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Write_Write createWrite_Write() {
-        Write_WriteImpl write_Write = new Write_WriteImpl();
-        return write_Write;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public BasicBlock createBasicBlock() {
         BasicBlockImpl basicBlock = new BasicBlockImpl();
         return basicBlock;
@@ -342,22 +303,32 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public ScheduleBlock createScheduleBlock() {
-        ScheduleBlockImpl scheduleBlock = new ScheduleBlockImpl();
-        return scheduleBlock;
+	public ExpressionDependency createExpressionDependency() {
+        ExpressionDependencyImpl expressionDependency = new ExpressionDependencyImpl();
+        return expressionDependency;
     }
 
 				/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public Schedule createSchedule() {
-        ScheduleImpl schedule = new ScheduleImpl();
-        return schedule;
+	public GuardDependency createGuardDependency() {
+        GuardDependencyImpl guardDependency = new GuardDependencyImpl();
+        return guardDependency;
     }
 
-    /**
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public ScheduleDependency createScheduleDependency() {
+        ScheduleDependencyImpl scheduleDependency = new ScheduleDependencyImpl();
+        return scheduleDependency;
+    }
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -388,6 +359,26 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     }
 
     /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public DataDependencyType createDataDependencyTypeFromString(EDataType eDataType, String initialValue) {
+        DataDependencyType result = DataDependencyType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public String convertDataDependencyTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

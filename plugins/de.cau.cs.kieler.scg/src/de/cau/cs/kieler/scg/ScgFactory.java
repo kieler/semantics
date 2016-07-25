@@ -168,42 +168,6 @@ public interface ScgFactory extends EFactory {
     ControlDependency createControlDependency();
 
     /**
-     * Returns a new object of class '<em>Absolute Write Read</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Absolute Write Read</em>'.
-     * @generated
-     */
-    AbsoluteWrite_Read createAbsoluteWrite_Read();
-
-    /**
-     * Returns a new object of class '<em>Relative Write Read</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Relative Write Read</em>'.
-     * @generated
-     */
-    RelativeWrite_Read createRelativeWrite_Read();
-
-    /**
-     * Returns a new object of class '<em>Absolute Write Relative Write</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Absolute Write Relative Write</em>'.
-     * @generated
-     */
-    AbsoluteWrite_RelativeWrite createAbsoluteWrite_RelativeWrite();
-
-    /**
-     * Returns a new object of class '<em>Write Write</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Write Write</em>'.
-     * @generated
-     */
-    Write_Write createWrite_Write();
-
-    /**
      * Returns a new object of class '<em>Basic Block</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -231,24 +195,33 @@ public interface ScgFactory extends EFactory {
     Predecessor createPredecessor();
 
     /**
-     * Returns a new object of class '<em>Schedule Block</em>'.
+     * Returns a new object of class '<em>Expression Dependency</em>'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule Block</em>'.
+     * @return a new object of class '<em>Expression Dependency</em>'.
      * @generated
      */
-	ScheduleBlock createScheduleBlock();
+	ExpressionDependency createExpressionDependency();
 
 				/**
-     * Returns a new object of class '<em>Schedule</em>'.
+     * Returns a new object of class '<em>Guard Dependency</em>'.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule</em>'.
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Guard Dependency</em>'.
      * @generated
      */
-    Schedule createSchedule();
+	GuardDependency createGuardDependency();
 
-    /**
+				/**
+     * Returns a new object of class '<em>Schedule Dependency</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Dependency</em>'.
+     * @generated
+     */
+	ScheduleDependency createScheduleDependency();
+
+				/**
      * Returns a new object of class '<em>Guard</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

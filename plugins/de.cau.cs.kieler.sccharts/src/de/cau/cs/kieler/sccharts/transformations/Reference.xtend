@@ -175,7 +175,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             ]
         ]
 
-        newState.declarations.immutableCopy.forEach [ declaration |
+        newState.variableDeclarations.immutableCopy.forEach [ declaration |
             if (declaration.isInput || declaration.isOutput) {
                 declaration.valuedObjects.forEach [
                     val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
@@ -238,7 +238,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 // bind inputs
                 var exprCounter = 0
                 val refedInputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.input].forEach[
+                refNode.referencedScope.variableDeclarations.filter[it.input].forEach[
                     refedInputs += valuedObjects
                 ]
                 for (expr: refNode.parameters) {
@@ -252,7 +252,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 // bind outputs
                 exprCounter = 0
                 val refedOutputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.output].forEach[
+                refNode.referencedScope.variableDeclarations.filter[it.output].forEach[
                     refedOutputs += valuedObjects
                 ]
                 for (eq: dataflow.equations) {

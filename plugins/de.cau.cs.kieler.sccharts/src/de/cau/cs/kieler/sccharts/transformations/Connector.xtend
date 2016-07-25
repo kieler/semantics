@@ -82,7 +82,7 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformConnector(State state, State targetRootState) {
-        if (state.type == StateType::CONNECTOR) {
+        if (state.isConnector) {
             state.setTypeNormal
             for (transition : state.outgoingTransitions) {
                 transition.setImmediate(true)

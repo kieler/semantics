@@ -22,60 +22,60 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.EmissionImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.keffects.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class EmissionImpl extends EffectImpl implements Emission {
-	/**
+    /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getValuedObject()
      * @generated
      * @ordered
      */
-	protected ValuedObject valuedObject;
+    protected ValuedObject valuedObject;
 
-	/**
+    /**
      * The cached value of the '{@link #getNewValue() <em>New Value</em>}' containment reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getNewValue()
      * @generated
      * @ordered
      */
-	protected Expression newValue;
+    protected Expression newValue;
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected EmissionImpl() {
+    protected EmissionImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	protected EClass eStaticClass() {
+    @Override
+    protected EClass eStaticClass() {
         return KEffectsPackage.Literals.EMISSION;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ValuedObject getValuedObject() {
+    public ValuedObject getValuedObject() {
         if (valuedObject != null && valuedObject.eIsProxy()) {
             InternalEObject oldValuedObject = (InternalEObject)valuedObject;
             valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
@@ -87,42 +87,42 @@ public class EmissionImpl extends EffectImpl implements Emission {
         return valuedObject;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ValuedObject basicGetValuedObject() {
+    public ValuedObject basicGetValuedObject() {
         return valuedObject;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setValuedObject(ValuedObject newValuedObject) {
+    public void setValuedObject(ValuedObject newValuedObject) {
         ValuedObject oldValuedObject = valuedObject;
         valuedObject = newValuedObject;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.EMISSION__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public Expression getNewValue() {
+    public Expression getNewValue() {
         return newValue;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public NotificationChain basicSetNewValue(Expression newNewValue, NotificationChain msgs) {
+    public NotificationChain basicSetNewValue(Expression newNewValue, NotificationChain msgs) {
         Expression oldNewValue = newValue;
         newValue = newNewValue;
         if (eNotificationRequired()) {
@@ -132,12 +132,12 @@ public class EmissionImpl extends EffectImpl implements Emission {
         return msgs;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setNewValue(Expression newNewValue) {
+    public void setNewValue(Expression newNewValue) {
         if (newNewValue != newValue) {
             NotificationChain msgs = null;
             if (newValue != null)
@@ -151,13 +151,13 @@ public class EmissionImpl extends EffectImpl implements Emission {
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.EMISSION__NEW_VALUE, newNewValue, newNewValue));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__NEW_VALUE:
                 return basicSetNewValue(null, msgs);
@@ -165,13 +165,13 @@ public class EmissionImpl extends EffectImpl implements Emission {
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
@@ -182,13 +182,13 @@ public class EmissionImpl extends EffectImpl implements Emission {
         return super.eGet(featureID, resolve, coreType);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public void eSet(int featureID, Object newValue) {
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
@@ -200,13 +200,13 @@ public class EmissionImpl extends EffectImpl implements Emission {
         super.eSet(featureID, newValue);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public void eUnset(int featureID) {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
@@ -218,13 +218,13 @@ public class EmissionImpl extends EffectImpl implements Emission {
         super.eUnset(featureID);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public boolean eIsSet(int featureID) {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case KEffectsPackage.EMISSION__VALUED_OBJECT:
                 return valuedObject != null;

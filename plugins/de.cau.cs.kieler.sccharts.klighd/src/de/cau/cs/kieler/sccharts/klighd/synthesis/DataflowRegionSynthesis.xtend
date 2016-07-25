@@ -61,6 +61,8 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
@@ -101,6 +103,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     extension KExpressionsValuedObjectExtensions
     
     @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
     extension ControlflowRegionStyles
     
     @Inject
@@ -131,7 +136,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 addStatesAndDeclarationsArea();
                 // Add declarations
                 // TODO display declaration otherwise
-                for (declaration : region.declarations) {
+                for (declaration : region.variableDeclarations) {
                     addDeclarationLabel(declaration.serializeComponents(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                         associateWith(declaration);
@@ -256,7 +261,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                     // if it's a ValuedObjectReference, it's just another variable
                     if (se instanceof ValuedObjectReference) {
                         val subVo = (se as ValuedObjectReference).valuedObject
-                        val decl = (subVo.eContainer as Declaration)
+                        val decl = (subVo.eContainer as VariableDeclaration)
                         // differ between input/output type of variable
                         if (decl.isInput) {
                             // create input node and shape
@@ -619,13 +624,13 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 LABELFONTSIZE,
                 KlighdConstants::DEFAULT_FONT_NAME
             )
-            refedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::WEST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
-            refedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
+            refedScope.variableDeclarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::EAST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                        vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -635,7 +640,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             // dNode is the dataflow KNode containing the reference node
             val dNode = refNode.eContainer.node
             val refInputs = <ValuedObject>newArrayList
-            refedScope.declarations.filter[it.input].forEach[
+            refedScope.variableDeclarations.filter[it.input].forEach[
                 refInputs += valuedObjects
             ]
             val refInputSize = refInputs.size

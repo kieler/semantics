@@ -25,6 +25,9 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.NamedObject;
 import de.cau.cs.kieler.core.annotations.ParameterAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation;
+import de.cau.cs.kieler.core.annotations.PropertyAnnotation;
 import de.cau.cs.kieler.core.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 
@@ -129,6 +132,20 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass commentAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass pragmaAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass pragmaStringAnnotationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -394,6 +411,24 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getPragmaAnnotation() {
+        return pragmaAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getPragmaStringAnnotation() {
+        return pragmaStringAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -450,6 +485,10 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         createEAttribute(typedStringAnnotationEClass, TYPED_STRING_ANNOTATION__TYPE);
 
         commentAnnotationEClass = createEClass(COMMENT_ANNOTATION);
+
+        pragmaAnnotationEClass = createEClass(PRAGMA_ANNOTATION);
+
+        pragmaStringAnnotationEClass = createEClass(PRAGMA_STRING_ANNOTATION);
     }
 
     /**
@@ -491,9 +530,11 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
         commentAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
+        pragmaAnnotationEClass.getESuperTypes().add(this.getAnnotation());
+        pragmaStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
 
         // Initialize classes and features; add operations and parameters
-        initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(namedObjectEClass, NamedObject.class, "NamedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNamedObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(annotatableEClass, Annotatable.class, "Annotatable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -539,6 +580,10 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         initEAttribute(getTypedStringAnnotation_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypedStringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(commentAnnotationEClass, CommentAnnotation.class, "CommentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(pragmaAnnotationEClass, PragmaAnnotation.class, "PragmaAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(pragmaStringAnnotationEClass, PragmaStringAnnotation.class, "PragmaStringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

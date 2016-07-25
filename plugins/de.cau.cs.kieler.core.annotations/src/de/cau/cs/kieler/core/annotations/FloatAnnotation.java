@@ -25,10 +25,10 @@ package de.cau.cs.kieler.core.annotations;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.FloatAnnotation#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getFloatAnnotation()
  * @model

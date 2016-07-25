@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.annotations.impl.BooleanAnnotationImpl#isValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

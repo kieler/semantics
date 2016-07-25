@@ -201,6 +201,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KEffectsFactory.eINSTANCE.createReferenceCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
 
         newChildDescriptors.add
@@ -246,12 +251,22 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createStringValue()));
+                 KExpressionsFactory.eINSTANCE.createCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -261,6 +276,11 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+                 KEffectsFactory.eINSTANCE.createReferenceCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
                  KEffectsFactory.eINSTANCE.createFunctionCallEffect()));
 
         newChildDescriptors.add
@@ -306,12 +326,22 @@ public class AssignmentItemProvider extends EffectItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
-                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
-                 KExpressionsFactory.eINSTANCE.createStringValue()));
+                 KExpressionsFactory.eINSTANCE.createCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createReferenceCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KEffectsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
     /**

@@ -75,4 +75,9 @@ class AnnotationsExtensions {
     def public List<TypedStringAnnotation> getTypedAnnotations(Annotatable annotatable, String name) {
         annotatable.getAllAnnotations(name).filter(typeof(TypedStringAnnotation)).toList
     }
+    
+    
+    def asStringAnnotation(Annotation annotation) {
+        annotation as StringAnnotation
+    }
 }

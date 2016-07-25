@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -51,6 +52,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension SCChartsSerializeHRExtension
@@ -77,7 +81,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
         //pre-evaluate type
-        val isConnector = state.type == StateType::CONNECTOR
+        val isConnector = state.isConnector
 
         // Basic state style
         switch state {
@@ -101,6 +105,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         if (state.isFinal) {
             node.setFinalStyle
+        }
+        if (state.isViolation) {
+            node.setViolationStyle
         }
 
         // Shadow
@@ -127,7 +134,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
 
             // Add declarations
-            for (declaration : state.declarations) {
+            for (declaration : state.variableDeclarations) {
                 node.addDeclarationLabel(declaration.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);

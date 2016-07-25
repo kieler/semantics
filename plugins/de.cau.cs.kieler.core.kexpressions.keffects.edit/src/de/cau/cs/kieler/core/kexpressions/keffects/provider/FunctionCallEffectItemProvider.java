@@ -89,7 +89,7 @@ public class FunctionCallEffectItemProvider extends EffectItemProvider {
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(KExpressionsPackage.Literals.FUNCTION_CALL__PARAMETERS);
+            childrenFeatures.add(KExpressionsPackage.Literals.CALL__PARAMETERS);
         }
         return childrenFeatures;
     }
@@ -168,7 +168,7 @@ public class FunctionCallEffectItemProvider extends EffectItemProvider {
 
         newChildDescriptors.add
             (createChildParameter
-                (KExpressionsPackage.Literals.FUNCTION_CALL__PARAMETERS,
+                (KExpressionsPackage.Literals.CALL__PARAMETERS,
                  KExpressionsFactory.eINSTANCE.createParameter()));
     }
 

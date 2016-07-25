@@ -45,265 +45,265 @@ public class DelayEventItemProvider
         IItemLabelProvider,
         IItemPropertySource {
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public DelayEventItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addTickPropertyDescriptor(object);
-            addFBPropertyDescriptor(object);
-            addEBPropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addTickPropertyDescriptor(object);
+			addFBPropertyDescriptor(object);
+			addEBPropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This adds a property descriptor for the Tick feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Tick feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addTickPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_DelayEvent_tick_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_tick_feature", "_UI_DelayEvent_type"),
-                 EsterelPackage.Literals.DELAY_EVENT__TICK,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DelayEvent_tick_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_tick_feature", "_UI_DelayEvent_type"),
+				 EsterelPackage.Literals.DELAY_EVENT__TICK,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the FB feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the FB feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addFBPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_DelayEvent_fB_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_fB_feature", "_UI_DelayEvent_type"),
-                 EsterelPackage.Literals.DELAY_EVENT__FB,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DelayEvent_fB_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_fB_feature", "_UI_DelayEvent_type"),
+				 EsterelPackage.Literals.DELAY_EVENT__FB,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This adds a property descriptor for the EB feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the EB feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addEBPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_DelayEvent_eB_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_eB_feature", "_UI_DelayEvent_type"),
-                 EsterelPackage.Literals.DELAY_EVENT__EB,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DelayEvent_eB_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DelayEvent_eB_feature", "_UI_DelayEvent_type"),
+				 EsterelPackage.Literals.DELAY_EVENT__EB,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-     * <!-- begin-user-doc -->
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-        if (childrenFeatures == null) {
-            super.getChildrenFeatures(object);
-            childrenFeatures.add(EsterelPackage.Literals.DELAY_EVENT__EXPR);
-        }
-        return childrenFeatures;
-    }
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(EsterelPackage.Literals.DELAY_EVENT__EXPR);
+		}
+		return childrenFeatures;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
 
-        return super.getChildFeature(object, child);
-    }
+		return super.getChildFeature(object, child);
+	}
 
     /**
-     * This returns DelayEvent.gif.
-     * <!-- begin-user-doc -->
+	 * This returns DelayEvent.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/DelayEvent"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DelayEvent"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        String label = ((DelayEvent)object).getTick();
-        return label == null || label.length() == 0 ?
-            getString("_UI_DelayEvent_type") :
-            getString("_UI_DelayEvent_type") + " " + label;
-    }
+		String label = ((DelayEvent)object).getTick();
+		return label == null || label.length() == 0 ?
+			getString("_UI_DelayEvent_type") :
+			getString("_UI_DelayEvent_type") + " " + label;
+	}
     
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(DelayEvent.class)) {
-            case EsterelPackage.DELAY_EVENT__TICK:
-            case EsterelPackage.DELAY_EVENT__FB:
-            case EsterelPackage.DELAY_EVENT__EB:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-            case EsterelPackage.DELAY_EVENT__EXPR:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(DelayEvent.class)) {
+			case EsterelPackage.DELAY_EVENT__TICK:
+			case EsterelPackage.DELAY_EVENT__FB:
+			case EsterelPackage.DELAY_EVENT__EB:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case EsterelPackage.DELAY_EVENT__EXPR:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
+		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 EsterelFactory.eINSTANCE.createTrapExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 EsterelFactory.eINSTANCE.createTrapExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 EsterelFactory.eINSTANCE.createFunctionExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 EsterelFactory.eINSTANCE.createFunctionExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 EsterelFactory.eINSTANCE.createConstantExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 EsterelFactory.eINSTANCE.createConstantExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createComplexExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createValue()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createValue()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createIntValue()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createIntValue()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createFloatValue()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DELAY_EVENT__EXPR,
-                 KExpressionsFactory.eINSTANCE.createTextExpression()));
-    }
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.DELAY_EVENT__EXPR,
+				 KExpressionsFactory.eINSTANCE.createTextExpression()));
+	}
 
     /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public ResourceLocator getResourceLocator() {
-        return EsterelEditPlugin.INSTANCE;
-    }
+		return EsterelEditPlugin.INSTANCE;
+	}
 
 }

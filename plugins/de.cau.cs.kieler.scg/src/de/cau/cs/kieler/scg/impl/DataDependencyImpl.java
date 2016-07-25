@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.DataDependency;
+import de.cau.cs.kieler.scg.DataDependencyType;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl#isConcurrent <em>Concurrent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl#isConfluent <em>Confluent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.DataDependencyImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -78,6 +80,26 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     protected boolean confluent = CONFLUENT_EDEFAULT;
 
     /**
+     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+	protected static final DataDependencyType TYPE_EDEFAULT = DataDependencyType.WRITE_WRITE;
+
+				/**
+     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
+	protected DataDependencyType type = TYPE_EDEFAULT;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -140,6 +162,27 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
 
     /**
      * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public DataDependencyType getType() {
+        return type;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public void setType(DataDependencyType newType) {
+        DataDependencyType oldType = type;
+        type = newType == null ? TYPE_EDEFAULT : newType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.DATA_DEPENDENCY__TYPE, oldType, type));
+    }
+
+				/**
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
@@ -150,6 +193,8 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
                 return isConcurrent();
             case ScgPackage.DATA_DEPENDENCY__CONFLUENT:
                 return isConfluent();
+            case ScgPackage.DATA_DEPENDENCY__TYPE:
+                return getType();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -167,6 +212,9 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
                 return;
             case ScgPackage.DATA_DEPENDENCY__CONFLUENT:
                 setConfluent((Boolean)newValue);
+                return;
+            case ScgPackage.DATA_DEPENDENCY__TYPE:
+                setType((DataDependencyType)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -186,6 +234,9 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
             case ScgPackage.DATA_DEPENDENCY__CONFLUENT:
                 setConfluent(CONFLUENT_EDEFAULT);
                 return;
+            case ScgPackage.DATA_DEPENDENCY__TYPE:
+                setType(TYPE_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -202,6 +253,8 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
                 return concurrent != CONCURRENT_EDEFAULT;
             case ScgPackage.DATA_DEPENDENCY__CONFLUENT:
                 return confluent != CONFLUENT_EDEFAULT;
+            case ScgPackage.DATA_DEPENDENCY__TYPE:
+                return type != TYPE_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -220,6 +273,8 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
         result.append(concurrent);
         result.append(", confluent: ");
         result.append(confluent);
+        result.append(", type: ");
+        result.append(type);
         result.append(')');
         return result.toString();
     }

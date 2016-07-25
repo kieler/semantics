@@ -3,10 +3,14 @@
 package de.cau.cs.kieler.core.kexpressions.keffects.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
+import de.cau.cs.kieler.core.kexpressions.Call;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.keffects.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,48 +32,48 @@ import org.eclipse.emf.ecore.util.Switch;
  * @generated
  */
 public class KEffectsSwitch<T> extends Switch<T> {
-	/**
+    /**
      * The cached model package
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected static KEffectsPackage modelPackage;
+    protected static KEffectsPackage modelPackage;
 
-	/**
+    /**
      * Creates an instance of the switch.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public KEffectsSwitch() {
+    public KEffectsSwitch() {
         if (modelPackage == null) {
             modelPackage = KEffectsPackage.eINSTANCE;
         }
     }
 
-	/**
+    /**
      * Checks whether this is a switch for the given package.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @parameter ePackage the package in question.
+     * <!-- end-user-doc -->
+     * @param ePackage the package in question.
      * @return whether this is a switch for the given package.
      * @generated
      */
-	@Override
-	protected boolean isSwitchFor(EPackage ePackage) {
+    @Override
+    protected boolean isSwitchFor(EPackage ePackage) {
         return ePackage == modelPackage;
     }
 
-	/**
+    /**
      * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the first non-null result returned by a <code>caseXXX</code> call.
      * @generated
      */
-	@Override
-	protected T doSwitch(int classifierID, EObject theEObject) {
+    @Override
+    protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
             case KEffectsPackage.EFFECT: {
                 Effect effect = (Effect)theEObject;
@@ -104,12 +108,25 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KEffectsPackage.REFERENCE_CALL_EFFECT: {
+                ReferenceCallEffect referenceCallEffect = (ReferenceCallEffect)theEObject;
+                T result = caseReferenceCallEffect(referenceCallEffect);
+                if (result == null) result = caseEffect(referenceCallEffect);
+                if (result == null) result = caseReferenceCall(referenceCallEffect);
+                if (result == null) result = caseAnnotatable(referenceCallEffect);
+                if (result == null) result = caseValuedObjectReference(referenceCallEffect);
+                if (result == null) result = caseCall(referenceCallEffect);
+                if (result == null) result = caseExpression(referenceCallEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case KEffectsPackage.FUNCTION_CALL_EFFECT: {
                 FunctionCallEffect functionCallEffect = (FunctionCallEffect)theEObject;
                 T result = caseFunctionCallEffect(functionCallEffect);
                 if (result == null) result = caseEffect(functionCallEffect);
                 if (result == null) result = caseFunctionCall(functionCallEffect);
                 if (result == null) result = caseAnnotatable(functionCallEffect);
+                if (result == null) result = caseCall(functionCallEffect);
                 if (result == null) result = caseExpression(functionCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -118,82 +135,97 @@ public class KEffectsSwitch<T> extends Switch<T> {
         }
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseEffect(Effect object) {
+    public T caseEffect(Effect object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseAssignment(Assignment object) {
+    public T caseAssignment(Assignment object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Emission</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Emission</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseEmission(Emission object) {
+    public T caseEmission(Emission object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Hostcode Effect</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Hostcode Effect</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseHostcodeEffect(HostcodeEffect object) {
+    public T caseHostcodeEffect(HostcodeEffect object) {
         return null;
     }
 
-	/**
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCallEffect(ReferenceCallEffect object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseFunctionCallEffect(FunctionCallEffect object) {
+    public T caseFunctionCallEffect(FunctionCallEffect object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -211,61 +243,106 @@ public class KEffectsSwitch<T> extends Switch<T> {
     /**
      * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseExpression(Expression object) {
+    public T caseExpression(Expression object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Text Expression</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Text Expression</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseTextExpression(TextExpression object) {
+    public T caseTextExpression(TextExpression object) {
         return null;
     }
 
-	/**
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseValuedObjectReference(ValuedObjectReference object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCall(Call object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Reference Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceCall(ReferenceCall object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseFunctionCall(FunctionCall object) {
+    public T caseFunctionCall(FunctionCall object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch, but this is the last case anyway.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch, but this is the last case anyway.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
      * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject)
      * @generated
      */
-	@Override
-	public T defaultCase(EObject object) {
+    @Override
+    public T defaultCase(EObject object) {
         return null;
     }
 

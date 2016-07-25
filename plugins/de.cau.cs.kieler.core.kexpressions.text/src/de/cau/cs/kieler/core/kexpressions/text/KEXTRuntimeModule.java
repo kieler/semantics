@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions.text;
 
+import de.cau.cs.kieler.core.kexpressions.text.scoping.KEXTQualifiedNameProvider;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
@@ -11,5 +13,9 @@ public class KEXTRuntimeModule extends de.cau.cs.kieler.core.kexpressions.text.A
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter.class;
     }
+
+    public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+        return KEXTQualifiedNameProvider.class;
+    }  
     
 }

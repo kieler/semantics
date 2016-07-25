@@ -207,6 +207,7 @@ AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
+    | ReferenceCall
     | FunctionCall
     | TextExpression;
 
@@ -229,18 +230,44 @@ ValuedObjectTestExpression returns Expression:
 	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
 	| ValuedObjectReference;
 
+// ID with primes
+PrimeID returns ecore::EString:
+  ID ("'")*;
+
 // Valued Object Reference Rule
 // References a valued object with arbitrary (including none) indices part.
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
+	valuedObject=[ValuedObject|PrimeID]
+	('.' subReference=ValuedObjectReference)? 
+	('[' indices+=Expression ']')*;
 
+// Reference Call Rule
+// Calls to references. They may include a parameter list. 
+ReferenceCall returns ReferenceCall:
+    valuedObject=[ValuedObject|PrimeID] 
+    (
+        ('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()'
+    );
+    
 // Function Call Rule
 // Calls to functions are indicated by angle brackets. They may include a parameter list. 
+// Deprecated?
 FunctionCall returns FunctionCall:
-    '<' functionName=ExtendedID 
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-    '>';
+    ('extern' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    )
+    |
+    ('<' functionName = ID 
+        (('(' parameters += Parameter 
+            (',' parameters += Parameter)* ')'
+        ) | '()')
+    '>')
+    ;    
 
 // Parameter Rule
 // The parameter rule is used by the function call rule. Every expression may be a paramter.
@@ -364,4 +391,5 @@ enum CombineOperator returns CombineOperator:
 // Hostcode Terminals
 // Custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
-	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	"`" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"`") )* "`";
+

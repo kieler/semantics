@@ -6,29 +6,32 @@ package de.cau.cs.kieler.scl.serializer;
 import com.google.inject.Inject;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.CommentAnnotation;
-import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.core.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
+import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
 import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
@@ -70,17 +73,14 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 			case AnnotationsPackage.ANNOTATION:
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.BOOLEAN_ANNOTATION:
-				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.FLOAT_ANNOTATION:
-				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_ANNOTATION:
+				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.INT_ANNOTATION:
-				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
+				sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
@@ -89,16 +89,26 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getRestrictedAnnotationRule()
+				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if (rule == grammarAccess.getRestrictedAnnotationRule()
+				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAnnotationRule()
@@ -123,14 +133,14 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
+				return; 
 			}
 		else if (epackage == KExpressionsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.BOOL_VALUE:
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.DECLARATION:
-				sequence_Declaration(context, (Declaration) semanticObject); 
 				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
@@ -182,6 +192,21 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.core.kexpressions.Parameter) semanticObject); 
 				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -194,12 +219,34 @@ public abstract class AbstractSCLSemanticSequencer extends KEXTSemanticSequencer
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == KextPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KextPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KextPackage.KEXT_SCOPE:
+				if (rule == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else break;
 			case KextPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 

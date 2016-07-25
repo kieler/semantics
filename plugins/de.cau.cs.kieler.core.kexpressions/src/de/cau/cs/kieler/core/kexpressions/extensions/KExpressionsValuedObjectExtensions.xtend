@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.Expression
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -35,9 +37,16 @@ class KExpressionsValuedObjectExtensions {
     @Inject
     extension KExpressionsDeclarationExtensions
     
-    def public Declaration declaration(ValuedObject valuedObject) {
+    def Declaration declaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration)
             valuedObject.eContainer as Declaration
+        else
+            null
+    }
+    
+    def VariableDeclaration variableDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof VariableDeclaration)
+            valuedObject.eContainer as VariableDeclaration
         else
             null
     }     
@@ -49,8 +58,13 @@ class KExpressionsValuedObjectExtensions {
         ]
     }    
     
-    def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.declaration.type
+    def boolean isModelReference(ValuedObject valuedObject) {
+        valuedObject.declaration instanceof ReferenceDeclaration
+    }
+    
+    def ValueType getType(ValuedObject valuedObject) {
+        if (valuedObject.isModelReference) return ValueType::REFERENCE;
+        valuedObject.variableDeclaration.type
     }
     
     def public ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
@@ -59,37 +73,43 @@ class KExpressionsValuedObjectExtensions {
         ])
     }  
     
-    def public ValuedObject removeValuedObjectFrom(ValuedObject valuedObject, Declaration declaration) {
+    def ValuedObject removeValuedObjectFromDeclaration(ValuedObject valuedObject, Declaration declaration) {
         declaration.valuedObjects -= valuedObject
         valuedObject
     }  
     
-    def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.declaration.isInput
+    def boolean isInput(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isInput
     }
 
-    def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.declaration.isOutput
+    def boolean isOutput(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isOutput
     }
 
-    def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.declaration.isStatic
+    def boolean isStatic(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isStatic
     }
 
-    def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.declaration.isConst
+    def boolean isConst(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isConst
     }
 
-    def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.declaration.isExtern
+    def boolean isExtern(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isExtern
     }
 
-    def public boolean isArray(ValuedObject valuedObject) {
+    def boolean isArray(ValuedObject valuedObject) {
         !valuedObject.cardinalities.nullOrEmpty
     }
 
-    def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.declaration.isSignal
+    def boolean isSignal(ValuedObject valuedObject) {
+        if (!valuedObject.isModelReference) return false
+        valuedObject.variableDeclaration.isSignal
     }   
     
     def ValuedObject createValuedObject() {
@@ -125,16 +145,14 @@ class KExpressionsValuedObjectExtensions {
     }
     
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        val list = <ValuedObjectReference>newArrayList
-        if (expression == null) {
-            return list
-        }
-        else if (expression instanceof ValuedObjectReference) {
-            list += expression as ValuedObjectReference
-        } else {
-            list += expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        }
-        return list
+        <ValuedObjectReference> newArrayList => [
+        	if (expression == null) {
+        	} else if (expression instanceof ValuedObjectReference) { 
+        		it += expression
+        	} else { 
+        		it += expression.eAllContents.filter(ValuedObjectReference).toList
+        	}
+        ]  
     }    
     
     def void deleteAndCleanup(ValuedObject valuedObject) {
@@ -148,11 +166,11 @@ class KExpressionsValuedObjectExtensions {
     
 
 
-    def public Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
+    def Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             valuedObject.eContainer as Declaration
         } else {
-            val newDeclaration = createDeclaration;
+            val newDeclaration = createVariableDeclaration;
             newDeclaration.valuedObjects += valuedObject
             newDeclaration
         }

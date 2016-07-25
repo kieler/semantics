@@ -1,0 +1,214 @@
+grammar de.cau.cs.kieler.sccharts.text.SCT with de.cau.cs.kieler.core.kexpressions.text.KEXT
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
+
+//generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
+
+// ---------------- //
+//  SCCharts Rules  // 
+// ---------------- //
+
+SCCharts returns sccharts::SCCharts:
+    annotations+=Pragmas*
+    rootStates+=RootState*;
+    
+Pragmas returns annotations::PragmaStringAnnotation:
+    '#' name = 'version' values += SCXVersions |
+    '#' name = 'director' values += SCXDirectors;
+
+SCXVersions returns ecore::EString:
+    'SCX' | 'SCT';
+    
+SCXDirectors returns ecore::EString:
+    'SCCharts' | 'Enforcer';
+
+
+// ------------- //
+//  State Rules  // 
+// ------------- //
+
+
+RootState returns sccharts::State:
+	annotations+=Annotation*
+	'scchart' id=ID label=STRING?
+	'{'
+		declarations+=DeclarationWOSemicolon*
+		localActions+=LocalAction*
+		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
+	'}';
+    
+
+State returns sccharts::State:
+	annotations+=Annotation*
+	initial?='initial'?
+	final?='final'?
+	violation?='violation'?
+	connector?='connector'?
+	'state' id=ID label=STRING?
+	('{'
+		declarations+=DeclarationWOSemicolon*
+		localActions+=LocalAction*
+		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
+	'}')?
+	outgoingTransitions+=Transition*;
+    
+
+// ------------------ //
+//  Transition Rules  // 
+// ------------------ //
+
+Transition returns sccharts::Transition:
+	annotations+=RestrictedTypeAnnotation*
+	type=TransitionType
+	targetState=[sccharts::State|ID]
+	immediate?='immediate'?
+	deferred?='deferred'?
+	history=HistoryType?
+	(
+		('if' delay=INT? trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		|
+		('if' label=STRING)
+	)?;
+	
+	
+// -------------- //
+//  Action Rules  // 
+// -------------- //
+	
+LocalAction returns sccharts::LocalAction:
+    EntryAction | DuringAction | ExitAction | SuspendAction | IterateAction | InitAction | FinalAction;    
+
+EntryAction returns sccharts::EntryAction:
+	{sccharts::EntryAction}
+   'entry' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+DuringAction returns sccharts::DuringAction:
+	{sccharts::DuringAction}
+    immediate?='immediate'? 'during' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+ExitAction returns sccharts::ExitAction:
+	{sccharts::ExitAction}
+	'exit' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+       
+SuspendAction returns sccharts::SuspendAction:
+	{sccharts::SuspendAction}
+	immediate?='immediate'? weak?='weak'? 'suspend' ('if' trigger=BoolExpression)?;
+      
+IterateAction returns sccharts::IterateAction:
+	{sccharts::IterateAction}
+	immediate?='immediate'? 'iterate' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+
+InitAction returns sccharts::InitAction:
+	{sccharts::InitAction}
+   'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+         
+FinalAction returns sccharts::FinalAction:
+	{sccharts::FinalAction}
+	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+
+
+// -------------- //
+//  Region Rules  // 
+// -------------- //
+
+Region returns sccharts::Region:
+    ControlflowRegion | DataflowRegion;
+
+SingleControlflowRegion returns sccharts::ControlflowRegion:
+	{sccharts::ControlflowRegion}
+    (states+=State)+;
+
+
+SingleDataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    (equations += Equation)+;
+
+
+ControlflowRegion returns sccharts::ControlflowRegion:
+	{sccharts::ControlflowRegion}
+    annotations+=Annotation*
+    'region' id=ID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    states+=State+;
+
+
+DataflowRegion returns sccharts::DataflowRegion:
+    {sccharts::DataflowRegion}
+    annotations+=Annotation*
+    'dataflow' id=ID? label=STRING? ':'
+    declarations+=DeclarationWOSemicolon*
+    equations+=Equation+;
+
+
+
+// ---------------- //
+//  Equation Rules  // 
+// ---------------- //
+
+DFAssignment returns keffects::Assignment:
+    annotations+=Annotation*    
+	valuedObject=[kexpressions::ValuedObject]
+	('[' indices+=Expression ']')*
+	 operator=AssignOperator expression = Expression;
+
+Equation returns sccharts::Equation:
+    {sccharts::Equation}
+    (
+        (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
+    );
+
+
+
+
+
+    
+    
+    
+
+
+
+
+//ScopeReference returns sccharts::ScopeReference:
+//    scope=[sccharts::Scope|ID];
+//
+//ScopeCall returns sccharts::ScopeCall:
+//    '[' scope=[sccharts::Scope|ID]
+//    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
+//    ']'
+//    ('.' valuedObject = [kexpressions::ValuedObject])
+//;
+
+
+Binding returns sccharts::Binding:
+    (annotations+=Annotation)*
+	formal = [kexpressions::ValuedObject|ID] 
+	'to' 
+	actual = [kexpressions::ValuedObject|ID]
+;
+
+AtomicExpression returns kexpressions::Expression:
+    BoolValue
+    | ValuedObjectTestExpression 
+    | '(' BoolExpression ')'
+    | ReferenceCall
+//    | ScopeCall
+    | TextExpression;
+
+
+// ------------ //
+//  Enum Rules  // 
+// ------------ //
+
+enum TransitionType returns sccharts::TransitionType:
+	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
+	
+
+enum HistoryType returns sccharts::HistoryType:
+    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+	
+	

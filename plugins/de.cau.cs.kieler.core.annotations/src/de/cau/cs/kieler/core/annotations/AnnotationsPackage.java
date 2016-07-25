@@ -398,7 +398,6 @@ public interface AnnotationsPackage extends EPackage {
      */
     int FLOAT_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 1;
 
-
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl <em>Containment Annotation</em>}' class.
      * <!-- begin-user-doc -->
@@ -445,7 +444,6 @@ public interface AnnotationsPackage extends EPackage {
      */
     int CONTAINMENT_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 1;
 
-
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.ImportAnnotationImpl <em>Import Annotation</em>}' class.
      * <!-- begin-user-doc -->
@@ -491,7 +489,6 @@ public interface AnnotationsPackage extends EPackage {
      * @ordered
      */
     int IMPORT_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 1;
-
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.TypedStringAnnotationImpl <em>Typed String Annotation</em>}' class.
@@ -594,6 +591,90 @@ public interface AnnotationsPackage extends EPackage {
      * @ordered
      */
     int COMMENT_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 0;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.PragmaAnnotationImpl <em>Pragma Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.PragmaAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getPragmaAnnotation()
+     * @generated
+     */
+    int PRAGMA_ANNOTATION = 12;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_ANNOTATION__NAME = ANNOTATION__NAME;
+
+    /**
+     * The number of structural features of the '<em>Pragma Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.PragmaStringAnnotationImpl <em>Pragma String Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.PragmaStringAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getPragmaStringAnnotation()
+     * @generated
+     */
+    int PRAGMA_STRING_ANNOTATION = 13;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_STRING_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_STRING_ANNOTATION__NAME = STRING_ANNOTATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Values</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_STRING_ANNOTATION__VALUES = STRING_ANNOTATION__VALUES;
+
+    /**
+     * The number of structural features of the '<em>Pragma String Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRAGMA_STRING_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 0;
 
 
     /**
@@ -827,6 +908,26 @@ public interface AnnotationsPackage extends EPackage {
     EClass getCommentAnnotation();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.PragmaAnnotation <em>Pragma Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Pragma Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.PragmaAnnotation
+     * @generated
+     */
+    EClass getPragmaAnnotation();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.PragmaStringAnnotation <em>Pragma String Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Pragma String Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
+     * @generated
+     */
+    EClass getPragmaStringAnnotation();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1047,6 +1148,26 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EClass COMMENT_ANNOTATION = eINSTANCE.getCommentAnnotation();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.PragmaAnnotationImpl <em>Pragma Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.PragmaAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getPragmaAnnotation()
+         * @generated
+         */
+        EClass PRAGMA_ANNOTATION = eINSTANCE.getPragmaAnnotation();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.PragmaStringAnnotationImpl <em>Pragma String Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.PragmaStringAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getPragmaStringAnnotation()
+         * @generated
+         */
+        EClass PRAGMA_STRING_ANNOTATION = eINSTANCE.getPragmaStringAnnotation();
 
     }
 

@@ -30,840 +30,825 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class AbortItemProvider extends StatementContainerItemProvider {
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public AbortItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-        }
-        return itemPropertyDescriptors;
-    }
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-     * <!-- begin-user-doc -->
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-        if (childrenFeatures == null) {
-            super.getChildrenFeatures(object);
-            childrenFeatures.add(EsterelPackage.Literals.ABORT__BODY);
-        }
-        return childrenFeatures;
-    }
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(EsterelPackage.Literals.ABORT__BODY);
+		}
+		return childrenFeatures;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
 
-        return super.getChildFeature(object, child);
-    }
+		return super.getChildFeature(object, child);
+	}
 
     /**
-     * This returns Abort.gif.
-     * <!-- begin-user-doc -->
+	 * This returns Abort.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Abort"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Abort"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Abort_type");
-    }
+		return getString("_UI_Abort_type");
+	}
     
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(Abort.class)) {
-            case EsterelPackage.ABORT__BODY:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(Abort.class)) {
+			case EsterelPackage.ABORT__BODY:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createProgram()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createModule()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createModuleBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createModuleInterface()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createChannelDescription()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTypeIdentifier()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createStatementContainer()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLocalSignalDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLocalSignalList()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSensorDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSensorWithType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRelationDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRelationType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRelationImplication()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRelationIncompatibility()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTypeDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createConstantDecls()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createOneTypeConstantDecls()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createConstantWithValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createFunctionDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createFunction()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createProcedureDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createProcedure()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTaskDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTask()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createStatement()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createBlock()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAssignment()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAbort()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAbortBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAbortInstance()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAbortCase()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAbortCaseSingle()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbortBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbortEnd()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbortEndAlt()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAwait()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAwaitBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAwaitInstance()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createAwaitCase()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createProcCall()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDo()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDoUpto()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDoWatching()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDoWatchingEnd()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createEmit()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createEveryDo()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createExit()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createHalt()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createIfTest()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createElsIf()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createThenPart()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createElsePart()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLoop()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createEndLoop()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLoopEach()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLoopDelay()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLoopBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createNothing()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPause()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresent()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresentBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresentEventBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresentCaseList()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresentCase()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createPresentEvent()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRepeat()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRun()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createModuleRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRenamingList()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTypeRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createConstantRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createFunctionRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createProcedureRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTaskRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSignalRenaming()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSuspend()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakSuspend()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSustain()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrap()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrapDeclList()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrapHandler()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLocalVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createGoto()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLabel()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDelayExpr()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createDelayEvent()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createExec()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createExecBody()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createExecCase()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createEsterelTypeIdentifier()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createEsterelType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createLocalSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createRelation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createConstant()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createParallel()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createSequence()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbort()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbortInstance()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakAbortCase()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrapDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrapExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createFunctionExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createConstantExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createValuedObject()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createIntValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createFloatValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createInterfaceDeclaration()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createInterfaceSignalDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createISignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createChannelDescription()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createTypeIdentifier()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createInterfaceVariableDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createVariableDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createIVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createInput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createOutput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createInputOutput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 KExpressionsFactory.eINSTANCE.createReturn()));
-    }
+		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createProgram()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createModule()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createModuleBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createModuleInterface()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createChannelDescription()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTypeIdentifier()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createStatementContainer()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLocalSignalDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLocalSignalList()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSensorDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSensorWithType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRelationDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRelationType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRelationImplication()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRelationIncompatibility()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTypeDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createConstantDecls()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createOneTypeConstantDecls()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createConstantWithValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createFunctionDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createFunction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createProcedureDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createProcedure()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTaskDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTask()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createStatement()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createBlock()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAssignment()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAbort()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAbortBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAbortInstance()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAbortCase()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAbortCaseSingle()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbortBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbortEnd()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbortEndAlt()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAwait()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAwaitBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAwaitInstance()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createAwaitCase()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createProcCall()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDo()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDoUpto()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDoWatching()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDoWatchingEnd()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createEmit()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createUnEmit()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createReset()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createEveryDo()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createExit()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createHalt()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createIfTest()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createElsIf()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createThenPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createElsePart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLoop()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createEndLoop()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLoopEach()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLoopDelay()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLoopBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createNothing()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPause()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresent()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresentBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresentEventBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresentCaseList()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresentCase()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createPresentEvent()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRepeat()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRun()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createModuleRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRenamingList()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTypeRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createConstantRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createFunctionRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createProcedureRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTaskRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSignalRenaming()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSuspend()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSustain()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrap()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrapDeclList()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrapHandler()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLocalVariable()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createGoto()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLabel()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDelayExpr()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createDelayEvent()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createExec()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createExecBody()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createExecCase()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createEsterelTypeIdentifier()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createEsterelType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createLocalSignal()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createRelation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createConstant()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createParallel()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createSequence()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbort()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbortInstance()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createWeakAbortCase()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrapDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrapExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createFunctionExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createConstantExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 AnnotationsFactory.eINSTANCE.createAnnotation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 AnnotationsFactory.eINSTANCE.createCommentAnnotation()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createComplexExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createTextualCode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createSignal()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createVariable()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createInterfaceDeclaration()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createInterfaceSignalDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createISignal()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createChannelDescription()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createTypeIdentifier()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createInterfaceVariableDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createVariableDecl()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createIVariable()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createInput()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createOutput()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createInputOutput()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EsterelPackage.Literals.ABORT__BODY,
+				 KExpressionsFactory.eINSTANCE.createReturn()));
+	}
 
     /**
-     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
+		Object childFeature = feature;
+		Object childObject = child;
 
-        boolean qualify =
-            childFeature == EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT ||
-            childFeature == EsterelPackage.Literals.ABORT__BODY;
+		boolean qualify =
+			childFeature == EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT ||
+			childFeature == EsterelPackage.Literals.ABORT__BODY;
 
-        if (qualify) {
-            return getString
-                ("_UI_CreateChild_text2",
-                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
-        }
-        return super.getCreateChildText(owner, feature, child, selection);
-    }
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
+	}
 
 }
