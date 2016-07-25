@@ -103,10 +103,10 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     public static def InputStream getInputStream(String filePathOrURL, Map<String, String> placeholderReplacement) {
         // Get input stream from url
         var InputStream inputStream= null
-        if(filePathOrURL != null && filePathOrURL != ""){
+        if(!filePathOrURL.isNullOrEmpty){
             
             // Load contents either from platform url or file path
-            if (filePathOrURL.trim().startsWith("platform:")) {
+            if (filePathOrURL.trim.startsWith("platform:")) {
                 val url = new URL(filePathOrURL);
                 inputStream = url.openStream
             } else {

@@ -34,11 +34,14 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.CheckboxCellEditor
+import org.eclipse.jface.viewers.CheckStateChangedEvent
+import org.eclipse.jface.viewers.CheckboxTableViewer
 import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
 import org.eclipse.jface.viewers.ICellModifier
+import org.eclipse.jface.viewers.ICheckStateListener
+import org.eclipse.jface.viewers.ICheckStateProvider
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
@@ -56,16 +59,13 @@ import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Table
+import org.eclipse.swt.widgets.TableItem
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.IDE
-import org.eclipse.jface.viewers.CheckboxTableViewer
-import org.eclipse.jface.viewers.ICheckStateListener
-import org.eclipse.jface.viewers.CheckStateChangedEvent
-import org.eclipse.jface.viewers.ICheckStateProvider
 
 /**
  * Factory class to create SWT widgets
@@ -640,7 +640,8 @@ class UIUtil {
             
             override modify(Object element, String property, Object value) {
                 val columnIndex = getColumnIndex(property)
-                val data = viewer.structuredSelection?.firstElement as CommandData
+                val item = element as TableItem
+                val data = item.data as CommandData
                 switch (columnIndex) {
                     case 1 : data.name = value as String
                     case 2 : data.command = value as String

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
@@ -29,7 +30,9 @@ import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.jface.preference.PreferencePage
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.jface.viewers.ICellModifier
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.LabelProvider
@@ -37,9 +40,8 @@ import org.eclipse.jface.viewers.ListViewer
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
+import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.swt.SWT
-import org.eclipse.swt.custom.TableEditor
-import org.eclipse.swt.custom.TreeEditor
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
@@ -51,11 +53,8 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.TabFolder
 import org.eclipse.swt.widgets.TabItem
 import org.eclipse.swt.widgets.Table
-import org.eclipse.swt.widgets.TableColumn
 import org.eclipse.swt.widgets.TableItem
 import org.eclipse.swt.widgets.Text
-import org.eclipse.swt.widgets.Tree
-import org.eclipse.swt.widgets.TreeItem
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
@@ -177,6 +176,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private var Text mainFileOrigin
 
     /**
+     * The table of resources that should be created at project setup.
+     */
+    private var TableViewer initialResources
+
+    /**
      * {@inheritDoc}
      */
     override protected createContents(Composite parent) {
@@ -249,8 +253,123 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         createWizardComponent(comp)
         createModelFileComponent(comp)
         createMainFileComponent(comp)
+        createInitialResourcesComponent(comp)
         
         return comp
+    }
+    
+    /**
+     * Creates the controls to add remove and modify the resources to be created at project setup.
+     * 
+     * @param folder The TabFolder where the tab will be added to  
+     */
+    private def TableViewer createInitialResourcesComponent(Composite parent) {
+        val group = UIUtil.createGroup(parent, "Initial Resources", 2)
+        
+        val table = new Table(group, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        table.setLayoutData(new GridData(GridData.FILL_BOTH));
+        
+        // Create viewer
+        val viewer = new TableViewer(table)
+        initialResources = viewer
+        
+        // Create columns
+        val pathColumn = UIUtil.createTableColumn(viewer, "Project relative path", 120)
+        pathColumn.labelProvider = new ColumnLabelProvider() {
+            override String getToolTipText(Object element) {
+                return "The project relative path of the resource to be created."
+            }
+            override String getText(Object element) {
+                val d = element as FileData
+                return d.projectRelativePath;
+            }
+        };
+        val originColumn = UIUtil.createTableColumn(viewer, "Origin", 150)
+        originColumn.labelProvider = new ColumnLabelProvider() {
+            override String getToolTipText(Object element) {
+                return "The template of the file or folder to be created.\n"
+                    + "This is either a file system path\n"
+                    + "or an URL using the platform scheme provided by eclipse."
+            }
+            override String getText(Object element) {
+                val d = element as FileData
+                return d.origin;
+            }
+        };
+
+        // Create content
+        viewer.setContentProvider(ArrayContentProvider.instance);
+        viewer.input = newArrayList()
+        
+        // Create editable cells
+        val pathEditor = new TextCellEditor(table);
+        val originEditor = new TextCellEditor(table);
+
+        // Assign the cell editors to the viewer 
+        viewer.setCellEditors(#[pathEditor, originEditor]);
+        viewer.columnProperties = #["path", "origin"]
+        viewer.setCellModifier(new ICellModifier{
+            
+            def int getColumnIndex(String property) {
+                switch(property) {
+                    case "path" : return 0
+                    default : return 1
+                }
+            }
+            override canModify(Object element, String property) {
+                return true
+            }
+            override getValue(Object element, String property) {
+                val columnIndex = getColumnIndex(property)
+                val data = element as FileData
+                switch (columnIndex) {
+                    case 0 : return data.projectRelativePath
+                    case 1 : return data.origin
+                }
+                return null
+            }
+            override modify(Object element, String property, Object value) {
+                val columnIndex = getColumnIndex(property)
+                val item = element as TableItem
+                val data = item.data as FileData
+                switch (columnIndex) {
+                    case 0 : data.projectRelativePath = value as String
+                    case 1 : data.origin = value as String
+                }
+                viewer.refresh()
+            }
+        })
+        
+        // Create buttons
+        val bcomp = UIUtil.createComposite(group, 1)
+        
+        // Create add button
+        val addButton = UIUtil.createButton(bcomp, "Add")
+        addButton.addSelectionListener(new SelectionAdapter() {
+            override void widgetSelected(SelectionEvent e) {
+                val data = new FileData("src/MyFile.txt")
+                val inputArray = viewer.input as ArrayList<FileData>
+                inputArray.add(data)
+                viewer.refresh()
+                viewer.selection = new StructuredSelection(data)
+                
+                checkConsistency()
+            }
+        })
+        addButton.toolTipText = "Add a file or folder to be created at project setup."
+        
+        // Create remove button
+        UIUtil.createRemoveButton(bcomp, viewer)
+        
+        // Create up button
+        UIUtil.createUpButton(bcomp, viewer)
+        
+        // Create down button
+        UIUtil.createDownButton(bcomp, viewer)
+        
+        return viewer
     }
     
     /**
@@ -737,6 +856,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // Update main file
             mainFile.text = data.launchData.mainFile
             mainFileOrigin.text = data.mainFileOrigin
+            
+            // Update initial resources
+            initialResources.input = data.initialResources
             
             // Update target language / compile chain
             var isCompileChain = true

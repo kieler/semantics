@@ -76,6 +76,12 @@ class EnvironmentData extends ConfigurationSerializable {
     protected String wrapperCodeSnippetsOrigin = ""
     
     /**
+     * The files and folders that should be created at project setup.
+     */
+    @Accessors
+    protected List<FileData> initialResources = newArrayList()
+    
+    /**
      * Creates a new instance of the class.
      */
     new() {
