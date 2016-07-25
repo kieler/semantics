@@ -34,17 +34,16 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.CheckStateChangedEvent
-import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.CheckboxCellEditor
 import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.ContentViewer
-import org.eclipse.jface.viewers.ICheckStateListener
-import org.eclipse.jface.viewers.ICheckStateProvider
+import org.eclipse.jface.viewers.ICellModifier
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
+import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
@@ -63,6 +62,10 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.ui.dialogs.ResourceSelectionDialog
 import org.eclipse.ui.ide.IDE
+import org.eclipse.jface.viewers.CheckboxTableViewer
+import org.eclipse.jface.viewers.ICheckStateListener
+import org.eclipse.jface.viewers.CheckStateChangedEvent
+import org.eclipse.jface.viewers.ICheckStateProvider
 
 /**
  * Factory class to create SWT widgets
@@ -553,66 +556,45 @@ class UIUtil {
      * @param checkboxes Flag to specify if the table should have checkboxes to enable / disable commands
      * @return the created table viewer 
      */
-    public static def TableViewer createCommandTable(Composite parent, boolean checkboxes) {
-        // Create table
-        val table = if (checkboxes)
-                new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
-            else
-                new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
+    public static def CheckboxTableViewer createCommandTable(Composite parent) {
+        val table = new Table(parent, SWT.CHECK.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
         // Create viewer
-        var TableViewer viewer
-        if (checkboxes) {
-            val checkViewer = new CheckboxTableViewer(table)
-            viewer = checkViewer
-
-            // Create listener
-            checkViewer.addCheckStateListener(new ICheckStateListener() {
-                override checkStateChanged(CheckStateChangedEvent event) {
-                    val comm = event.element as CommandData
-                    comm.enabled = !comm.isEnabled
-                    
-                    // On Windows and Mac, we have to refresh the content provider to make the change visible
-                    checkViewer.refresh();
-                }
-            })
-
-            // Create state provider
-            checkViewer.checkStateProvider = new ICheckStateProvider() {
-
-                override isChecked(Object element) {
-                    val comm = element as CommandData
-                    return comm.isEnabled
-                }
-
-                override isGrayed(Object element) {
-                    return false
-                }
+        val viewer = new CheckboxTableViewer(table)
+        // Checked state
+        viewer.checkStateProvider = new ICheckStateProvider {
+            override isChecked(Object element) {
+                val data = element as CommandData
+                return data.isEnabled()
             }
-
-            // Checked column
-            val checkColumn = createTableColumn(viewer, "Execute", 75)
-            checkColumn.labelProvider = new ColumnLabelProvider() {
-                override String getText(Object element) {
-                    return "";
-                }
-            };
-        } else {
-            viewer = new TableViewer(table)
+            override isGrayed(Object element) {
+                return false
+            }
         }
-
+        viewer.addCheckStateListener(new ICheckStateListener {
+            
+            override checkStateChanged(CheckStateChangedEvent event) {
+                val data = viewer.structuredSelection?.firstElement as CommandData
+                data.enabled = event.checked
+            }
+        })
         // Create columns
-        val nameColumn = createTableColumn(viewer, "Name", 75)
+        val checkColumn = createTableColumn(viewer, "Execute", 60)
+        checkColumn.labelProvider = new ColumnLabelProvider() {
+            override String getText(Object element) {
+                return "";
+            }
+        };
+        val nameColumn = createTableColumn(viewer, "Name", 120)
         nameColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 val c = element as CommandData
                 return c.name;
             }
         };
-
         val commandColumn = createTableColumn(viewer, "Command", 150)
         commandColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
@@ -625,6 +607,48 @@ class UIUtil {
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
 
+        // Create editable cells
+        val nameEditor = new TextCellEditor(table);
+        val commandEditor = new TextCellEditor(table);
+
+        // Assign the cell editors to the viewer 
+        viewer.setCellEditors(#[null, nameEditor, commandEditor]);
+        viewer.columnProperties = #["execute", "name", "command"]
+        viewer.setCellModifier(new ICellModifier{
+            
+            def int getColumnIndex(String property) {
+                switch(property) {
+                    case "execute" : return 0
+                    case "name" : return 1
+                    default : return 2
+                }
+            }
+            
+            override canModify(Object element, String property) {
+                return true
+            }
+            
+            override getValue(Object element, String property) {
+                val columnIndex = getColumnIndex(property)
+                val data = element as CommandData
+                switch (columnIndex) {
+                    case 1 : return data.name
+                    case 2 : return data.command
+                }
+                return null
+            }
+            
+            override modify(Object element, String property, Object value) {
+                val columnIndex = getColumnIndex(property)
+                val data = viewer.structuredSelection?.firstElement as CommandData
+                switch (columnIndex) {
+                    case 1 : data.name = value as String
+                    case 2 : data.command = value as String
+                }
+                viewer.refresh()
+            }
+        })
+        
         return viewer
     }
 

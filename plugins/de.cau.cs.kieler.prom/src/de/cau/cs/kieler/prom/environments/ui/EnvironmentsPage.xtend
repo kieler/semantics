@@ -38,6 +38,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
+import org.eclipse.swt.custom.TableEditor
+import org.eclipse.swt.custom.TreeEditor
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
@@ -48,7 +50,12 @@ import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.TabFolder
 import org.eclipse.swt.widgets.TabItem
+import org.eclipse.swt.widgets.Table
+import org.eclipse.swt.widgets.TableColumn
+import org.eclipse.swt.widgets.TableItem
 import org.eclipse.swt.widgets.Text
+import org.eclipse.swt.widgets.Tree
+import org.eclipse.swt.widgets.TreeItem
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
 
@@ -143,18 +150,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The control to display all shell commands for the currently selected environment.
      */
     private TableViewer viewer
-    /**
-     * The currently selected command from the table viewer or null if there is no selection.
-     */
-    private CommandData currentCommandData
-    /**
-     * The input field for the name of the currently selected command.
-     */
-    private Text commandName
-    /**
-     * The input field for the shell command to be executed.
-     */
-    private Text command
     
     /**
      * Combobox with all available launch shortcuts.
@@ -582,8 +577,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val comp = createTab(folder, "Execute")
         
         createCommandTableComponent(comp)
-        createCommandNameComponent(comp)
-        createCommandComponent(comp)
         createAssociatedLaunchShortcutComponent(comp)
         
         return comp
@@ -598,23 +591,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
         // Create viewer
-        viewer = UIUtil.createCommandTable(group, true)
-        viewer.addSelectionChangedListener(new ISelectionChangedListener(){
-            
-            override selectionChanged(SelectionChangedEvent event) {
-                val selection = event.selection as IStructuredSelection
-                if(selection != null){
-                    currentCommandData = selection.firstElement as CommandData
-                    
-                    if(currentCommandData != null) {
-                        commandName.text = currentCommandData.name
-                        command.text = currentCommandData.command
-                    }
-                } else {
-                    currentCommandData = null
-                }
-            }
-        })
+        viewer = UIUtil.createCommandTable(group)
         
         // Create buttons
         val bcomp = UIUtil.createComposite(group, 1)
@@ -640,48 +617,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         
         // Create down Button
         UIUtil.createDownButton(bcomp, viewer)
-    }
-    
-    /**
-     * Creates the control to set the user defined name of the currently selected command.
-     * 
-     * @param parent The parent composite
-     */
-    private def void createCommandNameComponent(Composite parent){
-        val group = UIUtil.createGroup(parent, "Name", 1)
-        
-        commandName = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
-        commandName.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentCommandData != null){
-                    currentCommandData.name = commandName.text
-                    viewer.refresh()   
-                }
-            }
-        })
-        commandName.toolTipText = "User defined name for the selected command"
-    }
-    
-    /**
-     * Creates the control to set the shell command.
-     * 
-     * @param parent The parent composite
-     */
-    private def void createCommandComponent(Composite parent){
-        val group = UIUtil.createGroup(parent, "Command", 2)
-        
-        command = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
-        command.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentCommandData != null){
-                    currentCommandData.command = command.text
-                    viewer.refresh()
-                }
-            }
-        })
-        command.toolTipText = "Shell command to be executed when the preceding commands finished successfully."
-        
-        UIUtil.createBrowseVariableButton(group, commandName, "Variables...")
     }
     
     /**
@@ -740,7 +675,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-        
+       
         // Create add button
         val bcomp = UIUtil.createComposite(comp, 1, GridData.HORIZONTAL_ALIGN_END)
         val addButton = UIUtil.createButton(bcomp, "Add")
@@ -837,8 +772,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             
             // Update commands
             viewer.input = data.launchData.commands
-            commandName.text = ""
-            command.text = ""
             
             // Select associated launch shortcut in combo viewer
             var selectionFound=false

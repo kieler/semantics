@@ -19,32 +19,25 @@ import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.ArrayList
-import java.util.EnumSet
 import java.util.List
 import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.CheckboxTableViewer
 import org.eclipse.jface.viewers.ComboViewer
-import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.ISelectionChangedListener
-import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.SWT
-import org.eclipse.swt.events.ModifyEvent
-import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
-import org.eclipse.swt.widgets.Text
-import org.eclipse.ui.dialogs.ResourceSelectionDialog
+import org.eclipse.jface.viewers.ICheckStateListener
+import org.eclipse.jface.viewers.CheckStateChangedEvent
+import org.eclipse.jface.viewers.ICellEditorListener
 
 /** 
  * The tab with the controls to set shell commands which will be executed
@@ -60,24 +53,9 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
     private CheckboxTableViewer viewer
     
     /**
-     * The input field to set the user defined name of a command.
-     */
-    private Text name
-    
-    /**
-     * The input field to set the shell command which should be executed.
-     */
-    private Text command
-    
-    /**
      * Combobox with all available launch shortcuts.
      */
     private var ComboViewer launchShortcuts
-    
-    /**
-     * The currently selected command data or null if there is nothing selected.
-     */
-    private CommandData currentData
     
     /**
      * The project of this launch configuration.
@@ -102,8 +80,6 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
         comp.setFont(parent.getFont())
         
         createTableComponent(comp)
-        createNameComponent(comp)
-        createCommandComponent(comp)
         createAssociatedLaunchShortcutComponent(comp)
     }
 
@@ -116,28 +92,28 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
         val group = UIUtil.createGroup(parent, "Commands", 2)
         
         // Create viewer
-        viewer = UIUtil.createCommandTable(group, true) as CheckboxTableViewer      
-        viewer.addSelectionChangedListener(new ISelectionChangedListener(){
+        viewer = UIUtil.createCommandTable(group)
+        viewer.addCheckStateListener(new ICheckStateListener{
             
-            override selectionChanged(SelectionChangedEvent event) {
-                val selection = event.selection as IStructuredSelection
-                if(selection != null)
-                    currentData = selection.firstElement as CommandData
-                else
-                    currentData = null
-                    
-                updateControls(currentData)
-                
-                checkConsistency()
-                updateLaunchConfigurationDialog()
-            }
-        })
-        viewer.addCheckStateListener(new ICheckStateListener() {
             override checkStateChanged(CheckStateChangedEvent event) {
                 checkConsistency()
                 updateLaunchConfigurationDialog()
             }
         })
+        for(editor : viewer.cellEditors) {
+            if(editor != null) {
+                editor.addListener(new ICellEditorListener{
+                    override applyEditorValue() {
+                        checkConsistency()
+                        updateLaunchConfigurationDialog()
+                    }
+                    override cancelEditor() {
+                    }
+                    override editorValueChanged(boolean oldValidState, boolean newValidState) {
+                    }
+                })
+            }
+        }
         
         // Create buttons
         val bcomp = UIUtil.createComposite(group, 1)
@@ -177,76 +153,6 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
         // Create down Button
         val downButton = UIUtil.createDownButton(bcomp, viewer)
         downButton.addSelectionListener(updateDialogSelectionProvider)
-    }
-
-    /**
-     * Creates the control to set a command's user defined name.
-     * 
-     * @param parent The parent composite
-     */
-    private def void createNameComponent(Composite parent){
-        val group = UIUtil.createGroup(parent, "Name", 1)
-        
-        name = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
-        name.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.name = name.text
-                    viewer.refresh()
-                    
-                    checkConsistency()
-                    updateLaunchConfigurationDialog()
-                }
-            }
-        })
-        name.toolTipText = "User defined name for the selected command"
-    }
-    
-    /**
-     * Creates the controls to set the shell command.
-     * 
-     * @param parent The parent composite
-     */
-    private def void createCommandComponent(Composite parent){
-        val group = UIUtil.createGroup(parent, "Command", 1)
-        
-        // Create text
-        command = UIUtil.createTextField(group, null, EnumSet.of(UIUtil.Buttons.NONE))
-        command.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.command = command.text
-                    viewer.refresh()
-                    
-                    checkConsistency()
-                    updateLaunchConfigurationDialog()
-                }
-            }
-        })
-        command.toolTipText = "Shell command to be executed when the preceding commands finished successfully."
-        
-        // Create buttons
-        val comp = UIUtil.createComposite(group, 2, GridData.HORIZONTAL_ALIGN_END)
-
-        val browse = createPushButton(comp, "Browse Project...", null);
-        browse.addSelectionListener(new SelectionAdapter() {
-
-            override void widgetSelected(SelectionEvent e) {
-                if (project != null) {
-                    val dialog = new ResourceSelectionDialog(shell, project, "Select a file in the project.")
-                    dialog.open()
-
-                    // Get results.
-                    val results = dialog.result
-                    if (results != null && !results.isEmpty) {
-                        val resource = results.get(0) as IResource
-                        command.insert('"' + resource.projectRelativePath.toOSString + '"')
-                    }
-                }
-            }
-        });
-
-        UIUtil.createBrowseVariableButton(comp, command, "Variables...")
     }
 
     /**
@@ -309,7 +215,6 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
         if(doNotApplyUIChanges) {
             return
         }
-        
         // Set associated launch shortcut
         val selection = (launchShortcuts.selection as StructuredSelection).firstElement
         val shortcutClassName = if(selection != null && selection instanceof IConfigurationElement)
@@ -362,24 +267,10 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
     }
     
     /**
-     * Update all controls content with the given command data object.
-     * @param comm The command data
-     */
-    private def void updateControls(CommandData comm){
-        if(comm != null){
-            name.text = comm.name
-            command.text = comm.command
-        }else{
-            name.text = ""
-            command.text = ""
-        }
-    }
-    
-    /**
      * Enable or disable all controls depending on this launch configuration's project. 
      */
     private def void updateEnabled(){
-        val List<Control> controls = #[viewer.table, name, command, launchShortcuts.combo]
+        val List<Control> controls = #[viewer.table, launchShortcuts.combo]
         UIUtil.enableControlsOnSameLevel(controls, project != null)
     }
 }
