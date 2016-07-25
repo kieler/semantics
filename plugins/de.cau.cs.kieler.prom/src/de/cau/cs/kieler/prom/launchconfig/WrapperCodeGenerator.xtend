@@ -302,15 +302,32 @@ class WrapperCodeGenerator {
      */
     private static def String getMacroCall(WrapperCodeAnnotationData data) {
         var txt = ""
+        // Ignore non existing macro <=> only call if macro exists
         if (data.ignoreNonExistingSnippet)
             txt += '''<#if «data.name»??>'''
 
         txt += '''<@«data.name» '''
-        for (String arg : data.arguments)
-            txt += ''''«arg»' '''
-
+        // Append arguments
+        var boolean isBooleanArgument
+        var boolean isFloatArgument
+        for (String arg : data.arguments) {
+            isBooleanArgument = (arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("false"))
+            try {
+                isFloatArgument = (Float.valueOf(arg) != null)
+            } catch (NumberFormatException e) {
+                isFloatArgument = false
+            }
+            val isNonStringArgument = isBooleanArgument || isFloatArgument
+            // Only string arguments need to be surrounded by single quotation marks
+            if(isNonStringArgument)
+                txt += '''«arg» '''   
+            else 
+                txt += ''''«arg»' '''
+        }
+        // Close macro call
         txt += '''/>''';
- 
+
+        // Close if
         if (data.ignoreNonExistingSnippet)
             txt += '''</#if>'''
         
@@ -547,7 +564,7 @@ class WrapperCodeGenerator {
             <#macro «name»>
                 <#if phase=='«phase.name»'>
                     <#nested />
-                    </#if>
+                </#if>
             </#macro>
         '''
     }
