@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author SL
@@ -44,61 +45,60 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
 
     
     // It is required, that a state contains only one ControlflowRegion
-    def State transform(State rootState, KielerCompilerContext context) {
-        
-        val regions = rootState.regions.filter(ControlflowRegion)
-        // List of States of function
-        val states = regions.head.states
-        // Todo list
-        for (s : states) {
-            nextStates.add(s)
-        }
-        
-
-        /* Make marked all transitions, which are marked by the annotation "notImmediate" of all states in this region
-         * delayed transitions. 
-         */
-        while (!nextStates.empty) {
+    def SCCharts transform(SCCharts rootSCChart, KielerCompilerContext context) {
+        for (rootState : rootSCChart.rootStates) {
             
-            tmpList.clear
-            
-            for (s : nextStates) {
-                // Change all transitions of State s
-                for (t : s.outgoingTransitions) {
-                    if(t.annotations.head != null) {
-                        if(t.annotations.head.name.contains("notImmediate")) {
-                            t.immediate = false
-                        }
-                    }
-                }
-                for (t : s.incomingTransitions) {
-                    if(t.annotations.head != null) {
-                        if(t.annotations.head.name.contains("notImmediate")) {
-                            t.immediate = false
-                        }
-                    }
-                }
-                // If State s contains additional states that need to be checked for transitions add them to Todo list
-                var tmpRegions = s.regions.filter(ControlflowRegion)
-                if (!tmpRegions.empty) {
-                    var tmpStates = tmpRegions.head.states
-                    // Save states to copy to Todo list later
-                    if (!tmpStates.empty) {
-                        for (state : tmpStates) {
-                            tmpList.add(state)
-                        }
-                    }
-                }
-            }
-            // Update Todo list
-            nextStates.clear
-            for (s : tmpList) {
+            val regions = rootState.regions.filter(ControlflowRegion)
+            // List of States of function
+            val states = regions.head.states
+            // Todo-list
+            for (s : states) {
                 nextStates.add(s)
             }
+            
+            /* Make marked all transitions, which are marked by the annotation "notImmediate" of all states in this region
+             * delayed transitions. 
+             */
+            while (!nextStates.empty) {
+                
+                tmpList.clear
+                
+                for (s : nextStates) {
+                    // Change all transitions of State s
+                    for (t : s.outgoingTransitions) {
+                        if(t.annotations.head != null) {
+                            if(t.annotations.head.name.contains("notImmediate")) {
+                                t.immediate = false
+                            }
+                        }
+                    }
+                    for (t : s.incomingTransitions) {
+                        if(t.annotations.head != null) {
+                            if(t.annotations.head.name.contains("notImmediate")) {
+                                t.immediate = false
+                            }
+                        }
+                    }
+                    // If State s contains additional states that need to be checked for transitions add them to Todo list
+                    var tmpRegions = s.regions.filter(ControlflowRegion)
+                    if (!tmpRegions.empty) {
+                        var tmpStates = tmpRegions.head.states
+                        // Save states to copy to Todo list later
+                        if (!tmpStates.empty) {
+                            for (state : tmpStates) {
+                                tmpList.add(state)
+                            }
+                        }
+                    }
+                }
+                // Update Todo list
+                nextStates.clear
+                for (s : tmpList) {
+                    nextStates.add(s)
+                }
+            }
         }
         
-        rootState
+        rootSCChart
     }
- 
-    
 }

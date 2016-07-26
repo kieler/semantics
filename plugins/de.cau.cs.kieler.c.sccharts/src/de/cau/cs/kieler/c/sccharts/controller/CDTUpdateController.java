@@ -23,6 +23,7 @@ import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
 
 /**
@@ -50,10 +51,10 @@ public class CDTUpdateController extends KiCoModelUpdateController  {
     protected EObject readModel_NON_STATIC(final IEditorPart editor) {
         if (editor instanceof CEditor) {
             CDTProcessor CDTProcessor = Guice.createInjector().getInstance(CDTProcessor.class);
-            State scchart = CDTProcessor.createFromEditor(editor);
+            SCCharts scchart = CDTProcessor.createFromEditor(editor);
             Annotation tag = AnnotationsFactory.eINSTANCE.createAnnotation();
             tag.setName(CbasedSCChartFeature.ID);
-            scchart.getAnnotations().add(tag);
+//            scchart.getAnnotations().add(tag);
             return scchart;
         }
         return null;
