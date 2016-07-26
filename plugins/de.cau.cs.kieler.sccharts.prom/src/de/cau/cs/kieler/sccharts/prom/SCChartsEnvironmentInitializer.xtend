@@ -59,6 +59,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         val initialResources = newArrayList() 
         initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl")
         initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets")
+        initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
         
         var env = new EnvironmentData("Mindstorms NXJ")
         env.launchData = launchData
@@ -84,7 +85,9 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
 
         val initialResources = newArrayList() 
         initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl")
-        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets")
+        initialResources += new FileData("snippets/lejos", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets")
+        initialResources += new FileData("snippets/lejos/ev3", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets")
+        initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
         
         var env = new EnvironmentData("Mindstorms EV3")
         env.launchData = launchData
@@ -110,6 +113,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         val initialResources = newArrayList() 
         initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
         initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
+        initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
         
         val env = new EnvironmentData("Arduino")
         env.launchData = launchData

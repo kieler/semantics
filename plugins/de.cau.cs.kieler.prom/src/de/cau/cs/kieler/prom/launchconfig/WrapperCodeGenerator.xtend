@@ -113,8 +113,8 @@ class WrapperCodeGenerator {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
-            // Debug output macro calls
-//            System.err.println(templateWithMacroCalls)
+            // Debug log macro calls
+            System.err.println(templateWithMacroCalls)
 
             processTemplateAndSaveOutput(templateWithMacroCalls)
         }
@@ -179,7 +179,7 @@ class WrapperCodeGenerator {
             FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
     
             // Add implicit include of snippet definitions
-            val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
+            val snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
             for(snippetFile : snippetFiles) {
                 // FreeMarker needs paths relative to the template directory.
                 // We calculate this via the URI class.
@@ -347,7 +347,7 @@ class WrapperCodeGenerator {
         // Filter that accepts directories and files with the given extension.
         val filter = new FileFilter() {
             override accept(File file) {
-                return file.isDirectory || Files.getFileExtension(file.name).toLowerCase == fileExtension
+                return file.isDirectory || Files.getFileExtension(file.name).equalsIgnoreCase(fileExtension)
             }
         }
 
@@ -367,14 +367,20 @@ class WrapperCodeGenerator {
      * @param filter A filter that found files must match
      */
     private def void getFilesRecursiveHelper(File folder, List<File> list, FileFilter filter) {
-        // Iterate over files in the folder recursively.
-        // Add every file that is not filtered to the list.
+        // Iterate over files in the folder.
+        // Add found files and remember folders for later.
+        val subFolders = newArrayList()
         for (fileEntry : folder.listFiles(filter)) {
             if (fileEntry.isDirectory()) {
-                getFilesRecursiveHelper(fileEntry, list, filter);
+                subFolders += fileEntry
             } else {
                 list.add(fileEntry)
             }
+        }
+        
+        // Go into next folder level
+        for (subFolder : subFolders) {
+            getFilesRecursiveHelper(subFolder, list, filter);
         }
     }
 

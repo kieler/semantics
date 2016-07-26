@@ -4,13 +4,13 @@
      Example for SCCharts:
          @Wrapper LightSensor, S3
          input int light; -->
- <#macro LightSensor port getPerCentValue='false'>
+ <#macro LightSensor port getPerCentValue=false>
     <@init>
         LightSensor lightSensor${port} = new LightSensor(SensorPort.${port});
     </@>
     <@input>
         // Light
-        <#if getPerCentValue=='true'>
+        <#if getPerCentValue>
         scchart.${varname} = lightSensor${port}.readNormalizedValue();
         <#else>
         scchart.${varname} = lightSensor${port}.getLightValue();
