@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
@@ -36,11 +36,6 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         // Mindstorms EV3
         datas += getMindstormsEV3DefaultEnvironment()
         
-        // Mindstorms NXC
-        // This environment is outdated and not used.
-        // However, it may become useful in the future, so we only comment it out
-//        datas += getMindstormsNXCDefaultEnvironment()
-       
         // Arduino
         datas += getArduinoDefaultEnvironment()
 
@@ -58,15 +53,18 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
-        launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_nxj"
+        launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
 
+        val initialResources = newArrayList() 
+        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets")
+        
         var env = new EnvironmentData("Mindstorms NXJ")
         env.launchData = launchData
+        env.initialResources = initialResources
         env.modelFile = "src/${project_name}"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets"
         env.associatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl"
         return env
     } 
     
@@ -81,37 +79,18 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
-        launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_ev3"
+        launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"
 
+        val initialResources = newArrayList() 
+        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets")
+        
         var env = new EnvironmentData("Mindstorms EV3")
         env.launchData = launchData
+        env.initialResources = initialResources
         env.modelFile = "src/${project_name}"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets"
         env.associatedProjectWizardClass = "org.lejos.ev3.ldt.wizard.NewEV3Project"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl"
-        return env
-    } 
-    
-    /**
-     * Creates the default environment for Mindstorms NXT running NXC.
-     * @return  The default environment for Mindstorms NXT running NXC.
-     */
-    private static def EnvironmentData getMindstormsNXCDefaultEnvironment(){
-        var launchData = new KiCoLaunchData()
-        launchData.mainFile = "main.ftl"
-        launchData.targetLanguage = "s.c"
-        launchData.targetLanguageFileExtension = ".nxc"
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
-        launchData.wrapperCodeSnippetDirectory = "snippets/mindstorms_nxc"
-        launchData.commands.add(new CommandData("Compile & Deploy & Run", '''/opt/nxc/nbc -S=usb -EF -r ${«KiCoLaunchConfig.COMPILED_MAIN_FILE_PATH_VARIABLE»}'''))
-        
-        val env = new EnvironmentData("Mindstorms NXC")
-        env.launchData = launchData
-        env.modelFile = "${project_name}"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/snippets"
-        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxc/main.ftl"
         return env
     }
     
@@ -125,14 +104,18 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".ino"
         launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
-        launchData.wrapperCodeSnippetDirectory = "snippets/arduino"
+        launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
+        
+        val initialResources = newArrayList() 
+        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets")
+        
         val env = new EnvironmentData("Arduino")
         env.launchData = launchData
+        env.initialResources = initialResources
         env.modelFile = "${project_name}Model"
-        env.wrapperCodeSnippetsOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/snippets"
         env.associatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
-        env.mainFileOrigin = "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/arduino/main.ftl"
         return env
     }
 }

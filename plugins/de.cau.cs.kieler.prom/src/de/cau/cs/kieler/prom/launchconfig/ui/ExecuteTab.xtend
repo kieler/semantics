@@ -38,6 +38,8 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.jface.viewers.ICheckStateListener
 import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.ICellEditorListener
+import org.eclipse.swt.events.FocusListener
+import org.eclipse.swt.events.FocusEvent
 
 /** 
  * The tab with the controls to set shell commands which will be executed
@@ -102,14 +104,13 @@ class ExecuteTab extends AbstractKiCoLaunchConfigTab {
         })
         for(editor : viewer.cellEditors) {
             if(editor != null) {
-                editor.addListener(new ICellEditorListener{
-                    override applyEditorValue() {
+                editor.control.addFocusListener(new FocusListener{
+                    
+                    override focusGained(FocusEvent e) {
+                    }
+                    override focusLost(FocusEvent e) {
                         checkConsistency()
                         updateLaunchConfigurationDialog()
-                    }
-                    override cancelEditor() {
-                    }
-                    override editorValueChanged(boolean oldValidState, boolean newValidState) {
                     }
                 })
             }

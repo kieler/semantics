@@ -81,7 +81,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     /**
      * The list control to show the environments.
      */
-    private var ListViewer list
+    private var TableViewer list
 
     /**
      * The currently selected EnvironmentData of the list
@@ -136,13 +136,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The input field for the directory which contains the wrapper code snippet definitions.
      */
     private var Text wrapperCodeSnippets
-    /**
-     * The input field for a directory which contains the inital data
-     * of the wrapper code snippet directory when creating a new project.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').
-     */
-    private var Text wrapperCodeSnippetsOrigin
     
     
     /**
@@ -169,11 +162,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * The input field for the default main file of the environment.
      */
     private var Text mainFile
-    /**
-     * The input field for a path to the file which contains the default contents
-     * of a newly created main file.
-     */
-    private var Text mainFileOrigin
 
     /**
      * The table of resources that should be created at project setup.
@@ -276,7 +264,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         initialResources = viewer
         
         // Create columns
-        val pathColumn = UIUtil.createTableColumn(viewer, "Project relative path", 120)
+        val pathColumn = UIUtil.createTableColumn(viewer, "Project relative path", 150)
         pathColumn.labelProvider = new ColumnLabelProvider() {
             override String getToolTipText(Object element) {
                 return "The project relative path of the resource to be created."
@@ -286,7 +274,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 return d.projectRelativePath;
             }
         };
-        val originColumn = UIUtil.createTableColumn(viewer, "Origin", 150)
+        val originColumn = UIUtil.createTableColumn(viewer, "Origin", 200)
         originColumn.labelProvider = new ColumnLabelProvider() {
             override String getToolTipText(Object element) {
                 return "The template of the file or folder to be created.\n"
@@ -448,7 +436,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         val group = UIUtil.createGroup(parent, "Model file", 2)
         
         // Create main file text field
-        modelFile = UIUtil.createTextField(group, "Model file (without file extension)", EnumSet.of(UIUtil.Buttons.NONE))
+        modelFile = UIUtil.createTextField(group, "Model file", EnumSet.of(UIUtil.Buttons.NONE))
         modelFile.addModifyListener(new ModifyListener() {
             override modifyText(ModifyEvent e) {
                 if(currentData != null){
@@ -481,21 +469,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         mainFile.toolTipText = "Project relative path to the initial main file of the project.\n"
             + "The file is created on project setup.\n"
             + "The path may contain placeholders such as ${project_name}."
-        
-        // Create main file origin text field
-        UIUtil.createLabel(group, "Main file origin")
-        val comp = UIUtil.createComposite(group, 2)
-        
-        mainFileOrigin = UIUtil.createTextField(comp, null, EnumSet.of(UIUtil.Buttons.FILE_SYSTEM_FILE_BUTTON))
-        mainFileOrigin.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.mainFileOrigin = mainFileOrigin.text
-                    checkConsistency()    
-                }
-            }
-        })
-        mainFileOrigin.toolTipText = "Absolute path to resource (file system or platform) with default content for main file"
     }
 
     /**
@@ -669,22 +642,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         wrapperCodeSnippets.toolTipText = "Directory path containing wrapper code snippets"
-        
-        // Create snippets origin control
-        UIUtil.createLabel(group, "Snippets origin")
-        val comp = UIUtil.createComposite(group, 2)
-        
-        wrapperCodeSnippetsOrigin = UIUtil.createTextField(comp, null, EnumSet.of(UIUtil.Buttons.FILE_SYSTEM_DIRECTORY_BUTTON))
-        wrapperCodeSnippetsOrigin.addModifyListener(new ModifyListener() {
-            override modifyText(ModifyEvent e) {
-                if(currentData != null){
-                    currentData.wrapperCodeSnippetsOrigin = wrapperCodeSnippetsOrigin.text
-                    checkConsistency()
-                }
-            }
-        })
-        wrapperCodeSnippetsOrigin.toolTipText = "Directory path (file system or platform) with defaul content\n"
-            + "for a snippet directory when creating a new project"
     }
 
     /**
@@ -746,6 +703,11 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
     private def void createAssociatedLaunchShortcutComponent(Composite parent){
         val group = UIUtil.createGroup(parent, "Associated Launch Shortcut", 2)
         
+        // Debug log, which launch shortcuts are currently installed
+//        for (e : ExtensionLookupUtil.launchShortcutConfigurationElements){
+//            println(e.getAttribute("class"))
+//        }
+        
         launchShortcuts = UIUtil.createLaunchShortcutCombo(group)
         // Selection event
         launchShortcuts.addSelectionChangedListener(new ISelectionChangedListener {
@@ -763,27 +725,30 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * @param parent The parent composite 
      */
     private def void createEnvironmentsComponent(Composite parent) {
-        val comp = UIUtil.createGroup(parent, "Environments", 2)
+        val group = UIUtil.createGroup(parent, "Environments", 2)
 
-        // Create list
-        list = new ListViewer(comp, SWT.DEFAULT)
-        list.getControl().setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-
-        // Create content provider
-        list.setContentProvider(ArrayContentProvider.instance)
-        list.input = new ArrayList<EnvironmentData>()
-        
-        // Create label provider
-        list.setLabelProvider(new LabelProvider() {
+        // Create table
+        val table = new Table(group, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
+        table.setHeaderVisible(false);
+        val gd = new GridData(GridData.FILL_BOTH)
+        gd.heightHint = 80
+        gd.minimumHeight = 60
+        gd.minimumWidth = 200
+        table.setLayoutData(gd);
+        // Create viewer
+        val viewer = new TableViewer(table)
+        list = viewer
+        // Create columns
+        val pathColumn = UIUtil.createTableColumn(viewer, "Name", 200)
+        pathColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
-                val data = (element as EnvironmentData)
-                if (data != null)
-                    return data.name
-                else
-                    return ""
+                val d = element as EnvironmentData
+                return d.name;
             }
-        })
-
+        };
+        // Create content
+        viewer.setContentProvider(ArrayContentProvider.instance);
+        viewer.input = newArrayList()
         // Create selection event
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
@@ -795,8 +760,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
        
+        // Create buttons
+        val bcomp = UIUtil.createComposite(group, 1, GridData.HORIZONTAL_ALIGN_END)
         // Create add button
-        val bcomp = UIUtil.createComposite(comp, 1, GridData.HORIZONTAL_ALIGN_END)
         val addButton = UIUtil.createButton(bcomp, "Add")
         addButton.addSelectionListener(new SelectionAdapter(){
             override widgetSelected(SelectionEvent e) {
@@ -815,7 +781,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-        
         // Create remove button
         val removeButton = UIUtil.createRemoveButton(bcomp, list)
         removeButton.addSelectionListener(new SelectionAdapter(){
@@ -823,10 +788,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
                 checkConsistency()
             }
         })
-        
         // Create up button
         UIUtil.createUpButton(bcomp, list)
-        
         // Create down button 
         UIUtil.createDownButton(bcomp, list)
     }
@@ -855,7 +818,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             
             // Update main file
             mainFile.text = data.launchData.mainFile
-            mainFileOrigin.text = data.mainFileOrigin
             
             // Update initial resources
             initialResources.input = data.initialResources
@@ -890,7 +852,6 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // Update wrapper code
             wrapperCodeTemplate.text = data.launchData.wrapperCodeTemplate
             wrapperCodeSnippets.text = data.launchData.wrapperCodeSnippetDirectory
-            wrapperCodeSnippetsOrigin.text = data.wrapperCodeSnippetsOrigin
             
             // Update commands
             viewer.input = data.launchData.commands

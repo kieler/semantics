@@ -15,7 +15,7 @@ package de.cau.cs.kieler.prom.simulation.ui
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.common.SimulationFileData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import java.util.EnumSet
@@ -129,7 +129,7 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         // Create listener
         viewer.addCheckStateListener(new ICheckStateListener() {
             override checkStateChanged(CheckStateChangedEvent event) {
-                val f = event.element as SimulationFileData
+                val f = event.element as FileData
                 f.providesInputs = !f.providesInputs
                 
                 // On Windows and Mac, we have to refresh the content provider to make the change visible
@@ -140,7 +140,7 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         // Create state provider
         viewer.checkStateProvider = new ICheckStateProvider() {
             override isChecked(Object element) {
-                val f = element as SimulationFileData
+                val f = element as FileData
                 return f.providesInputs
             }
 
@@ -160,7 +160,7 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         val pathColumn = UIUtil.createTableColumn(viewer, "Path", 250)
         pathColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
-                val f = element as SimulationFileData
+                val f = element as FileData
                 return f.projectRelativePath;
             }
         };

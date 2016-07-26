@@ -15,7 +15,7 @@
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
@@ -71,7 +71,7 @@ class SimulationLaunchConfig extends PromLaunchConfig {
             // Set files
             for(f : launchData.files) {
                 if(!f.isProvidesInputs) {
-                    kicoLaunchData.files += new FileCompilationData(f.projectRelativePath)
+                    kicoLaunchData.files += new FileData(f.projectRelativePath)
                 }
             }
             

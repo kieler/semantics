@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import freemarker.template.Template
 import java.io.File
@@ -100,7 +100,7 @@ class WrapperCodeGenerator {
      * 
      * @param datas The data objects to generate wrapper code for 
      */
-    def public void generateWrapperCode(FileCompilationData... datas) {
+    def public void generateWrapperCode(FileData... datas) {
 
         // Resolve variables
         val variableManager = VariablesPlugin.getDefault.stringVariableManager
@@ -128,7 +128,7 @@ class WrapperCodeGenerator {
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(FileCompilationData... datas) {
+    private def String getTemplateWithMacroCalls(FileData... datas) {
 
         // Get all annotations of input and output variables from the files.
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
@@ -385,7 +385,7 @@ class WrapperCodeGenerator {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    private def getWrapperCodeAnnotationData(FileCompilationData data,
+    private def getWrapperCodeAnnotationData(FileData data,
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file

@@ -47,19 +47,14 @@ class MainPage extends WizardPage {
     private ComboViewer environmentsCombo
 
     /**
-     * Checkbox to specify if a model file (e.g. SCT) should be created and initialized
+     * Checkbox to specify if a model file (e.g. SCT) should be created and initialized.
      */
     private Button createModelFileCheckbox
     
     /**
-     * Checkbox to specify if a main file, containing wrapper code, should be created and initialized
+     * Checkbox to specify the initial resources of the environment should be created.
      */
-    private Button createMainFileCheckbox
-    
-    /**
-     * Checkbox to specify the snippets directory should be initialized with the settings from the environment
-     */
-    private Button importSnippetsCheckbox
+    private Button createInitialResourcesCheckbox
     
     /**
      * Creates a new instance of this class with the given page name as title.
@@ -122,25 +117,21 @@ class MainPage extends WizardPage {
     }
 
     /**
-     * Creates a group with a checkbox to specify if wrapper code snippets should be imported.
+     * Creates a group with checkboxes to specify the items that should be initialized.
      * 
      * @param parent The parent composite
      */
     private def void createProjectInitializationComponent(Composite parent) {
         val group = UIUtil.createGroup(parent, "Project initialization", 1)
-
-        // Wrapper code components
-        importSnippetsCheckbox = UIUtil.createCheckButton(group, "Import wrapper code snippets", true);
-        importSnippetsCheckbox.toolTipText = "Wrapper code snippets of the selected environment\n" +
-            "will be copied to the new project."
         
         // Create model file components     
         createModelFileCheckbox = UIUtil.createCheckButton(group, "Create model file", true);
         createModelFileCheckbox.toolTipText = "Specify if the project should contain an initialized model file."
-        
-        // Create main file components
-        createMainFileCheckbox = UIUtil.createCheckButton(group, "Create main file", true);
-        createMainFileCheckbox.toolTipText = "Specify if a file with wrapper code should be created and initialized."
+
+        // Initial resources components
+        createInitialResourcesCheckbox = UIUtil.createCheckButton(group, "Create initial resources", true);
+        createInitialResourcesCheckbox.toolTipText = "Initial resources specified in the environment"
+            + " will be imported to the new project."
     }
     
     /**
@@ -168,15 +159,6 @@ class MainPage extends WizardPage {
             return ""
         }
     }
-
-    /**
-     * Returns weather a main file should be created.
-     * 
-     * @return the selection state of the respective checkbox
-     */
-    public def boolean isCreateMainFile(){
-        return createMainFileCheckbox.selection
-    }
     
     /**
      * Returns weather a model file should be created.
@@ -188,12 +170,12 @@ class MainPage extends WizardPage {
     }
 
     /**
-     * Returns weather the wrapper code snippets should be initialized. 
+     * Returns weather the initial resources should be created. 
      * 
      * @return the selection state of the respective checkbox
      */
-    public def boolean isImportSnippets(){
-        return importSnippetsCheckbox.selection
+    public def boolean isCreateInitialResources(){
+        return createInitialResourcesCheckbox.selection
     }
 
 }

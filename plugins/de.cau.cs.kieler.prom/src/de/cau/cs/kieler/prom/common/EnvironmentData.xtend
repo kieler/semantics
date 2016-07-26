@@ -54,27 +54,11 @@ class EnvironmentData extends ConfigurationSerializable {
     protected String associatedProjectWizardClass = ""
     
     /**
-     * A path to a file with the initial contents of a newly created main file of this environment.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/path/to/my/Main.java').
-     */
-    @Accessors
-    protected String mainFileOrigin = ""
-    
-    /**
-     * The project relative path for initial the model file, but without file extension. 
+     * The project relative path to the initial model file. 
      */
     @Accessors
     protected String modelFile = ""
-    
-    /**
-     * A path to a directory with the default contents for the snippet directory when creating a new project.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').
-     */
-    @Accessors
-    protected String wrapperCodeSnippetsOrigin = ""
-    
+
     /**
      * The files and folders that should be created at project setup.
      */

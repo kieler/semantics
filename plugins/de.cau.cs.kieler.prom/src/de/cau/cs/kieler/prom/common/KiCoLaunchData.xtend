@@ -56,7 +56,7 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * The files that should be compiled via KiCo
      */
     @Accessors
-    protected List<FileCompilationData> files = newArrayList()
+    protected List<FileData> files = newArrayList()
     
     /**
      * The target language for KiCo compilation.
@@ -174,7 +174,7 @@ class KiCoLaunchData extends ConfigurationSerializable {
         // Load commands
         commands = CommandData.loadAllFromConfiguration(configuration)
         // Load files
-        files = FileCompilationData.loadAllFromConfiguration(configuration)
+        files = FileData.loadAllFromConfiguration(configuration)
     }
 
     /**
@@ -190,6 +190,6 @@ class KiCoLaunchData extends ConfigurationSerializable {
         // Save commands
         CommandData.saveAllToConfiguration(configuration, data.commands)
         // Save files
-        FileCompilationData.saveAllToConfiguration(configuration, data.files)
+        FileData.saveAllToConfiguration(configuration, data.files)
     }
 }

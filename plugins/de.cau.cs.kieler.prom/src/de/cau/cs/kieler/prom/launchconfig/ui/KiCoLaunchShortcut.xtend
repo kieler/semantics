@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.environments.PromEnvironmentsInitializer
@@ -57,7 +57,7 @@ class KiCoLaunchShortcut extends PromLaunchShortcut {
             
             // Add the input file to the list of files which should be compiled
             // unless it is already in the list
-            val datas = FileCompilationData.loadAllFromConfiguration(configuration)
+            val datas = FileData.loadAllFromConfiguration(configuration)
 
             // Check if already in list
             var alreadyInList = false
@@ -70,9 +70,9 @@ class KiCoLaunchShortcut extends PromLaunchShortcut {
             if (!alreadyInList) {
                 val workingCopy = configuration.getWorkingCopy()
 
-                val data = new FileCompilationData(file.projectRelativePath.toOSString)
+                val data = new FileData(file.projectRelativePath.toOSString)
                 datas += data
-                FileCompilationData.saveAllToConfiguration(workingCopy, datas)
+                FileData.saveAllToConfiguration(workingCopy, datas)
                 workingCopy.doSave()
             }
 

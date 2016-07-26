@@ -47,7 +47,7 @@ class SimulationLaunchData extends ConfigurationSerializable{
      * The files used in this simulation.
      */
     @Accessors
-    protected List<SimulationFileData> files = newArrayList()
+    protected List<FileData> files = newArrayList()
     
     /**
      * {inheritDoc}
@@ -86,7 +86,7 @@ class SimulationLaunchData extends ConfigurationSerializable{
         val attributeMap = configuration.getAttribute(IDENTIFIER_ATTR, newHashMap());
         loadAttributesFromMap(attributeMap)
         // Load files
-        files = SimulationFileData.loadAllFromConfiguration(configuration)
+        files = FileData.loadAllFromConfiguration(configuration)
     }
 
     /**
@@ -99,6 +99,6 @@ class SimulationLaunchData extends ConfigurationSerializable{
         // Save attribute map
         configuration.setAttribute(IDENTIFIER_ATTR, data.attributeMap)
         // Save files
-        SimulationFileData.saveAllToConfiguration(configuration, data.files)
+        FileData.saveAllToConfiguration(configuration, data.files)
     }
 }

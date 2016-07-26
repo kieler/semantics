@@ -44,6 +44,14 @@ class FileData extends ConfigurationSerializable {
     }
 
     /**
+     * Creates a new instance of the class with the given path and origin.
+     */
+    new(String projectRelativePath, String origin) {
+        this(projectRelativePath)
+        this.origin = origin
+    }
+
+    /**
      * Returns the file name (including extension) of the project relative path.
      * 
      * @return the name of the file of this object's project relative path

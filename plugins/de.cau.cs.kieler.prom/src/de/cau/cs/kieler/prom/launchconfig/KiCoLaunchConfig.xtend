@@ -18,7 +18,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
@@ -327,7 +327,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
     }
 
     /**
-     * Creates a job that generates and saves the wrapper code for a list of FileCompilationData.
+     * Creates a job that generates and saves the wrapper code for a list of FileData.
      * 
      * @return the created job. 
      */
@@ -385,7 +385,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
      * 
      * @param data The file to be compiled
      */
-    private def void compile(FileCompilationData data) {
+    private def void compile(FileData data) {
         // Load model from file
         val EObject model = ModelImporter.load(project.location.toOSString + File.separator + data.projectRelativePath, true)
 

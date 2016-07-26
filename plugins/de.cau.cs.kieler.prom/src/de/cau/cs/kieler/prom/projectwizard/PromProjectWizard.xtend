@@ -141,13 +141,10 @@ class PromProjectWizard extends Wizard implements INewWizard {
             selectProjectForResolvingVariables(newlyCreatedProject)
             
             // Create main file.
-//            val isMainFileOk = createMainFile()
             // Create model file
             val isModelFileOk = createModelFile()
             // Create initial resources
-            val isResourceCreationOk = initializeResources()
-            // Copy templates to new project
-//            val isSnippetDirectoryOk = initializeSnippetDirectory()
+            val isResourceCreationOk = createInitialResources()
             // Add some data to properties of new project
             val isProjectPropertiesOk = initializeProjectProperties()
             
@@ -157,8 +154,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
             // If everything finished successful, the wizard can finish successful
             val isOK = isModelFileOk
                        && isResourceCreationOk
-//                       && isMainFileOk
-//                       && isSnippetDirectoryOk
                        && isProjectPropertiesOk
             if(!isOK) {
                 deleteCreatedProject()
@@ -216,8 +211,9 @@ class PromProjectWizard extends Wizard implements INewWizard {
             return true
         
         // Load path of model file
-        val modelFilePathWithoutExtension = getModelFilePath()
-        val modelFileNameWithoutExtension = new Path(modelFilePathWithoutExtension).removeFileExtension.lastSegment
+        val modelFilePath = getModelFilePath()
+        val modelFilePathWithoutExtension = new Path(modelFilePath).removeFileExtension
+        val modelFileNameWithoutExtension = modelFilePathWithoutExtension.lastSegment
  
         try {
             // Open initial content stream
@@ -285,9 +281,12 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * 
      * @return true if the creation ended sucessfully. false otherwise.
      */
-    protected def boolean initializeResources() {
-        val env = mainPage.selectedEnvironment
+    protected def boolean createInitialResources() {
+        // If the resources should not be created, we are done immediately
+        if(!mainPage.isCreateInitialResources)
+            return true
         
+        val env = mainPage.selectedEnvironment
         for(data : env.initialResources) {
             var resolvedProjectRelativePath = data.projectRelativePath
             try {
@@ -319,105 +318,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 return false
             }
         }
-         return true
-     }
-    
-    /**
-     * Creates the main file if the corresponding page has valid data
-     * and possibly initializes it with the contents of the used environment's main file origin.
-     * 
-     * @return true if the creation ended sucessfully. false otherwise.
-     */
-    protected def boolean createMainFile() {
-        // If the file should not be created, we are done immediately
-        if(!mainPage.isCreateMainFile)
-            return true
-        
-        val env = mainPage.selectedEnvironment
-        try {
-            if(!env.launchData.mainFile.isNullOrEmpty){
-                var resolvedMainFilePath = ""
-                try {
-                    val variableManager = VariablesPlugin.getDefault().stringVariableManager
-                    resolvedMainFilePath = variableManager.performStringSubstitution(env.launchData.mainFile)
-                } catch (CoreException ce) {
-                    MessageDialog.openError(shell, "Error", ce.message)
-                    return false
-                }
-                
-                // Prepare initial content
-                var InputStream initialContentStream = null
-                if(!env.mainFileOrigin.isNullOrEmpty()){
-                    initialContentStream = PromPlugin.getInputStream(env.mainFileOrigin, null)
-                }
-                
-                // Create resource
-                createdMainFile = newlyCreatedProject.getFile(resolvedMainFilePath)
-                createResource(createdMainFile, initialContentStream)
-                
-                // Remember created main file in project properties
-                newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
-            }
-            
-            return true
-            
-        } catch(Exception e) {
-            MessageDialog.openError(shell, "Error", "The default content for the main file could not be loaded from\n"
-                + "'"+env.mainFileOrigin+"'.\n"
-                + "Please check the environment settings in the preferences and enter a valid file path.");
-            
-            return false;
-        }
-    }
-
-    /**
-     * Creates the snippet directory of the used environment
-     * and initializes it with the snippets from the selected environments of the main page.
-     * 
-     * @return true if it ended sucessfully. false otherwise.
-     */
-    protected def boolean initializeSnippetDirectory(){
-        // If the directory should not be initialized, we are done immediately
-        if(!mainPage.isImportSnippets)
-            return true
-            
-        val env = mainPage.getSelectedEnvironment()
-        
-        // If the snippet directory of the environment is an absolute path,
-        // we do not copy anything to the new project to initialize it.
-        if(env.launchData.wrapperCodeSnippetDirectory ==  "" || new File(env.launchData.wrapperCodeSnippetDirectory).isAbsolute)
-            return true;
-        
-        // Get environments of which the wrapper code snippets should be imported.
-        val wrapperEnv = mainPage.getSelectedEnvironment()
-        if(wrapperEnv != null) {
-
-            try {
-                if (wrapperEnv.wrapperCodeSnippetsOrigin.trim().startsWith("platform:")) {
-                    // Fill folder with files from plugin
-                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
-                    initializeFolderViaPlatformURL(snippetsDirectory, wrapperEnv.wrapperCodeSnippetsOrigin)
-                } else if(!wrapperEnv.wrapperCodeSnippetsOrigin.isNullOrEmpty()){
-                    // Copy directory from file system
-                    val source = new File(wrapperEnv.wrapperCodeSnippetsOrigin)
-                    val target = new File(newlyCreatedProject.location + File.separator + wrapperEnv.launchData.wrapperCodeSnippetDirectory)
-                    
-                    copyFolder(source, target)
-                } else {
-                    // Create empty directory 
-                    val snippetsDirectory = newlyCreatedProject.getFolder(wrapperEnv.launchData.wrapperCodeSnippetDirectory)
-                    createResource(snippetsDirectory, null);
-                }
-            } catch (Exception e) {
-                MessageDialog.openError(shell, "Error", "The default content for the snippet directory could not be loaded from\n"
-                            + "'"+wrapperEnv.wrapperCodeSnippetsOrigin+"'.\n"
-                            + "Please check the environment settings in the preferences and enter a valid directory path.");
-                            
-                return false
-            }
-        }
-        
-        return true;
+        return true
     }
     
     private def void initializeFile(String projectRelativePath, String origin) {
@@ -496,7 +397,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
      * 
      * @return true if it ended sucessfully. false otherwise.
      */
-    protected def boolean initializeProjectProperties(){
+    protected def boolean initializeProjectProperties() {
         // Remember name of used environment.
         val env = mainPage.getSelectedEnvironment()
         newlyCreatedProject.setPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER, env.name)

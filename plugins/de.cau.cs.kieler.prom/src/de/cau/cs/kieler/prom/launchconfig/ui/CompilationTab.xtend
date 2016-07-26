@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig.ui
 
 import de.cau.cs.kieler.kico.internal.Transformation
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
@@ -58,7 +58,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
     /**
      * The currently selected data of the list control.
      */
-    private var FileCompilationData currentData
+    private var FileData currentData
 
     /**
      * The list control for the file data objects.
@@ -161,12 +161,12 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
 
         // Create content provider
         list.setContentProvider(ArrayContentProvider.instance);
-        list.input = new ArrayList<FileCompilationData>()
+        list.input = new ArrayList<FileData>()
 
         // Create label provider
         list.setLabelProvider(new LabelProvider() {
             override String getText(Object element) {
-                val data = (element as FileCompilationData)
+                val data = (element as FileData)
                 if (data != null)
                     return data.projectRelativePath
                 else
@@ -178,7 +178,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
         list.addSelectionChangedListener(new ISelectionChangedListener() {
             override void selectionChanged(SelectionChangedEvent event) {
                 val selection = event.selection as IStructuredSelection
-                currentData = selection.firstElement as FileCompilationData
+                currentData = selection.firstElement as FileData
             }
         });
 
@@ -204,7 +204,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
                     // Get results.
                     val results = dialog.result
                     if (results != null) {
-                        val inputArray = list.input as ArrayList<FileCompilationData>
+                        val inputArray = list.input as ArrayList<FileData>
 
                         // Add resources to the gui list
                         for (var i = 0; i < results.length; i++) {
@@ -213,14 +213,14 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
 
                             // Filter files which are already in the list.
                             var isOK = true
-                            for (FileCompilationData d : inputArray) {
+                            for (FileData d : inputArray) {
                                 if (d.projectRelativePath == projectRelativePath)
                                     isOK = false
                             }
 
                             // Add if the new element is ok.
                             if (isOK)
-                                inputArray.add(new FileCompilationData(projectRelativePath))
+                                inputArray.add(new FileData(projectRelativePath))
                             else
                                 println("Resource '" + resource.name + "' is already in list!")
                         }
@@ -479,7 +479,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
     private def String checkErrors(){
         if (project != null) {
             // All files exist in this project
-            for (data : list.input as List<FileCompilationData>) {
+            for (data : list.input as List<FileData>) {
                 val file = new File(project.location + File.separator + data.projectRelativePath)
                 if (!file.exists)
                     return "File '" + data.projectRelativePath + "' does not exist in the specified project"

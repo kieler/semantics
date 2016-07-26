@@ -13,7 +13,7 @@
  */
  package de.cau.cs.kieler.prom.simulation.ui
 
-import de.cau.cs.kieler.prom.common.SimulationFileData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import de.cau.cs.kieler.prom.launchconfig.ui.PromLaunchShortcut
 import de.cau.cs.kieler.prom.simulation.SimulationLaunchConfig
@@ -29,7 +29,7 @@ class SimulationLaunchShortcut extends PromLaunchShortcut {
     /**
      * Data object for the files that are part of this launch shortcut.
      */
-    val List<SimulationFileData> simulationFiles = newArrayList()
+    val List<FileData> simulationFiles = newArrayList()
     
     /**
      * {@inheritDoc}
@@ -68,7 +68,7 @@ class SimulationLaunchShortcut extends PromLaunchShortcut {
             val path = file.projectRelativePath
             val fileExtension = path.fileExtension
             
-            val f = new SimulationFileData(path.toOSString)
+            val f = new FileData(path.toOSString)
             simulationFiles += f
             switch(fileExtension.toLowerCase) {
                 case "eso": {
