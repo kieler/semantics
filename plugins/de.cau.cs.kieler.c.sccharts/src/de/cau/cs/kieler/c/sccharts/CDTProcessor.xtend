@@ -159,7 +159,7 @@ class CDTProcessor {
             }
         ]
 
-        removeConnectorStates();
+//        removeConnectorStates();
         rootSCChart.createStringAnnotation("cgeneratedscchart","")
         rootSCChart
     }
@@ -367,7 +367,7 @@ class CDTProcessor {
             s.setTypeConnector
             switchStateRegion.states += s
         ]
-        connectorStates.add(connectorState)
+//        connectorStates.add(connectorState)
       
         // Save condState ID, so we can reset the ID after the switch case statement is transformed
         val condID = condState.id
@@ -489,14 +489,23 @@ class CDTProcessor {
             switchStateRegion.states += s
         ]
     
-        // Transition from connectorState to endState.
-        val falseTrans = scc.createTransition => [
-            targetState = endState
-            immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
-            connectorState.outgoingTransitions += it
-        ]
-
+        // Final transition to endState. Check whether the connectorState can be removed.
+        var incTransitions = connectorState.incomingTransitions
+        // The connectorState can be removed if it only has one incoming transition.
+        if (incTransitions.length == 1) {
+            incTransitions.head.targetState = endState
+            switchStateRegion.states.remove(connectorState)
+        } else {
+            val falseTrans = scc.createTransition => [
+                targetState = endState
+                immediate = false
+                annotations.add(createStringAnnotation("notImmediate",""))
+                connectorState.outgoingTransitions += it
+            ]
+        }
+        
+        
+        
         switchState
     }
     
@@ -895,7 +904,6 @@ class CDTProcessor {
 
             ifStateRegion.states += s
         ]
-        connectorStates += connectorState
 
         
         // Body of statements if condition is met
@@ -994,20 +1002,20 @@ class CDTProcessor {
             if (ifs.elseClause == null) {
                 // Transition to endState.
                 val defaultTrans = scc.createTransition => [
-                    targetState = endState
+                    targetState = connectorState
                     immediate = true
                     annotations.add(createStringAnnotation("notImmediate",""))
                     condState.outgoingTransitions += it
                 ]
             }
             
-            // Transition to falseState
+            // Final transition to endState.            
             val falseTrans = scc.createTransition => [
                 targetState = endState
-                immediate = true
+                immediate = false
                 annotations.add(createStringAnnotation("notImmediate",""))
                 connectorState.outgoingTransitions += it
-            ]     
+            ]
         }
         
         ifState
@@ -1271,7 +1279,7 @@ class CDTProcessor {
         }
 
 
-        // TODO WAS IST DAS HIER?????????????????????????????????????????????????
+        // Handle function calls.
         if (es.expression instanceof CASTFunctionCallExpression) {
 
             val sa = scc.createState => [ s |
@@ -1627,29 +1635,32 @@ class CDTProcessor {
     }
     
 
-    private def void removeConnectorStates() {
-        for (var int i = 0; i < connectorStates.length(); i++) {
 
-            if (connectorStates.get(i).outgoingTransitions.empty) {
-                connectorStates.get(i).parentRegion.states.remove(connectorStates.get(i))
-            // connectorStates.remove(i);
-            }else if (connectorStates.get(i).incomingTransitions.empty){
-                connectorStates.get(i).parentRegion.states.remove(connectorStates.get(i))
-            }
-        // state.outgoingTransitions.head.targetState=state
-        // state.incomingTransitions+=state.outgoingTransitions.head
-        // state.parentRegion.states.remove(state);
-//            for(var int i=0; i<state.incomingTransitions.length(); i++) {
-//                
-//                state.incomingTransitions.get(i).targetState = targetstate
-//                
+// DAS HIER IST ALT. IST GLAUBE ICH UNNÖTIG!
+
+//    private def void removeConnectorStates() {
+//        for (var int i = 0; i < connectorStates.length(); i++) {
+//
+//            if (connectorStates.get(i).outgoingTransitions.empty) {
+//                connectorStates.get(i).parentRegion.states.remove(connectorStates.get(i))
+//            // connectorStates.remove(i);
+//            }else if (connectorStates.get(i).incomingTransitions.empty){
+//                connectorStates.get(i).parentRegion.states.remove(connectorStates.get(i))
 //            }
-//            for (transi:state.incomingTransitions){
-//                transi.targetState = targetstate
-//                //System.out.println(transi);
-//            }
-        //
-        }
-    }
+//        // state.outgoingTransitions.head.targetState=state
+//        // state.incomingTransitions+=state.outgoingTransitions.head
+//        // state.parentRegion.states.remove(state);
+////            for(var int i=0; i<state.incomingTransitions.length(); i++) {
+////                
+////                state.incomingTransitions.get(i).targetState = targetstate
+////                
+////            }
+////            for (transi:state.incomingTransitions){
+////                transi.targetState = targetstate
+////                //System.out.println(transi);
+////            }
+//        //
+//        }
+//    }
 //    private createExpression    
 }
