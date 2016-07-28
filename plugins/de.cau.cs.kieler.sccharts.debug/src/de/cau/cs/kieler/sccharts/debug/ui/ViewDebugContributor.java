@@ -29,31 +29,47 @@ import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
- * This class uses the contribution extention point of the KIEM view. A new toggle button is added
- * through which the debug mode can be enabled or disabled.
+ * This class uses the contribution extension point of the KIEM view.
+ * 
+ * The elements added here are two toggle breakpoint buttons, one to indicate debug mode and one to
+ * enable fast forwarding.
  * 
  * @author lgr
  *
  */
 public class ViewDebugContributor implements IKiemToolbarContributor {
 
+    /**
+     * The icon that represents the debug mode.
+     */
     public static final ImageDescriptor DEBUG = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/debug_exc.png");
 
+    /**
+     * The icon that represents fast forwarding.
+     */
     public static final ImageDescriptor FAST_FORWARD = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.sccharts.debug", "icons/fastForward.png");
 
+    /**
+     * The new elements are added with this id.
+     */
     public static final String CONTRIBUTION_ID = "Debugging";
 
-    private static Button buttonDebug; 
+    private static Button buttonDebug;
     private static Button buttonFastForward;
 
     private static boolean buttonDebugSelection = DataComponent.DEBUG_MODE;
     private static boolean buttonFastForwardSelection = DataComponent.FAST_FORWARD;
-    
-    private static boolean buttonDebugEnabled = true; 
+
+    private static boolean buttonDebugEnabled = true;
     private static boolean buttonFastForwardEnabled = DataComponent.DEBUG_MODE;
-    
+
+    /**
+     * Sets the selection of the debug button according to the debug mode variable. In case the
+     * debug button was instantiated its selection is also set accordingly. Additionally the fast
+     * forward button is enabled or disabled.
+     */
     public static void setButtonDebugSelection() {
         buttonDebugSelection = DataComponent.DEBUG_MODE;
         if (buttonDebug != null) {
@@ -61,28 +77,43 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
         }
         setFastForwardEnable();
     }
-    
+
+    /**
+     * Sets the debug buttons availability. If the button has been instantiated, its also
+     * enabled/disabled.
+     * 
+     * @param enabled Indicated whether the button is supposed to be enabled/disabled.
+     */
     public static void setButtonDebugEnable(boolean enabled) {
         buttonDebugEnabled = enabled;
         if (buttonDebug != null) {
             buttonDebug.setEnabled(enabled);
         }
     }
-    
+
+    /**
+     * Sets whether the fast forward is selected and if the button is instantiated, also sets its
+     * selection.
+     */
     private static void setFastForwardSelection() {
         buttonFastForwardSelection = DataComponent.FAST_FORWARD;
         if (!(buttonFastForward == null)) {
             buttonFastForward.setSelection(DataComponent.FAST_FORWARD);
         }
     }
-    
+
+    /** 
+     * Sets whether the fast forward is enabled and if the button is instantiated, also sets its
+     * enable.
+     * Can only be enabled, when the debug mode is enabled too. 
+     */
     private static void setFastForwardEnable() {
         buttonFastForwardEnabled = DataComponent.DEBUG_MODE;
         if (buttonFastForward != null) {
             buttonFastForward.setEnabled(buttonFastForwardEnabled);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -108,7 +139,12 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
 
         return result;
     }
-
+    
+    /** 
+     * Creates the debug Button. 
+     * 
+     * @param parent
+     */
     private void createDebugButton(final Composite parent) {
         buttonDebug = new Button(parent, SWT.TOGGLE);
         buttonDebugSelection = DataComponent.DEBUG_MODE;
@@ -133,6 +169,11 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
         });
     }
 
+    /** 
+     * Created the fast forward button.
+     * 
+     * @param parent
+     */
     private void createFastForwardButton(final Composite parent) {
         buttonFastForward = new Button(parent, SWT.TOGGLE);
         buttonFastForwardSelection = DataComponent.FAST_FORWARD;
@@ -142,6 +183,7 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
         buttonFastForward.setEnabled(buttonFastForwardEnabled);
         buttonFastForward.addListener(SWT.Selection, new Listener() {
             private int oldStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
+
             @Override
             public void handleEvent(Event event) {
                 if (buttonFastForward.getSelection()) {

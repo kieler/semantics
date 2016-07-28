@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IEditorInput;
 
 /**
- * TODO: Not quite sure, when this class methods are used.
+ * Representation of the debug model for sccharts.
  * 
  * @author lgr
  *

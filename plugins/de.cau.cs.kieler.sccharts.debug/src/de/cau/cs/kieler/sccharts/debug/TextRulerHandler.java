@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAd
 /**
  * This class is used as the Handler for the TextRulerContext command 'Toggle Breakpoint'.
  * 
- * Reaction to a double click enabled through {@link IEditorActionDelegate} but use of
+ * Reaction to a double click event enabled through {@link IEditorActionDelegate} but use of
  * editorActions-action is deprecated (see plugin.xml). No other workaround found yet.
  * 
  * @author lgr
@@ -38,10 +38,10 @@ import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAd
 public class TextRulerHandler extends AbstractHandler implements IEditorActionDelegate {
 
     /**
-     * {@inheritDoc}
-     * 
      * This class is the entry point when starting a 'Toggle Breakpoint' event from the editor's
      * ruler context.
+     * 
+     * {@inheritDoc}
      */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {

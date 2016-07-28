@@ -20,20 +20,24 @@ import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 
 /**
+ * The event listener for kiem events so it can be reacted accordingly.
+ * 
  * @author lgr
  *
  */
 public class EventListener implements IKiemEventListener {
 
     /**
-     * On Load Event: Check if a debug schedule is choosen, if not update the recent non debug
+     * On Load Event: Check if a debug schedule is chosen, if not update the recent non debug
      * schedule and additionally schedule debug again, if the debug mode is enabled.
      * 
      * On Execution Event: Disable the debug mode button.
      * 
      * On Execution Stop Event: Enable the debug mode button.
      * 
-     * On Step Event: Update the breakpoints map if needed. {@inheritDoc}
+     * On Step Event: Update the breakpoints map if needed. 
+     * 
+     * {@inheritDoc}
      */
     @Override
     public void notifyEvent(KiemEvent event) {
@@ -45,16 +49,14 @@ public class EventListener implements IKiemEventListener {
             IPath path = (IPath) event.getInfo();
             boolean debug = SCChartsDebugPlugin.getDefault().updateDebugScheduleData(path);
             
-            
+            // If these two variables don't fit, the schedule wasn't chosen correctly.
             if (debug ^ DataComponent.DEBUG_MODE) {
                 plugin.scheduleExecution();                
             }
-            
-            return;
         }
 
         // --------------------------------- EXECUTION STARTED ------------------------------------
-        if (event.isEvent(KiemEvent.EXECUTION_START)) {
+        else if (event.isEvent(KiemEvent.EXECUTION_START)) {
 
             if (event.isEvent(KiemEvent.EXECUTION_START)) {
                 if (Display.getDefault() == null) {
@@ -69,7 +71,7 @@ public class EventListener implements IKiemEventListener {
         }
 
         // --------------------------------- EXECUTION STOPPED ------------------------------------
-        if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
+        else if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
 
             if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
                 if (Display.getDefault() == null) {
@@ -82,11 +84,10 @@ public class EventListener implements IKiemEventListener {
                 });
 
             }
-            return;
         }
 
         // --------------------------------- STEP -------------------------------------------------
-        if (event.isEvent(KiemEvent.STEP_INFO)) {
+        else if (event.isEvent(KiemEvent.STEP_INFO)) {
             plugin.updateBreakpointLines();
         }
 

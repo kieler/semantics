@@ -39,9 +39,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * This class is the main entry point to the debugger. A datacomponent is defined, that needs to be
- * added to the execution manager and as consequence enables debugging features. It is recommended
- * to enable the KART data component, so that input can be provided.
+ * This class is the main entry point into the debugger. A datacomponent is defined, that needs to
+ * be added to the execution manager and as consequence enables debugging features. It is
+ * recommended to enable the KART data component, so that input can be provided.
  * 
  * @author lgr
  *
@@ -53,6 +53,12 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * component is added to the execution schedule.
      */
     public static boolean DEBUG_MODE = false;
+
+    /**
+     * During execution this enables the fast forward mode. The execution is only stopped in case
+     * there was a breakpoint and can only be enabled in combination with {@link #DEBUG_MODE} set to
+     * true.
+     */
     public static boolean FAST_FORWARD = false;
 
     private SCChartsDebugPlugin plugin = SCChartsDebugPlugin.getDefault();
@@ -121,6 +127,10 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     }
 
+    /*
+     * ********************************************************************************************
+     * STEP METHOD
+     *******************************************************************************************/
     /**
      * Checks the current state of the execution and in case there is a breakpoint enabled that
      * corresponds to the active model part, the execution is stopped.
@@ -129,7 +139,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      */
     @Override
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
-        System.out.println("Debug: " + jSONObject);
 
         if (KiemPlugin.getDefault().getExecution() != null) {
             List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
@@ -189,8 +198,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                         stop = true;
                     }
 
-                    // Afterwards check the target states. It's important to check on possible
-                    // hierarchy.
+                    // Afterwards check the target states. 
+                    // It's important to check on possible hierarchy.
                     if (!stop) {
                         State s = ((Transition) elem).getTargetState();
 
@@ -303,7 +312,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         } catch (CoreException e) {
             e.printStackTrace();
         }
-        System.out.println(false);
         return false;
     }
 
@@ -349,7 +357,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            System.out.println(baseObjID + ":" + baseObj);
 
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();
             while (treeIterator.hasNext()) {

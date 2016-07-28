@@ -43,10 +43,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This class gets
  * instantiated by the {@link SCChartsBreakpointTargetAdapterFactory#getAdapter(Object, Class)}
  * adapter factory for the XText editor.
- * 
- * TODO: filter if breakpoint position is reasonable
- * 
+ *  
  * @author lgr
+ * 
  */
 public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 

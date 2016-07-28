@@ -1,3 +1,15 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright ${year} by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
 package de.cau.cs.kieler.sccharts.debug;
 
 import java.util.HashMap;
@@ -18,7 +30,10 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
- * The main controlling class for the debug plugin. The
+ * The main controlling class for the debug plugin.
+ * 
+ * @author lgr
+ * 
  */
 public class SCChartsDebugPlugin extends AbstractUIPlugin {
 
@@ -27,25 +42,35 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.debug"; //$NON-NLS-1$
 
+    /**
+     * The Postfix for the debug execution schedules.
+     */
     public static final String DEFAULT_DEBUG_POSTFIX = "_debug.execution";
 
+    /**
+     * Saves the data corresponding to a debug schedule in relation to the schedule chosen.
+     */
     public ScheduleData debugSchedule;
+
+    /**
+     * Saves teh data corresponding to a non-debug schedule in relation to the schedule chosen.
+     */
     public ScheduleData nonDebugSchedule;
+
+    /**
+     * Indicates if the initial load of the schedule is terminated. Needed to allow the choosing of
+     * other schedules that a debug schedule which as a consequence will quit debug mode.
+     */
+    private boolean loaded;
 
     /**
      * The shared instance.
      */
     private static SCChartsDebugPlugin plugin;
 
-    /**
-     * Indicates if the initial loaded is terminated. Needed to allow the choosing of other
-     * schedules that a debug schedule which as a consequence will quit debug mode.
-     */
-    private boolean loaded;
-
     // ------------------------------- CURRENT BREAKPOINTS ----------------------------------------
     /**
-     * Save the current breakpoints with the corresponding line.
+     * Save the current breakpoints with its corresponding line.
      */
     private HashMap<Integer, IBreakpoint> breakpointLines = new HashMap<>();
 
@@ -55,12 +80,14 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     private boolean dirtyBreakpointList = true;
 
     /**
-     * The constructor
+     * The constructor. The loaded only needs to indicate false in case the debug schedule is
+     * initially turned on.
      */
     public SCChartsDebugPlugin() {
         loaded = DataComponent.DEBUG_MODE ? false : true;
     }
 
+    // --------------------------------------- PLUGIN METHODS -------------------------------------
     /*
      * (non-Javadoc)
      * 
@@ -69,10 +96,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
+        // Instantiate the breakpoints list on startup.
         IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager()
                 .getBreakpoints(SCChartsDebugModelPresentation.ID);
         for (IBreakpoint b : bs) {
-            System.out.println(((LineBreakpoint) b).getLineNumber());
         }
     }
 
@@ -95,6 +122,7 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         return plugin;
     }
 
+    // ------------------------------------------ BREAKPOINT ORGANISATION -------------------------
     /**
      * @return the breakpointLines
      */
@@ -132,11 +160,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
 
             IBreakpoint[] bps = DebugPlugin.getDefault().getBreakpointManager()
                     .getBreakpoints(SCChartsDebugModelPresentation.ID);
+            // Add each breakpoint and its line number to the list of all breakpoints.
             for (IBreakpoint b : bps) {
                 try {
-                    if (b.isEnabled()) {
-                        breakpointLines.put(((LineBreakpoint) b).getLineNumber(), b);
-                    }
+                    breakpointLines.put(((LineBreakpoint) b).getLineNumber(), b);
                 } catch (CoreException e) {
                     e.printStackTrace();
                 }
@@ -144,32 +171,47 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         }
     }
 
+    // --------------------------------------- METHODS DEBUG SCHEDULE -----------------------------
+    /**
+     * Updates the two saved schedule data with the given path that resolves to a the current chosen
+     * schedule.
+     * 
+     * @param path
+     *            The current chosen schedule.
+     * @return Returns if the given schedule was a debug schedule or not.
+     */
     public boolean updateDebugScheduleData(IPath path) {
+        IPath debugPath;
+        IPath nonDebugPath;
+        boolean isDebugSchedule = false;
+
+        // ------------------------- Chosen schedule is debug? ------------------------------------
+        if (path.toString().contains(SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX)) {
+            debugPath = path;
+            nonDebugPath = new Path(path.toString()
+                    .replaceAll(SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX, ".execution"));
+            isDebugSchedule = true;
+        } else {
+            debugPath = new Path("/execution/" + path.toString().replaceAll(".execution", "")
+                    + SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX);
+            nonDebugPath = path;
+        }
+
+        // ---------------- Extract whether the path is equal to a saved schedule. ----------------
         boolean noDebugS = false;
         boolean debugS = false;
+
         if (nonDebugSchedule != null && debugSchedule != null) {
             noDebugS = path.toString().contains(nonDebugSchedule.getExtendedName() + ".execution");
             debugS = path.toString().contains(debugSchedule.getExtendedName() + ".execution");
         }
 
-        IPath debugPath;
-        boolean isDebugSchedule = false;
-        if (path.toString().contains(SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX)) {
-            debugPath = path;
-            path = new Path(path.toString().replaceAll(SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX,
-                    ".execution"));
-            isDebugSchedule = true;
-        } else {
-            debugPath = new Path("/execution/" + path.toString().replaceAll(".execution", "")
-                    + SCChartsDebugPlugin.DEFAULT_DEBUG_POSTFIX);
-        }
-
+        // --------------------- Update the schedule data variables. ------------------------------
         if (!(noDebugS || debugS)) {
-            // Update the schedule data variables with the given data
             int foundBoth = 2;
             List<ScheduleData> scheduledata = ScheduleManager.getInstance().getAllSchedules();
             for (ScheduleData s : scheduledata) {
-                if (path.toString().contains(s.getExtendedName() + ".execution")) {
+                if (nonDebugPath.toString().contains(s.getExtendedName() + ".execution")) {
                     nonDebugSchedule = s;
                     foundBoth--;
                 }
@@ -184,7 +226,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         }
         return isDebugSchedule;
     }
-
+    
+    /**
+     * Schedules the schedule data according to the debug mode. 
+     */
     public void scheduleExecution() {
         ScheduleData toScheudle = DataComponent.DEBUG_MODE ? debugSchedule : nonDebugSchedule;
         try {
