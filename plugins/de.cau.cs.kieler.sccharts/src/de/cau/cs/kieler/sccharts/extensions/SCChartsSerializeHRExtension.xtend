@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Joiner
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Action
@@ -27,7 +26,14 @@ import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
+import de.cau.cs.kieler.core.kexpressions.Identifiable
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 
 /**
  * @author ssm
@@ -35,6 +41,7 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
+@ViewSynthesisShared
 class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     
     def dispatch CharSequence serialize(Transition transition) {
@@ -257,5 +264,339 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         }
 
         return new Pair(keywords, content);
+    }    
+    
+    
+    def dispatch serialize(State state) {
+        state.label
+    }
+    
+    def dispatch serializeHR(State state) {
+        state.label.applySymbolTable
+    }
+
+    def dispatch serialize(Region region) {
+        region.label
+    }
+    
+    def dispatch serializeHR(Region region) {
+        region.label.applySymbolTable
+    }
+    
+    
+    
+    private val nameSymbolTable = <String, String> newHashMap
+    
+    def defineSymbol(String startsWith, String symbol) {
+        nameSymbolTable.put(startsWith, symbol) 
+    }   
+    
+    def void clearSymbols() {
+        nameSymbolTable.clear
+    }
+    
+    def String applySymbolTable(String name) {
+        for(s : nameSymbolTable.keySet) {
+            if (name.startsWith(s))  {
+                return nameSymbolTable.get(s) + name.substring(s.length)
+            }
+        }
+        return name
+    } 
+    
+    // TODO: VO from declarations... refactor
+    override dispatch CharSequence serialize(ValuedObject valuedObject) {
+        var vo = valuedObject.name.applySymbolTable
+        
+        for (index : valuedObject.cardinalities) {
+            vo = vo + "[" + index.toString + "]"
+        }
+        vo
+    }
+
+    override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
+        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        for (index : valuedObjectReference.indices) {
+            vo = vo + "[" + index.serialize + "]"
+        }
+        vo
+    }    
+    
+    override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        for (index : valuedObjectReference.indices) {
+            vo = vo + "[" + index.serializeHR + "]"
+        }
+        vo
+    }   
+    
+    override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+        var res = assignment.valuedObject.name.applySymbolTable
+        if (!assignment.indices.nullOrEmpty) {
+            for(index : assignment.indices) {
+                res = res + "[" + index.serialize + "]"
+            }
+        }
+        
+        res = res + assignment.operator.serializeAssignOperator
+        if (expressionStr != null) {
+            res = res + expressionStr
+        }
+        
+        return res
+    }    
+    
+    override dispatch CharSequence serialize(Emission emission) {
+        val objectContainer = emission.valuedObject.eContainer
+        if (objectContainer instanceof VariableDeclaration) {
+            if (objectContainer.type != ValueType::PURE) {
+                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+            } else {
+                return emission.valuedObject.name.applySymbolTable
+            }
+        } else {
+            return emission.valuedObject.name.applySymbolTable
+        }
+    }    
+     
+    
+    def void defineGreekSymbols(String prefix) {
+        (prefix + "Heta").defineSymbol("\u0370")       // Ͱ
+        (prefix + "heta").defineSymbol("\u0371")       // ͱ       
+        (prefix + "Yot").defineSymbol("\u037F")        // Ϳ
+        
+        (prefix + "Alpha").defineSymbol("\u0391")      // Α
+        (prefix + "Beta").defineSymbol("\u0392")       // Β
+        (prefix + "Gamma").defineSymbol("\u0393")      // Γ
+        (prefix + "Delta").defineSymbol("\u0394")      // Δ
+        (prefix + "Epsilon").defineSymbol("\u0395")    // Ε
+        (prefix + "Zeta").defineSymbol("\u0396")       // Ζ
+        (prefix + "Eta").defineSymbol("\u0397")        // Η
+        (prefix + "Theta").defineSymbol("\u0398")      // Θ
+        (prefix + "Iota").defineSymbol("\u0399")       // Ι
+        (prefix + "Kappa").defineSymbol("\u039A")      // Κ
+        (prefix + "Lambda").defineSymbol("\u039B")     // Λ
+        (prefix + "Mu").defineSymbol("\u039C")         // Μ
+        (prefix + "Nu").defineSymbol("\u039D")         // Ν
+        (prefix + "Xi").defineSymbol("\u039E")         // Ξ
+        (prefix + "Omicron").defineSymbol("\u039F")    // Ο
+        (prefix + "Pi").defineSymbol("\u03A0")         // Π
+        (prefix + "Rho").defineSymbol("\u03A1")        // Ρ
+        (prefix + "Sigma").defineSymbol("\u03A3")      // Σ
+        (prefix + "Tau").defineSymbol("\u03A4")        // Τ
+        (prefix + "Upsilon").defineSymbol("\u03A5")    // Υ
+        (prefix + "Phi").defineSymbol("\u03A6")        // Φ
+        (prefix + "Chi").defineSymbol("\u03A7")        // Χ
+        (prefix + "Psi").defineSymbol("\u03A8")        // Ψ
+        (prefix + "Omega").defineSymbol("\u03A9")      // Ω
+        
+        (prefix + "alpha").defineSymbol("\u03B1")      // α
+        (prefix + "beta").defineSymbol("\u03B2")       // β
+        (prefix + "gamma").defineSymbol("\u03B3")      // γ
+        (prefix + "delta").defineSymbol("\u03B4")      // δ
+        (prefix + "epsilon").defineSymbol("\u03B5")    // ε
+        (prefix + "zeta").defineSymbol("\u03B6")       // ζ
+        (prefix + "eta").defineSymbol("\u03B7")        // η
+        (prefix + "theta").defineSymbol("\u03B8")      // θ
+        (prefix + "iota").defineSymbol("\u03B9")       // ι
+        
+        (prefix + "kappa").defineSymbol("\u03BA")      // κ
+        (prefix + "lambda").defineSymbol("\u03BB")     // λ
+        (prefix + "mu").defineSymbol("\u03BC")         // μ
+        (prefix + "nu").defineSymbol("\u03BD")         // ν
+        (prefix + "xi").defineSymbol("\u03BE")         // ξ
+        (prefix + "omicron").defineSymbol("\u03BF")    // ο
+        (prefix + "pi").defineSymbol("\u03C0")         // π
+        (prefix + "rho").defineSymbol("\u03C1")        // ρ
+        (prefix + "sigma").defineSymbol("\u03C3")      // σ
+        
+        (prefix + "tau").defineSymbol("\u03C4")        // τ
+        (prefix + "upsilon").defineSymbol("\u03C5")    // υ
+        (prefix + "phi").defineSymbol("\u03C6")        // φ
+        (prefix + "chi").defineSymbol("\u03C7")        // χ
+        (prefix + "psi").defineSymbol("\u03C8")        // ψ
+        (prefix + "omega").defineSymbol("\u03C9")      // ω    
+        
+        (prefix + "Stigma").defineSymbol("\u03DA")     // Ϛ
+        (prefix + "stigma").defineSymbol("\u03DB")     // ϛ
+        (prefix + "Digamma").defineSymbol("\u03DC")    // Ϝ
+        (prefix + "digamma").defineSymbol("\u03DD")    // ϝ
+        (prefix + "Koppa").defineSymbol("\u03DE")      // Ϟ
+        (prefix + "koppa").defineSymbol("\u03DF")      // ϟ
+        (prefix + "Sampi").defineSymbol("\u03E0")      // Ϡ
+        (prefix + "sampi").defineSymbol("\u03E1")      // ϡ
+        
+        (prefix + "Sho").defineSymbol("\u03F7")        // Ϸ
+        (prefix + "sho").defineSymbol("\u03F8")        // ϸ
+        (prefix + "San").defineSymbol("\u03FA")        // Ϻ
+        (prefix + "san").defineSymbol("\u03FB")        // ϻ
+    }
+    
+    def void defineMathScriptSymbols(String prefix) {
+        (prefix + "A").defineSymbol("\uD835\uDC9C")
+        (prefix + "B").defineSymbol("\u212C")
+        (prefix + "C").defineSymbol("\uD835\uDC9E")
+        (prefix + "D").defineSymbol("\uD835\uDC9F")
+        (prefix + "E").defineSymbol("\u2130")
+        (prefix + "F").defineSymbol("\u2131")
+        (prefix + "G").defineSymbol("\uD835\uDCA2")
+        (prefix + "H").defineSymbol("\u210B")
+        (prefix + "I").defineSymbol("\u2110")
+        (prefix + "J").defineSymbol("\uD835\uDCA5")
+        (prefix + "K").defineSymbol("\uD835\uDCA6")
+        (prefix + "L").defineSymbol("\u2112")
+        (prefix + "M").defineSymbol("\u2133")
+        (prefix + "N").defineSymbol("\uD835\uDCA9")
+        (prefix + "O").defineSymbol("\uD835\uDCAA")
+        (prefix + "P").defineSymbol("\uD835\uDCAB")
+        (prefix + "Q").defineSymbol("\uD835\uDCAC")
+        (prefix + "R").defineSymbol("\u211B")
+        (prefix + "S").defineSymbol("\uD835\uDCAE")
+        (prefix + "T").defineSymbol("\uD835\uDCAF")
+        (prefix + "U").defineSymbol("\uD835\uDCB0")
+        (prefix + "V").defineSymbol("\uD835\uDCB1")
+        (prefix + "W").defineSymbol("\uD835\uDCB2")
+        (prefix + "X").defineSymbol("\uD835\uDCB3")
+        (prefix + "Y").defineSymbol("\uD835\uDCB4")
+        (prefix + "Z").defineSymbol("\uD835\uDCB5")
+        
+        (prefix + "a").defineSymbol("\uD835\uDCB6")
+        (prefix + "b").defineSymbol("\uD835\uDCB7")
+        (prefix + "c").defineSymbol("\uD835\uDCB8")
+        (prefix + "d").defineSymbol("\uD835\uDCB9")
+        (prefix + "e").defineSymbol("\u212F")
+        (prefix + "f").defineSymbol("\uD835\uDCBB")
+        (prefix + "g").defineSymbol("\u210A")
+        (prefix + "h").defineSymbol("\uD835\uDCBD")
+        (prefix + "i").defineSymbol("\uD835\uDCBE")
+        (prefix + "j").defineSymbol("\uD835\uDCBF")
+        (prefix + "k").defineSymbol("\uD835\uDCC0")
+        (prefix + "l").defineSymbol("\uD835\uDCC1")
+        (prefix + "m").defineSymbol("\uD835\uDCC2")
+        (prefix + "n").defineSymbol("\uD835\uDCC3")
+        (prefix + "o").defineSymbol("\u2134")
+        (prefix + "p").defineSymbol("\uD835\uDCC5")
+        (prefix + "q").defineSymbol("\uD835\uDCC6")
+        (prefix + "r").defineSymbol("\uD835\uDCC7")
+        (prefix + "s").defineSymbol("\uD835\uDCC8")
+        (prefix + "t").defineSymbol("\uD835\uDCC9")
+        (prefix + "u").defineSymbol("\uD835\uDCCA")
+        (prefix + "v").defineSymbol("\uD835\uDCCB")
+        (prefix + "w").defineSymbol("\uD835\uDCCC")
+        (prefix + "x").defineSymbol("\uD835\uDCCD")
+        (prefix + "y").defineSymbol("\uD835\uDCCE")
+        (prefix + "z").defineSymbol("\uD835\uDCCF")
+    }
+    
+    def void defineMathFrakturSymbols(String prefix) {
+        (prefix + "A").defineSymbol("\uD835\uDD04")
+        (prefix + "B").defineSymbol("\uD835\uDD05")
+        (prefix + "C").defineSymbol("\u212D")
+        (prefix + "D").defineSymbol("\uD835\uDD07")
+        (prefix + "E").defineSymbol("\uD835\uDD08")
+        (prefix + "F").defineSymbol("\uD835\uDD09")
+        (prefix + "G").defineSymbol("\uD835\uDD0A")
+        (prefix + "H").defineSymbol("\u210C")
+        (prefix + "I").defineSymbol("\u2111")
+        (prefix + "J").defineSymbol("\uD835\uDD0D")
+        (prefix + "K").defineSymbol("\uD835\uDD0E")
+        (prefix + "L").defineSymbol("\uD835\uDD0F")
+        (prefix + "M").defineSymbol("\uD835\uDD10")
+        (prefix + "N").defineSymbol("\uD835\uDD11")
+        (prefix + "O").defineSymbol("\uD835\uDD12")
+        (prefix + "P").defineSymbol("\uD835\uDD13")
+        (prefix + "Q").defineSymbol("\uD835\uDD14")
+        (prefix + "R").defineSymbol("\u211C")
+        (prefix + "S").defineSymbol("\uD835\uDD16")
+        (prefix + "T").defineSymbol("\uD835\uDD17")
+        (prefix + "U").defineSymbol("\uD835\uDD18")
+        (prefix + "V").defineSymbol("\uD835\uDD19")
+        (prefix + "W").defineSymbol("\uD835\uDD1A")
+        (prefix + "X").defineSymbol("\uD835\uDD1B")
+        (prefix + "Y").defineSymbol("\uD835\uDD1C")
+        (prefix + "Z").defineSymbol("\u2128")
+        
+        (prefix + "a").defineSymbol("\uD835\uDD1E")
+        (prefix + "b").defineSymbol("\uD835\uDD1F")
+        (prefix + "c").defineSymbol("\uD835\uDD20")
+        (prefix + "d").defineSymbol("\uD835\uDD21")
+        (prefix + "e").defineSymbol("\uD835\uDD22")
+        (prefix + "f").defineSymbol("\uD835\uDD23")
+        (prefix + "g").defineSymbol("\uD835\uDD24")
+        (prefix + "h").defineSymbol("\uD835\uDD25")
+        (prefix + "i").defineSymbol("\uD835\uDD26")
+        (prefix + "j").defineSymbol("\uD835\uDD27")
+        (prefix + "k").defineSymbol("\uD835\uDD28")
+        (prefix + "l").defineSymbol("\uD835\uDD29")
+        (prefix + "m").defineSymbol("\uD835\uDD2A")
+        (prefix + "n").defineSymbol("\uD835\uDD2B")
+        (prefix + "o").defineSymbol("\uD835\uDD2C")
+        (prefix + "p").defineSymbol("\uD835\uDD2D")
+        (prefix + "q").defineSymbol("\uD835\uDD2E")
+        (prefix + "r").defineSymbol("\uD835\uDD2F")
+        (prefix + "s").defineSymbol("\uD835\uDD30")
+        (prefix + "t").defineSymbol("\uD835\uDD31")
+        (prefix + "u").defineSymbol("\uD835\uDD32")
+        (prefix + "v").defineSymbol("\uD835\uDD33")
+        (prefix + "w").defineSymbol("\uD835\uDD34")
+        (prefix + "x").defineSymbol("\uD835\uDD35")
+        (prefix + "y").defineSymbol("\uD835\uDD36")
+        (prefix + "z").defineSymbol("\uD835\uDD37")
+    }    
+    
+    def void defineMathDoubleStruckSymbols(String prefix) {
+        (prefix + "A").defineSymbol("\uD835\uDD38")
+        (prefix + "B").defineSymbol("\uD835\uDD39")
+        (prefix + "C").defineSymbol("\u2102")
+        (prefix + "D").defineSymbol("\uD835\uDD3B")
+        (prefix + "E").defineSymbol("\uD835\uDD3C")
+        (prefix + "F").defineSymbol("\uD835\uDD3D")
+        (prefix + "G").defineSymbol("\uD835\uDD3E")
+        (prefix + "H").defineSymbol("\u210D")
+        (prefix + "I").defineSymbol("\uD835\uDD40")
+        (prefix + "J").defineSymbol("\uD835\uDD41")
+        (prefix + "K").defineSymbol("\uD835\uDD42")
+        (prefix + "L").defineSymbol("\uD835\uDD43")
+        (prefix + "M").defineSymbol("\uD835\uDD44")
+        (prefix + "N").defineSymbol("\u2115")
+        (prefix + "O").defineSymbol("\uD835\uDD46")
+        (prefix + "P").defineSymbol("\u2119")
+        (prefix + "Q").defineSymbol("\u211A")
+        (prefix + "R").defineSymbol("\u211D")
+        (prefix + "S").defineSymbol("\uD835\uDD4A")
+        (prefix + "T").defineSymbol("\uD835\uDD4B")
+        (prefix + "U").defineSymbol("\uD835\uDD4C")
+        (prefix + "V").defineSymbol("\uD835\uDD4D")
+        (prefix + "W").defineSymbol("\uD835\uDD4E")
+        (prefix + "X").defineSymbol("\uD835\uDD4F")
+        (prefix + "Y").defineSymbol("\uD835\uDD50")
+        (prefix + "Z").defineSymbol("\u2124")
+        
+        (prefix + "a").defineSymbol("\uD835\uDD52")
+        (prefix + "b").defineSymbol("\uD835\uDD53")
+        (prefix + "c").defineSymbol("\uD835\uDD54")
+        (prefix + "d").defineSymbol("\uD835\uDD55")
+        (prefix + "e").defineSymbol("\uD835\uDD56")
+        (prefix + "f").defineSymbol("\uD835\uDD57")
+        (prefix + "g").defineSymbol("\uD835\uDD58")
+        (prefix + "h").defineSymbol("\uD835\uDD59")
+        (prefix + "i").defineSymbol("\uD835\uDD5A")
+        (prefix + "j").defineSymbol("\uD835\uDD5B")
+        (prefix + "k").defineSymbol("\uD835\uDD5C")
+        (prefix + "l").defineSymbol("\uD835\uDD5D")
+        (prefix + "m").defineSymbol("\uD835\uDD5E")
+        (prefix + "n").defineSymbol("\uD835\uDD5F")
+        (prefix + "o").defineSymbol("\uD835\uDD60")
+        (prefix + "p").defineSymbol("\uD835\uDD61")
+        (prefix + "q").defineSymbol("\uD835\uDD62")
+        (prefix + "r").defineSymbol("\uD835\uDD63")
+        (prefix + "s").defineSymbol("\uD835\uDD64")
+        (prefix + "t").defineSymbol("\uD835\uDD65")
+        (prefix + "u").defineSymbol("\uD835\uDD66")
+        (prefix + "v").defineSymbol("\uD835\uDD67")
+        (prefix + "w").defineSymbol("\uD835\uDD68")
+        (prefix + "x").defineSymbol("\uD835\uDD69")
+        (prefix + "y").defineSymbol("\uD835\uDD6A")
+        (prefix + "z").defineSymbol("\uD835\uDD6B")
     }    
 }

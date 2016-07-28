@@ -16,6 +16,7 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
@@ -24,6 +25,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
 import de.cau.cs.kieler.core.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
+import de.cau.cs.kieler.core.kexpressions.Referenceable;
 import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.Value;
@@ -171,6 +173,20 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass referenceableEClass = null;
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass identifiableEClass = null;
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -274,17 +290,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_Name() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getValuedObject_InitialValue() {
-        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -293,7 +300,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
 	public EAttribute getValuedObject_Cardinalities() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
 				/**
@@ -302,7 +309,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     public EAttribute getValuedObject_CombineOperator() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -688,6 +695,33 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getReferenceable() {
+        return referenceableEClass;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIdentifiable() {
+        return identifiableEClass;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIdentifiable_Id() {
+        return (EAttribute)identifiableEClass.getEStructuralFeatures().get(0);
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -741,7 +775,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         expressionEClass = createEClass(EXPRESSION);
 
         valuedObjectEClass = createEClass(VALUED_OBJECT);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
         createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__CARDINALITIES);
@@ -803,6 +836,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         functionCallEClass = createEClass(FUNCTION_CALL);
         createEAttribute(functionCallEClass, FUNCTION_CALL__FUNCTION_NAME);
 
+        referenceableEClass = createEClass(REFERENCEABLE);
+
+        identifiableEClass = createEClass(IDENTIFIABLE);
+        createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -840,7 +878,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        valuedObjectEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         valuedObjectEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        valuedObjectEClass.getESuperTypes().add(this.getReferenceable());
         valuedObjectReferenceEClass.getESuperTypes().add(this.getExpression());
         valueEClass.getESuperTypes().add(this.getExpression());
         intValueEClass.getESuperTypes().add(this.getValue());
@@ -861,7 +901,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_InitialValue(), this.getExpression(), null, "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Cardinalities(), ecorePackage.getEInt(), "cardinalities", null, 0, -1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -922,6 +961,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFunctionCall_FunctionName(), ecorePackage.getEString(), "functionName", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(referenceableEClass, Referenceable.class, "Referenceable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(identifiableEClass, Identifiable.class, "Identifiable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIdentifiable_Id(), ecorePackage.getEString(), "id", null, 0, 1, Identifiable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

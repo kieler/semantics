@@ -179,6 +179,24 @@ public interface KExpressionsFactory extends EFactory {
     FunctionCall createFunctionCall();
 
                 /**
+     * Returns a new object of class '<em>Referenceable</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Referenceable</em>'.
+     * @generated
+     */
+    Referenceable createReferenceable();
+
+                /**
+     * Returns a new object of class '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Identifiable</em>'.
+     * @generated
+     */
+    Identifiable createIdentifiable();
+
+                /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

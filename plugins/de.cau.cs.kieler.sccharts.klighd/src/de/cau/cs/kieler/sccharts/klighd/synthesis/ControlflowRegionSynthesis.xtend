@@ -87,7 +87,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         if (!region.states.empty) {
 
-            val label = if(region.label.nullOrEmpty) "" else " " + region.label;
+            val label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString;
 
             // Expanded
             node.addRegionFigure => [

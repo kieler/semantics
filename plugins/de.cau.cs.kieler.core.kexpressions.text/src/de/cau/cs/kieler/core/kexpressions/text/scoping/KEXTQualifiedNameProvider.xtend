@@ -15,7 +15,7 @@ import org.eclipse.xtext.util.Tuples;
 import com.google.common.base.Function;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable
+import de.cau.cs.kieler.core.kexpressions.Identifiable
 
 /**
  * @author ssm

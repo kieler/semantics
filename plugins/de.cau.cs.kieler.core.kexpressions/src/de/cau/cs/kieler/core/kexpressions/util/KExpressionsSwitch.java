@@ -8,6 +8,7 @@ package de.cau.cs.kieler.core.kexpressions.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.annotations.NamedObject;
 import de.cau.cs.kieler.core.kexpressions.*;
 
 import java.util.List;
@@ -83,7 +84,9 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.VALUED_OBJECT: {
                 ValuedObject valuedObject = (ValuedObject)theEObject;
                 T result = caseValuedObject(valuedObject);
+                if (result == null) result = caseNamedObject(valuedObject);
                 if (result == null) result = caseAnnotatable(valuedObject);
+                if (result == null) result = caseReferenceable(valuedObject);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -197,6 +200,18 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 T result = caseFunctionCall(functionCall);
                 if (result == null) result = caseCall(functionCall);
                 if (result == null) result = caseExpression(functionCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.REFERENCEABLE: {
+                Referenceable referenceable = (Referenceable)theEObject;
+                T result = caseReferenceable(referenceable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.IDENTIFIABLE: {
+                Identifiable identifiable = (Identifiable)theEObject;
+                T result = caseIdentifiable(identifiable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -456,6 +471,51 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferenceable(Referenceable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNamedObject(NamedObject object) {
         return null;
     }
 

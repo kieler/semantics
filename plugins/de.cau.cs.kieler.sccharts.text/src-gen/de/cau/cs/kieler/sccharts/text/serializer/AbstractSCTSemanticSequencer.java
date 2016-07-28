@@ -36,7 +36,6 @@ import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
 import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
 import de.cau.cs.kieler.core.kexpressions.text.serializer.KEXTSemanticSequencer;
-import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
@@ -181,8 +180,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 				sequence_IntValue(context, (IntValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if (rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getRootRule()
+				if (rule == grammarAccess.getRootRule()
 						|| rule == grammarAccess.getExpressionRule()
 						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getLogicalOrExpressionRule()
@@ -209,6 +207,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 						|| rule == grammarAccess.getModExpressionRule()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()) {
 					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
@@ -285,9 +284,6 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 			}
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case SCChartsPackage.BINDING:
-				sequence_Binding(context, (Binding) semanticObject); 
-				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
 				if (rule == grammarAccess.getRegionRule()
 						|| rule == grammarAccess.getControlflowRegionRule()) {
@@ -354,18 +350,6 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
-	/**
-	 * Contexts:
-	 *     Binding returns Binding
-	 *
-	 * Constraint:
-	 *     (annotations+=Annotation* formal=[ValuedObject|ID] actual=[ValuedObject|ID])
-	 */
-	protected void sequence_Binding(ISerializationContext context, Binding semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
 	
 	/**
 	 * Contexts:
@@ -436,7 +420,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     Equation returns Equation
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
+	 *     (valuedObject=[ValuedObject|PrimeID] expression=Expression)
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
 		if (errorAcceptor != null) {
@@ -446,7 +430,7 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.EQUATION__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEquationAccess().getValuedObjectValuedObjectIDTerminalRuleCall_1_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getEquationAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_0_1(), semanticObject.getValuedObject());
 		feeder.accept(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_1_2_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
@@ -509,7 +493,13 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *     Pragmas returns PragmaStringAnnotation
 	 *
 	 * Constraint:
-	 *     ((name='version' values+=SCXVersions) | (name='director' values+=SCXDirectors))
+	 *     (
+	 *         (name='version' values+=SCXVersions) | 
+	 *         (name='director' values+=SCXDirectors) | 
+	 *         (name='import' values+=STRING) | 
+	 *         (name='symbols' values+=STRING values+=PrimeID?) | 
+	 *         (name='symbol' values+=PrimeID values+=STRING)
+	 *     )
 	 */
 	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -584,9 +574,14 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *         connector?='connector'? 
 	 *         id=ID 
 	 *         label=STRING? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         localActions+=LocalAction* 
-	 *         (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)? 
+	 *         (
+	 *             (referencedScope=[State|ID] (parameters+=Parameter parameters+=Parameter*)?) | 
+	 *             (
+	 *                 declarations+=DeclarationWOSemicolon* 
+	 *                 localActions+=LocalAction* 
+	 *                 (regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region+)?
+	 *             )
+	 *         ) 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */

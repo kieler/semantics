@@ -19,7 +19,10 @@ SCCharts returns sccharts::SCCharts:
     
 Pragmas returns annotations::PragmaStringAnnotation:
     '#' name = 'version' values += SCXVersions |
-    '#' name = 'director' values += SCXDirectors;
+    '#' name = 'director' values += SCXDirectors |
+    '#' name = 'import' values += STRING |
+    '#' name = 'symbols' values += STRING (',' values += PrimeID)? |
+    '#' name = 'symbol' values += PrimeID ',' values += STRING;
 
 SCXVersions returns ecore::EString:
     'SCX' | 'SCT';
@@ -50,14 +53,16 @@ State returns sccharts::State:
 	violation?='violation'?
 	connector?='connector'?
 	'state' id=ID label=STRING?
-	('{'
+	((
+	    'is' referencedScope = [sccharts::State|ID]
+        ('(' parameters += Parameter (',' parameters += Parameter)* ')')?	    
+	)|('{'
 		declarations+=DeclarationWOSemicolon*
 		localActions+=LocalAction*
 		(regions+=SingleControlflowRegion | regions+=SingleDataflowRegion | regions+=Region*)
-	'}')?
+	'}'))?
 	outgoingTransitions+=Transition*;
     
-
 // ------------------ //
 //  Transition Rules  // 
 // ------------------ //
@@ -159,46 +164,8 @@ DFAssignment returns keffects::Assignment:
 Equation returns sccharts::Equation:
     {sccharts::Equation}
     (
-        (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
+        (valuedObject = [kexpressions::ValuedObject|PrimeID]) '=' (expression = Expression) 
     );
-
-
-
-
-
-    
-    
-    
-
-
-
-
-//ScopeReference returns sccharts::ScopeReference:
-//    scope=[sccharts::Scope|ID];
-//
-//ScopeCall returns sccharts::ScopeCall:
-//    '[' scope=[sccharts::Scope|ID]
-//    	(('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')? 
-//    ']'
-//    ('.' valuedObject = [kexpressions::ValuedObject])
-//;
-
-
-Binding returns sccharts::Binding:
-    (annotations+=Annotation)*
-	formal = [kexpressions::ValuedObject|ID] 
-	'to' 
-	actual = [kexpressions::ValuedObject|ID]
-;
-
-AtomicExpression returns kexpressions::Expression:
-    BoolValue
-    | ValuedObjectTestExpression 
-    | '(' BoolExpression ')'
-    | ReferenceCall
-//    | ScopeCall
-    | TextExpression;
-
 
 // ------------ //
 //  Enum Rules  // 

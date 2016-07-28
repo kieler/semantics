@@ -92,22 +92,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT = 1;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int VALUED_OBJECT__NAME = AnnotationsPackage.NAMED_OBJECT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT__ANNOTATIONS = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -116,7 +116,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -125,7 +125,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Cardinalities</b></em>' attribute list.
@@ -134,7 +134,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
 				/**
      * The number of structural features of the '<em>Valued Object</em>' class.
@@ -143,7 +143,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -764,6 +764,53 @@ public interface KExpressionsPackage extends EPackage {
     int FUNCTION_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 1;
 
                 /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceableImpl <em>Referenceable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.ReferenceableImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
+     * @generated
+     */
+    int REFERENCEABLE = 17;
+
+                /**
+     * The number of structural features of the '<em>Referenceable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCEABLE_FEATURE_COUNT = 0;
+
+                /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.IdentifiableImpl <em>Identifiable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.IdentifiableImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
+     * @generated
+     */
+    int IDENTIFIABLE = 18;
+
+                /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IDENTIFIABLE__ID = 0;
+
+                /**
+     * The number of structural features of the '<em>Identifiable</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IDENTIFIABLE_FEATURE_COUNT = 1;
+
+                /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -771,7 +818,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 17;
+    int COMBINE_OPERATOR = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -781,7 +828,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 18;
+    int OPERATOR_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -791,7 +838,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 19;
+    int VALUE_TYPE = 21;
 
 
     /**
@@ -813,17 +860,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getValuedObject();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getName()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Name();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
@@ -1306,6 +1342,37 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getFunctionCall_FunctionName();
 
                 /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Referenceable <em>Referenceable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Referenceable</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Referenceable
+     * @generated
+     */
+    EClass getReferenceable();
+
+                /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Identifiable</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Identifiable
+     * @generated
+     */
+    EClass getIdentifiable();
+
+                /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Identifiable#getId <em>Id</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Identifiable#getId()
+     * @see #getIdentifiable()
+     * @generated
+     */
+    EAttribute getIdentifiable_Id();
+
+                /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1376,14 +1443,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass VALUED_OBJECT = eINSTANCE.getValuedObject();
-
-        /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__NAME = eINSTANCE.getValuedObject_Name();
 
         /**
          * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
@@ -1774,6 +1833,34 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute FUNCTION_CALL__FUNCTION_NAME = eINSTANCE.getFunctionCall_FunctionName();
+
+                                /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceableImpl <em>Referenceable</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.ReferenceableImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
+         * @generated
+         */
+        EClass REFERENCEABLE = eINSTANCE.getReferenceable();
+
+                                /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.IdentifiableImpl <em>Identifiable</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.IdentifiableImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getIdentifiable()
+         * @generated
+         */
+        EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
+
+                                /**
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
 
                                 /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

@@ -1,17 +1,16 @@
 /**
  */
-package de.cau.cs.kieler.core.kexpressions.text.kext.impl;
+package de.cau.cs.kieler.core.kexpressions.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.text.kext.Identifiable;
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,12 +20,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.IdentifiableImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.IdentifiableImpl#getId <em>Id</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
+public class IdentifiableImpl extends EObjectImpl implements Identifiable {
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -63,7 +62,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
      */
     @Override
     protected EClass eStaticClass() {
-        return KextPackage.Literals.IDENTIFIABLE;
+        return KExpressionsPackage.Literals.IDENTIFIABLE;
     }
 
     /**
@@ -84,7 +83,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
         String oldId = id;
         id = newId;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KextPackage.IDENTIFIABLE__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.IDENTIFIABLE__ID, oldId, id));
     }
 
     /**
@@ -95,7 +94,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KextPackage.IDENTIFIABLE__ID:
+            case KExpressionsPackage.IDENTIFIABLE__ID:
                 return getId();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -109,7 +108,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KextPackage.IDENTIFIABLE__ID:
+            case KExpressionsPackage.IDENTIFIABLE__ID:
                 setId((String)newValue);
                 return;
         }
@@ -124,7 +123,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KextPackage.IDENTIFIABLE__ID:
+            case KExpressionsPackage.IDENTIFIABLE__ID:
                 setId(ID_EDEFAULT);
                 return;
         }
@@ -139,7 +138,7 @@ public class IdentifiableImpl extends AnnotatableImpl implements Identifiable {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KextPackage.IDENTIFIABLE__ID:
+            case KExpressionsPackage.IDENTIFIABLE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
         }
         return super.eIsSet(featureID);

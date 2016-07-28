@@ -18,7 +18,6 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -30,7 +29,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -67,12 +65,12 @@ public class StateImpl extends ScopeImpl implements State {
 				/**
      * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
      * @see #getRegions()
      * @generated
      * @ordered
      */
-    protected EList<Region> regions;
+   protected EList<Region> regions;
 
     /**
      * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
@@ -144,25 +142,25 @@ public class StateImpl extends ScopeImpl implements State {
      */
 	protected static final boolean CONNECTOR_EDEFAULT = false;
 
-				/**
+    /**
      * The cached value of the '{@link #isConnector() <em>Connector</em>}' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+ * <!-- end-user-doc -->
      * @see #isConnector()
      * @generated
      * @ordered
      */
-	protected boolean connector = CONNECTOR_EDEFAULT;
+protected boolean connector = CONNECTOR_EDEFAULT;
 
-				/**
+    /**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
      * @see #getOutgoingTransitions()
      * @generated
      * @ordered
      */
-    protected EList<Transition> outgoingTransitions;
+   protected EList<Transition> outgoingTransitions;
 
     /**
      * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
@@ -354,7 +352,7 @@ public class StateImpl extends ScopeImpl implements State {
         return incomingTransitions;
     }
 
-    /**
+                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

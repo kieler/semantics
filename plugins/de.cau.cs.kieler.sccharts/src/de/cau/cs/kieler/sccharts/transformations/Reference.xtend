@@ -123,7 +123,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             label = state.label
         ]
 
-        var newStateIterator = newState.eAllContents
+/*        var newStateIterator = newState.eAllContents
         while (newStateIterator.hasNext) {
             val eObject = newStateIterator.next
             if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
@@ -207,6 +207,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
             transformReference(newState)
         ]
+        * */
     }
 
     
@@ -241,6 +242,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 refNode.referencedScope.variableDeclarations.filter[it.input].forEach[
                     refedInputs += valuedObjects
                 ]
+                /* 
                 for (expr: refNode.parameters) {
                     val newBinding = SCChartsFactory.eINSTANCE.createBinding
                     newBinding.actual = (expr as ValuedObjectReference).valuedObject
@@ -269,6 +271,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         }
                     }
                 }
+                */
                 (newState.referencedScope as State).transform
             }
 			// transform all call nodes

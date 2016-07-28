@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -125,10 +127,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createEquationAdapter();
             }
             @Override
-            public Adapter caseBinding(Binding object) {
-                return createBindingAdapter();
-            }
-            @Override
             public Adapter caseTransition(Transition object) {
                 return createTransitionAdapter();
             }
@@ -177,8 +175,12 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
-            public Adapter caseDeclarationScope(de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope object) {
+            public Adapter caseDeclarationScope(DeclarationScope object) {
                 return createDeclarationScopeAdapter();
+            }
+            @Override
+            public Adapter caseIdentifiable(Identifiable object) {
+                return createIdentifiableAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -337,20 +339,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createEquationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Binding
-     * @generated
-     */
-    public Adapter createBindingAdapter() {
         return null;
     }
 
@@ -533,6 +521,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationScopeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.Identifiable
+     * @generated
+     */
+    public Adapter createIdentifiableAdapter() {
         return null;
     }
 

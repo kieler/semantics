@@ -23,9 +23,9 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
         return SctQualifiedNameProvider.class;
     }    
     
-    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
-        return SctResource.class;
-    }    
+//    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+//        return SctResource.class;
+//    }    
     
     public Class<? extends ILinker> bindILinker() {
         return SctLinker.class;

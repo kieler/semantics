@@ -563,11 +563,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-		//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 		public Group getGroup() { return cGroup; }
 
@@ -577,19 +577,19 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//'ref' reference=[kext::Identifiable|NamespaceID]
+		//'ref' reference=[kexpressions::Identifiable|NamespaceID]
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//'ref'
 		public Keyword getRefKeyword_1_0_0() { return cRefKeyword_1_0_0; }
 
-		//reference=[kext::Identifiable|NamespaceID]
+		//reference=[kexpressions::Identifiable|NamespaceID]
 		public Assignment getReferenceAssignment_1_0_1() { return cReferenceAssignment_1_0_1; }
 
-		//[kext::Identifiable|NamespaceID]
+		//[kexpressions::Identifiable|NamespaceID]
 		public CrossReference getReferenceIdentifiableCrossReference_1_0_1_0() { return cReferenceIdentifiableCrossReference_1_0_1_0; }
 
 		//NamespaceID
@@ -652,11 +652,11 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_3_1_0 = (RuleCall)cValuedObjectsAssignment_3_1.eContents().get(0);
 		
 		//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-		//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		//valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 		public Group getGroup() { return cGroup; }
 
@@ -666,19 +666,19 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+		//('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//'ref' reference=[kext::Identifiable|NamespaceID]
+		//'ref' reference=[kexpressions::Identifiable|NamespaceID]
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//'ref'
 		public Keyword getRefKeyword_1_0_0() { return cRefKeyword_1_0_0; }
 
-		//reference=[kext::Identifiable|NamespaceID]
+		//reference=[kexpressions::Identifiable|NamespaceID]
 		public Assignment getReferenceAssignment_1_0_1() { return cReferenceAssignment_1_0_1; }
 
-		//[kext::Identifiable|NamespaceID]
+		//[kexpressions::Identifiable|NamespaceID]
 		public CrossReference getReferenceIdentifiableCrossReference_1_0_1_0() { return cReferenceIdentifiableCrossReference_1_0_1_0; }
 
 		//NamespaceID
@@ -1033,7 +1033,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return pReferenceDeclaration;
@@ -1044,7 +1044,7 @@ public class KEXTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return pReferenceDeclarationWOSemicolon;

@@ -156,14 +156,14 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         
 
         // Add inner dataflow nodes
-        for (dNode : region.nodes) {
-            if (dNode instanceof DefineNode) {
-                //skip
-            } else {
-                // translate reference/call nodes
-                node.children += dNode.translate;
-            }
-        }
+//        for (dNode : region.nodes) {
+//            if (dNode instanceof DefineNode) {
+//                //skip
+//            } else {
+//                // translate reference/call nodes
+//                node.children += dNode.translate;
+//            }
+//        }
         // translate all direct dataflow equations
         for (equation: region.equations) {
             val vo = equation.valuedObject

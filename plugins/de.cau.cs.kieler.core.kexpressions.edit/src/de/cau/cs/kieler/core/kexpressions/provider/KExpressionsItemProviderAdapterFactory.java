@@ -467,6 +467,52 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
                 /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Referenceable} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReferenceableItemProvider referenceableItemProvider;
+
+                /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Referenceable}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReferenceableAdapter() {
+        if (referenceableItemProvider == null) {
+            referenceableItemProvider = new ReferenceableItemProvider(this);
+        }
+
+        return referenceableItemProvider;
+    }
+
+                /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Identifiable} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IdentifiableItemProvider identifiableItemProvider;
+
+                /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Identifiable}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createIdentifiableAdapter() {
+        if (identifiableItemProvider == null) {
+            identifiableItemProvider = new IdentifiableItemProvider(this);
+        }
+
+        return identifiableItemProvider;
+    }
+
+                /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -582,6 +628,8 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (callItemProvider != null) callItemProvider.dispose();
         if (referenceCallItemProvider != null) referenceCallItemProvider.dispose();
         if (functionCallItemProvider != null) functionCallItemProvider.dispose();
+        if (referenceableItemProvider != null) referenceableItemProvider.dispose();
+        if (identifiableItemProvider != null) identifiableItemProvider.dispose();
     }
 
 }

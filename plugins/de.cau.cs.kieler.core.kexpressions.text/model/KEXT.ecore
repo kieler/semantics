@@ -12,19 +12,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Identifiable" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeclarationScope">
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="KEXTScope" eSuperTypes="#//DeclarationScope #//Referenceable">
+  <eClassifiers xsi:type="ecore:EClass" name="KEXTScope" eSuperTypes="#//DeclarationScope ../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Identifiable ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Referenceable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
         eType="#//TestEntity" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scopes" upperBound="-1"
         eType="#//KEXTScope" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Referenceable" eSuperTypes="#//Identifiable"/>
 </ecore:EPackage>

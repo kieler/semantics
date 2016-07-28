@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -44,19 +46,17 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
  * @model abstract="true"
  * @generated
  */
-public interface Scope extends Annotatable, de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope {
+public interface Scope extends Annotatable, DeclarationScope, Identifiable {
     /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -65,32 +65,6 @@ public interface Scope extends Annotatable, de.cau.cs.kieler.core.kexpressions.t
 	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
-     * Returns the value of the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Id</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Id</em>' attribute.
-     * @see #setId(String)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Id()
-     * @model
-     * @generated
-     */
-    String getId();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Id</em>' attribute.
-     * @see #getId()
-     * @generated
-     */
-    void setId(String value);
-
-    /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -159,45 +133,19 @@ public interface Scope extends Annotatable, de.cau.cs.kieler.core.kexpressions.t
     void setReferencedScope(Scope value);
 
     /**
-     * Returns the value of the '<em><b>Bindings</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Binding}.
+     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Bindings</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Bindings</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Bindings()
+     * @return the value of the '<em>Parameters</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Parameters()
      * @model containment="true"
      * @generated
      */
-    EList<Binding> getBindings();
-
-    /**
-     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Expression</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Expression</em>' containment reference.
-     * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Expression()
-     * @model containment="true"
-     * @generated
-     */
-	Expression getExpression();
-
-				/**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getExpression <em>Expression</em>}' containment reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expression</em>' containment reference.
-     * @see #getExpression()
-     * @generated
-     */
-	void setExpression(Expression value);
+    EList<Parameter> getParameters();
 
 } // Scope

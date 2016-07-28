@@ -49,15 +49,6 @@ public interface KextFactory extends EFactory {
     AnnotatedExpression createAnnotatedExpression();
 
     /**
-     * Returns a new object of class '<em>Identifiable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Identifiable</em>'.
-     * @generated
-     */
-    Identifiable createIdentifiable();
-
-    /**
      * Returns a new object of class '<em>Declaration Scope</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,15 +65,6 @@ public interface KextFactory extends EFactory {
      * @generated
      */
     KEXTScope createKEXTScope();
-
-    /**
-     * Returns a new object of class '<em>Referenceable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Referenceable</em>'.
-     * @generated
-     */
-    Referenceable createReferenceable();
 
     /**
      * Returns the package supported by this factory.

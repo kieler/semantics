@@ -519,7 +519,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        namedObjectEClass.getESuperTypes().add(this.getAnnotatable());
         annotationEClass.getESuperTypes().add(this.getNamedObject());
         stringAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         referenceAnnotationEClass.getESuperTypes().add(this.getAnnotation());

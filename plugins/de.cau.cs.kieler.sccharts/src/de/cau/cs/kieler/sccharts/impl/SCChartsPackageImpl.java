@@ -19,8 +19,8 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
 import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
@@ -136,13 +136,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass equationEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass bindingEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -282,7 +275,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         isInited = true;
 
         // Initialize simple dependencies
-        de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage.eINSTANCE.eClass();
+        KextPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
@@ -673,33 +666,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBinding() {
-        return bindingEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBinding_Formal() {
-        return (EReference)bindingEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBinding_Actual() {
-        return (EReference)bindingEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getTransition() {
         return transitionEClass;
     }
@@ -772,7 +738,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getScope_Id() {
+    public EAttribute getScope_Label() {
         return (EAttribute)scopeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -781,17 +747,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getScope_Label() {
-        return (EAttribute)scopeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getScope_LocalActions() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
+        return (EReference)scopeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -800,7 +757,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getScope_ReferencedScope() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
+        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -808,20 +765,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_Bindings() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(4);
+    public EReference getScope_Parameters() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EReference getScope_Expression() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(5);
-    }
-
-				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1017,10 +965,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(equationEClass, EQUATION__NODE);
         createEReference(equationEClass, EQUATION__VALUED_OBJECT);
 
-        bindingEClass = createEClass(BINDING);
-        createEReference(bindingEClass, BINDING__FORMAL);
-        createEReference(bindingEClass, BINDING__ACTUAL);
-
         transitionEClass = createEClass(TRANSITION);
         createEAttribute(transitionEClass, TRANSITION__PRIORITY);
         createEAttribute(transitionEClass, TRANSITION__TYPE);
@@ -1030,12 +974,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
 
         scopeEClass = createEClass(SCOPE);
-        createEAttribute(scopeEClass, SCOPE__ID);
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__LOCAL_ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCED_SCOPE);
-        createEReference(scopeEClass, SCOPE__BINDINGS);
-        createEReference(scopeEClass, SCOPE__EXPRESSION);
+        createEReference(scopeEClass, SCOPE__PARAMETERS);
 
         localActionEClass = createEClass(LOCAL_ACTION);
 
@@ -1089,7 +1031,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
-        de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage theKextPackage = (de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage)EPackage.Registry.INSTANCE.getEPackage(de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage.eNS_URI);
+        KextPackage theKextPackage = (KextPackage)EPackage.Registry.INSTANCE.getEPackage(KextPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1105,10 +1047,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         referenceNodeEClass.getESuperTypes().add(this.getNode());
         callNodeEClass.getESuperTypes().add(this.getNode());
         defineNodeEClass.getESuperTypes().add(this.getNode());
-        bindingEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         scopeEClass.getESuperTypes().add(theKextPackage.getDeclarationScope());
+        scopeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         localActionEClass.getESuperTypes().add(this.getAction());
         entryActionEClass.getESuperTypes().add(this.getLocalAction());
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
@@ -1171,10 +1113,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getEquation_Node(), this.getNode(), null, "node", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEquation_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(bindingEClass, Binding.class, "Binding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBinding_Formal(), theKExpressionsPackage.getValuedObject(), null, "formal", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBinding_Actual(), theKExpressionsPackage.getValuedObject(), null, "actual", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1184,12 +1122,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getTransition_SourceState(), this.getState(), this.getState_OutgoingTransitions(), "sourceState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getScope_Id(), ecorePackage.getEString(), "id", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_LocalActions(), this.getLocalAction(), null, "localActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Bindings(), this.getBinding(), null, "bindings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Parameters(), theKExpressionsPackage.getParameter(), null, "parameters", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

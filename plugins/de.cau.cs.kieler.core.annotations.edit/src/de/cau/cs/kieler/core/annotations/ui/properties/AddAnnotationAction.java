@@ -93,12 +93,12 @@ public class AddAnnotationAction extends Action {
                 case TOP_LEVEL:
                     annotatable = propertySection.getAnnotatable();
                     break;
-                case SUB_ANNOT:
-                    annotatable = propertySection.getTableSelection();
-                    if (annotatable == null) {
-                        annotatable = propertySection.getAnnotatable();
-                    }
-                    break;
+//                case SUB_ANNOT:
+//                    annotatable = propertySection.getTableSelection();
+//                    if (annotatable == null) {
+//                        annotatable = propertySection.getAnnotatable();
+//                    }
+//                    break;
                 }
                 if (annotatable != null) {
                     final Annotatable parent = annotatable;

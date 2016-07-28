@@ -77,6 +77,34 @@ public interface AnnotationsPackage extends EPackage {
     int ANNOTATABLE = 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl <em>Named Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getNamedObject()
+     * @generated
+     */
+    int NAMED_OBJECT = 0;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NAMED_OBJECT__NAME = 0;
+
+    /**
+     * The number of structural features of the '<em>Named Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NAMED_OBJECT_FEATURE_COUNT = 1;
+
+    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -95,43 +123,6 @@ public interface AnnotationsPackage extends EPackage {
     int ANNOTATABLE_FEATURE_COUNT = 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl <em>Named Object</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl
-     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getNamedObject()
-     * @generated
-     */
-    int NAMED_OBJECT = 0;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NAMED_OBJECT__ANNOTATIONS = ANNOTATABLE__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NAMED_OBJECT__NAME = ANNOTATABLE_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Named Object</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NAMED_OBJECT_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.AnnotationImpl <em>Annotation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -140,15 +131,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int ANNOTATION = 2;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ANNOTATION__ANNOTATIONS = NAMED_OBJECT__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -177,15 +159,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int STRING_ANNOTATION = 3;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STRING_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -225,15 +198,6 @@ public interface AnnotationsPackage extends EPackage {
     int REFERENCE_ANNOTATION = 4;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -269,15 +233,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int BOOLEAN_ANNOTATION = 5;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BOOLEAN_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -317,15 +272,6 @@ public interface AnnotationsPackage extends EPackage {
     int INT_ANNOTATION = 6;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INT_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -361,15 +307,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int FLOAT_ANNOTATION = 7;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOAT_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -409,15 +346,6 @@ public interface AnnotationsPackage extends EPackage {
     int CONTAINMENT_ANNOTATION = 8;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTAINMENT_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -455,15 +383,6 @@ public interface AnnotationsPackage extends EPackage {
     int IMPORT_ANNOTATION = 9;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int IMPORT_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -499,15 +418,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int TYPED_STRING_ANNOTATION = 10;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TYPED_STRING_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -557,15 +467,6 @@ public interface AnnotationsPackage extends EPackage {
     int COMMENT_ANNOTATION = 11;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int COMMENT_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -604,15 +505,6 @@ public interface AnnotationsPackage extends EPackage {
     int PRAGMA_ANNOTATION = 12;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRAGMA_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
-
-    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -639,15 +531,6 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     int PRAGMA_STRING_ANNOTATION = 13;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int PRAGMA_STRING_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
