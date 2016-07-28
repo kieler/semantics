@@ -332,8 +332,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     // replace outputs: get all dataflow equations which have a reference
                     // to the current call node
                     for (eq: dataflow.equations) {
-                        if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
+//                        if (eq.node != null) {
+//                            if (eq.node.equals(callNode)) {
                                 val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
                                 val vo = eq.valuedObject
                                 // check if output variable is already substituted
@@ -368,8 +368,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                                     oldAssignment.valuedObject = vo
                                     voMapping.put(key, vo)
                                 }
-                            }
-                        }
+//                            }
+//                        }
                     }
                     // increment counters
                     regionCounter = regionCounter + 1
@@ -466,8 +466,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     // deal with multiple use of outputs
                     // first get all equations which refer to the current call node
                     for (eq: dataflow.equations) {
-                        if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
+//                        if (eq.node != null) {
+//                            if (eq.node.equals(callNode)) {
                                 val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
                                 val vo = eq.valuedObject
                                 val voRef = (eq.expression as ValuedObjectReference).valuedObject
@@ -500,8 +500,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                                             }
                                         }
                                     }
-                                }
-                            }
+//                                }
+//                            }
                         }
                     }
                     
@@ -516,11 +516,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			// transform all dataflow equations which do not refer to a node
 			val assignmentList = <Assignment> newArrayList			
 			for (eq: dataflow.equations) {
-			    if (eq.node == null) {
+//			    if (eq.node == null) {
                     // Equation: eq.node == null
                     // and create new assignment as transition effect
                     assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
-                }
+//                }
             }
             /*
              * create just one new region for all dataflow equations

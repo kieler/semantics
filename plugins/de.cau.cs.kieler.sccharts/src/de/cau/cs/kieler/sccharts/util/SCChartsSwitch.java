@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.kexpressions.Identifiable;
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.ecore.EObject;
@@ -168,6 +170,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.EQUATION: {
                 Equation equation = (Equation)theEObject;
                 T result = caseEquation(equation);
+                if (result == null) result = caseAssignment(equation);
+                if (result == null) result = caseEffect(equation);
+                if (result == null) result = caseAnnotatable(equation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -630,6 +635,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseIdentifiable(Identifiable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEffect(Effect object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAssignment(Assignment object) {
         return null;
     }
 

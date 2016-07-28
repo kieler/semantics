@@ -319,7 +319,52 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         }  
             
         return result
-    }	
+    }
+    
+    dispatch def CharSequence serializeHR(OperatorType operator) {
+        var CharSequence result = ""
+        
+        if (operator == OperatorType::EQ) {
+            result = "=="
+        } else if (operator == OperatorType::LT) {
+            result = "<"
+        } else if (operator == OperatorType::LEQ) {
+            result = "<="
+        } else if (operator == OperatorType::GT) {
+            result = ">"
+        } else if (operator == OperatorType::GEQ) {
+            result = ">="
+        } else if (operator == OperatorType::NOT) {
+            return "!"
+        } else if (operator == OperatorType::VAL) {
+            return "val"
+        } else if (operator == OperatorType::PRE) {
+            return "pre"
+        } else if (operator == OperatorType::NE) {
+            result = "~"
+        } else if (operator == OperatorType::LOGICAL_AND) {
+            result = "&&"
+        } else if (operator == OperatorType::LOGICAL_OR) {
+            result = "||"
+        } else if (operator == OperatorType::BITWISE_AND) {
+            result = "&"
+        } else if (operator == OperatorType::BITWISE_OR) {
+            result = "|"
+        } else if (operator == OperatorType::ADD) {
+            result = "+"
+        } else if (operator == OperatorType::SUB) {
+            result = "-"
+        } else if (operator == OperatorType::MULT) {
+            result = "*"
+        } else if (operator == OperatorType::DIV) {
+            result = "/"
+        } else if (operator == OperatorType::MOD) {
+            result = "%"
+        }  
+            
+        return result
+    }   
+    	
 	
 
     dispatch def CharSequence serializeHR(Expression expression) {

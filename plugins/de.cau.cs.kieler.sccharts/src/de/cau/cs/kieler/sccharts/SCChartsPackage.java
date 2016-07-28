@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -960,22 +961,13 @@ public interface SCChartsPackage extends EPackage {
     int EQUATION = 9;
 
     /**
-     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EQUATION__EXPRESSION = 0;
-
-    /**
-     * The feature id for the '<em><b>Node</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__NODE = 1;
+    int EQUATION__ANNOTATIONS = KEffectsPackage.ASSIGNMENT__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -984,7 +976,34 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EQUATION__VALUED_OBJECT = 2;
+    int EQUATION__VALUED_OBJECT = KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EQUATION__EXPRESSION = KEffectsPackage.ASSIGNMENT__EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EQUATION__INDICES = KEffectsPackage.ASSIGNMENT__INDICES;
+
+    /**
+     * The feature id for the '<em><b>Operator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EQUATION__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
 
     /**
      * The number of structural features of the '<em>Equation</em>' class.
@@ -993,7 +1012,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EQUATION_FEATURE_COUNT = 3;
+    int EQUATION_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2235,39 +2254,6 @@ public interface SCChartsPackage extends EPackage {
     EClass getEquation();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Equation#getExpression <em>Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getExpression()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_Expression();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Node</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getNode()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_Node();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getValuedObject()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_ValuedObject();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2874,30 +2860,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass EQUATION = eINSTANCE.getEquation();
-
-        /**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__EXPRESSION = eINSTANCE.getEquation_Expression();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__NODE = eINSTANCE.getEquation_Node();
-
-        /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__VALUED_OBJECT = eINSTANCE.getEquation_ValuedObject();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

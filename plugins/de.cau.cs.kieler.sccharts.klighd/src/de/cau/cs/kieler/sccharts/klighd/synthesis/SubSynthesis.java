@@ -41,13 +41,14 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
 public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
 
     @Inject
-    private SynthesisHooks hooks;
+    protected SynthesisHooks hooks;
 
     @Inject
     private SCChartsSynthesis parent;
 
     /** The input type this synthesis handles */
-    private final Type hookType;
+    protected final Type hookType;
+    
     @Inject
     public SubSynthesis() {
         java.lang.reflect.Type[] generics =
@@ -63,7 +64,7 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
      *            the model element to transform.
      * @return the transformed diagram element.
      */
-    public final O transform(I element) {
+    public O transform(I element) {
         O result = performTranformation(element);
         hooks.invokeHooks(hookType, element, result);
         return result;

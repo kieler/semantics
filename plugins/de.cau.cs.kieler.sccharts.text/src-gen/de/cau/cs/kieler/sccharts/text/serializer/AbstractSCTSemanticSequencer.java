@@ -424,10 +424,10 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.EQUATION__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.EQUATION__VALUED_OBJECT));
-			if (transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.EQUATION__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.EQUATION__EXPRESSION));
+			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT));
+			if (transientValues.isValueTransient(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KEffectsPackage.Literals.ASSIGNMENT__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getEquationAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_0_1(), semanticObject.getValuedObject());

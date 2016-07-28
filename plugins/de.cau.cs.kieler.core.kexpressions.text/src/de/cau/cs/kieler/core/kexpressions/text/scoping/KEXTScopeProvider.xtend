@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.core.kexpressions.Identifiable
 import java.util.Set
 import de.cau.cs.kieler.core.kexpressions.Referenceable
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -53,14 +54,47 @@ import de.cau.cs.kieler.core.kexpressions.Referenceable
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
- 	if (reference.eContainer instanceof ValuedObjectReference) {
+        if (reference.eContainer instanceof ValuedObjectReference) {
 			val parentVOR = reference.eContainer as ValuedObjectReference
 			val declaration = parentVOR.valuedObject.eContainer as Declaration
 			if (declaration instanceof ReferenceDeclaration) {
 				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
 			}
+		} else if (context.eContainer instanceof ValuedObjectReference) {
+		    // The context is a subreference!
+		    var parentVO = context.eContainer as ValuedObjectReference
+		    return parentVO.getScopeForReferenceDeclarationViaSubReference(reference)
+		} else if (context instanceof ValuedObjectReference) {
+		    if (context.subReference != null && context.subReference.valuedObject == null) {
+		        var parentVO = context as ValuedObjectReference
+		        return parentVO.getScopeForReferenceDeclarationViaSubReference(reference)
+		    }
 		}
 		return context.getScopeHierarchical(reference)
+	}
+	
+	protected def IScope getScopeForReferenceDeclarationViaSubReference(EObject context, EReference reference) {
+	    if (context instanceof ValuedObjectReference) {
+	        if (context.valuedObject != null) {
+    	        if (context.eContainer != null) {
+                    var parentVO = context as ValuedObjectReference
+                    while(parentVO.eContainer instanceof ValuedObjectReference) {
+                        parentVO = parentVO.eContainer as ValuedObjectReference
+                    }
+                    if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
+                        val declaration = parentVO.valuedObject.eContainer as ReferenceDeclaration 
+                        if (declaration.reference instanceof DeclarationScope) {
+                            val declarations = (declaration.reference as DeclarationScope).declarations
+                            val relevantDeclarations = declarations.filter(VariableDeclaration).filter[ output ].toList
+                            val candidates = <ValuedObject> newArrayList
+                            relevantDeclarations.forEach [ candidates += it.valuedObjects ]
+                            return Scopes.scopeFor(candidates)
+                       }
+                    }
+                }
+            }
+        }
+        return context.getScopeHierarchical(reference)	    
 	}
 	
 	protected def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
