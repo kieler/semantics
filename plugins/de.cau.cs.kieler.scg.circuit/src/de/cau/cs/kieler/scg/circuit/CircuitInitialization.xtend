@@ -23,6 +23,7 @@ import java.util.List
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.circuit.properties.IPortTypeProvider
+import de.cau.cs.kieler.circuit.properties.IActorTypeProvider
 
 /**
  * @author fry
@@ -30,7 +31,7 @@ import de.cau.cs.kieler.circuit.properties.IPortTypeProvider
  * This class creates the initialization region of the circuit containing reset logic and input registers.
  * 
  */
-class CircuitInitialization implements Traceable, IPortTypeProvider{
+class CircuitInitialization implements Traceable, IPortTypeProvider, IActorTypeProvider{
 
 	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
 		
@@ -48,13 +49,13 @@ class CircuitInitialization implements Traceable, IPortTypeProvider{
 		// -------------------------------------------------------
 		val regActor = CircuitFactory::eINSTANCE.createActor
 
-		regActor.type = "FF"
+		regActor.type = FF
 		regActor.name = "Reset_local"
 
 
-		createPort(regActor, "Reset", "In")
-		createPort(regActor, "Tick", "In")
-		createPort(regActor, "Reset_local", "Out")
+		createPort(regActor, "Reset", IN)
+		createPort(regActor, "Tick", TICK)
+		createPort(regActor, "Reset_local", OUT)
 
 		init.innerActors.add(regActor)
 
@@ -64,8 +65,8 @@ class CircuitInitialization implements Traceable, IPortTypeProvider{
 		// -------------------------------------------------------
 		init.innerActors += createRegister("_GO", "Reset" , "Reset_local")
 		
-		createPort(logic, "g0", "InConnectorLogic")
-		createPort(init, "g0", "OutConnectorInit")
+		createPort(logic, "g0", IN_CONNECTOR_LOGIC)
+		createPort(init, "g0", OUT_CONNECTOR_INIT)
 
 		// -------------------------------------------------------
 		// --Create Reset_pre for pre Registers in logic region --

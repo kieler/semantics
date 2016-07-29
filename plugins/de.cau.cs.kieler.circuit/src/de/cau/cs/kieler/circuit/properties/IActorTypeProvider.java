@@ -26,6 +26,8 @@ public interface IActorTypeProvider {
     
     public static final String REG = "REG";
     
+    public static final String FF = "FlipFlop";
+    
     public static final String NOT = "NOT";
     
     public static final String VCC = "VCC";
@@ -35,5 +37,9 @@ public interface IActorTypeProvider {
     public static final String GUARD_REGION = "GUARD_REGION";
     
     public static final String CIRCUIT_REGION = "CIRCUIT_REGION";
+    
+    public static final String INIT_REGION = "INITIALIZATION_REGION";
+    
+    public static final String LOGIC_REGION = "LOGIC_REGION";
 
 }

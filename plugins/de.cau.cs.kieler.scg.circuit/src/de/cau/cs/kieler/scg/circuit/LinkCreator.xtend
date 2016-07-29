@@ -29,10 +29,12 @@ import java.util.LinkedList
 class LinkCreator implements IPortTypeProvider, ILinkTypeProvider{
 	
 	/**
-	 * in every region ports with the same name but different types are connected.
+	 * In every region ports with the same name but different types are connected.
+	 * different types means e.g. IN and OUT ports with the same name.
+	 * @see IPortTypeProvider
 	 * 
-	 * "InConnector" and "OutConnector" are ports located at regions, 
-	 * "Not", "Sel", "In" and "Out" ports are located at gates.
+	 * "InConnector" and "OutConnector" are region ports, 
+	 * "Not", "Sel", "In" and "Out" ports are gate ports.
 	 * 
 	 */
 	
@@ -43,7 +45,7 @@ class LinkCreator implements IPortTypeProvider, ILinkTypeProvider{
 	def initRegion(Actor init) {
 		val ports = init.eAllContents.filter(Port).toList
 		for (p : ports) {
-			if (p.type == IN || p.type == SELECTION) {
+			if (p.type == IN || p.type == MUX_SELECTION) {
 				for (op : ports) {
 					if ((op.type == "InConnectorInit" || op.type == OUT) && p.name == op.name && p.eContainer != op.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
@@ -77,7 +79,7 @@ class LinkCreator implements IPortTypeProvider, ILinkTypeProvider{
 		for (p : portList) {
 			if (p.type == OUT) {
 				portList.forEach [ ip |
-					if ((ip.type.startsWith(IN) || ip.type == SELECTION || ip.type == NOT || ip.type == "OutConnectorLogic") &&
+					if ((ip.type.startsWith(IN) || ip.type == MUX_SELECTION || ip.type == NOT || ip.type == "OutConnectorLogic") &&
 						p.name == ip.name && p.eContainer != ip.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink
 						link.source = p;
@@ -101,7 +103,7 @@ class LinkCreator implements IPortTypeProvider, ILinkTypeProvider{
 				}
 			}
 
-			if (p.type.startsWith(IN) || p.type == SELECTION || p.type == NOT) {
+			if (p.type.startsWith(IN) || p.type == MUX_SELECTION || p.type == NOT) {
 				portList.forEach [ op |
 					if ((op.type == "InConnectorLogic") && p.name == op.name && p.eContainer != op.eContainer) {
 						val link = CircuitFactory::eINSTANCE.createLink

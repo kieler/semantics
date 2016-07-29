@@ -123,12 +123,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         newCircuit.trace(scg)
 
         val logicRegion = CircuitFactory::eINSTANCE.createActor.trace(scg)
-        logicRegion.type = IActorTypeProvider.CIRCUIT_REGION
+        logicRegion.type = IActorTypeProvider.LOGIC_REGION
         logicRegion.name = "Program Logic"
         newCircuit.innerActors += logicRegion
 
         val initializationRegion = CircuitFactory::eINSTANCE.createActor
-        initializationRegion.type = IActorTypeProvider.CIRCUIT_REGION
+        initializationRegion.type = IActorTypeProvider.INIT_REGION
         initializationRegion.name = "Circuit Initialization"
         newCircuit.innerActors += initializationRegion
 
@@ -218,9 +218,9 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                 newMUX.ports.add(selectPort)
                 newMUX.ports.add(outputPort)
 
-                truePort.type = IPortTypeProvider.SEL_TRUE_INPUT
-                falsePort.type = IPortTypeProvider.SEL_FALSE_INPUT
-                selectPort.type = IPortTypeProvider.SELECTION
+                truePort.type = IPortTypeProvider.SEL_TRUE_IN
+                falsePort.type = IPortTypeProvider.SEL_FALSE_IN
+                selectPort.type = IPortTypeProvider.MUX_SELECTION
                 outputPort.type = IPortTypeProvider.OUT
 
                 outputPort.name = thenNode.valuedObject.name
