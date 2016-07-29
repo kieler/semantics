@@ -81,6 +81,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
 import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
 import org.eclipse.cdt.core.dom.ast.IASTExpressionList
+import de.cau.cs.kieler.core.kexpressions.Parameter
 
 /**
  * @author ssm
@@ -110,23 +111,21 @@ class CDTProcessor {
     val VOSet = <ValuedObject>newHashSet
     var _trc = 0
 
+//    var State funcGlobalState
 
-
-    var State funcGlobalState
-    
-    // Save all different labels of defined functions. Used for lookup for function-calls.
-    var funcLabelSet = <String>newHashSet
-
+    // Contains children nodes of a FunctionCallExpression.
+    List<IASTExpression> argumentList = new ArrayList<IASTExpression>();
 
     // Save FunctionCallExpression and referencing state to handle function calls
     ArrayList<Pair<CASTFunctionCallExpression,State>> functionCallRefs = new ArrayList<Pair<CASTFunctionCallExpression,State>>();
     
     ArrayList<State> functions = new ArrayList<State>();
 
+//    Map<String, State> functionStates = new HashMap<String, State>();
+//    ArrayList<State> connectorStates = new ArrayList<State>();
+//    String parameterStr
 
-    Map<String, State> functionStates = new HashMap<String, State>();
-    ArrayList<State> connectorStates = new ArrayList<State>();
-    String parameterStr
+
 
     def SCCharts createFromEditor(IEditorPart editor) {
         val cEditor = editor as CEditor
@@ -176,24 +175,24 @@ class CDTProcessor {
                  * it to the referencing state (value). */
                 val funcCallExp = entry.key
                 val referencingState = entry.value
-                val funcID = getIDFromFunctionCallExp(funcCallExp)
+                val funcID = funcCallExp.functionNameExpression.children.head.toString
                 // Search the list functions for the to be referenced function state
                 val referencedState = lookForFunctions(funcID)
                 if (referencedState != null) {
                     referencingState.referencedScope = referencedState
                 }
                 
-                
-                
-                val x = funcCallExp.children.last
-                println("HALLOOOOO " + x)
-                println("LIST: " + referencingState.parameters)
-                
-                
-                
-                
                 // Handle arguments of function call.
-//                val argumentList = getFunctionCallArguments(funcCallExp)
+                val argumentList = getFunctionCallArguments(funcCallExp)
+                if(!argumentList.empty){
+                    // Create a parameter for each given argument.
+                    for (arg : argumentList) {
+                        kex.createParameter => [ p |
+                            p.expression = arg.createKExpression
+                            referencingState.parameters.add(p)
+                        ]
+                    }
+                }
             ]
         }
         
@@ -238,7 +237,7 @@ class CDTProcessor {
         ]
 
         // parameters
-        funcGlobalState = model
+//        funcGlobalState = model
 
         // createDeclaration
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration@46333ade
@@ -361,9 +360,10 @@ class CDTProcessor {
             s.label = createLabel(statement) + "cond"
             s.initial = true
             switchStateRegion.states += s
-        ] 
+        ]
         
-        createCondTransition(state, switchState, statement)
+        // Create transition which connects the parent state "state" to the switchState.
+        createConnectingTransition(state, switchState, statement)
         
 //        // Connects switch statement to the parent.
 //        val switchConnector = scc.createTransition => [
@@ -507,8 +507,8 @@ class CDTProcessor {
         // Reset condState ID back to normal
         condState.id = condID
         
-        // If a default case exists and its last state is not already final, connect it to the connectorState. 
-        if (defaultExpression && !lastState.final) {
+        // Connect the last state of the switch statement to the connectorState. 
+        if (!lastState.final) {
             val backConnector = scc.createTransition => [
                 targetState = connectorState
                 immediate = true
@@ -527,27 +527,30 @@ class CDTProcessor {
             switchStateRegion.states += s
         ]
     
-        // Final transition to endState. Check whether the connectorState can be removed.
-        var incTransitions = connectorState.incomingTransitions
-        // The connectorState can be removed if it only has one incoming transition.
-        if (incTransitions.length == 1) {
-            incTransitions.head.targetState = endState
-            switchStateRegion.states.remove(connectorState)
-        } else {
-            val falseTrans = scc.createTransition => [
-                targetState = endState
-                immediate = false
-                annotations.add(createStringAnnotation("notImmediate",""))
-                connectorState.outgoingTransitions += it
-            ]
-        }
+        // Check whether the connectorState can be removed. If not, create transition from connectorState to endState.
+        checkRemoveConnector(connectorState, endState, switchStateRegion)
+        
+        
+//        var incTransitions = connectorState.incomingTransitions
+//        // The connectorState can be removed if it only has one incoming transition.
+//        if (incTransitions.length == 1) {
+//            incTransitions.head.targetState = endState
+//            switchStateRegion.states.remove(connectorState)
+//        } else {
+//            val falseTrans = scc.createTransition => [
+//                targetState = endState
+//                immediate = false
+//                annotations.add(createStringAnnotation("notImmediate",""))
+//                connectorState.outgoingTransitions += it
+//            ]
+//        }
         
         
         
         switchState
     }
     
-
+    
     def State transformWhile(CASTWhileStatement statement, State state) {
         val f = statement
 
@@ -576,7 +579,8 @@ class CDTProcessor {
             whileStateRegion.states += s
         ]
         
-        createCondTransition(state, whileState, statement)
+        // Create transition which connects the parent state "state" to the whileState.
+        createConnectingTransition(state, whileState, statement)
         
 //        // Connects while loop to the parent.
 //        val whileConnector = scc.createTransition => [
@@ -699,8 +703,8 @@ class CDTProcessor {
             bodyState.outgoingTransitions += it
         ]
         
-        
-        createCondTransition(state, doWhileState, statement)
+        // Create transition which connects the parent state "state" to the doWhileState.
+        createConnectingTransition(state, doWhileState, statement)
         
 //        // Connects do-while loop to the parent
 //        val doWhileConnector = scc.createTransition => [
@@ -748,6 +752,7 @@ class CDTProcessor {
     }
     
 
+    //TODO Da noch mal drüber schauen....
     def State castDeclaration(CASTDeclarationStatement statement, State parent) {
 
         val simpleDeclaration = statement.children.filter(typeof(CASTSimpleDeclaration)).head
@@ -877,22 +882,22 @@ class CDTProcessor {
         val kExp = exp.createKExpression
 
         
-        // if construct state
+        // If construct state.
         val ifState = scc.createState => [ s |
             s.id = trC + "_if"
             s.label = "if"
             state.parentRegion.states += s
         ]
         
-        // region of ifState. It contains all states of the if statement
+        // Region of ifState. It contains all states of the if statement.
         val ifStateRegion = scc.createControlflowRegion => [ region |
                 region.id = ifState.id + "_region"
                 region.label = ""
                 ifState.regions += region
         ]
 
-
-        createCondTransition(state, ifState, statement)
+        // Create transition which connects the parent state "state" to the ifState.
+        createConnectingTransition(state, ifState, statement)
         
 //        // Connects if construct to the parent
 //        val ifConnector = scc.createTransition => [
@@ -926,7 +931,7 @@ class CDTProcessor {
 //            state.outgoingTransitions += it
 //        ]
         
-        // The outgoing transitions of the condState check the condition of the if statement
+        // The outgoing transitions of the condState to check the condition of the if statement.
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
             s.label = createLabel(ifs) + "cond"
@@ -934,7 +939,7 @@ class CDTProcessor {
             ifStateRegion.states += s
         ]
 
-        // Connects states to the final End state of the if statement, if necessary
+        // Connects states to the final endState of the if statement, if necessary.
         val connectorState = scc.createState => [ s |
             s.id = trC.toString
             s.label = s.id
@@ -944,13 +949,13 @@ class CDTProcessor {
         ]
 
         
-        // Body of statements if condition is met
+        // Body of statements, if condition is met.
         val trueBody = (ifs.thenClause as CASTCompoundStatement).transformCompound(condState, condState)
 
-        // If argument is set to true, then we only want an extra endState if necessary
+        // If argument is set to true, then we only want an extra endState if necessary.
         if (ifTransformationOption) {
             
-           // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+           // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state.
             if (trueBody.hasInnerStatesOrControlflowRegions) {
                 val trueConnector = scc.createTransition => [
                     targetState = connectorState
@@ -960,12 +965,12 @@ class CDTProcessor {
                 ]
                 needExtraEndState = true
             } else {
-                // If no inner behavior, there is no need for an extra final state
+                // If no inner behavior, there is no need for an extra final state.
                 trueBody.final = true
             }
         
         } else {
-            // Argument is set to false, so we want a extra endState for every if statement
+            // Argument is set to false, so we want a extra endState for every if statement.
             if (!trueBody.final) {
                 val trueConnector = scc.createTransition => [
                     targetState = connectorState
@@ -976,38 +981,38 @@ class CDTProcessor {
             }
         }
         
-        // Check whether a else clause exists
+        // Check whether a else clause exists.
         if (ifs.elseClause != null) {
-            // Body of statements if condition is not met
+            // Body of statements, if condition is not met.
             var State falseBody = null;
             
             if (ifs.elseClause instanceof CASTCompoundStatement) {
    
                 falseBody = (ifs.elseClause as CASTCompoundStatement).transformCompound(condState, condState)
                 
-            // Check for else if statement
+            // Check for else if statement.
             } else if (ifs.elseClause instanceof CASTIfStatement) {
                 falseBody = (ifs.elseClause as CASTIfStatement).transformIf(condState)
             }
             
-            // Here we check whether there needs to be an extra endState due to the content of falseBody
+            // Here we check whether there needs to be an extra endState due to the content of falseBody.
             if (ifTransformationOption) {
-                // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state
+                // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state.
                 if (falseBody.hasInnerStatesOrControlflowRegions) {
                     val falseConnector = scc.createTransition => [
                         targetState = connectorState
                         immediate = true
                         type = TransitionType::TERMINATION
                     ]
-                    // Therefore, we need an extra endState
+                    // Therefore, we need an extra endState.
                     needExtraEndState = true
                     falseBody.outgoingTransitions += falseConnector
                 } else {
-                    // As falseBody has no inner behavior, it can be final
+                    // As falseBody has no inner behavior, it can be final.
                     falseBody.final = true 
                 }
             } else {
-                // We want an extra endState regardless of the content of falseBody
+                // We want an extra endState regardless of the content of falseBody.
                 if (!falseBody.final) {
                     val falseConnector = scc.createTransition => [
                         targetState = connectorState
@@ -1019,8 +1024,8 @@ class CDTProcessor {
                 }
             }
 
-            // Here we ensure that the else condition transition has no trigger and is immediate
-            val elseTransition = condState.outgoingTransitions.last // condState's last transition in list is always the else transition
+            // Here we ensure that the else condition transition has no trigger and is immediate.
+            val elseTransition = condState.outgoingTransitions.last // condState's last transition in list is always the else transition.
             elseTransition.trigger = null
             elseTransition.immediate = true
             elseTransition.annotations.add(createStringAnnotation("notImmediate",""))
@@ -1047,14 +1052,19 @@ class CDTProcessor {
                 ]
             }
             
-            // Final transition to endState.            
-            val falseTrans = scc.createTransition => [
-                targetState = endState
-                immediate = false
-                annotations.add(createStringAnnotation("notImmediate",""))
-                connectorState.outgoingTransitions += it
-            ]
+//            // Final transition to endState.            
+//            val falseTrans = scc.createTransition => [
+//                targetState = endState
+//                immediate = false
+//                annotations.add(createStringAnnotation("notImmediate",""))
+//                connectorState.outgoingTransitions += it
+//            ]
+            
+            // Check whether the connectorState can be removed. If not, create transition from connectorState to endState.
+            checkRemoveConnector(connectorState, endState, ifStateRegion)
         }
+        
+        
         
         ifState
     }
@@ -1098,8 +1108,9 @@ class CDTProcessor {
 
             forStateRegion.states += s
         ]
-
-        createCondTransition(state, forState, statement)
+        
+        // Create transition which connects the parent state "state" to the forState.
+        createConnectingTransition(state, forState, statement)
         
 //        // Connects for loop to the parent
 //        val forConnector = scc.createTransition => [
@@ -1220,19 +1231,13 @@ class CDTProcessor {
             s.final = true
             state.parentRegion.states += s
         ]
-
-        state.outgoingTransitions += scc.createTransition => [
-            targetState = returnState
-            if(state.hasInnerStatesOrControlflowRegions) {
-                type = TransitionType::TERMINATION
-            } else {
-                immediate = true
-            }
-        ]
+        
+        // Create transition which connects the parent state "state" to the returnState.
+        createConnectingTransition(state, returnState, returnStatement)
 
         val entryact = returnState.createEntryAction
         entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
-            returnStatement.returnValue.createKExpression)
+                                  returnStatement.returnValue.createKExpression)
 
         returnState
     }
@@ -1266,18 +1271,18 @@ class CDTProcessor {
             }
             // else -> create new state for variable assignment
             else {
-            val codeState = scc.createState => [ s |
-                s.id = trC + "_binEx"
-                s.label = createLabel(es)
+                val codeState = scc.createState => [ s |
+                    s.id = trC + "_binEx"
+                    s.label = createLabel(es)
+    
+                    state.parentRegion.states += s
+                    val entryact = s.createEntryAction
+                    entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+                        exp.operand2.createKExpression)
+                ]
 
-                state.parentRegion.states += s
-                val entryact = s.createEntryAction
-                entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
-                    exp.operand2.createKExpression)
-            ]
-
-
-            createCondTransition(state, codeState, es)
+                // Create transition which connects the parent state "state" to the codeState.
+                createConnectingTransition(state, codeState, es)
 
 //            val trans = scc.createTransition => [
 //                targetState = codeState
@@ -1310,7 +1315,7 @@ class CDTProcessor {
 //            ]
 //            state.outgoingTransitions += trans
 
-            return codeState
+                return codeState
             
             }
             return state
@@ -1361,12 +1366,10 @@ class CDTProcessor {
 //                entryact.createEmission(cal)
 //
 //            }
-
-            val trans = scc.createTransition => [
-                targetState = refState
-                immediate = true
-            ]
-            state.outgoingTransitions += trans
+            
+            // Create transition which connects the parent state "state" to the refState.
+            createConnectingTransition(state, refState, es)
+            
 
             return refState
 
@@ -1406,9 +1409,11 @@ class CDTProcessor {
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@77cc47a
         // n
         // 1
+        
+        // Create entryAction for variable assignment.
         val entryact = state.createEntryAction
         entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
-            exp.operand2.createKExpression)
+                                   exp.operand2.createKExpression)
         state
     }
 
@@ -1655,9 +1660,8 @@ class CDTProcessor {
 //        return true;
     }
     
-    // If a control structure is located right after the condState of a FOR control structure, this method fixes a bug
-    // where the condition of the transition which leaves the condState is created correctly.
-    private def Transition createCondTransition(State src, State dst, ASTAttributeOwner statement) {
+    // Creates the outgoing transition of a condState with the condition of the respective control structure.
+    private def Transition createConnectingTransition(State src, State dst, ASTAttributeOwner statement) {
         // Connects switch statement to the parent.
         val connector = scc.createTransition => [
             targetState = dst
@@ -1694,16 +1698,16 @@ class CDTProcessor {
         return connector
     }
     
-    // Returns the id of function from a given CASTFunctionCallExpression.
-    private def String getIDFromFunctionCallExp(CASTFunctionCallExpression es) {
-        // Get idExpression of FunctionCallExpression
-        val idExpression = es.children.filter(CASTIdExpression).head
-        // Get id of called function.
-        val funcID = idExpression.children.head.toString
-        
-        return funcID
-    }
-    
+//    // Returns the id of function from a given CASTFunctionCallExpression.
+//    private def String getIDFromFunctionCallExp(CASTFunctionCallExpression es) {
+//        // Get idExpression of FunctionCallExpression
+//        val idExpression = es.children.filter(CASTIdExpression).head
+//        // Get id of called function.
+//        val funcID = idExpression.children.head.toString
+//        
+//        return funcID
+//    }
+//    
     // Return the entry of the global function list which has the same id as the one we are looking for.
     private def State lookForFunctions(String id) {
         for (s : functions) {
@@ -1715,33 +1719,43 @@ class CDTProcessor {
         return null
     }
     
+    
+    private def checkRemoveConnector(State connectorState, State dst, ControlflowRegion region) {
+        // Final transition to endState. Check whether the connectorState can be removed.
+        var incTransitions = connectorState.incomingTransitions
+        // The connectorState can be removed if it only has one incoming transition.
+        if (incTransitions.length == 1) {
+            incTransitions.head.targetState = dst
+            region.states.remove(connectorState)
+        } else {
+            val falseTrans = scc.createTransition => [
+                targetState = dst
+                immediate = false
+                annotations.add(createStringAnnotation("notImmediate",""))
+                connectorState.outgoingTransitions += it
+            ]
+        }
+    }
+    
+    
+    
     // Return a list of arguments of the given FunctionCallExpression.
-//    private def List<IASTNode> getFunctionCallArguments(CASTFunctionCallExpression funcCallExp) {
-//        val children = funcCallExp.children
-//        val List<IASTNode> todo = null
-//        val funcId = children.head
-//        
-//        for(a : children) {
-//            println("CHILD: " + a)
-//        }
-//        
-//        for(a : children) {
-//            todo.add(a)
-//        }
-//        
-//        for(a : todo) {
-//            println("FIRST: " + a)
-//        }
-//        
-//        
-//        val b = todo.remove(funcId)
-//        
-//        for(a : todo) {
-//            println("SECOND: " + a)
-//        }
-//        
-//        return null
-//    }
+    private def List<IASTExpression> getFunctionCallArguments(CASTFunctionCallExpression funcCallExp) {
+        // Ensure that argumentList is empty
+        argumentList.clear
+        val children = funcCallExp.children
+        // Get name of called function
+        val funcId = children.head
+        // Copy entries to our working list argumentList
+        for(a : children) {
+            argumentList.add(a as IASTExpression)
+        }
+        /* Remove first entry, which is the IdExpression of the function. We only want the arguments of the 
+         * function call in our argumentList. */
+        argumentList.remove(funcId)
+        
+        return argumentList
+    }
     
     
 
