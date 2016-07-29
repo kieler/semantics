@@ -79,6 +79,8 @@ import de.cau.cs.kieler.sccharts.transformations.Termination
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
 import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
+import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
+import org.eclipse.cdt.core.dom.ast.IASTExpressionList
 
 /**
  * @author ssm
@@ -108,15 +110,22 @@ class CDTProcessor {
     val VOSet = <ValuedObject>newHashSet
     var _trc = 0
 
-    var Declaration globalDeclaration
+
 
     var State funcGlobalState
     
     // Save all different labels of defined functions. Used for lookup for function-calls.
     var funcLabelSet = <String>newHashSet
 
+
+    // Save FunctionCallExpression and referencing state to handle function calls
+    ArrayList<Pair<CASTFunctionCallExpression,State>> functionCallRefs = new ArrayList<Pair<CASTFunctionCallExpression,State>>();
+    
+    ArrayList<State> functions = new ArrayList<State>();
+
+
     Map<String, State> functionStates = new HashMap<String, State>();
-    List<State> connectorStates = new ArrayList<State>();
+    ArrayList<State> connectorStates = new ArrayList<State>();
     String parameterStr
 
     def SCCharts createFromEditor(IEditorPart editor) {
@@ -136,14 +145,14 @@ class CDTProcessor {
             return null
         }
         
-        // Print different function-definitions.
-        ast.children.forEach [f | 
-            val declarator = f.children.filter(typeof(CASTFunctionDeclarator)).head
-            val label = declarator.children.head.toString
-            // Save label in a set so we can look up all defined functions of the program afterwards.
-            funcLabelSet.add(label)
-//            println("AST-Children: " + label)
-        ]
+//        // Print different function-definitions.
+//        ast.children.forEach [f | 
+//            val declarator = f.children.filter(typeof(CASTFunctionDeclarator)).head
+//            val label = declarator.children.head.toString
+//            // Save label in a set so we can look up all defined functions of the program afterwards.
+//            funcLabelSet.add(label)
+////            println("AST-Children: " + label)
+//        ]
 
         VOSet.clear
         
@@ -155,12 +164,41 @@ class CDTProcessor {
             if (func instanceof CASTFunctionDefinition) {
                 val rootFunctionDefinition = func as CASTFunctionDefinition
                 val model = rootFunctionDefinition.transformFunction
+                functions.add(model)
                 rootSCChart.rootStates += model
             }
         ]
-
+        
+        // Create reference of function call.
+        if (!functionCallRefs.empty) {
+            functionCallRefs.forEach [ entry |
+                /* Look up the to be referenced function inside CASTFunctionCallExpression (key) and connect
+                 * it to the referencing state (value). */
+                val funcCallExp = entry.key
+                val referencingState = entry.value
+                val funcID = getIDFromFunctionCallExp(funcCallExp)
+                // Search the list functions for the to be referenced function state
+                val referencedState = lookForFunctions(funcID)
+                if (referencedState != null) {
+                    referencingState.referencedScope = referencedState
+                }
+                
+                
+                
+                val x = funcCallExp.children.last
+                println("HALLOOOOO " + x)
+                println("LIST: " + referencingState.parameters)
+                
+                
+                
+                
+                // Handle arguments of function call.
+//                val argumentList = getFunctionCallArguments(funcCallExp)
+            ]
+        }
+        
 //        removeConnectorStates();
-        rootSCChart.createStringAnnotation("cgeneratedscchart","")
+        rootSCChart.createStringAnnotation(CbasedSCChartFeature.ID,"")
         rootSCChart
     }
 
@@ -1282,34 +1320,55 @@ class CDTProcessor {
         // Handle function calls.
         if (es.expression instanceof CASTFunctionCallExpression) {
 
-            val sa = scc.createState => [ s |
-                s.id = trC + "T"
-                s.label = createLabel(es)
+            // Get functionCallExpression.
+            val funcCallExp = es.children.filter(CASTFunctionCallExpression).head
+//            // Get idExpression of functionCallExp.
+//            val idExpression = es.expression.children.filter(CASTIdExpression).head
+//            // Get id of called function.
+//            val funcID = idExpression.children.head.toString
+            
+            // Create referencing state.
+            val refState = scc.createState => [ s |
+                s.id = trC + "_ref"
+                s.label = "Call"
                 state.parentRegion.states += s
             ]
+            
+            // The function of the FunctionCallExpression should be referenced to later on by refState.
+            val Pair<CASTFunctionCallExpression, State> p = new Pair(funcCallExp,refState)
+            /* The referencing needs to be done at a later point because until now, the called function
+             * does not have to be looked at yet.
+             */
+            functionCallRefs.add(p)
+            
 
-            if (functionStates.get("wasauchimmer") != null) {
-
-                sa.referencedScope = functionStates.get("wasauchimmer")
-                val bind = BindingImpl.newInstance
-                sa.bindings += bind
-                state.parentRegion.states += sa
-            } else {
-                val cal = (es.expression as CASTFunctionCallExpression).createFunctionCallValuedObject();
-
-                val entryact = sa.createEntryAction
-                entryact.createEmission(cal)
-
-            }
+//            val sa = scc.createState => [ s |
+//                s.id = trC + "T"
+//                s.label = createLabel(es)
+//                state.parentRegion.states += s
+//            ]
+//
+//            if (functionStates.get("wasauchimmer") != null) {
+//
+//                sa.referencedScope = functionStates.get("wasauchimmer")
+////                val bind = BindingImpl.newInstance
+////                sa.bindings += bind
+//                state.parentRegion.states += sa
+//            } else {
+//                val cal = (es.expression as CASTFunctionCallExpression).createFunctionCallValuedObject();
+//
+//                val entryact = sa.createEntryAction
+//                entryact.createEmission(cal)
+//
+//            }
 
             val trans = scc.createTransition => [
-                targetState = sa
+                targetState = refState
                 immediate = true
-            // codeState.outgoingTransitions += it
             ]
             state.outgoingTransitions += trans
 
-            return sa
+            return refState
 
         }
 
@@ -1335,6 +1394,7 @@ class CDTProcessor {
         } else {
             cal.name = cal.name + ")"
         }
+        
 
         cal.id("test")
         return cal
@@ -1634,7 +1694,56 @@ class CDTProcessor {
         return connector
     }
     
-
+    // Returns the id of function from a given CASTFunctionCallExpression.
+    private def String getIDFromFunctionCallExp(CASTFunctionCallExpression es) {
+        // Get idExpression of FunctionCallExpression
+        val idExpression = es.children.filter(CASTIdExpression).head
+        // Get id of called function.
+        val funcID = idExpression.children.head.toString
+        
+        return funcID
+    }
+    
+    // Return the entry of the global function list which has the same id as the one we are looking for.
+    private def State lookForFunctions(String id) {
+        for (s : functions) {
+            if (s.id == id) {
+                return s
+            }
+        }
+        // If there is no such entry, return null.
+        return null
+    }
+    
+    // Return a list of arguments of the given FunctionCallExpression.
+//    private def List<IASTNode> getFunctionCallArguments(CASTFunctionCallExpression funcCallExp) {
+//        val children = funcCallExp.children
+//        val List<IASTNode> todo = null
+//        val funcId = children.head
+//        
+//        for(a : children) {
+//            println("CHILD: " + a)
+//        }
+//        
+//        for(a : children) {
+//            todo.add(a)
+//        }
+//        
+//        for(a : todo) {
+//            println("FIRST: " + a)
+//        }
+//        
+//        
+//        val b = todo.remove(funcId)
+//        
+//        for(a : todo) {
+//            println("SECOND: " + a)
+//        }
+//        
+//        return null
+//    }
+    
+    
 
 // DAS HIER IST ALT. IST GLAUBE ICH UNNÖTIG!
 

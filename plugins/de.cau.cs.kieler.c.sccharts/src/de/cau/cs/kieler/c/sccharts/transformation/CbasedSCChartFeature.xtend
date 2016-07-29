@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author SL
@@ -37,7 +38,7 @@ class CbasedSCChartFeature extends Feature {
     @Inject
     extension AnnotationsExtensions
     
-    def boolean isContained(State scchart) {
+    def boolean isContained(SCCharts scchart) {
         scchart.hasAnnotation(ID)
     }
     
