@@ -32,6 +32,17 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.kiml.options.PortConstraints
+import de.cau.cs.kieler.kiml.options.PortLabelPlacement
+import de.cau.cs.kieler.kiml.util.nodespacing.Spacing
+import de.cau.cs.kieler.kiml.util.nodespacing.Spacing.Margins;
 
 /**
  * @author ssm
@@ -45,6 +56,12 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
 
     @Inject
     extension KEdgeExtensions
+    
+    @Inject
+    extension KPortExtensions
+    
+    @Inject
+    extension KLabelExtensions
     
     @Inject
     extension KExpressionsValuedObjectExtensions
@@ -74,7 +91,7 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
         val equationNodes = equation.expression.performEquationTransformation;
         
         val node = equation.valuedObject.createNode
-        node.addNodeLabel(equation.serializeAssignmentRoot.toString)
+//        node.addNodeLabel(equation.serializeAssignmentRoot.toString)
         
         val edge = equation.expression.performWireTransformation
         edge.target = node
@@ -87,24 +104,11 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
     }
     
     private def dispatch Set<KNode> performEquationTransformation(Value value) {
-        val node = value.createNode.associateWith(value)
-        node.addNodeLabel(value.serializeHR.toString);
-        <KNode> newHashSet => [ it += node ]
+        <KNode> newHashSet
     }
     
     private def dispatch Set<KNode> performEquationTransformation(ValuedObjectReference reference) {
-        
-        val declaration = reference.valuedObject.eContainer
-        
-        if (declaration instanceof VariableDeclaration) {
-            val node = reference.valuedObject.createNode.associateWith(reference.valuedObject)
-            node.addNodeLabel(reference.serializeHR.toString);
-            return <KNode> newHashSet => [ it += node ]
-        } else { // ReferenceDeclaration
-            val node = reference.valuedObject.createNode.associateWith(reference.valuedObject) 
-//            node.addNodeLabel(reference.serializeHR.toString)
-            return <KNode> newHashSet => [ it += node ]
-        }
+        <KNode> newHashSet
     }
     
     private def dispatch Set<KNode> performEquationTransformation(OperatorExpression expression) {
@@ -134,6 +138,13 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
         val edge = createEdge.associateWith(reference)
         edge.addWireFigure
         edge.source = reference.valuedObject.getNode
+        
+        if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
+            if (reference.subReference != null) {
+                edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
+            } 
+        }
+        
         edge        
     }
 
@@ -166,16 +177,40 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
                 
                 dataSources += vo
                 if (!isReference) {
-                    result += vo.createNode => [ addInputNodeFigure ]
+                    val node = vo.createNode => [ addInputNodeFigure ]
+                    node.associateWith(vo)
+                    node.addNodeLabel(vo.serializeHR.toString);
+                    result += node
                 } else {
-                    val referenceDeclaration = (vo as ValuedObject).eContainer as ReferenceDeclaration
-                    
-                    val node = vo.createNode => [ addReferenceNodeFigure ]
-                    
+                    val node = vo.createNode => [ 
+                        addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+                        setLayoutOption(LayoutOptions::BORDER_SPACING, 5f);
+                        setLayoutOption(LayoutOptions::SPACING, 1f);
+                        setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
+                        setLayoutOption(LayoutOptions::EXPAND_NODES, true);         
+                        setLayoutOption(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
+                        setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE)     
+                        addReferenceNodeFigure
+                    ]
+                    node.associateWith(vo)
                     node.addNodeLabel((vo as ValuedObject).serializeHR.toString)
                     node.addRegionsArea
                     
                     node.children += (vo as ValuedObject).createReferenceDataflowRegion
+                    
+                    val reference = (vo.eContainer as ReferenceDeclaration).reference as State
+                    for(output : reference.declarations.filter(VariableDeclaration).filter[ output ]) {
+                        for(v : output.valuedObjects) {
+                            val port = vo.createPort(v) => [
+                                addLayoutParam(LayoutOptions::PORT_SIDE, PortSide.EAST)
+                                setPortSize(3, 3)
+                                addLayoutParam(LayoutOptions::OFFSET, -3f)
+                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                                node.ports += it
+                            ]          
+                            port.associateWith(v)              
+                        }
+                    }
                     
                     result += node
                 }
@@ -189,7 +224,10 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
         val vo = equation.valuedObject
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
-            result += vo.createNode => [ addOutputNodeFigure ]
+            val node = vo.createNode => [ addOutputNodeFigure ]
+            node.associateWith(vo)
+            node.addNodeLabel(vo.serializeHR.toString);
+            result += node
         }
         result 
     }

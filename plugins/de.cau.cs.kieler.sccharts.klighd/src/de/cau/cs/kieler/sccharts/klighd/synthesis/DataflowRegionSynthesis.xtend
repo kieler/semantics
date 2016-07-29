@@ -97,8 +97,10 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
         node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
-        node.addLayoutParam(Properties::THOROUGHNESS, 100);
+//        node.addLayoutParam(Properties::THOROUGHNESS, 100);
         node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF);
+        node.setLayoutOption(LayoutOptions::SPACING, 20f);
+        node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
 
         node.setLayoutOption(KlighdProperties::EXPAND, true);
 
@@ -151,16 +153,16 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
      */
     def KNode createReferenceDataflowRegion(ValuedObject valuedObject) {
         val node = createNode().associateWith(valuedObject); // This association is important for the ReferenceExpandAction
-        if (USE_KLAY.booleanValue) {
+//        if (USE_KLAY.booleanValue) {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.setLayoutOption(LayoutOptions::SPACING, 3f);
             node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
-        } else {
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-            node.setLayoutOption(LayoutOptions::SPACING, 40f);
-        }
-        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.setLayoutOption(LayoutOptions::SPACING, 40f);
+//        } else {
+//            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+//            node.setLayoutOption(LayoutOptions::SPACING, 40f);
+//        }
+//        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+//        node.setLayoutOption(LayoutOptions::SPACING, 40f);
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);

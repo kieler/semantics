@@ -119,8 +119,8 @@ class EquationStyles {
      * Adds a connector figure.
      */
     def addOperatorNodeFigure(KNode node) {
-        node.setNodeSize(20, 20);
-        node.addRoundedRectangle(20, 20, baseLineWidth) => [
+        node.setNodeSize(24, 24);
+        node.addRoundedRectangle(24, 24, baseLineWidth) => [
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(OPERATORNODE_BACKGROUND_GRADIENT_1.color, OPERATORNODE_BACKGROUND_GRADIENT_2.color, 90);
             foreground = OPERATORNODE_FOREGROUND.color;
@@ -143,7 +143,7 @@ class EquationStyles {
      */
     def KText addMacroNodeLabel(KNode node, String text) {
         node.contentContainer.addText(text) => [
-            fontSize = 8;
+            fontSize = 11;
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
         ]
@@ -154,7 +154,7 @@ class EquationStyles {
      */
     def KText addOperatorNodeLabel(KNode node, String text) {
         node.contentContainer.addText(text) => [
-            fontSize = 6;
+            fontSize = 8;
             // Add surrounding space
             setGridPlacementData().from(LEFT, 1.5f, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
         ]
@@ -175,7 +175,7 @@ class EquationStyles {
      */
     def KRoundedRectangle addReferenceNodeFigure(KNode node) {
         node.setMinimalNodeSize(34, 34); // same as default figure
-        node.addRoundedRectangle(8, 8, baseLineWidth) => [
+        node.addRoundedRectangle(3, 3, baseLineWidth) => [
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setBackgroundGradient(REFERENCENODE_BACKGROUND_GRADIENT_1.color, REFERENCENODE_BACKGROUND_GRADIENT_2.color, 90);
