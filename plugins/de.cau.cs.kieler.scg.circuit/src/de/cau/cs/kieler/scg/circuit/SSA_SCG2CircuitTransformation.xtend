@@ -327,7 +327,14 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				//else { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  add for no red regions
 				//					logic.innerActors += actor
 				//				}
-				inputPort.name = subexpr.serialize.toString
+				
+				//inputPort.name = subexpr.serialize.toString
+				// Fixed _GO-Bug.
+				if(subexpr.serialize.toString == "_GO"){
+                    inputPort.name = "g0"
+                } else {
+                    inputPort.name = subexpr.serialize.toString
+                }
 			}
 		}
 
