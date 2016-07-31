@@ -49,8 +49,12 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 
+    /** 
+     * For the current element, maps a line number to the corresponding EObject.
+     */
+    public static HashMap<Integer, EObject> lineToModelElement = new HashMap<>();
+
     private IResource activeResource = null;
-    private HashMap<Integer, EObject> lineToModelElement = new HashMap<>();
 
     /**
      * {@inheritDoc}

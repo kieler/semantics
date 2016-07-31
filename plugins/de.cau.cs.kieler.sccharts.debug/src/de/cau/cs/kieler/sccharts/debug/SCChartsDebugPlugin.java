@@ -19,6 +19,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.IBreakpointListener;
+import org.eclipse.debug.core.IBreakpointManager;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -96,11 +98,11 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-        // Instantiate the breakpoints list on startup.
-        IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager()
-                .getBreakpoints(SCChartsDebugModelPresentation.ID);
-        for (IBreakpoint b : bs) {
-        }
+
+        IBreakpointManager manager = DebugPlugin.getDefault().getBreakpointManager();
+        IBreakpointListener listener = new BreakpointListener();
+        manager.addBreakpointListener(listener);
+
     }
 
     /*
@@ -226,9 +228,9 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         }
         return isDebugSchedule;
     }
-    
+
     /**
-     * Schedules the schedule data according to the debug mode. 
+     * Schedules the schedule data according to the debug mode.
      */
     public void scheduleExecution() {
         ScheduleData toScheudle = DataComponent.DEBUG_MODE ? debugSchedule : nonDebugSchedule;
