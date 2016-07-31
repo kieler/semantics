@@ -59,7 +59,7 @@ class CircuitInitialization {
 		// -------------------------------------------------------
 		init.innerActors += createRegister("_GO", "Reset" , "Reset_local")
 		
-		createPort(logic, "g0", "InConnectorLogic")
+		createPort(logic, "_GO", "InConnectorLogic")
 		createPort(init, "g0", "OutConnectorInit")
 
 		// -------------------------------------------------------

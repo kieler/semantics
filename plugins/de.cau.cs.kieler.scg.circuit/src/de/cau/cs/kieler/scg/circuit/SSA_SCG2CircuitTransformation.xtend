@@ -328,13 +328,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				//					logic.innerActors += actor
 				//				}
 				
-				//inputPort.name = subexpr.serialize.toString
-				// Fixed _GO-Bug.
-				if(subexpr.serialize.toString == "_GO"){
-                    inputPort.name = "g0"
-                } else {
-                    inputPort.name = subexpr.serialize.toString
-                }
+				inputPort.name = subexpr.serialize.toString
 			}
 		}
 
@@ -355,11 +349,11 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		 * TODO: Find a better solution!!! 
 		 * */
 		else if (expr instanceof ValuedObjectReference) {
-			if (assignment.valuedObject.name == "g0") {
-				voExpressions.put(expr.valuedObject.name, assignment.valuedObject)
-			} else {
+			//if (assignment.valuedObject.name == "g0") {
+			//	voExpressions.put(expr.valuedObject.name, assignment.valuedObject)
+			//} else {
 				voExpressions.put(assignment.valuedObject.name, expr.valuedObject)
-			}
+			//}
 		}
 
 	}
