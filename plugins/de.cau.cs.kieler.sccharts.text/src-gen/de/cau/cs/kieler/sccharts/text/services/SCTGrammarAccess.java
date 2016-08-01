@@ -1121,7 +1121,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.InitAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cInitActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cInitKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cPrecedingKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -1137,17 +1137,17 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//InitAction sccharts::InitAction:
 		//	{sccharts::InitAction}
-		//	'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::InitAction} 'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::InitAction} 'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::InitAction}
 		public Action getInitActionAction_0() { return cInitActionAction_0; }
 
-		//'init'
-		public Keyword getInitKeyword_1() { return cInitKeyword_1; }
+		//'preceding'
+		public Keyword getPrecedingKeyword_1() { return cPrecedingKeyword_1; }
 
 		//('if' trigger=BoolExpression)?
 		public Group getGroup_2() { return cGroup_2; }
@@ -1190,7 +1190,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.FinalAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cFinalActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cFinalKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cSucceedingKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cIfKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
@@ -1206,17 +1206,17 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//FinalAction sccharts::FinalAction:
 		//	{sccharts::FinalAction}
-		//	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::FinalAction} 'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//{sccharts::FinalAction} 'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::FinalAction}
 		public Action getFinalActionAction_0() { return cFinalActionAction_0; }
 
-		//'final'
-		public Keyword getFinalKeyword_1() { return cFinalKeyword_1; }
+		//'succeeding'
+		public Keyword getSucceedingKeyword_1() { return cSucceedingKeyword_1; }
 
 		//('if' trigger=BoolExpression)?
 		public Group getGroup_2() { return cGroup_2; }
@@ -1915,7 +1915,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//InitAction sccharts::InitAction:
 	//	{sccharts::InitAction}
-	//	'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public InitActionElements getInitActionAccess() {
 		return pInitAction;
 	}
@@ -1926,7 +1926,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//FinalAction sccharts::FinalAction:
 	//	{sccharts::FinalAction}
-	//	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	public FinalActionElements getFinalActionAccess() {
 		return pFinalAction;
 	}

@@ -8338,11 +8338,11 @@ rule__InitAction__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getInitActionAccess().getInitKeyword_1()); }
+{ before(grammarAccess.getInitActionAccess().getPrecedingKeyword_1()); }
 
-	'init' 
+	'preceding' 
 
-{ after(grammarAccess.getInitActionAccess().getInitKeyword_1()); }
+{ after(grammarAccess.getInitActionAccess().getPrecedingKeyword_1()); }
 )
 
 ;
@@ -8685,11 +8685,11 @@ rule__FinalAction__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getFinalActionAccess().getFinalKeyword_1()); }
+{ before(grammarAccess.getFinalActionAccess().getSucceedingKeyword_1()); }
 
-	'final' 
+	'succeeding' 
 
-{ after(grammarAccess.getFinalActionAccess().getFinalKeyword_1()); }
+{ after(grammarAccess.getFinalActionAccess().getSucceedingKeyword_1()); }
 )
 
 ;

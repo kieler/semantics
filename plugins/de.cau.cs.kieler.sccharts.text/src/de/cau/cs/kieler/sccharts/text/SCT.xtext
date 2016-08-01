@@ -110,11 +110,11 @@ IterateAction returns sccharts::IterateAction:
 
 InitAction returns sccharts::InitAction:
 	{sccharts::InitAction}
-   'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 FinalAction returns sccharts::FinalAction:
 	{sccharts::FinalAction}
-	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
 
 
 // -------------- //

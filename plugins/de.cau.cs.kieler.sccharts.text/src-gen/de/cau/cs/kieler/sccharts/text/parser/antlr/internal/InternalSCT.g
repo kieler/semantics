@@ -1832,9 +1832,9 @@ ruleInitAction returns [EObject current=null]
             grammarAccess.getInitActionAccess().getInitActionAction_0(),
             $current);
     }
-)	otherlv_1='init' 
+)	otherlv_1='preceding' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getInitActionAccess().getInitKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getInitActionAccess().getPrecedingKeyword_1());
     }
 (	otherlv_2='if' 
     {
@@ -1932,9 +1932,9 @@ ruleFinalAction returns [EObject current=null]
             grammarAccess.getFinalActionAccess().getFinalActionAction_0(),
             $current);
     }
-)	otherlv_1='final' 
+)	otherlv_1='succeeding' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getFinalActionAccess().getFinalKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getFinalActionAccess().getSucceedingKeyword_1());
     }
 (	otherlv_2='if' 
     {
