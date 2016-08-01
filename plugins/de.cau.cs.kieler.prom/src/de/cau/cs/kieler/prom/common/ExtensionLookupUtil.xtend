@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.debug.ui.ILaunchShortcut
 import org.eclipse.ui.IWorkbenchWizard
 import com.google.common.collect.Lists
+import de.cau.cs.kieler.prom.simulation.ISimulator
 
 /**
  * Auxilary class to search for installed extensions
@@ -39,6 +40,16 @@ class ExtensionLookupUtil {
      * The element name for wizard extensions
      */
     public static val WIZARD_ELEMENT_NAME = "wizard"
+    
+    /**
+     * The extension id of simulators.
+     */
+    public static val SIMULATOR_EXTENSION_ID = "de.cau.cs.kieler.prom.simulator"
+    
+    /**
+     * The element name for wizard extensions
+     */
+    public static val SIMULATOR_ELEMENT_NAME = "simulator"
     
     /**
      * The attribute name for a class which implements a wizard
@@ -84,6 +95,17 @@ class ExtensionLookupUtil {
         return instantiateClassFromExtension(WIZARD_EXTENSION_ID, WIZARD_ELEMENT_NAME, CLASS_ATTRIBUTE_NAME, fullyQualifiedClassName) as IWorkbenchWizard
     }
 
+    /**
+     * Searches for a simulators and initializes the one with the fully qulified class name.
+     * 
+     * @param fullyQualifiedClassName The fully qualified class name of an implementation of a simulator.
+     * @return The simulator implemented by the fully qualified class name<br/>
+     *         or null if there is no such implementation.
+     */
+    static def ISimulator getSimulator(String fullyQualifiedClassName) {
+        return instantiateClassFromExtension(SIMULATOR_EXTENSION_ID, SIMULATOR_ELEMENT_NAME, CLASS_ATTRIBUTE_NAME, fullyQualifiedClassName) as ISimulator
+    }
+    
     /**
      * Searches for extension point configurations of launch shortcuts.
      * 

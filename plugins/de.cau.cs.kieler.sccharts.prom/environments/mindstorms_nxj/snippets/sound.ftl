@@ -4,7 +4,7 @@
      Example for SCCharts:
          @Wrapper Beep
          ouput bool warningBeep; -->
-<#macro Beep volume="10">
+<#macro Beep volume=10>
     <@output>
         // Play beep sound
         if(scchart.${varname}) {
@@ -41,7 +41,7 @@
      Example for SCCharts:
          @Wrapper BeepSequence, Up
          ouput bool playBeepSequence; -->
-<#macro BeepSequence direction="Down" volume="10">
+<#macro BeepSequence direction="Down" volume=10>
     <@output>
         // Play sequence of beep tones
         if(scchart.${varname}) {
