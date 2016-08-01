@@ -17,7 +17,6 @@ import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import java.util.Set
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.EquationStyles
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValueExtensions
@@ -35,12 +34,18 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortLabelPlacement
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.emf.common.util.URI
+import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.kiml.klayoutdata.KIdentifier
 
 /**
  * @author ssm
@@ -50,13 +55,13 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     
     @Inject
-    extension KNodeExtensions
+    extension KNodeExtensionsReplacement
 
     @Inject
     extension KEdgeExtensions
     
     @Inject
-    extension KPortExtensions
+    extension KPortExtensionsReplacement
     
     @Inject
     extension KLabelExtensions
@@ -68,6 +73,9 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     extension KExpressionsValueExtensions
     
     @Inject
+    extension AnnotationsExtensions
+    
+    @Inject
     extension SCChartsSerializeHRExtension    
     
     @Inject
@@ -76,9 +84,13 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     @Inject
     extension DataflowRegionSynthesis
     
+    @Inject
+    IResourceServiceProvider.Registry regXtext;    
+    
     
     private val dataSources = <EObject> newHashSet
     private val dataSinks = <ValuedObject> newHashSet
+    private val dataRefs = <ValuedObject> newHashSet
     
     override performTranformationToSet(Assignment equation) {
         val nodes = <KNode> newHashSet
@@ -93,6 +105,11 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
         
         val edge = equation.expression.performWireTransformation
         edge.target = node
+        if (equation.valuedObject.eContainer instanceof ReferenceDeclaration) {
+            if (equation.subReference != null) {
+                edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
+            } 
+        }        
         
         nodes += equationNodes
         nodes += node
@@ -161,6 +178,94 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     }
     
     
+    protected def Set<KNode> performReferenceNodeTransformation(ValuedObject vo) {
+        val result = <KNode> newHashSet
+        if (dataRefs.contains(vo)) return result
+        dataRefs += vo
+        
+        val reference = (vo.eContainer as ReferenceDeclaration).reference as State
+        if (reference.hasAnnotation("actor")) {
+            val kgt = reference.getStringAnnotationValue("actor")
+            println(vo.eResource.URI)
+            val sl = vo.eResource.URI.segmentsList
+            val nsl = sl.take(sl.length - 1).drop(1)
+            val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
+            println(newURI)
+
+            val provider = regXtext.getResourceServiceProvider(newURI)
+            val newResourceSet = provider.get(XtextResourceSet)
+            newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+            val res = newResourceSet.createResource(newURI)
+
+            res.load(newResourceSet.loadOptions)
+            val node = (res.getContents().get(0) as KNode).children.head
+            vo.addNode(node)
+            result += node 
+            
+            val vos = <ValuedObject> newArrayList
+            reference.declarations.forEach[ vos += valuedObjects ]
+            
+            for(p : node.eAllContents.filter(KPort).toList) {
+                val id = p.data.filter(KIdentifier).head
+                val obj = vos.filter[ it.name.equals(id.id) ].head
+                
+                vo.addPort(obj, p)
+            }
+
+            return result            
+        }      
+        
+        val node = vo.createNode => [ 
+            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+            setLayoutOption(LayoutOptions::BORDER_SPACING, 5f);
+            setLayoutOption(LayoutOptions::SPACING, 1f);
+            setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
+            setLayoutOption(LayoutOptions::EXPAND_NODES, true);         
+            setLayoutOption(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
+            setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE)     
+            addReferenceNodeFigure
+        ]
+        node.associateWith(vo)
+        node.addNodeLabel((vo as ValuedObject).serializeHR.toString)
+        node.addRegionsArea
+        
+        node.children += (vo as ValuedObject).createReferenceDataflowRegion
+        
+        for(output : reference.declarations.filter(VariableDeclaration).filter[ output ]) {
+            for(v : output.valuedObjects) {
+                val port = vo.createPort(v) => [
+                    addLayoutParam(LayoutOptions::PORT_SIDE, PortSide.EAST)
+                    setPortSize(3, 3)
+                    addLayoutParam(LayoutOptions::OFFSET, -3f)
+                    createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                    node.ports += it
+                ]          
+                port.associateWith(v)              
+            }
+        }
+        for(input : reference.declarations.filter(VariableDeclaration).filter[ input ]) {
+            for(v : input.valuedObjects.reverseView) {
+                val port = vo.createPort(v) => [
+                    if (v.hasAnnotation("hidden")) {
+                        addLayoutParam(LayoutOptions::PORT_SIDE, PortSide.SOUTH)
+                    } else {
+                        addLayoutParam(LayoutOptions::PORT_SIDE, PortSide.WEST)
+                    }
+                    setPortSize(3, 3)
+                    addLayoutParam(LayoutOptions::OFFSET, -3f)
+                    createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                    node.ports += it
+                ]          
+                port.associateWith(v)              
+            }
+        }
+        
+        result += node
+        
+        result        
+    }
+    
+    
     private def Set<KNode> performDataSourceTransformation(Assignment equation) {
         val result = <KNode> newHashSet
         val vors = equation.expression.getAllReferences.map[ valuedObject ]
@@ -170,7 +275,11 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
                 
                 var isReference = false
                 if (vo instanceof ValuedObject) {
-                    if (vo.eContainer instanceof ReferenceDeclaration) isReference = true            
+                    if (vo.eContainer instanceof ReferenceDeclaration) {
+                        if ((vo.eContainer as ReferenceDeclaration).extern == null) {
+                            isReference = true
+                        }
+                    }            
                 }
                 
                 dataSources += vo
@@ -180,37 +289,7 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
                     node.addNodeLabel(vo.serializeHR.toString);
                     result += node
                 } else {
-                    val node = vo.createNode => [ 
-                        addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-                        setLayoutOption(LayoutOptions::BORDER_SPACING, 5f);
-                        setLayoutOption(LayoutOptions::SPACING, 1f);
-                        setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
-                        setLayoutOption(LayoutOptions::EXPAND_NODES, true);         
-                        setLayoutOption(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-                        setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.INSIDE)     
-                        addReferenceNodeFigure
-                    ]
-                    node.associateWith(vo)
-                    node.addNodeLabel((vo as ValuedObject).serializeHR.toString)
-                    node.addRegionsArea
-                    
-                    node.children += (vo as ValuedObject).createReferenceDataflowRegion
-                    
-                    val reference = (vo.eContainer as ReferenceDeclaration).reference as State
-                    for(output : reference.declarations.filter(VariableDeclaration).filter[ output ]) {
-                        for(v : output.valuedObjects) {
-                            val port = vo.createPort(v) => [
-                                addLayoutParam(LayoutOptions::PORT_SIDE, PortSide.EAST)
-                                setPortSize(3, 3)
-                                addLayoutParam(LayoutOptions::OFFSET, -3f)
-                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
-                                node.ports += it
-                            ]          
-                            port.associateWith(v)              
-                        }
-                    }
-                    
-                    result += node
+                    result += (vo as ValuedObject).performReferenceNodeTransformation
                 }
             }
         }
@@ -220,6 +299,13 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     private def Set<KNode> performDataSinkTransformation(Assignment equation) {
         val result = <KNode> newHashSet
         val vo = equation.valuedObject
+        
+        if (vo.eContainer instanceof ReferenceDeclaration) {
+            if ((vo.eContainer as ReferenceDeclaration).extern == null) {
+                return vo.performReferenceNodeTransformation
+            }
+        }
+        
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
             val node = vo.createNode => [ addOutputNodeFigure ]

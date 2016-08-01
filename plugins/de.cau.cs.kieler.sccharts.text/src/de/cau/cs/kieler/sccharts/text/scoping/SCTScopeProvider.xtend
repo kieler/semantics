@@ -34,7 +34,7 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
     @Inject extension SCChartsExtension
 
     override getScope(EObject context, EReference reference) {
-        println(context + "\n  " + reference)
+//        println(context + "\n  " + reference)
         if (context instanceof Transition) {
             return getScopeForTransition(context, reference)
         }
@@ -70,7 +70,7 @@ class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.K
                     if (resSet != null) {
                         val resSetFilter = resSet.resources.filter[ 
                             val uri = it.URI.toPlatformString(true)
-                            println(uri)
+//                            println(uri)
                             return imports.exists[ uri.endsWith(it.values.head) ]
                         ]
                         for(r : resSetFilter) {
