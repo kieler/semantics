@@ -29,6 +29,8 @@ import de.cau.cs.kieler.core.kexpressions.Identifiable
 import java.util.Set
 import de.cau.cs.kieler.core.kexpressions.Referenceable
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 /**
  * @author ssm
@@ -43,7 +45,9 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 			return getScopeForValuedObjectReference(context, reference)
 		} else if (context instanceof ReferenceDeclaration) {
 			return getScopeForReferenceDeclaration(context, reference)			
-		} 
+		}  else if (context instanceof Assignment) {
+		    return getScopeForAssignment(context, reference)
+		}
 		
 		else if (reference == KEffectsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) {
 			return getScopeForValuedObject(context, reference)
@@ -51,6 +55,15 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 			return getScopeForValuedObject(context, reference)
 		}
 		return super.getScope(context, reference);
+	}
+	
+	protected def IScope getScopeForAssignment(EObject context, EReference reference) {
+	    if (context instanceof Assignment) {
+	        if (context.subReference != null && context.subReference.valuedObject == null) {
+	            return context.getScopeForReferencedDeclarationFromAssignment(reference)
+	        }
+	    }
+	    return context.getScopeHierarchical(reference)
 	}
 	
 	protected def IScope getScopeForValuedObjectReference(EObject context, EReference reference) {
@@ -63,17 +76,36 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 		} else if (context.eContainer instanceof ValuedObjectReference) {
 		    // The context is a subreference!
 		    var parentVO = context.eContainer as ValuedObjectReference
-		    return parentVO.getScopeForReferenceDeclarationViaSubReference(reference)
+		    return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
 		} else if (context instanceof ValuedObjectReference) {
-		    if (context.subReference != null && context.subReference.valuedObject == null) {
+		    if (context.eContainer instanceof Assignment) {
+		        // The context is a subreference inside of an assignment!
+		        if (context != context.eContainer.asAssignment.expression) {
+		          return context.eContainer.getScopeForReferencedDeclarationFromAssignment(reference)
+		        }
+	       	} else if (context.subReference != null && context.subReference.valuedObject == null) {
 		        var parentVO = context as ValuedObjectReference
-		        return parentVO.getScopeForReferenceDeclarationViaSubReference(reference)
+		        return parentVO.getScopeForReferencedDeclarationFromSubReference(reference)
 		    }
-		}
+        }
 		return context.getScopeHierarchical(reference)
 	}
 	
-	protected def IScope getScopeForReferenceDeclarationViaSubReference(EObject context, EReference reference) {
+	 protected def IScope getScopeForReferencedDeclarationFromAssignment(EObject context, EReference reference) {
+        if (context instanceof Assignment) {
+            if (context.valuedObject != null) {
+                if (context.valuedObject.eContainer != null) {
+                    if (context.valuedObject.eContainer instanceof ReferenceDeclaration) {
+                        return (context.valuedObject.eContainer as ReferenceDeclaration).
+                            getScopeForReferencedDeclarationObject[ input ]
+                    }
+                }
+            }
+        }
+        return context.getScopeHierarchical(reference)      
+    }
+	
+	protected def IScope getScopeForReferencedDeclarationFromSubReference(EObject context, EReference reference) {
 	    if (context instanceof ValuedObjectReference) {
 	        if (context.valuedObject != null) {
     	        if (context.eContainer != null) {
@@ -82,19 +114,25 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
                         parentVO = parentVO.eContainer as ValuedObjectReference
                     }
                     if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
-                        val declaration = parentVO.valuedObject.eContainer as ReferenceDeclaration 
-                        if (declaration.reference instanceof DeclarationScope) {
-                            val declarations = (declaration.reference as DeclarationScope).declarations
-                            val relevantDeclarations = declarations.filter(VariableDeclaration).filter[ output ].toList
-                            val candidates = <ValuedObject> newArrayList
-                            relevantDeclarations.forEach [ candidates += it.valuedObjects ]
-                            return Scopes.scopeFor(candidates)
-                       }
+                        return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
+                            getScopeForReferencedDeclarationObject[ output ]
                     }
                 }
             }
         }
         return context.getScopeHierarchical(reference)	    
+	}
+	
+	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
+	    Function1<? super VariableDeclaration, Boolean> predicate
+	) {
+        if (declaration.reference instanceof DeclarationScope) {
+            val declarations = (declaration.reference as DeclarationScope).declarations
+            val relevantDeclarations = declarations.filter(VariableDeclaration).filter(predicate).toList
+            val candidates = <ValuedObject> newArrayList
+            relevantDeclarations.forEach [ candidates += it.valuedObjects ]
+            return Scopes.scopeFor(candidates)
+       }
 	}
 	
 	protected def IScope getScopeForReferenceDeclaration(EObject context, EReference reference) {
@@ -147,6 +185,10 @@ import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
 	protected def Set<Referenceable> getReferenceables(EObject eObject) {
 	    eObject.eContents.filter(Referenceable).toSet
 	}
+	
+	private def asAssignment(EObject eObject) {
+	    eObject as Assignment
+	} 
 
 }
 
