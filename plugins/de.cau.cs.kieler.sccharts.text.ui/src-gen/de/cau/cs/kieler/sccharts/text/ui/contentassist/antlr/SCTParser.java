@@ -137,8 +137,6 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDataflowRegionAccess().getGroup(), "rule__DataflowRegion__Group__0");
 					put(grammarAccess.getDFAssignmentAccess().getGroup(), "rule__DFAssignment__Group__0");
 					put(grammarAccess.getDFAssignmentAccess().getGroup_2(), "rule__DFAssignment__Group_2__0");
-					put(grammarAccess.getEquationAccess().getGroup(), "rule__Equation__Group__0");
-					put(grammarAccess.getEquationAccess().getGroup_1(), "rule__Equation__Group_1__0");
 					put(grammarAccess.getRootScopeAccess().getGroup(), "rule__RootScope__Group__0");
 					put(grammarAccess.getRootScopeAccess().getGroup_3(), "rule__RootScope__Group_3__0");
 					put(grammarAccess.getScopeAccess().getGroup(), "rule__Scope__Group__0");
@@ -168,6 +166,9 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup_2(), "rule__Assignment__Group_2__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup(), "rule__SubReferenceAssignment__Group__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup_2(), "rule__SubReferenceAssignment__Group_2__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup_3(), "rule__SubReferenceAssignment__Group_3__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup_2(), "rule__PostfixEffect__Group_2__0");
 					put(grammarAccess.getHostcodeEffectAccess().getGroup(), "rule__HostcodeEffect__Group__0");
@@ -342,8 +343,6 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDFAssignmentAccess().getIndicesAssignment_2_1(), "rule__DFAssignment__IndicesAssignment_2_1");
 					put(grammarAccess.getDFAssignmentAccess().getOperatorAssignment_3(), "rule__DFAssignment__OperatorAssignment_3");
 					put(grammarAccess.getDFAssignmentAccess().getExpressionAssignment_4(), "rule__DFAssignment__ExpressionAssignment_4");
-					put(grammarAccess.getEquationAccess().getValuedObjectAssignment_1_0(), "rule__Equation__ValuedObjectAssignment_1_0");
-					put(grammarAccess.getEquationAccess().getExpressionAssignment_1_2(), "rule__Equation__ExpressionAssignment_1_2");
 					put(grammarAccess.getKextAccess().getScopesAssignment(), "rule__Kext__ScopesAssignment");
 					put(grammarAccess.getRootScopeAccess().getDeclarationsAssignment_1(), "rule__RootScope__DeclarationsAssignment_1");
 					put(grammarAccess.getRootScopeAccess().getEntitiesAssignment_2(), "rule__RootScope__EntitiesAssignment_2");
@@ -399,6 +398,12 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
 					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getAnnotationsAssignment_0(), "rule__SubReferenceAssignment__AnnotationsAssignment_0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getValuedObjectAssignment_1(), "rule__SubReferenceAssignment__ValuedObjectAssignment_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getIndicesAssignment_2_1(), "rule__SubReferenceAssignment__IndicesAssignment_2_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getSubReferenceAssignment_3_1(), "rule__SubReferenceAssignment__SubReferenceAssignment_3_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getOperatorAssignment_4(), "rule__SubReferenceAssignment__OperatorAssignment_4");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getExpressionAssignment_5(), "rule__SubReferenceAssignment__ExpressionAssignment_5");
 					put(grammarAccess.getPostfixEffectAccess().getAnnotationsAssignment_0(), "rule__PostfixEffect__AnnotationsAssignment_0");
 					put(grammarAccess.getPostfixEffectAccess().getValuedObjectAssignment_1(), "rule__PostfixEffect__ValuedObjectAssignment_1");
 					put(grammarAccess.getPostfixEffectAccess().getIndicesAssignment_2_1(), "rule__PostfixEffect__IndicesAssignment_2_1");
@@ -443,8 +448,8 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
-					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1(), "rule__ValuedObjectReference__SubReferenceAssignment_1_1");
-					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1(), "rule__ValuedObjectReference__IndicesAssignment_2_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
 					put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");

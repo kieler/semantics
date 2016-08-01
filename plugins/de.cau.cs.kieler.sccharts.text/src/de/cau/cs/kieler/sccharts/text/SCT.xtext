@@ -161,11 +161,8 @@ DFAssignment returns keffects::Assignment:
 	('[' indices+=Expression ']')*
 	 operator=AssignOperator expression = Expression;
 
-Equation returns sccharts::Equation:
-    {sccharts::Equation}
-    (
-        (valuedObject = [kexpressions::ValuedObject|PrimeID]) '=' (expression = Expression) 
-    );
+Equation returns keffects::Assignment:
+    SubReferenceAssignment;
 
 // ------------ //
 //  Enum Rules  // 

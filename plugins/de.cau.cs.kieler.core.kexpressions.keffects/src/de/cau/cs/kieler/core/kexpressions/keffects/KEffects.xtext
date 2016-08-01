@@ -67,6 +67,13 @@ Assignment returns keffects::Assignment:
 	('[' indices+=Expression ']')*
 	 operator=AssignOperator expression = Expression;
 	 
+SubReferenceAssignment returns keffects::Assignment:
+    (annotations+=Annotation)*    
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+     operator=AssignOperator expression = Expression;	 
+	 
 // Postfix Effect
 // A postfix effect is an assignment missing the part beyond the operator. In this case the operator type
 // must be a postfix operator.

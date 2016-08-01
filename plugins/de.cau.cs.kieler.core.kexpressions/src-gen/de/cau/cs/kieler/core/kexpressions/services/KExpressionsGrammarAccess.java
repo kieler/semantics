@@ -917,23 +917,23 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cSubReferenceAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_1_1_0 = (RuleCall)cSubReferenceAssignment_1_1.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cIndicesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_1_1_0 = (RuleCall)cIndicesAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cIndicesExpressionParserRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cSubReferenceAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cSubReferenceAssignment_2_1.eContents().get(0);
 		
 		//// Valued Object Reference Rule
 		//// References a valued object with arbitrary (including none) indices part.
 		//// Example: A, B
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+		//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 		@Override public ParserRule getRule() { return rule; }
 
-		//valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*
+		//valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[ValuedObject|PrimeID]
@@ -945,32 +945,32 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1; }
 
-		//('.' subReference=ValuedObjectReference)?
+		//('[' indices+=Expression ']')*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//'.'
-		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
-
-		//subReference=ValuedObjectReference
-		public Assignment getSubReferenceAssignment_1_1() { return cSubReferenceAssignment_1_1; }
-
-		//ValuedObjectReference
-		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_1_1_0; }
-
-		//('[' indices+=Expression ']')*
-		public Group getGroup_2() { return cGroup_2; }
-
 		//'['
-		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
 
 		//indices+=Expression
-		public Assignment getIndicesAssignment_2_1() { return cIndicesAssignment_2_1; }
+		public Assignment getIndicesAssignment_1_1() { return cIndicesAssignment_1_1; }
 
 		//Expression
-		public RuleCall getIndicesExpressionParserRuleCall_2_1_0() { return cIndicesExpressionParserRuleCall_2_1_0; }
+		public RuleCall getIndicesExpressionParserRuleCall_1_1_0() { return cIndicesExpressionParserRuleCall_1_1_0; }
 
 		//']'
-		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//('.' subReference=ValuedObjectReference)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'.'
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
+
+		//subReference=ValuedObjectReference
+		public Assignment getSubReferenceAssignment_2_1() { return cSubReferenceAssignment_2_1; }
+
+		//ValuedObjectReference
+		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0; }
 	}
 
 	public class ReferenceCallElements extends AbstractParserRuleElementFinder {
@@ -2287,7 +2287,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return pValuedObjectReference;
 	}

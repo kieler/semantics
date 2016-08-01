@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scg.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getSubReference <em>Sub Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
  * </ul>
  *
@@ -93,6 +95,16 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     protected AssignOperator operator = OPERATOR_EDEFAULT;
 
 				/**
+     * The cached value of the '{@link #getSubReference() <em>Sub Reference</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSubReference()
+     * @generated
+     * @ordered
+     */
+    protected ValuedObjectReference subReference;
+
+                /**
      * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -283,6 +295,49 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    public ValuedObjectReference getSubReference() {
+        return subReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetSubReference(ValuedObjectReference newSubReference, NotificationChain msgs) {
+        ValuedObjectReference oldSubReference = subReference;
+        subReference = newSubReference;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__SUB_REFERENCE, oldSubReference, newSubReference);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSubReference(ValuedObjectReference newSubReference) {
+        if (newSubReference != subReference) {
+            NotificationChain msgs = null;
+            if (subReference != null)
+                msgs = ((InternalEObject)subReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+            if (newSubReference != null)
+                msgs = ((InternalEObject)newSubReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__SUB_REFERENCE, null, msgs);
+            msgs = basicSetSubReference(newSubReference, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__SUB_REFERENCE, newSubReference, newSubReference));
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -290,6 +345,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return basicSetExpression(null, msgs);
             case ScgPackage.ASSIGNMENT__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return basicSetSubReference(null, msgs);
             case ScgPackage.ASSIGNMENT__NEXT:
                 return basicSetNext(null, msgs);
         }
@@ -313,6 +370,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return getIndices();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return getOperator();
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return getSubReference();
             case ScgPackage.ASSIGNMENT__NEXT:
                 return getNext();
         }
@@ -341,6 +400,9 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 setOperator((AssignOperator)newValue);
                 return;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)newValue);
+                return;
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((ControlFlow)newValue);
                 return;
@@ -368,6 +430,9 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
                 return;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                setSubReference((ValuedObjectReference)null);
+                return;
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((ControlFlow)null);
                 return;
@@ -391,6 +456,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return indices != null && !indices.isEmpty();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
+            case ScgPackage.ASSIGNMENT__SUB_REFERENCE:
+                return subReference != null;
             case ScgPackage.ASSIGNMENT__NEXT:
                 return next != null;
         }
@@ -415,6 +482,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 case ScgPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
                 case ScgPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
                 case ScgPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+                case ScgPackage.ASSIGNMENT__SUB_REFERENCE: return KEffectsPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
             }
         }
@@ -439,6 +507,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.ASSIGNMENT__EXPRESSION;
                 case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.ASSIGNMENT__INDICES;
                 case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.ASSIGNMENT__OPERATOR;
+                case KEffectsPackage.ASSIGNMENT__SUB_REFERENCE: return ScgPackage.ASSIGNMENT__SUB_REFERENCE;
                 default: return -1;
             }
         }

@@ -522,10 +522,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:33:7: ( '.' )
-            // InternalKExpressions.g:33:9: '.'
+            // InternalKExpressions.g:33:7: ( '[' )
+            // InternalKExpressions.g:33:9: '['
             {
-            match('.'); 
+            match('['); 
 
             }
 
@@ -542,10 +542,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:34:7: ( '[' )
-            // InternalKExpressions.g:34:9: '['
+            // InternalKExpressions.g:34:7: ( ']' )
+            // InternalKExpressions.g:34:9: ']'
             {
-            match('['); 
+            match(']'); 
 
             }
 
@@ -562,10 +562,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalKExpressions.g:35:7: ( ']' )
-            // InternalKExpressions.g:35:9: ']'
+            // InternalKExpressions.g:35:7: ( '.' )
+            // InternalKExpressions.g:35:9: '.'
             {
-            match(']'); 
+            match('.'); 
 
             }
 
@@ -1882,7 +1882,7 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA21_specialS =
         "\1\1\27\uffff\1\0\3\uffff\1\3\20\uffff\1\2\54\uffff}>";
     static final String[] DFA21_transitionS = {
-            "\11\40\2\37\2\40\1\37\22\40\1\37\1\4\1\34\1\27\1\40\1\10\1\3\1\20\1\13\1\17\1\7\1\5\1\24\1\6\1\21\1\11\12\31\2\40\1\15\1\14\1\16\1\40\1\26\32\36\1\22\1\40\1\23\1\35\1\36\1\30\4\36\1\25\1\33\11\36\1\1\3\36\1\32\1\36\1\12\4\36\1\40\1\2\uff83\40",
+            "\11\40\2\37\2\40\1\37\22\40\1\37\1\4\1\34\1\27\1\40\1\10\1\3\1\20\1\13\1\17\1\7\1\5\1\24\1\6\1\23\1\11\12\31\2\40\1\15\1\14\1\16\1\40\1\26\32\36\1\21\1\40\1\22\1\35\1\36\1\30\4\36\1\25\1\33\11\36\1\1\3\36\1\32\1\36\1\12\4\36\1\40\1\2\uff83\40",
             "\1\41",
             "\1\43",
             "\1\45",
@@ -2056,11 +2056,11 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         else if ( (LA21_0=='\'') ) {s = 16;}
 
-                        else if ( (LA21_0=='.') ) {s = 17;}
+                        else if ( (LA21_0=='[') ) {s = 17;}
 
-                        else if ( (LA21_0=='[') ) {s = 18;}
+                        else if ( (LA21_0==']') ) {s = 18;}
 
-                        else if ( (LA21_0==']') ) {s = 19;}
+                        else if ( (LA21_0=='.') ) {s = 19;}
 
                         else if ( (LA21_0==',') ) {s = 20;}
 

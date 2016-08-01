@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import java.util.Set
@@ -41,15 +40,14 @@ import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortLabelPlacement
-import de.cau.cs.kieler.kiml.util.nodespacing.Spacing
-import de.cau.cs.kieler.kiml.util.nodespacing.Spacing.Margins;
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 
 /**
  * @author ssm
  *
  */
 @ViewSynthesisShared
-class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
+class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     
     @Inject
     extension KNodeExtensions
@@ -82,7 +80,7 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
     private val dataSources = <EObject> newHashSet
     private val dataSinks = <ValuedObject> newHashSet
     
-    override performTranformationToSet(Equation equation) {
+    override performTranformationToSet(Assignment equation) {
         val nodes = <KNode> newHashSet
         
         nodes += equation.performDataSourceTransformation;
@@ -163,7 +161,7 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
     }
     
     
-    private def Set<KNode> performDataSourceTransformation(Equation equation) {
+    private def Set<KNode> performDataSourceTransformation(Assignment equation) {
         val result = <KNode> newHashSet
         val vors = equation.expression.getAllReferences.map[ valuedObject ]
             + equation.expression.getAllValues
@@ -219,7 +217,7 @@ class EquationSynthesis extends SubSetSynthesis<Equation, KNode, Set<KNode>> {
         result 
     }
     
-    private def Set<KNode> performDataSinkTransformation(Equation equation) {
+    private def Set<KNode> performDataSinkTransformation(Assignment equation) {
         val result = <KNode> newHashSet
         val vo = equation.valuedObject
         if (!dataSinks.contains(vo)) {

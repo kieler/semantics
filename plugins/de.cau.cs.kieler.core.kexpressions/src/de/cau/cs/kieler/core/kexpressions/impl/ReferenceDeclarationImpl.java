@@ -3,13 +3,20 @@
 package de.cau.cs.kieler.core.kexpressions.impl;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Parameter;
 import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceDeclarationImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceDeclarationImpl#getExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ReferenceDeclarationImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -54,6 +62,16 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * @ordered
      */
     protected String extern = EXTERN_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getParameters()
+     * @generated
+     * @ordered
+     */
+    protected EList<Parameter> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -138,6 +156,32 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Parameter> getParameters() {
+        if (parameters == null) {
+            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS);
+        }
+        return parameters;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -146,6 +190,8 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
                 return basicGetReference();
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 return getExtern();
+            case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
+                return getParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -155,6 +201,7 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -163,6 +210,10 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
                 return;
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 setExtern((String)newValue);
+                return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
+                getParameters().clear();
+                getParameters().addAll((Collection<? extends Parameter>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -182,6 +233,9 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 setExtern(EXTERN_EDEFAULT);
                 return;
+            case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
+                getParameters().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -198,6 +252,8 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
                 return reference != null;
             case KExpressionsPackage.REFERENCE_DECLARATION__EXTERN:
                 return EXTERN_EDEFAULT == null ? extern != null : !EXTERN_EDEFAULT.equals(extern);
+            case KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS:
+                return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }

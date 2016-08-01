@@ -2545,6 +2545,8 @@ ruleEmission returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRulePostfixEffect
 entryRulePostfixEffect returns [EObject current=null] 
 	:
@@ -4475,55 +4477,55 @@ ruleValuedObjectReference returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_1='.' 
+)(	otherlv_1='[' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0());
+    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_subReference_2_0=ruleValuedObjectReference		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
-	        }
-       		set(
-       			$current, 
-       			"subReference",
-        		lv_subReference_2_0, 
-        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?(	otherlv_3='[' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
-	    }
-		lv_indices_4_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
        			"indices",
-        		lv_indices_4_0, 
+        		lv_indices_2_0, 
         		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_5=']' 
+)	otherlv_3=']' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2());
+    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
     }
-)*)
+)*(	otherlv_4='.' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
+	    }
+		lv_subReference_5_0=ruleValuedObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
+	        }
+       		set(
+       			$current, 
+       			"subReference",
+        		lv_subReference_5_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
 ;
 
 
@@ -6243,6 +6245,65 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 
 
 
+
+// Rule AssignOperator
+ruleAssignOperator returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getAssignOperatorAccess().getASSIGNEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='+=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getAssignOperatorAccess().getASSIGNADDEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='-=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNSUBEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getAssignOperatorAccess().getASSIGNSUBEnumLiteralDeclaration_2()); 
+    }
+)
+    |(	enumLiteral_3='*=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNMULEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getAssignOperatorAccess().getASSIGNMULEnumLiteralDeclaration_3()); 
+    }
+)
+    |(	enumLiteral_4='/=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_4, grammarAccess.getAssignOperatorAccess().getASSIGNDIVEnumLiteralDeclaration_4()); 
+    }
+)
+    |(	enumLiteral_5='%=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNMODEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_5, grammarAccess.getAssignOperatorAccess().getASSIGNMODEnumLiteralDeclaration_5()); 
+    }
+)
+    |(	enumLiteral_6='&=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_6, grammarAccess.getAssignOperatorAccess().getASSIGNANDEnumLiteralDeclaration_6()); 
+    }
+)
+    |(	enumLiteral_7='|=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNOREnumLiteralDeclaration_7().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_7, grammarAccess.getAssignOperatorAccess().getASSIGNOREnumLiteralDeclaration_7()); 
+    }
+)
+    |(	enumLiteral_8='^=' 
+	{
+        $current = grammarAccess.getAssignOperatorAccess().getASSIGNXOREnumLiteralDeclaration_8().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_8, grammarAccess.getAssignOperatorAccess().getASSIGNXOREnumLiteralDeclaration_8()); 
+    }
+));
 
 
 

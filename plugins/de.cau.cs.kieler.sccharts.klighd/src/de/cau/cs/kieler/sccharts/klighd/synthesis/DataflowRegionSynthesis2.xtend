@@ -51,7 +51,6 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DefineNode
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.State
@@ -63,6 +62,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 
 /**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
@@ -341,7 +341,7 @@ class DataflowRegionSynthesis2 extends SubSynthesis<DataflowRegion, KNode> {
                 ]
                 // if it's an operator expression, but there are no subexpressions
                 // get the corresponding nodes and create edges
-                if (expr.eContainer instanceof Equation) {
+                if (expr.eContainer instanceof Assignment) {
                     val vo = d.equations.get(index).valuedObject
                     nNode.addPort(vo, PortSide::EAST)
                     nNode.createEdge(parentNode) => [
@@ -575,8 +575,8 @@ class DataflowRegionSynthesis2 extends SubSynthesis<DataflowRegion, KNode> {
             it.sourcePort = n.getPort(expr.portMap)
             // getting the target node/port depends on
             // if the eContainer is the dataflow or another operator expression
-            if (expr.eContainer instanceof Equation) {
-                val eq = (expr.eContainer as Equation)
+            if (expr.eContainer instanceof Assignment) {
+                val eq = (expr.eContainer as Assignment)
                 val voRef = eq.valuedObject
                 it.target = voRef.getNode(parentNode)
                 it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)

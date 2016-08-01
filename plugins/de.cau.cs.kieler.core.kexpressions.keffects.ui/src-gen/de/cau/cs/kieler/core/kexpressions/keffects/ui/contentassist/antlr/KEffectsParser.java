@@ -72,6 +72,9 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup_2(), "rule__Assignment__Group_2__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup(), "rule__SubReferenceAssignment__Group__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup_2(), "rule__SubReferenceAssignment__Group_2__0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getGroup_3(), "rule__SubReferenceAssignment__Group_3__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
 					put(grammarAccess.getPostfixEffectAccess().getGroup_2(), "rule__PostfixEffect__Group_2__0");
 					put(grammarAccess.getHostcodeEffectAccess().getGroup(), "rule__HostcodeEffect__Group__0");
@@ -165,6 +168,12 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_2_1(), "rule__Assignment__IndicesAssignment_2_1");
 					put(grammarAccess.getAssignmentAccess().getOperatorAssignment_3(), "rule__Assignment__OperatorAssignment_3");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_4(), "rule__Assignment__ExpressionAssignment_4");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getAnnotationsAssignment_0(), "rule__SubReferenceAssignment__AnnotationsAssignment_0");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getValuedObjectAssignment_1(), "rule__SubReferenceAssignment__ValuedObjectAssignment_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getIndicesAssignment_2_1(), "rule__SubReferenceAssignment__IndicesAssignment_2_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getSubReferenceAssignment_3_1(), "rule__SubReferenceAssignment__SubReferenceAssignment_3_1");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getOperatorAssignment_4(), "rule__SubReferenceAssignment__OperatorAssignment_4");
+					put(grammarAccess.getSubReferenceAssignmentAccess().getExpressionAssignment_5(), "rule__SubReferenceAssignment__ExpressionAssignment_5");
 					put(grammarAccess.getPostfixEffectAccess().getAnnotationsAssignment_0(), "rule__PostfixEffect__AnnotationsAssignment_0");
 					put(grammarAccess.getPostfixEffectAccess().getValuedObjectAssignment_1(), "rule__PostfixEffect__ValuedObjectAssignment_1");
 					put(grammarAccess.getPostfixEffectAccess().getIndicesAssignment_2_1(), "rule__PostfixEffect__IndicesAssignment_2_1");
@@ -209,8 +218,8 @@ public class KEffectsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
-					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1(), "rule__ValuedObjectReference__SubReferenceAssignment_1_1");
-					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1(), "rule__ValuedObjectReference__IndicesAssignment_2_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
 					put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");

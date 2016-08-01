@@ -12,38 +12,34 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.core.kgraph.KNode
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kiml.options.EdgeRouting
+import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.sccharts.Equation
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
-import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.DataflowRegionStyles
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * @author ssm
@@ -56,29 +52,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     extension KNodeExtensions
 
     @Inject
-    extension KEdgeExtensions
-
-    @Inject
-    extension KLabelExtensions
-
-    @Inject
-    extension KPortExtensions
-
-    @Inject
     extension KRenderingExtensions
 
-    @Inject
-    extension KContainerRenderingExtensions
-
-    @Inject
-    extension KPolylineExtensions
-
-    @Inject
-    extension KColorExtensions
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
     @Inject
     extension KExpressionsDeclarationExtensions
     

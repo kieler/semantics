@@ -206,6 +206,94 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getExpressionExpressionParserRuleCall_4_0() { return cExpressionExpressionParserRuleCall_4_0; }
 	}
 
+	public class SubReferenceAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.kexpressions.keffects.KEffects.SubReferenceAssignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cIndicesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_2_1_0 = (RuleCall)cIndicesAssignment_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cFullStopKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cSubReferenceAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_3_1_0 = (RuleCall)cSubReferenceAssignment_3_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cOperatorAssignOperatorEnumRuleCall_4_0 = (RuleCall)cOperatorAssignment_4.eContents().get(0);
+		private final Assignment cExpressionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cExpressionExpressionParserRuleCall_5_0 = (RuleCall)cExpressionAssignment_5.eContents().get(0);
+		
+		//SubReferenceAssignment keffects::Assignment:
+		//	annotations+=Annotation*
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+		//	subReference=ValuedObjectReference)?
+		//	operator=AssignOperator expression=Expression
+		@Override public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+		//subReference=ValuedObjectReference)? operator=AssignOperator expression=Expression
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//valuedObject=[kexpressions::ValuedObject|PrimeID]
+		public Assignment getValuedObjectAssignment_1() { return cValuedObjectAssignment_1; }
+
+		//[kexpressions::ValuedObject|PrimeID]
+		public CrossReference getValuedObjectValuedObjectCrossReference_1_0() { return cValuedObjectValuedObjectCrossReference_1_0; }
+
+		//PrimeID
+		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
+
+		//('[' indices+=Expression ']')*
+		public Group getGroup_2() { return cGroup_2; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
+
+		//indices+=Expression
+		public Assignment getIndicesAssignment_2_1() { return cIndicesAssignment_2_1; }
+
+		//Expression
+		public RuleCall getIndicesExpressionParserRuleCall_2_1_0() { return cIndicesExpressionParserRuleCall_2_1_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+
+		//('.' subReference=ValuedObjectReference)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//'.'
+		public Keyword getFullStopKeyword_3_0() { return cFullStopKeyword_3_0; }
+
+		//subReference=ValuedObjectReference
+		public Assignment getSubReferenceAssignment_3_1() { return cSubReferenceAssignment_3_1; }
+
+		//ValuedObjectReference
+		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_3_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_3_1_0; }
+
+		//operator=AssignOperator
+		public Assignment getOperatorAssignment_4() { return cOperatorAssignment_4; }
+
+		//AssignOperator
+		public RuleCall getOperatorAssignOperatorEnumRuleCall_4_0() { return cOperatorAssignOperatorEnumRuleCall_4_0; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_5() { return cExpressionAssignment_5; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_5_0() { return cExpressionExpressionParserRuleCall_5_0; }
+	}
+
 	public class PostfixEffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.core.kexpressions.keffects.KEffects.PostfixEffect");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -658,6 +746,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	private final EffectElements pEffect;
 	private final EmissionElements pEmission;
 	private final AssignmentElements pAssignment;
+	private final SubReferenceAssignmentElements pSubReferenceAssignment;
 	private final PostfixEffectElements pPostfixEffect;
 	private final HostcodeEffectElements pHostcodeEffect;
 	private final ReferenceCallEffectElements pReferenceCallEffect;
@@ -685,6 +774,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pEffect = new EffectElements();
 		this.pEmission = new EmissionElements();
 		this.pAssignment = new AssignmentElements();
+		this.pSubReferenceAssignment = new SubReferenceAssignmentElements();
 		this.pPostfixEffect = new PostfixEffectElements();
 		this.pHostcodeEffect = new HostcodeEffectElements();
 		this.pReferenceCallEffect = new ReferenceCallEffectElements();
@@ -785,6 +875,19 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
+	}
+
+	//SubReferenceAssignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)?
+	//	operator=AssignOperator expression=Expression
+	public SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
+		return pSubReferenceAssignment;
+	}
+	
+	public ParserRule getSubReferenceAssignmentRule() {
+		return getSubReferenceAssignmentAccess().getRule();
 	}
 
 	//// Postfix Effect
@@ -1205,7 +1308,7 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}

@@ -49,7 +49,8 @@
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
-        eType="#//Equation" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//Node"/>
   </eClassifiers>
@@ -88,7 +89,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Equation" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"/>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Transition represents a connection between two {@link State}s and the&#xA;shift from the source to the target State. In sccharts Transitions may&#xA;only be specified between States on the same Regions. Inter-level&#xA;Transitions are not allowed.&#xA;&lt;p>&#xA;A Transition is an {@link Action} and therefore may contain a trigger condition&#xA;which guards the Transition and effects that get executed when the transition&#xA;is taken.&#xA;&lt;p>&#xA;Transitions have an integer priority. If there are multiple outgoing &#xA;transitions of a States and multiple triggers are evaluated to true, then&#xA;the transition with lowest priority is taken.&#xA;&lt;p>&#xA;A history transition will enter its source state in its containing Regions at the states that&#xA;it has left them before. So it does not start at the initial states in all circumstances but&#xA;in the states that the source state was left in some earlier tick. Only when a State is entered&#xA;for the first time (i.e. there is no history) then it is always entered in its initial States.&#xA;&lt;p>&#xA;A transition has a type {@link TransitionType}."/>

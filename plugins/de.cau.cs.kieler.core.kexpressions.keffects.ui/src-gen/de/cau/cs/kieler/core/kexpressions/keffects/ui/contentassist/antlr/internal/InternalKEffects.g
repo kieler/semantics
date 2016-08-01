@@ -141,6 +141,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRulePostfixEffect
 entryRulePostfixEffect 
 :
@@ -3039,6 +3041,9 @@ rule__Assignment__Group_2__2__Impl
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+
 
 
 
@@ -6805,7 +6810,7 @@ rule__ValuedObjectReference__Group__1__Impl
 :
 (
 { before(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); }
-(rule__ValuedObjectReference__Group_1__0)?
+(rule__ValuedObjectReference__Group_1__0)*
 { after(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); }
 )
 
@@ -6833,7 +6838,7 @@ rule__ValuedObjectReference__Group__2__Impl
 :
 (
 { before(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); }
-(rule__ValuedObjectReference__Group_2__0)*
+(rule__ValuedObjectReference__Group_2__0)?
 { after(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); }
 )
 
@@ -6867,11 +6872,11 @@ rule__ValuedObjectReference__Group_1__0__Impl
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); }
 
-	'.' 
+	'[' 
 
-{ after(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0()); }
+{ after(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); }
 )
 
 ;
@@ -6886,6 +6891,7 @@ rule__ValuedObjectReference__Group_1__1
     }
 :
 	rule__ValuedObjectReference__Group_1__1__Impl
+	rule__ValuedObjectReference__Group_1__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6897,15 +6903,47 @@ rule__ValuedObjectReference__Group_1__1__Impl
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1()); }
-(rule__ValuedObjectReference__SubReferenceAssignment_1_1)
-{ after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); }
+(rule__ValuedObjectReference__IndicesAssignment_1_1)
+{ after(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__ValuedObjectReference__Group_1__2
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__ValuedObjectReference__Group_1__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObjectReference__Group_1__2__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); }
+
+	']' 
+
+{ after(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -6930,11 +6968,11 @@ rule__ValuedObjectReference__Group_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); }
 
-	'[' 
+	'.' 
 
-{ after(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0()); }
+{ after(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); }
 )
 
 ;
@@ -6949,7 +6987,6 @@ rule__ValuedObjectReference__Group_2__1
     }
 :
 	rule__ValuedObjectReference__Group_2__1__Impl
-	rule__ValuedObjectReference__Group_2__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6961,47 +6998,15 @@ rule__ValuedObjectReference__Group_2__1__Impl
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1()); }
-(rule__ValuedObjectReference__IndicesAssignment_2_1)
-{ after(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); }
+(rule__ValuedObjectReference__SubReferenceAssignment_2_1)
+{ after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
-
-
-rule__ValuedObjectReference__Group_2__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__ValuedObjectReference__Group_2__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__ValuedObjectReference__Group_2__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2()); }
-
-	']' 
-
-{ after(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 
 
 
@@ -10190,6 +10195,12 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+
+
+
+
+
+
 rule__PostfixEffect__AnnotationsAssignment_0
     @init {
 		int stackSize = keepStackSize();
@@ -10863,14 +10874,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ValuedObjectReference__SubReferenceAssignment_1_1
+rule__ValuedObjectReference__IndicesAssignment_1_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); }
-	ruleValuedObjectReference{ after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); }
+	ruleExpression{ after(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); }
 )
 
 ;
@@ -10878,14 +10889,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ValuedObjectReference__IndicesAssignment_2_1
+rule__ValuedObjectReference__SubReferenceAssignment_2_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); }
-	ruleExpression{ after(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); }
+{ before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); }
+	ruleValuedObjectReference{ after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); }
 )
 
 ;

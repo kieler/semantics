@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 
@@ -16,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getReference <em>Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration()
@@ -75,4 +77,20 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     void setExtern(String value);
+
+    /**
+     * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parameters</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getReferenceDeclaration_Parameters()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Parameter> getParameters();
 } // ReferenceDeclaration

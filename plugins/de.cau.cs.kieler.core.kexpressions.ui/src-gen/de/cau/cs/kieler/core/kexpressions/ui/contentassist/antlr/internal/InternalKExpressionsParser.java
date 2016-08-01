@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExpressionsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'('", "')'", "'\\''", "'.'", "'['", "']'", "','", "'extern'", "'@'", "'#'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'()'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'('", "')'", "'\\''", "'['", "']'", "'.'", "','", "'extern'", "'@'", "'#'"
     };
     public static final int RULE_BOOLEAN=5;
     public static final int T__19=19;
@@ -13421,42 +13421,49 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__1__Impl"
-    // InternalKExpressions.g:4576:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )? ) ;
+    // InternalKExpressions.g:4576:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )* ) ;
     public final void rule__ValuedObjectReference__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4580:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )? ) )
-            // InternalKExpressions.g:4581:1: ( ( rule__ValuedObjectReference__Group_1__0 )? )
+            // InternalKExpressions.g:4580:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )* ) )
+            // InternalKExpressions.g:4581:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
             {
-            // InternalKExpressions.g:4581:1: ( ( rule__ValuedObjectReference__Group_1__0 )? )
-            // InternalKExpressions.g:4582:1: ( rule__ValuedObjectReference__Group_1__0 )?
+            // InternalKExpressions.g:4581:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
+            // InternalKExpressions.g:4582:1: ( rule__ValuedObjectReference__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); 
             }
-            // InternalKExpressions.g:4583:1: ( rule__ValuedObjectReference__Group_1__0 )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // InternalKExpressions.g:4583:1: ( rule__ValuedObjectReference__Group_1__0 )*
+            loop36:
+            do {
+                int alt36=2;
+                int LA36_0 = input.LA(1);
 
-            if ( (LA36_0==38) ) {
-                alt36=1;
-            }
-            switch (alt36) {
-                case 1 :
-                    // InternalKExpressions.g:4583:2: rule__ValuedObjectReference__Group_1__0
-                    {
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    rule__ValuedObjectReference__Group_1__0();
+                if ( (LA36_0==38) ) {
+                    alt36=1;
+                }
 
-                    state._fsp--;
-                    if (state.failed) return ;
 
-                    }
-                    break;
+                switch (alt36) {
+            	case 1 :
+            	    // InternalKExpressions.g:4583:2: rule__ValuedObjectReference__Group_1__0
+            	    {
+            	    pushFollow(FollowSets000.FOLLOW_32);
+            	    rule__ValuedObjectReference__Group_1__0();
 
-            }
+            	    state._fsp--;
+            	    if (state.failed) return ;
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop36;
+                }
+            } while (true);
 
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); 
@@ -13516,55 +13523,42 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__2__Impl"
-    // InternalKExpressions.g:4604:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )* ) ;
+    // InternalKExpressions.g:4604:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )? ) ;
     public final void rule__ValuedObjectReference__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4608:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )* ) )
-            // InternalKExpressions.g:4609:1: ( ( rule__ValuedObjectReference__Group_2__0 )* )
+            // InternalKExpressions.g:4608:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )? ) )
+            // InternalKExpressions.g:4609:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
             {
-            // InternalKExpressions.g:4609:1: ( ( rule__ValuedObjectReference__Group_2__0 )* )
-            // InternalKExpressions.g:4610:1: ( rule__ValuedObjectReference__Group_2__0 )*
+            // InternalKExpressions.g:4609:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
+            // InternalKExpressions.g:4610:1: ( rule__ValuedObjectReference__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); 
             }
-            // InternalKExpressions.g:4611:1: ( rule__ValuedObjectReference__Group_2__0 )*
-            loop37:
-            do {
-                int alt37=2;
-                int LA37_0 = input.LA(1);
+            // InternalKExpressions.g:4611:1: ( rule__ValuedObjectReference__Group_2__0 )?
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-                if ( (LA37_0==39) ) {
-                    int LA37_2 = input.LA(2);
+            if ( (LA37_0==40) ) {
+                alt37=1;
+            }
+            switch (alt37) {
+                case 1 :
+                    // InternalKExpressions.g:4611:2: rule__ValuedObjectReference__Group_2__0
+                    {
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    rule__ValuedObjectReference__Group_2__0();
 
-                    if ( (synpred52_InternalKExpressions()) ) {
-                        alt37=1;
+                    state._fsp--;
+                    if (state.failed) return ;
+
                     }
+                    break;
 
-
-                }
-
-
-                switch (alt37) {
-            	case 1 :
-            	    // InternalKExpressions.g:4611:2: rule__ValuedObjectReference__Group_2__0
-            	    {
-            	    pushFollow(FollowSets000.FOLLOW_32);
-            	    rule__ValuedObjectReference__Group_2__0();
-
-            	    state._fsp--;
-            	    if (state.failed) return ;
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop37;
-                }
-            } while (true);
+            }
 
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); 
@@ -13600,7 +13594,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // InternalKExpressions.g:4631:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
             // InternalKExpressions.g:4632:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_28);
+            pushFollow(FollowSets000.FOLLOW_5);
             rule__ValuedObjectReference__Group_1__0__Impl();
 
             state._fsp--;
@@ -13629,24 +13623,24 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__0__Impl"
-    // InternalKExpressions.g:4639:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '.' ) ;
+    // InternalKExpressions.g:4639:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '[' ) ;
     public final void rule__ValuedObjectReference__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4643:1: ( ( '.' ) )
-            // InternalKExpressions.g:4644:1: ( '.' )
+            // InternalKExpressions.g:4643:1: ( ( '[' ) )
+            // InternalKExpressions.g:4644:1: ( '[' )
             {
-            // InternalKExpressions.g:4644:1: ( '.' )
-            // InternalKExpressions.g:4645:1: '.'
+            // InternalKExpressions.g:4644:1: ( '[' )
+            // InternalKExpressions.g:4645:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
             }
             match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
             }
 
             }
@@ -13670,17 +13664,22 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1"
-    // InternalKExpressions.g:4658:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl ;
+    // InternalKExpressions.g:4658:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 ;
     public final void rule__ValuedObjectReference__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4662:1: ( rule__ValuedObjectReference__Group_1__1__Impl )
-            // InternalKExpressions.g:4663:2: rule__ValuedObjectReference__Group_1__1__Impl
+            // InternalKExpressions.g:4662:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
+            // InternalKExpressions.g:4663:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_2);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__ValuedObjectReference__Group_1__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectReference__Group_1__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13703,26 +13702,26 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1__Impl"
-    // InternalKExpressions.g:4669:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 ) ) ;
+    // InternalKExpressions.g:4670:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4673:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 ) ) )
-            // InternalKExpressions.g:4674:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 ) )
+            // InternalKExpressions.g:4674:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
+            // InternalKExpressions.g:4675:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
             {
-            // InternalKExpressions.g:4674:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 ) )
-            // InternalKExpressions.g:4675:1: ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 )
+            // InternalKExpressions.g:4675:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // InternalKExpressions.g:4676:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
-            // InternalKExpressions.g:4676:1: ( rule__ValuedObjectReference__SubReferenceAssignment_1_1 )
-            // InternalKExpressions.g:4676:2: rule__ValuedObjectReference__SubReferenceAssignment_1_1
+            // InternalKExpressions.g:4677:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // InternalKExpressions.g:4677:2: rule__ValuedObjectReference__IndicesAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__ValuedObjectReference__SubReferenceAssignment_1_1();
+            rule__ValuedObjectReference__IndicesAssignment_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13730,7 +13729,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
 
             }
@@ -13753,17 +13752,91 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__ValuedObjectReference__Group_1__1__Impl"
 
 
+    // $ANTLR start "rule__ValuedObjectReference__Group_1__2"
+    // InternalKExpressions.g:4687:1: rule__ValuedObjectReference__Group_1__2 : rule__ValuedObjectReference__Group_1__2__Impl ;
+    public final void rule__ValuedObjectReference__Group_1__2() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:4691:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
+            // InternalKExpressions.g:4692:2: rule__ValuedObjectReference__Group_1__2__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectReference__Group_1__2__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectReference__Group_1__2"
+
+
+    // $ANTLR start "rule__ValuedObjectReference__Group_1__2__Impl"
+    // InternalKExpressions.g:4698:1: rule__ValuedObjectReference__Group_1__2__Impl : ( ']' ) ;
+    public final void rule__ValuedObjectReference__Group_1__2__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:4702:1: ( ( ']' ) )
+            // InternalKExpressions.g:4703:1: ( ']' )
+            {
+            // InternalKExpressions.g:4703:1: ( ']' )
+            // InternalKExpressions.g:4704:1: ']'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
+            }
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectReference__Group_1__2__Impl"
+
+
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0"
-    // InternalKExpressions.g:4690:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
+    // InternalKExpressions.g:4723:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
     public final void rule__ValuedObjectReference__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4694:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
-            // InternalKExpressions.g:4695:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
+            // InternalKExpressions.g:4727:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
+            // InternalKExpressions.g:4728:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_5);
+            pushFollow(FollowSets000.FOLLOW_28);
             rule__ValuedObjectReference__Group_2__0__Impl();
 
             state._fsp--;
@@ -13792,24 +13865,24 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0__Impl"
-    // InternalKExpressions.g:4702:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '[' ) ;
+    // InternalKExpressions.g:4735:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '.' ) ;
     public final void rule__ValuedObjectReference__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4706:1: ( ( '[' ) )
-            // InternalKExpressions.g:4707:1: ( '[' )
+            // InternalKExpressions.g:4739:1: ( ( '.' ) )
+            // InternalKExpressions.g:4740:1: ( '.' )
             {
-            // InternalKExpressions.g:4707:1: ( '[' )
-            // InternalKExpressions.g:4708:1: '['
+            // InternalKExpressions.g:4740:1: ( '.' )
+            // InternalKExpressions.g:4741:1: '.'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); 
             }
-            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); 
             }
 
             }
@@ -13833,22 +13906,17 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1"
-    // InternalKExpressions.g:4721:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl rule__ValuedObjectReference__Group_2__2 ;
+    // InternalKExpressions.g:4754:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl ;
     public final void rule__ValuedObjectReference__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4725:1: ( rule__ValuedObjectReference__Group_2__1__Impl rule__ValuedObjectReference__Group_2__2 )
-            // InternalKExpressions.g:4726:2: rule__ValuedObjectReference__Group_2__1__Impl rule__ValuedObjectReference__Group_2__2
+            // InternalKExpressions.g:4758:1: ( rule__ValuedObjectReference__Group_2__1__Impl )
+            // InternalKExpressions.g:4759:2: rule__ValuedObjectReference__Group_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_33);
-            rule__ValuedObjectReference__Group_2__1__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__ValuedObjectReference__Group_2__2();
+            rule__ValuedObjectReference__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13871,26 +13939,26 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1__Impl"
-    // InternalKExpressions.g:4733:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_2_1 ) ) ;
+    // InternalKExpressions.g:4765:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:4737:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_2_1 ) ) )
-            // InternalKExpressions.g:4738:1: ( ( rule__ValuedObjectReference__IndicesAssignment_2_1 ) )
+            // InternalKExpressions.g:4769:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) )
+            // InternalKExpressions.g:4770:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
             {
-            // InternalKExpressions.g:4738:1: ( ( rule__ValuedObjectReference__IndicesAssignment_2_1 ) )
-            // InternalKExpressions.g:4739:1: ( rule__ValuedObjectReference__IndicesAssignment_2_1 )
+            // InternalKExpressions.g:4770:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
+            // InternalKExpressions.g:4771:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); 
             }
-            // InternalKExpressions.g:4740:1: ( rule__ValuedObjectReference__IndicesAssignment_2_1 )
-            // InternalKExpressions.g:4740:2: rule__ValuedObjectReference__IndicesAssignment_2_1
+            // InternalKExpressions.g:4772:1: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
+            // InternalKExpressions.g:4772:2: rule__ValuedObjectReference__SubReferenceAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__ValuedObjectReference__IndicesAssignment_2_1();
+            rule__ValuedObjectReference__SubReferenceAssignment_2_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13898,7 +13966,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); 
             }
 
             }
@@ -13919,80 +13987,6 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         return ;
     }
     // $ANTLR end "rule__ValuedObjectReference__Group_2__1__Impl"
-
-
-    // $ANTLR start "rule__ValuedObjectReference__Group_2__2"
-    // InternalKExpressions.g:4750:1: rule__ValuedObjectReference__Group_2__2 : rule__ValuedObjectReference__Group_2__2__Impl ;
-    public final void rule__ValuedObjectReference__Group_2__2() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalKExpressions.g:4754:1: ( rule__ValuedObjectReference__Group_2__2__Impl )
-            // InternalKExpressions.g:4755:2: rule__ValuedObjectReference__Group_2__2__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_2);
-            rule__ValuedObjectReference__Group_2__2__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ValuedObjectReference__Group_2__2"
-
-
-    // $ANTLR start "rule__ValuedObjectReference__Group_2__2__Impl"
-    // InternalKExpressions.g:4761:1: rule__ValuedObjectReference__Group_2__2__Impl : ( ']' ) ;
-    public final void rule__ValuedObjectReference__Group_2__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalKExpressions.g:4765:1: ( ( ']' ) )
-            // InternalKExpressions.g:4766:1: ( ']' )
-            {
-            // InternalKExpressions.g:4766:1: ( ']' )
-            // InternalKExpressions.g:4767:1: ']'
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2()); 
-            }
-            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ValuedObjectReference__Group_2__2__Impl"
 
 
     // $ANTLR start "rule__ReferenceCall__Group__0"
@@ -18776,7 +18770,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
-            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
@@ -18944,7 +18938,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -19545,7 +19539,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
-            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
@@ -19713,7 +19707,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -20836,7 +20830,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
-            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
@@ -21004,7 +20998,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,39,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -21522,7 +21516,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
                 int alt50=2;
                 int LA50_0 = input.LA(1);
 
-                if ( (LA50_0==38) ) {
+                if ( (LA50_0==40) ) {
                     alt50=1;
                 }
 
@@ -21718,7 +21712,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
-            match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            match(input,40,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
@@ -23543,66 +23537,21 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__ValuedObjectReference__ValuedObjectAssignment_0"
 
 
-    // $ANTLR start "rule__ValuedObjectReference__SubReferenceAssignment_1_1"
-    // InternalKExpressions.g:8250:1: rule__ValuedObjectReference__SubReferenceAssignment_1_1 : ( ruleValuedObjectReference ) ;
-    public final void rule__ValuedObjectReference__SubReferenceAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__ValuedObjectReference__IndicesAssignment_1_1"
+    // InternalKExpressions.g:8250:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
+    public final void rule__ValuedObjectReference__IndicesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalKExpressions.g:8254:1: ( ( ruleValuedObjectReference ) )
-            // InternalKExpressions.g:8255:1: ( ruleValuedObjectReference )
+            // InternalKExpressions.g:8254:1: ( ( ruleExpression ) )
+            // InternalKExpressions.g:8255:1: ( ruleExpression )
             {
-            // InternalKExpressions.g:8255:1: ( ruleValuedObjectReference )
-            // InternalKExpressions.g:8256:1: ruleValuedObjectReference
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_2);
-            ruleValuedObjectReference();
-
-            state._fsp--;
-            if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ValuedObjectReference__SubReferenceAssignment_1_1"
-
-
-    // $ANTLR start "rule__ValuedObjectReference__IndicesAssignment_2_1"
-    // InternalKExpressions.g:8265:1: rule__ValuedObjectReference__IndicesAssignment_2_1 : ( ruleExpression ) ;
-    public final void rule__ValuedObjectReference__IndicesAssignment_2_1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // InternalKExpressions.g:8269:1: ( ( ruleExpression ) )
-            // InternalKExpressions.g:8270:1: ( ruleExpression )
-            {
-            // InternalKExpressions.g:8270:1: ( ruleExpression )
-            // InternalKExpressions.g:8271:1: ruleExpression
+            // InternalKExpressions.g:8255:1: ( ruleExpression )
+            // InternalKExpressions.g:8256:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleExpression();
@@ -23610,7 +23559,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
             }
 
             }
@@ -23630,7 +23579,52 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         }
         return ;
     }
-    // $ANTLR end "rule__ValuedObjectReference__IndicesAssignment_2_1"
+    // $ANTLR end "rule__ValuedObjectReference__IndicesAssignment_1_1"
+
+
+    // $ANTLR start "rule__ValuedObjectReference__SubReferenceAssignment_2_1"
+    // InternalKExpressions.g:8265:1: rule__ValuedObjectReference__SubReferenceAssignment_2_1 : ( ruleValuedObjectReference ) ;
+    public final void rule__ValuedObjectReference__SubReferenceAssignment_2_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // InternalKExpressions.g:8269:1: ( ( ruleValuedObjectReference ) )
+            // InternalKExpressions.g:8270:1: ( ruleValuedObjectReference )
+            {
+            // InternalKExpressions.g:8270:1: ( ruleValuedObjectReference )
+            // InternalKExpressions.g:8271:1: ruleValuedObjectReference
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleValuedObjectReference();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectReference__SubReferenceAssignment_2_1"
 
 
     // $ANTLR start "rule__ReferenceCall__ValuedObjectAssignment_0"
@@ -25670,37 +25664,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     }
     // $ANTLR end synpred13_InternalKExpressions
 
-    // $ANTLR start synpred52_InternalKExpressions
-    public final void synpred52_InternalKExpressions_fragment() throws RecognitionException {   
-        // InternalKExpressions.g:4611:2: ( rule__ValuedObjectReference__Group_2__0 )
-        // InternalKExpressions.g:4611:2: rule__ValuedObjectReference__Group_2__0
-        {
-        pushFollow(FollowSets000.FOLLOW_2);
-        rule__ValuedObjectReference__Group_2__0();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred52_InternalKExpressions
-
     // Delegated rules
 
-    public final boolean synpred52_InternalKExpressions() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred52_InternalKExpressions_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred13_InternalKExpressions() {
         state.backtracking++;
         int start = input.mark();
@@ -26312,9 +26277,9 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000002010040L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000002000000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000002000000002L});
-        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x000000C000000000L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000008000000002L});
-        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000010000000000L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000014000000000L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000004000000002L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000008000000000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000810000000L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x00000408422D03F0L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000021000000000L});
@@ -26325,10 +26290,10 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x00000000002001F0L});
         public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000020000000000L});
         public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000000070L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000008000000000L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000004000000000L});
         public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000104000000000L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000004000000002L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000110000000000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000010000000002L});
         public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000200080L});
     }

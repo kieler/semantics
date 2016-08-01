@@ -1538,46 +1538,14 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class EquationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.Equation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cEquationAction_0 = (Action)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Assignment cValuedObjectAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0_0 = (CrossReference)cValuedObjectAssignment_1_0.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cExpressionAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cExpressionExpressionParserRuleCall_1_2_0 = (RuleCall)cExpressionAssignment_1_2.eContents().get(0);
+		private final RuleCall cSubReferenceAssignmentParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//Equation sccharts::Equation:
-		//	{sccharts::Equation} (valuedObject=[kexpressions::ValuedObject|PrimeID] '=' expression=Expression)
+		//Equation keffects::Assignment:
+		//	SubReferenceAssignment
 		@Override public ParserRule getRule() { return rule; }
 
-		//{sccharts::Equation} (valuedObject=[kexpressions::ValuedObject|PrimeID] '=' expression=Expression)
-		public Group getGroup() { return cGroup; }
-
-		//{sccharts::Equation}
-		public Action getEquationAction_0() { return cEquationAction_0; }
-
-		//(valuedObject=[kexpressions::ValuedObject|PrimeID] '=' expression=Expression)
-		public Group getGroup_1() { return cGroup_1; }
-
-		//valuedObject=[kexpressions::ValuedObject|PrimeID]
-		public Assignment getValuedObjectAssignment_1_0() { return cValuedObjectAssignment_1_0; }
-
-		//[kexpressions::ValuedObject|PrimeID]
-		public CrossReference getValuedObjectValuedObjectCrossReference_1_0_0() { return cValuedObjectValuedObjectCrossReference_1_0_0; }
-
-		//PrimeID
-		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_0_1; }
-
-		//'='
-		public Keyword getEqualsSignKeyword_1_1() { return cEqualsSignKeyword_1_1; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_1_2() { return cExpressionAssignment_1_2; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_1_2_0() { return cExpressionExpressionParserRuleCall_1_2_0; }
+		//SubReferenceAssignment
+		public RuleCall getSubReferenceAssignmentParserRuleCall() { return cSubReferenceAssignmentParserRuleCall; }
 	}
 	
 	
@@ -2041,8 +2009,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		return getDFAssignmentAccess().getRule();
 	}
 
-	//Equation sccharts::Equation:
-	//	{sccharts::Equation} (valuedObject=[kexpressions::ValuedObject|PrimeID] '=' expression=Expression)
+	//Equation keffects::Assignment:
+	//	SubReferenceAssignment
 	public EquationElements getEquationAccess() {
 		return pEquation;
 	}
@@ -2212,8 +2180,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
 	}
@@ -2223,8 +2191,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] | 'extern' extern=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
 	}
@@ -2233,6 +2201,28 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 
+	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////        ';'
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	////    );
+	////    
+	////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	////    );
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -2306,6 +2296,19 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAssignmentRule() {
 		return getAssignmentAccess().getRule();
+	}
+
+	//SubReferenceAssignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)?
+	//	operator=AssignOperator expression=Expression
+	public KEffectsGrammarAccess.SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
+		return gaKEffects.getSubReferenceAssignmentAccess();
+	}
+	
+	public ParserRule getSubReferenceAssignmentRule() {
+		return getSubReferenceAssignmentAccess().getRule();
 	}
 
 	//// Postfix Effect
@@ -2726,7 +2729,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}

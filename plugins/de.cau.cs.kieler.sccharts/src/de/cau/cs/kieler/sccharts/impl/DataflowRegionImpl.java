@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
-import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -61,7 +61,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * @generated
      * @ordered
      */
-    protected EList<Equation> equations;
+    protected EList<Assignment> equations;
 
 				/**
      * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
@@ -109,9 +109,9 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Equation> getEquations() {
+    public EList<Assignment> getEquations() {
         if (equations == null) {
-            equations = new EObjectContainmentEList<Equation>(Equation.class, this, SCChartsPackage.DATAFLOW_REGION__EQUATIONS);
+            equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, SCChartsPackage.DATAFLOW_REGION__EQUATIONS);
         }
         return equations;
     }
@@ -157,7 +157,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
                 getEquations().clear();
-                getEquations().addAll((Collection<? extends Equation>)newValue);
+                getEquations().addAll((Collection<? extends Assignment>)newValue);
                 return;
             case SCChartsPackage.DATAFLOW_REGION__NODES:
                 getNodes().clear();

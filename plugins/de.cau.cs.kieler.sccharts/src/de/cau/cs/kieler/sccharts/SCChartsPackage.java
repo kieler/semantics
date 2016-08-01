@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -157,7 +156,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 11;
+    int SCOPE = 10;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -951,70 +950,6 @@ public interface SCChartsPackage extends EPackage {
     int DEFINE_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
-     * @generated
-     */
-    int EQUATION = 9;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__ANNOTATIONS = KEffectsPackage.ASSIGNMENT__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__VALUED_OBJECT = KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
-
-    /**
-     * The feature id for the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__EXPRESSION = KEffectsPackage.ASSIGNMENT__EXPRESSION;
-
-    /**
-     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__INDICES = KEffectsPackage.ASSIGNMENT__INDICES;
-
-    /**
-     * The feature id for the '<em><b>Operator</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__OPERATOR = KEffectsPackage.ASSIGNMENT__OPERATOR;
-
-    /**
-     * The number of structural features of the '<em>Equation</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION_FEATURE_COUNT = KEffectsPackage.ASSIGNMENT_FEATURE_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1022,7 +957,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
      * @generated
      */
-    int TRANSITION = 10;
+    int TRANSITION = 9;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1149,7 +1084,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
      * @generated
      */
-    int LOCAL_ACTION = 12;
+    int LOCAL_ACTION = 11;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1222,7 +1157,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
      * @generated
      */
-    int ENTRY_ACTION = 13;
+    int ENTRY_ACTION = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1295,7 +1230,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
      * @generated
      */
-    int DURING_ACTION = 14;
+    int DURING_ACTION = 13;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1368,7 +1303,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
      * @generated
      */
-    int EXIT_ACTION = 15;
+    int EXIT_ACTION = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1441,7 +1376,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
      * @generated
      */
-    int SUSPEND_ACTION = 16;
+    int SUSPEND_ACTION = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1523,7 +1458,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getIterateAction()
      * @generated
      */
-    int ITERATE_ACTION = 17;
+    int ITERATE_ACTION = 16;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1596,7 +1531,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getInitAction()
      * @generated
      */
-	int INIT_ACTION = 18;
+	int INIT_ACTION = 17;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1669,7 +1604,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFinalAction()
      * @generated
      */
-	int FINAL_ACTION = 19;
+	int FINAL_ACTION = 18;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1742,7 +1677,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSCCharts()
      * @generated
      */
-	int SC_CHARTS = 20;
+	int SC_CHARTS = 19;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1833,7 +1768,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 21;
+    int TRANSITION_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1843,7 +1778,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 22;
+    int HISTORY_TYPE = 21;
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -2242,16 +2177,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getDefineNode_States();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Equation <em>Equation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Equation</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation
-     * @generated
-     */
-    EClass getEquation();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
@@ -2850,16 +2775,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference DEFINE_NODE__STATES = eINSTANCE.getDefineNode_States();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
-         * @generated
-         */
-        EClass EQUATION = eINSTANCE.getEquation();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

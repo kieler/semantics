@@ -1492,8 +1492,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
 		return gaKEXT.getReferenceDeclarationAccess();
 	}
@@ -1503,8 +1503,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
-	//	annotations+=Annotation* ('ref' reference=[kext::Identifiable|NamespaceID] | 'extern' extern=STRING)
-	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
+	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
 	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
 		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
 	}
@@ -1513,6 +1513,28 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getReferenceDeclarationWOSemicolonAccess().getRule();
 	}
 
+	////ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////        ';'
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+	////    );
+	////    
+	////ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+	////    annotations+=Annotation*
+	////    (
+	////        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+	////        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+	////        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+	////    ) | (
+	////        'extern' extern = STRING
+	////        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+	////    );
 	//// Valued Object Rule
 	//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 	//// expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
@@ -1569,6 +1591,19 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getEmissionRule() {
 		return getEmissionAccess().getRule();
+	}
+
+	//SubReferenceAssignment keffects::Assignment:
+	//	annotations+=Annotation*
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)?
+	//	operator=AssignOperator expression=Expression
+	public KEffectsGrammarAccess.SubReferenceAssignmentElements getSubReferenceAssignmentAccess() {
+		return gaKEffects.getSubReferenceAssignmentAccess();
+	}
+	
+	public ParserRule getSubReferenceAssignmentRule() {
+		return getSubReferenceAssignmentAccess().getRule();
 	}
 
 	//// Postfix Effect
@@ -1989,7 +2024,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// References a valued object with arbitrary (including none) indices part.
 	//// Example: A, B
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('[' indices+=Expression ']')*;
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)?;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
