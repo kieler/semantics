@@ -944,7 +944,6 @@ class CDTProcessor {
             s.id = trC.toString
             s.label = s.id
             s.setTypeConnector
-
             ifStateRegion.states += s
         ]
 
@@ -1034,34 +1033,44 @@ class CDTProcessor {
         
         // If needed, add an extra endState and transitions.
         if (ifs.elseClause == null || needExtraEndState || !ifTransformationOption) {
-            // Final state of loop. It is reached when loop condition is not met anymore.
-            val endState = scc.createState => [s |
-                s.id = trC + "_end"
-                s.label = "End"
-                s.final = true
-                ifStateRegion.states += s
-            ]
-            // This default transition from condState to endState is only needed if there is no else clause.
-            if (ifs.elseClause == null) {
-                // Transition to endState.
-                val defaultTrans = scc.createTransition => [
-                    targetState = connectorState
-                    immediate = true
-                    annotations.add(createStringAnnotation("notImmediate",""))
-                    condState.outgoingTransitions += it
+            // In case that trueBody and falseBody are both final, then we do not need an endState regardless.
+            if (!connectorState.incomingTransitions.empty) {
+                // Final state of loop. It is reached when loop condition is not met anymore.
+                val endState = scc.createState => [s |
+                    s.id = trC + "_end"
+                    s.label = "End"
+                    s.final = true
+                    ifStateRegion.states += s
                 ]
+                // This default transition from condState to endState is only needed if there is no else clause.
+                if (ifs.elseClause == null) {
+                    // Transition to endState.
+                    val defaultTrans = scc.createTransition => [
+                        targetState = connectorState
+                        immediate = true
+                        annotations.add(createStringAnnotation("notImmediate",""))
+                        condState.outgoingTransitions += it
+                    ]
+                }
+                
+                
+                
+    //            // Final transition to endState.            
+    //            val falseTrans = scc.createTransition => [
+    //                targetState = endState
+    //                immediate = false
+    //                annotations.add(createStringAnnotation("notImmediate",""))
+    //                connectorState.outgoingTransitions += it
+    //            ]
+                
+                // Check whether the connectorState can be removed. If not, create transition from connectorState to endState.
+                checkRemoveConnector(connectorState, endState, ifStateRegion)
             }
-            
-//            // Final transition to endState.            
-//            val falseTrans = scc.createTransition => [
-//                targetState = endState
-//                immediate = false
-//                annotations.add(createStringAnnotation("notImmediate",""))
-//                connectorState.outgoingTransitions += it
-//            ]
-            
-            // Check whether the connectorState can be removed. If not, create transition from connectorState to endState.
-            checkRemoveConnector(connectorState, endState, ifStateRegion)
+            // If connectorState has no incoming transitions, remove it.
+            checkRemoveConnector(connectorState, null, ifStateRegion)
+        } else {
+            // If connectorState has no incoming transitions, remove it.
+            checkRemoveConnector(connectorState, null, ifStateRegion)
         }
         
         
@@ -1724,16 +1733,21 @@ class CDTProcessor {
         // Final transition to endState. Check whether the connectorState can be removed.
         var incTransitions = connectorState.incomingTransitions
         // The connectorState can be removed if it only has one incoming transition.
-        if (incTransitions.length == 1) {
-            incTransitions.head.targetState = dst
+        if (incTransitions.length == 0) {
             region.states.remove(connectorState)
-        } else {
-            val falseTrans = scc.createTransition => [
-                targetState = dst
-                immediate = false
-                annotations.add(createStringAnnotation("notImmediate",""))
-                connectorState.outgoingTransitions += it
-            ]
+        }
+        else if (dst != null) {
+            if (incTransitions.length == 1) {
+                incTransitions.head.targetState = dst
+                region.states.remove(connectorState)
+            } else {
+                val falseTrans = scc.createTransition => [
+                    targetState = dst
+                    immediate = false
+                    annotations.add(createStringAnnotation("notImmediate",""))
+                    connectorState.outgoingTransitions += it
+                ]
+            }
         }
     }
     
