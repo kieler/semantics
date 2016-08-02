@@ -46,6 +46,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.kiml.klayoutdata.KIdentifier
+import java.util.List
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * @author ssm
@@ -268,7 +270,7 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     
     private def Set<KNode> performDataSourceTransformation(Assignment equation) {
         val result = <KNode> newHashSet
-        val vors = equation.expression.getAllReferences.map[ valuedObject ]
+        val vors = equation.expression.getAllPrimaryReferences.map[ valuedObject ]
             + equation.expression.getAllValues
         for(vo : vors) {
             if (!dataSources.contains(vo)) {
@@ -279,7 +281,7 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
                         if ((vo.eContainer as ReferenceDeclaration).extern == null) {
                             isReference = true
                         }
-                    }            
+                    }
                 }
                 
                 dataSources += vo
@@ -316,5 +318,16 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
         result 
     }
     
+    def List<ValuedObjectReference> getAllPrimaryReferences(Expression expression) {
+        <ValuedObjectReference> newArrayList => [
+            if (expression == null) {
+            } else if (expression instanceof ValuedObjectReference) { 
+                it += expression
+            } else { 
+                it += expression.eAllContents.filter(ValuedObjectReference).
+                filter[ !(eContainer instanceof ValuedObjectReference) ].toList
+            }
+        ]  
+    }     
     
 }
