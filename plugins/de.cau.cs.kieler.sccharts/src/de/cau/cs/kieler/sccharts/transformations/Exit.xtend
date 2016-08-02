@@ -127,8 +127,9 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState
             var State lastState
+            val noregions = !state.hasInnerStatesOrControlflowRegions
 
-            if (!state.hasInnerStatesOrControlflowRegions) {
+            if (noregions) {
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
@@ -150,8 +151,8 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             }
 
             // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
-            // Do not create superflous exitOptionStates
-            if (stateOutgoingTransitions > 0 && state.outgoingTransitions.filter[trigger != null].size > 0) {
+            // Do not create superfluous exitOptionStates
+            if (noregions && stateOutgoingTransitions > 0) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
 
                 // Memorize outgoing transition
                 val region = firstState.parentRegion
