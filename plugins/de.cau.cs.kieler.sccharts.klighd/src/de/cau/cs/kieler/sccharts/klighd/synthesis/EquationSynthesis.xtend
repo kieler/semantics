@@ -199,22 +199,26 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
             newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
             val res = newResourceSet.createResource(newURI)
 
-            res.load(newResourceSet.loadOptions)
-            val node = (res.getContents().get(0) as KNode).children.head
-            vo.addNode(node)
-            result += node 
+            try {
+                res.load(newResourceSet.loadOptions)
+                val node = (res.getContents().get(0) as KNode).children.head
+                vo.addNode(node)
+                result += node 
             
-            val vos = <ValuedObject> newArrayList
-            reference.declarations.forEach[ vos += valuedObjects ]
+                val vos = <ValuedObject> newArrayList
+                reference.declarations.forEach[ vos += valuedObjects ]
             
-            for(p : node.eAllContents.filter(KPort).toList) {
-                val id = p.data.filter(KIdentifier).head
-                val obj = vos.filter[ it.name.equals(id.id) ].head
+                for(p : node.eAllContents.filter(KPort).toList) {
+                    val id = p.data.filter(KIdentifier).head
+                    val obj = vos.filter[ it.name.equals(id.id) ].head
                 
-                vo.addPort(obj, p)
-            }
+                    vo.addPort(obj, p)
+                }
 
-            return result            
+                return result
+            } catch (Exception e) {
+                // Display default reference actor
+            }            
         }      
         
         val node = vo.createNode => [ 
