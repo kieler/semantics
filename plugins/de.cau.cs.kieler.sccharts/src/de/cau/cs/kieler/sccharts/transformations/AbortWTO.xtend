@@ -249,6 +249,7 @@ class AbortWTO extends AbstractExpansionTransformation {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
+                    ctrlTransition.setLowestPriority
                     if (transition.immediate2) {
 
                         // if the transition was immediate then set the ctrl transition to be immediate
