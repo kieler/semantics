@@ -20,6 +20,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts For Transformation.
@@ -76,6 +77,10 @@ class For extends AbstractExpansionTransformation {
 
     def void transformFor(State state, State targetRootState) {
         //TODO
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

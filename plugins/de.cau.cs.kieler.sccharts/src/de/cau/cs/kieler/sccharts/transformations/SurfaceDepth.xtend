@@ -26,7 +26,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
-
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -276,5 +276,9 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             }
         }
     }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ it.transform ] ]
+    }    
 
 }

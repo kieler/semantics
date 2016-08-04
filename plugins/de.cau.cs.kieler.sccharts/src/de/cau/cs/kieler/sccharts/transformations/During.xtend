@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts During Transformation.
@@ -275,6 +276,8 @@ class During extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
-    // ------------------------------------------------------------------------
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
     
 }

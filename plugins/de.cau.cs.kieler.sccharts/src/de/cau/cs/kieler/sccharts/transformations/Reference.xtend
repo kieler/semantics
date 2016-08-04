@@ -43,6 +43,7 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Reference Transformation.
@@ -591,6 +592,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     		}
     	}
    	}
+   	
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+   	
    	
    	// helper methods
    	private def Assignment createNewAssignment(ValuedObject vo, Expression expression) {

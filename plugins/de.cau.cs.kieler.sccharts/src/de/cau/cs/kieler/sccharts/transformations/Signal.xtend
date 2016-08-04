@@ -36,6 +36,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Signal Transformation.
@@ -273,6 +274,10 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             // UNDEFINED
             return createIntValue(0);
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }
