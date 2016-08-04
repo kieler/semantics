@@ -82,6 +82,7 @@ import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
 import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
 import org.eclipse.cdt.core.dom.ast.IASTExpressionList
 import de.cau.cs.kieler.core.kexpressions.Parameter
+import org.eclipse.cdt.internal.core.model.VariableDeclaration
 
 /**
  * @author ssm
@@ -106,20 +107,28 @@ class CDTProcessor {
     @Inject
     extension AnnotationsExtensions
     
-    public static val RETURNVONAME = "return"
-
+    private static val RETURNVONAME = "return"
+    
+    private static val NESTEDRETURN = "nestedReturn"
+    
+    var nestedReturnParameter = kex.createVariableDeclaration
+    
     val VOSet = <ValuedObject>newHashSet
     var _trc = 0
-
+    
 //    var State funcGlobalState
 
     // Contains children nodes of a FunctionCallExpression.
     List<IASTExpression> argumentList = new ArrayList<IASTExpression>();
 
+
     // Save FunctionCallExpression and referencing state to handle function calls
     ArrayList<Pair<CASTFunctionCallExpression,State>> functionCallRefs = new ArrayList<Pair<CASTFunctionCallExpression,State>>();
     
+    // Contains all defined functions of the given C code.
     ArrayList<State> functions = new ArrayList<State>();
+    
+    
 
 //    Map<String, State> functionStates = new HashMap<String, State>();
 //    ArrayList<State> connectorStates = new ArrayList<State>();
@@ -192,7 +201,10 @@ class CDTProcessor {
                             referencingState.parameters.add(p)
                         ]
                     }
+                    
                 }
+                
+               
             ]
         }
         
@@ -218,53 +230,98 @@ class CDTProcessor {
             VOSet += it
         ]
 
-        // Create the SCChart model for the function.
         val declarator = function.children.filter(typeof(CASTFunctionDeclarator)).head
+        
         // Function State 
-        val model = scc.createState => [ root |
-            root.label = declarator.children.head.toString
-            root.id = root.label
-            root.declarations += returnDeclaration
-            val mainRegion = scc.createControlflowRegion => [
-                    id = "_main"
-                    label = id
-                    root.regions += it
-                ]
-               
-            if (declarator.children.head.toString == "main") { 
-                root.initial = true
+        val funcState = scc.createState => [
+            label = declarator.children.head.toString
+            if (returnDeclaration.type == ValueType.PURE) {
+                id = label + "_void" // Mark void functions.
+            } else {
+                id = label + "_" + returnDeclaration.type // Mark type of function.
+            }
+            
+            if (label == "main") { 
+                initial = true
             }
         ]
+        val funcStateLabel = funcState.label
+        
+        
+        // Function region
+        val funcRegion = scc.createControlflowRegion => [
+            id = funcStateLabel + "_function" // to identify nested return statements
+            label = "_" + funcStateLabel
+            funcState.regions += it
+        ]
+        
 
         // parameters
 //        funcGlobalState = model
 
-        // createDeclaration
-        // org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration@46333ade
-        // org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@4d5de8d3
-        // org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50609c53
-        // n        
+        // Create declaration of given arguments of the function.
+            // org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration@46333ade
+            // org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@4d5de8d3
+            // org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50609c53
+            // n        
         declarator.children.filter(typeof(CASTParameterDeclaration)).forEach [ parameter |
             val iName = parameter.children.filter(typeof(CASTDeclarator)).head.children.head.toString
-            val intParamater = kex.createVariableDeclaration => [
+            val iParamater = kex.createVariableDeclaration => [
                 type = parseCDTType(parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
                 input = true
-                model.declarations += it
-
+                funcState.declarations += it
             ]
+            // Add parameter to VOSet to give it a name.
             kex.createValuedObject => [
                 name = iName
-                intParamater.valuedObjects += it
+                iParamater.valuedObjects += it
                 VOSet += it
             ]
         ]
 
         val compound = function.children.filter(typeof(CASTCompoundStatement)).head
+        var State lastState = null
         if (compound != null) {
-            compound.transformCompound(null, model)
+            lastState = compound.transformCompound(null, funcState)
+        }
+        
+        // In case the function is of type void, we need to create a endState as there is no return statement.
+        if (returnDeclaration.type == ValueType.PURE) {
+            val endState = scc.createState => [s |
+                s.id = trC + "_end"
+                s.label = "End"
+                s.final = true
+                funcRegion.states += s
+            ]
+        
+            // transition to endState
+            val endTrans = scc.createTransition => [
+                targetState = endState
+                immediate = true
+            ]
+            if (lastState.hasInnerStatesOrControlflowRegions) {
+                endTrans.type = TransitionType::TERMINATION
+            }
+            lastState.outgoingTransitions += endTrans
+        } else {
+            // For a non-void function, add declaration of a output variable.
+            funcState.declarations += returnDeclaration
+        }
+        
+        /* In case a nested return exists inside the function, the valuedObject-List contains a nestedReturn-value
+         * If so, create a boolean variable declaration. */
+        if (!nestedReturnParameter.valuedObjects.empty) {
+            val parameter = nestedReturnParameter
+            funcState.declarations += parameter
+            
+            // Set nestedReturn variable to initially false.
+            var boolVal = kex.createBoolValue
+            boolVal.value = false
+            var entryAction = funcState.createEntryAction
+            entryAction.createAssignment(VOSet.filter[name.equals(NESTEDRETURN)].head, boolVal)
         }
 
-        model
+        funcState
     }
 
     def State transformCompound(CASTCompoundStatement cs, State state, State parentState) {
@@ -303,29 +360,34 @@ class CDTProcessor {
         var actualState = parent;
         if (statement instanceof CASTIfStatement) {
             actualState = statement.transformIf(actualState)
+            checkForNestedReturn(actualState)
         }
-        if (statement instanceof CASTReturnStatement) {
+        else if (statement instanceof CASTReturnStatement) {
             actualState = statement.transformReturn(actualState)
         }
-        if (statement instanceof CASTExpressionStatement) {
+        else if (statement instanceof CASTExpressionStatement) {
             actualState = statement.transformExpression(actualState)
         }
-        if (statement instanceof CASTForStatement) {
+        else if (statement instanceof CASTForStatement) {
             actualState = statement.transformFor(actualState)
+            checkForNestedReturn(actualState)
         }
-        if (statement instanceof CASTWhileStatement) {
+        else if (statement instanceof CASTWhileStatement) {
             actualState = statement.transformWhile(actualState)
+            checkForNestedReturn(actualState)
         }
-        if (statement instanceof CASTDoStatement) {
+        else if (statement instanceof CASTDoStatement) {
             actualState = statement.transformDoWhile(actualState)
+            checkForNestedReturn(actualState)
         }
-        if (statement instanceof CASTSwitchStatement) {
+        else if (statement instanceof CASTSwitchStatement) {
             actualState = statement.transformSwitch(actualState)
+            checkForNestedReturn(actualState)
         }
-        if (statement instanceof CASTBinaryExpression) {
+        else if (statement instanceof CASTBinaryExpression) {
             actualState = statement.createDataflow(actualState)
         }
-        if (statement instanceof CASTDeclarationStatement) {
+        else if (statement instanceof CASTDeclarationStatement) {
             actualState = statement.castDeclaration(actualState)
         }
 
@@ -667,14 +729,14 @@ class CDTProcessor {
             state.parentRegion.states += s
         ]
         
-        // region of do-whileState. It contains all states of do-while loop                 
+        // Region of do-whileState. It contains all states of do-while loop   .              
         val doWhileStateRegion = scc.createControlflowRegion => [ region |
                 region.id = doWhileState.id + "_region"
                 region.label = "" 
                 doWhileState.regions += region
         ]
 
-        // Inital state of do-while loop
+        // Initial state of do-while loop.
         val doState = scc.createState => [ s |
             s.id = trC.toString + "_do"
             s.label = "do"
@@ -682,7 +744,7 @@ class CDTProcessor {
             doWhileStateRegion.states += s
         ]
     
-        // continue to transform body of do-while loop
+        // Continue to transform body of do-while loop.
         val body = f.body as CASTCompoundStatement
         val bodyState = body.transformCompound(doState, doState)
 
@@ -793,7 +855,7 @@ class CDTProcessor {
                        // Write into previous state if there also is an other variable initialization.
                        if (parent.id.contains("_varInit")) {
                            var entryAction = parent.createEntryAction
-                            entryAction.createAssignment(value, exp.createKExpression)
+                           entryAction.createAssignment(value, exp.createKExpression)
                        } 
                        // If this is not the case, create an extra state.
                        else {
@@ -870,13 +932,11 @@ class CDTProcessor {
     }
 
 
-    // TODO    BUG                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Wenn im if oder im else ein return steht, muss man aus dem ifState raus und dann den returnState machen.
-    // Immoment wird der returnState noch im ifState gemacht, womit nur der ifState beendet und nicht der Funktionsaufruf
-    // BEI ALLEN ANDEREN KONTROLLSTRUKTUREN DAS GLEICHE PROBLEM
     def State transformIf(CASTIfStatement statement, State state) {
         
         var needExtraEndState = false
+        var trueBodyFinal = false
+        var bothBodiesFinal = false
         val ifs = statement
         val exp = ifs.children.filter(typeof(CASTBinaryExpression)).head
         val kExp = exp.createKExpression
@@ -951,8 +1011,8 @@ class CDTProcessor {
         // Body of statements, if condition is met.
         val trueBody = (ifs.thenClause as CASTCompoundStatement).transformCompound(condState, condState)
 
-        // If argument is set to true, then we only want an extra endState if necessary.
-        if (ifTransformationOption) {
+        // If true, then we only want an extra endState if necessary.
+        if (!extraEndStateOption) {
             
            // A final state cannot have inner behavior for Core SCCharts, so we need an extra final state.
             if (trueBody.hasInnerStatesOrControlflowRegions) {
@@ -966,18 +1026,21 @@ class CDTProcessor {
             } else {
                 // If no inner behavior, there is no need for an extra final state.
                 trueBody.final = true
+                trueBodyFinal = true
             }
         
         } else {
-            // Argument is set to false, so we want a extra endState for every if statement.
-            if (!trueBody.final) {
+            // If false, so we want a extra endState for every if statement.
+//            if (!trueBody.final) {
                 val trueConnector = scc.createTransition => [
                     targetState = connectorState
                     immediate = true
+                    if (trueBody.hasInnerStatesOrControlflowRegions) {
+                        type = TransitionType::TERMINATION
+                    }
                     trueBody.outgoingTransitions += it
-                    type == TransitionType::TERMINATION
                 ]
-            }
+//            }
         }
         
         // Check whether a else clause exists.
@@ -995,7 +1058,7 @@ class CDTProcessor {
             }
             
             // Here we check whether there needs to be an extra endState due to the content of falseBody.
-            if (ifTransformationOption) {
+            if (!extraEndStateOption) {
                 // Final state cannot have inner behavior for Core SCCharts, so we need an extra final state.
                 if (falseBody.hasInnerStatesOrControlflowRegions) {
                     val falseConnector = scc.createTransition => [
@@ -1008,19 +1071,23 @@ class CDTProcessor {
                     falseBody.outgoingTransitions += falseConnector
                 } else {
                     // As falseBody has no inner behavior, it can be final.
-                    falseBody.final = true 
+                    falseBody.final = true
+                    if (trueBodyFinal) {
+                        bothBodiesFinal = true
+                    }
                 }
             } else {
                 // We want an extra endState regardless of the content of falseBody.
-                if (!falseBody.final) {
+//                if (!falseBody.final) {
                     val falseConnector = scc.createTransition => [
                         targetState = connectorState
                         immediate = true
-    
-                        type == TransitionType::TERMINATION
+                        if (trueBody.hasInnerStatesOrControlflowRegions) {
+                            type = TransitionType::TERMINATION
+                        }
                     ]
                     falseBody.outgoingTransitions += falseConnector
-                }
+//                }
             }
 
             // Here we ensure that the else condition transition has no trigger and is immediate.
@@ -1032,9 +1099,9 @@ class CDTProcessor {
         }
         
         // If needed, add an extra endState and transitions.
-        if (ifs.elseClause == null || needExtraEndState || !ifTransformationOption) {
+        if (ifs.elseClause == null || needExtraEndState || extraEndStateOption) {
             // In case that trueBody and falseBody are both final, then we do not need an endState regardless.
-            if (!connectorState.incomingTransitions.empty) {
+            if (!bothBodiesFinal) {
                 // Final state of loop. It is reached when loop condition is not met anymore.
                 val endState = scc.createState => [s |
                     s.id = trC + "_end"
@@ -1233,20 +1300,87 @@ class CDTProcessor {
     }
 
     def State transformReturn(CASTReturnStatement returnStatement, State state) {
-
-        val returnState = scc.createState => [ s |
-            s.id = trC.toString
-            s.label = createLabel(returnStatement)
-            s.final = true
-            state.parentRegion.states += s
+        
+        var returnState = scc.createState
+         => [
+//            id = trC.toString
+//            label = createLabel(returnStatement)
+//            state.parentRegion.states += it
         ]
         
-        // Create transition which connects the parent state "state" to the returnState.
-        createConnectingTransition(state, returnState, returnStatement)
-
-        val entryact = returnState.createEntryAction
-        entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
-                                  returnStatement.returnValue.createKExpression)
+        
+        if (state.id.contains("_binEx") && !state.id.contains("fallthrough")) {
+//            // Combine last state and return statement.
+//            val entryact = state.createEntryAction
+//            entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
+//                                      returnStatement.returnValue.createKExpression)
+            returnState = state
+//            if (!extraEndStateOption) {
+//                returnState.final = true
+////                state.final = true
+//            }
+            
+        } else {
+            // Create transition which connects the parent state "state" to the returnState.
+            state.parentRegion.states += returnState
+        
+            createConnectingTransition(state, returnState, returnStatement)
+            
+            }
+        
+            val entryact = returnState.createEntryAction
+            entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
+                                      returnStatement.returnValue.createKExpression)
+//        }
+        
+        // In case of a nested return statement...
+        if (!state.parentRegion.id.contains("_function")) {
+            val parameter = kex.createVariableDeclaration => [
+                type = ValueType::BOOL
+            ]
+            
+            // ... add parameter to VOSet and give it a name.
+            val value = kex.createValuedObject => [
+                name = "nestedReturn"
+                parameter.valuedObjects += it
+                VOSet += it
+            ]
+            
+            // Save it so we can create the variable declaration at the top-level region of the function.
+            nestedReturnParameter = parameter
+            
+            // Set nestedReturn variable to true, so that the exit condition for the nested return is met.
+            var boolVal = kex.createBoolValue
+            boolVal.value = true
+            var entryAction = returnState.createEntryAction
+            entryAction.createAssignment(value, boolVal)
+            
+            if (state.parentRegion.parentState != null && state.parentRegion.parentState.hasInnerStatesOrControlflowRegions) {
+                var tmp = state.parentRegion.parentState.id
+                tmp += "_hasNestedReturn"
+                state.parentRegion.parentState.id = tmp
+                
+            }
+            
+        } else {
+            if (extraEndStateOption) {
+                val endState = scc.createState => [
+                    id = trC + "_end"
+                    label = "End"
+                    final = true
+                    state.parentRegion.states += it
+                ]
+                
+                val falseTrans = scc.createTransition => [
+                    targetState = endState
+                    immediate = true
+//                    returnState.outgoingTransitions += it
+                ]
+                returnState.outgoingTransitions += falseTrans
+            } else {
+                returnState.final = true
+            }
+        }
 
         returnState
     }
@@ -1336,10 +1470,6 @@ class CDTProcessor {
 
             // Get functionCallExpression.
             val funcCallExp = es.children.filter(CASTFunctionCallExpression).head
-//            // Get idExpression of functionCallExp.
-//            val idExpression = es.expression.children.filter(CASTIdExpression).head
-//            // Get id of called function.
-//            val funcID = idExpression.children.head.toString
             
             // Create referencing state.
             val refState = scc.createState => [ s |
@@ -1355,37 +1485,14 @@ class CDTProcessor {
              */
             functionCallRefs.add(p)
             
-
-//            val sa = scc.createState => [ s |
-//                s.id = trC + "T"
-//                s.label = createLabel(es)
-//                state.parentRegion.states += s
-//            ]
-//
-//            if (functionStates.get("wasauchimmer") != null) {
-//
-//                sa.referencedScope = functionStates.get("wasauchimmer")
-////                val bind = BindingImpl.newInstance
-////                sa.bindings += bind
-//                state.parentRegion.states += sa
-//            } else {
-//                val cal = (es.expression as CASTFunctionCallExpression).createFunctionCallValuedObject();
-//
-//                val entryact = sa.createEntryAction
-//                entryact.createEmission(cal)
-//
-//            }
-            
             // Create transition which connects the parent state "state" to the refState.
             createConnectingTransition(state, refState, es)
-            
 
             return refState
-
         }
-
         null
     }
+    
 
     def ValuedObject createFunctionCallValuedObject(CASTFunctionCallExpression expression) {
         val cal = kex.createValuedObject;
@@ -1654,19 +1761,14 @@ class CDTProcessor {
     private def int getLabelOption() {
         return 2;
     }
-
-    private def int getMultiEntryOption() {
-        return 0;
-    // return 1;
-    }
     
-    /* Toggle the transformation option for if control structures
-     * return false = create a separate endState for each if construct
-     * return true = create only a separate endState for each if construct if necessary
+    /* Toggle the transformation option for if control structures:
+     *   return true = create a separate endState for each construct
+     *   return false = create only a separate endState for each construct if necessary
      */
-    private def boolean getIfTransformationOption() {
-        return false;
-//        return true;
+    private def boolean getExtraEndStateOption() {
+//        return false;
+        return true;
     }
     
     // Creates the outgoing transition of a condState with the condition of the respective control structure.
@@ -1690,8 +1792,9 @@ class CDTProcessor {
                     condCondition = condStatement.condition
                 }
                 if (condCondition != null) {
-					condKExp = condCondition.createKExpression
-				}
+                    condKExp = condCondition.createKExpression
+                }
+                
                 trigger = condKExp
                 annotations.add(createStringAnnotation("notImmediate",""))
                 immediate = true
@@ -1707,20 +1810,11 @@ class CDTProcessor {
         return connector
     }
     
-//    // Returns the id of function from a given CASTFunctionCallExpression.
-//    private def String getIDFromFunctionCallExp(CASTFunctionCallExpression es) {
-//        // Get idExpression of FunctionCallExpression
-//        val idExpression = es.children.filter(CASTIdExpression).head
-//        // Get id of called function.
-//        val funcID = idExpression.children.head.toString
-//        
-//        return funcID
-//    }
-//    
+
     // Return the entry of the global function list which has the same id as the one we are looking for.
     private def State lookForFunctions(String id) {
         for (s : functions) {
-            if (s.id == id) {
+            if (s.id.contains(id)) {
                 return s
             }
         }
@@ -1729,30 +1823,30 @@ class CDTProcessor {
     }
     
     
+    // Check whether a given connectorState can be removed.
     private def checkRemoveConnector(State connectorState, State dst, ControlflowRegion region) {
-        // Final transition to endState. Check whether the connectorState can be removed.
+        // Final transition to endState.
         var incTransitions = connectorState.incomingTransitions
-        // The connectorState can be removed if it only has one incoming transition.
+        // The connectorState can be removed if it only has none or one incoming transition.
         if (incTransitions.length == 0) {
             region.states.remove(connectorState)
         }
         else if (dst != null) {
             if (incTransitions.length == 1) {
+                // The incoming transition needs to be redirected to a given destination state (dst).
                 incTransitions.head.targetState = dst
                 region.states.remove(connectorState)
             } else {
-                val falseTrans = scc.createTransition => [
+                // If the connectorState is not removed, connect it to a given destination state (dst).
+                scc.createTransition => [
                     targetState = dst
-                    immediate = false
-                    annotations.add(createStringAnnotation("notImmediate",""))
+                    immediate = true
                     connectorState.outgoingTransitions += it
                 ]
             }
         }
     }
-    
-    
-    
+   
     // Return a list of arguments of the given FunctionCallExpression.
     private def List<IASTExpression> getFunctionCallArguments(CASTFunctionCallExpression funcCallExp) {
         // Ensure that argumentList is empty
@@ -1771,6 +1865,51 @@ class CDTProcessor {
         return argumentList
     }
     
+    
+    /* In case of a nested return statement, we need to add an additional exit out of the nested control
+     * structures so that the code after the return statement is not executed. */
+    private def checkForNestedReturn(State state) {
+        // If this valuedObject list is empty then there is no nested return statement inside the program code.
+        if (!nestedReturnParameter.valuedObjects.empty) {
+            // Check if the nested return statement can be found inside state.
+            if (state.id.contains("_hasNestedReturn")) {
+                val parentRegion = state.parentRegion
+                // Set id of parent state because the return statement is inside it.
+                var tmp = parentRegion.parentState.id
+                tmp += "_hasNestedReturn"
+                parentRegion.parentState.id = tmp
+                
+                // Create additional exit out of the nested control structures.
+                val endState = scc.createState => [s |
+                    s.id = trC + "_end" + "_nestedReturn"
+                    s.label = "End"
+                    s.final = true
+                    parentRegion.states += s
+                ]
+                val endTrans = scc.createTransition => [
+                    targetState = endState
+                    immediate = true 
+                ]
+            
+                // Get valued object reference for trigger of transition.
+                val VO = VOSet.filter[name.equals(NESTEDRETURN)].head
+                var ValuedObjectReference ex = null
+                if (VO != null) {
+                    ex = VO.reference
+                }
+                
+                // Set trigger to ensure that this exit is only taken when a nested return statement exists.
+                endTrans.trigger = ex
+                
+                // Check for transition type.
+                if (state.hasInnerStatesOrControlflowRegions) {
+                    endTrans.type = TransitionType::TERMINATION
+                }
+                state.outgoingTransitions += endTrans
+            
+            }
+        }
+    }
     
 
 // DAS HIER IST ALT. IST GLAUBE ICH UNNÖTIG!
