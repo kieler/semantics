@@ -632,7 +632,7 @@ class SCChartsExtension {
 
     // These are actions that expand to INNER content like during or exit actions.
     def boolean hasInnerActions(State state) {
-        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
+        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty || !state.entryActions.nullOrEmpty)
     }
 
     //========== TRANSITIONS ===========

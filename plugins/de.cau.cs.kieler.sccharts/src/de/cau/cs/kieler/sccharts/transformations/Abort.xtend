@@ -111,7 +111,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 targetState.transformAbortNoWTO(targetRootState);
             }
 
-        //done = true;
+           //done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -142,15 +142,17 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             // or a delayed termination
             val notCoreTerminations = outgoingTransitions.filter[e|
                 (e.typeTermination && (!(e.immediate2) || (e.trigger != null)))]
-            val delayedWeekAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
+            val delayedWeakAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
+            val mixedImmediateAndDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0
+                                                       && outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0 
             val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final].size > 0].size > 0
             val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
 
             val terminationHandlingNeeded = (notCoreTerminations.size > 0)
-            val delayedWeakAbortHandlingNeeded = (delayedWeekAborts.size > 0)
-            val anyFinalStatesButNoTermination = finalStates && !termination
-            val needCtrlRegion = terminationHandlingNeeded || delayedWeakAbortHandlingNeeded ||
-                anyFinalStatesButNoTermination
+            val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedImmediateAndDelayedStrongAborts
+            val anyFinalStatesButNoTermination = finalStates && !termination && !state.isRootState
+            val needCtrlRegion = terminationHandlingNeeded || delayedAbortHandlingNeeded 
+                || anyFinalStatesButNoTermination
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
@@ -167,16 +169,28 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
-                var strongImmediateTrigger = false;
-                var Expression weakAbortTrigger = null;
+                var Expression strongAbortImmediateTrigger = null;
+                //var strongImmediateTrigger = false;
+                var Expression weakAbortImmediateTrigger = null;
                 for (transition : outgoingTransitions) {
                     transition.setDefaultTrace;
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
-                        strongImmediateTrigger = strongImmediateTrigger || transition.immediate2
+                        if (transition.immediate2) {
+                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(transition.trigger.copy).trace(transition)
+                        } else {
+                            if (mixedImmediateAndDelayedStrongAborts) {
+                                //strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
+                                val transitionTriggerVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
+                                state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
+                                transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
+                                strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(transition)
+                            } else {
+                                strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
+                            }
+                        }
                     } else if (transition.typeWeakAbort) {
                         if (transition.immediate2) {
-                            weakAbortTrigger = weakAbortTrigger.or(transition.trigger.copy).trace(transition)
+                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.trigger.copy).trace(transition)
                         } else {
                             // In case of a delayed weak abort, we need to take care of the delay in
                             // the watcher region and create an auxiliarv variable
@@ -184,7 +198,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                             val transitionTriggerVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
                             state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                             transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                            weakAbortTrigger = weakAbortTrigger.or(transitionTriggerVariable.reference).trace(transition)
+                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transitionTriggerVariable.reference).trace(transition)
                         }
                     }
                 }
@@ -213,7 +227,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         state.createEntryAction.addEffect(termVariable.assign(FALSE))
                     }
 
-                    // Inside every region create a _Aborted
+                    // Inside every region create an _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
                     for (innerState : region.states.filter[!final]) {
@@ -225,11 +239,20 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
-                                strongAbort.setImmediate(strongImmediateTrigger)
+                                strongAbort.setImmediate(false)
                             }
-                            if (weakAbortTrigger != null) {
+                            if (strongAbortImmediateTrigger != null) {
+                                val strongAbort = innerState.createTransitionTo(abortedState, 0)
+                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
+                                    strongAbort.setTypeStrongAbort
+                                }
+                                strongAbort.setPriority(0)
+                                strongAbort.setTrigger(strongAbortImmediateTrigger.copy)
+                                strongAbort.setImmediate(true)
+                            }
+                            if (weakAbortImmediateTrigger != null) {
                                 val weakAbort = innerState.createTransitionTo(abortedState)
-                                weakAbort.setTrigger(weakAbortTrigger.copy)
+                                weakAbort.setTrigger(weakAbortImmediateTrigger.copy)
                                 weakAbort.setLowestPriority;
                                 // ALL weak aborts MUST be immediate, otherwise they might be overruled
                                 // by other transitions and would NEVER be executed. This way it is made
@@ -255,6 +278,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         //(transition.typeWeakAbort && !transition.immediate2)) {
                         // Create a ctrlTransition in the ctrlRegion
                         val ctrlTransition = runState.createTransitionTo(doneState)
+                        ctrlTransition.setLowestPriority
                         if (transition.immediate2) {
                             // if the transition was immediate then set the ctrl transition to be immediate
                             ctrlTransition.setImmediate(true)
@@ -267,18 +291,20 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 ctrlTransition.setTrigger(terminationTrigger.copy)
                             }
                         } else {
-
                             // this is the fallback were we copy in a NO WTO fashion the triggers
                             ctrlTransition.setTrigger(transition.trigger.copy)
 
-                            if (transition.typeWeakAbort && !transition.immediate2) {
-
+//                            if (transition.typeWeakAbort && !transition.immediate2) {
                                 // in this case we have to take care of getting the auxiliary variable for the
                                 // original delayed weak abort trigger
                                 // Get the _transitionTrigger that was created earlier
+                                //
+                                // Do the following also in case of mixed delayed/immediate STRONG aborts!
                                 val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                                ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
-                            }
+                                if (transitionTriggerVariable != null) {
+                                    ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
+                                }
+//                            }
                         }
 
                     }
@@ -305,13 +331,12 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 if (transition != defaultTransition) {
 
                   // Get the _transitionTrigger that was created earlier
-                  if (transition.typeWeakAbort && !transition.immediate2) {
+                  //if (transition.typeWeakAbort && !transition.immediate2) {
                     val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
                     if (transitionTriggerVariable != null) {
                         // This case for delayed termination transitions only
                         transition.setTrigger2(transitionTriggerVariable.reference)
                     }
-                  } 
                   else {
                       // Fall back to this case when we did not create a trigger variable
                       // Take the original trigger here (before for the actual ABORT in the main region take a copy, also for the watcher take a copy
@@ -337,6 +362,14 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 state.parentRegion.states.remove(outgoingConnectorState)
             }
 
+        }
+        else {
+            // Because we do not have (abortable) internal controlflow, change all strong aborts to be "weak" aborts
+            // This can only happen for entry or exit actions inside a state with no further internal behavior
+            // because entry and exit actions (at this point) cannot be aborted (TODO: think about additional before and after actions!)
+            for (transition : state.outgoingTransitions) {
+                transition.setTypeWeakAbort
+            }
         }
 
     }
