@@ -143,13 +143,13 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             val notCoreTerminations = outgoingTransitions.filter[e|
                 (e.typeTermination && (!(e.immediate2) || (e.trigger != null)))]
             val delayedWeakAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
-            val mixedImmediateAndDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0
-                                                       && outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0 
+            val mixedDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0
+                                                       && outgoingTransitions.filter[e|!e.typeStrongAbort && e.immediate2].size > 0 
             val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final].size > 0].size > 0
             val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
 
             val terminationHandlingNeeded = (notCoreTerminations.size > 0)
-            val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedImmediateAndDelayedStrongAborts
+            val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedDelayedStrongAborts
             val anyFinalStatesButNoTermination = finalStates && !termination && !state.isRootState
             val needCtrlRegion = terminationHandlingNeeded || delayedAbortHandlingNeeded 
                 || anyFinalStatesButNoTermination
@@ -178,7 +178,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         if (transition.immediate2) {
                             strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(transition.trigger.copy).trace(transition)
                         } else {
-                            if (mixedImmediateAndDelayedStrongAborts) {
+                            if (mixedDelayedStrongAborts) {
                                 //strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
                                 val transitionTriggerVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
                                 state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
