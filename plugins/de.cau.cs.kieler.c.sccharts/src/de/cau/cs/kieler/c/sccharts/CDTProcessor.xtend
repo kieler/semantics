@@ -125,6 +125,11 @@ class CDTProcessor {
     // Save FunctionCallExpression and referencing state to handle function calls
     ArrayList<Pair<CASTFunctionCallExpression,State>> functionCallRefs = new ArrayList<Pair<CASTFunctionCallExpression,State>>();
     
+    
+    // Save FunctionCallExpression and referencing state to handle function calls
+    ArrayList<Pair<CASTIdExpression,CASTFunctionCallExpression>> functionCallAssignment = new ArrayList<Pair<CASTIdExpression,CASTFunctionCallExpression>>();
+    
+    
     // Contains all defined functions of the given C code.
     ArrayList<State> functions = new ArrayList<State>();
     
@@ -201,10 +206,17 @@ class CDTProcessor {
                             referencingState.parameters.add(p)
                         ]
                     }
-                    
                 }
                 
-               
+                // If necessary, add reference to the variable which is assigned to the retun value of the function call.
+                val CASTIdExpression assignedVar = getAssignedVariableForReturnVal(funcCallExp)
+                if (assignedVar != null) {
+                    kex.createParameter => [ p |
+                        p.callByReference = true
+                        p.expression = assignedVar.createKExpression
+                        referencingState.parameters.add(p)
+                    ]
+                }
             ]
         }
         
@@ -1385,7 +1397,9 @@ class CDTProcessor {
         returnState
     }
     
-
+    // Status whether it is a non-void function call (assignment of the return value to a variable).
+    var funcCallWithAssignment = false
+    
     def State transformExpression(CASTExpressionStatement es, State state) {
 
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@7f6adc09
@@ -1395,15 +1409,33 @@ class CDTProcessor {
         // fh
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression@40a62a65
         // n
-
+        var CASTIdExpression operand1 = null
+        var CASTFunctionCallExpression operand2 = null
+        
         if (es.expression instanceof CASTBinaryExpression) {
             // Create binary expression
             val exp = es.expression as CASTBinaryExpression
+            // In case of a non-void function call:
+            if (exp.operand2 instanceof CASTFunctionCallExpression) {
+                funcCallWithAssignment = true
+                operand1 = exp.operand1 as CASTIdExpression
+                operand2 = exp.operand2 as CASTFunctionCallExpression
+                
+                /* Contains the variable (operand1) which the return value of the function call (operand2) is assigned to.
+                 * Later on, it is used for referencing. */
+                val Pair<CASTIdExpression, CASTFunctionCallExpression> p = new Pair(operand1,operand2)
+                /* The referencing needs to be done at a later point because until now, the called function
+                 * does not have to be looked at yet.
+                 */
+                functionCallAssignment.add(p)
+            }
+            
             // If variable assignment happens right after the initial state of the function -> entry action parent state
-            if(state.id.contains("_initFuncState")) {
+            else if(state.id.contains("_initFuncState")) {
                 val entryact = state.parent.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
+                return state
             }
             // If variable assignments is follows by another variable assignment -> put them into one state
             // This does not apply to "fallthrough" switch states.
@@ -1411,6 +1443,7 @@ class CDTProcessor {
                 val entryact = state.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
+                return state
             }
             // else -> create new state for variable assignment
             else {
@@ -1427,49 +1460,23 @@ class CDTProcessor {
                 // Create transition which connects the parent state "state" to the codeState.
                 createConnectingTransition(state, codeState, es)
 
-//            val trans = scc.createTransition => [
-//                targetState = codeState
-//                
-//                if(state.id.contains("_cond")) {
-//                    var Expression condKExp = null
-//                    var IASTExpression condCondition = null
-//                    val condStatement = es.parent.parent
-//
-//                    if (condStatement instanceof CASTForStatement) {
-//                        condCondition = condStatement.conditionExpression
-//                    } 
-//                    else if (condStatement instanceof CASTIfStatement) {
-//                        condCondition = condStatement.conditionExpression
-//                    } 
-//                    else if (condStatement instanceof CASTWhileStatement) {
-//                        condCondition = condStatement.condition
-//                    }
-//                    condKExp = condCondition.createKExpression
-//                    trigger = condKExp
-//                    annotations.add(createStringAnnotation("notImmediate",""))
-//                    immediate = true
-//             
-//                } else if(state.hasInnerStatesOrControlflowRegions) {
-//                    type = TransitionType::TERMINATION
-//                } else {
-//                    immediate = true
-//                }
-//                state.outgoingTransitions += it
-//            ]
-//            state.outgoingTransitions += trans
-
                 return codeState
-            
             }
-            return state
         }
 
 
         // Handle function calls.
-        if (es.expression instanceof CASTFunctionCallExpression) {
+        if (es.expression instanceof CASTFunctionCallExpression || funcCallWithAssignment) {
 
-            // Get functionCallExpression.
-            val funcCallExp = es.children.filter(CASTFunctionCallExpression).head
+            var CASTFunctionCallExpression funcCallExp = null
+            
+            if (funcCallWithAssignment) {
+                // In case of a non-void function call:
+                funcCallExp = operand2
+            } else {
+                // In case of a void function:
+                funcCallExp = es.children.filter(CASTFunctionCallExpression).head
+            }
             
             // Create referencing state.
             val refState = scc.createState => [ s |
@@ -1819,6 +1826,18 @@ class CDTProcessor {
             }
         }
         // If there is no such entry, return null.
+        return null
+    }
+    
+    
+    private def CASTIdExpression getAssignedVariableForReturnVal(CASTFunctionCallExpression f) {
+        for (entry : functionCallAssignment) {
+            val variable = entry.key
+            val funcName = entry.value
+            if (f.equals(funcName)) {
+                return variable
+            }
+        }
         return null
     }
     
