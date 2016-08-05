@@ -8,6 +8,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
@@ -52,7 +53,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transform((State) model, null);
+            transformed = transformation.transform((SCCharts) model, null);
         } 
         return transformed;
     }
