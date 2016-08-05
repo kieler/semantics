@@ -115,6 +115,10 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSubReferenceAssignmentRule()) {
+					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
 				else break;
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
@@ -291,6 +295,25 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SubReferenceAssignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         indices+=Expression* 
+	 *         subReference=ValuedObjectReference? 
+	 *         operator=AssignOperator 
+	 *         expression=Expression
+	 *     )
+	 */
+	protected void sequence_SubReferenceAssignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

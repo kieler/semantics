@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Connector Transformation.
@@ -88,6 +89,10 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
                 transition.setImmediate(true)
             }
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

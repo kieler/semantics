@@ -10,6 +10,8 @@
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//AssignOperator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subReference" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"

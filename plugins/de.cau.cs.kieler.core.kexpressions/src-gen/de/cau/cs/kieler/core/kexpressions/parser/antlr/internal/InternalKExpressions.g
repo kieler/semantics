@@ -1569,55 +1569,55 @@ ruleValuedObjectReference returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_1='.' 
+)(	otherlv_1='[' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_1_0());
+    	newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_subReference_2_0=ruleValuedObjectReference		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
-	        }
-       		set(
-       			$current, 
-       			"subReference",
-        		lv_subReference_2_0, 
-        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-))?(	otherlv_3='[' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_2_0());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_2_1_0()); 
-	    }
-		lv_indices_4_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
        			"indices",
-        		lv_indices_4_0, 
+        		lv_indices_2_0, 
         		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_5=']' 
+)	otherlv_3=']' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_2_2());
+    	newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
     }
-)*)
+)*(	otherlv_4='.' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
+	    }
+		lv_subReference_5_0=ruleValuedObjectReference		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
+	        }
+       		set(
+       			$current, 
+       			"subReference",
+        		lv_subReference_5_0, 
+        		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
 ;
 
 

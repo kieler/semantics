@@ -289,13 +289,22 @@ public interface SPackage extends EPackage
   int ASSIGNMENT__OPERATOR = INSTRUCTION_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__SUB_REFERENCE = INSTRUCTION_FEATURE_COUNT + 5;
+
+  /**
    * The number of structural features of the '<em>Assignment</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 5;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 6;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.

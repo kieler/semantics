@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -309,6 +310,10 @@ class AbortWTODeep extends AbstractExpansionTransformation {
             }
 
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

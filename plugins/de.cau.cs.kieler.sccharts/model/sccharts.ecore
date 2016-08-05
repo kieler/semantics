@@ -49,7 +49,8 @@
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
-        eType="#//Equation" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Assignment"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//Node"/>
   </eClassifiers>
@@ -87,14 +88,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Equation">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//Node"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Action">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

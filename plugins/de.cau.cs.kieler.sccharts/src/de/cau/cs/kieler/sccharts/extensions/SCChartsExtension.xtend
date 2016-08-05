@@ -33,7 +33,6 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.IterateAction
@@ -62,7 +61,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExte
 import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -1316,7 +1314,7 @@ class SCChartsExtension {
         val relevantObjects = scope.eAllContents.filter(
             e|
                 e instanceof ValuedObjectReference || e instanceof Assignment ||
-                    e instanceof Emission || e instanceof Binding || e instanceof Equation
+                    e instanceof Emission || e instanceof Binding || e instanceof Assignment
         ).immutableCopy;
         for (obj : relevantObjects) {
             if (obj instanceof ValuedObjectReference && (obj as ValuedObjectReference).valuedObject == valuedObject) {
@@ -1341,8 +1339,8 @@ class SCChartsExtension {
             } else if (obj instanceof Binding) {
                 if((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
                 if((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
-            } else if (obj instanceof Equation && (obj as Equation).valuedObject == valuedObject) {
-                (obj as Equation).valuedObject = replacement;
+            } else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject) {
+                (obj as Assignment).valuedObject = replacement;
             }      
 
         }

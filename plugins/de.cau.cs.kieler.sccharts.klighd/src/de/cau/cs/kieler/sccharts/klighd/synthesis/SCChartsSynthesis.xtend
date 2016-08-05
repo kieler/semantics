@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -87,6 +88,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     public static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
     public static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
     public static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"       
+    
+    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE);    
 
     // -------------------------------------------------------------------------
     // Fields
@@ -99,8 +103,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         
+        
         // Add general options
         options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
+        options.add(SHOW_ALL_SCCHARTS)
         
         // Add options of subsyntheses
         options.addAll(stateSynthesis.displayedSynthesisOptions);
@@ -151,7 +157,11 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         }
 
         if (root instanceof SCCharts) {
-            rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+            if (SHOW_ALL_SCCHARTS.booleanValue) {
+                rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+            } else {
+                rootNode.children += stateSynthesis.transform(root.rootStates.head) 
+            }
         } else if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
         } else if (root instanceof ControlflowRegion) {

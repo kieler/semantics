@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Suspend Transformation.
@@ -131,6 +132,10 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
             // remove suspend action
             state.localActions.remove(suspension)
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

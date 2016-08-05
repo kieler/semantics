@@ -160,8 +160,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
-					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_1_1(), "rule__ValuedObjectReference__SubReferenceAssignment_1_1");
-					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_2_1(), "rule__ValuedObjectReference__IndicesAssignment_2_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");
 					put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
 					put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");

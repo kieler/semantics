@@ -239,8 +239,8 @@ PrimeID returns ecore::EString:
 // Example: A, B
 ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|PrimeID]
-	('.' subReference=ValuedObjectReference)? 
-	('[' indices+=Expression ']')*;
+	('[' indices+=Expression ']')*
+	('.' subReference=ValuedObjectReference)?; 
 
 // Reference Call Rule
 // Calls to references. They may include a parameter list. 

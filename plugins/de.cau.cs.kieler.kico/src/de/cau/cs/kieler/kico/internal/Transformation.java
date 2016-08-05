@@ -351,13 +351,16 @@ public class Transformation implements ITransformation {
     /**
      * Gets the argument parameter type of the first processor.
      * 
+     * @param transformationObject
+     *            the transformation object
+     * 
      * @return the argument parameter type of the first processor
      */
-    public Class<?> getParameterType() {
+    public Class<?> getParameterType(EObject transformationObject) {
         if (processorOptions.size() > 0) {
             ProcessorOption firstProcessorOption = processorOptions.get(0);
             if (firstProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
-                return getTransformationMethodParameterType();
+                return getTransformationMethodParameterType(transformationObject);
             }
             // Ask KiCo for processor and return the getParameterType
             Processor processor =
@@ -374,11 +377,11 @@ public class Transformation implements ITransformation {
      * 
      * @return the return argument type of the last processor
      */
-    public Class<?> getReturnType() {
+    public Class<?> getReturnType(EObject transformationObject) {
         if (processorOptions.size() > 0) {
             ProcessorOption lastProcessorOption = processorOptions.get(processorOptions.size() - 1);
             if (lastProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
-                return getTransformationMethodReturnType();
+                return getTransformationMethodReturnType(transformationObject);
             }
             // Ask KiCo for processor and return the getReturnType
             Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getProcessorId());
@@ -390,11 +393,13 @@ public class Transformation implements ITransformation {
     /**
      * Gets the argument parameter type for the transform method.
      * 
+     * @param transformationObject
+     *            the transformation object
      * @return the argument parameter type
      */
-    public Class<?> getTransformationMethodParameterType() {
+    public Class<?> getTransformationMethodParameterType(EObject transformationObject) {
         Method transformMethod =
-                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId(), transformationObject);
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -414,9 +419,9 @@ public class Transformation implements ITransformation {
      * 
      * @return the return argument type
      */
-    public Class<?> getTransformationMethodReturnType() {
+    public Class<?> getTransformationMethodReturnType(EObject transformationObject) {
         Method transformMethod =
-                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
+                KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId(), transformationObject);
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -494,7 +499,7 @@ public class Transformation implements ITransformation {
                     // Process the next processor
                     start = System.currentTimeMillis();
                     Method transformMethod =
-                            KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId());
+                            KiCoUtil.getSpecificTransformationMethodOrFallBack(delegate, getId(), processorInput);
                     if (transformMethod.getParameterTypes().length == 2) {
                         // first try more specific method
                         result = transformMethod.invoke(delegate, processorInput, context);

@@ -123,6 +123,10 @@ public abstract class AbstractKEXTSemanticSequencer extends KEffectsSemanticSequ
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSubReferenceAssignmentRule()) {
+					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
 				else break;
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 

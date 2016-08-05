@@ -84,7 +84,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.REFERENCE_NODE: return createReferenceNode();
             case SCChartsPackage.CALL_NODE: return createCallNode();
             case SCChartsPackage.DEFINE_NODE: return createDefineNode();
-            case SCChartsPackage.EQUATION: return createEquation();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
@@ -221,16 +220,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public DefineNode createDefineNode() {
         DefineNodeImpl defineNode = new DefineNodeImpl();
         return defineNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Equation createEquation() {
-        EquationImpl equation = new EquationImpl();
-        return equation;
     }
 
     /**

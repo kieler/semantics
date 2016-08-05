@@ -72,15 +72,21 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
         return " = "          
     }
     
-    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+    public def CharSequence serializeAssignmentRoot(Assignment assignment) {
         var res = assignment.valuedObject.name
         if (!assignment.indices.nullOrEmpty) {
             for(index : assignment.indices) {
                 res = res + "[" + index.serialize + "]"
             }
         }
+        return res        
+    }
+    
+    public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+        var res = assignment.serializeAssignmentRoot.toString
         
         res = res + assignment.operator.serializeAssignOperator
+        
         if (expressionStr != null) {
             res = res + expressionStr
         }

@@ -110,11 +110,11 @@ IterateAction returns sccharts::IterateAction:
 
 InitAction returns sccharts::InitAction:
 	{sccharts::InitAction}
-   'init' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
+   'preceding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;
          
 FinalAction returns sccharts::FinalAction:
 	{sccharts::FinalAction}
-	'final' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
+	'succeeding' ('if' trigger=BoolExpression)? ('do' effects+=Effect (';' effects+=Effect)*)?;  
 
 
 // -------------- //
@@ -161,11 +161,8 @@ DFAssignment returns keffects::Assignment:
 	('[' indices+=Expression ']')*
 	 operator=AssignOperator expression = Expression;
 
-Equation returns sccharts::Equation:
-    {sccharts::Equation}
-    (
-        (valuedObject = [kexpressions::ValuedObject|PrimeID]) '=' (expression = Expression) 
-    );
+Equation returns keffects::Assignment:
+    SubReferenceAssignment;
 
 // ------------ //
 //  Enum Rules  // 

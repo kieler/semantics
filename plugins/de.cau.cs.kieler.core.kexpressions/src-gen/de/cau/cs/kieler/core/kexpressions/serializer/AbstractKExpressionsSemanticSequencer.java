@@ -586,7 +586,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ValuedObjectReference returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] subReference=ValuedObjectReference? indices+=Expression*)
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference?)
 	 */
 	protected void sequence_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

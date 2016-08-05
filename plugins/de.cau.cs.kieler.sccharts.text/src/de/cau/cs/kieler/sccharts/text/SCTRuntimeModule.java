@@ -5,6 +5,7 @@ package de.cau.cs.kieler.sccharts.text;
 
 import org.eclipse.xtext.linking.ILinker;
 
+import de.cau.cs.kieler.sccharts.text.formatting.SCTValueConverter;
 import de.cau.cs.kieler.sccharts.text.formatting.SctIndentionInformation;
 import de.cau.cs.kieler.sccharts.text.scoping.SctQualifiedNameProvider;
 import de.cau.cs.kieler.sccharts.text.validation.SCTValidatorX;
@@ -35,4 +36,7 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
         return SctIndentionInformation.class;
     }
     
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return SCTValueConverter.class;
+    }    
 }

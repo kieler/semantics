@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Abort Transformation.
@@ -341,4 +342,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 
     }
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ it.transform ] ]
+    }
 }

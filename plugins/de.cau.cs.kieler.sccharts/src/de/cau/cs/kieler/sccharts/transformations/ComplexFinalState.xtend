@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -196,6 +197,10 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             }
         }
 
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

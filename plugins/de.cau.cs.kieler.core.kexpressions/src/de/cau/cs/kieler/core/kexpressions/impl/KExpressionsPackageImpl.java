@@ -596,6 +596,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getReferenceDeclaration_Parameters() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getParameter() {
         return parameterEClass;
     }
@@ -819,6 +828,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         referenceDeclarationEClass = createEClass(REFERENCE_DECLARATION);
         createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__REFERENCE);
         createEAttribute(referenceDeclarationEClass, REFERENCE_DECLARATION__EXTERN);
+        createEReference(referenceDeclarationEClass, REFERENCE_DECLARATION__PARAMETERS);
 
         parameterEClass = createEClass(PARAMETER);
         createEAttribute(parameterEClass, PARAMETER__CALL_BY_REFERENCE);
@@ -945,6 +955,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(referenceDeclarationEClass, ReferenceDeclaration.class, "ReferenceDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceDeclaration_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getReferenceDeclaration_Extern(), ecorePackage.getEString(), "extern", null, 0, 1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceDeclaration_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, ReferenceDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getParameter_CallByReference(), ecorePackage.getEBoolean(), "callByReference", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

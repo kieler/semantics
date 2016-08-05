@@ -120,15 +120,6 @@ public interface SCChartsFactory extends EFactory {
     DefineNode createDefineNode();
 
     /**
-     * Returns a new object of class '<em>Equation</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Equation</em>'.
-     * @generated
-     */
-    Equation createEquation();
-
-    /**
      * Returns a new object of class '<em>Transition</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

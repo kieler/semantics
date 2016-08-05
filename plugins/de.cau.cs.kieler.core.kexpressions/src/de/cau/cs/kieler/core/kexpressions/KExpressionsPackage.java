@@ -561,13 +561,22 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__EXTERN = DECLARATION_FEATURE_COUNT + 1;
 
                 /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCE_DECLARATION__PARAMETERS = DECLARATION_FEATURE_COUNT + 2;
+
+                /**
      * The number of structural features of the '<em>Reference Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 2;
+    int REFERENCE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
@@ -1226,6 +1235,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getReferenceDeclaration_Extern();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration#getParameters()
+     * @see #getReferenceDeclaration()
+     * @generated
+     */
+    EReference getReferenceDeclaration_Parameters();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Parameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1735,6 +1755,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute REFERENCE_DECLARATION__EXTERN = eINSTANCE.getReferenceDeclaration_Extern();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REFERENCE_DECLARATION__PARAMETERS = eINSTANCE.getReferenceDeclaration_Parameters();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.

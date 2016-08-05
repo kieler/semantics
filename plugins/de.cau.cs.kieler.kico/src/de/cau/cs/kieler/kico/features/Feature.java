@@ -116,7 +116,7 @@ public abstract class Feature implements IFeature {
      * @return true, if successful
      */
     public final boolean doIsContained(EObject model) {
-        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId());
+        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId(), model);
         boolean result;
         try {
             if (transformMethod != null && transformMethod.getParameterTypes()[0].isInstance(model)) {
