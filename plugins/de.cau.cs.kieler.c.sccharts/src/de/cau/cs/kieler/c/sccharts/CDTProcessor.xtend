@@ -189,6 +189,7 @@ class CDTProcessor {
                  * it to the referencing state (value). */
                 val funcCallExp = entry.key
                 val referencingState = entry.value
+                
                 val funcID = funcCallExp.functionNameExpression.children.head.toString
                 // Search the list functions for the to be referenced function state
                 val referencedState = lookForFunctions(funcID)
@@ -1494,7 +1495,10 @@ class CDTProcessor {
             
             // Create transition which connects the parent state "state" to the refState.
             createConnectingTransition(state, refState, es)
-
+            
+            // Set to false for next function calls.
+            funcCallWithAssignment = false
+            
             return refState
         }
         null
@@ -1565,11 +1569,11 @@ class CDTProcessor {
             }
             val df = state.dataflowRegion
 
-            val eq = scc.createEquation
+            val eq = KEffectsFactory.eINSTANCE.createAssignment
             eq.valuedObject = lVar
             eq.expression = kExp
 
-            df.equations += eq
+//            df.equations.add(eq)
         }
     }
 
