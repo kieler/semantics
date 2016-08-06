@@ -34,6 +34,9 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * SCCharts Pre Transformation.
@@ -124,8 +127,23 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     action|
                         action.getPreExpression(valuedObject).hasNext ||
                             action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+
+        var ControlflowRegion preRegion = null;
+        var State preInit = null;
+        var State preWait = null;
+        var Transition transInitWait = null;
+        var Transition transWaitInit = null;
         
 		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+		    if (preRegion == null || preInit == null || preWait == null) {
+		        preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+		        preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
+                preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                
+                transInitWait = preInit.createImmediateTransitionTo(preWait);
+                transWaitInit = preWait.createTransitionTo(preInit);
+            }
+		    
 		    // Tracing
             preValuedObject.setDefaultTrace
             
@@ -136,15 +154,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
             newAux.copyAttributes(preValuedObject)
 
-            val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
-            val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 
             //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
-            val transInitWait = preInit.createImmediateTransitionTo(preWait)
             transInitWait.addEffect(newAux.assign(preValuedObject.reference))
 
-            val transWaitInit = preWait.createTransitionTo(preInit)
             transWaitInit.addEffect(newPre.assign(newAux.reference))
 
             //            val transWaitDone = preWait.createTransitionTo(preDone)
