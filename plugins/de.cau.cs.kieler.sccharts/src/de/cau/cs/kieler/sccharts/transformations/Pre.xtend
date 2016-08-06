@@ -150,7 +150,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
                 + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
             newPre.copyAttributes(preValuedObject)
-            val newAux = state.createVariable(GENERATED_PREFIX + "cur" + GENERATED_PREFIX 
+            val newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
                 + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
             newAux.copyAttributes(preValuedObject)
 
