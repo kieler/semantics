@@ -67,7 +67,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID, SCChartsFeature::SIGNAL_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -188,7 +188,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                         (container as Assignment).expression = newPre.reference
                     } else if (container instanceof Emission) {
 
-                        // If PRE directly a emitted value
+                        // If PRE directly an emitted value
                         (container as Emission).newValue = newPre.reference
                     }
                 }
