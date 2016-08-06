@@ -531,6 +531,16 @@ class AbortWTO extends AbstractExpansionTransformation {
             }
 
         }
+        else {
+            // Because we do not have (abortable) internal controlflow, change all strong aborts to be "weak" aborts
+            // This can only happen for entry or exit actions inside a state with no further internal behavior
+            // because entry and exit actions (at this point) cannot be aborted (TODO: think about additional before and after actions!)
+            for (transition : state.outgoingTransitions) {
+                if (transition.isTypeStrongAbort) {
+                    transition.setTypeWeakAbort
+                }
+            }
+        }
     }
 
 }

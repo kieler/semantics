@@ -368,7 +368,9 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             // This can only happen for entry or exit actions inside a state with no further internal behavior
             // because entry and exit actions (at this point) cannot be aborted (TODO: think about additional before and after actions!)
             for (transition : state.outgoingTransitions) {
-                transition.setTypeWeakAbort
+                if (transition.isTypeStrongAbort) {
+                    transition.setTypeWeakAbort
+                }
             }
         }
 
