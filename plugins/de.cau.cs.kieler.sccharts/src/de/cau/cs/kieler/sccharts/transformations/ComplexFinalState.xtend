@@ -150,15 +150,15 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 val finalStates = region.states.filter[final && incomingTransitions.size > 0]
 
                 for (finalState : finalStates) {
-                    for (transition : finalState.incomingTransitions.filter[!sourceState.complexFinalState]) {
+                    for (transition : finalState.incomingTransitions.filter[!sourceState.isFinal]) {
                         transition.addEffect(termVariable.assign(TRUE))
                     }
-                    for (transition : finalState.outgoingTransitions.filter[!targetState.complexFinalState]) {
+                    for (transition : finalState.outgoingTransitions.filter[!targetState.isFinal]) {
                         transition.addEffect(termVariable.assign(FALSE))
                     }
                 }
                 for (finalState : finalStates) {
-                    if (!finalState.outgoingTransitions.nullOrEmpty) {
+                    if (finalState.complexFinalState) {
                         finalState.final = false
                     }
                 }
