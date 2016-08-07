@@ -137,11 +137,6 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         parentState.setDefaultTrace
         var ArrayList<ValuedObject> termVariables = new ArrayList
 
-        // Every such parent state gets an special abort flag that is used to trigger
-        // the abortion of the old complex final states to new auxiliary real (not complex) final states!
-        var abortFlag = parentState.createValuedObject(GENERATED_PREFIX + "abort", createBoolDeclaration).uniqueName
-        abortFlag.setInitialValue(FALSE)
-
         // For every region in such a parent state, we need to track if it finishes
         for (region : parentState.regions.filter(ControlflowRegion)) {
                 val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
@@ -161,21 +156,15 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                     for (transition : finalState.outgoingTransitions.filter[!targetState.complexFinalState]) {
                         transition.addEffect(termVariable.assign(FALSE))
                     }
-                    finalState.final = false
+                }
+                for (finalState : finalStates) {
+                    if (!finalState.outgoingTransitions.nullOrEmpty) {
+                        finalState.final = false
+                    }
                 }
         }
 
-//        //Add Watcher Region
-//        val watcherRegion = parentState.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
-//        val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
-//                createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
-//        watcherTransition.addEffect(abortFlag.assign(TRUE))
-//        for (termVariable : termVariables) {
-//                watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
-//        }
-
         // Modify all termination transitions by weak aborts
-        
        for (termination : parentState.outgoingTransitions.filter[isTypeTermination].toList) {
             termination.setTypeWeakAbort
            
@@ -183,30 +172,6 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 termination.setTrigger(termination.trigger.and(termVariable.reference))
             }
        }
-
-
-        // Now traverse all the complex final states and eliminate them by
-        // 1. unsetting their final flag
-        // 2. creating a new (real) final state that is entered if the abort for the other regions was triggered
-
-//        for (region : parentState.regions.filter(ControlflowRegion)) {
-//            if (region.containsComplexFinalState) {
-                
-//                // Create a unique real final state in here
-//                val auxiliaryFinalState = region.createFinalState(GENERATED_PREFIX + "Final").uniqueName
-                
-//                for (state : region.states.filter[isComplexFinalState]) {
-//                    
-//                    state.final = false;
-//                    val abortTransition = state.createImmediateTransitionTo(auxiliaryFinalState);
-//                    abortTransition.setLowestPriority.setTrigger(abortFlag.reference)
-                    
-//                    auxiliaryFinalState.trace(state)
-//                    abortTransition.trace(state) 
-//                }
-//            }
-//        }
-
     }
     
     
