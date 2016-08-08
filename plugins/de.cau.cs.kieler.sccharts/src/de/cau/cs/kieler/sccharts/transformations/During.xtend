@@ -113,7 +113,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
-        val compexDuring = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
+        val complexDuring = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -131,7 +131,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
                 // because we have a second state, we need another transition
                 secondState.createTransitionTo(initialState)
-                if (compexDuring) {
+                if (complexDuring) {
                     secondState.setFinal
                 }
             } else {
@@ -140,7 +140,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
                 duringTransition = initialState.createTransitionTo(initialState)
             }
     
-            if (compexDuring) {
+            if (complexDuring) {
                  initialState.setFinal
             }
 
