@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * SCCharts Abort Transformation.
@@ -230,7 +231,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     // Inside every region create an _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final]) {
+                    for (innerState : region.states.filter[!final && type!=StateType::CONNECTOR]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)

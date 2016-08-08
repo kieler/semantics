@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -202,7 +203,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                     // Inside every region create a _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final]) {
+                    for (innerState : region.states.filter[!final && type!=StateType::CONNECTOR]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
