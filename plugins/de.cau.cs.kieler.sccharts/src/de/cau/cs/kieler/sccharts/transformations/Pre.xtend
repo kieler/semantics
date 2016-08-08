@@ -63,7 +63,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID)
+        return Sets.newHashSet(SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID)
     }
 
     override getNotHandlesFeatureIds() {
@@ -118,6 +118,12 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
     def void transformPre(State state, State targetRootState) {
+        
+        // If the state has outgoing terminations, we need to finalize the during
+        // actions in case we end the states over these transitions
+         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+         val hasOutgoingTerminations = outgoingTerminations.length > 0
+         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
@@ -138,7 +144,11 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 		    if (preRegion == null || preInit == null || preWait == null) {
 		        preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
 		        preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
-                preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                if (complexPre) {
+                    preWait.setFinal
+                    preInit.setFinal
+                }
                 
                 transInitWait = preInit.createImmediateTransitionTo(preWait);
                 transWaitInit = preWait.createTransitionTo(preInit);
