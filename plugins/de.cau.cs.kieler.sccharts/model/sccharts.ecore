@@ -93,7 +93,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Transition represents a connection between two {@link State}s and the&#xA;shift from the source to the target State. In sccharts Transitions may&#xA;only be specified between States on the same Regions. Inter-level&#xA;Transitions are not allowed.&#xA;&lt;p>&#xA;A Transition is an {@link Action} and therefore may contain a trigger condition&#xA;which guards the Transition and effects that get executed when the transition&#xA;is taken.&#xA;&lt;p>&#xA;Transitions have an integer priority. If there are multiple outgoing &#xA;transitions of a States and multiple triggers are evaluated to true, then&#xA;the transition with lowest priority is taken.&#xA;&lt;p>&#xA;A history transition will enter its source state in its containing Regions at the states that&#xA;it has left them before. So it does not start at the initial states in all circumstances but&#xA;in the states that the source state was left in some earlier tick. Only when a State is entered&#xA;for the first time (i.e. there is no history) then it is always entered in its initial States.&#xA;&lt;p>&#xA;A transition has a type {@link TransitionType}."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//TransitionType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deferred" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="history" eType="#//HistoryType"/>

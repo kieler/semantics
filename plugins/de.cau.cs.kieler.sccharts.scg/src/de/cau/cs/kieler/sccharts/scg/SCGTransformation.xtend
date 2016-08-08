@@ -69,6 +69,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -126,7 +127,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
     private val uniqueNameCache = <String>newArrayList
-
+    
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
     private static val String ANNOTATION_HOSTCODE = "hostcode"
@@ -232,7 +233,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
   //    newSCG
   //}
 
-    def SCGraph transform(State rootState, KielerCompilerContext context) {
+    def SCGraph transform(State rootState, KielerCompilerContext context, SCGraph sCGraph) {
 
         System.out.print("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
@@ -257,11 +258,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         resetMapping
         stateTypeCache.clear
         uniqueNameCache.clear
-
-        // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
-            label = if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
-        ]
 
         creationalTransformation(rootState, sCGraph) //Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
@@ -366,6 +362,18 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         scg
     }
+    
+    def SCGraph transform(SCCharts sccharts, KielerCompilerContext context) {
+        var scg = ScgFactory::eINSTANCE.createSCGraph => [
+            label = if(!sccharts.rootStates.head.label.nullOrEmpty) 
+            sccharts.rootStates.head.label else sccharts.rootStates.head.id
+        ]
+
+        for(rs: sccharts.rootStates) {
+            scg = rs.transform(context, scg)   
+        }
+        scg
+    }      
 
     // -------------------------------------------------------------------------   
     def boolean isPause(State state) {
@@ -824,6 +832,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     def dispatch Expression convertToSCGExpression(Expression expression) {
         createExpression.trace(expression)
     }
-
+    
 // -------------------------------------------------------------------------   
 }
