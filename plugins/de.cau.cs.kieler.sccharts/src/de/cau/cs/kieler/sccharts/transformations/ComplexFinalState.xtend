@@ -137,16 +137,35 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     def void transformComplexFinalState(State parentState, State rootState) {
         parentState.setDefaultTrace
         var ArrayList<ValuedObject> termVariables = new ArrayList
-
+        
+        var state = parentState
+        
+        // If there are regions that cannot terminate, then we do not need to transform something
+        if (!state.regionsMayTerminate) {
+           return;
+        }
+        
+        // If the parent state is the root state then make an explicit termination transition
+        if (parentState.rootState) {
+            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
+            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
+            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
+            for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
+                    i.regions.add(mainRegion)
+            }
+            i.createTransitionTo(f).setTypeTermination
+            state = i;
+        }
+        
         // For every region in such a parent state, we need to track if it finishes
-        for (region : parentState.regions.filter(ControlflowRegion)) {
+        for (region : state.regions.filter(ControlflowRegion)) {
             val allFinalStates = region.states.size == region.states.filter[isFinal].size
 
             // Use this new term variable to track final states of this region
             val finalStates = region.states.filter[final && incomingTransitions.size > 0]
 
             if (!allFinalStates) {
-                val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
+                val termVariable = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
                     uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
@@ -172,7 +191,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         }
 
         // Modify all termination transitions by weak aborts
-        for (termination : parentState.outgoingTransitions.filter[isTypeTermination].toList) {
+        for (termination : state.outgoingTransitions.filter[isTypeTermination].toList) {
             termination.setTypeWeakAbort
 
             for (termVariable : termVariables) {
