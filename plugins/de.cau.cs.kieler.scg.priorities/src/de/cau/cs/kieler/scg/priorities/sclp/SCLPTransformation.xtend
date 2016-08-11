@@ -14,7 +14,6 @@ package de.cau.cs.kieler.scg.priorities.sclp
 
 import de.cau.cs.kieler.core.annotations.IntAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -116,6 +115,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
     }
     
     
+    /**
+     *  Starts the translation of the scg
+     * 
+     */
     protected def void addProgram(StringBuilder sb, SCGraph scg) {
         
         
@@ -249,38 +252,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
         sb.append(" = ")
         sb.expand(ass.expression)
         sb.append(";\n")
-        /*
-        if(ass.valuedObject != null) {
-            val vo = ass.valuedObject
-            if(ass.expression != null) {
-                val expression = ass.expression
-            }
-        } else if (ass.expression instanceof TextExpression) {
-            //This is the case if the valuedObject is null
-            
-            val hostcode = (ass.expression as TextExpression).text
-            sb.appendInd(hostcode)
-        
-        } else if (ass.expression instanceof FunctionCall) {
-            //Do something here   
-        }
-         */
-        /*        
-        //Get the contents of the assignment
-        println(ass.valuedObject.name)
-        if(expression instanceof OperatorExpression) {
-            val opExp = expression as OperatorExpression
-            println(opExp.subExpressions)
-            if(expression.operator == OperatorType.PRE) { 
-                println("asdasd")
-                for(pre : expression.eAllContents.filter(ValuedObjectReference).map[valuedObject].toList) {
-                    println(pre)
-                }
-            }
-        }
-        
-        */
-
         
         sb.transformNode(ass.next.target)
         

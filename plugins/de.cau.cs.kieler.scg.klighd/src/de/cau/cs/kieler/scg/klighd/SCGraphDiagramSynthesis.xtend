@@ -1085,7 +1085,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
+            println("asdasdasd222")
             if(entry.hasAnnotation("nodePrios")) {
+                println("asdasdasd")
                 nodePrio = (entry.getAnnotation("nodePrios") as IntAnnotation).value
                 val container = node.KContainerRendering
 
