@@ -969,6 +969,12 @@ class SCChartsExtension {
         valuedObject.assign(valuedObject.reference.or(newValue))
     }
     
+    
+    // Create a valued relative AND Assignment. 
+    def Assignment assignRelativeAnd(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.assign(valuedObject.reference.and(newValue))
+    }    
+    
     // Creates a combine assignment if a combination function is given, otherwise
     // it creates a normal (fallback) assignment
     def Assignment assingCombined(ValuedObject valuedObject, Expression newValue) {
