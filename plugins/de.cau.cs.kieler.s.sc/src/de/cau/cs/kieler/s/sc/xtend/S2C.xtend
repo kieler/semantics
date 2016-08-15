@@ -249,17 +249,22 @@ class S2C {
    // -------------------------------------------------------------------------   
    
    // Generate the  tick function.
-   def sTickFunction(Program program) {
-       '''    void tick(){
-       «FOR state : program.states»
-       «state.expand»
-       «ENDFOR»
-       «program.setPreVariables»
-       _GO = 0;
-       return;
-    }
-    '''
+    // Generate the  tick function.
+  def sTickFunction(Program program) {
+      '''    void tick(){
+      static int _PRE_GO = 0;
+      if (_PRE_GO == 1) {
+           _GO = 0;
+      }
+      «FOR state : program.states»
+      «state.expand»
+      «ENDFOR»
+      «program.setPreVariables»
+      _PRE_GO = _GO;
+      return;
    }
+   '''
+  }
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------   

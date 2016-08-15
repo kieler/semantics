@@ -146,6 +146,12 @@ class LinkCreator {
 						link.target = ip
 						circuit.innerLinks += link
 					}
+					else if ((ip.type == "InConnectorLogic")&& p.name == "g0" && ip.name == "_GO"){
+					    val link = CircuitFactory::eINSTANCE.createLink
+                        link.source = p;
+                        link.target = ip
+                        circuit.innerLinks += link
+					}
 				]
 			}
 

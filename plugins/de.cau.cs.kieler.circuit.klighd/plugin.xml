@@ -78,6 +78,10 @@
          class="de.cau.cs.kieler.circuit.klighd.FocusOnActorAction"
          id="de.cau.cs.kieler.circuit.klighd.FocusOnActorAction">
    </action>
+   <action
+         class="de.cau.cs.kieler.circuit.klighd.TickWireHook"
+         id="de.cau.cs.kieler.circuit.klighd.TickWireHook">
+   </action>
 </extension>
 
 </plugin>
