@@ -15,27 +15,25 @@ package de.cau.cs.kieler.sccharts.enforcer
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
-import java.util.Set
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import java.util.Set
+
+//import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Enforcer Transformation.
@@ -49,6 +47,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     public static val ENFORCER_TRANSFORMATION_ID = "sccharts.enforcer"
     public static val ENFORCER_TRANSFORMATION_NAME = "Enforcer"
     
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsExtension
@@ -97,13 +96,17 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             rootState.regions += it
         ]
             
-        rootState.createTickRegion(inputs, outputs)
-//        inputRegion.modifyInputRegion(inputs, outputs)
-//        outputRegion.modifyOutputRegion(inputs, outputs)
+        val tickRegion = rootState.createTickRegion(inputs, outputs)
+        inputRegion.modifyInputRegion(inputs, outputs)
+        outputRegion.modifyOutputRegion(inputs, outputs)
         
-//        inputRegion.optimizeRegion(inputs, outputs)
-//        outputRegion.optimizeRegion(inputs, outputs)
+        inputRegion.annotations += createTypedStringAnnotation("layout", "priority", "3")
+        tickRegion.annotations += createTypedStringAnnotation("layout", "priority", "2")
+        outputRegion.annotations += createTypedStringAnnotation("layout", "priority", "1")
                 
+        inputRegion.optimizeRegion(inputs, outputs)
+        outputRegion.optimizeRegion(inputs, outputs)
+        
         rootState
     }
     
@@ -196,8 +199,11 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         region        
     }    
     
-    protected def State createTickRegion(State rootState, Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
-        val tickFunctionDeclaration = KExpressionsFactory.eINSTANCE.createReferenceDeclaration => [ extern = "tick" ]
+    protected def Region createTickRegion(State rootState, Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
+        val tickFunctionDeclaration = KExpressionsFactory.eINSTANCE.createReferenceDeclaration => [ 
+            extern = "tick"
+            rootState.declarations += it
+        ]
         val tickFunctionVO = KExpressionsFactory.eINSTANCE.createValuedObject => [
             name = "tick"
             tickFunctionDeclaration.valuedObjects += it
@@ -223,8 +229,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             ]
         ]
         
-        
-        rootState
+        tickRegion
     }
 
 
