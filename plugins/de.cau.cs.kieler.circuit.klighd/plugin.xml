@@ -79,8 +79,16 @@
          id="de.cau.cs.kieler.circuit.klighd.FocusOnActorAction">
    </action>
    <action
-         class="de.cau.cs.kieler.circuit.klighd.TickWireHook"
-         id="de.cau.cs.kieler.circuit.klighd.TickWireHook">
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook">
+   </action>
+   <action
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook">
+   </action>
+   <action
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook">
    </action>
 </extension>
 

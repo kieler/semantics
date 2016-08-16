@@ -11,29 +11,35 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.circuit.klighd
+ package de.cau.cs.kieler.circuit.klight.synthesis.actorShapes
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.KlighdConstants
 
 /**
  * @author fry
- * Synthesis for Register gates
+ * Synthesis for Flip-Flop gates
  */
  
-class RegisterActorSynthesis implements IDrawableActor {
+class FlipFlopActorSynthesis implements IDrawableActor {
 	@Inject
 	extension KNodeExtensions
-	
+
+	@Inject
+	extension KLabelExtensions
+
 	@Inject
 	extension KRenderingExtensions
 
 	@Inject
 	extension KColorExtensions
+
 
 	override draw(Actor actor) {
 		val KNode node = actor.node
@@ -42,20 +48,15 @@ class RegisterActorSynthesis implements IDrawableActor {
 
 		node.addRectangle =>
 			[
-
-				
-				if(actor.name.startsWith("pre")){
-					it.setBackground("gray".color)
-				} else { 
-					it.setBackground("white".color);
-				}
+				it.id = "highlightable"
 				it.selectionBackground = "green".color;
-			]
-	return node;
-	}
-}
+				it.setBackground("white".color);
+				node.addInsideBottomCenteredNodeLabel("FF", KlighdConstants.DEFAULT_FONT_SIZE,
+					KlighdConstants.DEFAULT_FONT_NAME);
 
-				
-//				node.addInsideBottomCenteredNodeLabel("R", KlighdConstants.DEFAULT_FONT_SIZE,
-//					KlighdConstants.DEFAULT_FONT_NAME);
-					
+			]
+
+		return node;
+	}
+
+}

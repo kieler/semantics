@@ -42,6 +42,7 @@ import java.util.LinkedHashSet
 import javax.inject.Inject
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import java.util.logging.Logger
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.*
 
 /** 
  * 
@@ -83,12 +84,12 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 //	/** Show Tick */
 //	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false).updateAction = "de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook"
-    /** Show Reset */
-    private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("Reset Wires", false).setCategory(VISIBILITY);
+//    /** Show Reset */
+//    private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("Reset Wires", false).setCategory(VISIBILITY);
 
-    /** Show Circuit */
-    private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
-        false);
+//    /** Show Circuit */
+//    private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
+//        false);
 
     /** DIAGRAM LAYOUT */
     private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
@@ -102,10 +103,10 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
      */
     override public getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
-        options.addAll(SHOW_RESET);
+        options.addAll(ResetWireHook.displayedSynthesisOptions);
         options.addAll(TickWireHook.displayedSynthesisOptions);
+        options.addAll(ShowEntireCircuitHook.displayedSynthesisOptions);
         options.addAll(VISIBILITY);
-        options.addAll(SHOW_ALL_REGIONS);
         options.addAll(LAYOUT);
         
         
@@ -126,18 +127,18 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
     override KNode transform(Actor model) {
 
-        if (SHOW_ALL_REGIONS.booleanValue) {
+//        if (SHOW_ALL_REGIONS.booleanValue) {
             val root = createNode().associateWith(model);
             root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
             model.transformActor(root);
             return root;
-        } else {
-            val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
-            val rootLogic = createNode().associateWith(logic)
-            rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
-            logic.transformActor(rootLogic);
-            return rootLogic;
-        }
+//        } else {
+//            val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
+//            val rootLogic = createNode().associateWith(logic)
+//            rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+//            logic.transformActor(rootLogic);
+//            return rootLogic;
+//        }
     }
 
     // -------------------------------------------------------------------------

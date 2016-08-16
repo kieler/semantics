@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.circuit.klighd
+ package de.cau.cs.kieler.circuit.klight.synthesis.actorShapes
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
@@ -87,6 +87,7 @@ class OrActorSynthesis implements IDrawableActor {
 		
 		node.addRectangle => [
 			it.invisible = true;
+			it.lineWidth = 0
 			it.lineCap = LineCap.CAP_ROUND;
 			it.lineCap.propagateToChildren = true
 

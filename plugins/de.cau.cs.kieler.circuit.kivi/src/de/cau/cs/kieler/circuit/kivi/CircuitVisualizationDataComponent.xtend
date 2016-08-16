@@ -140,7 +140,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 
 		val Runnable run = [|
 			for (context : contextsCirc) {
-				System.out.println("-- Initialize circuit simulation... --")
+//				System.out.println("-- Initialize circuit simulation... --")
 				val circuit = context.inputModel as Actor
 
 				// -------------------------------------------------------------
@@ -245,7 +245,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	}
 
 	override wrapup() throws KiemInitializationException {
-		System.out.println("wrapup----------------------------------------")
+//		System.out.println("wrapup----------------------------------------")
 		//remove all highlighting
 		val Runnable run = [|
 			
@@ -279,7 +279,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	// In each step: list the gates which shall be highlighted                     --
 	// -------------------------------------------------------------------------------------------------
 	override step(JSONObject jSONObject) throws KiemExecutionException {
-		System.out.println("step ---------------------------------------- " + tick)
+//		System.out.println("step ---------------------------------------- " + tick)
 		// -----------------------------------------------------------
 		// Use highlighting information from C Code            --
 		// -----------------------------------------------------------
@@ -288,7 +288,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		//only if this tick is a new tick, new highlighting information need to be computed
 		//otherwise, old information is copied from "...Collection" lists.
 		if (newTick) {
-			System.out.println("this is a new tick..")
+//			System.out.println("this is a new tick..")
 			for (key : jSONObject.keys.toIterable) {
 
 				// check for active guards in this tick
@@ -320,6 +320,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 					}
 				}
 			}
+			println("DDDDD " + highlighting)
 
 			// -------------------------------------------------------------
 			// Add MUX, REG, AND and OR gates to highlighting information --
@@ -339,6 +340,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 			val actorsCopy = actors.immutableCopy
 
 			addActors(highlighting, actors)
+			
 
 			actors.clear
 			actors.addAll(actorsCopy) 
@@ -377,9 +379,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		// if this is not a new tick, use the values stored in the "...Collection" lists
 		else if (!newTick) {
 			for (entry : muxFlapChangeCollection) {
-					System.out.println("muxflapchange11: " + entry)
+//					System.out.println("muxflapchange11: " + entry)
 			}
-			System.out.println("this is an old tick..")
+//			System.out.println("this is an old tick..")
 			highlighting.clear
 			val tickInt = toIntExact(tick)
 			highlighting.addAll(highlightingCollection.get(tickInt - 1))
@@ -393,6 +395,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		// ---------------------------------------------------------------
 		// Now highlight all entries of highlighting list          --
 		// ---------------------------------------------------------------
+		println(highlighting)
 		highlight(highlighting)
 
 		jSONObject
@@ -403,13 +406,17 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		val List<Actor> removeActors = new LinkedList<Actor>
 		for (a : actorsCopy) {
 			switch a.type {
-				case "REG": addReg(a, highlighting, removeActors)
+				case "REG": if(a.name != "_GO") addReg(a, highlighting, removeActors)
 				case "AND": addAnd(a, highlighting, removeActors)
 				case "OR": addOr(a, highlighting, removeActors)
 				case "MUX": addMux(a, highlighting, removeActors)
 				case "vcc": addConst1(a, highlighting, removeActors)
 				case "gnd": removeActors += a
 			}
+			if(a.name != null){
+        println("added  " + a.name + " with type "+ a.type + highlighting)
+        
+        }
 		}
 		
 		//if some new highlighting information was added, 
@@ -578,7 +585,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	// This method finally highlights the gates and links                   --
 	// -----------------------------------------------------------------------
 	protected def void highlight(Set<String> highlighting) {
-		System.out.println("highlighting for step -------------------------------------" + tick)
+//		System.out.println("highlighting for step -------------------------------------" + tick)
 		val Runnable run = [|
 
 			// highlight actors: check for each entry (actor) if its name is in highlighting list. If so, highlight it.

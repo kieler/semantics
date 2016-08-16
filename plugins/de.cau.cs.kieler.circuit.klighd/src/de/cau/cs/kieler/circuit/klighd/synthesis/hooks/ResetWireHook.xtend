@@ -27,13 +27,13 @@ import de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis
  * 
  */
 @ViewSynthesisShared
-class TickWireHook extends SynthesisActionHook implements IAction {
+class ResetWireHook extends SynthesisActionHook implements IAction {
     @Inject extension KRenderingExtensions
 
 
-    public static final String ID = "de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook"
-    public static final SynthesisOption SHOW_TICK_WIRES = SynthesisOption.createCheckOption("Tick wires.", true).
-        setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(TickWireHook.ID);
+    public static final String ID = "de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook"
+    public static final SynthesisOption SHOW_RESET_WIRES = SynthesisOption.createCheckOption("Reset wires.", true).
+        setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(ResetWireHook.ID);
 
         override executeAction(KNode rootNode) {
 
@@ -41,8 +41,10 @@ class TickWireHook extends SynthesisActionHook implements IAction {
 
                 if (port.labels.length > 0) {
                     val portLabel = port.labels.head.text
-                    if (portLabel.equals("Tick")) {
-                        if (!SHOW_TICK_WIRES.getBooleanValue) {
+                    println("eee")
+                    if (portLabel == "Reset_pre") {
+                        
+                        if (!SHOW_RESET_WIRES.getBooleanValue) {
                             port.edges.forEach [ edge |
                                 edge.getKRendering.invisible = true;
                                 for (KPolyline line : edge.eAllContents.filter(KPolyline).toIterable) {
@@ -51,7 +53,7 @@ class TickWireHook extends SynthesisActionHook implements IAction {
                                 }
                             ]
                         }
-                        if (SHOW_TICK_WIRES.booleanValue) {
+                        if (SHOW_RESET_WIRES.booleanValue) {
                             port.edges.forEach [ edge |
                                 edge.getKRendering.invisible = false;
                                 for (KPolyline line : edge.eAllContents.filter(KPolyline).toIterable) {
@@ -71,7 +73,7 @@ class TickWireHook extends SynthesisActionHook implements IAction {
         }
 
         def static getDisplayedSynthesisOptions() {
-            return newLinkedList(SHOW_TICK_WIRES)
+            return newLinkedList(SHOW_RESET_WIRES)
         }
 
     }

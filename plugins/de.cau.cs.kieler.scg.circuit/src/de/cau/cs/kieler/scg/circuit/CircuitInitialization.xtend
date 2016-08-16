@@ -102,7 +102,17 @@ class CircuitInitialization {
 					createPort(init,name,"OutConnectorInit")
 					createPort(logic,name,"InConnectorLogic")
 					
-					init.innerActors += createRegister(name, "Reset", name)
+//					init.innerActors += createRegister(name, "Reset", name)
+                    //create a Flipflop for each Input value
+                    
+                    val flipflop = CircuitFactory::eINSTANCE.createActor
+                    flipflop.type = "FF"
+                    flipflop.name = name
+                    createPort(flipflop,"Tick","In")
+                    createPort(flipflop,name,"In")
+                    createPort(flipflop,name,"Out")
+                    init.innerActors += flipflop
+                    
 					
 				}
 				if (d.isOutput) {
