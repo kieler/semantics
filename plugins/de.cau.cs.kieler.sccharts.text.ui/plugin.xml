@@ -49,6 +49,12 @@
             priority="80"
             features="ALL"
             preferred=""></editor>
+      <editor
+            editor="de.cau.cs.kieler.sccharts.text.SCT"
+            features="sccharts.enforcer"
+            label="Enforcer"
+            priority="101">
+      </editor>
    </extension>
        
     
