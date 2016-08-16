@@ -76,7 +76,7 @@ public interface Transition extends Action {
      * @return the value of the '<em>Priority</em>' attribute.
      * @see #setPriority(int)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Priority()
-     * @model
+     * @model transient="true"
      * @generated
      */
     int getPriority();

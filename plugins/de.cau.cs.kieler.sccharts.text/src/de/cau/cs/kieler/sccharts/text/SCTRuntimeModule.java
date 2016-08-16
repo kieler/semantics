@@ -12,6 +12,8 @@ import de.cau.cs.kieler.sccharts.text.validation.SCTValidatorX;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * 
+ * @author ssm
  */
 public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCTRuntimeModule {
 
@@ -26,7 +28,11 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
     
 //    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
 //        return SctResource.class;
-//    }    
+//    }  
+    
+    public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
+        return SctTransientValueService.class;
+    }    
     
     public Class<? extends ILinker> bindILinker() {
         return SctLinker.class;

@@ -68,7 +68,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         return "<" + functionCall.functionName + functionCall.parameters.serializeHRParameters + ">"
     }
     
-    def protected CharSequence serializeHRParameters(List<Parameter> parameters) {
+    def public CharSequence serializeHRParameters(List<Parameter> parameters) {
         val sb = new StringBuilder
         sb.append("(")
         var cnt = 0
