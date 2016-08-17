@@ -102,16 +102,16 @@ class CircuitInitialization {
 					createPort(init,name,"OutConnectorInit")
 					createPort(logic,name,"InConnectorLogic")
 					
-//					init.innerActors += createRegister(name, "Reset", name)
+					init.innerActors += createSampleRegister(name, "Reset", name)
                     //create a Flipflop for each Input value
                     
-                    val flipflop = CircuitFactory::eINSTANCE.createActor
-                    flipflop.type = "FF"
-                    flipflop.name = name
-                    createPort(flipflop,"Tick","In")
-                    createPort(flipflop,name,"In")
-                    createPort(flipflop,name,"Out")
-                    init.innerActors += flipflop
+//                    val flipflop = CircuitFactory::eINSTANCE.createActor
+//                    flipflop.type = "FF"
+//                    flipflop.name = name
+//                    createPort(flipflop,"Tick","In")
+//                    createPort(flipflop,name,"In")
+//                    createPort(flipflop,name,"Out")
+//                    init.innerActors += flipflop
                     
 					
 				}
@@ -138,16 +138,27 @@ class CircuitInitialization {
 		createPort(logic, "Reset_pre", "InConnectorLogic")
 
 	}
+    
+    def createSampleRegister(String name, String selPortName, String inPortName){
+        val register = CircuitFactory::eINSTANCE.createActor
+        
+        register.name = name
+        register.type = "SampleREG"
+        
+        createPort(register, "Tick", "In")
+        createPort(register, inPortName, "In")
+        createPort(register, selPortName, "Sel")
+        if(name == "_GO"){
+            createPort(register, "g0", "Out" )
+        }
+        else{
+            createPort(register, name, "Out" )
+        }
+        return register
+    }
 
 
-	def drawInputRegister(String name, Actor init) {
-		
-		init.innerActors += createRegister(name, "Reset", name)
-		
-		createPort(init, name , "InConnectorInit")
-		createPort(init, name , "OutConnectorInit")
 
-	}
 	
 	def createConstantZero(Actor actor, String outputPortName) {
 

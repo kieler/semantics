@@ -310,6 +310,11 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 			actorRegion.innerActors += actor
 			actorRegion.name = guardname
 			logic.innerActors += actorRegion
+//			val regionPort = CircuitFactory::eINSTANCE.createPort
+//			regionPort.name = guardname
+//			regionPort.type = "Out"
+//			actorRegion.ports.add(regionPort)
+			
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
 			
 			// the created actor gate gX gets an input port for each subExpression

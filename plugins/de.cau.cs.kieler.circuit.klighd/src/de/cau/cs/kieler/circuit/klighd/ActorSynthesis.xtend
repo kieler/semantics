@@ -112,6 +112,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
                         actorNode = notActorSynthesis.draw(actor)
                     case "REG":
                         actorNode = registerActorSynthesis.draw(actor)
+                    case "SampleREG":
+                        actorNode = registerActorSynthesis.draw(actor)
                     case "MUX":
                         actorNode = muxActorSynthesis.draw(actor)
                     case "FF":

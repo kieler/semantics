@@ -16,10 +16,15 @@ package de.cau.cs.kieler.circuit.klighd
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.SynthesisActionHook
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineCap
 import de.cau.cs.kieler.core.krendering.LineJoin
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
@@ -39,10 +44,8 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.LinkedHashSet
-import javax.inject.Inject
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import java.util.logging.Logger
-import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.*
+import javax.inject.Inject
 
 /** 
  * 
