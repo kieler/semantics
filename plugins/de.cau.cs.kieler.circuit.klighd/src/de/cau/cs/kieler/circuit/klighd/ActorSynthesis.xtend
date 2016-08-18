@@ -136,11 +136,12 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
         // -------------------------------------------------
         else {
             if (actor.name != "Circuit Initialization" && actor.name != "Program Logic") {
+                val int portCount = actor.ports.length
                 // Add a rendering for the collapsed version of this region
                 val collapsedRendering = createRegion(actorNode, actor)
                 collapsedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
                 collapsedRendering.setAreaPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0),
-                    createKPosition(LEFT, 80, 0, TOP, 50, 0));
+                    createKPosition(LEFT, 40, 0, TOP, portCount*30, 0));
                 collapsedRendering.setBackgroundColor(100, 140, 200)
                 collapsedRendering.setProperty(KlighdProperties::COLLAPSED_RENDERING, true)
 

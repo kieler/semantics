@@ -90,6 +90,10 @@
          class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook"
          id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook">
    </action>
+   <action
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsHook"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsHook">
+   </action>
 </extension>
 
 </plugin>

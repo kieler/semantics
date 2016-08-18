@@ -16,6 +16,7 @@ package de.cau.cs.kieler.circuit.klighd
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsHook
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.HookHandlingBeforeUpdate
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook
@@ -33,7 +34,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.HierarchyHandling
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortLabelPlacement
@@ -45,8 +45,8 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.LinkedHashSet
 import java.util.LinkedList
-import javax.inject.Inject
 import java.util.List
+import javax.inject.Inject
 
 /** 
  * 
@@ -96,6 +96,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         options.addAll(ResetWireHook.displayedSynthesisOptions);
         options.addAll(TickWireHook.displayedSynthesisOptions);
         options.addAll(ShowEntireCircuitHook.displayedSynthesisOptions);
+        options.addAll(CollapseGuardRegionsHook.displayedSynthesisOptions)
         options.addAll(VISIBILITY);
         options.addAll(LAYOUT);
 

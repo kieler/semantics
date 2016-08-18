@@ -36,8 +36,8 @@ class TickWireHook extends SynthesisActionHook implements IAction {
     public static final SynthesisOption SHOW_TICK_WIRES = SynthesisOption.createCheckOption("Tick wires.", true).
         setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(TickWireHook.ID);
 
-        override executeAction(KNode rootNode) {
-
+        override executeAction(ActionContext context) {
+            val KNode rootNode = context.KNode
             for (KPort port : rootNode.eAllContents.filter(KPort).toIterable) {
 
                 if (port.labels.length > 0) {
@@ -64,7 +64,7 @@ class TickWireHook extends SynthesisActionHook implements IAction {
                     }
                 }
             }
-            return IAction$ActionResult.createResult(false);
+            return IAction$ActionResult.createResult(true);
         }
 
         def getBooleanValue(SynthesisOption option) {

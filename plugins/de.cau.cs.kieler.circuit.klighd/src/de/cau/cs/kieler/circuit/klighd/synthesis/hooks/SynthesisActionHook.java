@@ -68,7 +68,7 @@ public abstract class SynthesisActionHook implements IAction {
      *         as configurations of 'animateLayout', 'zoomToFit', etc.<br>
      *         Use {@link ActionResult#createResult(boolean, ILayoutConfig...)} for creation.
      */
-    abstract public ActionResult executeAction(KNode rootNode);
+    abstract public ActionResult executeAction(ActionContext context);
 
     /**
      * {@inheritDoc}
@@ -87,12 +87,13 @@ public abstract class SynthesisActionHook implements IAction {
 
         // invoke execution
         if (context.getKNode() != null) {
-            returnValue = executeAction(context.getKNode());
+            return executeAction(context);
+//            returnValue = executeAction(context.getKNode());
 
         }
 
-        // allow to use the context in Hook Actions
-        additionalActions(context);
+//        // allow to use the context in Hook Actions
+//        additionalActions(context);
 
         return returnValue;
     }

@@ -36,7 +36,8 @@ class ResetWireHook extends SynthesisActionHook implements IAction {
     public static final SynthesisOption SHOW_RESET_WIRES = SynthesisOption.createCheckOption("Reset wires.", true).
         setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(ResetWireHook.ID);
 
-        override executeAction(KNode rootNode) {
+         override executeAction(ActionContext context) {
+            val KNode rootNode = context.KNode
 
             for (KPort port : rootNode.eAllContents.filter(KPort).toIterable) {
 
@@ -66,7 +67,7 @@ class ResetWireHook extends SynthesisActionHook implements IAction {
                     }
                 }
             }
-            return IAction$ActionResult.createResult(false);
+            return IAction$ActionResult.createResult(true);
         }
 
         def getBooleanValue(SynthesisOption option) {

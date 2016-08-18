@@ -41,7 +41,8 @@ class ShowEntireCircuitHook extends SynthesisActionHook implements IAction {
     private KNode zoomInFrame = KGraphFactory.eINSTANCE.createKNode;
     private KNode zoomOutFrame = KGraphFactory.eINSTANCE.createKNode;
     
-    override executeAction(KNode rootNode) {
+     override executeAction(ActionContext context) {
+            val KNode rootNode = context.KNode
 
         val frame = rootNode.children.get(0)
         
@@ -85,6 +86,18 @@ class ShowEntireCircuitHook extends SynthesisActionHook implements IAction {
             }
         }
         
+        if(SHOW_ENTIRE_CIRCUIT.booleanValue){
+                   context.getActiveViewer().centerOn(zoomOutFrame,1000);
+//                   context.getActiveViewer().zoomToLevel(10,1000)
+            
+        }
+        if(!SHOW_ENTIRE_CIRCUIT.booleanValue){
+            
+                   context.getActiveViewer().centerOn(zoomInFrame,1000);
+//                    context.getActiveViewer().zoomToLevel(10,1000)
+                   
+        }
+        
         return IAction.ActionResult.createResult(false);
     }
     
@@ -109,48 +122,9 @@ class ShowEntireCircuitHook extends SynthesisActionHook implements IAction {
         }
     }
 
-    private def void showAllKGraphElements(KGraphElement elem) {
-        if(elem instanceof KNode){
-                for(KEdge edge : elem.incomingEdges){
-                    edge.KRendering.invisible = false;
-                }
-            }
-        for (KGraphElement content : elem.eAllContents.filter(KGraphElement).toIterable) {
-            content.KRendering.invisible = false
-            for (KRendering rend : content.KRendering.eAllContents.filter(KRendering).toIterable) {
-                rend.invisible = false
-            }
-            if (content instanceof KEdge) {
-                for (KPolyline line : content.eAllContents.filter(KPolyline).toIterable) {
-                    val rend = line.getJunctionPointRendering()
-                    rend.invisible = false
-                }
-            }
+   
 
-        }
-    }
-
-    private def void hideAllKGraphElements(KGraphElement elem) {
-        if(elem instanceof KNode){
-                for(KEdge edge : elem.incomingEdges){
-                    edge.KRendering.invisible = true;
-                }
-            }
-        for (KGraphElement content : elem.eAllContents.filter(KGraphElement).toIterable) {
-            content.KRendering.invisible = true
-            for (KRendering rend : content.KRendering.eAllContents.filter(KRendering).toIterable) {
-                rend.invisible = true
-            }
-            
-            if (content instanceof KEdge) {
-                for (KPolyline line : content.eAllContents.filter(KPolyline).toIterable) {
-                    val rend = line.getJunctionPointRendering()
-                    rend.invisible = true
-                }
-            }
-
-        }
-    }
+   
 
     def getBooleanValue(SynthesisOption option) {
         return parent.getBooleanValue(option);
@@ -160,21 +134,21 @@ class ShowEntireCircuitHook extends SynthesisActionHook implements IAction {
         return newLinkedList(SHOW_ENTIRE_CIRCUIT)
     }
     
-    override additionalActions(ActionContext context){
-        if(SHOW_ENTIRE_CIRCUIT.booleanValue){
-                   context.getActiveViewer().centerOn(zoomOutFrame,0);
-                   context.getActiveViewer().zoomToLevel(10,1000)
-            
-        }
-        if(!SHOW_ENTIRE_CIRCUIT.booleanValue){
-            
-                   context.getActiveViewer()
-//                   .zoom(ZOOM_TO_FOCUS,1000)
-                   .centerOn(zoomInFrame,0);
-                    context.getActiveViewer().zoomToLevel(10,1000)
-                   
-        }
-        return IAction.ActionResult.createResult(true);
-    }
+//    override additionalActions(ActionContext context){
+//        if(SHOW_ENTIRE_CIRCUIT.booleanValue){
+//                   context.getActiveViewer().centerOn(zoomOutFrame,0);
+//                   context.getActiveViewer().zoomToLevel(10,1000)
+//            
+//        }
+//        if(!SHOW_ENTIRE_CIRCUIT.booleanValue){
+//            
+//                   context.getActiveViewer()
+////                   .zoom(ZOOM_TO_FOCUS,1000)
+//                   .centerOn(zoomInFrame,0);
+//                    context.getActiveViewer().zoomToLevel(10,1000)
+//                   
+//        }
+//        return IAction.ActionResult.createResult(true);
+//    }
 
 }
