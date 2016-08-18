@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -27,7 +27,6 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
 
-
 /**
  * SCCharts SurfaceDepth Transformation.
  * 
@@ -37,9 +36,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensio
  */
 class SurfaceDepth extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::SURFACEDEPTH_ID
     }
@@ -60,7 +59,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         return Sets.newHashSet(SCChartsFeature::TRIGGEREFFECT_ID)
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension KExpressionsCompareExtensions
 
@@ -73,11 +72,11 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--                S U R F A C E  &   D E P T H                         --
-    //-------------------------------------------------------------------------
-    //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
-    //                                 macro state, hence we just consider simple states here)
+    // -------------------------------------------------------------------------
+    // --                S U R F A C E  &   D E P T H                         --
+    // -------------------------------------------------------------------------
+    // @requires: abort transformation (there must not be any weak or strong aborts outgoing from
+    // macro state, hence we just consider simple states here)
     //
     // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
     // Create an auxiliary valuedObject isDepth_S that indicates that the state was
@@ -103,178 +102,201 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
-        targetRootState
-              .fixAllTextualOrdersByPriorities
-              .optimizeSuperflousConditionalStates
-              .optimizeSuperflousImmediateTransitions
-              .fixDeadCode
+        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
+            optimizeSuperflousImmediateTransitions.fixDeadCode
 //            optimizeSuperflousImmediateTransitions.fixDeadCode;
-            
 //        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
-
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
-        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
-            !state.outgoingTransitions.get(0).typeTermination &&
-            (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
-            val parentRegion = state.parentRegion;
-
-            // Duplicate immediate transitions
-            val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
-            for (transition : immediateTransitions) {
-                val transitionCopy = transition.copy
-                transitionCopy.setSourceState(transition.sourceState)
-                transitionCopy.setTargetState(transition.targetState)
-                transitionCopy.setHighestPriority
-                transition.setNotImmediate
+        val noTransition = state.outgoingTransitions.nullOrEmpty
+        // no transition
+        if (noTransition) {
+            return
+        }
+        // termination
+        val numTransition = state.outgoingTransitions.size
+        if (numTransition == 1 && state.outgoingTransitions.get(0).typeTermination) {
+            return
+        }
+        val immediate0 = state.outgoingTransitions.get(0).immediate2
+        val noTrigger0 = state.outgoingTransitions.get(0).trigger == null
+        val noEffects0 = state.outgoingTransitions.get(0).effects.nullOrEmpty
+        if (numTransition == 1 && noTrigger0) {
+            // pause
+            if (!immediate0 && noEffects0) {
+                return
             }
+            // action
+            if (immediate0 && !noEffects0) {
+                return
+            }
+        }
+        val immediate1 = state.outgoingTransitions.get(1).immediate2
+        val noTrigger1 = state.outgoingTransitions.get(1).trigger == null
+        val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
+        // conditional
+        if (numTransition == 2 && immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
+            return
+        }
 
-            // Modify surfaceState (the original state)
-            val surfaceState = state
-            var depthState = state
-            surfaceState.uniqueName
+//        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
+//            !state.outgoingTransitions.get(0).typeTermination &&
+//            (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
+        val parentRegion = state.parentRegion;
 
-            // For every state create a number of surface nodes
-            val orderedTransitionList = state.outgoingTransitions.sortBy[priority];
+        // Duplicate immediate transitions
+        val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
+        for (transition : immediateTransitions) {
+            val transitionCopy = transition.copy
+            transitionCopy.setSourceState(transition.sourceState)
+            transitionCopy.setTargetState(transition.targetState)
+            transitionCopy.setHighestPriority
+            transition.setNotImmediate
+        }
 
-            var pauseInserted = false
+        // Modify surfaceState (the original state)
+        val surfaceState = state
+        var depthState = state
+        surfaceState.uniqueName
 
-            var State previousState = surfaceState
-            var State currentState = surfaceState
+        // For every state create a number of surface nodes
+        val orderedTransitionList = state.outgoingTransitions.sortBy[priority];
 
-            surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
+        var pauseInserted = false
 
-            for (transition : orderedTransitionList) {
+        var State previousState = surfaceState
+        var State currentState = surfaceState
 
-                if (!(transition.isImmediate) && !pauseInserted) {
+        surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
+        for (transition : orderedTransitionList) {
 
-                    // For the first transition that is NOT immediate (a delay transition)
-                    // and if we have not inserted a pause yet, then do it now
-                    // Make sure the next transition is delayed 
-                    pauseInserted = true
+            if (!(transition.isImmediate) && !pauseInserted) {
 
-                    depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
-                    previousState.createImmediateTransitionTo(depthState).trace(transition)
-                    //System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
+                // For the first transition that is NOT immediate (a delay transition)
+                // and if we have not inserted a pause yet, then do it now
+                // Make sure the next transition is delayed 
+                pauseInserted = true
 
-                    val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
-                    depthState.createTransitionTo(pauseState).trace(transition)
+                depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
+                previousState.createImmediateTransitionTo(depthState).trace(transition)
+                // System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
+                val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
+                depthState.createTransitionTo(pauseState).trace(transition)
 
-                    // Imitate next cycle
-                    previousState = pauseState
-                    currentState = null
-
-                    //System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
-                }
-
-                if (currentState == null) {
-
-                    // Create a new state
-                    currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
-                    //System.out.println("New currentState := " + currentState.id)
-
-                    // Connect
-                    val connect = previousState.createImmediateTransitionTo(currentState)
-                    //System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
-                    connect.setPriority(2)
-
-                    // Move transition to this state
-                    //System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
-                    currentState.outgoingTransitions.add(transition)
-                }
-
-                // Ensure the transition is immediate
-                transition.setImmediate(true)
-
-                // We can now set the transition priority to 1 (it is reflected implicitly by the sequential order now)
-                transition.setPriority(1)
-
-                // Next cycle
-                //System.out.println("Set previousState := " + currentState.id)
-                previousState = currentState
+                // Imitate next cycle
+                previousState = pauseState
                 currentState = null
+
+            // System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
             }
 
-            // Connect back depth with surface state
-            var T2tmp = previousState.createImmediateTransitionTo(depthState).trace(previousState)
-            //System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
+            if (currentState == null) {
 
-            // Afterwards do the DTO transformation
-            /* Der Knoten _Pause ist besonders ausgezeichnet. Er hat meistens zwei
-            eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
-            
-            Falls _Pause KEINE zwei eingehenden Kanten hat, so ist er vermutlich
-            als initial Knoten markiert!
-            
-            Gehe beide Kanten T1 und T2 rückwärts zu jeweiligen Source-Knoten K1 und
-            K2 entlang und verleiche die ausgehenden Transitionen TK1 und TK2 (die
-            nicht T1 oder T2 sind). 
-             
-            Wenn diese gleich sind wird K1 der neue Pause
-            Knoten und die eingehende Kanten von K2 zeigt nun auf den neuen _Pause.
-            K2, T2 und TK2 werden eliminiert.
-            
-            Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen _Pause
-            bis TK1 und TK2 ungleich sind.*/
-            var stateAfterDepth = depthState
+                // Create a new state
+                currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
+                // System.out.println("New currentState := " + currentState.id)
+                // Connect
+                val connect = previousState.createImmediateTransitionTo(currentState)
+                // System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
+                connect.setPriority(2)
 
-            //System.out.println("stateAfterDepth:" + stateAfterDepth.id);
+                // Move transition to this state
+                // System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
+                currentState.outgoingTransitions.add(transition)
+            }
 
-            var doDTO = true;
+            // Ensure the transition is immediate
+            transition.setImmediate(true)
 
-            if (doDTO) {
-                var done = false
-                while (!done) {
-                    done = true
-                    if (stateAfterDepth.incomingTransitions.size == 2) {
+            // We can now set the transition priority to 1 (it is reflected implicitly by the sequential order now)
+            transition.setPriority(1)
 
-                        // T1 is the incoming node from the surface
-                        var T1tmp = stateAfterDepth.incomingTransitions.get(0)
-                        if (T1tmp == T2tmp) {
-                            T1tmp = stateAfterDepth.incomingTransitions.get(1)
-                        }
-                        val T1 = T1tmp
-                        val T2 = T2tmp
+            // Next cycle
+            // System.out.println("Set previousState := " + currentState.id)
+            previousState = currentState
+            currentState = null
+        }
 
-                        // T2 is the incoming node from the feedback
-                        val K1 = T1.sourceState
-                        val K2 = T2.sourceState
-                        if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
-                            !K2.outgoingTransitions.filter(e|e != T2).nullOrEmpty) {
-                            val TK1s = K1.outgoingTransitions.filter(e|e != T1)
-                            val TK2s = K2.outgoingTransitions.filter(e|e != T2)
-                            if (TK1s.size > 0 && TK2s.size > 0) {
-                                val TK1 = TK1s.get(0)
-                                val TK2 = TK2s.get(0)
-                                if ((TK1.targetState == TK2.targetState) &&
-                                    //TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
-                                    ((TK1.trigger == TK2.trigger) || (TK2.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
-                                    stateAfterDepth = K1
+        // Connect back depth with surface state
+        var T2tmp = previousState.createImmediateTransitionTo(depthState).trace(previousState)
+        // System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
+        // Afterwards do the DTO transformation
+        /* Der Knoten _Pause ist besonders ausgezeichnet. Er hat meistens zwei
+         * eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
+         * 
+         * Falls _Pause KEINE zwei eingehenden Kanten hat, so ist er vermutlich
+         * als initial Knoten markiert!
+         * 
+         * Gehe beide Kanten T1 und T2 rückwärts zu jeweiligen Source-Knoten K1 und
+         * K2 entlang und verleiche die ausgehenden Transitionen TK1 und TK2 (die
+         * nicht T1 oder T2 sind). 
+         *  
+         * Wenn diese gleich sind wird K1 der neue Pause
+         * Knoten und die eingehende Kanten von K2 zeigt nun auf den neuen _Pause.
+         * K2, T2 und TK2 werden eliminiert.
+         * 
+         * Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen _Pause
+         bis TK1 und TK2 ungleich sind.*/
+        var stateAfterDepth = depthState
 
-                                    System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
-                                    val t = K2.incomingTransitions.get(0)
-                                    t.setTargetState(stateAfterDepth)
-                                    for (transition : K2.outgoingTransitions) {
-                                        stateAfterDepth.trace(transition) //KITT: Redirect tracing before removing
-                                        transition.targetState.incomingTransitions.remove(transition)
-                                    }
-                                    stateAfterDepth.trace(K2) //KITT: Redirect tracing before removing
-                                    K2.parentRegion.states.remove(K2)
-                                    done = false
-                                    T2tmp = t
+        // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
+        var doDTO = true;
+
+        if (doDTO) {
+            var done = false
+            while (!done) {
+                done = true
+                if (stateAfterDepth.incomingTransitions.size == 2) {
+
+                    // T1 is the incoming node from the surface
+                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
+                    if (T1tmp == T2tmp) {
+                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
+                    }
+                    val T1 = T1tmp
+                    val T2 = T2tmp
+
+                    // T2 is the incoming node from the feedback
+                    val K1 = T1.sourceState
+                    val K2 = T2.sourceState
+                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty && !K2.outgoingTransitions.filter(
+                        e |
+                            e != T2
+                    ).nullOrEmpty) {
+                        val TK1s = K1.outgoingTransitions.filter(e|e != T1)
+                        val TK2s = K2.outgoingTransitions.filter(e|e != T2)
+                        if (TK1s.size > 0 && TK2s.size > 0) {
+                            val TK1 = TK1s.get(0)
+                            val TK2 = TK2s.get(0)
+                            if ((TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
+                            ((TK1.trigger == TK2.trigger) ||
+                                (TK2.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
+                                stateAfterDepth = K1
+
+                                System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+                                val t = K2.incomingTransitions.get(0)
+                                t.setTargetState(stateAfterDepth)
+                                for (transition : K2.outgoingTransitions) {
+                                    stateAfterDepth.trace(transition) // KITT: Redirect tracing before removing
+                                    transition.targetState.incomingTransitions.remove(transition)
                                 }
+                                stateAfterDepth.trace(K2) // KITT: Redirect tracing before removing
+                                K2.parentRegion.states.remove(K2)
+                                done = false
+                                T2tmp = t
                             }
                         }
                     }
                 }
-
-            // End of DTO transformation
-            // This MUST be highest priority so that the control flow restarts and takes other 
-            // outgoing transition.
-            // There should not be any other outgoing transition.
             }
+
+        // End of DTO transformation
+        // This MUST be highest priority so that the control flow restarts and takes other 
+        // outgoing transition.
+        // There should not be any other outgoing transition.
         }
+//        }
     }
 
 }
