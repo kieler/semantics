@@ -127,6 +127,10 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
         // initialize circuit creates all inputs/outputs and a tick and reset input
         circuitInitialization.initialize(inputsAndOutputs, initializationRegian, logicRegion, newCircuit)
 
+        // for each input port of logic region create one NOT gate.. maybe this gate is deleted after link creation
+        // put everey "not"-gate in a list
+        val List<Actor> notGates = createNegativeInputs(logicRegion)
+
         // -------------------------------------------------------
         // --              Transform SSA SCG Nodes              --
         // -------------------------------------------------------
@@ -143,9 +147,46 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
         linkCreator.logicRegion(logicRegion, inputOutputMap)
         linkCreator.initRegion(initializationRegian)
 
+        deleteUnusedGates(logicRegion, notGates)
         // return the circuit
         newCircuit
 
+    }
+
+    def deleteUnusedGates(Actor logicRegion, List<Actor> actors) {
+        for (actor : actors) {
+            val outputPort = actor.ports.filter[type == "Out"].head
+            if (outputPort.outgoingLinks.empty) {
+                actor.incomingLinks.clear
+                logicRegion.innerActors.remove(actor)
+            }
+        }
+    }
+
+    private def List<Actor> createNegativeInputs(Actor logicRegion) {
+
+        val List<Actor> notActorList = new LinkedList<Actor>
+        for (logicInputPort : logicRegion.ports.filter[type == "InConnectorLogic"]) {
+            val actor = CircuitFactory::eINSTANCE.createActor
+            actor.name = "!" + logicInputPort.name
+            actor.type = "NOT"
+            assignmentActor.add(actor.name)
+            // Create output port. 
+            val outputPort = CircuitFactory::eINSTANCE.createPort
+            outputPort.type = "Out"
+            outputPort.name = actor.name
+            actor.ports += outputPort
+            // Create input port.
+            val inputPort = CircuitFactory::eINSTANCE.createPort
+            inputPort.type = "In"
+            inputPort.name = logicInputPort.name
+            actor.ports += inputPort
+            // Add actor to logic region.
+            logicRegion.innerActors += actor
+            notActorList.add(actor)
+        }
+
+        return notActorList
     }
 
     /**
@@ -311,6 +352,18 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
             regionPort.type = "redOut"
             actorRegion.ports.add(regionPort)
 
+            // if a register is in the region, the regions needs additional tick and reset inputs
+            if (actor.type == "REG") {
+               
+
+                    // add Both inputPorts to regionPortList
+                    redRegionPorts.add("Tick")
+                    redRegionPorts.add("Reset_pre")
+
+                
+
+            }
+
             // the created actor gate gX gets an input port for each subExpression
             // and each subExpression is transformed into gates with method transformExpressions
             for (Expression subexpr : expr.subExpressions) {
@@ -435,6 +488,18 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
                     }
                 }
 
+                // if Actor is a register, tick and reset input ports need to be added to guard region
+                if (actor.type == "REG") {
+                    if (redRegionPorts != null && !redRegionPorts.contains("Tick")) {
+
+                        // add Both inputPorts to regionPortList
+                        redRegionPorts.add("Tick")
+                        redRegionPorts.add("Reset_pre")
+
+                    }
+
+                }
+
                 // the created actor needs an input port for each subexpression
                 // and the subexpressions are transformed, too.
                 for (Expression subExpr : expr.subExpressions) {
@@ -445,11 +510,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 
                     // add and remove ports from region port list
                     if (redRegionPorts != null) {
-                        if (redRegionPorts.contains(port.name)) {
-                            redRegionPorts.remove(port.name)
-                        } else {
-                            redRegionPorts.add(port.name)
-                        }
+                        redRegionPorts.add(port.name)
+
                     }
 
                     if (subExpr instanceof OperatorExpression) {

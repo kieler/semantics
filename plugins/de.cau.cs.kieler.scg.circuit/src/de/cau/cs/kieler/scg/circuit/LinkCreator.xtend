@@ -136,14 +136,14 @@ class LinkCreator {
             println(regionPortList)
             println()
             for (port : regionPortList) {
-                if (port.type == "In" || port.type == "redOut") {
+                if (port.type == "In" || port.type == "redOut" || port.type == "Sel") {
                     regionPortList.forEach [ pport |
                         if ((pport.type == "redIn" || pport.type == "Out") && port.name == pport.name) {
                             val link = CircuitFactory::eINSTANCE.createLink
                             link.source = pport;
                             link.target = port;
                             region.innerLinks += link
-                            println("createdLink from " + pport.name + " to " + port.name)
+                            
                         }
 
                     ]
