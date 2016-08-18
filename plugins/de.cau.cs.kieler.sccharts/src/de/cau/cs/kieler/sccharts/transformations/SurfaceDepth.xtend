@@ -109,35 +109,42 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
-        val noTransition = state.outgoingTransitions.nullOrEmpty
-        // no transition
-        if (noTransition) {
-            return
-        }
-        // termination
         val numTransition = state.outgoingTransitions.size
-        if (numTransition == 1 && state.outgoingTransitions.get(0).typeTermination) {
+        // root or final state
+        if (state.rootState || (numTransition == 0 && state.final)) {
             return
         }
-        val immediate0 = state.outgoingTransitions.get(0).immediate2
-        val noTrigger0 = state.outgoingTransitions.get(0).trigger == null
-        val noEffects0 = state.outgoingTransitions.get(0).effects.nullOrEmpty
-        if (numTransition == 1 && noTrigger0) {
-            // pause
-            if (!immediate0 && noEffects0) {
-                return
-            }
-            // action
-            if (immediate0 && !noEffects0) {
-                return
-            }
+        if (numTransition == 0) {
+          // halt state --> create explicit pause (self loop)
+          state.createTransitionTo(state)
         }
-        val immediate1 = state.outgoingTransitions.get(1).immediate2
-        val noTrigger1 = state.outgoingTransitions.get(1).trigger == null
-        val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
-        // conditional
-        if (numTransition == 2 && immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
-            return
+        if (numTransition > 0) {
+            // termination
+            if (numTransition == 1 && state.outgoingTransitions.get(0).typeTermination) {
+                return
+            }
+            val immediate0 = state.outgoingTransitions.get(0).immediate2
+            val noTrigger0 = state.outgoingTransitions.get(0).trigger == null
+            val noEffects0 = state.outgoingTransitions.get(0).effects.nullOrEmpty
+            if (numTransition == 1 && noTrigger0) {
+                // pause
+                if (!immediate0 && noEffects0) {
+                    return
+                }
+                // action
+                if (immediate0 && !noEffects0) {
+                    return
+                }
+            }
+            if (numTransition > 1) {
+                val immediate1 = state.outgoingTransitions.get(1).immediate2
+                val noTrigger1 = state.outgoingTransitions.get(1).trigger == null
+                val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
+                // conditional
+                if (immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
+                    return
+                }
+            }
         }
 
 //        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
@@ -241,7 +248,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         var stateAfterDepth = depthState
 
         // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
-        var doDTO = true;
+        var doDTO = false;
 
         if (doDTO) {
             var done = false
@@ -288,15 +295,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                             }
                         }
                     }
+//                }
                 }
-            }
 
-        // End of DTO transformation
-        // This MUST be highest priority so that the control flow restarts and takes other 
-        // outgoing transition.
-        // There should not be any other outgoing transition.
+            // End of DTO transformation
+            // This MUST be highest priority so that the control flow restarts and takes other 
+            // outgoing transition.
+            // There should not be any other outgoing transition.
+            }
         }
-//        }
     }
 
 }
