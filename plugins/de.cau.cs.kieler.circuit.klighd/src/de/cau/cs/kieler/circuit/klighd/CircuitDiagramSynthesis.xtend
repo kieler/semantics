@@ -16,9 +16,9 @@ package de.cau.cs.kieler.circuit.klighd
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.HookHandlingBeforeUpdate
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ResetWireHook
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook
-import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.SynthesisActionHook
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
@@ -44,8 +44,9 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.LinkedHashSet
-import java.util.logging.Logger
+import java.util.LinkedList
 import javax.inject.Inject
+import java.util.List
 
 /** 
  * 
@@ -59,7 +60,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
     @Inject ActorSynthesis actorSynthesis
     
-//    @Inject TickWireHook tickWireHook
+    @Inject HookHandlingBeforeUpdate hookHandling
 
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
@@ -68,37 +69,23 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension KLabelExtensions
+    
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
     
     
-    val logger = Logger.getLogger(this.class.name)
+//    val logger = Logger.getLogger(this.class.name)
     public val ID = "de.cau.cs.kieler.circuit.klight.CircuitDiagramSynthesis"
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------
-    // TODO: 
-//	/** Show Assignment Regions */
-//	private static val SynthesisOption SHOW_ASSIGNMENT = SynthesisOption::createCheckOption("Show Assignment Regions",
-//		false);
-//	/** Show Not-Gates */
-//	private static val SynthesisOption SHOW_NOT = SynthesisOption::createCheckOption("Not-Gates", true);
+
     /** The visibility category */
     public static final SynthesisOption VISIBILITY = SynthesisOption.createCategory("Visibility");
-
-//	/** Show Tick */
-//	private static val SynthesisOption SHOW_TICK = SynthesisOption::createCheckOption("Tick Wires", false).updateAction = "de.cau.cs.kieler.circuit.klighd.synthesis.hooks.TickWireHook"
-//    /** Show Reset */
-//    private static val SynthesisOption SHOW_RESET = SynthesisOption::createCheckOption("Reset Wires", false).setCategory(VISIBILITY);
-
-//    /** Show Circuit */
-//    private static val SynthesisOption SHOW_ALL_REGIONS = SynthesisOption::createCheckOption("Show Entire Circuit",
-//        false);
 
     /** DIAGRAM LAYOUT */
     private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
         <String>newLinkedList("Brandes Koepf", "Linear Segments", "Network Simplex", "Simple"), "Top-Down");
-    
-    
+
     
     /**  
      * Returns a list of KlighD visualization options. Called by KlighD.
@@ -111,37 +98,31 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         options.addAll(ShowEntireCircuitHook.displayedSynthesisOptions);
         options.addAll(VISIBILITY);
         options.addAll(LAYOUT);
-        
-        
 
         return options.toList
 
-//		return newLinkedList(
-//			SynthesisOption::createSeparator("Visibility"),
-////			SHOW_ASSIGNMENT,
-////			SHOW_NOT,
-////			SHOW_TICK,
-//			SHOW_RESET,
-//			SHOW_ALL_REGIONS,
-//			SynthesisOption::createSeparator("Layout"),
-//			LAYOUT
-//		)
     }
 
     override KNode transform(Actor model) {
 
-//        if (SHOW_ALL_REGIONS.booleanValue) {
             val root = createNode().associateWith(model);
             root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
             model.transformActor(root);
+
+            /* Update diagram after refreshing.
+             * optionHooks gives hook information for option. */
+            val options = displayedSynthesisOptions.filter[updateAction != null]
+            val List<Pair<String,Boolean>> optionHooks = new LinkedList<Pair<String,Boolean>>
+            for(option : options){
+                val id = option.updateAction
+                val value = option.booleanValue
+                val pair = new Pair<String,Boolean>(id,value)
+                optionHooks.add(pair)
+                
+            }
+            hookHandling.updateDigram(root, optionHooks)
+            
             return root;
-//        } else {
-//            val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
-//            val rootLogic = createNode().associateWith(logic)
-//            rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
-//            logic.transformActor(rootLogic);
-//            return rootLogic;
-//        }
     }
 
     // -------------------------------------------------------------------------
@@ -201,7 +182,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
                 if (port.type.startsWith("In")) {
 
                     // ports for the tick function are marked with triangle 
-                    if (port.name == "Tick") { // /TODO: still not working ... place Tick ports at fixed position
+                    if (port.name == "Tick") { // 
                         it.setPortSize(0, 0)
                         it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
                         it.addPolygon => [
@@ -253,23 +234,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
                     it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
                     it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
                     it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-
                 }
-
-//				else if (port.type.startsWith("Not")) {
-//					if (actor.type == "NOT") {
-//						it.setPortSize(5, 2);
-//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-//						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-//						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-//					} else {
-//						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
-//						it.setPortSize(6, 6);
-//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-//						it.addEllipse.setBackground("white".color).lineWidth = 1;
-//					}
-//
-//				}
             ]
         }
 
@@ -285,32 +250,6 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         // ------------------------------------------------------------------------
         actor.innerLinks.forEach [ l |
             createEdgeForLink(l);
-//		    val KEdge newEdge = createEdgeForLink(l);
-//		    if(!SHOW_TICK.booleanValue){
-//		        val s = l.source as Port;
-//		        if(s.name == "Tick"){
-//		            newEdge.KRendering.invisible = true
-//		            
-//		        }
-//		    }
-//			if ((SHOW_TICK.booleanValue) && (SHOW_RESET.booleanValue)) {
-//				createLink(l)
-//			} else if (!(SHOW_TICK.booleanValue) && !(SHOW_RESET.booleanValue)) {
-//				val s = l.source as Port
-//				if (!(s.name == "Tick") &&  !(s.name == "Reset_pre")) {
-//					createLink(l)
-//				}
-//			} else if (!SHOW_TICK.booleanValue) {
-//				val s = l.source as Port
-//				if (!(s.name == "Tick")) {
-//					createLink(l)
-//				}
-//			} else if (!SHOW_RESET.booleanValue) {
-//				val s = l.source as Port
-//				if (!(s.name == "Reset_pre")) {
-//					createLink(l)
-//				}
-//			}
         ]
 
     }

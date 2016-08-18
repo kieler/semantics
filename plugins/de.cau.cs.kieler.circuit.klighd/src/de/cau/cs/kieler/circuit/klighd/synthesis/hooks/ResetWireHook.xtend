@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis
 
 /**
+ * This class hides and unhides the reset wires of the circuit.
  * @author fry
  * 
  */
@@ -41,7 +42,7 @@ class ResetWireHook extends SynthesisActionHook implements IAction {
 
                 if (port.labels.length > 0) {
                     val portLabel = port.labels.head.text
-                    println("eee")
+                    
                     if (portLabel == "Reset_pre") {
                         
                         if (!SHOW_RESET_WIRES.getBooleanValue) {

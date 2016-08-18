@@ -28,8 +28,8 @@ import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 
 /**
- * Normal {@link SynthesisHook} with additional {@link IAction} capability. If the action
- * should handle dynamic updates for {@link SynthesisOption} the ID must be set as in
+ * Normal {@link SynthesisHook} with additional {@link IAction} capability. If the action should
+ * handle dynamic updates for {@link SynthesisOption} the ID must be set as in
  * {@link SynthesisOption.setUpdateAction}.
  * <p>
  * Any extending class must be double registered in the extension points. A klighd.action and
@@ -42,8 +42,9 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
  */
 @ViewSynthesisShared
 public abstract class SynthesisActionHook implements IAction {
-       
-    @Inject CircuitDiagramSynthesis parent;
+
+    @Inject
+    CircuitDiagramSynthesis parent;
 
     /** Injector for injecting member if this class was not injected (the action instance) */
     private static final Injector injector = Guice.createInjector(new Module() {
@@ -74,22 +75,30 @@ public abstract class SynthesisActionHook implements IAction {
      */
     @Override
     public ActionResult execute(ActionContext context) {
+
+        ActionResult returnValue = ActionResult.createResult(false);
         // inject members
         if (parent == null) {
             injector.injectMembers(this);
         }
-        
+
         // set used view context
         parent.use(context.getViewContext());
-        
+
         // invoke execution
         if (context.getKNode() != null) {
-            return executeAction(context.getKNode());
+            returnValue = executeAction(context.getKNode());
+
         }
-        
+
+        // allow to use the context in Hook Actions
+        additionalActions(context);
+
+        return returnValue;
+    }
+
+    public ActionResult additionalActions(ActionContext context) {
         return ActionResult.createResult(false);
     }
-    
-   
 
 }
