@@ -91,8 +91,12 @@
          id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ShowEntireCircuitHook">
    </action>
    <action
-         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsHook"
-         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsHook">
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsAction"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsAction">
+   </action>
+   <action
+         class="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ExpandGuardRegionsAction"
+         id="de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ExpandGuardRegionsAction">
    </action>
 </extension>
 
