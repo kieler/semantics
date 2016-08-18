@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis
 
 /**
+ * This class hides and unhides the tick wires of the circuit.
  * @author fry
  * 
  */

@@ -106,7 +106,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
     override KNode transform(Actor model) {
 
             val root = createNode().associateWith(model);
-            root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+//            root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
             model.transformActor(root);
 
             /* Update diagram after refreshing.
@@ -179,7 +179,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
                 // --------------------------------------------------------------
                 // --   Input ports: are placed on the left side of actors     --
                 // --------------------------------------------------------------
-                if (port.type.startsWith("In")) {
+                if (port.type.startsWith("In") || port.type.startsWith("redIn")) {
 
                     // ports for the tick function are marked with triangle 
                     if (port.name == "Tick") { // 
@@ -215,7 +215,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
                 } // --------------------------------------------------------------
                 // --  Output ports: are placed on the right side of actors    --
                 // --------------------------------------------------------------
-                else if (port.type.startsWith("Out")) {
+                else if (port.type.startsWith("Out") ||port.type.startsWith("redOut")) {
                     it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
                     it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
                     if (port.outgoingLinks.length == 0) { // mark unnecessary nodes in circuit...
