@@ -105,7 +105,10 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
         }
     }
 
-    private void updateLineEObjectMap() {
+    /**
+     * This will updated the map that maps a line number to an EObject.
+     */
+    public void updateLineEObjectMap() {
         lineToModelElement.clear();
 
         IPath p = activeResource.getFullPath();

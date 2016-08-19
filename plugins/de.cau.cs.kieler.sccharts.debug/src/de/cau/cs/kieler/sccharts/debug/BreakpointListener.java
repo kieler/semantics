@@ -19,12 +19,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.IBreakpointListener;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
@@ -37,11 +41,16 @@ import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.KBackground;
 import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData;
+import de.cau.cs.kieler.core.krendering.KEllipse;
 import de.cau.cs.kieler.core.krendering.KForeground;
+import de.cau.cs.kieler.core.krendering.KPolyline;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -50,18 +59,29 @@ import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter;
+import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapterFactory;
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore;
 
 /**
+ * This class handles the highlighting of the graphical elements of SCCharts. Thus on a add event,
+ * the breakpoint is highlighted, on a change event checked on possible disabled breakpoint and on a
+ * remove event the highlighting is removed.
+ * 
  * @author lgr
  *
  */
 public class BreakpointListener implements IBreakpointListener {
 
+    private String ellipseId = "breakpoint";
+
     private ViewContext viewContext;
 
-    IEditorPart editor = null;
+    private static KRenderingFactory factory = KRenderingFactory.eINSTANCE;
 
-    public static IProperty<Object> BREAKPOINT_HIGHLIGHTING_MARKER =
+    private ArrayList<KNode> kNodesExpanded = new ArrayList<KNode>();
+
+    // --------------------------------------------------------------------------------------------
+    private static IProperty<Object> BREAKPOINT_HIGHLIGHTING_MARKER =
             new Property<Object>("breakpoint_highlight");
 
     private Predicate<KStyle> filter = new Predicate<KStyle>() {
@@ -79,17 +99,20 @@ public class BreakpointListener implements IBreakpointListener {
         }
     };
 
-    private static KColor SCCHARTSBLUE1 =
-            KRenderingFactory.eINSTANCE.createKColor().setColor(215, 255, 215);
-    private static KColor SCCHARTSBLUE2 =
-            KRenderingFactory.eINSTANCE.createKColor().setColor(158, 255, 158);
+    private static KColor SCCHARTSBLUE1 = factory.createKColor().setColor(60, 150, 60);
+    private static KColor SCCHARTSBLUE2 = factory.createKColor().setColor(0, 150, 0);
 
-    private static KBackground STYLE1 = KRenderingFactory.eINSTANCE.createKBackground()
+    private static KBackground STYLE1 = factory.createKBackground()
             .setColors(SCCHARTSBLUE1, SCCHARTSBLUE2).setGradientAngle2(90);
 
-    private ArrayList<KNode> expanded = new ArrayList<KNode>();
+    private KRenderingExtensions _kRenderingExtensions = new KRenderingExtensions();
+    private KContainerRenderingExtensions _kContainerRenderingExtensions =
+            new KContainerRenderingExtensions();
 
+    // --------------------------------------------------------------------------------------------
     /**
+     * When a breakpoint is added and enabled, it will get highlighted.
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -106,6 +129,8 @@ public class BreakpointListener implements IBreakpointListener {
     }
 
     /**
+     * When a breakpoint is removed, its highlighting will be removed.
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -120,6 +145,9 @@ public class BreakpointListener implements IBreakpointListener {
     }
 
     /**
+     * When a breakpoint is changed, its checked on whether it is still enabled or not. The
+     * highlighting will be changed accordingly. 
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -148,74 +176,52 @@ public class BreakpointListener implements IBreakpointListener {
         }
     }
 
+    // ---------------------------- TRANSITION HIGHLIGHTING ---------------------------------------
+
     private void handleTransitionHighlight(Transition obj, boolean highlighting) {
         updateViewContext();
         final KEdge viewElementTransition = viewContext.getTargetElement(obj, KEdge.class);
 
-        List<KEdge> currentTransitions = Lists.newArrayList();
-        if (viewElementTransition != null) {
-            currentTransitions.add(viewElementTransition);
-        }
-
         if (highlighting) {
-
-            // Add highlighting for NEW highlighted elements
-            KRenderingFactory factory = KRenderingFactory.eINSTANCE;
-
-            final KStyle kEdgeStyle = factory.createKForeground().setColor(Colors.STEEL_BLUE_3);
-            kEdgeStyle.setProperty(BREAKPOINT_HIGHLIGHTING_MARKER, BreakpointListener.this);
-            kEdgeStyle.setPropagateToChildren(true);
-
-            final KStyle labelStyle = factory.createKForeground().setColor(Colors.STEEL_BLUE_3);
-            labelStyle.setProperty(BREAKPOINT_HIGHLIGHTING_MARKER, BreakpointListener.this);
-
-            final List<KEdge> currentTransitionsCopy = currentTransitions;
-
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    for (final KEdge viewElementTransition : currentTransitionsCopy) {
-                        final KContainerRendering ren =
-                                viewElementTransition.getData(KContainerRendering.class);
-                        final boolean flagged = Iterables.any(ren.getStyles(), filter);
-                        if (!flagged) {
-                            ren.getStyles().add(EcoreUtil.copy(kEdgeStyle));
-                            List<KLabel> labels = viewElementTransition.getLabels();
-                            if (labels != null && labels.size() > 0) {
-                                final KLabel label = labels.get(0);
-                                if (label != null) {
-                                    final KText ren2 = label.getData(KText.class);
-                                    ren2.getStyles().add(EcoreUtil.copy(labelStyle));
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+            addBreakpointDecorator(viewElementTransition);
         } else {
-            final List<KEdge> notHighlightedEdges = new ArrayList<KEdge>();
-            notHighlightedEdges.add(viewElementTransition);
-
-            // Remove highlighting for NOT highlighted elements
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    for (KEdge k : notHighlightedEdges) {
-                        KRendering ren = k.getData(KRendering.class);
-                        if (Iterables.any(ren.getStyles(), filter)) {
-                            Iterables.removeIf(ren.getStyles(), filter);
-                            if (k.getLabels().size() > 0) {
-                                KLabel label = k.getLabels().get(0);
-                                KText ren2 = label.getData(KText.class);
-                                Iterables.removeIf(ren2.getStyles(), blueFilter);
-                            }
-                        }
-                    }
-                }
-            });
-
+            removeBreakpointDecorator(viewElementTransition);
         }
-
     }
 
+    private KEllipse addBreakpointDecorator(final KEdge edge) {
+
+        KPolyline _line = this.line(edge);
+        KEllipse _addEllipse = _kContainerRenderingExtensions.addEllipse(_line);
+        _addEllipse.setId(ellipseId);
+
+        final Procedure1<KEllipse> _function = (KEllipse it) -> {
+            _kRenderingExtensions.<KEllipse> setDecoratorPlacementData(it, 8, 8, -4, 0.5f, false);
+            _kRenderingExtensions.setLineWidth(it, 1);
+            _kRenderingExtensions.setBackground(it, factory.createKColor().setColor(60, 60, 150));
+        };
+        return ObjectExtensions.<KEllipse> operator_doubleArrow(_addEllipse, _function);
+    }
+
+    private KEllipse removeBreakpointDecorator(final KEdge edge) {
+        KPolyline _line = this.line(edge);
+        EList<KRendering> children = _line.getChildren();
+        for (KRendering ren : children) {
+            if (ren.getId() == ellipseId) {
+                children.remove(ren);
+                break;
+            }
+        }
+        return null;
+    }
+
+    private KPolyline line(final KEdge edge) {
+        KContainerRendering _kContainerRendering =
+                _kRenderingExtensions.getKContainerRendering(edge);
+        return ((KPolyline) _kContainerRendering);
+    }
+
+    // ---------------------------- STATE HIGHLIGHTING --------------------------------------------
     private void handleStateHighlight(State obj, boolean highlighting) {
         updateViewContext();
         final KNode viewElement = viewContext.getTargetElement(obj, KNode.class);
@@ -228,13 +234,12 @@ public class BreakpointListener implements IBreakpointListener {
 
         if (highlighting) {
             // Add highlighting for NEW highlighted elements
-            final KBackground nodeStyle = KRenderingFactory.eINSTANCE.createKBackground()
-                    .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
+            final KBackground nodeStyle =
+                    factory.createKBackground().setColorsAlphasGradientAngleCopiedFrom(STYLE1);
             nodeStyle.setProperty(BREAKPOINT_HIGHLIGHTING_MARKER, BreakpointListener.this);
             nodeStyle.setPropagateToChildren(true);
 
-            final KStyle labelStyle =
-                    KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.BLACK);
+            final KStyle labelStyle = factory.createKForeground().setColor(Colors.WHITE);
             labelStyle.setProperty(BREAKPOINT_HIGHLIGHTING_MARKER, BreakpointListener.this);
 
             for (final KNode viewElementState : currentStates) {
@@ -255,7 +260,7 @@ public class BreakpointListener implements IBreakpointListener {
                             for (KNode r : viewElementState.getChildren()) {
                                 if (!viewContext.getViewer().isExpanded(r)) {
                                     viewContext.getViewer().expand(r);
-                                    expanded.add(r);
+                                    kNodesExpanded.add(r);
                                 }
                             }
 
@@ -282,9 +287,9 @@ public class BreakpointListener implements IBreakpointListener {
                                 Iterables.removeIf(t.getStyles(), blueFilter);
                             }
                         }
-                        if (expanded.contains(k)) {
+                        if (kNodesExpanded.contains(k)) {
                             viewContext.getViewer().collapse(k);
-                            expanded.remove(k);
+                            kNodesExpanded.remove(k);
                         }
                     }
                 }

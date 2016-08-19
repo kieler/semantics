@@ -69,6 +69,8 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * The shared instance.
      */
     private static SCChartsDebugPlugin plugin;
+    
+    public BreakpointListener listener = new BreakpointListener();
 
     // ------------------------------- CURRENT BREAKPOINTS ----------------------------------------
     /**
@@ -100,7 +102,6 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         plugin = this;
 
         IBreakpointManager manager = DebugPlugin.getDefault().getBreakpointManager();
-        IBreakpointListener listener = new BreakpointListener();
         manager.addBreakpointListener(listener);
 
     }
