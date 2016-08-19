@@ -374,6 +374,44 @@ rulePragmas returns [EObject current=null]
 	    }
 
 )
+))
+    |(	otherlv_19='#' 
+    {
+    	newLeafNode(otherlv_19, grammarAccess.getPragmasAccess().getNumberSignKeyword_5_0());
+    }
+(
+(
+		lv_name_20_0=	'font' 
+    {
+        newLeafNode(lv_name_20_0, grammarAccess.getPragmasAccess().getNameFontKeyword_5_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_20_0, "font");
+	    }
+
+)
+)(
+(
+		lv_values_21_0=RULE_STRING
+		{
+			newLeafNode(lv_values_21_0, grammarAccess.getPragmasAccess().getValuesSTRINGTerminalRuleCall_5_2_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		addWithLastConsumed(
+       			$current, 
+       			"values",
+        		lv_values_21_0, 
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+	    }
+
+)
 )))
 ;
 
