@@ -446,7 +446,7 @@
       </menuContribution>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sccharts.text.sct.generator.extension">
+         point="de.cau.cs.kieler.sccharts.text.generator.extension">
       <SCTGeneratorExtension
             class="de.cau.cs.kieler.sccharts.text.ui.sctgenerator.extensions.KGXExtension">
       </SCTGeneratorExtension>
