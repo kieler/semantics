@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.prom.launchconfig.ui
 
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup
 import org.eclipse.debug.ui.CommonTab
 import org.eclipse.debug.ui.ILaunchConfigurationDialog
 import org.eclipse.debug.ui.ILaunchConfigurationTab
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -25,7 +25,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author aas
  */
-class KiCoLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup {
+class KiCoLaunchConfigTabGroup extends AbstractLaunchConfigurationTabGroup {
 
     /**
      * The data object that the UI is working on.

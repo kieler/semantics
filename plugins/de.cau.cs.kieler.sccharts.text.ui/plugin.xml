@@ -397,6 +397,58 @@
             controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.sccharts.text.SCT">
       </editor>
-   </extension>    
-
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.category"
+            id="de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog"
+            name="Open SCT Generator Dialog">
+      </command>
+      <category
+            id="de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.category"
+            name="SCT Generator Category">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.text.ui.sctgenerator.SCTGeneratorDialogHandler"
+            commandId="de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.SCTGenerator.openDialog"
+               label="Generate SCT Models..."
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                     </adapt>
+                  </iterate>
+                  <count
+                        value="1">
+                  </count>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sccharts.text.sct.generator.extension">
+      <SCTGeneratorExtension
+            class="de.cau.cs.kieler.sccharts.text.ui.sctgenerator.extensions.KGXExtension">
+      </SCTGeneratorExtension>
+   </extension>
 </plugin>
