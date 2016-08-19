@@ -208,18 +208,17 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             }
 
             if (currentState == null) {
-
                 // Create a new state
                 currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
                 // System.out.println("New currentState := " + currentState.id)
-                // Connect
-                val connect = previousState.createImmediateTransitionTo(currentState)
-                // System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
-                connect.setPriority(2)
-
+                
                 // Move transition to this state
                 // System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
                 currentState.outgoingTransitions.add(transition)
+                
+                // Connect
+                previousState.createImmediateTransitionTo(currentState)
+                // System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
             }
 
             // Ensure the transition is immediate
