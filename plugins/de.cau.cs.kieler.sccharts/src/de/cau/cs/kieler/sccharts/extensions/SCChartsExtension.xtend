@@ -1137,42 +1137,7 @@ class SCChartsExtension {
     }
 
 
-    //-------------------------------------------------------------------------
-    //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
-    //-------------------------------------------------------------------------
-    // This fixes termination transitions that have effects
-    def State fixTerminationWithEffects(State rootState, List<Transition> transitionList) {
-        val terminationTransitions = transitionList.filter[type == TransitionType::TERMINATION].filter[
-            !effects.nullOrEmpty].toList
 
-        for (terminationTransition : terminationTransitions) {
-            val originalSource = terminationTransition.sourceState
-            val originalTarget = terminationTransition.targetState
-            val region = originalSource.parentRegion
-            val auxiliaryState = region.createState("_TE").uniqueName.trace(terminationTransition)
-            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget).trace(
-                terminationTransition)
-            for (effect : terminationTransition.effects.immutableCopy) {
-                auxliiaryTransition.addEffect(effect)
-            }
-            terminationTransition.setTargetState(auxiliaryState)
-        }
-        rootState
-    }
-
-    //-------------------------------------------------------------------------
-    //--                F I X   F O R   H A L T   S T A T E S                --
-    //-------------------------------------------------------------------------
-    // This fixes halt states and adds an explicit delayed self transition
-    def State fixPossibleHaltStates(State rootState, List<State> stateList) {
-        val haltStates = stateList.filter[
-            !hasInnerStatesOrControlflowRegions && outgoingTransitions.nullOrEmpty && !final]
-
-        for (haltState : haltStates) {
-            haltState.createTransitionTo(haltState).trace(haltState)
-        }
-        rootState
-    }
 
     //-------------------------------------------------------------------------
     //--                F I X   F O R   D E A D    C O D E                   --
