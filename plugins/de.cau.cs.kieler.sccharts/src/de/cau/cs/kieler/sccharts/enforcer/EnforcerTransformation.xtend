@@ -152,6 +152,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     
     protected def Transition applyEditI(Transition transition,
         Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
+            
         // EXAMPLE
         transition.targetState = transition.sourceState
         val inputRefs = transition.trigger.getAllReferences.map[ valuedObject ]
