@@ -42,7 +42,10 @@ class ShowEntireCircuitHook extends SynthesisActionHook implements IAction {
     private KNode zoomOutFrame = KGraphFactory.eINSTANCE.createKNode;
     
      override executeAction(ActionContext context) {
-            val KNode rootNode = context.KNode
+            var KNode rootNode = context.KNode
+        while(rootNode.eContainer != null){
+            rootNode = rootNode.eContainer as KNode
+        }
 
         val frame = rootNode.children.get(0)
         

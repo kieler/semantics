@@ -39,9 +39,7 @@ class CollapseGuardRegionsAction extends SynthesisActionHook implements IAction 
         }
         
         val KNode logicRegion = rootNode.children.head.children.filter[labels.head.text == "Program Logic"].head
-        val regions = logicRegion.
-        children.
-        filter[!children.empty]
+        val regions = logicRegion.children.filter[!children.empty]
         
         if(regions != null){
         for (region : regions) {

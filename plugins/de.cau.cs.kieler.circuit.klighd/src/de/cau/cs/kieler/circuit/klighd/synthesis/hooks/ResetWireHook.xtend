@@ -37,9 +37,13 @@ class ResetWireHook extends SynthesisActionHook implements IAction {
         setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(ResetWireHook.ID);
 
          override executeAction(ActionContext context) {
-            val KNode rootNode = context.KNode
+            var KNode rootNode = context.KNode
+        while(rootNode.eContainer != null){
+            rootNode = rootNode.eContainer as KNode
+        }
+        val KNode logicRegion = rootNode.children.head.children.filter[labels.head.text == "Program Logic"].head
 
-            for (KPort port : rootNode.eAllContents.filter(KPort).toIterable) {
+            for (KPort port : logicRegion.eAllContents.filter(KPort).toIterable) {
 
                 if (port.labels.length > 0) {
                     val portLabel = port.labels.head.text
@@ -48,26 +52,32 @@ class ResetWireHook extends SynthesisActionHook implements IAction {
                         
                         if (!SHOW_RESET_WIRES.getBooleanValue) {
                             port.edges.forEach [ edge |
+                                if(edge.sourcePort == port){
                                 edge.getKRendering.invisible = true;
                                 for (KPolyline line : edge.eAllContents.filter(KPolyline).toIterable) {
                                     val rend = line.getJunctionPointRendering()
                                     rend.invisible = true
+                                    
+                                    }
                                 }
                             ]
                         }
                         if (SHOW_RESET_WIRES.booleanValue) {
                             port.edges.forEach [ edge |
+                                if(edge.sourcePort == port){
                                 edge.getKRendering.invisible = false;
                                 for (KPolyline line : edge.eAllContents.filter(KPolyline).toIterable) {
                                     val rend = line.getJunctionPointRendering()
                                     rend.invisible = false
+                                }
+                                
                                 }
                             ]
                         }
                     }
                 }
             }
-            return IAction$ActionResult.createResult(true);
+            return IAction$ActionResult.createResult(false);
         }
 
         def getBooleanValue(SynthesisOption option) {

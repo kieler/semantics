@@ -37,8 +37,13 @@ class TickWireHook extends SynthesisActionHook implements IAction {
         setCategory(CircuitDiagramSynthesis::VISIBILITY).setUpdateAction(TickWireHook.ID);
 
         override executeAction(ActionContext context) {
-            val KNode rootNode = context.KNode
-            for (KPort port : rootNode.eAllContents.filter(KPort).toIterable) {
+            var KNode rootNode = context.KNode
+        while(rootNode.eContainer != null){
+            rootNode = rootNode.eContainer as KNode
+        }
+                val KNode logicRegion = rootNode.children.head.children.filter[labels.head.text == "Program Logic"].head
+        
+            for (KPort port : logicRegion.eAllContents.filter(KPort).toIterable) {
 
                 if (port.labels.length > 0) {
                     val portLabel = port.labels.head.text
@@ -64,7 +69,7 @@ class TickWireHook extends SynthesisActionHook implements IAction {
                     }
                 }
             }
-            return IAction$ActionResult.createResult(true);
+            return IAction$ActionResult.createResult(false);
         }
 
         def getBooleanValue(SynthesisOption option) {
