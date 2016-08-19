@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import com.google.common.base.Function
 
 /**
  * @author ssm
@@ -286,6 +287,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     
     
     private val nameSymbolTable = <String, String> newHashMap
+    private val nameSymbolSuffixProcessor = <String, Function<String, String>> newHashMap
     
     def defineSymbol(String startsWith, String symbol) {
         nameSymbolTable.put(startsWith, symbol) 
@@ -293,6 +295,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     
     def void clearSymbols() {
         nameSymbolTable.clear
+        nameSymbolSuffixProcessor.clear
     }
     
     def String applySymbolTable(String name) {
@@ -300,6 +303,15 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
             if (name.startsWith(s))  {
                 return nameSymbolTable.get(s) + name.substring(s.length)
             }
+        }
+        for(suffix : nameSymbolSuffixProcessor.keySet) {
+            if (name.contains(suffix)) {
+                val sepPos = name.indexOf(suffix)
+                val prefix = name.substring(0, sepPos)
+                val toProcess = name.substring(sepPos + 1)
+                val subS = nameSymbolSuffixProcessor.get(suffix).apply(toProcess)
+                return prefix + subS
+            }            
         }
         return name
     } 
@@ -359,6 +371,50 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         }
     }    
      
+    def void defineSubscriptSymbols(String separator) {
+        nameSymbolSuffixProcessor.put(separator, 
+            [ s | 
+                var result = ""
+                for(c : s.toCharArray) {
+                    result = result + c.toString.subscript
+                }
+                result
+            ]
+        )
+    }
+    
+    private def String subscript(String c) {
+        switch c {
+            case '0': return '₀' // u2080
+            case '1': return '₁' // u2081
+            case '2': return '₂' // u2082
+            case '3': return '₃' // u2083
+            case '4': return '₄' // u2084
+            case '5': return '₅' // u2085
+            case '6': return '₆' // u2086
+            case '7': return '₇' // u2087
+            case '8': return '₈' // u2088
+            case '9': return '₉' // u2089
+            case 'a': return 'ₐ'
+            case 'e': return 'ₑ'
+            case 'h': return 'ₕ'
+            case 'i': return 'ᵢ'
+            case 'j': return 'ⱼ'
+            case 'k': return 'ₖ'
+            case 'l': return 'ₗ'
+            case 'm': return 'ₘ'
+            case 'n': return 'ₙ'
+            case 'o': return 'ₒ'
+            case 'p': return 'ₚ'
+            case 'r': return 'ᵣ'
+            case 's': return 'ₛ'
+            case 't': return 'ₜ'
+            case 'u': return 'ᵤ'
+            case 'v': return 'ᵥ'
+            case 'x': return 'ₓ'
+            default: return c
+        }
+    }
     
     def void defineGreekSymbols(String prefix) {
         (prefix + "Heta").defineSymbol("\u0370")       // Ͱ

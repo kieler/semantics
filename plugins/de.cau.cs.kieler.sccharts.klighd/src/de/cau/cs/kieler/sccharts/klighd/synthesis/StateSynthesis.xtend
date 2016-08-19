@@ -129,6 +129,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     default:
                         node.addSimpleStateLabel(state.serializeHR.toString).associateWith(state)
                 }
+            } else {
+                node.addEmptyStateLabel
             }
 
             // Add declarations

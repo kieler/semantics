@@ -246,6 +246,8 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
         } catch (IOException e) {
             throw new Exception("Cannot write output model file: " + e.getMessage());
         }
+        
+        registeredExtensions.forEach[ onSaveModel(rootState, project) ]
     }    
       
     /* SCT Generator extensions

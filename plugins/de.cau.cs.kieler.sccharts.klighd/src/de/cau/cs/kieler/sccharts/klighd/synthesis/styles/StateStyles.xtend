@@ -191,6 +191,17 @@ class StateStyles {
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
         ]
     }
+    
+    /**
+     * Adds an empty label placeholder to a state figure to fix surrounding space for following elements.
+     */
+    def KRectangle addEmptyStateLabel(KNode node) {
+        node.contentContainer.addRectangle => [
+            invisible = true
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+        ]
+    }
 
     /**
      * Adds a label in declaration style with the given components to a macro state.<br>

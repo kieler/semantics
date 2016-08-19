@@ -476,7 +476,8 @@ public abstract class AbstractSCTSemanticSequencer extends KEXTSemanticSequencer
 	 *         (name='director' values+=SCXDirectors) | 
 	 *         (name='import' values+=STRING) | 
 	 *         (name='symbols' values+=STRING values+=PrimeID?) | 
-	 *         (name='symbol' values+=PrimeID values+=STRING)
+	 *         (name='symbol' values+=PrimeID values+=STRING) | 
+	 *         (name='font' values+=STRING)
 	 *     )
 	 */
 	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {

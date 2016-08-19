@@ -289,9 +289,8 @@ class S2C {
    
    // -------------------------------------------------------------------------   
 
-   // Host code without "..."
    def extractCode(String hostCodeString) {
-        hostCodeString.substring(1, hostCodeString.length-1);
+        hostCodeString
    }
 
    def extractCode(TextExpression hostCode) {
