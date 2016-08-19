@@ -114,7 +114,16 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         if (state.rootState || (numTransition == 0 && state.final)) {
             return
         }
-        if (numTransition == 0) {
+        if (numTransition == 0 && state.isHierarchical) {
+            // Do not transform  halt-superstates
+            // Rationale: It would be necessary to add a termination transition with a delayed pause
+            // self-loop (over an additional auxiliary state)
+            // or not a loop but a transition to such a state but
+            // this would be dead code.
+            // Hence, we decided to not transform such states
+           return            
+        }
+        if (numTransition == 0) { // && !state.isHierarchical
           // halt state --> create explicit pause (self loop)
           state.createTransitionTo(state)
         }
