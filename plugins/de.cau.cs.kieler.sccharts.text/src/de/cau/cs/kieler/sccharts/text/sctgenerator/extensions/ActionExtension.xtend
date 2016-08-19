@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
 import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerator.*
 import org.eclipse.core.resources.IProject
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author ssm
@@ -113,9 +114,6 @@ class ActionExtension implements ISCTGeneratorExtension {
     override onExpressionCreate(Expression expression) {
     }
     
-    override onModelCreate(State rootState) {
-    }
-    
     override getCategory() {
         SCTGenerator.SCTGENERATOR_EXTENSIONS_TAB
     }
@@ -128,8 +126,13 @@ class ActionExtension implements ISCTGeneratorExtension {
         )
     }
     
-    override onSaveModel(State rootState, IProject project) {
-        // Do nothing.
+    override onModelCreate(SCCharts sccharts) {
+    }
+    
+    override onRootStateCreate(State rootState) {
+    }
+    
+    override onSaveModel(SCCharts sccharts, IProject project) {
     }
     
 }

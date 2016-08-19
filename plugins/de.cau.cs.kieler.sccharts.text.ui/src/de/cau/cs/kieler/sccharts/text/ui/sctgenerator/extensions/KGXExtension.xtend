@@ -30,6 +30,7 @@ import java.io.IOException
 import org.eclipse.core.resources.IProject
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * @author ssm
@@ -69,10 +70,6 @@ class KGXExtension implements ISCTGeneratorExtension {
         // Do nothing.
     }
     
-    override onModelCreate(State rootState) {
-        // Do nothing.
-    }
-    
     override getCategory() {
         SCTGenerator.SCTGENERATOR_EXTENSIONS_TAB
     }
@@ -83,27 +80,27 @@ class KGXExtension implements ISCTGeneratorExtension {
         )
     }
     
-    override onSaveModel(State rootState, IProject project) {
+    override onSaveModel(SCCharts sccharts, IProject project) {
         val value = getProperty(EXPORT_AS_KGX)
         if (value.value > 0) {
-            exportAsKGX(rootState, project)
+            exportAsKGX(sccharts, project)
         }
     }
     
-    public def exportAsKGX(State rootState, IProject project) {
-        val vc = LightDiagramServices.translateModel2(rootState, null, null)
+    public def exportAsKGX(SCCharts sccharts, IProject project) {
+        val vc = LightDiagramServices.translateModel2(sccharts, null, null)
         LightDiagramServices.layoutDiagram(vc);
         val node = vc.viewModel
         // Bugfix for label manager property bug
         node.eAllContents.filter(KLayoutData).toList.forEach[
             it.setProperty(new Property<Object>("de.cau.cs.kieler.labels.labelManager"), null)
         ]
-        saveModel(rootState, project, node)
+        saveModel(sccharts, project, node)
     }
     
-    protected def saveModel(State rootState, IProject project, KNode node) {
+    protected def saveModel(SCCharts sccharts, IProject project, KNode node) {
         // Create output URI.
-        var output = URI.createURI(project.locationURI.toString() + "/kgx/" + rootState.id);
+        var output = URI.createURI(project.locationURI.toString() + "/kgx/" + sccharts.rootStates.head.id);
         output = output.appendFileExtension(KGX_MODEL_EXTENSION);
 
         // Try to save the model.
@@ -114,7 +111,12 @@ class KGXExtension implements ISCTGeneratorExtension {
         } catch (IOException e) {
             throw new Exception("Cannot write output model file: " + e.getMessage());
         }
-    }     
+    }
     
+    override onModelCreate(SCCharts sccharts) {
+    }
+    
+    override onRootStateCreate(State rootState) {
+    }
     
 }

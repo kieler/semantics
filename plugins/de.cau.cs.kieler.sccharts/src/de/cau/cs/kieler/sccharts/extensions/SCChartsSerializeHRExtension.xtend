@@ -384,7 +384,6 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
     }
     
     private def String subscript(String c) {
-        println("\"" + c + "\"")
         switch c {
             case '0': return '₀' // u2080
             case '1': return '₁' // u2081

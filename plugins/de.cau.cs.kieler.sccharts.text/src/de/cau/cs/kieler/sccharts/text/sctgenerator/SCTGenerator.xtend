@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import java.util.logging.Logger
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * Main SCT Generator class  
@@ -51,7 +52,7 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
     public static val SCT_MODEL_EXTENSION = "sct"
 
     /* Public IDs */        
-    public static val SCTGENERATOR_ID = "de.cau.cs.kieler.sccharts.text.sct.generator"
+    public static val SCTGENERATOR_ID = "de.cau.cs.kieler.sccharts.text.generator"
     public static val SCTGENERATOR_EXTENSION_POINT = SCTGENERATOR_ID + ".extension" 
     public static val SCTGENERATOR_CORE_TAB = SCTGENERATOR_ID + "tabs.Core"
     public static val SCTGENERATOR_EXTENSIONS_TAB = SCTGENERATOR_ID + "tabs.Extensions"
@@ -233,21 +234,21 @@ class SCTGenerator extends MapPropertyHolder implements ISCTGeneratorPropertyHol
      * 
      * @returns void
      */
-    protected def saveModel(State rootState, IProject project) {
+    protected def saveModel(SCCharts sccharts, IProject project) {
         // Create output URI.
-        var output = URI.createURI(project.locationURI.toString() + "/" + rootState.id);
+        var output = URI.createURI(project.locationURI.toString() + "/" + sccharts.rootStates.head.id);
         output = output.appendFileExtension(SCT_MODEL_EXTENSION);
 
         // Try to save the model.
         try {
             val saveRes = new ResourceSetImpl().createResource(output);
-            saveRes.getContents().add(rootState);
+            saveRes.getContents().add(sccharts);
             saveRes.save(null)
         } catch (IOException e) {
             throw new Exception("Cannot write output model file: " + e.getMessage());
         }
         
-        registeredExtensions.forEach[ onSaveModel(rootState, project) ]
+        registeredExtensions.forEach[ onSaveModel(sccharts, project) ]
     }    
       
     /* SCT Generator extensions

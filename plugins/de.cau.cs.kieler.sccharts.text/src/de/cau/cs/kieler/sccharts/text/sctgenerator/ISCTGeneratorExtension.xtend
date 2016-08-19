@@ -18,6 +18,7 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.core.resources.IProject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCT Generator interface for generator extensions
@@ -78,7 +79,9 @@ interface ISCTGeneratorExtension extends ISCTGeneratorPropertyHolder {
      * @param rootState is the root state of the newly created model..
      * @returns void
      */
-    def void onModelCreate(State rootState)
+    def void onModelCreate(SCCharts sccharts)
     
-    def void onSaveModel(State rootState, IProject project)
+    def void onRootStateCreate(State rootState)
+    
+    def void onSaveModel(SCCharts sccharts, IProject project)
 }

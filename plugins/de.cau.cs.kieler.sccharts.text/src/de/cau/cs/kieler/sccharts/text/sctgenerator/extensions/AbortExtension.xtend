@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import com.google.inject.Singleton
 import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerator.isSuperstate
 import org.eclipse.core.resources.IProject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * Abort extension for the SCT Generator
@@ -110,16 +111,20 @@ class AbortExtension implements ISCTGeneratorExtension {
         // Do nothing.
     }
 
-    override onModelCreate(State rootState) {
-        // Do nothing.
-    }
-    
     override onDeclarationCreate(Declaration declaration) {
         // Do nothing.
     }
     
-    override onSaveModel(State rootState, IProject project) {
-        // Do nothing.
+    override onModelCreate(SCCharts sccharts) {
+        // Do nothing.    
+    }
+    
+    override onRootStateCreate(State rootState) {
+        // Do nothing.    
+    }
+    
+    override onSaveModel(SCCharts sccharts, IProject project) {
+        // Do nothing.    
     }
 
 }

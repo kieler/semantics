@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject
 import com.google.inject.Singleton
 import static de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator.*
 import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * The Model Generator class
@@ -71,7 +72,25 @@ class ModelGenerator {
      * @param id sets the id and the label of the model.
      * @returns the root state of the model.
      */
-    def State createModel(String id) {
+    def SCCharts createModel(String id) {
+        val sct = SCChartsFactory.eINSTANCE.createSCCharts => [
+            rootStates += createRootState(id)
+        ]
+        
+        // Call the model creation hooks.
+        generatorExtensions.forEach[ onModelCreate(sct) ]
+        
+        sct
+    }
+     
+     
+    /**
+     * Creates the root state.
+     * 
+     * @param id sets the id and the label of the root state.
+     * @returns the root state.
+     */
+    def State createRootState(String id) {
         // Retrieve the list of classes which use the extension point.
         generatorExtensions.clear
         generatorExtensions += registeredExtensions
@@ -106,8 +125,8 @@ class ModelGenerator {
         // Create the top level region plane.
         rootState.createRegions(0, statesLeft)
         
-        // Call the model creation hooks.
-        generatorExtensions.forEach[ onModelCreate(rootState) ]
+        // Call the root state creation hooks.
+        generatorExtensions.forEach[ onRootStateCreate(rootState) ]
         
         rootState
     }
