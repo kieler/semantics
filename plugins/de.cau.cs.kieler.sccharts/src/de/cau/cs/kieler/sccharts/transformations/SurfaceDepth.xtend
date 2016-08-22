@@ -121,11 +121,19 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             // or not a loop but a transition to such a state but
             // this would be dead code.
             // Hence, we decided to not transform such states
-           return            
+            if (!state.regionsMayTerminate) {
+                // Optimization according to decision in SYNCHRON meeting 22. Aug 2016
+                return
+            } else {
+                val haltState = state.parentRegion.createState(GENERATED_PREFIX + "HaltState")
+                val halt = state.createTransitionTo(haltState)
+                halt.setTypeTermination
+                haltState.createTransitionTo(haltState)
+            }
         }
         if (numTransition == 0) { // && !state.isHierarchical
-          // halt state --> create explicit pause (self loop)
-          state.createTransitionTo(state)
+        // halt state --> create explicit pause (self loop)
+            state.createTransitionTo(state)
         }
         if (numTransition > 0) {
             // termination
@@ -155,10 +163,19 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 }
             }
         }
-
-//        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
+ 
+    ///////////////////////////////////////////
+    //     O L D     C O N D I T I O N      ///
+    ///////////////////////////////////////////
+    // FIXME: REMOVE THIS AFTER SYNCHRON MEETING 22. AUG 2016
+    //
+//        if (!(state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
 //            !state.outgoingTransitions.get(0).typeTermination &&
-//            (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
+//            (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate))) {
+//            return
+//        }
+        
+        
         val parentRegion = state.parentRegion;
 
         // Duplicate immediate transitions
@@ -211,14 +228,13 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 // Create a new state
                 currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
                 // System.out.println("New currentState := " + currentState.id)
-                
                 // Move transition to this state
                 // System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
                 currentState.outgoingTransitions.add(transition)
-                
+
                 // Connect
                 previousState.createImmediateTransitionTo(currentState)
-                // System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
+            // System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
             }
 
             // Ensure the transition is immediate
@@ -256,7 +272,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         var stateAfterDepth = depthState
 
         // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
-        var doDTO = false;
+        var doDTO = true;
 
         if (doDTO) {
             var done = false
@@ -303,7 +319,6 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                             }
                         }
                     }
-//                }
                 }
 
             // End of DTO transformation
