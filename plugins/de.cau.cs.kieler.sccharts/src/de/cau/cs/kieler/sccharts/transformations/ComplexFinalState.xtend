@@ -104,7 +104,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
-        val parentSatesContainingComplexFinalStates = targetRootState.allContainedStates.filter [
+        val parentSatesContainingComplexFinalStates = targetRootState.allStates.filter [
             isParentContainingComplexFinalState
         ]
         for (targetParentState : parentSatesContainingComplexFinalStates.toList) {
@@ -131,7 +131,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     // Tells if a state is a complex final state, i.e., it is final and has either inner actions (during/exit) or outgoing transitions
     def boolean isComplexFinalState(State state) {
         state.isFinal &&
-            (!(state.outgoingTransitions.nullOrEmpty) || state.duringActions.size > 0 || state.exitActions.size > 0)
+            ((!state.outgoingTransitions.nullOrEmpty) || state.duringActions.size > 0 || state.exitActions.size > 0 || (state.allContainedStates.size > 0))
     }
 
     def void transformComplexFinalState(State parentState, State rootState) {
@@ -153,10 +153,10 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
                     i.regions.add(mainRegion)
             }
-            i.createTransitionTo(f).setTypeTermination
+            i.createImmediateTransitionTo(f).setTypeTermination
             state = i;
         }
-        
+         
         // For every region in such a parent state, we need to track if it finishes
         for (region : state.regions.filter(ControlflowRegion)) {
             val allFinalStates = region.states.size == region.states.filter[isFinal].size
@@ -165,7 +165,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             val finalStates = region.states.filter[final && incomingTransitions.size > 0]
 
             if (!allFinalStates) {
-                val termVariable = state.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
+                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
                     uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
