@@ -13,26 +13,20 @@
  */
 package de.cau.cs.kieler.scg.transformations.synchronizer
 
+import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
-import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
@@ -41,12 +35,10 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
-import java.util.Set
-import de.cau.cs.kieler.scg.BranchType
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
-import de.cau.cs.kieler.scg.SCGAnnotations
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -76,7 +68,7 @@ import de.cau.cs.kieler.scg.SCGAnnotations
  * 
  * @extends AbstractSCGSynchronizer
  */
-class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
+class IncrementalSurfaceSynchronizer extends AbstractSynchronizer {
 
 	static final boolean DEBUG = true;
 
@@ -118,14 +110,10 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 	@Inject
 	extension KEffectsSerializeExtensions
 
-	@Inject
-	extension KExpressionsCreateExtensions
-
 	protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
 	protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
-	public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin2"
-	private static val SCHIZO_SUFFIX = "_s"
+	public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
 
 	// -------------------------------------------------------------------------
 	// -- Synchronizer
@@ -153,36 +141,29 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 			setJoin(join)
 			setGuard(guard)
 		]
+
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
 
-		// Potentially instantaneous loop
-		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
-			criticalNodes.toSet
 		// The valued object of the GuardExpression of the synchronizer is the guard of the
 		// scheduling block of the join node. 
 //        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
 		// Hence, we create an or-operator expression. 
-		var terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+		val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
 			setOperator(OperatorType::LOGICAL_OR)
 		]
 
-		data.createEmptyExpressions(terminationExpression, join.fork, scg)
-		for (emptyExpression : data.guardExpression.emptyExpressions) {
-			emptyExpression.expression = unfoldExp(emptyExpression.expression,
-				join.fork.cachedSchedulingBlock.guards.head, scg)
-		}
-//		terminationExpression = terminationExpression.unfoldExp(join.fork.cachedSchedulingBlock.guard, scg) as OperatorExpression
+		data.createEmptyExpressions(terminationExpression)
 		data.createGuardExpression(terminationExpression)
 //        data.guardExpression.expression = FALSE
 //		data.fixEmptyExpressions.fixSynchronizerExpression
 		val emptyDeclaration = createBoolDeclaration => [
 			scg.declarations += it
 		]
-		guard.expression = data.guardExpression.expression // .unfoldExp(join.fork.cachedSchedulingBlock.guard,scg)
+		guard.expression = data.guardExpression.expression
 		for (emptyExp : data.guardExpression.emptyExpressions) {
 			val newGuard = ScgFactory::eINSTANCE.createGuard
 			newGuard.valuedObject = emptyExp.valuedObject
@@ -193,241 +174,10 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
-		fixSchizophrenicStmts(join, pilData, scg)
-	}
-
-	private def void fixSchizophrenicStmts(Join join, Set<Node> pilData, SCGraph scg) {
-		val exitNodes = <Exit>newLinkedList
-		join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
-
-		// Get all exit nodes with potentially instantaneous paths
-		val relevantExitNodes = exitNodes.filter [
-			(it.entry.threadControlFlowTypes.containsValue(ThreadPathType::INSTANTANEOUS) ||
-				it.entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
-				pilData.contains(it)
-		]
-
-		val schizoDeclaration = createBoolDeclaration => [
-			scg.declarations += it
-		]
-
-		// Fix all potentially instantaneous paths
-		for (exit : relevantExitNodes) {
-			// Get all schizophrenic nodes
-			val schizoNodes = markSchizoNodes(pilData, exit.entry)
-			// For each schizophrenic node, we need a copy for its "surface execution".
-			//  The original guard will be modified to only trigger in its depth
-			schizoNodes.forEach [
-				val originalGuard = it.schedulingBlock.guards.head
-				val surfGuard = ScgFactory::eINSTANCE.createGuard
-				val surfValObj = getValuedObject(originalGuard.valuedObject.name + SCHIZO_SUFFIX)
-
-				if (!(originalGuard.expression instanceof ValuedObjectReference)) {
-					val originalExpression = (originalGuard.expression as OperatorExpression)
-
-					val surfExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-					surfGuard.valuedObject = surfValObj
-
-					surfExpression.operator = originalExpression.operator
-					// Copy all guards which lay on the pil to the surface guard
-					originalExpression.subExpressions.filter [
-						val temp = it
-						!pilData.filter [
-							try {
-								it.schedulingBlock.guards.head.valuedObject ==
-									(temp as ValuedObjectReference).valuedObject
-							} catch (ClassCastException e) {
-								return false
-							}
-						].isEmpty
-					].forEach [
-						if (it instanceof ValuedObjectReference) {
-							val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-							newVOR.valuedObject = (it as ValuedObjectReference).valuedObject
-							surfExpression.subExpressions.add(newVOR)
-						}
-					]
-
-					surfGuard.expression = surfExpression
-
-					// Remove all guards from the original exp which are on the pil but not schizophrenic.
-					// (Those can only be executed in the surface, so we don't need them in the depth anymore)
-					originalExpression.subExpressions.removeAll(originalExpression.subExpressions.filter [
-						try {
-							!pilData.filter [ temp |
-								temp.schedulingBlock.guards.head.valuedObject ==
-									(it as ValuedObjectReference).valuedObject
-							].isEmpty && schizoNodes.filter [ temp |
-								temp.schedulingBlock.guards.head.valuedObject ==
-									(it as ValuedObjectReference).valuedObject
-							].isEmpty
-						} catch (ClassCastException e) {
-							return false
-						}
-					])
-				} else {
-					// If the guard only holds a VOR, just change it to the corresponding schizophrenic guard
-					val newValObjRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-					val cachedValObjRef = (it.schedulingBlock.guards.head.expression as ValuedObjectReference)
-					newValObjRef.valuedObject = getValuedObject(cachedValObjRef.valuedObject.name + SCHIZO_SUFFIX)
-
-					surfGuard.valuedObject = surfValObj
-					surfGuard.expression = newValObjRef
-				}
-				debug("Generated schizophrenic guard " + surfGuard.serialize)
-				scg.guards.add(surfGuard)
-				schizoDeclaration.valuedObjects += surfGuard.valuedObject
-
-				// fit schizo control flow into normal control flow
-				val nonSchizoSuccessors = it.allNext.map[target].filter [
-					!(schizoNodes.contains(it)) && !(it instanceof Exit)
-				]
-				nonSchizoSuccessors.forEach[ot|enhanceNonSchizoNodes(surfGuard, it.basicBlock, ot, scg)]
-
-			]
-		}
-	}
-
-	private def void enhanceNonSchizoNodes(Guard source, BasicBlock original, Node target, SCGraph scg) {
-		// Get the conditional guard
-		val cond = scg.guards.filter [
-			it.valuedObject.name == AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX + original.schedulingBlocks.head.guards.head.valuedObject.name
-		].head
-		// What type of branch
-		val branchType = target.schedulingBlock.basicBlock.predecessors.filter [
-			it.basicBlock.schedulingBlocks.head.guards.head == original.schedulingBlocks.head.guards.head
-		].head.branchType
-		
-		val targetExpression = target.schedulingBlock.guards.head.expression
-		val sourceValObj = source.valuedObject
-		if (targetExpression instanceof OperatorExpression) {
-			if (targetExpression.operator == OperatorType::LOGICAL_AND) { // If there is only one expression we need to add another with an or-operation
-				val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-					operator = OperatorType::LOGICAL_AND
-					subExpressions.addAll(targetExpression.subExpressions)
-				]
-				targetExpression.subExpressions.clear
-				targetExpression.operator = OperatorType::LOGICAL_OR
-				targetExpression.subExpressions.add(newExp)
-			}
-			// Add the schizo-expression
-			if (targetExpression.operator == OperatorType::LOGICAL_OR) {
-				val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-					val newValObjRefGuard = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-						it.valuedObject = sourceValObj
-					]
-					val newValObjRefCond = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-						it.valuedObject = cond.valuedObject
-					]
-					operator = OperatorType::LOGICAL_AND
-					subExpressions.add(newValObjRefGuard)
-					// Add correct cond
-					if(branchType == BranchType::TRUEBRANCH){
-						subExpressions.add(newValObjRefCond)
-					} else {
-						val notExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-							operator = OperatorType::NOT
-							subExpressions.add(newValObjRefCond)
-						]
-						subExpressions.add(notExp)
-					}
-				]
-				targetExpression.subExpressions.add(newExp)
-			}
-		}
-		debug("Modified guard " + target.schedulingBlock.guards.head.serialize)
-	}
-
-	private def create valuedObject : createValuedObject(name) getValuedObject(String name) {}
-
-	private def Set<Node> markSchizoNodes(Set<Node> pilData, Entry entry) {
-		// Get all depths...
-		// Filter for reachable nodes
-		// Intersection of both these nodes and pilData are our desired schizoNodes
-		val depths = entry.getThreadNodes.filter(typeof(Depth)).toList
-		val reachableNodes = <Node>newHashSet()
-		depths.forEach [
-			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach [
-				it.forEach[reachableNodes.add(it.target)]
-			]
-		]
-		return reachableNodes.filter[pilData.contains(it)].filter[!(it instanceof Exit)].toSet
-	}
-
-	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {
-		if (exp instanceof OperatorExpression) {
-			if (exp.operator == OperatorType::PRE) {
-				// Copy PRE
-				val preExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-				preExp.operator = OperatorType::PRE
-				val subExpValObj = (exp.subExpressions.head as ValuedObjectReference).valuedObject
-				val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-				newVOR.valuedObject = subExpValObj
-				preExp.subExpressions.add(newVOR)
-				return preExp
-			}
-
-			// Create a new, unfolded expression
-			val newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-			newExp.operator = exp.operator
-			// TODO: Test if the cond is unnecessary
-			if (exp.subExpressions.size > 1) {
-				exp.subExpressions.forEach[newExp.subExpressions.add(it.unfoldExp(upperBound, scg))]
-			} else {
-				newExp.subExpressions.add(exp.subExpressions.head.unfoldExp(upperBound, scg))
-			}
-			return optimizeExp(newExp, scg)
-
-		} else if (exp instanceof ValuedObjectReference) {
-			val newVOR = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-
-			// If it is the upper bound return false
-			if (exp.valuedObject == upperBound.valuedObject) {
-				return FALSE()
-			}
-			// return copy of _conds
-			if (exp.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX)) {
-				newVOR.valuedObject = exp.valuedObject
-				return newVOR
-			}
-
-			// Get the guard expression and unfold it
-			val guardExp = scg.guards.filter[it.valuedObject.name == exp.valuedObject.name].head.expression
-			if (guardExp == null) {
-				newVOR.valuedObject = exp.valuedObject
-				return newVOR
-			} else {
-				return unfoldExp(guardExp, upperBound, scg)
-			}
-		}
-	}
-
-	private def Expression optimizeExp(OperatorExpression exp, SCGraph scg) {
-		// TODO: case-switch?
-		switch exp.operator {
-			case OperatorType::LOGICAL_OR:
-				exp.subExpressions.removeAll(exp.subExpressions.filter [
-					(it instanceof BoolValue && (it as BoolValue).value == FALSE().value)
-				])
-			case OperatorType::LOGICAL_AND:
-				if (!exp.subExpressions.filter [
-					(it instanceof BoolValue && (it as BoolValue).value == FALSE().value)
-				].isEmpty) {
-					return FALSE()
-				}
-			case OperatorType::NOT:
-				if (exp.subExpressions.get(0) == FALSE())
-					return TRUE()
-				else if (exp.subExpressions.get(0) == TRUE())
-					return FALSE()
-			default: {
-			}
-		}
-		return exp
 	}
 
 	protected def SynchronizerData createEmptyExpressions(SynchronizerData data,
-		OperatorExpression terminationExpression, Fork fork, SCGraph scg) {
+		OperatorExpression terminationExpression) {
 		// Count the exit nodes. The counter is used for enumerating the empty expressions.        
 		var exitNodeCount = 0
 
@@ -435,7 +185,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 
 		var delayFound = false
 		for (entry : data.join.getEntryNodes) {
-			val t = entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2
+			val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2
 			threadPathTypes.put(entry.exit, t)
 			if (t != ThreadPathType::INSTANTANEOUS) {
 				delayFound = true
@@ -452,7 +202,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 			val nestedJoins = getNestedThreads(exit.entry)
 			val nestedEmptyExpressions = newLinkedList()
 
-			if ((!exit.entry.hasAnnotation(SCGAnnotations.ANNOTATION_IGNORETHREAD)) &&
+			if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
 				((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
 
 				// Increment the exit node counter and retrieve the scheduling block of the exit node.
@@ -463,7 +213,6 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 
 				// Now, retrieve all surfaces of the actual thread.
 				val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
-
 				// But remove redundant nested surfaces
 				nestedJoins.forEach [
 					entryNodes.forEach [
@@ -536,7 +285,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 						val incrementalExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 						incrementalExpression.setOperator(OperatorType::LOGICAL_AND)
 						incrementalExpression.subExpressions.addAll(nestedEmptyExpressions)
-						if (threadSurfaces.size > 0) {
+						if (threadSurfaces.size > 0){ // Add uncovered surfaces
 							incrementalExpression.subExpressions.add(expression)
 						}
 						emptyExp.expression = incrementalExpression
@@ -559,8 +308,140 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 				// terminationExpr.subExpressions.add(exitSB.guard.reference)
 				terminationExpression.subExpressions.add(exitSB.guards.head.valuedObject.reference)
 			}
-			exit.cachedSchedulingBlock.guards.head.expression = unfoldExp(
-				exit.cachedSchedulingBlock.guards.head.expression, fork.cachedSchedulingBlock.guards.head, scg)
+		}
+
+		data
+	}
+
+	protected def SynchronizerData createGuardExpression(SynchronizerData data,
+		OperatorExpression terminationExpression) {
+		/**
+		 * At this point a termination expression and an empty expression for each thread have been created.
+		 * Now, we have to concatenate these expressions via an and-operator expression. 
+		 * As stated in the introduction of the build function, a thread must be empty or exited in this thread. 
+		 * Therefore, for each thread a new expression, called thread expression, is created. 
+		 * Finally, the termination expression is added since at least one thread must exit in this tick instance. 
+		 */
+		if (data.guardExpression.emptyExpressions.size > 0) {
+			// Create a new and-operator expression.
+			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+			expression.setOperator(OperatorType::LOGICAL_AND)
+
+			// Create thread expressions (or-operator expressions) for each thread. 
+			// They include the empty expression - the thread already finished in previous ticks - 
+			// and the threadExitObject - the thread just finished in this tick.
+			data.guardExpression.emptyExpressions.forEach [
+				val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+				threadExpr.setOperator(OperatorType::LOGICAL_OR)
+				threadExpr.subExpressions.add(it.valuedObject.reference)
+				threadExpr.subExpressions.add(it.threadExitObject.reference)
+				expression.subExpressions.add(threadExpr)
+			]
+			// Conclusively, add the termination expression - at least one thread must exit this tick.
+			if (terminationExpression.subExpressions.size == 1) {
+				expression.subExpressions.add(terminationExpression.subExpressions.head)
+			} else {
+				expression.subExpressions.add(terminationExpression)
+			}
+			data.guardExpression.expression = expression
+		} else {
+			// No surface found! Synchronizer exists immediately!
+			data.guardExpression.expression = terminationExpression
+		}
+
+		data
+	}
+
+	protected def SynchronizerData fixEmptyExpressions(SynchronizerData data) {
+		/** Fix for too long empty expressions. */
+		var ok = false
+		while (!ok) {
+			ok = true
+			val emptyCopy = ImmutableList::copyOf(data.guardExpression.emptyExpressions)
+			for (empty : emptyCopy) {
+				var Expression exp = null
+				if (empty.expression instanceof OperatorExpression) {
+					if ((empty.expression as OperatorExpression).getOperator == OperatorType::NOT) {
+						exp = (empty.expression as OperatorExpression).subExpressions.head
+					} else {
+						exp = empty.expression
+					}
+				}
+				val encapsExp = exp
+				if (encapsExp instanceof OperatorExpression) {
+					val opExp = encapsExp as OperatorExpression
+					val depth = opExp.subExpressions.size
+					if (depth > OPERATOREXPRESSION_DEPTHLIMIT) {
+						ok = false
+						val emptyExp = new EmptyExpression()
+						emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+						emptyExp.valuedObject.name = empty.valuedObject.name + "_fix"
+						data.valuedObjects.add(emptyExp.valuedObject)
+						val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+						subExpression.setOperator(OperatorType::LOGICAL_OR)
+						var gd = OPERATOREXPRESSION_DEPTHLIMIT / 2
+						while (gd < depth - 1) {
+							subExpression.subExpressions += opExp.subExpressions.get(OPERATOREXPRESSION_DEPTHLIMIT / 2)
+							gd = gd + 1
+						}
+						emptyExp.expression = subExpression;
+						(encapsExp as OperatorExpression).subExpressions.add(emptyExp.valuedObject.reference)
+						data.guardExpression.emptyExpressions.add(0, emptyExp)
+					}
+				}
+			}
+		}
+
+		data
+	}
+
+	protected def SynchronizerData fixSynchronizerExpression(SynchronizerData data) {
+		/** Basically, do the same thing for the synchronizer expression. */
+		var ok = false
+		if (data.guardExpression.expression instanceof OperatorExpression &&
+			(data.guardExpression.expression as OperatorExpression).operator == OperatorType::LOGICAL_AND) {
+			val sExp = data.guardExpression.expression as OperatorExpression
+			var fixcnt = 0
+			while (sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+				val eExp = new EmptyExpression()
+				eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+//                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+				eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
+				data.valuedObjects.add(eExp.valuedObject)
+				val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+				subExp.setOperator(OperatorType::LOGICAL_AND)
+				var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER / 2
+				while (gd > 0) {
+					subExp.subExpressions += sExp.subExpressions.get(0)
+					gd = gd - 1
+				}
+				eExp.expression = subExp;
+				sExp.subExpressions.add(0, eExp.valuedObject.reference)
+				data.guardExpression.emptyExpressions.add(eExp)
+				fixcnt = fixcnt + 1
+			}
+
+			if (sExp.subExpressions.last instanceof OperatorExpression) {
+				val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression
+				while (tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+					val eExp = new EmptyExpression()
+					eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+//                    eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+					eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
+					data.valuedObjects.add(eExp.valuedObject)
+					val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+					subExp.setOperator(OperatorType::LOGICAL_OR)
+					var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER / 2
+					while (gd > 0) {
+						subExp.subExpressions += tExp.subExpressions.get(0)
+						gd = gd - 1
+					}
+					eExp.expression = subExp;
+					tExp.subExpressions.add(0, eExp.valuedObject.reference)
+					data.guardExpression.emptyExpressions.add(eExp)
+					fixcnt = fixcnt + 1
+				}
+			}
 		}
 
 		data
@@ -571,10 +452,47 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 	}
 
 	override isSynchronizable(Fork fork, Iterable<ThreadPathType> threadPathTypes, boolean instantaneousFeedback) {
+		var synchronizable = true
 
-		// Maybe we should forbid nested threads for this synchronizer
-		return (!(threadPathTypes.filter[it == ThreadPathType::DELAYED].empty)) && instantaneousFeedback
+		if (instantaneousFeedback) {
+			for (tpt : threadPathTypes) {
+				if(tpt == ThreadPathType::POTENTIALLY_INSTANTANEOUS) synchronizable = false
+			}
+		}
 
+		synchronizable
 	}
 
+	protected def boolean guardExists(SCGraph scg, String name) {
+		for (g : scg.guards) {
+			if(g.valuedObject.name == name) return true
+		}
+		return false
+	}
+
+//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//        val excludeSet = <Predecessor> newHashSet
+//
+//        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+//        
+//        var delayFound = false
+//        for(entry:join.getEntryNodes) {
+//            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+//            if (t != ThreadPathType::INSTANTANEOUS) {
+//                delayFound = true
+//            } else {
+//                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
+//            }
+//        }
+//       
+//        if (!delayFound) { 
+//            excludeSet.clear
+//        }
+//        return excludeSet
+//    }
+//    
+//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//		<Predecessor> newHashSet
+//	}    
 }
