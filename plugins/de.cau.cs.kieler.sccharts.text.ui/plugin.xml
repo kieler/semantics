@@ -356,7 +356,7 @@
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Netlist Compilation"
             priority="90"
-            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, T_scg.sdj, T_scg.guards, T_scg.guards.ft, T_scg.scheduling, T_scg.scheduling.dc, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java, scg.c"
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.guards, T_scg.sdj, T_scg.guards, T_scg.guards.ft, scg.scheduling, T_scg.scheduling, T_scg.scheduling.dc, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java, scg.c"
             preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION"></editor>
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
