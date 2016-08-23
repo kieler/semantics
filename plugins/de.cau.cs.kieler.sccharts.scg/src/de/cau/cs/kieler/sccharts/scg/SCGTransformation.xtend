@@ -73,6 +73,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -371,6 +372,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             if (!entry.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE))
                 entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
         }
+        
+        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
         scg
     }

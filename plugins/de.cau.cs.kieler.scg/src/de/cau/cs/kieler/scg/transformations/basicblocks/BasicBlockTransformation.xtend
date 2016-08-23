@@ -85,7 +85,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::DEPENDENCY_ID)
+        return newHashSet(SCGFeatures::STRUCTURALDEPTHJOIN_ID)
     }
     
     // -------------------------------------------------------------------------

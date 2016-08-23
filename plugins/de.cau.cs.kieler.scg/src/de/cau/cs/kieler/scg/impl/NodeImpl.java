@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
  * </ul>
  *
  * @generated
@@ -73,6 +74,26 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @ordered
      */
     protected EList<Dependency> dependencies;
+
+    /**
+     * The default value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSchizophrenic()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SCHIZOPHRENIC_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSchizophrenic()
+     * @generated
+     * @ordered
+     */
+    protected boolean schizophrenic = SCHIZOPHRENIC_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -143,6 +164,27 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isSchizophrenic() {
+        return schizophrenic;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSchizophrenic(boolean newSchizophrenic) {
+        boolean oldSchizophrenic = schizophrenic;
+        schizophrenic = newSchizophrenic;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__SCHIZOPHRENIC, oldSchizophrenic, schizophrenic));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -183,6 +225,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return isIsInitial();
             case ScgPackage.NODE__DEPENDENCIES:
                 return getDependencies();
+            case ScgPackage.NODE__SCHIZOPHRENIC:
+                return isSchizophrenic();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -207,6 +251,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 getDependencies().clear();
                 getDependencies().addAll((Collection<? extends Dependency>)newValue);
                 return;
+            case ScgPackage.NODE__SCHIZOPHRENIC:
+                setSchizophrenic((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -228,6 +275,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__DEPENDENCIES:
                 getDependencies().clear();
                 return;
+            case ScgPackage.NODE__SCHIZOPHRENIC:
+                setSchizophrenic(SCHIZOPHRENIC_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -246,6 +296,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return isInitial != IS_INITIAL_EDEFAULT;
             case ScgPackage.NODE__DEPENDENCIES:
                 return dependencies != null && !dependencies.isEmpty();
+            case ScgPackage.NODE__SCHIZOPHRENIC:
+                return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -262,6 +314,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (isInitial: ");
         result.append(isInitial);
+        result.append(", schizophrenic: ");
+        result.append(schizophrenic);
         result.append(')');
         return result.toString();
     }

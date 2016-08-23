@@ -97,29 +97,16 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 	// -------------------------------------------------------------------------
 	// -- Injections 
 	// -------------------------------------------------------------------------
-	@Inject
-	extension KExpressionsValuedObjectExtensions
 
-	@Inject
-	extension KExpressionsDeclarationExtensions
+	@Inject	extension AnnotationsExtensions
+	@Inject extension KExpressionsValuedObjectExtensions
+	@Inject extension KExpressionsDeclarationExtensions
+	@Inject	extension KEffectsSerializeExtensions
+	@Inject	extension KExpressionsCreateExtensions
+	@Inject	extension SCGCoreExtensions
+	@Inject	extension SCGControlFlowExtensions
+	@Inject	extension SCGThreadExtensions
 
-	@Inject
-	extension SCGCoreExtensions
-
-	@Inject
-	extension SCGControlFlowExtensions
-
-	@Inject
-	extension SCGThreadExtensions
-
-	@Inject
-	extension AnnotationsExtensions
-
-	@Inject
-	extension KEffectsSerializeExtensions
-
-	@Inject
-	extension KExpressionsCreateExtensions
 
 	protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
 	protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -149,40 +136,33 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 	 */
 	override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
 		// Create a new SynchronizerData class which holds the data to return.
-		var data = new SynchronizerData() => [
-			setJoin(join)
-			setGuard(guard)
-		]
-		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
+		var data = new SynchronizerData() => [ setJoin(join) setGuard(guard) ]
+		
+		// Since we are working with completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
-		val joinSB = join.getCachedSchedulingBlock
+		join.getCachedSchedulingBlock
 
 		// Potentially instantaneous loop
 		val pilData = compilerContext.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
 			criticalNodes.toSet
-		// The valued object of the GuardExpression of the synchronizer is the guard of the
-		// scheduling block of the join node. 
-//        data.guardExpression.valuedObject = joinSB.guard.valuedObject
+			
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
 		// Hence, we create an or-operator expression. 
-		var terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-			setOperator(OperatorType::LOGICAL_OR)
-		]
+		var terminationExpression = createLogicalOrExpression
 
 		data.createEmptyExpressions(terminationExpression, join.fork, scg)
 		for (emptyExpression : data.guardExpression.emptyExpressions) {
 			emptyExpression.expression = unfoldExp(emptyExpression.expression,
 				join.fork.cachedSchedulingBlock.guards.head, scg)
 		}
-//		terminationExpression = terminationExpression.unfoldExp(join.fork.cachedSchedulingBlock.guard, scg) as OperatorExpression
+
 		data.createGuardExpression(terminationExpression)
-//        data.guardExpression.expression = FALSE
-//		data.fixEmptyExpressions.fixSynchronizerExpression
+
 		val emptyDeclaration = createBoolDeclaration => [
 			scg.declarations += it
 		]
-		guard.expression = data.guardExpression.expression // .unfoldExp(join.fork.cachedSchedulingBlock.guard,scg)
+		guard.expression = data.guardExpression.expression 
 		for (emptyExp : data.guardExpression.emptyExpressions) {
 			val newGuard = ScgFactory::eINSTANCE.createGuard
 			newGuard.valuedObject = emptyExp.valuedObject
@@ -193,28 +173,25 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 			debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " +
 				newGuard.expression.serialize)
 		}
-		fixSchizophrenicStmts(join, pilData, scg)
+		
+		fixSchizophrenicStatements(join, pilData, scg)
 	}
 
-	private def void fixSchizophrenicStmts(Join join, Set<Node> pilData, SCGraph scg) {
-		val exitNodes = <Exit>newLinkedList
-		join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
-
+	private def void fixSchizophrenicStatements(Join join, Set<Node> pilData, SCGraph scg) {
+		
+		val schizoDeclaration = createBoolDeclaration => [ scg.declarations += it ]
+		
 		// Get all exit nodes with potentially instantaneous paths
-		val relevantExitNodes = exitNodes.filter [
-			(it.entry.threadControlFlowTypes.containsValue(ThreadPathType::INSTANTANEOUS) ||
-				it.entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
-				pilData.contains(it)
-		]
+		val relevantExitNodes = join.allPrevious.map[ eContainer ].filter(Exit).filter[
+		    (entry.threadControlFlowTypes.containsValue(ThreadPathType::INSTANTANEOUS) ||
+            entry.threadControlFlowTypes.containsValue(ThreadPathType::POTENTIALLY_INSTANTANEOUS)) &&
+            pilData.contains(it)
+		].toList
 
-		val schizoDeclaration = createBoolDeclaration => [
-			scg.declarations += it
-		]
-
-		// Fix all potentially instantaneous paths
 		for (exit : relevantExitNodes) {
 			// Get all schizophrenic nodes
 			val schizoNodes = markSchizoNodes(pilData, exit.entry)
+			
 			// For each schizophrenic node, we need a copy for its "surface execution".
 			//  The original guard will be modified to only trigger in its depth
 			schizoNodes.forEach [
@@ -288,6 +265,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 		}
 	}
 
+    // Correct control flow
 	private def void enhanceNonSchizoNodes(Guard source, BasicBlock original, Node target, SCGraph scg) {
 		// Get the conditional guard
 		val cond = scg.guards.filter [
@@ -340,11 +318,12 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 
 	private def create valuedObject : createValuedObject(name) getValuedObject(String name) {}
 
+    // Nodes that must be copied
 	private def Set<Node> markSchizoNodes(Set<Node> pilData, Entry entry) {
 		// Get all depths...
 		// Filter for reachable nodes
 		// Intersection of both these nodes and pilData are our desired schizoNodes
-		val depths = entry.getThreadNodes.filter(typeof(Depth)).toList
+		val depths = entry.getThreadNodes.filter(Depth).toList
 		val reachableNodes = <Node>newHashSet()
 		depths.forEach [
 			it.getIndirectControlFlowsBeyondTickBoundaries(entry.exit).forEach [
@@ -354,6 +333,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 		return reachableNodes.filter[pilData.contains(it)].filter[!(it instanceof Exit)].toSet
 	}
 
+    // Set selected expressions to false
 	private def Expression unfoldExp(Expression exp, Guard upperBound, SCGraph scg) {
 		if (exp instanceof OperatorExpression) {
 			if (exp.operator == OperatorType::PRE) {
@@ -402,6 +382,7 @@ class DepthJoin2Synchronizer extends IncrementalSurfaceSynchronizer {
 		}
 	}
 
+    // Optimizes logical expressions
 	private def Expression optimizeExp(OperatorExpression exp, SCGraph scg) {
 		// TODO: case-switch?
 		switch exp.operator {

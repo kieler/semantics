@@ -341,6 +341,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHEDULEBORDER = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 0; it.blue = 128;]
 
+    private static val KColor SCHIZO_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
+        [it.red = 245; it.green = 96; it.blue = 33;]
+
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val int PROBLEM_WIDTH = 4    
@@ -468,29 +471,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Synthesize all children             
             for (n : scg.nodes) { 
-                if (n instanceof Surface) { node.children += n.synthesize }
-                if (n instanceof Assignment) { 
-                    val aNode = n.synthesize
-                    node.children += aNode
-//                    if ((n as Assignment).hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
-//                        val bNode = (n as Assignment).synthesizeConditionalAssignmentAnnotation
-//                        node.children += bNode
-//                        aNode.synthesizeConditionalAssignmentLink(bNode)
-//                    }                    
-                }
                 if (n instanceof Entry) { 
                     if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
                         threadTypes.put((n as Entry), n.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
                     }
-                	node.children += n.synthesize
                 }
-                if (n instanceof Exit) { 
-                	node.children += n.synthesize
-                }
-                if (n instanceof Join) { node.children += n.synthesize }
-                if (n instanceof Depth) { node.children += n.synthesize }
-                if (n instanceof Fork) { node.children += n.synthesize }
-                if (n instanceof Conditional) { node.children += n.synthesize }
+
+                val aNode = n.synthesize
+                node.children += aNode
+                
+                if (n.schizophrenic) {
+                    aNode.KRendering.foreground = SCHIZO_COLOR.copy
+                }                 
             }
             // For each node transform the control flow edges.
             // This must be done after all nodes have been created.
@@ -1104,6 +1096,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoingPortId == SCGPORTID_OUTGOING_THEN) {
                 edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+            }
+            
+            if (controlFlow.target.schizophrenic) {
+                edge.KRendering.foreground = SCHIZO_COLOR.copy
             }
         ]
     }

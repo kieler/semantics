@@ -35,6 +35,11 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Fork
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Conditional
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -273,11 +278,39 @@ class SCGCoreExtensions {
     	Guice.createInjector().getInstance(clazz) 
     }
     
+    def copyNode(Node node) {
+        val o = node.copy
+        
+        if (o instanceof Entry) {
+            o.next.target = node.asEntry.next.target
+        } else if (o instanceof Exit) {
+            o.next.target = node.asExit.next.target
+        } else if (o instanceof Fork) {
+            for(var i = 0; i < node.asFork.next.size; i++) { o.next.get(i).target = node.asFork.next.get(i).target }
+        } else if (o instanceof Join) {
+            o.next.target = node.asJoin.next.target
+        } else if (o instanceof Surface) {
+        } else if (o instanceof Depth) {
+            o.next.target = node.asDepth.next.target
+        } else if (o instanceof Assignment) {
+            o.next.target = node.asAssignment.next.target
+        } else if (o instanceof Conditional) {
+            o.then.target = node.asConditional.then.target
+            o.^else.target = node.asConditional.^else.target
+        }
+        
+        o 
+    }
+    
     
     
     def Entry asEntry(Node node) {
     	node as Entry
     }
+    
+    def Exit asExit(Node node) {
+        node as Exit
+    }    
     
     def Assignment asAssignment(Node node) {
     	node as Assignment
@@ -286,11 +319,26 @@ class SCGCoreExtensions {
     def Fork asFork(Node node) {
     	node as Fork
     }
+
+    def Join asJoin(Node node) {
+        node as Join
+    }
+
+    def Conditional asConditional(Node node) {
+        node as Conditional
+    }
+    
+    def Surface asSurface(Node node) {
+        node as Surface
+    }
+    
+    def Depth asDepth(EObject eObject) {
+        eObject as Depth
+    }    
     
     def Node asNode(EObject eObject) {
     	eObject as Node
     }
-    
 }
 
 
