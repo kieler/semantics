@@ -203,7 +203,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		
 		// Restore sequential order in guarded assignments
 		for (assignment : AAMap.keySet) {
-			if ((assignment.next.target instanceof Assignment) &&
+			if (assignment.next != null && (assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
 				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 			} 
