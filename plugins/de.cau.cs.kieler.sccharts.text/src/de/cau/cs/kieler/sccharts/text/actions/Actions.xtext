@@ -9,6 +9,7 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 
 // haf: We need a Rule for transitions in order to serialize them
 // here we only want to have the features isImmediate, delay, trigger and effects

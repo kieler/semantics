@@ -55,7 +55,19 @@
             class="de.cau.cs.kieler.scg.transformations.schedulers.SimpleGuardScheduler">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.transformations.sequentializer.GuardSequentializer">
+            class="de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.schedulers.DCGuardScheduler">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.guards.FlatThreadsGuardTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.sequentializer.DCGuardSequentializer">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation">
       </productionTransformationClass>
    </extension>
    <extension
@@ -84,8 +96,14 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.features.SCGraphGroup">
       </featureGroupClass>
-      <featureClass
+      <featureClass 
             class="de.cau.cs.kieler.scg.features.SCPDG">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.DCSequentialize">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.C">
       </featureClass>
    </extension>
 

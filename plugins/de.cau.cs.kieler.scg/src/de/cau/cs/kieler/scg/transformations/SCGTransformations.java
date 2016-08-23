@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.transformations;
 /**
  * This class lists all transformations of SCG.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-04-27 proposed 
  * @kieler.rating 2015-04-27 proposed yellow
  * 
@@ -39,14 +39,26 @@ public class SCGTransformations {
     public final static String GUARD_EXPRESSIONS_NAME = "Expressions";
     
     public final static String GUARDS_ID = "scg.guards";
-    public final static String GUARDS_NAME = "Guards";    
+    public final static String GUARDS_NAME = "Guards";
+    
+    public final static String FT_GUARDS_ID = "scg.guards.ft";
+    public final static String FT_GUARDS_NAME = "RTF Guards";    
 
     public final static String SCHEDULING_ID = "scg.scheduling";
     public final static String SCHEDULING_NAME = "Scheduling";
 
+    public final static String DC_SCHEDULING_ID = "scg.scheduling.dc";
+    public final static String DC_SCHEDULING_NAME = "DC Scheduling";
+    
     public final static String SEQUENTIALIZE_ID = "scg.sequentialize";
     public final static String SEQUENTIALIZE_NAME = "Sequentialize";
     
+    public final static String DC_SEQUENTIALIZE_ID = "scg.sequentialize.dc";
+    public final static String DC_SEQUENTIALIZE_NAME = "DC Sequentialize";
+    
     public final static String SCPDG_ID = "scg.scpdg";
     public final static String SCPDG_NAME = "SCPDG";
+    
+    public final static String SCG2C_ID = "scg.c";
+    public final static String SCG2C_NAME = "C";    
 }

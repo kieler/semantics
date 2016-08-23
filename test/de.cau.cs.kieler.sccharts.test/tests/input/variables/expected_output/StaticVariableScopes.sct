@@ -1,0 +1,20 @@
+
+@Transformation STATIC
+scchart StaticVariableScopes {
+  int StaticVariableScopes_null_A___x = 100;
+  int StaticVariableScopes_null_B___x = - 100;
+
+  initial state A {
+
+    initial state A0;
+  }
+  --> B with / StaticVariableScopes_null_A___x =
+  StaticVariableScopes_null_A___x + 1;
+
+  state B {
+
+    initial state B0;
+  }
+  --> A with / StaticVariableScopes_null_B___x =
+  StaticVariableScopes_null_B___x - 1;
+}

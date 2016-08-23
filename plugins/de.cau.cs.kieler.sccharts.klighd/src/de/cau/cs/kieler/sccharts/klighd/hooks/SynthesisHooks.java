@@ -93,9 +93,8 @@ public class SynthesisHooks {
             if (ELEMENT_HOOK.equals(element.getName())) {
                 try {
                     @SuppressWarnings("unchecked")
-                    Class<? extends SynthesisHook> hookClass =
-                            (Class<? extends SynthesisHook>) Class.forName(element
-                                    .getAttribute(ATTRIBUTE_CLASS));
+					Class<? extends SynthesisHook> hookClass = (Class<? extends SynthesisHook>) element
+							.createExecutableExtension(ATTRIBUTE_CLASS).getClass();
                     registeredHooks.add(hookClass);
                 } catch (final Exception exception) {
                     StatusManager.getManager().handle(

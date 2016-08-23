@@ -9,6 +9,6 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.sim.kiem.ui</artifactId>
-  <version>0.5.5-SNAPSHOT</version>
+  <version>0.5.6-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

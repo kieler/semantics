@@ -29,6 +29,8 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.LinkedHashSet
 import java.util.Set
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.DataDependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -75,6 +77,9 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     
     @Inject
     extension SCGDependencyExtensions
+
+    @Inject
+    extension SCGCoreExtensions
 
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -147,11 +152,15 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		// Check if all required nodes were scheduled. If not, abort.
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
+				System.out.println("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
+					" to " + dependency.target.asAssignment.valuedObject.name
+				)
 				return
 			}
 		}
 		
 		// Add this node to the schedule.
+		System.out.println(node.asAssignment.valuedObject.name)
 		schedule += node
 	}
 	
@@ -166,7 +175,8 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 	protected def Iterable<Dependency> getSchedulingDependencies(Node node) {
 		node.incoming.filter(Dependency).filter[ d |
 			d instanceof ExpressionDependency ||
-			d instanceof ControlDependency
+			d instanceof ControlDependency ||
+			(d instanceof DataDependency && ((d as DataDependency).concurrent && !(d as DataDependency).confluent))
 		]
 	}
 

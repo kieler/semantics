@@ -14,13 +14,9 @@
 package de.cau.cs.kieler.scg.processors.analyzer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Write_Write
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author ssm

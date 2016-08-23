@@ -23,16 +23,14 @@ import java.io.FileWriter
 import java.io.StringWriter
 import java.util.ArrayList
 import java.util.HashMap
-import java.util.HashSet
 import java.util.List
-import org.apache.commons.io.FilenameUtils
-import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
-import com.google.common.base.Strings
 
 /**
  * This class generates wrapper code for models.
@@ -41,7 +39,7 @@ import com.google.common.base.Strings
  * 
  * @author aas
  */
-class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
+class WrapperCodeGenerator {
 
     /**
      * The id of the extension point for wrapper code annotation analyzers.
@@ -79,20 +77,39 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     public static var String macroDefinitions = null
 
     /**
+     * The launch config, which created this instance. 
+     */
+    private LaunchConfiguration launchConfig
+
+    /**
      * The name of the last processed model
      * (e.g. the name for an SCChart).  
      */
     private String modelName = ""
 
+    private String resolvedWrapperCodeTemplate
+    private String resolvedWrapperCodeSnippetDirectory
+    private String resolvedWrapperCodeTargetLocation
+    
+    new(LaunchConfiguration launchConfig) {
+        this.launchConfig = launchConfig
+    }
+    
     /**
      * Generates and saves the wrapper code for a list of files.
      * 
      * @param datas The data objects to generate wrapper code for 
      */
-    override void generateWrapperCode(FileCompilationData... datas) {
+    def public void generateWrapperCode(FileCompilationData... datas) {
+
+        // Resolve variables
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        resolvedWrapperCodeTemplate = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate)
+        resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
+        resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
 
         // Check consistency of path
-        if (!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeTemplate)) {
+        if (!resolvedWrapperCodeTemplate.isNullOrEmpty()) {
 
             val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
 
@@ -126,13 +143,13 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         map.put(MODEL_NAME_VARIABLE, modelName)
         
         // Add name of output file 
-        val fileName = new File(launchConfiguration.wrapperCodeTargetLocation).name
-        val fileNameWithoutExtension = FilenameUtils.removeExtension(fileName)
+        val fileName = new File(resolvedWrapperCodeTargetLocation).name
+        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
         map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
         
         // Inject macro calls in input template
-        FreeMarkerPlugin.newConfiguration(launchConfiguration.project.location.toOSString())
-        val template = FreeMarkerPlugin.configuration.getTemplate(launchConfiguration.wrapperCodeTemplate)
+        FreeMarkerPlugin.newConfiguration(launchConfig.project.location.toOSString())
+        val template = FreeMarkerPlugin.configuration.getTemplate(resolvedWrapperCodeTemplate)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -149,10 +166,10 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
     private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
         
         // Load snippet definitions
-        if(!Strings.isNullOrEmpty(launchConfiguration.wrapperCodeSnippetDirectory)) {
-            var File snippetDirectoryLocation = new File(launchConfiguration.wrapperCodeSnippetDirectory)
+        if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
+            var File snippetDirectoryLocation = new File(resolvedWrapperCodeSnippetDirectory)
             if (!snippetDirectoryLocation.isAbsolute)
-                snippetDirectoryLocation = new File(launchConfiguration.project.location + File.separator + launchConfiguration.wrapperCodeSnippetDirectory)
+                snippetDirectoryLocation = new File(launchConfig.project.location + File.separator + resolvedWrapperCodeSnippetDirectory)
                 
             // Set the snippets directory to implicitly load the macro definitions
             FreeMarkerPlugin.newConfiguration(snippetDirectoryLocation.absolutePath)
@@ -175,7 +192,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
         // Process template and write output directly to target file
-        val writer = new FileWriter(launchConfiguration.wrapperCodeTargetLocation)
+        val writer = new FileWriter(resolvedWrapperCodeTargetLocation)
         template.process(newHashMap(), writer)
         writer.close()
     }
@@ -355,7 +372,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.load(launchConfiguration.project.location.toOSString + File.separator + data.projectRelativePath, true)
+        val model = ModelImporter.load(launchConfig.project.location.toOSString + File.separator + data.projectRelativePath, true)
 
         if (model != null) {
             initAnalyzers()
@@ -376,7 +393,7 @@ class WrapperCodeGenerator extends AbstractWrapperCodeGenerator {
             // If none of the analyzers can get a name for the model
             // we interpret the file name as the model's name, like it is in java classes. 
             if (modelName == null)
-                modelName = FilenameUtils.getBaseName(data.projectRelativePath)
+                modelName = new Path(data.projectRelativePath).removeFileExtension.lastSegment
         }
     }
     

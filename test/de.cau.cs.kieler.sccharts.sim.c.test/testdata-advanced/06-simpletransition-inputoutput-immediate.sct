@@ -8,7 +8,7 @@ scchart syncchart {
     --> B with I;
 
     state B
-    --> C immediate / O;
+    --> C immediate with / O;
 
     state C;
   }

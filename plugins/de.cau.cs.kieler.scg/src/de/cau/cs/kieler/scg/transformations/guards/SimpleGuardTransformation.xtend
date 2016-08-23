@@ -24,7 +24,10 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
@@ -88,12 +91,6 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
     
     @Inject
     extension AnnotationsExtensions
-
-    // -------------------------------------------------------------------------
-    // -- Globals
-    // -------------------------------------------------------------------------
-
-    private static val String ANNOTATION_HOSTCODE = "hostcode" 
     
     // -------------------------------------------------------------------------
     // -- Guard Transformation
@@ -116,22 +113,44 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         scg.setDefaultTrace
         newSCG.trace(scg)
         
-        val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
+        val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
-            newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
+            newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG)
         val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
+        val deadGuards = <Guard> newHashSet
+
+        for(bb : scg.basicBlocks) {
+            if (bb.deadBlock) {
+                for(sb : bb.schedulingBlocks) {
+                    deadGuards += sb.guards
+                }
+            }
+        }
         
         // Create assignments
         for(guard : scg.guards) {
+            if (!deadGuards.contains(guard))
         	guard.createAssignment(valuedObjectMap) => [
         		newSCG.nodes += it
         		GAMap.put(guard, it)
         		VAMap.put(it.valuedObject, it)
         	]
+        }
+        
+        // Create sbHeadNodes
+        for(bb : scg.basicBlocks) {
+        	for(sb : bb.schedulingBlocks) {
+        		val assignment = GAMap.get(sb.guards.head)
+        		if (assignment != null) {
+        		    // Can be null if removed because the bb is dead
+            		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
+            		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
+        		}
+        	}
         }
         
         // Copy node dependencies

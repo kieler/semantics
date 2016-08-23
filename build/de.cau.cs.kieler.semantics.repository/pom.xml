@@ -20,7 +20,7 @@
     <update.site.name>KIELER Semantics</update.site.name>
     <update.site.description>Nightly</update.site.description>
     <update.site.version>0.10.0</update.site.version>
-    <target.eclipse.version>4.3 (Kepler)</target.eclipse.version>
+    <target.eclipse.version>4.5 (Mars)</target.eclipse.version>
     <!--  <target.eclipse.version>4.2 (Juno)</target.eclipse.version>  -->
   </properties>
   
@@ -43,13 +43,12 @@
             </goals>
             <configuration>
               <associateSites>
+			    <associateSite>http://download.eclipse.org/releases/mars</associateSite>
                 <associateSite>http://guava-osgi.googlecode.com/svn/trunk/repository/</associateSite>
                 <associateSite>http://download.eclipse.org/graphiti/updates/0.8.1</associateSite>
                 <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</associateSite>
-               <!--  
-                DEACTIVATED DUE TO CLOSE COUPLING OF SEMANTICS AND PRAGMATICS (ssm's ongoing activities :-)
-               <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9.1/</associateSite> -->
-               <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</associateSite>
+                <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</associateSite>
+               <!--<associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</associateSite>-->
               </associateSites>
               <siteTemplateFolder>siteTemplate</siteTemplateFolder>
               <symbols>

@@ -14,23 +14,17 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
-         <plugin>
-    <groupId>org.eclipse.xtend</groupId>
-    <artifactId>xtend-maven-plugin</artifactId>
-    <version>2.7.3</version>
-    <executions>
-    <execution>
-    <goals>
-    <goal>compile</goal>
-    <goal>testCompile</goal>
-    </goals>
-    <configuration>
-    <outputDirectory>${project.build.directory}/xtend-gen/main</outputDirectory>
-    <testOutputDirectory>${project.build.directory}/xtend-gen/test</testOutputDirectory>
-    </configuration>
-    </execution>
-    </executions>
-    </plugin>
+      <plugin>
+        <groupId>org.eclipse.xtend</groupId>
+        <artifactId>xtend-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

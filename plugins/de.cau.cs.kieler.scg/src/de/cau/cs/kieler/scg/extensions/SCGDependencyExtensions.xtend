@@ -20,6 +20,15 @@ import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValueExtensions
+import java.util.List
+import de.cau.cs.kieler.scg.Entry
+import java.util.Map
+import de.cau.cs.kieler.scg.Fork
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -42,33 +51,96 @@ import de.cau.cs.kieler.scg.Node
  * @kieler.rating 2016-02-24 proposed yellow
  */
 class SCGDependencyExtensions { 
+	
+	@Inject
+	extension SCGCoreExtensions
+	
+	@Inject
+	extension SCGControlFlowExtensions
+	
+	@Inject
+	extension KExpressionsValueExtensions
+	
+	 def DataDependency createDataDependency(DataDependencyType type) {
+	 	ScgFactory::eINSTANCE.createDataDependency => [ 
+	 		it.type = type
+	 	]
+	 }
 
-    public def ExpressionDependency createExpressionDependency(Node source, Node target) {
+    def DataDependency createDataDependency(Node source, Node target, DataDependencyType type) {
+    	type.createDataDependency => [ 
+    		source.dependencies += it
+    		it.target = target
+    	]
+    }
+
+    def ExpressionDependency createExpressionDependency(Node source, Node target) {
     	ScgFactory::eINSTANCE.createExpressionDependency => [ 
     		source.dependencies += it
     		it.target = target
     	]
     }
 
-    public def GuardDependency createGuardDependency(Node source, Node target) {
+    def GuardDependency createGuardDependency(Node source, Node target) {
     	ScgFactory::eINSTANCE.createGuardDependency => [ 
     		source.dependencies += it
     		it.target = target
     	]
     }
     
-    public def ControlDependency createControlDependency(Node source, Node target) {
+    def ControlDependency createControlDependency(Node source, Node target) {
     	ScgFactory::eINSTANCE.createControlDependency => [ 
     		source.dependencies += it
     		it.target = target
     	]
     }
     
-    public def ScheduleDependency createScheduleDependency(Node source, Node target) {
+    def ScheduleDependency createScheduleDependency(Node source, Node target) {
     	ScgFactory::eINSTANCE.createScheduleDependency => [ 
     		source.dependencies += it
     		it.target = target
     	]
     }
+    
+    def DataDependency checkAndSetConfluence(DataDependency dependency) {
+    	val sourceNode = dependency.eContainer as Node
+    	val targetNode = dependency.target
+    	dependency.confluent = false
+    	if (sourceNode instanceof Assignment && targetNode instanceof Assignment) {
+    		val sourceExpression = sourceNode.asAssignment.expression
+    		val targetExpression = targetNode.asAssignment.expression
+    		if (sourceExpression.isSameValue(targetExpression)) {
+    			dependency.confluent = true
+    		}
+    	}
+    	dependency
+    }
+    
+    def DataDependency checkAndSetConcurrency(DataDependency dependency, Map<Node, List<Entry>> nodeMapping) {
+    	val sourceNode = dependency.eContainer as Node
+    	val targetNode = dependency.target
+    	dependency.concurrent = false
+    	
+    	val sourceThreads = nodeMapping.get(sourceNode)
+    	val targetThreads = nodeMapping.get(targetNode)
+    	for(sourceEntry : sourceThreads) {
+    		var Fork sourceFork = null
+    		val sourcePredecessor = sourceEntry.getAllPreviousHeadNode
+    		if (sourcePredecessor instanceof Fork) sourceFork = sourcePredecessor as Fork
+    		if (sourceFork != null) {
+    			for(targetEntry : targetThreads) {
+    				var Fork targetFork = null
+    				val targetPredecessor = targetEntry.getAllPreviousHeadNode
+    				if (targetPredecessor instanceof Fork) targetFork = targetPredecessor as Fork
+   					if (targetFork != null && sourceFork == targetFork && sourceEntry != targetEntry) {
+   						dependency.concurrent = true;
+   						return dependency
+   					}
+    			}
+    		}
+    	}
+    	
+		dependency		    	
+    }    
 	
 }

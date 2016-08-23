@@ -119,6 +119,7 @@ void readInputs() {
 void writeOutputs() {
     cJSON* value;;
 	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
+	«System.out.println("=====> " + output.name)»
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
 	cJSON_AddItemToObject(output, "«output.name»", value);

@@ -24,6 +24,9 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -40,18 +43,16 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
 import java.util.HashMap
 import java.util.List
 import java.util.Set
 
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
-import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
-import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerSelector
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -118,16 +119,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SynchronizerSelector
-    
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-    
+        
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
 

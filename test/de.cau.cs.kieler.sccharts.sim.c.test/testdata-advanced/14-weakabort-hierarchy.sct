@@ -11,13 +11,13 @@ scchart DVDPlayer2 "DVDPlayer" {
     initial state H {
 
       initial state English
-      --> French / O;
+      --> French with / O;
 
       state German
-      --> English / O;
+      --> English with / O;
 
       state French
-      --> German / O;
+      --> German with / O;
 
       region:
 

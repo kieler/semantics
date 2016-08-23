@@ -31,6 +31,10 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduleDependency
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Fork
+import com.google.common.collect.ImmutableList
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -58,6 +62,10 @@ class SCGCoreExtensions {
     // -------------------------------------------------------------------------
     // -- Block queries
     // -------------------------------------------------------------------------
+   
+    def <E> ImmutableList<E> immutableCopy(List<E> list) {
+        ImmutableList::copyOf(list) as ImmutableList<E>
+    }   
    
     def boolean hasSchedulingData(SCGraph scg) {
     	!scg.nodes.filter[ !dependencies.filter(ScheduleDependency).empty ].empty
@@ -263,6 +271,24 @@ class SCGCoreExtensions {
     
     def inject(Class<? extends Object> clazz) {
     	Guice.createInjector().getInstance(clazz) 
+    }
+    
+    
+    
+    def Entry asEntry(Node node) {
+    	node as Entry
+    }
+    
+    def Assignment asAssignment(Node node) {
+    	node as Assignment
+    }
+    
+    def Fork asFork(Node node) {
+    	node as Fork
+    }
+    
+    def Node asNode(EObject eObject) {
+    	eObject as Node
     }
     
 }

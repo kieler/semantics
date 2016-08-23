@@ -27,22 +27,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class GuardDependencyImpl extends DependencyImpl implements GuardDependency {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected GuardDependencyImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgPackage.Literals.GUARD_DEPENDENCY;
-	}
+        return ScgPackage.Literals.GUARD_DEPENDENCY;
+    }
 
 } //GuardDependencyImpl

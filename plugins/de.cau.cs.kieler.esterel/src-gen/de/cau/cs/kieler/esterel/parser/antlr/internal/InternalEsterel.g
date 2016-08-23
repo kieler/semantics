@@ -104,7 +104,7 @@ ruleProgram returns [EObject current=null]
        			$current, 
        			"modules",
         		lv_modules_0_0, 
-        		"Module");
+        		"de.cau.cs.kieler.esterel.Esterel.Module");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -151,7 +151,7 @@ ruleModule returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -172,7 +172,7 @@ ruleModule returns [EObject current=null]
        			$current, 
        			"interface",
         		lv_interface_3_0, 
-        		"ModuleInterface");
+        		"de.cau.cs.kieler.esterel.Esterel.ModuleInterface");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -190,7 +190,7 @@ ruleModule returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_4_0, 
-        		"ModuleBody");
+        		"de.cau.cs.kieler.esterel.Esterel.ModuleBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -208,7 +208,7 @@ ruleModule returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_5_0, 
-        		"EndModule");
+        		"de.cau.cs.kieler.esterel.Esterel.EndModule");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -287,7 +287,7 @@ ruleModuleBody returns [EObject current=null]
        			$current, 
        			"statements",
         		lv_statements_0_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -326,7 +326,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intSignalDecls",
         		lv_intSignalDecls_0_0, 
-        		"InterfaceSignalDecl");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.InterfaceSignalDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -345,7 +345,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intTypeDecls",
         		lv_intTypeDecls_1_0, 
-        		"TypeDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -364,7 +364,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intSensorDecls",
         		lv_intSensorDecls_2_0, 
-        		"SensorDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.SensorDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -383,7 +383,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intConstantDecls",
         		lv_intConstantDecls_3_0, 
-        		"ConstantDecls");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantDecls");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -402,7 +402,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intRelationDecls",
         		lv_intRelationDecls_4_0, 
-        		"RelationDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.RelationDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -421,7 +421,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intTaskDecls",
         		lv_intTaskDecls_5_0, 
-        		"TaskDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.TaskDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -440,7 +440,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intFunctionDecls",
         		lv_intFunctionDecls_6_0, 
-        		"FunctionDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.FunctionDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -459,7 +459,7 @@ ruleModuleInterface returns [EObject current=null]
        			$current, 
        			"intProcedureDecls",
         		lv_intProcedureDecls_7_0, 
-        		"ProcedureDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.ProcedureDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -502,7 +502,7 @@ ruleChannelDescription returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_1_0, 
-        		"EsterelTypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelTypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -525,7 +525,7 @@ ruleChannelDescription returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"EsterelTypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelTypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -552,7 +552,7 @@ ruleChannelDescription returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_6_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -574,7 +574,7 @@ ruleChannelDescription returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_8_0, 
-        		"EsterelTypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.EsterelTypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -613,7 +613,7 @@ ruleEsterelTypeIdentifier returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_0_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -633,7 +633,7 @@ ruleEsterelTypeIdentifier returns [EObject current=null]
        			$current, 
        			"typeID",
         		lv_typeID_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -664,7 +664,7 @@ ruleEsterelTypeIdentifier returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_4_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -684,7 +684,7 @@ ruleEsterelTypeIdentifier returns [EObject current=null]
        			$current, 
        			"typeID",
         		lv_typeID_5_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -722,7 +722,7 @@ ruleEsterelTypeIdentifier returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_8_0, 
-        		"CombineOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.CombineOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -761,7 +761,7 @@ ruleTypeIdentifier returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_0_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -781,7 +781,7 @@ ruleTypeIdentifier returns [EObject current=null]
        			$current, 
        			"typeID",
         		lv_typeID_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -803,7 +803,7 @@ ruleTypeIdentifier returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -823,7 +823,7 @@ ruleTypeIdentifier returns [EObject current=null]
        			$current, 
        			"typeID",
         		lv_typeID_4_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -844,7 +844,7 @@ ruleTypeIdentifier returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_6_0, 
-        		"CombineOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.CombineOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -913,7 +913,7 @@ ruleLocalSignalDecl returns [EObject current=null]
        			$current, 
        			"signalList",
         		lv_signalList_1_0, 
-        		"LocalSignalList");
+        		"de.cau.cs.kieler.esterel.Esterel.LocalSignalList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -935,7 +935,7 @@ ruleLocalSignalDecl returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1002,7 +1002,7 @@ ruleLocalSignalList returns [EObject current=null]
        			$current, 
        			"signal",
         		lv_signal_1_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1024,7 +1024,7 @@ ruleLocalSignalList returns [EObject current=null]
        			$current, 
        			"signal",
         		lv_signal_3_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1067,7 +1067,7 @@ ruleSensorDecl returns [EObject current=null]
        			$current, 
        			"sensors",
         		lv_sensors_1_0, 
-        		"SensorWithType");
+        		"de.cau.cs.kieler.esterel.Esterel.SensorWithType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1089,7 +1089,7 @@ ruleSensorDecl returns [EObject current=null]
        			$current, 
        			"sensors",
         		lv_sensors_3_0, 
-        		"SensorWithType");
+        		"de.cau.cs.kieler.esterel.Esterel.SensorWithType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1132,7 +1132,7 @@ ruleSensorWithType returns [EObject current=null]
        			$current, 
        			"sensor",
         		lv_sensor_0_0, 
-        		"Sensor");
+        		"de.cau.cs.kieler.esterel.Esterel.Sensor");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1154,7 +1154,7 @@ ruleSensorWithType returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_2_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1173,7 +1173,7 @@ ruleSensorWithType returns [EObject current=null]
        			$current, 
        			"sensor",
         		lv_sensor_3_0, 
-        		"Sensor");
+        		"de.cau.cs.kieler.esterel.Esterel.Sensor");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1195,7 +1195,7 @@ ruleSensorWithType returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_5_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1239,7 +1239,7 @@ ruleSensor returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -1290,7 +1290,7 @@ ruleRelationDecl returns [EObject current=null]
        			$current, 
        			"relations",
         		lv_relations_2_0, 
-        		"RelationType");
+        		"de.cau.cs.kieler.esterel.Esterel.RelationType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1312,7 +1312,7 @@ ruleRelationDecl returns [EObject current=null]
        			$current, 
        			"relations",
         		lv_relations_4_0, 
-        		"RelationType");
+        		"de.cau.cs.kieler.esterel.Esterel.RelationType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1561,7 +1561,7 @@ ruleTypeDecl returns [EObject current=null]
        			$current, 
        			"types",
         		lv_types_1_0, 
-        		"Type");
+        		"de.cau.cs.kieler.esterel.Esterel.Type");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1583,7 +1583,7 @@ ruleTypeDecl returns [EObject current=null]
        			$current, 
        			"types",
         		lv_types_3_0, 
-        		"Type");
+        		"de.cau.cs.kieler.esterel.Esterel.Type");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1627,7 +1627,7 @@ ruleType returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -1669,7 +1669,7 @@ ruleConstantDecls returns [EObject current=null]
        			$current, 
        			"constants",
         		lv_constants_1_0, 
-        		"OneTypeConstantDecls");
+        		"de.cau.cs.kieler.esterel.Esterel.OneTypeConstantDecls");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1691,7 +1691,7 @@ ruleConstantDecls returns [EObject current=null]
        			$current, 
        			"constants",
         		lv_constants_3_0, 
-        		"OneTypeConstantDecls");
+        		"de.cau.cs.kieler.esterel.Esterel.OneTypeConstantDecls");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1734,7 +1734,7 @@ ruleOneTypeConstantDecls returns [EObject current=null]
        			$current, 
        			"constants",
         		lv_constants_0_0, 
-        		"ConstantWithValue");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantWithValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1756,7 +1756,7 @@ ruleOneTypeConstantDecls returns [EObject current=null]
        			$current, 
        			"constants",
         		lv_constants_2_0, 
-        		"ConstantWithValue");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantWithValue");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1778,7 +1778,7 @@ ruleOneTypeConstantDecls returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_4_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1817,7 +1817,7 @@ ruleConstantWithValue returns [EObject current=null]
        			$current, 
        			"constant",
         		lv_constant_0_0, 
-        		"Constant");
+        		"de.cau.cs.kieler.esterel.Esterel.Constant");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1839,7 +1839,7 @@ ruleConstantWithValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"ConstantAtom");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantAtom");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1888,7 +1888,7 @@ ruleConstant returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -2022,7 +2022,7 @@ ruleFunctionDecl returns [EObject current=null]
        			$current, 
        			"functions",
         		lv_functions_1_0, 
-        		"Function");
+        		"de.cau.cs.kieler.esterel.Esterel.Function");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2044,7 +2044,7 @@ ruleFunctionDecl returns [EObject current=null]
        			$current, 
        			"functions",
         		lv_functions_3_0, 
-        		"Function");
+        		"de.cau.cs.kieler.esterel.Esterel.Function");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2088,7 +2088,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -2109,7 +2109,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"idList",
         		lv_idList_2_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2131,7 +2131,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"idList",
         		lv_idList_4_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2157,7 +2157,7 @@ ruleFunction returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_7_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2200,7 +2200,7 @@ ruleProcedureDecl returns [EObject current=null]
        			$current, 
        			"procedures",
         		lv_procedures_1_0, 
-        		"Procedure");
+        		"de.cau.cs.kieler.esterel.Esterel.Procedure");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2222,7 +2222,7 @@ ruleProcedureDecl returns [EObject current=null]
        			$current, 
        			"procedures",
         		lv_procedures_3_0, 
-        		"Procedure");
+        		"de.cau.cs.kieler.esterel.Esterel.Procedure");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2266,7 +2266,7 @@ ruleProcedure returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -2287,7 +2287,7 @@ ruleProcedure returns [EObject current=null]
        			$current, 
        			"idList1",
         		lv_idList1_2_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2309,7 +2309,7 @@ ruleProcedure returns [EObject current=null]
        			$current, 
        			"idList1",
         		lv_idList1_4_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2335,7 +2335,7 @@ ruleProcedure returns [EObject current=null]
        			$current, 
        			"idList2",
         		lv_idList2_7_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2357,7 +2357,7 @@ ruleProcedure returns [EObject current=null]
        			$current, 
        			"idList2",
         		lv_idList2_9_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2404,7 +2404,7 @@ ruleTaskDecl returns [EObject current=null]
        			$current, 
        			"tasks",
         		lv_tasks_1_0, 
-        		"Task");
+        		"de.cau.cs.kieler.esterel.Esterel.Task");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2426,7 +2426,7 @@ ruleTaskDecl returns [EObject current=null]
        			$current, 
        			"tasks",
         		lv_tasks_3_0, 
-        		"Task");
+        		"de.cau.cs.kieler.esterel.Esterel.Task");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2470,7 +2470,7 @@ ruleTask returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -2491,7 +2491,7 @@ ruleTask returns [EObject current=null]
        			$current, 
        			"idList1",
         		lv_idList1_2_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2513,7 +2513,7 @@ ruleTask returns [EObject current=null]
        			$current, 
        			"idList1",
         		lv_idList1_4_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2539,7 +2539,7 @@ ruleTask returns [EObject current=null]
        			$current, 
        			"idList2",
         		lv_idList2_7_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2561,7 +2561,7 @@ ruleTask returns [EObject current=null]
        			$current, 
        			"idList2",
         		lv_idList2_9_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2633,7 +2633,7 @@ ruleStatement returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_3_0, 
-        		"Sequence");
+        		"de.cau.cs.kieler.esterel.Esterel.Sequence");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3068,7 +3068,7 @@ ruleSequence returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_3_0, 
-        		"AtomicStatement");
+        		"de.cau.cs.kieler.esterel.Esterel.AtomicStatement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3115,7 +3115,7 @@ ruleBlock returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3178,7 +3178,7 @@ ruleAssignment returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_2_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3221,7 +3221,7 @@ ruleAbort returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3243,7 +3243,7 @@ ruleAbort returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_3_0, 
-        		"AbortBody");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3328,7 +3328,7 @@ ruleAbortInstance returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_0_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3350,7 +3350,7 @@ ruleAbortInstance returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_2_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3408,7 +3408,7 @@ ruleAbortCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_0_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3426,7 +3426,7 @@ ruleAbortCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_1_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3488,7 +3488,7 @@ ruleAbortCaseSingle returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_1_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3510,7 +3510,7 @@ ruleAbortCaseSingle returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3566,7 +3566,7 @@ ruleWeakAbort returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3588,7 +3588,7 @@ ruleWeakAbort returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_5_0, 
-        		"WeakAbortBody");
+        		"de.cau.cs.kieler.esterel.Esterel.WeakAbortBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3686,7 +3686,7 @@ ruleWeakAbortEnd returns [EObject current=null]
        			$current, 
        			"optEnd",
         		lv_optEnd_2_0, 
-        		"WeakAbortEndAlt");
+        		"de.cau.cs.kieler.esterel.Esterel.WeakAbortEndAlt");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3785,7 +3785,7 @@ ruleWeakAbortInstance returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_1_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3807,7 +3807,7 @@ ruleWeakAbortInstance returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3825,7 +3825,7 @@ ruleWeakAbortInstance returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_4_0, 
-        		"WeakAbortEnd");
+        		"de.cau.cs.kieler.esterel.Esterel.WeakAbortEnd");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3873,7 +3873,7 @@ ruleWeakAbortCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_1_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3891,7 +3891,7 @@ ruleWeakAbortCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_2_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3909,7 +3909,7 @@ ruleWeakAbortCase returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_3_0, 
-        		"WeakAbortEnd");
+        		"de.cau.cs.kieler.esterel.Esterel.WeakAbortEnd");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -3952,7 +3952,7 @@ ruleAwait returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_1_0, 
-        		"AwaitBody");
+        		"de.cau.cs.kieler.esterel.Esterel.AwaitBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4037,7 +4037,7 @@ ruleAwaitInstance returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_0_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4059,7 +4059,7 @@ ruleAwaitInstance returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_2_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4077,7 +4077,7 @@ ruleAwaitInstance returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_3_0, 
-        		"AwaitEnd");
+        		"de.cau.cs.kieler.esterel.Esterel.AwaitEnd");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4116,7 +4116,7 @@ ruleAwaitCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_0_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4134,7 +4134,7 @@ ruleAwaitCase returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_1_0, 
-        		"AbortCaseSingle");
+        		"de.cau.cs.kieler.esterel.Esterel.AbortCaseSingle");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4152,7 +4152,7 @@ ruleAwaitCase returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_2_0, 
-        		"AwaitEnd");
+        		"de.cau.cs.kieler.esterel.Esterel.AwaitEnd");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4292,7 +4292,7 @@ ruleProcCall returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_8_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4314,7 +4314,7 @@ ruleProcCall returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_10_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4361,7 +4361,7 @@ ruleDo returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4379,7 +4379,7 @@ ruleDo returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_2_0, 
-        		"DoUpto");
+        		"de.cau.cs.kieler.esterel.Esterel.DoUpto");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4398,7 +4398,7 @@ ruleDo returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_3_0, 
-        		"DoWatching");
+        		"de.cau.cs.kieler.esterel.Esterel.DoWatching");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4441,7 +4441,7 @@ ruleDoUpto returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_1_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4484,7 +4484,7 @@ ruleDoWatching returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_1_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4502,7 +4502,7 @@ ruleDoWatching returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_2_0, 
-        		"DoWatchingEnd");
+        		"de.cau.cs.kieler.esterel.Esterel.DoWatchingEnd");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4545,7 +4545,7 @@ ruleDoWatchingEnd returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4624,7 +4624,7 @@ ruleEmit returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_2_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4646,7 +4646,7 @@ ruleEmit returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_4_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4710,7 +4710,7 @@ ruleUnEmit returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_2_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4770,7 +4770,7 @@ ruleReset returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_2_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4792,7 +4792,7 @@ ruleReset returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_4_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4839,7 +4839,7 @@ ruleEveryDo returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_1_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4861,7 +4861,7 @@ ruleEveryDo returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -4943,7 +4943,7 @@ ruleExit returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5024,7 +5024,7 @@ ruleIfTest returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_1_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5042,7 +5042,7 @@ ruleIfTest returns [EObject current=null]
        			$current, 
        			"thenPart",
         		lv_thenPart_2_0, 
-        		"ThenPart");
+        		"de.cau.cs.kieler.esterel.Esterel.ThenPart");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5060,7 +5060,7 @@ ruleIfTest returns [EObject current=null]
        			$current, 
        			"elsif",
         		lv_elsif_3_0, 
-        		"ElsIf");
+        		"de.cau.cs.kieler.esterel.Esterel.ElsIf");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5078,7 +5078,7 @@ ruleIfTest returns [EObject current=null]
        			$current, 
        			"elsePart",
         		lv_elsePart_4_0, 
-        		"ElsePart");
+        		"de.cau.cs.kieler.esterel.Esterel.ElsePart");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5140,7 +5140,7 @@ ruleElsIf returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_1_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5158,7 +5158,7 @@ ruleElsIf returns [EObject current=null]
        			$current, 
        			"thenPart",
         		lv_thenPart_2_0, 
-        		"ThenPart");
+        		"de.cau.cs.kieler.esterel.Esterel.ThenPart");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5201,7 +5201,7 @@ ruleThenPart returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5244,7 +5244,7 @@ ruleElsePart returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5287,7 +5287,7 @@ ruleLoop returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_1_0, 
-        		"LoopBody");
+        		"de.cau.cs.kieler.esterel.Esterel.LoopBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5305,7 +5305,7 @@ ruleLoop returns [EObject current=null]
        			$current, 
        			"end1",
         		lv_end1_2_0, 
-        		"EndLoop");
+        		"de.cau.cs.kieler.esterel.Esterel.EndLoop");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5324,7 +5324,7 @@ ruleLoop returns [EObject current=null]
        			$current, 
        			"end",
         		lv_end_3_0, 
-        		"LoopEach");
+        		"de.cau.cs.kieler.esterel.Esterel.LoopEach");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5449,7 +5449,7 @@ ruleLoopDelay returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_0_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5488,7 +5488,7 @@ ruleLoopBody returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_0_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5599,7 +5599,7 @@ rulePresent returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_1_0, 
-        		"PresentBody");
+        		"de.cau.cs.kieler.esterel.Esterel.PresentBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5617,7 +5617,7 @@ rulePresent returns [EObject current=null]
        			$current, 
        			"elsePart",
         		lv_elsePart_2_0, 
-        		"ElsePart");
+        		"de.cau.cs.kieler.esterel.Esterel.ElsePart");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5721,7 +5721,7 @@ rulePresentEventBody returns [EObject current=null]
        			$current, 
        			"event",
         		lv_event_0_0, 
-        		"PresentEvent");
+        		"de.cau.cs.kieler.esterel.Esterel.PresentEvent");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5739,7 +5739,7 @@ rulePresentEventBody returns [EObject current=null]
        			$current, 
        			"thenPart",
         		lv_thenPart_1_0, 
-        		"ThenPart");
+        		"de.cau.cs.kieler.esterel.Esterel.ThenPart");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5778,7 +5778,7 @@ rulePresentCaseList returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_0_0, 
-        		"PresentCase");
+        		"de.cau.cs.kieler.esterel.Esterel.PresentCase");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5796,7 +5796,7 @@ rulePresentCaseList returns [EObject current=null]
        			$current, 
        			"cases",
         		lv_cases_1_0, 
-        		"PresentCase");
+        		"de.cau.cs.kieler.esterel.Esterel.PresentCase");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5839,7 +5839,7 @@ rulePresentCase returns [EObject current=null]
        			$current, 
        			"event",
         		lv_event_1_0, 
-        		"PresentEvent");
+        		"de.cau.cs.kieler.esterel.Esterel.PresentEvent");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5861,7 +5861,7 @@ rulePresentCase returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5900,7 +5900,7 @@ rulePresentEvent returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_0_0, 
-        		"SignalExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5934,7 +5934,7 @@ rulePresentEvent returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_2_0, 
-        		"SignalExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -5968,7 +5968,7 @@ rulePresentEvent returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_4_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6026,7 +6026,7 @@ ruleRepeat returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_2_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6048,7 +6048,7 @@ ruleRepeat returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_4_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6110,7 +6110,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"module",
         		lv_module_1_0, 
-        		"ModuleRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ModuleRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6132,7 +6132,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_3_0, 
-        		"RenamingList");
+        		"de.cau.cs.kieler.esterel.Esterel.RenamingList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6159,7 +6159,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"module",
         		lv_module_6_0, 
-        		"ModuleRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ModuleRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6181,7 +6181,7 @@ ruleRun returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_8_0, 
-        		"RenamingList");
+        		"de.cau.cs.kieler.esterel.Esterel.RenamingList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6242,7 +6242,7 @@ ruleModuleRenaming returns [EObject current=null]
        			$current, 
        			"newName",
         		lv_newName_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -6300,7 +6300,7 @@ ruleRenamingList returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_0_0, 
-        		"Renaming");
+        		"de.cau.cs.kieler.esterel.Esterel.Renaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6322,7 +6322,7 @@ ruleRenamingList returns [EObject current=null]
        			$current, 
        			"list",
         		lv_list_2_0, 
-        		"Renaming");
+        		"de.cau.cs.kieler.esterel.Esterel.Renaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6365,7 +6365,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_1_0, 
-        		"TypeRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6387,7 +6387,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_3_0, 
-        		"TypeRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6410,7 +6410,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_5_0, 
-        		"ConstantRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6432,7 +6432,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_7_0, 
-        		"ConstantRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6455,7 +6455,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_9_0, 
-        		"FunctionRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.FunctionRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6477,7 +6477,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_11_0, 
-        		"FunctionRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.FunctionRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6500,7 +6500,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_13_0, 
-        		"ProcedureRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ProcedureRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6522,7 +6522,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_15_0, 
-        		"ProcedureRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.ProcedureRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6545,7 +6545,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_17_0, 
-        		"TaskRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.TaskRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6567,7 +6567,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_19_0, 
-        		"TaskRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.TaskRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6590,7 +6590,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_21_0, 
-        		"SignalRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6612,7 +6612,7 @@ ruleRenaming returns [EObject current=null]
        			$current, 
        			"renamings",
         		lv_renamings_23_0, 
-        		"SignalRenaming");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalRenaming");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6668,7 +6668,7 @@ ruleTypeRenaming returns [EObject current=null]
        			$current, 
        			"newType",
         		lv_newType_1_0, 
-        		"ValueType");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6744,7 +6744,7 @@ ruleConstantRenaming returns [EObject current=null]
        			$current, 
        			"newValue",
         		lv_newValue_1_0, 
-        		"ConstantAtom");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantAtom");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -6820,7 +6820,7 @@ ruleFunctionRenaming returns [EObject current=null]
        			$current, 
        			"newFunc",
         		lv_newFunc_1_0, 
-        		"BuildInFunction");
+        		"de.cau.cs.kieler.esterel.Esterel.BuildInFunction");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7177,7 +7177,7 @@ ruleSuspend returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_1_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7199,7 +7199,7 @@ ruleSuspend returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_3_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7246,7 +7246,7 @@ ruleWeakSuspend returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_2_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7268,7 +7268,7 @@ ruleWeakSuspend returns [EObject current=null]
        			$current, 
        			"delay",
         		lv_delay_4_0, 
-        		"DelayExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7328,7 +7328,7 @@ ruleSustain returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_2_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7350,7 +7350,7 @@ ruleSustain returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_4_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7397,7 +7397,7 @@ ruleTrap returns [EObject current=null]
        			$current, 
        			"trapDeclList",
         		lv_trapDeclList_1_0, 
-        		"TrapDeclList");
+        		"de.cau.cs.kieler.esterel.Esterel.TrapDeclList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7419,7 +7419,7 @@ ruleTrap returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7437,7 +7437,7 @@ ruleTrap returns [EObject current=null]
        			$current, 
        			"trapHandler",
         		lv_trapHandler_4_0, 
-        		"TrapHandler");
+        		"de.cau.cs.kieler.esterel.Esterel.TrapHandler");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7495,7 +7495,7 @@ ruleTrapDeclList returns [EObject current=null]
        			$current, 
        			"trapDecls",
         		lv_trapDecls_0_0, 
-        		"TrapDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.TrapDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7517,7 +7517,7 @@ ruleTrapDeclList returns [EObject current=null]
        			$current, 
        			"trapDecls",
         		lv_trapDecls_2_0, 
-        		"TrapDecl");
+        		"de.cau.cs.kieler.esterel.Esterel.TrapDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7566,7 +7566,7 @@ ruleTrapDecl returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -7583,7 +7583,7 @@ ruleTrapDecl returns [EObject current=null]
        			$current, 
        			"channelDescr",
         		lv_channelDescr_2_0, 
-        		"ChannelDescription");
+        		"de.cau.cs.kieler.esterel.Esterel.ChannelDescription");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7626,7 +7626,7 @@ ruleTrapHandler returns [EObject current=null]
        			$current, 
        			"trapExpr",
         		lv_trapExpr_1_0, 
-        		"TrapExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.TrapExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7648,7 +7648,7 @@ ruleTrapHandler returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_3_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7687,7 +7687,7 @@ ruleLocalVariable returns [EObject current=null]
        			$current, 
        			"var",
         		lv_var_0_0, 
-        		"InterfaceVariableDecl");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.InterfaceVariableDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7709,7 +7709,7 @@ ruleLocalVariable returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_2_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7969,7 +7969,7 @@ ruleFunctionExpression returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_3_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -7991,7 +7991,7 @@ ruleFunctionExpression returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_5_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8060,7 +8060,7 @@ ruleConstantExpression returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"ConstantAtom");
+        		"de.cau.cs.kieler.esterel.Esterel.ConstantAtom");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8153,7 +8153,7 @@ ruleSignalExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"OrOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.OrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8171,7 +8171,7 @@ ruleSignalExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"SignalAndExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalAndExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8231,7 +8231,7 @@ ruleSignalAndExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"AndOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.AndOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8249,7 +8249,7 @@ ruleSignalAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"SignalNotExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalNotExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8297,7 +8297,7 @@ ruleSignalNotExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"NotOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.NotOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8315,7 +8315,7 @@ ruleSignalNotExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_2_0, 
-        		"SignalNotExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalNotExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8493,7 +8493,7 @@ ruleSignalPreExpr returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"PreOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.PreOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8515,7 +8515,7 @@ ruleSignalPreExpr returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"SignalReferenceExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8604,7 +8604,7 @@ ruleDelayExpr returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_0_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8622,7 +8622,7 @@ ruleDelayExpr returns [EObject current=null]
        			$current, 
        			"event",
         		lv_event_1_0, 
-        		"DelayEvent");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayEvent");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8641,7 +8641,7 @@ ruleDelayExpr returns [EObject current=null]
        			$current, 
        			"event",
         		lv_event_2_0, 
-        		"DelayEvent");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayEvent");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8675,7 +8675,7 @@ ruleDelayExpr returns [EObject current=null]
        			$current, 
        			"event",
         		lv_event_4_0, 
-        		"DelayEvent");
+        		"de.cau.cs.kieler.esterel.Esterel.DelayEvent");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8714,7 +8714,7 @@ ruleDelayEvent returns [EObject current=null]
        			$current, 
        			"tick",
         		lv_tick_0_0, 
-        		"Tick");
+        		"de.cau.cs.kieler.esterel.Esterel.Tick");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8733,7 +8733,7 @@ ruleDelayEvent returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_1_0, 
-        		"SignalReferenceExpr");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalReferenceExpr");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8767,7 +8767,7 @@ ruleDelayEvent returns [EObject current=null]
        			$current, 
        			"expr",
         		lv_expr_3_0, 
-        		"SignalExpression");
+        		"de.cau.cs.kieler.esterel.Esterel.SignalExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8841,7 +8841,7 @@ ruleExec returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_2_0, 
-        		"ExecBody");
+        		"de.cau.cs.kieler.esterel.Esterel.ExecBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8883,7 +8883,7 @@ ruleExec returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_6_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8906,7 +8906,7 @@ ruleExec returns [EObject current=null]
        			$current, 
        			"execCaseList",
         		lv_execCaseList_8_0, 
-        		"ExecCase");
+        		"de.cau.cs.kieler.esterel.Esterel.ExecCase");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -8924,7 +8924,7 @@ ruleExec returns [EObject current=null]
        			$current, 
        			"execCaseList",
         		lv_execCaseList_9_0, 
-        		"ExecCase");
+        		"de.cau.cs.kieler.esterel.Esterel.ExecCase");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9039,7 +9039,7 @@ ruleExecBody returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_7_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9061,7 +9061,7 @@ ruleExecBody returns [EObject current=null]
        			$current, 
        			"kexpressions",
         		lv_kexpressions_9_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9124,7 +9124,7 @@ ruleExecCase returns [EObject current=null]
        			$current, 
        			"body",
         		lv_body_2_0, 
-        		"ExecBody");
+        		"de.cau.cs.kieler.esterel.Esterel.ExecBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9166,7 +9166,7 @@ ruleExecCase returns [EObject current=null]
        			$current, 
        			"statement",
         		lv_statement_6_0, 
-        		"Statement");
+        		"de.cau.cs.kieler.esterel.Esterel.Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9334,7 +9334,7 @@ ruleOrExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"OrOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.OrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9352,7 +9352,7 @@ ruleOrExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"AndExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.AndExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9412,7 +9412,7 @@ ruleAndExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"AndOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.AndOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9430,7 +9430,7 @@ ruleAndExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"CompareOperation");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.CompareOperation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9490,7 +9490,7 @@ ruleCompareOperation returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"CompareOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.CompareOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9508,7 +9508,7 @@ ruleCompareOperation returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"NotOrValuedExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.NotOrValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9615,7 +9615,7 @@ ruleNotExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"NotOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.NotOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9633,7 +9633,7 @@ ruleNotExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_2_0, 
-        		"NotExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.NotExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9739,7 +9739,7 @@ ruleAddExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"AddOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.AddOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9757,7 +9757,7 @@ ruleAddExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"SubExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.SubExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9817,7 +9817,7 @@ ruleSubExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"SubOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.SubOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9835,7 +9835,7 @@ ruleSubExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"MultExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.MultExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9895,7 +9895,7 @@ ruleMultExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"MultOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.MultOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9913,7 +9913,7 @@ ruleMultExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"DivExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.DivExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9973,7 +9973,7 @@ ruleDivExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"DivOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.DivOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -9991,7 +9991,7 @@ ruleDivExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"ModExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ModExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10051,7 +10051,7 @@ ruleModExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_2_0, 
-        		"ModOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ModOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10069,7 +10069,7 @@ ruleModExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"AtomicValuedExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.AtomicValuedExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10117,7 +10117,7 @@ ruleNegExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"SubOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.SubOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10135,7 +10135,7 @@ ruleNegExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_2_0, 
-        		"NegExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.NegExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10277,7 +10277,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_1_0, 
-        		"PreOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.PreOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10299,7 +10299,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_3_0, 
-        		"ValuedObjectTestExpression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValuedObjectTestExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10331,7 +10331,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"operator",
         		lv_operator_6_0, 
-        		"ValueTestOperator");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValueTestOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10349,7 +10349,7 @@ ruleValuedObjectTestExpression returns [EObject current=null]
        			$current, 
        			"subExpressions",
         		lv_subExpressions_7_0, 
-        		"ValuedObjectReference");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10439,7 +10439,7 @@ ruleTextExpression returns [EObject current=null]
        			$current, 
        			"code",
         		lv_code_0_0, 
-        		"HOSTCODE");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.HOSTCODE");
 	    }
 
 )
@@ -10461,7 +10461,7 @@ ruleTextExpression returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_2_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -10504,7 +10504,7 @@ ruleIntValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"INT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
 	    }
 
 )
@@ -10543,7 +10543,7 @@ ruleFloatValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"FLOAT");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.FLOAT");
 	    }
 
 )
@@ -10582,7 +10582,7 @@ ruleBooleanValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"BOOLEAN");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.BOOLEAN");
 	    }
 
 )
@@ -10669,7 +10669,7 @@ ruleISignal returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -10686,7 +10686,7 @@ ruleISignal returns [EObject current=null]
        			$current, 
        			"channelDescr",
         		lv_channelDescr_1_0, 
-        		"ChannelDescription");
+        		"de.cau.cs.kieler.esterel.Esterel.ChannelDescription");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10738,7 +10738,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_2_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10760,7 +10760,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_4_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10796,7 +10796,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_8_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10818,7 +10818,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_10_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10854,7 +10854,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_14_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10876,7 +10876,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_16_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10912,7 +10912,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_20_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10934,7 +10934,7 @@ ruleInterfaceSignalDecl returns [EObject current=null]
        			$current, 
        			"signals",
         		lv_signals_22_0, 
-        		"ISignal");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.ISignal");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -10981,7 +10981,7 @@ ruleInterfaceVariableDecl returns [EObject current=null]
        			$current, 
        			"varDecls",
         		lv_varDecls_1_0, 
-        		"VariableDecl");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.VariableDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11003,7 +11003,7 @@ ruleInterfaceVariableDecl returns [EObject current=null]
        			$current, 
        			"varDecls",
         		lv_varDecls_3_0, 
-        		"VariableDecl");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.VariableDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11042,7 +11042,7 @@ ruleVariableDecl returns [EObject current=null]
        			$current, 
        			"variables",
         		lv_variables_0_0, 
-        		"IVariable");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.IVariable");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11064,7 +11064,7 @@ ruleVariableDecl returns [EObject current=null]
        			$current, 
        			"variables",
         		lv_variables_2_0, 
-        		"IVariable");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.IVariable");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11086,7 +11086,7 @@ ruleVariableDecl returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_4_0, 
-        		"TypeIdentifier");
+        		"de.cau.cs.kieler.esterel.Esterel.TypeIdentifier");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11126,7 +11126,7 @@ ruleIVariable returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_0_0, 
-        		"ID");
+        		"org.eclipse.xtext.common.Terminals.ID");
 	    }
 
 )
@@ -11147,7 +11147,7 @@ ruleIVariable returns [EObject current=null]
        			$current, 
        			"expression",
         		lv_expression_2_0, 
-        		"Expression");
+        		"de.cau.cs.kieler.esterel.kexpressions.KExpressions.Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11193,7 +11193,7 @@ ruleCommentAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_0_0, 
-        		"COMMENT_ANNOTATION");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.COMMENT_ANNOTATION");
 	    }
 
 )
@@ -11235,7 +11235,7 @@ ruleTagAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11278,7 +11278,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11296,7 +11296,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_2_0, 
-        		"EString");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EString");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11318,7 +11318,7 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_4_0, 
-        		"EString");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EString");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11361,7 +11361,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11383,7 +11383,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11405,7 +11405,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11427,7 +11427,7 @@ ruleTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"EStringBoolean");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11470,7 +11470,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11489,7 +11489,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_2_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
@@ -11511,7 +11511,7 @@ ruleQuotedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_4_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
@@ -11553,7 +11553,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11575,7 +11575,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_3_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11598,7 +11598,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_5_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
@@ -11620,7 +11620,7 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
        			$current, 
        			"values",
         		lv_values_7_0, 
-        		"STRING");
+        		"de.cau.cs.kieler.esterel.Esterel.STRING");
 	    }
 
 )
@@ -11662,7 +11662,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11681,7 +11681,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"BOOLEAN");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.BOOLEAN");
 	    }
 
 )
@@ -11723,7 +11723,7 @@ ruleKeyIntValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11741,7 +11741,7 @@ ruleKeyIntValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Integer");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Integer");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11784,7 +11784,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"ExtendedID");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -11802,7 +11802,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Floateger");
+        		"de.cau.cs.kieler.core.annotations.text.Annotations.Floateger");
 	        afterParserOrEnumRuleCall();
 	    }
 

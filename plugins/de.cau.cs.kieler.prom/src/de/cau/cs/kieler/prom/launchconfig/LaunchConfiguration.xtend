@@ -16,10 +16,11 @@ package de.cau.cs.kieler.prom.launchconfig
 import com.google.common.base.Strings
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.prom.common.CommandData
 import de.cau.cs.kieler.prom.common.ExtensionLookupUtil
 import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
+import de.cau.cs.kieler.prom.common.PromPlugin
 import freemarker.template.Configuration
 import freemarker.template.Template
 import freemarker.template.TemplateExceptionHandler
@@ -28,8 +29,6 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.PrintWriter
-import java.util.List
-import org.apache.commons.io.FilenameUtils
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -45,14 +44,15 @@ import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.jdt.core.IClasspathEntry
+import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.console.ConsolePlugin
 import org.eclipse.ui.console.MessageConsole
 import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.xtend.lib.annotations.Accessors
-
-import static de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration.*
 
 /**
  * Implementation of a launch configuration that uses KiCo.
@@ -79,29 +79,14 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     public static val COMPILED_CODE_PLACEHOLDER = "kico_code"
 
     /**
-     * The directory in which compiled output of this launch will be saved.
+     * The directory in which compiled output of this launch will be saved per default.
      */
     public static val BUILD_DIRECTORY = "kieler-gen"
 
     // Attribute names
     public static val ATTR_COMMANDS = "de.cau.cs.kieler.prom.launchconfig.commands"
-
     public static val ATTR_FILES = "de.cau.cs.kieler.prom.launchconfig.files"
-
-    public static val ATTR_PROJECT = "de.cau.cs.kieler.prom.launchconfig.main.project"
-    public static val ATTR_MAIN_FILE = "de.cau.cs.kieler.prom.launchconfig.main.file"
-
     public static val ATTR_ENVIRONMENT = "de.cau.cs.kieler.prom.launchconfig.main.environment"
-
-    public static val ATTR_TARGET_LANGUAGE = "de.cau.cs.kieler.prom.launchconfig.main.target.language"
-    public static val ATTR_TARGET_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.target.template"
-    public static val ATTR_TARGET_LANGUAGE_FILE_EXTENSION = "de.cau.cs.kieler.prom.launchconfig.main.target.file.extension"
-
-    public static val ATTR_WRAPPER_CODE_TEMPLATE = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.template"
-    public static val ATTR_WRAPPER_CODE_SNIPPETS = "de.cau.cs.kieler.prom.launchconfig.main.wrapper.snippets"
-    public static val ATTR_WRAPPER_CODE_GENERATOR = "de.cau.cs.kieler.prom.launchconfig.wrapper.generator"
-    
-    public static val ATTR_ASSOCIATED_LAUNCH_SHORTCUT = "de.cau.cs.kieler.prom.launchconfig.main.associated.launch.shortcut"
 
     // Variable names
     public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
@@ -140,32 +125,9 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     // Objects loaded from configuration
     @Accessors
     private IProject project
-    @Accessors
-    private String mainFile
-    @Accessors
-    private List<FileCompilationData> files
-    @Accessors
-    private String targetLanguage
-    @Accessors
-    private String targetTemplate
-    @Accessors
-    private String wrapperCodeTemplate
-    @Accessors
-    private String wrapperCodeSnippetDirectory
-    @Accessors
-    private String wrapperCodeTargetLocation
-    @Accessors
-    private String wrapperCodeGenerator
 
     @Accessors
-    private List<CommandData> commands
-    @Accessors
-    private String associatedLaunchShortcut
-
-    @Accessors
-    private String targetLanguageFileExtension
-
-
+    private KiCoLaunchData launchData
 
     /**
      * {@inheritDoc}
@@ -189,10 +151,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         if (project != null) {
 
             // Set variables (e.g. launched_project_loc, main_name, main_loc, ...)
-            setVariables() 
+            setVariables()
 
-            // Remove placeholders (e.g. ${project_name}) in fields
-            resolveVariables()
+            // Create directory for output if there is none yet
+            createBuildDirectory()
 
             // Create jobs.
             compileJob = getCompileJob()
@@ -205,18 +167,32 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Wait for the jobs to finish.
             compileJob.join()
             wrapperCodeJob.join()
-
+            
             // Proceed only if the other jobs succeded  
             if (compileJob.result.code == IStatus.OK && wrapperCodeJob.result.code == IStatus.OK) {
+                // Refresh output directory
+                if(!launchData.targetDirectory.isNullOrEmpty()) {
+                    project.getFolder(launchData.targetDirectory).refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                } else {
+                    // Refresh directories of files
+                    for(fileData : launchData.files) {
+                        var dir = new Path(fileData.projectRelativePath).removeTrailingSeparator.toOSString
+                        if(dir.startsWith("/") || dir.startsWith("\\")) {
+                            dir = dir.substring(1)    
+                        }
+                        val fullPath = project.name + File.separator + dir
+                        val folder = project.getFolder(fullPath)
+                        if(folder.exists)
+                            folder.refreshLocal(IResource.DEPTH_INFINITE, monitor)
+                    }
+                }
+                
                 // Run associated launch shortcut
                 runAssociatedLauchShortcut()
                 
                 // Execute command list 
                 getExecuteCommandsJob().schedule()
             }
-            
-            // Refresh output directory for files
-            project.getFolder(BUILD_DIRECTORY).refreshLocal(IResource.DEPTH_INFINITE, monitor)
         } else {
             writeToConsole("Project of launch configuration '" + configuration.name +
                 "' does not exist.\n");
@@ -264,7 +240,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     public static def void writeToConsole(String message){
         // If there is nothing to write, we are done immediately.
-        if(Strings.isNullOrEmpty(message))
+        if(message.isNullOrEmpty())
             return;
         
         // Ensure the console exists.
@@ -292,6 +268,25 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     }
     
     
+    /**
+     * Creates the folder in which compilation results will be saved. 
+     */
+    private def void createBuildDirectory() {
+        // If the target directory is empty
+        // the output will be saved in the same folder as the input files,
+        // so we don't need to create them.
+        if(!launchData.targetDirectory.isNullOrEmpty()) {
+            val folder = project.getFolder(launchData.targetDirectory)
+            if(!folder.exists) {
+                folder.create(false, true, null)
+                // Add folder to java class path if it is a java project
+                if (project.hasNature(JavaCore.NATURE_ID)) {
+                    val javaProject = JavaCore.create(project);
+                    PromPlugin.addFolderToJavaClasspath(javaProject, folder)
+                }                
+            }
+        }
+    }
     
     /**
      * Runs the associated launch shortcut on the compiled main file.
@@ -299,18 +294,18 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      */
     private def void runAssociatedLauchShortcut() {
         // Nothing to do
-        if(Strings.isNullOrEmpty(mainFile) || Strings.isNullOrEmpty(associatedLaunchShortcut)) {
+        if(launchData.mainFile.isNullOrEmpty() || launchData.associatedLaunchShortcut.isNullOrEmpty()) {
             return;
         }
         
         // Start associated launch shortcut on compiled main file
-        val compiledMainPath = new Path(computeTargetPath(mainFile, true))
+        val compiledMainPath = new Path(computeTargetPath(launchData.mainFile, true))
         val compiledMainFile = project.getFile(compiledMainPath)
         val selection = new StructuredSelection(compiledMainFile)
-        val shortcut = ExtensionLookupUtil.getLaunchShortcut(associatedLaunchShortcut);
+        val shortcut = ExtensionLookupUtil.getLaunchShortcut(launchData.associatedLaunchShortcut);
         
         if(shortcut == null) {
-            throw new Exception("The associated launch shortcut "+associatedLaunchShortcut+
+            throw new Exception("The associated launch shortcut "+launchData.associatedLaunchShortcut+
                                 " for the launch configuration '"+configuration.name +"' could not be instantiated.")
         }
         
@@ -332,10 +327,10 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return new Job("KiCo Compilation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
-                val startTime = System.currentTimeMillis()
+//                val startTime = System.currentTimeMillis()
 
                 try {
-                    for (data : files) {
+                    for (data : launchData.files) {
                         compile(data)
 
                         if (monitor.isCanceled())
@@ -366,24 +361,12 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         return new Job("Wrapper Code Generation") {
             override protected IStatus run(IProgressMonitor monitor) {
 
-                val startTime = System.currentTimeMillis()
+//                val startTime = System.currentTimeMillis()
 
                 try {
-                    // Create generator
-                    var IWrapperCodeGenerator generator
-                    if(!Strings.isNullOrEmpty(wrapperCodeGenerator)){
-                        generator = instantiateWrapperCodeGenerator(wrapperCodeGenerator)
-                    } else {
-                        generator = new WrapperCodeGenerator()
-                    }
-                    
-                    // Generate code
-                    if(generator != null) {
-                        generator.launchConfiguration = launchConfig
-                        generator.generateWrapperCode(files)
-                    } else {
-                        writeToConsole("The class for wrapper code generation " + wrapperCodeGenerator+ " could not be instantiated.")
-                    }
+                    // Create wrapper code
+                    val generator = new WrapperCodeGenerator(launchConfig)
+                    generator.generateWrapperCode(launchData.files)
                 } catch (Exception e) {
                     writeToConsole(e)
                     return Status.CANCEL_STATUS
@@ -397,18 +380,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             }
         }
     }
-
-    /**
-     * Instantiates a wrapper code generator with the given class name.
-     * 
-     * @param fullyQualifiedClassName The class name
-     */
-    private def IWrapperCodeGenerator instantiateWrapperCodeGenerator(String fullyQualifiedClassName) {
-        return ExtensionLookupUtil.instantiateClassFromExtension(WRAPPER_CODE_GENERATOR_EXTENSION_POINT_ID,
-                                       "generator", "class", fullyQualifiedClassName)
-                                       as IWrapperCodeGenerator
-    }
-
+    
     /**
      * Creates a job that executes the commands for this launch config successively.
      * 
@@ -422,7 +394,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             override protected run(IProgressMonitor monitor) {
                 try {
                     val executor = new CommandExecutor(launchConfig)
-                    executor.execute(commands)
+                    executor.execute(launchData.commands)
                     return Status.OK_STATUS
                 } catch (Exception e) {
                     writeToConsole(e)
@@ -445,7 +417,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + targetLanguage, model)
+            val context = new KielerCompilerContext("!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, T_" + launchData.targetLanguage, model)
             context.inplace = false
             context.advancedSelect = true
 
@@ -453,7 +425,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
             val result = KielerCompiler.compile(context)
 
             // Flush compilation result to target
-            if (Strings.isNullOrEmpty(result.allErrors) && Strings.isNullOrEmpty(result.allWarnings) && !Strings.isNullOrEmpty(result.string) ) {
+            if (result.allErrors.isNullOrEmpty() && result.allWarnings.isNullOrEmpty() && !result.string.isNullOrEmpty() ) {
                 saveCompilationResult(result.string, computeTargetPath(data.projectRelativePath, false))
             } else {
                 var errorMessage = "Compilation of '" + data.name + "' failed:\n\n" +
@@ -475,24 +447,51 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param projectRelative Flag to specify if the computed path should be projectRelative or not
      * @return the computed path
      */
-    private def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
-        // The src directory of a typical java project is not part of the relevant target path.
-        // (Would be more accurate: if the first directory is a java build source folder, remove it)
-        var String projectRelativeRelevantPath;
-        if (projectRelativePath.startsWith("src/") || projectRelativePath.startsWith("src\\"))
-            projectRelativeRelevantPath = projectRelativePath.substring(4)
-        else
-            projectRelativeRelevantPath = projectRelativePath
-
-        // Remove extension
-        val projectRelativeRelevantPathWithoutExtension = FilenameUtils.removeExtension(projectRelativeRelevantPath)        
-     
-        // Compute target path
-        val projectRelativeTargetPath = BUILD_DIRECTORY + File.separator + projectRelativeRelevantPathWithoutExtension + targetLanguageFileExtension
+    public def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
+        var String projectRelativeTargetPath;
+        if(launchData.targetDirectory.isNullOrEmpty()) {
+            // Compute path such that the target file will be in the same file as the source file.
+            projectRelativeTargetPath = new Path(projectRelativePath).removeFileExtension.toOSString + launchData.targetLanguageFileExtension
+        } else {
+            // Compute path in the target directory
+            // such that the directory structure of the original file is retained.
+            var String projectRelativeRelevantPath = projectRelativePath
+            // The source directories of a java project are not part of the relevant target path
+            // because output files will be saved to a java source folder as well.
+            // So we remove the first segment of the path if it is a java source directory.
+            val firstSegment = new Path(projectRelativePath).segment(0);
+            if(!firstSegment.isNullOrEmpty() && project.hasNature(JavaCore.NATURE_ID)) {
+                val javaProject = JavaCore.create(project)
+                if(isJavaSourceDirectory(javaProject, firstSegment)) {
+                    projectRelativeRelevantPath = projectRelativePath.substring(firstSegment.length+1)
+                }
+            }
+            
+            // Remove extension
+            val projectRelativeRelevantPathWithoutExtension = new Path(projectRelativeRelevantPath).removeFileExtension        
+         
+            // Compute target path
+            projectRelativeTargetPath = launchData.targetDirectory + File.separator + projectRelativeRelevantPathWithoutExtension + launchData.targetLanguageFileExtension
+        }
+        
+        // Return either absolute or relative target path
         if(projectRelative)
             return projectRelativeTargetPath
         else
-            return project.location + File.separator + projectRelativeTargetPath
+            return project.location + File.separator + projectRelativeTargetPath    
+    }
+
+    private def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
+        val classPathEntries = javaProject.getRawClasspath();
+        for(entry : classPathEntries) {
+            if(entry.entryKind == IClasspathEntry.CPE_SOURCE) {
+                val sourceFolderName = new Path(entry.path.toOSString).lastSegment
+                if(sourceFolderName.equals(directory)) {
+                    return true
+                }
+            } 
+        }
+        return false
     }
 
     /**
@@ -505,19 +504,21 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
     private def void saveCompilationResult(String result, String targetPath) {
         // Create directory for the output if none yet.
         createDirectories(targetPath)
-
-        if (targetTemplate != "") {
+        
+        // Compile with KiCo and save output
+        val resolvedTargetTemplate = variableManager.performStringSubstitution(launchData.targetTemplate)
+        if (resolvedTargetTemplate != "") {
             // Use template
-            val reader = new FileReader(
-                new File(project.location + File.separator + variableManager.performStringSubstitution(targetTemplate)))
+            val targetTemplateLocation = project.location + File.separator + resolvedTargetTemplate
+            val reader = new FileReader(new File(targetTemplateLocation))
+            // Setup Freemarker
             val cfg = new Configuration(new Version(2, 3, 0))
             cfg.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
-
-            val template = new Template(targetTemplate, reader, cfg)
+            // Write output to target path
+            val template = new Template(resolvedTargetTemplate, reader, cfg)
             val writer = new FileWriter(new File(targetPath))
             template.process(#{COMPILED_CODE_PLACEHOLDER -> result}, writer)
             writer.close()
-
             reader.close()
         } else {
             // Don't use template
@@ -532,39 +533,19 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * 
      * @param path The path to a fully qualified file
      */
-    private def void createDirectories(String path) {
-        new File(path).parentFile.mkdirs()
+    private def void createDirectories(String filePath) {
+        new File(filePath).parentFile.mkdirs()
     }
 
     /**
      * Loads all necessary data from the launch configuration.
      */
     private def void loadSettingsFromConfiguration() {
-        // Load project
-        val projectName = configuration.getAttribute(ATTR_PROJECT, "")
-        project = findProject(projectName)
-
-        // Load main file
-        mainFile = configuration.getAttribute(ATTR_MAIN_FILE, "")
-        
-        // Model files to be compiled
-        files = FileCompilationData.loadAllFromConfiguration(configuration)
+        // Load data object
+        launchData = KiCoLaunchData.loadFromConfiguration(configuration)
     
-        // Load target
-        targetLanguage = configuration.getAttribute(ATTR_TARGET_LANGUAGE, "")
-        targetLanguageFileExtension = configuration.getAttribute(ATTR_TARGET_LANGUAGE_FILE_EXTENSION, "")
-        targetTemplate = configuration.getAttribute(ATTR_TARGET_TEMPLATE, "")
-
-        // Load wrapper code
-        wrapperCodeGenerator = configuration.getAttribute(ATTR_WRAPPER_CODE_GENERATOR, "")
-        wrapperCodeSnippetDirectory = configuration.getAttribute(ATTR_WRAPPER_CODE_SNIPPETS, "")
-        wrapperCodeTemplate = configuration.getAttribute(ATTR_WRAPPER_CODE_TEMPLATE, "")
-        
-        // Load shell commands
-        commands = CommandData.loadAllFromConfiguration(configuration)
-        
-        // Load associated launch shortcut
-        associatedLaunchShortcut = configuration.getAttribute(ATTR_ASSOCIATED_LAUNCH_SHORTCUT, "")
+        // Set project handle
+        project = findProject(launchData.projectName)
     }
 
     /**
@@ -576,40 +557,31 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
         setVariable(LaunchConfiguration.LAUNCHED_PROJECT_VARIABLE, project.location.toOSString)
 
         // Set main file
-        val mainFileName = new File(mainFile).name
+        val mainFileName = new File(launchData.mainFile).name
         val mainFileLocation = if(mainFileName != "")
-                                   new File(project.location + File.separator + mainFile).absolutePath
+                                   new File(project.location + File.separator + launchData.mainFile).absolutePath
                                else
                                    ""
-        val mainFilePath = mainFile
-        val mainFileWithoutExtension = FilenameUtils.removeExtension(mainFileName)
+        val mainFilePath = launchData.mainFile
+        val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_VARIABLE, mainFileName)
         setVariable(LaunchConfiguration.MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
         setVariable(LaunchConfiguration.MAIN_FILE_PATH_VARIABLE, mainFilePath)
         setVariable(LaunchConfiguration.MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
 
         // Set compiled main file
-        val mainTarget = computeTargetPath(mainFile, true)
+        val mainTarget = computeTargetPath(launchData.mainFile, true)
         val mainTargetName = new File(mainTarget).name
         val mainTargetLocation = if(mainTargetName != "")
                                      new File(project.location + File.separator + mainTarget).absolutePath
                                  else
                                     ""
         val mainTargetPath = mainTarget
-        val mainTargetWithoutExtension = FilenameUtils.removeExtension(mainTargetName)
+        val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_PATH_VARIABLE, mainTargetPath)
         setVariable(LaunchConfiguration.COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
-    }
-
-    /**
-     * Substitutes placeholder variables (e.g. ${project_name}) in fields with their actual value. 
-     */
-    private def void resolveVariables() {
-        wrapperCodeTemplate = variableManager.performStringSubstitution(wrapperCodeTemplate)
-        wrapperCodeSnippetDirectory = variableManager.performStringSubstitution(wrapperCodeSnippetDirectory)
-        wrapperCodeTargetLocation = computeTargetPath(wrapperCodeTemplate, false)
     }
 
     /**
@@ -643,7 +615,7 @@ class LaunchConfiguration implements ILaunchConfigurationDelegate {
      * @param name The name of a project to be found
      */
     static def IProject findProject(String name) {
-        if (!Strings.isNullOrEmpty(name) && new Path(name).isValidPath(name)) {
+        if (!name.isNullOrEmpty() && new Path(name).isValidPath(name)) {
             val p = ResourcesPlugin.workspace.root.getProject(name)
             if (p.location != null)
                 return p

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.transformations.synchronizer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -32,6 +31,8 @@ import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.Map
 import java.util.Set
+
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -75,10 +76,7 @@ abstract class AbstractSynchronizer {
     
     @Inject
     extension AnnotationsExtensions	
-    
-    protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
-    protected static val ANNOTATION_IGNORETHREAD = "ignore"
-	
+    	
 	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
 	

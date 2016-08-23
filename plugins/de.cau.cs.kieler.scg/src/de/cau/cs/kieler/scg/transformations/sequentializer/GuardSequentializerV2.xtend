@@ -19,6 +19,8 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -33,18 +35,17 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
+import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
 import java.util.HashMap
 import java.util.List
 import java.util.Set
 
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -90,9 +91,6 @@ class GuardSequentializerV2 extends AbstractSequentializer implements Traceable 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
-    @Inject
-    extension SCGCoreExtensions
     
     @Inject 
     extension SCGDeclarationExtensions

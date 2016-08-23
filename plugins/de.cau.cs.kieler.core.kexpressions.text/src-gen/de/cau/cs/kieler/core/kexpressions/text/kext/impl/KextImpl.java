@@ -28,173 +28,173 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl#getEntities <em>Entities</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 public class KextImpl extends MinimalEObjectImpl.Container implements Kext
 {
   /**
-     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getDeclarations()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDeclarations()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<Declaration> declarations;
 
   /**
-     * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getEntities()
-     * @generated
-     * @ordered
-     */
+	 * @see #getEntities()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<TestEntity> entities;
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   protected KextImpl()
   {
-        super();
-    }
+		super();
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-        return KextPackage.Literals.KEXT;
-    }
+		return KextPackage.Literals.KEXT;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public EList<Declaration> getDeclarations()
   {
-        if (declarations == null) {
-            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KextPackage.KEXT__DECLARATIONS);
-        }
-        return declarations;
-    }
+		if (declarations == null) {
+			declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KextPackage.KEXT__DECLARATIONS);
+		}
+		return declarations;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   public EList<TestEntity> getEntities()
   {
-        if (entities == null) {
-            entities = new EObjectContainmentEList<TestEntity>(TestEntity.class, this, KextPackage.KEXT__ENTITIES);
-        }
-        return entities;
-    }
+		if (entities == null) {
+			entities = new EObjectContainmentEList<TestEntity>(TestEntity.class, this, KextPackage.KEXT__ENTITIES);
+		}
+		return entities;
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
-                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
-            case KextPackage.KEXT__ENTITIES:
-                return ((InternalEList<?>)getEntities()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case KextPackage.KEXT__DECLARATIONS:
+				return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+			case KextPackage.KEXT__ENTITIES:
+				return ((InternalEList<?>)getEntities()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
-                return getDeclarations();
-            case KextPackage.KEXT__ENTITIES:
-                return getEntities();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case KextPackage.KEXT__DECLARATIONS:
+				return getDeclarations();
+			case KextPackage.KEXT__ENTITIES:
+				return getEntities();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
-                getDeclarations().clear();
-                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-                return;
-            case KextPackage.KEXT__ENTITIES:
-                getEntities().clear();
-                getEntities().addAll((Collection<? extends TestEntity>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case KextPackage.KEXT__DECLARATIONS:
+				getDeclarations().clear();
+				getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+				return;
+			case KextPackage.KEXT__ENTITIES:
+				getEntities().clear();
+				getEntities().addAll((Collection<? extends TestEntity>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
-                getDeclarations().clear();
-                return;
-            case KextPackage.KEXT__ENTITIES:
-                getEntities().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case KextPackage.KEXT__DECLARATIONS:
+				getDeclarations().clear();
+				return;
+			case KextPackage.KEXT__ENTITIES:
+				getEntities().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
-                return declarations != null && !declarations.isEmpty();
-            case KextPackage.KEXT__ENTITIES:
-                return entities != null && !entities.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case KextPackage.KEXT__DECLARATIONS:
+				return declarations != null && !declarations.isEmpty();
+			case KextPackage.KEXT__ENTITIES:
+				return entities != null && !entities.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //KextImpl

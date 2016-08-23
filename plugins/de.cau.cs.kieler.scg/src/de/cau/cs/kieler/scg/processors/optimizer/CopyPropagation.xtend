@@ -14,22 +14,16 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.SCGraph
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Guard
-import java.util.List
-import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
+import java.util.List
 
 /**
  * @author ssm
