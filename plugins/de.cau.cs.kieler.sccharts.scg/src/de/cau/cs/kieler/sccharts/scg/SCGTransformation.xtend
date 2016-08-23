@@ -83,6 +83,9 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation extends AbstractProductionTransformation implements Traceable {
+    
+    protected static val ANNOTATION_IGNORETHREAD = "ignore"
+    
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -540,6 +543,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // -------------------------------------------------------------------------   
     def void transformSCGGenerateNodes(ControlflowRegion region, SCGraph sCGraph) {
         val entry = sCGraph.addEntry.trace(region, region.parentState)
+        if (region.hasAnnotation(ANNOTATION_IGNORETHREAD)) {
+              entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
+        }
         val exit = sCGraph.addExit.trace(region, region.parentState)
         region.map(entry)
         entry.setExit(exit)
