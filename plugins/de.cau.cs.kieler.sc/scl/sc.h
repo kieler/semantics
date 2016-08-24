@@ -1,7 +1,7 @@
 /*! \file sc.h
  *
  * Header file to be included by SC applications.
- *
+ * 
  * See README.txt for general information.
  * See LICENSE.txt for licensing information.
  * For further information, see
@@ -158,7 +158,7 @@ _DEF_setCopyFrom(_sig)
 // Calculate size required for strings representing sets of ids or signals, as octals
 /* Format for set represented by scalar: 0x...x
  * Format for set represented by array:  0x...x xxxxxxxxxxx ... xxxxxxxxxxx   (32 bit size array elements)
- *
+ * 
  * Max index of elements to be represented: max   := (_SC_ID_MAX > _SC_SIG_MAX) ? _SC_ID_MAX : _SC_SIG_MAX
  * Number of string parts:                 parts := max / _setPartSize + 1
  * Max. length of one string part:         partlength := (_setPartSize - 1) / 3 + 2
@@ -207,16 +207,16 @@ labeltype    _returnAddress;         //!< For function calls (eg Exit Actions)
 char    *statePrev[_idCnt];          //!< State where thread resumed previous tick
 char    *state[_idCnt];              //!< State where thread resumed current tick
 
-const int     _idMax         = _SC_ID_MAX;
+const int     _idMax         = _SC_ID_MAX;				
 const int     _sigMax        = _SC_SIG_MAX;
-
-_setPartType *enabledPtr     = (_setPartType *) &enabled;
-_setPartType *signalsPtr     = (_setPartType *) &signals;
-sigset        tickInputs;
-_setPartType* tickInputsPtr  = (_setPartType *) &tickInputs;
-sigset        tickOutputs;
-_setPartType* tickOutputsPtr = (_setPartType *) &tickOutputs;
-sigset        tickSignals;
+	
+_setPartType *enabledPtr     = (_setPartType *) &enabled;		
+_setPartType *signalsPtr     = (_setPartType *) &signals;		
+sigset        tickInputs;						
+_setPartType* tickInputsPtr  = (_setPartType *) &tickInputs;		
+sigset        tickOutputs;						
+_setPartType* tickOutputsPtr = (_setPartType *) &tickOutputs;		
+sigset        tickSignals;						
 _setPartType* tickSignalsPtr = (_setPartType *) &tickSignals;
 
 #ifndef _SC_SUPPRESS_ERROR_DETECT
@@ -224,11 +224,11 @@ sigset       _presence_tested;       //!< Signals that have been checked for pre
 #endif
 
 #ifdef RUNMAX
-const int     _runMax        = RUNMAX;
+const int     _runMax        = RUNMAX;				
 #endif
 
 #ifdef TICKMAX
-const int     _tickMax       = TICKMAX;
+const int     _tickMax       = TICKMAX;				
 #endif
 
 
@@ -266,7 +266,6 @@ _setPartType _setPart;
  * instruction at our disposal or not.
  */
 
-/*
 #if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
 // Version 1: x86 + gcc available.
 // Use fast Bit Scan Reverse assembler instruction.
@@ -276,15 +275,13 @@ _setPartType _setPart;
 // - Compare also with "63 - __builtin_clzll(set)"
 # if (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 32)) ||	\
      ((_SC_ID_MAX < _setPartSize) && (_setPartSize == 32)))
-*/
 #  define _BitScanReverse(set, bit)		\
   __asm volatile("bsrl %1,%0\n"			\
 		 : "=r" (bit)			\
 		 : "r" (set)			\
 		 )
-/* # elif   (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 64)) ||	\
+# elif   (((_SC_ID_MAX < WORD_BIT) && (WORD_BIT == 64)) ||	\
 	 (_setPartSize == 64))
-
 unsigned long _longBit;
 #  define _BitScanReverse(set, bit)			\
   __asm volatile("bsrq %1,%0\n"				\
@@ -293,19 +290,17 @@ unsigned long _longBit;
 		 );					\
   bit = _longBit
 
-//# endif
-/*#else
+# endif
+#else
 # define _BitScanReverse(set, bit)				      \
   bit = 0;							      \
-  for (_setPart = set; _setPart > 1; _setPart >>= 1) {		      \
-    bit++;							      \
-  }
+  for (_setPart = set; _setPart > 1; _setPart >>= 1)		      \
+    bit++;
 #endif
-*/
 
 #if _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
 # define selectCid()   _SC_ERROR_DETECT_NONE_ACTIVE \
-  _BitScanReverse((long)active, _cid)
+  _BitScanReverse(active, _cid)
 #else
 # define selectCid() {				\
     for (_i = _idsetSize - 1; ; _i--) {		\
