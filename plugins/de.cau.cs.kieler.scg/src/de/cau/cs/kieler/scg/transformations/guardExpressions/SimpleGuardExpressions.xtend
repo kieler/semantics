@@ -179,7 +179,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
+//        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**

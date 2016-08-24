@@ -40,6 +40,7 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.DataDependency
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -278,7 +279,7 @@ class SCGCoreExtensions {
     	Guice.createInjector().getInstance(clazz) 
     }
     
-    def copyNode(Node node) {
+    def copyNode(Node node, boolean copyIncomingDependencies) {
         val o = node.copy
         
         if (o instanceof Entry) {
@@ -299,6 +300,19 @@ class SCGCoreExtensions {
             o.^else.target = node.asConditional.^else.target
         }
         
+        for(var i = 0; i < node.dependencies.size; i++) {
+            o.dependencies.get(i).target = node.dependencies.get(i).target
+        }
+        
+        if (copyIncomingDependencies) {
+            val incomingDependencies = node.incoming.filter(DataDependency).toList 
+            for(var i = 0; i < incomingDependencies.size; i++) {
+                val dep = incomingDependencies.get(i).copy
+                dep.target = o
+                incomingDependencies.get(i).eContainer.asNode.dependencies += dep
+            }
+        }
+
         o 
     }
     

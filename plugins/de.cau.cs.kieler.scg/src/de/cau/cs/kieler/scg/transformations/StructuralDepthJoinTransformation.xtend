@@ -118,11 +118,13 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
         val schizoMapping = <Node, Node> newHashMap
         
         for(pNode : pilNodes) {
-            val sNode = pNode.copyNode
+            val sNode = pNode.copyNode(true)
             sNode.schizophrenic = true
             schizoMapping.put(pNode, sNode)
             
             scg.nodes += sNode
+            
+            // add incoming dependencies
         }
         
         for(pNode : pilNodes) {
