@@ -70,7 +70,8 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
     public def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
         
         val threadMapping = <Entry, Set<Node>> newHashMap
-        val nodeMapping = <Node, List<Entry>> newHashMap;        
+        val nodeMapping = <Node, List<Entry>> newHashMap
+        val modifiedEntries = <Entry> newHashSet;        
         scg.nodes.head.asEntry.getAllThreadNodesAndThreads(threadMapping, nodeMapping)
         context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
         val pilData = PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
@@ -90,6 +91,7 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
                         ThreadPathType.POTENTIALLY_INSTANTANEOUS
                     ) {
                         entry.transformSDJ(scg, threadMapping.get(entry), pilData)
+                        modifiedEntries += entry
                     }
                 }
                 
@@ -98,6 +100,14 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
 
         context.compilationResult.removeAllAuxiliaryData(PotentialInstantaneousLoopResult)
 //        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
+        
+        // SCG thread path types
+        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+        for (entry : modifiedEntries) {
+            if (entry.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) 
+                entry.removeAnnotations(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
+            entry.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+        }        
         
         scg
     }  
