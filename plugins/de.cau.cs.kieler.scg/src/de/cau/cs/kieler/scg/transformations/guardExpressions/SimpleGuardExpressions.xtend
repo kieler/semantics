@@ -650,7 +650,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BranchType blockType, SCGraph scg) {
         val twin = predecessorTwinCache.get(predecessor)
-        predecessorSBCache.get(twin).head
+        predecessorSBCache.get(twin)?.head
     }
 
     private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {

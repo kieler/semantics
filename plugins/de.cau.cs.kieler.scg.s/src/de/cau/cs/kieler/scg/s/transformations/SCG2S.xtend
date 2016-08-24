@@ -150,8 +150,10 @@ class SCG2S extends AbstractProductionTransformation {
         ]
         val instructionCache = <Instruction>newLinkedList
 
-        nodeList += scg.nodes.head
-        nodeInstructionMap.put(scg.nodes.head, instructionCache)
+//        nodeList += scg.nodes.head
+//        nodeInstructionMap.put(scg.nodes.head, instructionCache)
+        nodeList += scg.nodes.filter[ incoming.size == 0 ].head
+        nodeInstructionMap.put(nodeList.head, instructionCache)
 
         while (!nodeList.empty) {
             val node = nodeList.head
@@ -178,6 +180,10 @@ class SCG2S extends AbstractProductionTransformation {
         System.out.println("S transformation finished (time used overall: " + (time / 1000) + "s).")
         sProgram
     }
+
+//    private def dispatch void translate(Void a, Void b) {
+//        
+//    }
 
     private def dispatch void translate(Entry entry, List<Instruction> instructions) {
         if(processedNodes.get(entry) != null) return;
