@@ -102,11 +102,12 @@ class StructuralDepthJoinTransformation extends AbstractProductionTransformation
 //        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
         
         // SCG thread path types
-        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+//        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
         for (entry : modifiedEntries) {
             if (entry.hasAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) 
                 entry.removeAnnotations(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
-            entry.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+//            entry.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+            entry.createStringAnnotation(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE, ThreadPathType.DELAYED.toString2)
         }        
         
         scg
