@@ -52,9 +52,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsExtension
     
-    //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
     override getId() {
         return ENFORCER_TRANSFORMATION_ID
     }
@@ -75,11 +73,20 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         return Sets.newHashSet()
     }
 
+
+    /**
+     * Transform method for new SCCharts with more than one root state.
+     * Each root state will be transformed.  
+     */
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]
     }
-    
+
+    /**
+     * Transform method for root states.
+     */    
     def State transform(State rootState) {
+        // Create new sets for inputs and outputs and fill them appropriately.
         val inputs = <ValuedObject> newHashSet
         val outputs = <ValuedObject> newHashSet  
         for(declaration : rootState.declarations.filter(VariableDeclaration)) {
@@ -87,34 +94,44 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             if (declaration.output) outputs += declaration.valuedObjects
         }
         
+        // The SA is located in the first (and only) region of the SCChart.
+        // It resembles the initial pre-processed input and output regions of the enforcer.
+        // Hence, copy the region for the output region. The original will serve as input region.
         val SARegion = rootState.regions.filter(ControlflowRegion).head
-        val inputRegion = SARegion => [ 
-            id = "input"
-        ]
-        val outputRegion = SARegion.copy => [ 
-            id = "output"
-            rootState.regions += it
-        ]
-            
+        val inputRegion = SARegion => [ id = "input" ]
+        val outputRegion = SARegion.copy => [ id = "output" rootState.regions += it ]
+           
+        // Additionally, create a region for the tick function.
         val tickRegion = rootState.createTickRegion(inputs, outputs)
+        
+        // Now, modifiy the input and the output regions according to the enforcer algorithm.
         inputRegion.modifyInputRegion(inputs, outputs)
         outputRegion.modifyOutputRegion(inputs, outputs)
         
+        // Layout stuff: Always layout input | tick | output
         inputRegion.annotations += createTypedStringAnnotation("layout", "priority", "3")
         tickRegion.annotations += createTypedStringAnnotation("layout", "priority", "2")
         outputRegion.annotations += createTypedStringAnnotation("layout", "priority", "1")
                 
+        // Optimize the regions... some states are superfluous.
         inputRegion.optimizeRegion(inputs, outputs)
         outputRegion.optimizeRegion(inputs, outputs)
         
+        // Return the root state.
         rootState
     }
     
+    /**
+     * This method modifies the input region according to the enforcer algorithm.
+     */
     protected def ControlflowRegion modifyInputRegion(ControlflowRegion region, Set<ValuedObject> inputs, 
         Set<ValuedObject> outputs) {
         
+        // Retrieve the violation state and look at every incoming transition.
         val violationState = region.states.filter[ violation ].head
         for(vt : violationState.incomingTransitions.immutableCopy) {
+            
+            // Look at all variable references. If an output is present, then the input region cannot to anything.
             val references = vt.trigger.getAllReferences
             if (references.map[ valuedObject ].exists[ outputs.contains(it) ]) {
                 // Output is present, cannot do anything
@@ -125,16 +142,23 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             }
         }
         
+        // Remove the violation state.
         violationState.remove
-        
         region
     }
     
+    /**
+     * This method modifies the output region according to the enforcer algorithm.
+     */
     protected def ControlflowRegion modifyOutputRegion(ControlflowRegion region, Set<ValuedObject> inputs, 
         Set<ValuedObject> outputs) {
 
+        // Retrieve the violation state and look at every incoming transition
         val violationState = region.states.filter[ violation ].head
         for(vt : violationState.incomingTransitions.immutableCopy) {
+            
+            // Look at all variable references. If no output is present, then this case should already be dealt with
+            // in the input region. 
             val references = vt.trigger.getAllReferences
             if (references.map[ valuedObject ].exists[ outputs.contains(it) ]) {
                 // Output is present, apply edit_o here
@@ -144,16 +168,20 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
                 vt.remove
             }
         }
-        
+
+        // Remove the violation state.        
         violationState.remove
-        
         region
     }
-    
+  
+    /**
+     * This method implements the editI function that determines the behavior of the enforcer in the input region.
+     */  
     protected def Transition applyEditI(Transition transition,
         Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
             
         // EXAMPLE
+        // Set all trigger to false
         transition.targetState = transition.sourceState
         val inputRefs = transition.trigger.getAllReferences.map[ valuedObject ]
         for(input : inputRefs) {
@@ -166,10 +194,14 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         transition
     }
 
+    /**
+     * This method implements the editO function that determines the behavior of the enforcer in the output region.
+     */  
     protected def Transition applyEditO(Transition transition, 
         Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
             
         // EXAMPLE
+        // Set all trigger to false
         transition.targetState = transition.sourceState
         val outputRefs = transition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
         for(output : outputRefs) {
@@ -183,6 +215,9 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         transition
     }
     
+    /**
+     * Optimize input region.
+     */
     protected def ControlflowRegion optimizeRegion(ControlflowRegion region, Set<ValuedObject> inputs,
         Set<ValuedObject> outputs) {
     
@@ -200,6 +235,9 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         region        
     }    
     
+    /**
+     * Creates the tick region.
+     */
     protected def Region createTickRegion(State rootState, Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
         val tickFunctionDeclaration = KExpressionsFactory.eINSTANCE.createReferenceDeclaration => [ 
             extern = "tick"
