@@ -127,14 +127,14 @@ public class KielerCompilerContext extends MapPropertyHolder {
                 if (transformation == null) {
                     this.getCompilationResult().addPostponedWarning(
                             new KielerCompilerException("KieleCompiler", "KielerCompiler",
-                                    "Transformation with '" + id + "' cannot be found."));
+                                    "Transformation with ID '" + id + "' cannot be found."));
                 }
             } else {
                 Feature feature = KielerCompiler.getFeature(id);
                 if (feature == null) {
                     this.getCompilationResult().addPostponedWarning(
                             new KielerCompilerException("KieleCompiler", "KielerCompiler",
-                                    "Feature with '" + id + "' cannot be found."));
+                                    "Feature with ID '" + id + "' cannot be found."));
                 }
             }
         }
@@ -344,6 +344,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
         if (compilationChain == null || forceUpdate) {
             recomputeTransformationChain(true);
         }
+        validateSelection();
         return compilationChain;
     }
 

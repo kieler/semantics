@@ -115,6 +115,22 @@ class SctValidator extends SctJavaValidator {
     } 
 
     /**
+     * Checks if the given state has abort transitions without trigger and adds a warning.
+     * In most cases an abort without trigger is meant to be a termination transition.
+     */
+    @Check
+    public def void checkAbortHasTrigger(de.cau.cs.kieler.sccharts.State state) {
+        if(state.isHierarchical) {
+            for (transition : state.outgoingTransitions) {
+                if ((transition.type == TransitionType.STRONGABORT || transition.type == TransitionType.WEAKABORT)
+                    && transition.trigger == null) {
+                    warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
+                }
+            }
+        }
+    } 
+    
+    /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
      * that handles valued signals without combination function (see KISEMA-1071).   

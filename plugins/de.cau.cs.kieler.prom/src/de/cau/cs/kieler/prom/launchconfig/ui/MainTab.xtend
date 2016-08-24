@@ -18,7 +18,7 @@ import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.ui.IProjectHolder
 import de.cau.cs.kieler.prom.common.ui.UIUtil
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.ArrayList
 import java.util.EnumSet
 import java.util.List
@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Text
  * 
  * @author aas
  */
-class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHolder {
+class MainTab extends AbstractKiCoLaunchConfigTab implements IProjectHolder {
 
     /**
      * The launch configuration this object is working on.
@@ -70,7 +70,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
     /**
      * Constructor
      */
-    new(KiCoLaunchConfigurationTabGroup tabGroup) {
+    new(KiCoLaunchConfigTabGroup tabGroup) {
         super(tabGroup)
     }
 
@@ -183,7 +183,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
         
         // Load environment
         if (environment.input != null) {
-            val loadedEnvironmentName = configuration.getAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, "")
+            val loadedEnvironmentName = configuration.getAttribute(KiCoLaunchConfig.ATTR_ENVIRONMENT, "")
             for (env : environment.input as ArrayList<EnvironmentData>) {
                 if (env.name == loadedEnvironmentName) {
                     environment.selection = new StructuredSelection(env)
@@ -206,7 +206,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
         // Save environment
         val env = getSelectedEnvironment()
         if (env != null) 
-            configuration.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, env.name)
+            configuration.setAttribute(KiCoLaunchConfig.ATTR_ENVIRONMENT, env.name)
             
         // Set project
         launchData.projectName = project.text
@@ -245,7 +245,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
         }
         
         // Project exists
-        val proj = LaunchConfiguration.findProject(project.text)
+        val proj = KiCoLaunchConfig.findProject(project.text)
         if (proj == null) {
             return "Project does not exist."
         } else {
@@ -263,7 +263,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
      */
     private def void updateEnabled() {
         val List<Control> controls = #[]
-        val enabled = (LaunchConfiguration.findProject(project.text) != null)
+        val enabled = (KiCoLaunchConfig.findProject(project.text) != null)
         UIUtil.enableControlsOnSameLevel(controls, enabled)
     }
 
@@ -279,7 +279,7 @@ class MainTab extends AbstractKiCoLaunchConfigurationTab implements IProjectHold
      *         or null if there is no project with the specified name.
      */
     override getProject() {
-        return LaunchConfiguration.findProject(project.text)
+        return KiCoLaunchConfig.findProject(project.text)
     }
 
     /**
