@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * @author ssm
@@ -62,6 +63,10 @@ class KExpressionsCompareExtensions {
         return expression1.text.equals(expression2.text)
     }
 
+    def dispatch equals2(BoolValue boolValue1, BoolValue boolValue2) {
+        return (boolValue1.value == boolValue2.value)
+    }
+    
     def dispatch equals2(Expression expression1, Expression expression2) {
         if (expression1 == null && expression2 == null) {
             return true

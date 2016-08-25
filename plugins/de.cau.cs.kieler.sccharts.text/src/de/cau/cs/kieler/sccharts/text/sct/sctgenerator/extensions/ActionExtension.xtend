@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 
 import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.*
+import org.eclipse.core.resources.IProject
 
 /**
  * @author ssm
@@ -112,6 +113,10 @@ class ActionExtension implements ISCTGeneratorExtension {
             CHANCE_FOR_DURING_ACTION,
             CHANCE_FOR_EXIT_ACTION
         )
+    }
+    
+    override onSaveModel(State rootState, IProject project) {
+        // Do nothing.
     }
     
 }

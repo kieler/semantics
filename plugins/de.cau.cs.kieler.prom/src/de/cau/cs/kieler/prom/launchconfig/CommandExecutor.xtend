@@ -30,7 +30,7 @@ import org.eclipse.debug.core.DebugPlugin
  */
 class CommandExecutor {
 
-    private LaunchConfiguration launchConfig
+    private KiCoLaunchConfig launchConfig
 
     /**
      * Creates a new instance of this class and sets the project and launch associated with it.
@@ -38,7 +38,7 @@ class CommandExecutor {
      * @param project The project
      * @param launch The launch
      */
-    new(LaunchConfiguration launchConfig){
+    new(KiCoLaunchConfig launchConfig){
         this.launchConfig = launchConfig
     }
 

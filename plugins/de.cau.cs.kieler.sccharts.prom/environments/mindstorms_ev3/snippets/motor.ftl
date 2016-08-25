@@ -9,7 +9,7 @@
          @Wrapper MotorSpeed, A
          @Wrapper MotorSpeed, B
          output int speed; -->
-<#macro MotorSpeed port brake='true'>
+<#macro MotorSpeed port brake=true>
     <@init>
         <@InitMotor port />
     </@>
@@ -22,7 +22,7 @@
         if (Math.abs(scchart.${varname}) != motor${port}.getSpeed()) {
             motor${port}.setSpeed(Math.abs(scchart.${varname}));
             if(scchart.${varname} == 0)
-                <#if brake='true'>
+                <#if brake>
                 motor${port}.stop(true);
                 <#else>
                 motor${port}.flt(true);
@@ -91,17 +91,15 @@
 <#-- Auxiliary macro to initialize a motor if it is not yet initialized.
      This macro is not meant to be used in a model file. -->
 <#macro InitMotor port>
-        <#if !((initializedMotors![])?seq_contains(port))>
-        <#assign initializedMotors = (initializedMotors![]) + [port]>
+        <@singleton "motor_"+port>
         RegulatedMotor motor${port} = new EV3LargeRegulatedMotor(MotorPort.${port});
-        </#if>
+        </@>
 </#macro>
 
 <#-- Auxiliary macro to initialize an RCX motor if it is not yet initialized.
      This macro is not meant to be used in a model file. -->
 <#macro InitRCXMotor port>
-        <#if !((initializedRCXMotors![])?seq_contains(port))>
-        <#assign initializedRCXMotors = (initializedRCXMotors![]) + [port]>
+        <@singleton "rc_motor_"+port>
         RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
-        </#if>
+        </@>
 </#macro>
