@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.priorities.priorityCalculations.StronglyConnectedCom
 import de.cau.cs.kieler.scg.priorities.priorityCalculations.ThreadSegmentIDs
 import javax.inject.Inject
 
+
 /**
  * @author lpe
  *
@@ -123,6 +124,8 @@ class SCGPriority extends AbstractProductionTransformation{
             }
             println("NOT SCHEDULABLE")
         }
+        
+        
         
         
         return scg
