@@ -13,10 +13,10 @@ import de.cau.cs.kieler.kexpressions.Declaration;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.StatementScope#getDeclarations <em>Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementScope()
  * @model

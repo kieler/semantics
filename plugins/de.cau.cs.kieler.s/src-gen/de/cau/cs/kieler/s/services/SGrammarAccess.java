@@ -12,9 +12,9 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
-import de.cau.cs.kieler.kexpressions.text.services.KEXTGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
@@ -1019,7 +1019,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final Grammar grammar;
 
-	private final KEXTGrammarAccess gaKEXT;
+	private final KExtGrammarAccess gaKExt;
 
 	private final KEffectsGrammarAccess gaKEffects;
 
@@ -1031,13 +1031,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public SGrammarAccess(GrammarProvider grammarProvider,
-		KEXTGrammarAccess gaKEXT,
+		KExtGrammarAccess gaKExt,
 		KEffectsGrammarAccess gaKEffects,
 		KExpressionsGrammarAccess gaKExpressions,
 		AnnotationsGrammarAccess gaAnnotations,
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
-		this.gaKEXT = gaKEXT;
+		this.gaKExt = gaKExt;
 		this.gaKEffects = gaKEffects;
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
@@ -1085,8 +1085,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 
-	public KEXTGrammarAccess getKEXTGrammarAccess() {
-		return gaKEXT;
+	public KExtGrammarAccess getKExtGrammarAccess() {
+		return gaKExt;
 	}
 
 	public KEffectsGrammarAccess getKEffectsGrammarAccess() {
@@ -1368,8 +1368,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Kext kext::Kext:
 	//	declarations+=Declaration*
 	//	entities+=TestEntity*
-	public KEXTGrammarAccess.KextElements getKextAccess() {
-		return gaKEXT.getKextAccess();
+	public KExtGrammarAccess.KextElements getKextAccess() {
+		return gaKExt.getKextAccess();
 	}
 	
 	public ParserRule getKextRule() {
@@ -1380,8 +1380,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
 	//	expression=AnnotatedExpression | effect=Effect
-	public KEXTGrammarAccess.TestEntityElements getTestEntityAccess() {
-		return gaKEXT.getTestEntityAccess();
+	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
+		return gaKExt.getTestEntityAccess();
 	}
 	
 	public ParserRule getTestEntityRule() {
@@ -1395,8 +1395,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	'expression'
 	//	expression=Expression
-	public KEXTGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
-		return gaKEXT.getAnnotatedExpressionAccess();
+	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
+		return gaKExt.getAnnotatedExpressionAccess();
 	}
 	
 	public ParserRule getAnnotatedExpressionRule() {
@@ -1418,8 +1418,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
-	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
-		return gaKEXT.getDeclarationAccess();
+	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
+		return gaKExt.getDeclarationAccess();
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -1433,8 +1433,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	name=ID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
-	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
-		return gaKEXT.getValuedObjectAccess();
+	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKExt.getValuedObjectAccess();
 	}
 	
 	public ParserRule getValuedObjectRule() {

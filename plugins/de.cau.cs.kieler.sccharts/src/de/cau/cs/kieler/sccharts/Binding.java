@@ -23,11 +23,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding()
  * @model

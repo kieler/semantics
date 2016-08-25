@@ -13,8 +13,12 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
  org.eclipse.xtext.xbase,
  org.eclipse.xtext.builder,
- de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.core,
+ org.eclipse.xtext,
+ org.eclipse.xtext.util,
+ org.antlr.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.text.actions,
  de.cau.cs.kieler.sccharts.text.actions.formatting,
@@ -34,4 +38,3 @@ Export-Package: de.cau.cs.kieler.sccharts.text.actions,
  de.cau.cs.kieler.sccharts.text.sct.services,
  de.cau.cs.kieler.sccharts.text.sct.validation
 Import-Package: org.apache.log4j
-

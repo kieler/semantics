@@ -3,7 +3,9 @@
 package de.cau.cs.kieler.s.s.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.common.notify.Adapter;

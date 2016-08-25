@@ -25,12 +25,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Equation#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Equation#getNode <em>Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Equation#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getEquation()
  * @model

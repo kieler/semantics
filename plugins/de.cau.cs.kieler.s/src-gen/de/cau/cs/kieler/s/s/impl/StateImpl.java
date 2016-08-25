@@ -3,7 +3,9 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
+
 import de.cau.cs.kieler.kexpressions.Declaration;
+
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;

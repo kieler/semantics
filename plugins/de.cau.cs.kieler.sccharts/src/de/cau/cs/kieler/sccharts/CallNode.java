@@ -24,11 +24,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.CallNode#getCallReference <em>Call Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.CallNode#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getCallNode()
  * @model

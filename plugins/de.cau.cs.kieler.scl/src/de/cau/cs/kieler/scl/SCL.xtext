@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.core.kexpressions.text.KEXT
+grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.kexpressions.kext.KExt
  
 //// we do not need to generate the transitionlabel ecore model, because we
 //// only reuse classes of the official sccharts metamodel

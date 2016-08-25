@@ -1,7 +1,7 @@
 //grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
 //		 de.cau.cs.kieler.core.expressions.Expressions, 
 //		 de.cau.cs.kieler.core.annotations.Annotations
-grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.text.KEXT
+grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.kexpressions.kext.KExt
 //grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.actions.Actions
 //grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.interfaces.Interfaces
 

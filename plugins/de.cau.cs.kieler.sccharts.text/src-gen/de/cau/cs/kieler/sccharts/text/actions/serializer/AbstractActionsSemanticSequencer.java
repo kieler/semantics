@@ -28,11 +28,11 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
-import de.cau.cs.kieler.kexpressions.text.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.text.kext.Kext;
-import de.cau.cs.kieler.kexpressions.text.kext.KextPackage;
-import de.cau.cs.kieler.kexpressions.text.kext.TestEntity;
-import de.cau.cs.kieler.kexpressions.text.serializer.KEXTSemanticSequencer;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
@@ -50,7 +50,7 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 
 @SuppressWarnings("all")
-public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSequencer {
+public abstract class AbstractActionsSemanticSequencer extends KExtSemanticSequencer {
 
 	@Inject
 	private ActionsGrammarAccess grammarAccess;
@@ -202,15 +202,15 @@ public abstract class AbstractActionsSemanticSequencer extends KEXTSemanticSeque
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			}
-		else if (epackage == KextPackage.eINSTANCE)
+		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case KextPackage.ANNOTATED_EXPRESSION:
+			case KExtPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
-			case KextPackage.KEXT:
+			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
-			case KextPackage.TEST_ENTITY:
+			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
 			}

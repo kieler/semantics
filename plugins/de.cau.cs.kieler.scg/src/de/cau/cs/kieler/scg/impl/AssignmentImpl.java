@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -86,7 +87,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      * @ordered
      */
-    protected static final de.cau.cs.kieler.kexpressions.keffects.AssignOperator OPERATOR_EDEFAULT = de.cau.cs.kieler.kexpressions.keffects.AssignOperator.ASSIGN;
+    protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
 
     /**
      * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -96,7 +97,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      * @ordered
      */
-    protected de.cau.cs.kieler.kexpressions.keffects.AssignOperator operator = OPERATOR_EDEFAULT;
+    protected AssignOperator operator = OPERATOR_EDEFAULT;
 
                 /**
      * <!-- begin-user-doc -->
@@ -258,7 +259,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public de.cau.cs.kieler.kexpressions.keffects.AssignOperator getOperator() {
+    public AssignOperator getOperator() {
         return operator;
     }
 
@@ -267,8 +268,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setOperator(de.cau.cs.kieler.kexpressions.keffects.AssignOperator newOperator) {
-        de.cau.cs.kieler.kexpressions.keffects.AssignOperator oldOperator = operator;
+    public void setOperator(AssignOperator newOperator) {
+        AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
@@ -338,7 +339,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__OPERATOR:
-                setOperator((de.cau.cs.kieler.kexpressions.keffects.AssignOperator)newValue);
+                setOperator((AssignOperator)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

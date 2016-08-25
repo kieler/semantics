@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+
 import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.SPackage;
 

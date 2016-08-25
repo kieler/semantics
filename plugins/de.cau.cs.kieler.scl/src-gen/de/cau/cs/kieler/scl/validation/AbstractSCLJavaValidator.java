@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.ComposedChecks;
 
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
-public class AbstractSCLJavaValidator extends de.cau.cs.kieler.kexpressions.text.validation.KEXTJavaValidator {
+public class AbstractSCLJavaValidator extends de.cau.cs.kieler.kexpressions.kext.validation.KExtJavaValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {

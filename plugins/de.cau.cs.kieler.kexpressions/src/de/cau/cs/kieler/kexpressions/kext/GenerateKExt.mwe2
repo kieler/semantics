@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.kexpressions.KExt
+module de.cau.cs.kieler.kexpressions.kext.KExt
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*

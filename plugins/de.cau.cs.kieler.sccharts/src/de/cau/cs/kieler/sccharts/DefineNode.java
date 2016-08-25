@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.DefineNode#getInputs <em>Inputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.DefineNode#getOutputs <em>Outputs</em>}</li>
@@ -33,7 +34,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.DefineNode#getExpressions <em>Expressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.DefineNode#getStates <em>States</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDefineNode()
  * @model
