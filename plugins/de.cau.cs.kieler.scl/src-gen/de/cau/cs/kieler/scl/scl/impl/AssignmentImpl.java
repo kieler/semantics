@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AssignmentImpl extends de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
+public class AssignmentImpl extends de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

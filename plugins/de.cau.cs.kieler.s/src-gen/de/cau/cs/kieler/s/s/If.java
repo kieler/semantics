@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->

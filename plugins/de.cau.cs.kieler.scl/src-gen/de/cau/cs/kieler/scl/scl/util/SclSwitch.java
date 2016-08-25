@@ -3,9 +3,7 @@
 package de.cau.cs.kieler.scl.scl.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -420,7 +418,7 @@ public class SclSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object) {
+    public T caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
         return null;
     }
 

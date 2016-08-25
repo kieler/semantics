@@ -8,7 +8,7 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder,
- de.cau.cs.kieler.core.kexpressions.ui,
+ de.cau.cs.kieler.kexpressions.ui,
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.core.kexpressions.text.ui,

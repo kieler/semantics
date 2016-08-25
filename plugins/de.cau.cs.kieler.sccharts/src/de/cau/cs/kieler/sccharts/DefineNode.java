@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,7 +49,7 @@ public interface DefineNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Inputs</em>' containment reference list isn't clear,
@@ -65,7 +65,7 @@ public interface DefineNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Outputs</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Outputs</em>' containment reference list isn't clear,
@@ -81,7 +81,7 @@ public interface DefineNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Valued Objects</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObject}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Objects</em>' reference list isn't clear,
@@ -97,7 +97,7 @@ public interface DefineNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,

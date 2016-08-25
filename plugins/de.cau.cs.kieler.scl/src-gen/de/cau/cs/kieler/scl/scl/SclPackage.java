@@ -3,8 +3,7 @@
 package de.cau.cs.kieler.scl.scl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;

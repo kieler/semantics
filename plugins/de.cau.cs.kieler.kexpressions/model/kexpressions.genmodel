@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kexpressions/src" modelPluginID="de.cau.cs.kieler.kexpressions"
+    modelName="KExpressions" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations">
+  <foreignModel>kexpressions.ecore</foreignModel>
+  <genPackages prefix="KExpressions" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      fileExtensions="kexpr" ecorePackage="kexpressions.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//CombineOperator/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//OperatorType">
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/GEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/VAL"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/PRE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LOGICAL_AND"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LOGICAL_OR"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/DIV"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/MOD"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/BITWISE_OR"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/BITWISE_AND"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/POSTFIX_ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/POSTFIX_SUB"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ValueType">
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/PURE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/UNSIGNED"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/HOST"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/STRING"/>
+    </genEnums>
+    <genClasses ecoreClass="kexpressions.ecore#//Expression"/>
+    <genClasses ecoreClass="kexpressions.ecore#//ValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/combineOperator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/cardinalities"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//ValuedObjectReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObjectReference/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObjectReference/indices"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//Value"/>
+    <genClasses ecoreClass="kexpressions.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//FloatValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//BoolValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//BoolValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//OperatorExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//OperatorExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//OperatorExpression/subExpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//TextExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//TextExpression/text"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//Declaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Declaration/valuedObjects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/input"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/output"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/static"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/const"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/extern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/volatile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/hostType"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//FunctionCall">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//FunctionCall/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//FunctionCall/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Parameter/callByReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Parameter/pureOutput"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Parameter/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//StringValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//StringValue/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scl.formatting;
 
-import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter;
+import de.cau.cs.kieler.kexpressions.text.formatting.KEXTValueConverter;
 
 /**
  * @author ssm

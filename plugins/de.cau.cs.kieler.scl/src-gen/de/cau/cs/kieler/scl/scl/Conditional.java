@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,7 +54,7 @@ public interface Conditional extends StatementSequence, Instruction {
 
     /**
      * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,

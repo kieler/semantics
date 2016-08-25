@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -148,7 +148,7 @@ public interface Guard extends EObject {
 
 				/**
      * Returns the value of the '<em><b>Original Object</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObject}.
      * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Original Object</em>' reference list isn't clear,

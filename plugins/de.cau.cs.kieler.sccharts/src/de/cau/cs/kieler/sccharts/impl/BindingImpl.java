@@ -14,9 +14,7 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 

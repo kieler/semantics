@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read;
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite;
 import de.cau.cs.kieler.scg.Assignment;

@@ -16,7 +16,7 @@
 package de.cau.cs.kieler.sccharts.text.actions.formatting;
 
 
-import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter;
+import de.cau.cs.kieler.kexpressions.text.formatting.KEXTValueConverter;
 
 /**
  * Delegates to {@link ExpressionsValueConverter}.

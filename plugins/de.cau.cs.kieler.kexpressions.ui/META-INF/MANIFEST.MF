@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Expressions UI Infrastructure
+Bundle-Vendor: Kiel University
+Bundle-Version: 0.5.2.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.kexpressions.ui;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.builder,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.antlr.runtime,
+ de.cau.cs.kieler.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.text.ui
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.core.kexpressions.text.ui.contentassist,
+ de.cau.cs.kieler.core.kexpressions.text.ui.quickfix,
+ de.cau.cs.kieler.core.kexpressions.ui,
+ de.cau.cs.kieler.core.kexpressions.ui.contentassist,
+ de.cau.cs.kieler.core.kexpressions.ui.contentassist.antlr,
+ de.cau.cs.kieler.core.kexpressions.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.core.kexpressions.ui.internal,
+ de.cau.cs.kieler.core.kexpressions.ui.labeling,
+ de.cau.cs.kieler.core.kexpressions.ui.outline,
+ de.cau.cs.kieler.core.kexpressions.ui.quickfix,
+ de.cau.cs.kieler.kexpressions.keffects.ui,
+ de.cau.cs.kieler.kexpressions.keffects.ui.contentassist,
+ de.cau.cs.kieler.kexpressions.keffects.ui.labeling,
+ de.cau.cs.kieler.kexpressions.keffects.ui.outline,
+ de.cau.cs.kieler.kexpressions.keffects.ui.quickfix
+Bundle-Activator: de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator

@@ -10,7 +10,7 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTFormatter;
+import de.cau.cs.kieler.kexpressions.text.formatting.KEXTFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 
 /**

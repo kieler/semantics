@@ -12,9 +12,9 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
-import de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.text.services.KEXTGrammarAccess;
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 

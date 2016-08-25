@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractActionsJavaValidator extends de.cau.cs.kieler.core.kexpressions.text.validation.KEXTJavaValidator {
+public class AbstractActionsJavaValidator extends de.cau.cs.kieler.kexpressions.text.validation.KEXTJavaValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {

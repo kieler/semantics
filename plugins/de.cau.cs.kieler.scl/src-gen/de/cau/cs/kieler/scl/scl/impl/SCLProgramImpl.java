@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 

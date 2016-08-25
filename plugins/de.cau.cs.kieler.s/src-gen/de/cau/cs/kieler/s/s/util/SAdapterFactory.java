@@ -3,9 +3,7 @@
 package de.cau.cs.kieler.s.s.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -174,7 +172,7 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createEffectAdapter();
       }
       @Override
-      public Adapter caseKEffects_Assignment(de.cau.cs.kieler.core.kexpressions.keffects.Assignment object)
+      public Adapter caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object)
       {
         return createKEffects_AssignmentAdapter();
       }
@@ -471,13 +469,13 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Effect <em>Effect</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.keffects.Effect
+   * @see de.cau.cs.kieler.kexpressions.keffects.Effect
    * @generated
    */
   public Adapter createEffectAdapter()
@@ -486,13 +484,13 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+   * @see de.cau.cs.kieler.kexpressions.keffects.Assignment
    * @generated
    */
   public Adapter createKEffects_AssignmentAdapter()
