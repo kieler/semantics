@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.annotations.Annotation;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 
@@ -33,7 +33,7 @@ public interface State extends EObject
 {
   /**
    * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.annotations.Annotation}.
+   * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,

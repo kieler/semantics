@@ -8,7 +8,7 @@ package de.cau.cs.kieler.kexpressions.ui.quickfix;
  *
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#quick-fixes
  */
-public class KExpressionsQuickfixProvider extends de.cau.cs.kieler.core.annotations.text.ui.quickfix.AnnotationsQuickfixProvider {
+public class KExpressionsQuickfixProvider extends de.cau.cs.kieler.annotations.ui.quickfix.AnnotationsQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
 //	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {

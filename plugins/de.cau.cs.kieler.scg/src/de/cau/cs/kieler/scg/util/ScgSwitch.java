@@ -13,8 +13,7 @@
  */
 package de.cau.cs.kieler.scg.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
+import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.scg.*;
 
 import org.eclipse.emf.ecore.EObject;

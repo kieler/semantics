@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.kexpressions.editor/src" modelPluginID="de.cau.cs.kieler.kexpressions"
     forceOverwrite="true" modelName="kext" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kexpressions.edit"
-    editorPluginID="de.cau.cs.kieler.kexpressions.editor" runtimeVersion="2.10" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations keffects.genmodel#//keffects kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.kexpressions.editor" runtimeVersion="2.10" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations keffects.genmodel#//keffects kexpressions.genmodel#//kexpressions">
   <genPackages prefix="KExt" basePackage="de.cau.cs.kieler.kexpressions" disposableProviderFactory="true"
       contentTypeIdentifier="" ecorePackage="kext.ecore#/">
     <genClasses ecoreClass="kext.ecore#//Kext">

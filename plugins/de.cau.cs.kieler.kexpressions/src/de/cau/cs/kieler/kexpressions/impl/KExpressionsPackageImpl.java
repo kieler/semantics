@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.CombineOperator;
 import de.cau.cs.kieler.kexpressions.Declaration;

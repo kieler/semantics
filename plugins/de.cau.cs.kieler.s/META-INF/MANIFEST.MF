@@ -22,11 +22,10 @@ Require-Bundle: org.eclipse.xtend.lib,
  org.eclipse.emf.common,
  org.antlr.runtime,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.core.annotations,
- de.cau.cs.kieler.core.annotations.text,
+ de.cau.cs.kieler.annotations,
  org.eclipse.xtend.lib,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.core.annotations.text.ui
+ de.cau.cs.kieler.annotations.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.s,

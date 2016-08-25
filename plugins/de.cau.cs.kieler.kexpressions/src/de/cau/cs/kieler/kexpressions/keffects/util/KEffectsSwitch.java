@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
+import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.TextExpression;

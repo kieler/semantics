@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.scg
 
-import static extension de.cau.cs.kieler.core.annotations.registry.AnnotationsRegistry.*
-import de.cau.cs.kieler.core.annotations.registry.AnnotationsType
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.Annotation
+import static extension de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.Annotation
 import org.eclipse.emf.ecore.EObject
 
 /**

@@ -17,7 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
 
-import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsHighlightingConfiguration;
+import de.cau.cs.kieler.annotations.ui.AnnotationsHighlightingConfiguration;
 
 /**
  *

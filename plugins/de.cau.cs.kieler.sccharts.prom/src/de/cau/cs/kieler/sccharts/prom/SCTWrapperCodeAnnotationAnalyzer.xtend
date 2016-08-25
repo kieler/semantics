@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation
-import de.cau.cs.kieler.core.annotations.FloatAnnotation
-import de.cau.cs.kieler.core.annotations.IntAnnotation
-import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.BooleanAnnotation
+import de.cau.cs.kieler.annotations.FloatAnnotation
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData

@@ -12,10 +12,10 @@ var runtimeProject = "../${projectName}"
 Workflow {
 	bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.genmodel"
 	}

@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
+import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.kexpressions.kext.*;
 
 import org.eclipse.emf.ecore.EObject;

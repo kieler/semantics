@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 
-public class AbstractKExpressionsJavaValidator extends de.cau.cs.kieler.core.annotations.text.validation.AnnotationsJavaValidator {
+public class AbstractKExpressionsJavaValidator extends de.cau.cs.kieler.annotations.validation.AnnotationsJavaValidator {
 
 	@Override
 	protected List<EPackage> getEPackages() {

@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.kexpressions.scoping;
 
-import de.cau.cs.kieler.core.annotations.text.scoping.AnnotationsScopeProvider;
+import de.cau.cs.kieler.annotations.scoping.AnnotationsScopeProvider;
 
 /**
  * This class contains custom scoping description.

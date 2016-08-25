@@ -14,7 +14,7 @@
  package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Join

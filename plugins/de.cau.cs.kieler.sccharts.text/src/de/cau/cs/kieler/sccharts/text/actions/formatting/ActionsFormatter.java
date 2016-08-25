@@ -9,7 +9,7 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
-import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
+import de.cau.cs.kieler.annotations.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.kexpressions.kext.formatting.KExtFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 

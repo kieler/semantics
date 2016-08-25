@@ -16,7 +16,7 @@ import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
-import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton

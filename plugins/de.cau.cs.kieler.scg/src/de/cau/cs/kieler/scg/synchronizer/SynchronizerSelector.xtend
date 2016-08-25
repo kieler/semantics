@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.synchronizer
 import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions

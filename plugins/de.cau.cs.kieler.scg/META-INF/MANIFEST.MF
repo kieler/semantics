@@ -10,7 +10,7 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.eclipse.emf.ecore;visibility:=reexport,
- de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.annotations;visibility:=reexport,
  de.cau.cs.kieler.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.scg;visibility:=reexport,
  org.eclipse.xtend.lib,

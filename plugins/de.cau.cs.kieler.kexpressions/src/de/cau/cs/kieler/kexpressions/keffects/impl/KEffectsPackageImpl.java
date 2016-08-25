@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;

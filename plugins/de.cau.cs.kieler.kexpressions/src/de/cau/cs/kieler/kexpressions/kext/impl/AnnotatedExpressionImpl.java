@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;

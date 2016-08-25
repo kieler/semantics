@@ -4,7 +4,7 @@
     modelDirectory="/de.cau.cs.kieler.sccharts/src" modelPluginID="de.cau.cs.kieler.sccharts"
     templateDirectory="de.cau.cs.kieler.sccharts/templates" dynamicTemplates="true"
     redirection="" modelName="SCCharts" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <foreignModel>sccharts.ecore</foreignModel>
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="kixs" ecorePackage="sccharts.ecore#/">

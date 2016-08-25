@@ -18,7 +18,7 @@ import com.google.inject.Binder
 import com.google.inject.Guice
 import com.google.inject.Module
 import com.google.inject.Scopes
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors

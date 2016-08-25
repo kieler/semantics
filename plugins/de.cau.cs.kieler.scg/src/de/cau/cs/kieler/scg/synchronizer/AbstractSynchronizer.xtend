@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scg.synchronizer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
