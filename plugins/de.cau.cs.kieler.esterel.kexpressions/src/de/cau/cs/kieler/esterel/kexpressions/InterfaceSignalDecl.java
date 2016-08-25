@@ -15,10 +15,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl#getSignals <em>Signals</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getInterfaceSignalDecl()
  * @model

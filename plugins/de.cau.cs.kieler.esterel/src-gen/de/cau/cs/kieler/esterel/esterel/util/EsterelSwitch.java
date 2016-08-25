@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 

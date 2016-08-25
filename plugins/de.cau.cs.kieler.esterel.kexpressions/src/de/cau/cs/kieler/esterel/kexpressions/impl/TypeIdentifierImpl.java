@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl#getTypeID <em>Type ID</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

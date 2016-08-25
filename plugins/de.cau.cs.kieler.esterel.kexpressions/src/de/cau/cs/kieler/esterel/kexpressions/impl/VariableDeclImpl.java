@@ -33,11 +33,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.VariableDeclImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.VariableDeclImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
