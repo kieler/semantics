@@ -20,10 +20,10 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.HostcodeEffectImpl#getText <em>Text</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

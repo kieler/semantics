@@ -17,4 +17,20 @@
             genModel="model/kexpressions.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated keffects -->
+      <package
+            uri="http://kieler.cs.cau.de/keffects/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
+            genModel="model/keffects.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated KEXT -->
+      <package
+            uri="http://kieler.cs.cau.de/kext/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.kext.KextPackage"
+            genModel="model/KEXT.genmodel"/>
+   </extension>
+
 </plugin>

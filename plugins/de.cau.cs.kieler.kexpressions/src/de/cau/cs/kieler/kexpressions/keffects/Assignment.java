@@ -14,13 +14,13 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Assignment#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getAssignment()
  * @model

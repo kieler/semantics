@@ -30,11 +30,11 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getFunctionName <em>Function Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.FunctionCallEffectImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -12,11 +12,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.Emission#getNewValue <em>New Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage#getEmission()
  * @model
