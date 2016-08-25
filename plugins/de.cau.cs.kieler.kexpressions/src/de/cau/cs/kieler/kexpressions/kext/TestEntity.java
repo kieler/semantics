@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.TestEntity#getExpression <em>Expression</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getTestEntity()
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getTestEntity()
  * @model
  * @generated
  */
@@ -34,7 +34,7 @@ public interface TestEntity extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Effect</em>' containment reference.
      * @see #setEffect(Effect)
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getTestEntity_Effect()
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getTestEntity_Effect()
      * @model containment="true"
      * @generated
      */
@@ -60,7 +60,7 @@ public interface TestEntity extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Expression</em>' containment reference.
      * @see #setExpression(AnnotatedExpression)
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getTestEntity_Expression()
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getTestEntity_Expression()
      * @model containment="true"
      * @generated
      */

@@ -21,17 +21,17 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage
  * @generated
  */
-public class KextSwitch<T> extends Switch<T> {
+public class KExtSwitch<T> extends Switch<T> {
     /**
      * The cached model package
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static KextPackage modelPackage;
+    protected static KExtPackage modelPackage;
 
     /**
      * Creates an instance of the switch.
@@ -39,9 +39,9 @@ public class KextSwitch<T> extends Switch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KextSwitch() {
+    public KExtSwitch() {
         if (modelPackage == null) {
-            modelPackage = KextPackage.eINSTANCE;
+            modelPackage = KExtPackage.eINSTANCE;
         }
     }
 
@@ -68,19 +68,19 @@ public class KextSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case KextPackage.KEXT: {
+            case KExtPackage.KEXT: {
                 Kext kext = (Kext)theEObject;
                 T result = caseKext(kext);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KextPackage.TEST_ENTITY: {
+            case KExtPackage.TEST_ENTITY: {
                 TestEntity testEntity = (TestEntity)theEObject;
                 T result = caseTestEntity(testEntity);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KextPackage.ANNOTATED_EXPRESSION: {
+            case KExtPackage.ANNOTATED_EXPRESSION: {
                 AnnotatedExpression annotatedExpression = (AnnotatedExpression)theEObject;
                 T result = caseAnnotatedExpression(annotatedExpression);
                 if (result == null) result = caseAnnotatable(annotatedExpression);
@@ -167,4 +167,4 @@ public class KextSwitch<T> extends Switch<T> {
         return null;
     }
 
-} //KextSwitch
+} //KExtSwitch

@@ -9,9 +9,9 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KExtFactory;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.KextFactory;
-import de.cau.cs.kieler.kexpressions.kext.KextPackage;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
 import org.eclipse.emf.ecore.EClass;
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class KextPackageImpl extends EPackageImpl implements KextPackage {
+public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -59,12 +59,12 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#eNS_URI
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#eNS_URI
      * @see #init()
      * @generated
      */
-    private KextPackageImpl() {
-        super(eNS_URI, KextFactory.eINSTANCE);
+    private KExtPackageImpl() {
+        super(eNS_URI, KExtFactory.eINSTANCE);
     }
 
     /**
@@ -77,7 +77,7 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
-     * <p>This method is used to initialize {@link KextPackage#eINSTANCE} when that field is accessed.
+     * <p>This method is used to initialize {@link KExtPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -86,11 +86,11 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
      * @see #initializePackageContents()
      * @generated
      */
-    public static KextPackage init() {
-        if (isInited) return (KextPackage)EPackage.Registry.INSTANCE.getEPackage(KextPackage.eNS_URI);
+    public static KExtPackage init() {
+        if (isInited) return (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
 
         // Obtain or create and register package
-        KextPackageImpl theKextPackage = (KextPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KextPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KextPackageImpl());
+        KExtPackageImpl theKExtPackage = (KExtPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExtPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExtPackageImpl());
 
         isInited = true;
 
@@ -98,18 +98,18 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
         KEffectsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
-        theKextPackage.createPackageContents();
+        theKExtPackage.createPackageContents();
 
         // Initialize created meta-data
-        theKextPackage.initializePackageContents();
+        theKExtPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
-        theKextPackage.freeze();
+        theKExtPackage.freeze();
 
   
         // Update the registry and return the package
-        EPackage.Registry.INSTANCE.put(KextPackage.eNS_URI, theKextPackage);
-        return theKextPackage;
+        EPackage.Registry.INSTANCE.put(KExtPackage.eNS_URI, theKExtPackage);
+        return theKExtPackage;
     }
 
     /**
@@ -189,8 +189,8 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KextFactory getKextFactory() {
-        return (KextFactory)getEFactoryInstance();
+    public KExtFactory getKExtFactory() {
+        return (KExtFactory)getEFactoryInstance();
     }
 
     /**
@@ -275,4 +275,4 @@ public class KextPackageImpl extends EPackageImpl implements KextPackage {
         createResource(eNS_URI);
     }
 
-} //KextPackageImpl
+} //KExtPackageImpl

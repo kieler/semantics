@@ -5,7 +5,7 @@ package de.cau.cs.kieler.kexpressions.kext.impl;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.kext.KextPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -68,7 +68,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
      */
     @Override
     protected EClass eStaticClass() {
-        return KextPackage.Literals.TEST_ENTITY;
+        return KExtPackage.Literals.TEST_ENTITY;
     }
 
     /**
@@ -89,7 +89,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
         Effect oldEffect = effect;
         effect = newEffect;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KextPackage.TEST_ENTITY__EFFECT, oldEffect, newEffect);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExtPackage.TEST_ENTITY__EFFECT, oldEffect, newEffect);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -104,14 +104,14 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
         if (newEffect != effect) {
             NotificationChain msgs = null;
             if (effect != null)
-                msgs = ((InternalEObject)effect).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KextPackage.TEST_ENTITY__EFFECT, null, msgs);
+                msgs = ((InternalEObject)effect).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExtPackage.TEST_ENTITY__EFFECT, null, msgs);
             if (newEffect != null)
-                msgs = ((InternalEObject)newEffect).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KextPackage.TEST_ENTITY__EFFECT, null, msgs);
+                msgs = ((InternalEObject)newEffect).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExtPackage.TEST_ENTITY__EFFECT, null, msgs);
             msgs = basicSetEffect(newEffect, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KextPackage.TEST_ENTITY__EFFECT, newEffect, newEffect));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.TEST_ENTITY__EFFECT, newEffect, newEffect));
     }
 
     /**
@@ -132,7 +132,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
         AnnotatedExpression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KextPackage.TEST_ENTITY__EXPRESSION, oldExpression, newExpression);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExtPackage.TEST_ENTITY__EXPRESSION, oldExpression, newExpression);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -147,14 +147,14 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KextPackage.TEST_ENTITY__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExtPackage.TEST_ENTITY__EXPRESSION, null, msgs);
             if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KextPackage.TEST_ENTITY__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExtPackage.TEST_ENTITY__EXPRESSION, null, msgs);
             msgs = basicSetExpression(newExpression, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KextPackage.TEST_ENTITY__EXPRESSION, newExpression, newExpression));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.TEST_ENTITY__EXPRESSION, newExpression, newExpression));
     }
 
     /**
@@ -165,9 +165,9 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KextPackage.TEST_ENTITY__EFFECT:
+            case KExtPackage.TEST_ENTITY__EFFECT:
                 return basicSetEffect(null, msgs);
-            case KextPackage.TEST_ENTITY__EXPRESSION:
+            case KExtPackage.TEST_ENTITY__EXPRESSION:
                 return basicSetExpression(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -181,9 +181,9 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KextPackage.TEST_ENTITY__EFFECT:
+            case KExtPackage.TEST_ENTITY__EFFECT:
                 return getEffect();
-            case KextPackage.TEST_ENTITY__EXPRESSION:
+            case KExtPackage.TEST_ENTITY__EXPRESSION:
                 return getExpression();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -197,10 +197,10 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KextPackage.TEST_ENTITY__EFFECT:
+            case KExtPackage.TEST_ENTITY__EFFECT:
                 setEffect((Effect)newValue);
                 return;
-            case KextPackage.TEST_ENTITY__EXPRESSION:
+            case KExtPackage.TEST_ENTITY__EXPRESSION:
                 setExpression((AnnotatedExpression)newValue);
                 return;
         }
@@ -215,10 +215,10 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KextPackage.TEST_ENTITY__EFFECT:
+            case KExtPackage.TEST_ENTITY__EFFECT:
                 setEffect((Effect)null);
                 return;
-            case KextPackage.TEST_ENTITY__EXPRESSION:
+            case KExtPackage.TEST_ENTITY__EXPRESSION:
                 setExpression((AnnotatedExpression)null);
                 return;
         }
@@ -233,9 +233,9 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KextPackage.TEST_ENTITY__EFFECT:
+            case KExtPackage.TEST_ENTITY__EFFECT:
                 return effect != null;
-            case KextPackage.TEST_ENTITY__EXPRESSION:
+            case KExtPackage.TEST_ENTITY__EXPRESSION:
                 return expression != null;
         }
         return super.eIsSet(featureID);

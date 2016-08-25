@@ -23,5 +23,9 @@ Export-Package: de.cau.cs.kieler.kexpressions.ui.contentassist,
  de.cau.cs.kieler.kexpressions.keffects.ui.contentassist,
  de.cau.cs.kieler.kexpressions.keffects.ui.quickfix,
  de.cau.cs.kieler.kexpressions.keffects.ui.contentassist.antlr,
- de.cau.cs.kieler.kexpressions.keffects.ui.contentassist.antlr.internal
+ de.cau.cs.kieler.kexpressions.keffects.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.kexpressions.kext.ui.contentassist,
+ de.cau.cs.kieler.kexpressions.kext.ui.quickfix,
+ de.cau.cs.kieler.kexpressions.kext.ui.contentassist.antlr,
+ de.cau.cs.kieler.kexpressions.kext.ui.contentassist.antlr.internal
 Bundle-Activator: de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator

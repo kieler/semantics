@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.Kext#getEntities <em>Entities</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getKext()
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getKext()
  * @model
  * @generated
  */
@@ -36,7 +36,7 @@ public interface Kext extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getKext_Declarations()
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getKext_Declarations()
      * @model containment="true"
      * @generated
      */
@@ -52,7 +52,7 @@ public interface Kext extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Entities</em>' containment reference list.
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getKext_Entities()
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getKext_Entities()
      * @model containment="true"
      * @generated
      */

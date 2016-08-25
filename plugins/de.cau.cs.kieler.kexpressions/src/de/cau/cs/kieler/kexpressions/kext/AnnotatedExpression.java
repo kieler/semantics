@@ -18,7 +18,7 @@ import de.cau.cs.kieler.kexpressions.Expression;
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression#getExpression <em>Expression</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getAnnotatedExpression()
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getAnnotatedExpression()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface AnnotatedExpression extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Expression</em>' containment reference.
      * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.kexpressions.kext.KextPackage#getAnnotatedExpression_Expression()
+     * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage#getAnnotatedExpression_Expression()
      * @model containment="true"
      * @generated
      */

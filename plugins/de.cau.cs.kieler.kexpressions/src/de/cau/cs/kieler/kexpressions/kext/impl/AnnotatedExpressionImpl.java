@@ -7,7 +7,7 @@ import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
-import de.cau.cs.kieler.kexpressions.kext.KextPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -57,7 +57,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
      */
     @Override
     protected EClass eStaticClass() {
-        return KextPackage.Literals.ANNOTATED_EXPRESSION;
+        return KExtPackage.Literals.ANNOTATED_EXPRESSION;
     }
 
     /**
@@ -78,7 +78,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
         Expression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KextPackage.ANNOTATED_EXPRESSION__EXPRESSION, oldExpression, newExpression);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION, oldExpression, newExpression);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -93,14 +93,14 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KextPackage.ANNOTATED_EXPRESSION__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION, null, msgs);
             if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KextPackage.ANNOTATED_EXPRESSION__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION, null, msgs);
             msgs = basicSetExpression(newExpression, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KextPackage.ANNOTATED_EXPRESSION__EXPRESSION, newExpression, newExpression));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION, newExpression, newExpression));
     }
 
     /**
@@ -111,7 +111,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KextPackage.ANNOTATED_EXPRESSION__EXPRESSION:
+            case KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION:
                 return basicSetExpression(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -125,7 +125,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KextPackage.ANNOTATED_EXPRESSION__EXPRESSION:
+            case KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION:
                 return getExpression();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -139,7 +139,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KextPackage.ANNOTATED_EXPRESSION__EXPRESSION:
+            case KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
         }
@@ -154,7 +154,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KextPackage.ANNOTATED_EXPRESSION__EXPRESSION:
+            case KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION:
                 setExpression((Expression)null);
                 return;
         }
@@ -169,7 +169,7 @@ public class AnnotatedExpressionImpl extends AnnotatableImpl implements Annotate
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KextPackage.ANNOTATED_EXPRESSION__EXPRESSION:
+            case KExtPackage.ANNOTATED_EXPRESSION__EXPRESSION:
                 return expression != null;
         }
         return super.eIsSet(featureID);

@@ -4,8 +4,8 @@ package de.cau.cs.kieler.kexpressions.kext.impl;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.KextPackage;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
 import java.util.Collection;
@@ -73,7 +73,7 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
      */
     @Override
     protected EClass eStaticClass() {
-        return KextPackage.Literals.KEXT;
+        return KExtPackage.Literals.KEXT;
     }
 
     /**
@@ -83,7 +83,7 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
      */
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
-            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KextPackage.KEXT__DECLARATIONS);
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExtPackage.KEXT__DECLARATIONS);
         }
         return declarations;
     }
@@ -95,7 +95,7 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
      */
     public EList<TestEntity> getEntities() {
         if (entities == null) {
-            entities = new EObjectContainmentEList<TestEntity>(TestEntity.class, this, KextPackage.KEXT__ENTITIES);
+            entities = new EObjectContainmentEList<TestEntity>(TestEntity.class, this, KExtPackage.KEXT__ENTITIES);
         }
         return entities;
     }
@@ -108,9 +108,9 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
+            case KExtPackage.KEXT__DECLARATIONS:
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
-            case KextPackage.KEXT__ENTITIES:
+            case KExtPackage.KEXT__ENTITIES:
                 return ((InternalEList<?>)getEntities()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -124,9 +124,9 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
+            case KExtPackage.KEXT__DECLARATIONS:
                 return getDeclarations();
-            case KextPackage.KEXT__ENTITIES:
+            case KExtPackage.KEXT__ENTITIES:
                 return getEntities();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -141,11 +141,11 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
+            case KExtPackage.KEXT__DECLARATIONS:
                 getDeclarations().clear();
                 getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
-            case KextPackage.KEXT__ENTITIES:
+            case KExtPackage.KEXT__ENTITIES:
                 getEntities().clear();
                 getEntities().addAll((Collection<? extends TestEntity>)newValue);
                 return;
@@ -161,10 +161,10 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
+            case KExtPackage.KEXT__DECLARATIONS:
                 getDeclarations().clear();
                 return;
-            case KextPackage.KEXT__ENTITIES:
+            case KExtPackage.KEXT__ENTITIES:
                 getEntities().clear();
                 return;
         }
@@ -179,9 +179,9 @@ public class KextImpl extends MinimalEObjectImpl.Container implements Kext {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KextPackage.KEXT__DECLARATIONS:
+            case KExtPackage.KEXT__DECLARATIONS:
                 return declarations != null && !declarations.isEmpty();
-            case KextPackage.KEXT__ENTITIES:
+            case KExtPackage.KEXT__ENTITIES:
                 return entities != null && !entities.isEmpty();
         }
         return super.eIsSet(featureID);

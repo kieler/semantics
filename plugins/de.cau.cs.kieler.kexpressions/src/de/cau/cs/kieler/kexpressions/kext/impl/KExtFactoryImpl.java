@@ -18,24 +18,24 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
+public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
     /**
      * Creates the default factory implementation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static KextFactory init() {
+    public static KExtFactory init() {
         try {
-            KextFactory theKextFactory = (KextFactory)EPackage.Registry.INSTANCE.getEFactory(KextPackage.eNS_URI);
-            if (theKextFactory != null) {
-                return theKextFactory;
+            KExtFactory theKExtFactory = (KExtFactory)EPackage.Registry.INSTANCE.getEFactory(KExtPackage.eNS_URI);
+            if (theKExtFactory != null) {
+                return theKExtFactory;
             }
         }
         catch (Exception exception) {
             EcorePlugin.INSTANCE.log(exception);
         }
-        return new KextFactoryImpl();
+        return new KExtFactoryImpl();
     }
 
     /**
@@ -44,7 +44,7 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KextFactoryImpl() {
+    public KExtFactoryImpl() {
         super();
     }
 
@@ -56,9 +56,9 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KextPackage.KEXT: return createKext();
-            case KextPackage.TEST_ENTITY: return createTestEntity();
-            case KextPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
+            case KExtPackage.KEXT: return createKext();
+            case KExtPackage.TEST_ENTITY: return createTestEntity();
+            case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -99,8 +99,8 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KextPackage getKextPackage() {
-        return (KextPackage)getEPackage();
+    public KExtPackage getKExtPackage() {
+        return (KExtPackage)getEPackage();
     }
 
     /**
@@ -110,8 +110,8 @@ public class KextFactoryImpl extends EFactoryImpl implements KextFactory {
      * @generated
      */
     @Deprecated
-    public static KextPackage getPackage() {
-        return KextPackage.eINSTANCE;
+    public static KExtPackage getPackage() {
+        return KExtPackage.eINSTANCE;
     }
 
-} //KextFactoryImpl
+} //KExtFactoryImpl

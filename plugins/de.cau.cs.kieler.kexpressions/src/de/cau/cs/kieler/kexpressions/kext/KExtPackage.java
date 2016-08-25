@@ -19,11 +19,11 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.kexpressions.kext.KextFactory
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtFactory
  * @model kind="package"
  * @generated
  */
-public interface KextPackage extends EPackage {
+public interface KExtPackage extends EPackage {
     /**
      * The package name.
      * <!-- begin-user-doc -->
@@ -54,14 +54,14 @@ public interface KextPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    KextPackage eINSTANCE = de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl.init();
+    KExtPackage eINSTANCE = de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl.init();
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KextImpl <em>Kext</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
-     * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getKext()
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKext()
      * @generated
      */
     int KEXT = 0;
@@ -98,7 +98,7 @@ public interface KextPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.kexpressions.kext.impl.TestEntityImpl
-     * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getTestEntity()
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getTestEntity()
      * @generated
      */
     int TEST_ENTITY = 1;
@@ -135,7 +135,7 @@ public interface KextPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.kexpressions.kext.impl.AnnotatedExpressionImpl
-     * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getAnnotatedExpression()
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getAnnotatedExpression()
      * @generated
      */
     int ANNOTATED_EXPRESSION = 2;
@@ -260,7 +260,7 @@ public interface KextPackage extends EPackage {
      * @return the factory that creates the instances of the model.
      * @generated
      */
-    KextFactory getKextFactory();
+    KExtFactory getKExtFactory();
 
     /**
      * <!-- begin-user-doc -->
@@ -280,7 +280,7 @@ public interface KextPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.kexpressions.kext.impl.KextImpl
-         * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getKext()
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getKext()
          * @generated
          */
         EClass KEXT = eINSTANCE.getKext();
@@ -306,7 +306,7 @@ public interface KextPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.kexpressions.kext.impl.TestEntityImpl
-         * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getTestEntity()
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getTestEntity()
          * @generated
          */
         EClass TEST_ENTITY = eINSTANCE.getTestEntity();
@@ -332,7 +332,7 @@ public interface KextPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.kexpressions.kext.impl.AnnotatedExpressionImpl
-         * @see de.cau.cs.kieler.kexpressions.kext.impl.KextPackageImpl#getAnnotatedExpression()
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getAnnotatedExpression()
          * @generated
          */
         EClass ANNOTATED_EXPRESSION = eINSTANCE.getAnnotatedExpression();
@@ -347,4 +347,4 @@ public interface KextPackage extends EPackage {
 
     }
 
-} //KextPackage
+} //KExtPackage

@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage
  * @generated
  */
-public interface KextFactory extends EFactory {
+public interface KExtFactory extends EFactory {
     /**
      * The singleton instance of the factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    KextFactory eINSTANCE = de.cau.cs.kieler.kexpressions.kext.impl.KextFactoryImpl.init();
+    KExtFactory eINSTANCE = de.cau.cs.kieler.kexpressions.kext.impl.KExtFactoryImpl.init();
 
     /**
      * Returns a new object of class '<em>Kext</em>'.
@@ -55,6 +55,6 @@ public interface KextFactory extends EFactory {
      * @return the package supported by this factory.
      * @generated
      */
-    KextPackage getKextPackage();
+    KExtPackage getKExtPackage();
 
-} //KextFactory
+} //KExtFactory

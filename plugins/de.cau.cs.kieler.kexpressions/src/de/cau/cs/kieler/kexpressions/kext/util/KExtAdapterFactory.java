@@ -18,17 +18,17 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.kexpressions.kext.KextPackage
+ * @see de.cau.cs.kieler.kexpressions.kext.KExtPackage
  * @generated
  */
-public class KextAdapterFactory extends AdapterFactoryImpl {
+public class KExtAdapterFactory extends AdapterFactoryImpl {
     /**
      * The cached model package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static KextPackage modelPackage;
+    protected static KExtPackage modelPackage;
 
     /**
      * Creates an instance of the adapter factory.
@@ -36,9 +36,9 @@ public class KextAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KextAdapterFactory() {
+    public KExtAdapterFactory() {
         if (modelPackage == null) {
-            modelPackage = KextPackage.eINSTANCE;
+            modelPackage = KExtPackage.eINSTANCE;
         }
     }
 
@@ -67,8 +67,8 @@ public class KextAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected KextSwitch<Adapter> modelSwitch =
-        new KextSwitch<Adapter>() {
+    protected KExtSwitch<Adapter> modelSwitch =
+        new KExtSwitch<Adapter>() {
             @Override
             public Adapter caseKext(Kext object) {
                 return createKextAdapter();
@@ -173,4 +173,4 @@ public class KextAdapterFactory extends AdapterFactoryImpl {
         return null;
     }
 
-} //KextAdapterFactory
+} //KExtAdapterFactory

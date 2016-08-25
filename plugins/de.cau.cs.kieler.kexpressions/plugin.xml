@@ -30,7 +30,15 @@
       <package
             uri="http://kieler.cs.cau.de/kext/0.1.0"
             class="de.cau.cs.kieler.kexpressions.kext.KextPackage"
-            genModel="model/KEXT.genmodel"/>
+            genModel="model/kext.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated kext -->
+      <package
+            uri="http://kieler.cs.cau.de/kext/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.kext.KExtPackage"
+            genModel="model/kext.genmodel"/>
    </extension>
 
 </plugin>
