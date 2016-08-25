@@ -23,16 +23,9 @@
     <module>de.cau.cs.kieler.circuit.kivi</module>
     <module>de.cau.cs.kieler.circuit.klighd</module>
     <module>de.cau.cs.kieler.core.annotations</module>
-    <module>de.cau.cs.kieler.core.annotations.edit</module>
     <module>de.cau.cs.kieler.core.annotations.text</module>
     <module>de.cau.cs.kieler.core.annotations.text.ui</module>
     <module>de.cau.cs.kieler.core.kexpressions</module>
-    <module>de.cau.cs.kieler.core.kexpressions.edit</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects.edit</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects.ui</module>
-    <module>de.cau.cs.kieler.core.kexpressions.text</module>
-    <module>de.cau.cs.kieler.core.kexpressions.text.ui</module>
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.perspectives</module> 
@@ -88,8 +81,6 @@
 	<module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scg.circuit</module>
-    <module>de.cau.cs.kieler.scg.edit</module>
-    <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>
