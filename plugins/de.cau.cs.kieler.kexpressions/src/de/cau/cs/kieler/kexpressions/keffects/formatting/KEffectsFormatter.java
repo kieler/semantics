@@ -26,7 +26,7 @@ public class KEffectsFormatter extends KExpressionsFormatter {
     
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess f = (de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess) getGrammarAccess();
+		de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess f = (de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess) getGrammarAccess();
 		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
 			c.setIndentation(pair.getFirst(), pair.getSecond());
 			c.setLinewrap(1).after(pair.getFirst());

@@ -18,14 +18,14 @@ package de.cau.cs.kieler.kexpressions;
  * 
  */
 public class KExpressionsRuntimeModule extends
-        de.cau.cs.kieler.core.kexpressions.AbstractKExpressionsRuntimeModule {
+        de.cau.cs.kieler.kexpressions.AbstractKExpressionsRuntimeModule {
 
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.kexpressions.formatting.KExpressionsValueConverter.class;
     }
     
     public Class<? extends de.cau.cs.kieler.kexpressions.validation.KExpressionsJavaValidator> bindKExpressionsJavaValidator() {
-            return de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidatorXtend.class;
+            return de.cau.cs.kieler.kexpressions.validation.KExpressionsJavaValidatorXtend.class;
     }    
 
 }

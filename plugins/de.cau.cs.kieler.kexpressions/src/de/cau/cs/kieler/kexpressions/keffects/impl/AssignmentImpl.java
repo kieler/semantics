@@ -2,6 +2,13 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -16,12 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,37 +41,37 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
  * @generated
  */
 public class AssignmentImpl extends EffectImpl implements Assignment {
-	/**
+    /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getValuedObject()
      * @generated
      * @ordered
      */
-	protected ValuedObject valuedObject;
+    protected ValuedObject valuedObject;
 
-	/**
+    /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getExpression()
      * @generated
      * @ordered
      */
-	protected Expression expression;
+    protected Expression expression;
 
-	/**
+    /**
      * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see #getIndices()
      * @generated
      * @ordered
      */
-	protected EList<Expression> indices;
+    protected EList<Expression> indices;
 
-	/**
+    /**
      * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -92,29 +93,29 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected AssignmentImpl() {
+    protected AssignmentImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	protected EClass eStaticClass() {
+    @Override
+    protected EClass eStaticClass() {
         return KEffectsPackage.Literals.ASSIGNMENT;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ValuedObject getValuedObject() {
+    public ValuedObject getValuedObject() {
         if (valuedObject != null && valuedObject.eIsProxy()) {
             InternalEObject oldValuedObject = (InternalEObject)valuedObject;
             valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
@@ -126,42 +127,42 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         return valuedObject;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public ValuedObject basicGetValuedObject() {
+    public ValuedObject basicGetValuedObject() {
         return valuedObject;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setValuedObject(ValuedObject newValuedObject) {
+    public void setValuedObject(ValuedObject newValuedObject) {
         ValuedObject oldValuedObject = valuedObject;
         valuedObject = newValuedObject;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public Expression getExpression() {
+    public Expression getExpression() {
         return expression;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
         Expression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
@@ -171,12 +172,12 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         return msgs;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setExpression(Expression newExpression) {
+    public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
@@ -190,19 +191,19 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
             eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Expression> getIndices() {
+    public EList<Expression> getIndices() {
         if (indices == null) {
             indices = new EObjectContainmentEList<Expression>(Expression.class, this, KEffectsPackage.ASSIGNMENT__INDICES);
         }
         return indices;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -225,11 +226,11 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
@@ -239,13 +240,13 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
@@ -260,14 +261,14 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         return super.eGet(featureID, resolve, coreType);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
@@ -286,13 +287,13 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         super.eSet(featureID, newValue);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public void eUnset(int featureID) {
+    @Override
+    public void eUnset(int featureID) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
@@ -310,13 +311,13 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         super.eUnset(featureID);
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	public boolean eIsSet(int featureID) {
+    @Override
+    public boolean eIsSet(int featureID) {
         switch (featureID) {
             case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT:
                 return valuedObject != null;

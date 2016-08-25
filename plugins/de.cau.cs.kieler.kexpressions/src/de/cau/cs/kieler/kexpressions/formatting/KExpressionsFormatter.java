@@ -20,7 +20,7 @@ import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Keyword;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 
 /**
  * This class contains custom formatting description.

@@ -1,7 +1,7 @@
 
 package de.cau.cs.kieler.kexpressions;
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetupGenerated;
+import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetupGenerated;
 
 /**
  * Initialization support for running Xtext languages 

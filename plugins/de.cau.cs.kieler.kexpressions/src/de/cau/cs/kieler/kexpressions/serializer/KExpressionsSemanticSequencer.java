@@ -6,8 +6,8 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEOb
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.kexpressions.serializer.AbstractKExpressionsSemanticSequencer;
-import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.serializer.AbstractKExpressionsSemanticSequencer;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;

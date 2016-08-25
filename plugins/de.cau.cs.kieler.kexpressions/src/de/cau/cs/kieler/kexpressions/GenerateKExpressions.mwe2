@@ -1,29 +1,29 @@
-module de.cau.cs.kieler.core.kexpressions.KExpressions
+module de.cau.cs.kieler.kexpressions.KExpressions
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/core/kexpressions/KExpressions.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext"
 var file.extensions = "expr"
-var projectName = "de.cau.cs.kieler.core.kexpressions"
+var projectName = "de.cau.cs.kieler.kexpressions"
 var runtimeProject = "../${projectName}"
 
 Workflow {
 	bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
-		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
 	}
 	
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}/src-gen"
+//		directory = "${runtimeProject}/src-gen"
 	}
 	
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}.ui/src-gen"
+//		directory = "${runtimeProject}.ui/src-gen"
 	}
 	
 	component = Generator {

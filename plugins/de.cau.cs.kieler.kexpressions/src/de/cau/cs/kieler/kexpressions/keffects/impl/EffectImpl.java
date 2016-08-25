@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.kexpressions.keffects.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
@@ -16,22 +17,22 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public class EffectImpl extends AnnotatableImpl implements Effect {
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected EffectImpl() {
+    protected EffectImpl() {
         super();
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	@Override
-	protected EClass eStaticClass() {
+    @Override
+    protected EClass eStaticClass() {
         return KEffectsPackage.Literals.EFFECT;
     }
 

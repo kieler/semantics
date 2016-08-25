@@ -3,5 +3,6 @@
  */
 package de.cau.cs.kieler.kexpressions.keffects.serializer;
 
+
 public class KEffectsSyntacticSequencer extends AbstractKEffectsSyntacticSequencer {
 }

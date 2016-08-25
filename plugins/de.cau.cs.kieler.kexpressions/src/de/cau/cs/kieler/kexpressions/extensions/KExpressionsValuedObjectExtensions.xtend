@@ -11,18 +11,18 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.kexpressions.extensions
+package de.cau.cs.kieler.kexpressions.extensions
 
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.List
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Expression
 import com.google.common.collect.ImmutableList
 
 /**
