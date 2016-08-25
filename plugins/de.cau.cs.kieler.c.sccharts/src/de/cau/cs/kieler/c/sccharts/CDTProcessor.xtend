@@ -880,6 +880,9 @@ class CDTProcessor {
                             val trans = scc.createTransition => [
                                 targetState = initVarState
                                 immediate = true
+                                if (parent.hasInnerStatesOrControlflowRegions) {
+                                    type = TransitionType::TERMINATION
+                                }
                                 parent.outgoingTransitions += it
                             ]
                             var entryAction = initVarState.createEntryAction
@@ -892,27 +895,30 @@ class CDTProcessor {
                         // Falls die Variablenzuweisung abhängig von einer anderen Variable ist...
                         if (childList.filter(typeof(CASTSimpleDeclSpecifier)) != []) {
                             // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
-                       if (parent.id.contains("_varInit")) {
-                           var entryAction = parent.createEntryAction
-                            entryAction.createAssignment(value, exp.createKExpression)
-                       } 
-                       // ... sonst separate state
-                       else {
-                            val initVarState = scc.createState => [ s |
-                                s.id = parent.id + "_varInit"
-                                s.label = createLabel(statement)
-            
-                                parent.parentRegion.states += s
-                            ]
-                            val trans = scc.createTransition => [
-                                targetState = initVarState
-                                immediate = true
-                                parent.outgoingTransitions += it
-                            ]
-                            var entryAction = initVarState.createEntryAction
-                            entryAction.createAssignment(value, exp.createKExpression)
-                            return initVarState 
-                            
+                            if (parent.id.contains("_varInit")) {
+                               var entryAction = parent.createEntryAction
+                                entryAction.createAssignment(value, exp.createKExpression)
+                            }
+                            // ... sonst separate state
+                            else {
+                                val initVarState = scc.createState => [ s |
+                                    s.id = parent.id + "_varInit"
+                                    s.label = createLabel(statement)
+                
+                                    parent.parentRegion.states += s
+                                ]
+                                val trans = scc.createTransition => [
+                                    targetState = initVarState
+                                    immediate = true
+                                    if (parent.hasInnerStatesOrControlflowRegions) {
+                                        type = TransitionType::TERMINATION
+                                    }
+                                    parent.outgoingTransitions += it
+                                ]
+                                var entryAction = initVarState.createEntryAction
+                                entryAction.createAssignment(value, exp.createKExpression)
+                                return initVarState 
+                                
                             }
                         }
                     }
@@ -1095,10 +1101,10 @@ class CDTProcessor {
                     val falseConnector = scc.createTransition => [
                         targetState = connectorState
                         immediate = true
-                        if (trueBody.hasInnerStatesOrControlflowRegions) {
-                            type = TransitionType::TERMINATION
-                        }
                     ]
+                    if (falseBody.hasInnerStatesOrControlflowRegions) {
+                        falseConnector.type = TransitionType::TERMINATION
+                    }
                     falseBody.outgoingTransitions += falseConnector
 //                }
             }
@@ -1170,6 +1176,7 @@ class CDTProcessor {
             s.label = "for"
             state.parentRegion.states += s
         ]
+        val saveID = forState.id
         
         // Region of forState. It contains all states of the for loop                 
         val forStateRegion = scc.createControlflowRegion => [ region |
@@ -1183,7 +1190,9 @@ class CDTProcessor {
             val initializationExp = f.initializerStatement as CASTDeclarationStatement
             initializationExp.castDeclaration(forState) // add declaration to function head
         } else {
+            forState.id = "_initFor"
             (f.initializerStatement as CASTExpressionStatement).transformExpression(forState)
+            forState.id = saveID
         }
 
         // Condition
@@ -1322,7 +1331,7 @@ class CDTProcessor {
         ]
         
         
-        if (state.id.contains("_binEx") && !state.id.contains("fallthrough")) {
+        if ((state.id.contains("_binEx") || state.id.contains("_varInit")) && !state.id.contains("fallthrough")) {
 //            // Combine last state and return statement.
 //            val entryact = state.createEntryAction
 //            entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
@@ -1402,7 +1411,6 @@ class CDTProcessor {
     var funcCallWithAssignment = false
     
     def State transformExpression(CASTExpressionStatement es, State state) {
-
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@7f6adc09
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTExpressionStatement@40941439
         // org.eclipse.cdt.internal.core.dom.parser.c.CASTBinaryExpression@39bbcb4e
@@ -1430,7 +1438,6 @@ class CDTProcessor {
                  */
                 functionCallAssignment.add(p)
             }
-            
             // If variable assignment happens right after the initial state of the function -> entry action parent state
             else if(state.id.contains("_initFuncState")) {
                 val entryact = state.parent.createEntryAction
@@ -1438,9 +1445,16 @@ class CDTProcessor {
                     exp.operand2.createKExpression)
                 return state
             }
-            // If variable assignments is follows by another variable assignment -> put them into one state
+            // If variable assignments is follows by another variable assignment / declaration -> put them into one state.
             // This does not apply to "fallthrough" switch states.
-            else if (state.id.contains("_binEx") && !state.id.contains("fallthrough")) {
+            else if ((state.id.contains("_binEx") || state.id.contains("_varInit")) && !state.id.contains("fallthrough")) {
+                val entryact = state.createEntryAction
+                entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
+                    exp.operand2.createKExpression)
+                return state
+            }
+            // If variable assignments is done for counter variable of for loop / declaration -> put them into one state.
+            else if (state.id.contains("_initFor")) {
                 val entryact = state.createEntryAction
                 entryact.createAssignment((exp.operand1 as CASTIdExpression).createVOReference.valuedObject,
                     exp.operand2.createKExpression)
@@ -1778,8 +1792,8 @@ class CDTProcessor {
      *   return false = create only a separate endState for each construct if necessary
      */
     private def boolean getExtraEndStateOption() {
-//        return false;
-        return true;
+        return false;
+//        return true;
     }
     
     // Creates the outgoing transition of a condState with the condition of the respective control structure.
