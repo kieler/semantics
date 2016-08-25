@@ -22,9 +22,8 @@
     <module>de.cau.cs.kieler.circuit</module>
     <module>de.cau.cs.kieler.circuit.kivi</module>
     <module>de.cau.cs.kieler.circuit.klighd</module>
-    <module>de.cau.cs.kieler.core.annotations</module>
-    <module>de.cau.cs.kieler.core.annotations.text</module>
-    <module>de.cau.cs.kieler.core.annotations.text.ui</module>
+    <module>de.cau.cs.kieler.annotations</module>
+    <module>de.cau.cs.kieler.annotations.ui</module>
     <module>de.cau.cs.kieler.kexpressions</module>
     <module>de.cau.cs.kieler.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
