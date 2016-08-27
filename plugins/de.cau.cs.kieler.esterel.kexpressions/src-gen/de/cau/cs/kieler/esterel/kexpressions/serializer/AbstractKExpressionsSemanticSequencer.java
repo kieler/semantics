@@ -4,15 +4,15 @@
 package de.cau.cs.kieler.esterel.kexpressions.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
-import de.cau.cs.kieler.core.annotations.CommentAnnotation;
-import de.cau.cs.kieler.core.annotations.FloatAnnotation;
-import de.cau.cs.kieler.core.annotations.IntAnnotation;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.annotations.CommentAnnotation;
+import de.cau.cs.kieler.annotations.FloatAnnotation;
+import de.cau.cs.kieler.annotations.IntAnnotation;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue;
 import de.cau.cs.kieler.esterel.kexpressions.ChannelDescription;
 import de.cau.cs.kieler.esterel.kexpressions.FloatValue;

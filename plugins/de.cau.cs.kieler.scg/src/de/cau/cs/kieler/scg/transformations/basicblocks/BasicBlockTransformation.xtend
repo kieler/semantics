@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.scg.transformations.basicblocks
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
@@ -42,10 +42,10 @@ import java.util.HashMap
 import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 

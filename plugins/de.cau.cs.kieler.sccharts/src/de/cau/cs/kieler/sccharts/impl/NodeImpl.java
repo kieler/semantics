@@ -13,8 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -30,11 +29,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getLabel <em>Label</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

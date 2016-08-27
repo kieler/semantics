@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.actions.ui;
 
-import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsAntlrTokenToAttributeIdMapper;
+import de.cau.cs.kieler.annotations.ui.AnnotationsAntlrTokenToAttributeIdMapper;
 
 /**
  * Custom {@link org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper}

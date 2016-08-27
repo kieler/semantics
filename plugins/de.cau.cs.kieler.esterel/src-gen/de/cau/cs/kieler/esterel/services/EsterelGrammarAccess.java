@@ -13,7 +13,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 import de.cau.cs.kieler.esterel.kexpressions.services.KExpressionsGrammarAccess;
-import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton

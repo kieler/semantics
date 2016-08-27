@@ -16,26 +16,26 @@ package de.cau.cs.kieler.sccharts.scg
 import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kico.KielerCompilerContext
@@ -579,12 +579,12 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
-            if (effect instanceof de.cau.cs.kieler.core.kexpressions.keffects.Assignment) {
+            if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
                 
                 assignment.operator = effect.operator
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
-                val sCChartAssignment = (effect as de.cau.cs.kieler.core.kexpressions.keffects.Assignment)
+                val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
                 if (sCChartAssignment.valuedObject != null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }

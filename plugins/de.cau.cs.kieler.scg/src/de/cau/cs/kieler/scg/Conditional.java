@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Expression;
 
 
 

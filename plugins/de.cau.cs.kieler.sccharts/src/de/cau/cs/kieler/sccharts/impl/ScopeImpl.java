@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -43,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
@@ -51,7 +50,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

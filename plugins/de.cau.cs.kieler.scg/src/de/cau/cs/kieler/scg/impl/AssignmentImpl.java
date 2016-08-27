@@ -2,12 +2,12 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -409,7 +409,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 default: return -1;
             }
         }
-        if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class) {
+        if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class) {
             switch (derivedFeatureID) {
                 case ScgPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
                 case ScgPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
@@ -433,7 +433,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 default: return -1;
             }
         }
-        if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class) {
+        if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class) {
             switch (baseFeatureID) {
                 case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return ScgPackage.ASSIGNMENT__VALUED_OBJECT;
                 case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.ASSIGNMENT__EXPRESSION;

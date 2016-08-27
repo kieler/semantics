@@ -19,7 +19,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.ScgFactory
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author ssm

@@ -13,11 +13,11 @@
 package de.cau.cs.kieler.sccharts.text.ui.sctgenerator.extensions
 
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value

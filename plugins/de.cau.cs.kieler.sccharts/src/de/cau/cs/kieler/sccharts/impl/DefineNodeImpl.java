@@ -13,10 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -40,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl#getOutputs <em>Outputs</em>}</li>
@@ -47,7 +47,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl#getExpressions <em>Expressions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl#getStates <em>States</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

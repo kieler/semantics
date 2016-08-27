@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.scg.Guard;
 
 /**
@@ -27,5 +27,6 @@ import de.cau.cs.kieler.scg.Guard;
  * @generated
  */
 public interface Guard extends Node, Assignment {
+
 
 } // Guard

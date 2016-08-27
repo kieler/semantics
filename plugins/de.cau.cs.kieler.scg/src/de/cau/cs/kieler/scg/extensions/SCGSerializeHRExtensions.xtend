@@ -1,11 +1,11 @@
 package de.cau.cs.kieler.scg.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.scg.Assignment
 import java.util.List
 
