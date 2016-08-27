@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -33,11 +31,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getFormal <em>Formal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getActual <em>Actual</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

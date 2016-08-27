@@ -13,13 +13,13 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
@@ -20,22 +16,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class InputImpl extends InterfaceSignalDeclImpl implements Input {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected InputImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.INPUT;
-	}
+        return KExpressionsPackage.Literals.INPUT;
+    }
 
 } //InputImpl

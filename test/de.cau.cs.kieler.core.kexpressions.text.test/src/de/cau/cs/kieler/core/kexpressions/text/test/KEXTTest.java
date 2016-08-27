@@ -24,16 +24,16 @@ import org.junit.runners.MethodSorters;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
-import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
-import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
-import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsFactory;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
@@ -68,13 +68,13 @@ public class KEXTTest {
      */
     @ModelCollectionTestRunner.ResourceSet
     public static ResourceSet getResourceSet() {
-        return new KEXTStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(
+        return new KExtStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(
                 XtextResourceSet.class);
     }
     
     @Test
     public void serialize(final EObject eObject, String expected) {
-        KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
+        KExtSerializeExtensions SE = Guice.createInjector().getInstance(KExtSerializeExtensions.class);
         TestEntity entity = (TestEntity) eObject;
         if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
             expected = expected.substring(11); 
@@ -124,7 +124,7 @@ public class KEXTTest {
     
     @Test
     public void serializeHumanReadable(final EObject eObject, String expected) {
-        KEXTSerializeExtensions SE = Guice.createInjector().getInstance(KEXTSerializeExtensions.class);
+        KExtSerializeExtensions SE = Guice.createInjector().getInstance(KExtSerializeExtensions.class);
         TestEntity entity = (TestEntity) eObject;
         if (entity.getExpression() != null && expected.startsWith(KEXT_EXPRESSION_KEYWORD)) {
                 expected = expected.substring(11); 

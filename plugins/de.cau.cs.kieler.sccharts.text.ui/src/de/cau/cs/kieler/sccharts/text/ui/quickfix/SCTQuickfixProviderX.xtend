@@ -20,8 +20,8 @@ import org.eclipse.xtext.ui.editor.model.edit.ISemanticModification
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 
 /**
  * @author ssm

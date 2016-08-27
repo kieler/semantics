@@ -35,13 +35,12 @@ import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.text.kext.KEXTScope;
-import de.cau.cs.kieler.core.kexpressions.text.kext.Kext;
-import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
+import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.StopOnFailure;
 
 /**
  * @author ssm

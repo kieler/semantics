@@ -39,29 +39,29 @@ package de.cau.cs.kieler.esterel.kexpressions;
  */
 public interface ValuedObjectReference extends ComplexExpression {
     /**
-	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Object</em>' reference.
-	 * @see #setValuedObject(ValuedObject)
-	 * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObjectReference_ValuedObject()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObjectReference_ValuedObject()
+     * @model required="true"
+     * @generated
+     */
     ValuedObject getValuedObject();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Valued Object</em>' reference.
-	 * @see #getValuedObject()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
+     * @generated
+     */
     void setValuedObject(ValuedObject value);
 
 } // ValuedObjectReference

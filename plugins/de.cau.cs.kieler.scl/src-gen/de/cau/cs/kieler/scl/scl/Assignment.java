@@ -13,5 +13,5 @@ package de.cau.cs.kieler.scl.scl;
  * @model
  * @generated
  */
-public interface Assignment extends de.cau.cs.kieler.core.kexpressions.keffects.Assignment, Instruction {
+public interface Assignment extends de.cau.cs.kieler.kexpressions.keffects.Assignment, Instruction {
 } // Assignment

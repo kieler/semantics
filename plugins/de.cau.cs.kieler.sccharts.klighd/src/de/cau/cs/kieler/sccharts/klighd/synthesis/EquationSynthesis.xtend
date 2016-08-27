@@ -15,20 +15,20 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import java.util.Set
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.EquationStyles
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.Value
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
@@ -38,8 +38,8 @@ import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 import de.cau.cs.kieler.kiml.options.PortLabelPlacement
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
@@ -47,7 +47,7 @@ import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.kiml.klayoutdata.KIdentifier
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author ssm
@@ -67,9 +67,6 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     
     @Inject
     extension KLabelExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions
     
     @Inject
     extension KExpressionsValueExtensions

@@ -41,29 +41,29 @@ package de.cau.cs.kieler.esterel.kexpressions;
  */
 public interface Variable extends ValuedObject {
     /**
-	 * Returns the value of the '<em><b>Const</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Const</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Const</em>' attribute.
-	 * @see #setConst(boolean)
-	 * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getVariable_Const()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Const</em>' attribute.
+     * @see #setConst(boolean)
+     * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getVariable_Const()
+     * @model required="true"
+     * @generated
+     */
     boolean isConst();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.Variable#isConst <em>Const</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.kexpressions.Variable#isConst <em>Const</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Const</em>' attribute.
-	 * @see #isConst()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Const</em>' attribute.
+     * @see #isConst()
+     * @generated
+     */
     void setConst(boolean value);
 
 } // Variable

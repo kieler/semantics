@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
@@ -20,22 +16,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class ReturnImpl extends InterfaceSignalDeclImpl implements Return {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ReturnImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.RETURN;
-	}
+        return KExpressionsPackage.Literals.RETURN;
+    }
 
 } //ReturnImpl

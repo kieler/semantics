@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.kexpressions.Identifiable;
-import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

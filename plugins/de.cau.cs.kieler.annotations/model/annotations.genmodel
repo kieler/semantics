@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&#xA;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xA;&#xA;Copyright 2010 by&#xA;+ Kiel University&#xA;  + Department of Computer Science&#xA;    + Real-Time and Embedded Systems Group&#xA;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xA;See the file epl-v10.html for the license text."
+    modelDirectory="/de.cau.cs.kieler.annotations/src" modelPluginID="de.cau.cs.kieler.annotations"
+    modelName="Annotations" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false">
+  <foreignModel>annotations.ecore</foreignModel>
+  <genPackages prefix="Annotations" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="annotations.ecore#/">
+    <genClasses image="false" ecoreClass="annotations.ecore#//NamedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//NamedObject/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="annotations.ecore#//Annotatable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference annotations.ecore#//Annotatable/annotations"/>
+      <genOperations ecoreOperation="annotations.ecore#//Annotatable/getAnnotation">
+        <genParameters ecoreParameter="annotations.ecore#//Annotatable/getAnnotation/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="annotations.ecore#//Annotatable/getAllAnnotations">
+        <genParameters ecoreParameter="annotations.ecore#//Annotatable/getAllAnnotations/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="annotations.ecore#//Annotatable/removeAllAnnotations">
+        <genParameters ecoreParameter="annotations.ecore#//Annotatable/removeAllAnnotations/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//Annotation"/>
+    <genClasses ecoreClass="annotations.ecore#//StringAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//StringAnnotation/values"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//ReferenceAnnotation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference annotations.ecore#//ReferenceAnnotation/object"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//BooleanAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//BooleanAnnotation/value"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//IntAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//IntAnnotation/value"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//FloatAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//FloatAnnotation/value"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//ContainmentAnnotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference annotations.ecore#//ContainmentAnnotation/object"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//ImportAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//ImportAnnotation/importURI"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//TypedStringAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//TypedStringAnnotation/type"/>
+    </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//CommentAnnotation"/>
+  </genPackages>
+</genmodel:GenModel>

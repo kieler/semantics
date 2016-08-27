@@ -14,24 +14,24 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AssignmentImpl extends de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
+public class AssignmentImpl extends de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AssignmentImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SclPackage.Literals.ASSIGNMENT;
-	}
+        return SclPackage.Literals.ASSIGNMENT;
+    }
 
 } //AssignmentImpl

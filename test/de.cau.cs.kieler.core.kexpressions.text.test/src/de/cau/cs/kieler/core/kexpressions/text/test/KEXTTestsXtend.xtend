@@ -25,25 +25,25 @@ import org.junit.runners.MethodSorters;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup;
-import de.cau.cs.kieler.core.kexpressions.text.extensions.KEXTSerializeExtensions;
-import de.cau.cs.kieler.core.kexpressions.text.kext.AnnotatedExpression;
-import de.cau.cs.kieler.core.kexpressions.text.kext.TestEntity;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsFactory;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
 import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath;
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 
 /**
  * JUnit Test Case for the KEXT
@@ -69,7 +69,7 @@ public class KEXTTestsXtend {
     public static val String KEXT_ALIAS_ANNOTATION = "alias"
     public static val String KEXT_EXPRESSION_KEYWORD = "expression"
     
-    private static val KEXTSerializeExtensions SE = Guice.createInjector().getInstance(typeof(KEXTSerializeExtensions))
+    private static val KExtSerializeExtensions SE = Guice.createInjector().getInstance(typeof(KExtSerializeExtensions))
     private static val AnnotationsExtensions AE = Guice.createInjector().getInstance(typeof(AnnotationsExtensions))
 
     /**
@@ -79,7 +79,7 @@ public class KEXTTestsXtend {
      */
     @ModelCollectionTestRunner.ResourceSet
     public static def ResourceSet getResourceSet() {
-        return new KEXTStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(typeof(XtextResourceSet))
+        return new KExtStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(typeof(XtextResourceSet))
     }
     
     @Test

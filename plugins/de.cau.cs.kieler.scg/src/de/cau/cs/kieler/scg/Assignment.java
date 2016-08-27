@@ -29,7 +29,7 @@ package de.cau.cs.kieler.scg;
  * @model
  * @generated
  */
-public interface Assignment extends Node, de.cau.cs.kieler.core.kexpressions.keffects.Assignment {
+public interface Assignment extends Node, de.cau.cs.kieler.kexpressions.keffects.Assignment {
     /**
      * Returns the value of the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->

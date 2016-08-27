@@ -717,7 +717,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"values",
                               		lv_values_8_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -791,7 +791,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"values",
                               		lv_values_11_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -842,7 +842,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"values",
                                       		lv_values_13_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -927,7 +927,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"values",
                               		lv_values_16_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -964,7 +964,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"values",
                               		lv_values_18_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -1038,7 +1038,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"values",
                               		lv_values_21_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -1422,7 +1422,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -1503,7 +1503,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"label",
                               		lv_label_3_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -1552,7 +1552,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"declarations",
             	              		lv_declarations_5_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -1921,7 +1921,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -2150,7 +2150,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"label",
                               		lv_label_7_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -2257,7 +2257,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"parameters",
                                       		lv_parameters_11_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -2313,7 +2313,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"parameters",
                             	              		lv_parameters_13_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -2393,7 +2393,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"declarations",
                     	              		lv_declarations_16_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
+                    	              		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -2807,7 +2807,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.RestrictedTypeAnnotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.RestrictedTypeAnnotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -3060,7 +3060,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                              			current, 
                                              			"delay",
                                               		lv_delay_7_0, 
-                                              		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
+                                              		"de.cau.cs.kieler.annotations.Annotations.INT");
                                       	    
                                     }
 
@@ -3097,7 +3097,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"trigger",
                                       		lv_trigger_8_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -3155,7 +3155,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"effects",
                                       		lv_effects_10_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                                      		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -3211,7 +3211,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"effects",
                             	              		lv_effects_12_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                            	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -3275,7 +3275,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"label",
                               		lv_label_14_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -3800,7 +3800,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -3858,7 +3858,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -3914,7 +3914,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_7_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -4130,7 +4130,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_4_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -4188,7 +4188,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -4244,7 +4244,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_8_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -4422,7 +4422,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -4480,7 +4480,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -4536,7 +4536,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_7_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -4784,7 +4784,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -4991,7 +4991,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_4_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5049,7 +5049,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5105,7 +5105,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_8_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -5283,7 +5283,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5341,7 +5341,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5397,7 +5397,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_7_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -5575,7 +5575,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"trigger",
                               		lv_trigger_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BoolExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.BoolExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5633,7 +5633,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effects",
                               		lv_effects_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -5689,7 +5689,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"effects",
                     	              		lv_effects_7_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                    	              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -6304,7 +6304,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_1_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -6396,7 +6396,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"label",
                               		lv_label_4_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -6445,7 +6445,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"declarations",
             	              		lv_declarations_6_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -6656,7 +6656,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_1_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -6748,7 +6748,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"label",
                               		lv_label_4_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -6797,7 +6797,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"declarations",
             	              		lv_declarations_6_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.DeclarationWOSemicolon");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7093,7 +7093,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"declarations",
             	              		lv_declarations_1_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Declaration");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7146,7 +7146,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"entities",
             	              		lv_entities_2_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.TestEntity");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.TestEntity");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7208,7 +7208,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"scopes",
             	              		lv_scopes_4_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Scope");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.Scope");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7410,7 +7410,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"declarations",
             	              		lv_declarations_3_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Declaration");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7463,7 +7463,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"entities",
             	              		lv_entities_4_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.TestEntity");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.TestEntity");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7525,7 +7525,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"scopes",
             	              		lv_scopes_6_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.Scope");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.Scope");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7660,7 +7660,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"expression",
                               		lv_expression_0_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.AnnotatedExpression");
+                              		"de.cau.cs.kieler.kexpressions.kext.KExt.AnnotatedExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -7701,7 +7701,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"effect",
                               		lv_effect_1_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.Effect");
+                              		"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -7833,7 +7833,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -7880,7 +7880,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"expression",
                       		lv_expression_2_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -8292,7 +8292,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -8556,7 +8556,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"type",
                               		lv_type_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValueType");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -8632,7 +8632,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"valuedObjects",
                       		lv_valuedObjects_8_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+                      		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -8688,7 +8688,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"valuedObjects",
             	              		lv_valuedObjects_10_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -8842,7 +8842,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9106,7 +9106,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"type",
                               		lv_type_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValueType");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -9182,7 +9182,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"valuedObjects",
                       		lv_valuedObjects_8_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+                      		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -9238,7 +9238,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"valuedObjects",
             	              		lv_valuedObjects_10_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9525,7 +9525,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9649,7 +9649,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"extern",
                               		lv_extern_4_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -9692,7 +9692,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"valuedObjects",
                       		lv_valuedObjects_5_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+                      		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -9748,7 +9748,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"valuedObjects",
             	              		lv_valuedObjects_7_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -9897,7 +9897,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10021,7 +10021,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"extern",
                               		lv_extern_4_0, 
-                              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                              		"de.cau.cs.kieler.annotations.Annotations.STRING");
                       	    
                     }
 
@@ -10064,7 +10064,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"valuedObjects",
                       		lv_valuedObjects_5_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+                      		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -10120,7 +10120,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"valuedObjects",
             	              		lv_valuedObjects_7_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.text.KEXT.ValuedObject");
+            	              		"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10266,7 +10266,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.QuotedStringAnnotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.QuotedStringAnnotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10307,7 +10307,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.PrimeID");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.PrimeID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -10359,7 +10359,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"cardinalities",
             	              		lv_cardinalities_3_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
+            	              		"de.cau.cs.kieler.annotations.Annotations.INT");
             	      	    
             	    }
 
@@ -10425,7 +10425,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"initialValue",
                               		lv_initialValue_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -10483,7 +10483,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"combineOperator",
                               		lv_combineOperator_8_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.CombineOperator");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.CombineOperator");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -10871,7 +10871,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.QuotedStringAnnotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.QuotedStringAnnotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -10968,7 +10968,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"newValue",
                               		lv_newValue_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -11114,7 +11114,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11215,7 +11215,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"indices",
             	              		lv_indices_3_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11265,7 +11265,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"operator",
                       		lv_operator_5_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.AssignOperator");
+                      		"de.cau.cs.kieler.kexpressions.keffects.KEffects.AssignOperator");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -11300,7 +11300,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"expression",
                       		lv_expression_6_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -11437,7 +11437,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11538,7 +11538,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"indices",
             	              		lv_indices_3_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11605,7 +11605,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subReference",
                               		lv_subReference_6_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -11646,7 +11646,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"operator",
                       		lv_operator_7_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.AssignOperator");
+                      		"de.cau.cs.kieler.kexpressions.keffects.KEffects.AssignOperator");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -11681,7 +11681,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"expression",
                       		lv_expression_8_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -11813,7 +11813,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11914,7 +11914,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"indices",
             	              		lv_indices_3_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -11964,7 +11964,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"operator",
                       		lv_operator_5_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.keffects.KEffects.PostfixOperator");
+                      		"de.cau.cs.kieler.kexpressions.keffects.KEffects.PostfixOperator");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -12091,7 +12091,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -12128,7 +12128,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"text",
                       		lv_text_1_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.HOSTCODE");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
               	    
             }
 
@@ -12261,7 +12261,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"annotations",
             	              		lv_annotations_0_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+            	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -12371,7 +12371,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"parameters",
                               		lv_parameters_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -12427,7 +12427,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"parameters",
                     	              		lv_parameters_5_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -12631,7 +12631,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"annotations",
                     	              		lv_annotations_0_0, 
-                    	              		"de.cau.cs.kieler.core.annotations.text.Annotations.Annotation");
+                    	              		"de.cau.cs.kieler.annotations.Annotations.Annotation");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -12741,7 +12741,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"parameters",
                                       		lv_parameters_4_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -12797,7 +12797,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"parameters",
                             	              		lv_parameters_6_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -12949,7 +12949,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"parameters",
                                       		lv_parameters_12_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -13005,7 +13005,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"parameters",
                             	              		lv_parameters_14_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -13467,7 +13467,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalOrOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalOrOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -13502,7 +13502,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalAndExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -13706,7 +13706,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.LogicalAndOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.LogicalAndOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -13741,7 +13741,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseOrExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -13945,7 +13945,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseOrOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseOrOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -13980,7 +13980,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseAndExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -14184,7 +14184,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.BitwiseAndOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.BitwiseAndOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -14219,7 +14219,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.CompareOperation");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperation");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -14403,7 +14403,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"operator",
                               		lv_operator_2_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.CompareOperator");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.CompareOperator");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -14438,7 +14438,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subExpressions",
                               		lv_subExpressions_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotOrValuedExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.NotOrValuedExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -14737,7 +14737,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"operator",
                               		lv_operator_1_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotOperator");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.NotOperator");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -14772,7 +14772,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subExpressions",
                               		lv_subExpressions_2_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.NotExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.NotExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -15083,7 +15083,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.AddOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.AddOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15118,7 +15118,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.SubExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15322,7 +15322,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.SubOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15357,7 +15357,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.MultExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.MultExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15561,7 +15561,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.MultOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.MultOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15596,7 +15596,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.DivExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.DivExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15800,7 +15800,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.DivOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.DivOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -15835,7 +15835,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ModExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.ModExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -16039,7 +16039,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"operator",
                     	              		lv_operator_2_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ModOperator");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.ModOperator");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -16074,7 +16074,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"subExpressions",
                     	              		lv_subExpressions_3_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.AtomicValuedExpression");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -16251,7 +16251,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"operator",
                               		lv_operator_1_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.SubOperator");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.SubOperator");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -16286,7 +16286,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subExpressions",
                               		lv_subExpressions_2_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.NegExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.NegExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -17016,7 +17016,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"operator",
                                       		lv_operator_1_1, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.PreOperator");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.PreOperator");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -17045,7 +17045,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"operator",
                                       		lv_operator_1_2, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValOperator");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.ValOperator");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -17092,7 +17092,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subExpressions",
                               		lv_subExpressions_3_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectTestExpression");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectTestExpression");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -17431,7 +17431,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"indices",
             	              		lv_indices_2_0, 
-            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -17498,7 +17498,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"subReference",
                               		lv_subReference_5_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.ValuedObjectReference");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -17693,7 +17693,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                              			current, 
                              			"parameters",
                               		lv_parameters_2_0, 
-                              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                       	        afterParserOrEnumRuleCall();
                       	    
                     }
@@ -17749,7 +17749,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                     	             			current, 
                     	             			"parameters",
                     	              		lv_parameters_4_0, 
-                    	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                    	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                     	      	        afterParserOrEnumRuleCall();
                     	      	    
                     	    }
@@ -18005,7 +18005,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"parameters",
                                       		lv_parameters_3_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -18061,7 +18061,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"parameters",
                             	              		lv_parameters_5_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -18210,7 +18210,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                                      			current, 
                                      			"parameters",
                                       		lv_parameters_11_0, 
-                                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                                      		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                               	        afterParserOrEnumRuleCall();
                               	    
                             }
@@ -18266,7 +18266,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                             	             			current, 
                             	             			"parameters",
                             	              		lv_parameters_13_0, 
-                            	              		"de.cau.cs.kieler.core.kexpressions.KExpressions.Parameter");
+                            	              		"de.cau.cs.kieler.kexpressions.KExpressions.Parameter");
                             	      	        afterParserOrEnumRuleCall();
                             	      	    
                             	    }
@@ -18517,7 +18517,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"expression",
                       		lv_expression_2_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.Expression");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -18623,7 +18623,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"text",
                       		lv_text_0_0, 
-                      		"de.cau.cs.kieler.core.kexpressions.KExpressions.HOSTCODE");
+                      		"de.cau.cs.kieler.kexpressions.KExpressions.HOSTCODE");
               	    
             }
 
@@ -18725,7 +18725,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.INT");
+                      		"de.cau.cs.kieler.annotations.Annotations.INT");
               	    
             }
 
@@ -18827,7 +18827,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.FLOAT");
+                      		"de.cau.cs.kieler.annotations.Annotations.FLOAT");
               	    
             }
 
@@ -18929,7 +18929,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.BOOLEAN");
+                      		"de.cau.cs.kieler.annotations.Annotations.BOOLEAN");
               	    
             }
 
@@ -19031,7 +19031,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
               	    
             }
 
@@ -19715,7 +19715,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_0_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.COMMENT_ANNOTATION");
+                      		"de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
               	    
             }
 
@@ -19832,7 +19832,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -19953,7 +19953,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20079,7 +20079,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20114,7 +20114,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_2_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20170,7 +20170,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -20305,7 +20305,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20340,7 +20340,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_2_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20396,7 +20396,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -20531,7 +20531,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20566,7 +20566,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_2_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20622,7 +20622,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -20761,7 +20761,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20802,7 +20802,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"type",
                       		lv_type_3_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20843,7 +20843,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_5_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -20899,7 +20899,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringAllTypes");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -21038,7 +21038,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21079,7 +21079,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"type",
                       		lv_type_3_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21120,7 +21120,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_5_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
+                      		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21176,7 +21176,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.EStringBoolean");
+            	              		"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -21309,7 +21309,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21340,7 +21340,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_2_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
               	    
             }
 
@@ -21391,7 +21391,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_4_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
             	      	    
             	    }
 
@@ -21527,7 +21527,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"name",
                       		lv_name_1_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21568,7 +21568,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"type",
                       		lv_type_3_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.ExtendedID");
+                      		"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               	        afterParserOrEnumRuleCall();
               	    
             }
@@ -21605,7 +21605,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"values",
                       		lv_values_5_0, 
-                      		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+                      		"de.cau.cs.kieler.annotations.Annotations.STRING");
               	    
             }
 
@@ -21656,7 +21656,7 @@ public class InternalSCTParser extends AbstractInternalAntlrParser {
             	             			current, 
             	             			"values",
             	              		lv_values_7_0, 
-            	              		"de.cau.cs.kieler.core.annotations.text.Annotations.STRING");
+            	              		"de.cau.cs.kieler.annotations.Annotations.STRING");
             	      	    
             	    }
 

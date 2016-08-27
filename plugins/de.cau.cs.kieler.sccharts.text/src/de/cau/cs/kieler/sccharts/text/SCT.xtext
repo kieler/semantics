@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.sccharts.text.SCT with de.cau.cs.kieler.core.kexpressions.text.KEXT
+grammar de.cau.cs.kieler.sccharts.text.SCT with de.cau.cs.kieler.kexpressions.kext.KExt
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
