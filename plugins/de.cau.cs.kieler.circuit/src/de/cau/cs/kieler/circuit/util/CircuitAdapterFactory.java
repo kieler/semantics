@@ -15,10 +15,9 @@
  */
 package de.cau.cs.kieler.circuit.util;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.circuit.*;
-
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.NamedObject;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -184,13 +183,13 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.Annotatable
+	 * @see de.cau.cs.kieler.annotations.Annotatable
 	 * @generated
 	 */
 	public Adapter createAnnotatableAdapter() {
@@ -198,13 +197,13 @@ public class CircuitAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.core.annotations.NamedObject
+	 * @see de.cau.cs.kieler.annotations.NamedObject
 	 * @generated
 	 */
 	public Adapter createNamedObjectAdapter() {

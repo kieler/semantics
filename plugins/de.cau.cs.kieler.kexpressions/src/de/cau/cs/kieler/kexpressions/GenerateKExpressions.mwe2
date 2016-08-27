@@ -1,0 +1,113 @@
+module de.cau.cs.kieler.kexpressions.KExpressions
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+
+var grammarURI = "classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext"
+var file.extensions = "expr"
+var projectName = "de.cau.cs.kieler.kexpressions"
+var runtimeProject = "../${projectName}"
+
+Workflow {
+	bean = StandaloneSetup {
+		platformUri = "${runtimeProject}/.."
+		registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
+	}
+	
+	component = DirectoryCleaner {
+//		directory = "${runtimeProject}/src-gen"
+	}
+	
+	component = DirectoryCleaner {
+//		directory = "${runtimeProject}.ui/src-gen"
+	}
+	
+	component = Generator {
+		pathRtProject = runtimeProject
+		pathUiProject = "${runtimeProject}.ui"
+		projectNameRt = projectName
+		projectNameUi = "${projectName}.ui"
+		
+		language = {
+			uri = grammarURI
+			fileExtensions = file.extensions
+			
+			// Java API to access grammar elements (required by several other fragments)
+			fragment = grammarAccess.GrammarAccessFragment {}
+			
+			// generates Java API for the generated EPackages			 
+			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" }			
+			
+			// the serialization component
+			// Old serializer			
+			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			// New Serializer 2.0
+			fragment = serializer.SerializerFragment {}
+			
+			// a custom ResourceFactory for use with EMF 
+			fragment = resourceFactory.ResourceFactoryFragment {
+				fileExtensions = file.extensions
+			}
+				
+			// the Antlr parser
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
+				options = {
+					classSplitting = true
+					backtrack = true
+				}
+			}
+			
+			// java-based API for validation 
+			fragment = validation.JavaValidatorFragment {
+            // composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+            // composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+//                composedCheck = "de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator"
+            }
+            
+			// scoping and exporting API
+			fragment = scoping.ImportURIScopingFragment {}
+            // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished
+			
+			// scoping and exporting API 
+
+			// fragment = scoping.ImportNamespacesScopingFragment {}
+			// fragment = exporting.QualifiedNamesFragment {}
+			
+			// formatter API 
+			fragment = ecore2xtext.FormatterFragment {}
+
+			// labeling API 
+			fragment = labeling.LabelProviderFragment {}
+
+			// outline API 
+			fragment = outline.OutlineTreeProviderFragment {}
+			fragment = outline.QuickOutlineFragment {}
+
+			// java-based API for content assistance 
+			fragment = contentAssist.JavaBasedContentAssistFragment {}
+			
+			// antlr parser generator tailored for content assist 
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
+				options = {
+					classSplitting = true
+					backtrack = true
+				}
+			}
+
+			// fragment = builder.BuilderIntegrationFragment {}
+
+			// project wizard (optional) 
+			// fragment = projectWizard.SimpleProjectWizardFragment {
+			//	generatorProjectName = "${projectName}.generator" 
+			//	modelFileExtension = file.extensions
+			// }
+			
+			// quickfix API 
+			fragment = quickfix.QuickfixProviderFragment {}			
+		}
+	}
+}

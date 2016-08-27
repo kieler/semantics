@@ -21,8 +21,7 @@
 <#-- Auxiliary macro to initialize an ultrasonic sensor if it is not yet initialized.
      This macro is not meant to be used in a model file. -->
 <#macro InitUltrasonicSensor port>
-        <#if !((initializedUltrasonicSensors![])?seq_contains(port))>
-        <#assign initializedUltrasonicSensors = (initializedUltrasonicSensors![]) + [port]>
+        <@singleton "ultrasonic_"+port>
         EV3UltrasonicSensor usSensor${port} = new EV3UltrasonicSensor(SensorPort.${port});
-        </#if>
+        </@>
 </#macro>

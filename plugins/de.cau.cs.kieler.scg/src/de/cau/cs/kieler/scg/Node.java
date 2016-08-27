@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.annotations.Annotatable;
 
 /**
  * <!-- begin-user-doc -->

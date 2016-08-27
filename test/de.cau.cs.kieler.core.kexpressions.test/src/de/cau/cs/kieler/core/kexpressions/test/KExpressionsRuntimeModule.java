@@ -19,7 +19,7 @@ package de.cau.cs.kieler.core.kexpressions.test;
  * 
  * @author cmot
  */
-public class KExpressionsRuntimeModule extends de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule {
+public class KExpressionsRuntimeModule extends de.cau.cs.kieler.kexpressions.KExpressionsRuntimeModule {
 	
 	// use a DummyScope with some declared dummy signals for testing
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {

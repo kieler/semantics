@@ -23,7 +23,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.text.sct.SctTransientValueService;
 

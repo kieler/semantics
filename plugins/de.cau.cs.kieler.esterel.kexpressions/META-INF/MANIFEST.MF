@@ -11,7 +11,7 @@ Export-Package: de.cau.cs.kieler.esterel.kexpressions,
  de.cau.cs.kieler.esterel.kexpressions.formatting,
  de.cau.cs.kieler.esterel.kexpressions.impl,
  de.cau.cs.kieler.esterel.kexpressions.util,
- de.cau.cs.kieler.esterel.kexpressions.services,
+ de.cau.cs.kieler.esterel.kexpressions.services, 
  de.cau.cs.kieler.esterel.kexpressions.serializer,
  de.cau.cs.kieler.esterel.kexpressions.parser.antlr,
  de.cau.cs.kieler.esterel.kexpressions.parser.antlr.internal,
@@ -26,7 +26,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.logging,
  org.eclipse.emf.mwe2.launch;bundle-version="1.0.0",
  org.antlr.runtime,
- de.cau.cs.kieler.core.annotations,
- de.cau.cs.kieler.core.annotations.text
+ de.cau.cs.kieler.annotations;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="1.2.15"

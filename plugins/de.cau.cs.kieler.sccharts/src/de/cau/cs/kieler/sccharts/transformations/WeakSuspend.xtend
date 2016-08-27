@@ -25,17 +25,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import java.util.ArrayList
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.HistoryType
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**

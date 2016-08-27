@@ -12,11 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import org.eclipse.core.resources.IProject
 
 /**
  * SCT Generator interface for generator extensions
@@ -79,4 +80,5 @@ interface ISCTGeneratorExtension extends ISCTGeneratorPropertyHolder {
      */
     def void onModelCreate(State rootState)
     
+    def void onSaveModel(State rootState, IProject project)
 }

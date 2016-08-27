@@ -18,15 +18,15 @@ import java.util.Set;
 
 import org.eclipse.xtext.validation.Check;
 
-import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.DoubleValue;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.IntValue;
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
+import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.DoubleValue;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.FloatValue;
+import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
@@ -66,6 +66,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
     
     public static final String STRONG_ABORT_WITH_LOW_PRIORITY = "Strong abort transition with lower priority than non-strong-abort transition";
+    public static final String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
     
     public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
     
@@ -80,7 +81,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Emission emission) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.kexpressions.keffects.Emission emission) {
         if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
             if (!declaration.isSignal()) {
@@ -97,7 +98,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
         if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
             if (declaration.isSignal()) {
@@ -205,7 +206,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkAssignmentToConst(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
+    public void checkAssignmentToConst(final de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
     	if (assignment.getValuedObject() != null) {
     		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
     		if (declaration.isConst()) {

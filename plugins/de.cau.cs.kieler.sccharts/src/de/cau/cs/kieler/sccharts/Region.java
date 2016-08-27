@@ -21,10 +21,10 @@ package de.cau.cs.kieler.sccharts;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion()
  * @model

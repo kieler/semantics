@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.InterfaceVariableDeclImpl#getVarDecls <em>Var Decls</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

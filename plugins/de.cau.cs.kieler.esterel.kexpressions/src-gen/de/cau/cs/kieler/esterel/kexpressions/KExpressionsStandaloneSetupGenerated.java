@@ -18,7 +18,7 @@ public class KExpressionsStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.core.annotations.text.AnnotationsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.annotations.AnnotationsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

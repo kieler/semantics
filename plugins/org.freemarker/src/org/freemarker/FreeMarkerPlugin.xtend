@@ -71,7 +71,8 @@ class FreeMarkerPlugin implements BundleActivator {
         configuration.locale = Locale.US;
         configuration.templateExceptionHandler = TemplateExceptionHandler.RETHROW_HANDLER
         configuration.whitespaceStripping = true
-        
+        configuration.setNumberFormat("0.##########")
+         
         // We want to load templates from files in the directory
         // as well as from simple strings.
         stringTemplateLoader = new StringTemplateLoader();        

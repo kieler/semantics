@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;

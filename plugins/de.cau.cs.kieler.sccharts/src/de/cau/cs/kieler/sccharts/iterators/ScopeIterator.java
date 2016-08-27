@@ -23,8 +23,8 @@ import org.eclipse.emf.common.util.AbstractTreeIterator;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;

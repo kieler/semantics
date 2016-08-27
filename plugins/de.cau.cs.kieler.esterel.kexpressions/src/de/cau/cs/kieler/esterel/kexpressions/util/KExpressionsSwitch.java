@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.esterel.kexpressions.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.kexpressions.*;
 
@@ -55,7 +55,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * Checks whether this is a switch for the given package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @parameter ePackage the package in question.
+     * @param ePackage the package in question.
      * @return whether this is a switch for the given package.
      * @generated
      */
@@ -650,7 +650,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseAnnotatable(Annotatable object) {
+    public T caseAnnotatable(de.cau.cs.kieler.annotations.Annotatable object) {
         return null;
     }
 
