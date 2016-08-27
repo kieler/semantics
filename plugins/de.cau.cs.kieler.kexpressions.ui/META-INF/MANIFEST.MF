@@ -40,4 +40,4 @@ Export-Package: de.cau.cs.kieler.kexpressions.keffects.ui,
  de.cau.cs.kieler.kexpressions.ui.labeling,
  de.cau.cs.kieler.kexpressions.ui.outline,
  de.cau.cs.kieler.kexpressions.ui.quickfix
-Bundle-Activator: de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator
+Bundle-Activator: de.cau.cs.kieler.kexpressions.ui.internal.KExpressionsActivator

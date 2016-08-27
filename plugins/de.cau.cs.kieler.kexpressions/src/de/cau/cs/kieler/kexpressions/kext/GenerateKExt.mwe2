@@ -43,21 +43,6 @@ Workflow {
 			// Java API to access grammar elements (required by several other fragments)
 			fragment = grammarAccess.GrammarAccessFragment {}
 
-			// generates Java API for the generated EPackages 
-			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel" }
-            // generates Java API for the generated EPackages 
-//            fragment = ecore.EcoreGeneratorFragment {
-//            // referencedGenModels = "uri to genmodel, uri to next genmodel"
-////             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
-////             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
-////                generateEdit = true
-//                genModel = "model/KEXT.genmodel"
-//                xmiModelDirectory = "${runtimeProject}/model"
-//                
-//            }
-			// the serialization component
-			// Old serializer			
-			//fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
 			// New Serializer 2.0
 			fragment = serializer.SerializerFragment {}
 

@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.core.kexpressions.text.related
+module de.cau.cs.kieler.kexpressions.kext.related
 
 
 Workflow {

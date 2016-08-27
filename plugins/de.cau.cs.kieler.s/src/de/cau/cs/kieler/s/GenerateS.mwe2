@@ -12,7 +12,6 @@ var runtimeProject = "../${projectName}"
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-//		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.KExpressionsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.kexpressions.kext.KExtPackage"
@@ -46,9 +45,6 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-			// referencedGenModels = "uri to genmodel, uri to next genmodel"
-//			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
-//			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 			}
 
 			// the serialization component

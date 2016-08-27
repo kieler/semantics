@@ -524,7 +524,7 @@ class SCCharts2STransformation {
 //          // first reset possible defined local (output) signals here
 //          for (signal : state.signals.filter(e | !e.isInput)) {
 //              val ssignal = SFactory::eINSTANCE.createLocalSignal();
-//              val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal;
+//              val sSignal = TraceComponent::getSingleTraceTarget(signal, "Signal") as de.cau.cs.kieler.kexpressions.Signal;
 //              ssignal.setSignal(sSignal);
 //              sState.instructions.add(ssignal);
 //          }
