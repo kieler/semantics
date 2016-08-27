@@ -14,14 +14,14 @@
 package de.cau.cs.kieler.scg.transformations.sequentializer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.transformations.synchronizer.SynchronizerData
 
 /** 

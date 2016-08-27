@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -84,7 +84,7 @@ public interface Program extends Annotatable
 
   /**
    * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,

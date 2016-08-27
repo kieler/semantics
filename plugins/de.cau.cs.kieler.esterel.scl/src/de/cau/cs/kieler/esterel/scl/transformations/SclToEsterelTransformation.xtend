@@ -17,7 +17,7 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
@@ -31,7 +31,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
-import de.cau.cs.kieler.core.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
@@ -45,8 +45,8 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import org.eclipse.emf.ecore.util.EObjectEList
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import java.util.List
 
 /**
@@ -408,25 +408,25 @@ class SclToEsterelTransformation {
      * Expression transformation
      * cond signalizes if a conditional is transformed and no val operator should be used
      */
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.BoolValue exp) {
+    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.kexpressions.BoolValue exp) {
         EsterelFactory::eINSTANCE.createConstantExpression => [
             value = Boolean.toString(exp.value)
         ]
     }
 
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.IntValue exp) {
+    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.kexpressions.IntValue exp) {
         EsterelFactory::eINSTANCE.createConstantExpression => [
             value = Integer.toString(exp.value)
         ]
     }
 
-    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.core.kexpressions.FloatValue exp) {
+    def dispatch ConstantExpression transformExp(de.cau.cs.kieler.kexpressions.FloatValue exp) {
         EsterelFactory::eINSTANCE.createConstantExpression => [
             value = Float.toString(exp.value)
         ]
     }
 
-    def dispatch Expression transformExp(de.cau.cs.kieler.core.kexpressions.ValuedObjectReference exp) {
+    def dispatch Expression transformExp(de.cau.cs.kieler.kexpressions.ValuedObjectReference exp) {
         return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = OperatorType::VAL
             subExpressions += KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -435,7 +435,7 @@ class SclToEsterelTransformation {
         ]
     }
 
-    def dispatch OperatorExpression transformExp(de.cau.cs.kieler.core.kexpressions.OperatorExpression exp) {
+    def dispatch OperatorExpression transformExp(de.cau.cs.kieler.kexpressions.OperatorExpression exp) {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = OperatorType::getByName(exp.operator.getName)
             for (subExp : exp.subExpressions) {

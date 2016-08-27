@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.ui
 
-import de.cau.cs.kieler.core.kexpressions.ui.KExpressionsHighlightingConfiguration
+import de.cau.cs.kieler.kexpressions.ui.KExpressionsHighlightingConfiguration
 
 /**
  * @author ssm

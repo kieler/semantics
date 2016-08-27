@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
+import de.cau.cs.kieler.kexpressions.KExpressionsRuntimeModule
 import com.google.inject.Singleton
 import org.eclipse.xtext.scoping.IScopeProvider
 

@@ -2,17 +2,17 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator;
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.s.s.Assignment;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -534,7 +534,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         default: return -1;
       }
     }
-    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class)
     {
       switch (derivedFeatureID)
       {
@@ -572,7 +572,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
         default: return -1;
       }
     }
-    if (baseClass == de.cau.cs.kieler.core.kexpressions.keffects.Assignment.class)
+    if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class)
     {
       switch (baseFeatureID)
       {

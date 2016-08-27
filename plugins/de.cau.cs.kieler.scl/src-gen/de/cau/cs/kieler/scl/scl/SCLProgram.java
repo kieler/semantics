@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,45 +25,50 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SCLProgram extends StatementSequence {
     /**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Name()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Name</em>' attribute.
+     * @see #setName(String)
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Name()
+     * @model
+     * @generated
+     */
     String getName();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.SCLProgram#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.SCLProgram#getName <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Name</em>' attribute.
+     * @see #getName()
+     * @generated
+     */
     void setName(String value);
 
     /**
-	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+=======
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+>>>>>>> ssm/scg
      * <p>
      * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declarations</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Declarations()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Declarations()
+     * @model containment="true"
+     * @generated
+     */
     EList<Declaration> getDeclarations();
 
 } // SCLProgram

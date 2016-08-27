@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.validation
 
-import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope

@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -70,7 +70,7 @@ public interface DataflowRegion extends Region {
 
     /**
      * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.keffects.Assignment}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Assignment}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,

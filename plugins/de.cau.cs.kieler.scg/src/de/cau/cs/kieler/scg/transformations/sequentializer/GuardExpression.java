@@ -16,8 +16,8 @@ package de.cau.cs.kieler.scg.transformations.sequentializer;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->

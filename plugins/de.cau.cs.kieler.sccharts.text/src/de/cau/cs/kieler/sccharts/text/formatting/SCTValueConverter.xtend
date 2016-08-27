@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.text.formatting
 
-import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter
+import de.cau.cs.kieler.kexpressions.kext.formatting.KExtValueConverter
 
 /**
  * @author ssm
  *
  */
-class SCTValueConverter extends KEXTValueConverter {
+class SCTValueConverter extends KExtValueConverter {
     
 }

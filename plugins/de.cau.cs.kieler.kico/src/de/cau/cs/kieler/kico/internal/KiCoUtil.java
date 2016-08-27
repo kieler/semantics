@@ -43,7 +43,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;

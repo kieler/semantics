@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->

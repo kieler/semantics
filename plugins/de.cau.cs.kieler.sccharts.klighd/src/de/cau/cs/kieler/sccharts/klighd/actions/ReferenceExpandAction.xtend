@@ -17,9 +17,9 @@ import de.cau.cs.kieler.klighd.IAction.ActionContext
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and

@@ -20,8 +20,8 @@ import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Declaration
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.TransitionType
 import com.google.inject.Singleton

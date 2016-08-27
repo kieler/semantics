@@ -22,9 +22,9 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2C;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;

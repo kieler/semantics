@@ -34,9 +34,8 @@ import java.util.logging.Logger
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
