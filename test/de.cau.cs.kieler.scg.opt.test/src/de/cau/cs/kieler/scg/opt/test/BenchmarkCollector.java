@@ -25,7 +25,7 @@ IJSONObjectDataComponent {
     public void initialize() throws KiemInitializationException {
     	wrote = false;
 		try {
-			fw = new FileWriter("/tmp/executiontimeresults.csv", true);
+			fw = new FileWriter("/tmp/executiontimeresults_rvcp_noneg.csv", true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

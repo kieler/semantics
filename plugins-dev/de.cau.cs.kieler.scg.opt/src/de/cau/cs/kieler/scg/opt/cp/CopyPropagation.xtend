@@ -111,7 +111,7 @@ class CopyPropagation extends AbstractProductionTransformation {
         /* BUILD ONE BIG FILTER */
         val relevantAssignments = one2oneAssignments.toList()
         relevantAssignments.addAll(preAssignments)
-        relevantAssignments.addAll(notAssignments)
+        //relevantAssignments.addAll(notAssignments) // Test for Prof. Dr. von Hanxleden
         relevantAssignments.addAll(condAssignments)
         relevantAssignments.addAll(constantAssignments);
         /* CHECK IF THE ASSIGNMENT IS ONLY ASSIGNED ONCE */

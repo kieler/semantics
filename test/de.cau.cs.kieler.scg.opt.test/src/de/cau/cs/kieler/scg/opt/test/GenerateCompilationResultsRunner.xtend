@@ -77,6 +77,7 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
 			var SCGraph seq=sequenzializedSCG(obj) 
 			endTime = System.nanoTime()
 			addResults(seq, modelName, "compile", endTime - startTime);
+			var seqCompSize = CompileAndBytecodeSize(seq);
 			// compile with feature
 			startTime = System.nanoTime()
 			var SCGraph cp=cp(seq)
@@ -257,5 +258,15 @@ class GenerateCompilationResultsRunner extends ModelCollectionTestRunner {
 	}
 	def private SCGraph rvcp(SCGraph obj) {
 		return cp(rv(obj)) 
+    }
+    def private int CompileAndBytecodeSize(SCGraph obj) {
+        var ArrayList<String> features=new ArrayList<String>() 
+        features.add("s.java") 
+        var KielerCompilerContext context=new KielerCompilerContext(features,new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),obj) 
+        context.setAdvancedSelect(false) 
+        var CompilationResult res=KielerCompiler.compile(context) 
+        var Object ret=res.getObject()
+        var tmp = ret;
+        return 0;
     }
 }
