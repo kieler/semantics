@@ -129,6 +129,8 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 val halt = state.createTransitionTo(haltState)
                 halt.setTypeTermination
                 haltState.createTransitionTo(haltState)
+                state.transformSurfaceDepth(targetRootState)
+                return
             }
         }
         if (numTransition == 0) { // && !state.isHierarchical
