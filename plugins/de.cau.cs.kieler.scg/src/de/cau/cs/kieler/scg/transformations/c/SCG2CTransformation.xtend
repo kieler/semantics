@@ -58,6 +58,9 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     public static val DEFAULT_INDENTATION = "  "
     public static val GUARD_TYPE = "char"
     public static val DEFAULT_PRE_PREFIX = "p"
+    
+    // ID, Tick function
+    protected val entryMapping = <String, String> newHashMap 
 
     override getId() {
         return SCGTransformations.SCG2C_ID
@@ -87,16 +90,23 @@ class SCG2CTransformation extends AbstractProductionTransformation {
 
     protected def addProgram(StringBuilder sb, SCGraph scg) {
         val tickStarts = scg.nodes.filter(Entry).toList
-        var suffixCounter = 0
+        var suffixCounter = 1
         var String functionSuffix
         val initSB = new StringBuilder
         val implSB = new StringBuilder
-        for (tickStart : tickStarts) {
-            if (tickStarts.size < 2) {
-                functionSuffix = ""
+        
+        entryMapping.clear
+        val mainEntry = scg.getStringAnnotationValue("main")
+        for(tickStart : tickStarts) {
+            if (tickStart.id.equals(mainEntry)) {
+                entryMapping.put(tickStart.id, "")
             } else {
-                functionSuffix = suffixCounter.toString
+                entryMapping.put(tickStart.id, suffixCounter.toString)
             }
+        }
+        
+        for (tickStart : tickStarts) {
+            functionSuffix = entryMapping.get(tickStart.id)
             tickStart.addTick(initSB, implSB, scg, functionSuffix)
             suffixCounter++
         }
