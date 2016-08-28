@@ -51,6 +51,14 @@ class KExpressionsValuedObjectExtensions {
             null
     }     
     
+    def asVariableDeclaration(EObject eObject) {
+        eObject as VariableDeclaration
+    }
+    
+    def asReferenceDeclaration(EObject eObject) {
+        eObject as ReferenceDeclaration
+    }
+    
     // Create a ValuedObjectReference to a valuedObject
     def ValuedObjectReference reference(ValuedObject valuedObject) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
