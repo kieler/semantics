@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.sccharts.text.sctgenerator.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.sccharts.Region
@@ -29,7 +29,7 @@ import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
 
 import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerator.*
 import org.eclipse.core.resources.IProject
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.SCCharts
 
 /**

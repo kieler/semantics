@@ -13,11 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.kexpressions.Identifiable;
-import de.cau.cs.kieler.core.kexpressions.Parameter;
-import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -134,7 +136,7 @@ public interface Scope extends Annotatable, DeclarationScope, Identifiable {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Parameter}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,

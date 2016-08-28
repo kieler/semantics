@@ -17,8 +17,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
-import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsSemanticHighlightingCalculator;
-import de.cau.cs.kieler.core.kexpressions.ui.KExpressionsSemanticHighlightingCalculator;
+import de.cau.cs.kieler.annotations.ui.AnnotationsSemanticHighlightingCalculator;
+import de.cau.cs.kieler.kexpressions.ui.KExpressionsSemanticHighlightingCalculator;
 
 /**
  * Custom {@link ISemanticHighlightingCalculator} contributing to the Actions editor.

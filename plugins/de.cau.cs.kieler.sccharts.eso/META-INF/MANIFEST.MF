@@ -9,6 +9,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model,
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.sccharts.text3
+ de.cau.cs.kieler.sccharts.text
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

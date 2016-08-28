@@ -9,18 +9,12 @@ import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.xtext.scoping.IScope
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.eclipse.xtext.resource.EObjectDescription
-import org.eclipse.xtext.naming.QualifiedName
-import java.util.Collections
-import org.eclipse.xtext.scoping.impl.SimpleScope
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
-import de.cau.cs.kieler.core.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 
 /**
  * This class contains custom scoping description.
@@ -29,7 +23,7 @@ import de.cau.cs.kieler.core.annotations.PragmaStringAnnotation
  * on how and when to use it.
  *
  */
-class SCTScopeProvider extends de.cau.cs.kieler.core.kexpressions.text.scoping.KEXTScopeProvider {
+class SCTScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
     
     @Inject extension SCChartsExtension
 

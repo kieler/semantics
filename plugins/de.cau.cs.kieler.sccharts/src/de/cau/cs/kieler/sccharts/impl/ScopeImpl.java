@@ -13,14 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.Identifiable;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.Parameter;
-import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.Parameter;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -424,7 +423,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
         if (baseClass == DeclarationScope.class) {
             switch (derivedFeatureID) {
-                case SCChartsPackage.SCOPE__DECLARATIONS: return KextPackage.DECLARATION_SCOPE__DECLARATIONS;
+                case SCChartsPackage.SCOPE__DECLARATIONS: return KExtPackage.DECLARATION_SCOPE__DECLARATIONS;
                 default: return -1;
             }
         }
@@ -446,7 +445,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
         if (baseClass == DeclarationScope.class) {
             switch (baseFeatureID) {
-                case KextPackage.DECLARATION_SCOPE__DECLARATIONS: return SCChartsPackage.SCOPE__DECLARATIONS;
+                case KExtPackage.DECLARATION_SCOPE__DECLARATIONS: return SCChartsPackage.SCOPE__DECLARATIONS;
                 default: return -1;
             }
         }

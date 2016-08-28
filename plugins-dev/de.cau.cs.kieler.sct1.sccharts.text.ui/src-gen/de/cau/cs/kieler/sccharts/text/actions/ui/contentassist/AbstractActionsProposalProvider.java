@@ -9,12 +9,20 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
 /**
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sct1.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/AbstractActionsProposalProvider.java
  * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.core.kexpressions.text.ui.contentassist.KEXTProposalProvider}.
+=======
+ * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider}.
+>>>>>>> ssm/scg:plugins/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/AbstractActionsProposalProvider.java
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
 @SuppressWarnings("all")
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sct1.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/AbstractActionsProposalProvider.java
 public class AbstractActionsProposalProvider extends de.cau.cs.kieler.core.kexpressions.text.ui.contentassist.KEXTProposalProvider {
+=======
+public class AbstractActionsProposalProvider extends de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider {
+>>>>>>> ssm/scg:plugins/de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/AbstractActionsProposalProvider.java
 		
 	public void completeTransition_Annotations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

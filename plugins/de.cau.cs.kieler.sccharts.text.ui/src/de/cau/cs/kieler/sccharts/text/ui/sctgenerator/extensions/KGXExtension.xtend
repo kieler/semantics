@@ -13,19 +13,19 @@
 package de.cau.cs.kieler.sccharts.text.ui.sctgenerator.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
+import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
-import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
-import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import java.io.IOException
 import org.eclipse.core.resources.IProject
 import org.eclipse.emf.common.util.URI

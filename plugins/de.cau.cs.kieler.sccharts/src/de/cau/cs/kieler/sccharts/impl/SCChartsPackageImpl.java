@@ -13,13 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
-
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
@@ -267,7 +264,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         isInited = true;
 
         // Initialize simple dependencies
-        KextPackage.eINSTANCE.eClass();
+        KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
@@ -982,7 +979,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
-        KextPackage theKextPackage = (KextPackage)EPackage.Registry.INSTANCE.getEPackage(KextPackage.eNS_URI);
+        KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1000,7 +997,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         defineNodeEClass.getESuperTypes().add(this.getNode());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        scopeEClass.getESuperTypes().add(theKextPackage.getDeclarationScope());
+        scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         scopeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         localActionEClass.getESuperTypes().add(this.getAction());
         entryActionEClass.getESuperTypes().add(this.getLocalAction());

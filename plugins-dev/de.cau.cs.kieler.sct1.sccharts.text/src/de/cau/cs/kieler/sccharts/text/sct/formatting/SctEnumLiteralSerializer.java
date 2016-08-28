@@ -23,7 +23,11 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import com.google.inject.Inject;
 
+<<<<<<< HEAD:plugins-dev/de.cau.cs.kieler.sct1.sccharts.text/src/de/cau/cs/kieler/sccharts/text/sct/formatting/SctEnumLiteralSerializer.java
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+=======
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+>>>>>>> ssm/scg:plugins/de.cau.cs.kieler.sccharts.text/src/de/cau/cs/kieler/sccharts/text/sct/formatting/SctEnumLiteralSerializer.java
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.text.sct.SctTransientValueService;
 

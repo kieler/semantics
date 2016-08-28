@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,19 +24,24 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface StatementScope extends StatementSequence, Instruction {
     /**
-	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+=======
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+>>>>>>> ssm/scg
      * <p>
      * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Declarations</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementScope_Declarations()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementScope_Declarations()
+     * @model containment="true"
+     * @generated
+     */
     EList<Declaration> getDeclarations();
 
 } // StatementScope

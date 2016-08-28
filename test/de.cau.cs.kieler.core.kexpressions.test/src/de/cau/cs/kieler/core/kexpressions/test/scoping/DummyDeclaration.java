@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
-import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.impl.VariableDeclarationImpl;
+import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl;
 
 /**
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy

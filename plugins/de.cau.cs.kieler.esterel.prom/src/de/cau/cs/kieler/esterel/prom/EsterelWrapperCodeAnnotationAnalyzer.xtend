@@ -28,7 +28,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
     }
     
     override getModelName(EObject model) {
-        if(model instanceof ProgramImpl){
+        if(model instanceof ProgramImpl){ 
             val modules = model.modules
             if (!modules.isEmpty)
                 return modules.get(0).name

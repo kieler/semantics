@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.eclipse.ui;resolution:=optional,
  de.cau.cs.kieler.core,
- de.cau.cs.kieler.core.annotations
+ de.cau.cs.kieler.annotations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico,

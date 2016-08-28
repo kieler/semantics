@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 
@@ -34,118 +33,118 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class StatementScopeImpl extends StatementSequenceImpl implements StatementScope {
     /**
-	 * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getDeclarations()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
     protected EList<Declaration> declarations;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected StatementScopeImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SclPackage.Literals.STATEMENT_SCOPE;
-	}
+        return SclPackage.Literals.STATEMENT_SCOPE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Declaration> getDeclarations() {
-		if (declarations == null) {
-			declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
-		}
-		return declarations;
-	}
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.STATEMENT_SCOPE__DECLARATIONS);
+        }
+        return declarations;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-				return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-				return getDeclarations();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return getDeclarations();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-				getDeclarations().clear();
-				getDeclarations().addAll((Collection<? extends Declaration>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-				getDeclarations().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
-				return declarations != null && !declarations.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SclPackage.STATEMENT_SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //StatementScopeImpl

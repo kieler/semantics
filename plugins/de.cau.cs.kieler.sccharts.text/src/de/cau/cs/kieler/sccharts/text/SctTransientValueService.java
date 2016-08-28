@@ -20,14 +20,14 @@ import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 import org.eclipse.xtext.util.Strings;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
-import de.cau.cs.kieler.core.kexpressions.CombineOperator;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.text.kext.KextPackage;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.impl.AnnotationImpl;
+import de.cau.cs.kieler.kexpressions.CombineOperator;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -58,7 +58,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
             return true;
         }
         // if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
-        if (feature == KextPackage.eINSTANCE.getDeclarationScope_Declarations()) {
+        if (feature == KExtPackage.eINSTANCE.getDeclarationScope_Declarations()) {
             // check all valuedObjects in order to prevent attempts to serialize trapdecls (kies)
             // && scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
             // && owner.eContainer() == null) {
@@ -194,7 +194,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 //        }
 
         // if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
-        if (feature == KextPackage.eINSTANCE.getDeclarationScope_Declarations()) {
+        if (feature == KExtPackage.eINSTANCE.getDeclarationScope_Declarations()) {
             if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
                     && owner.eContainer() == null) {
                 /* do not serialized the implicit 'tick' valuedObject! */

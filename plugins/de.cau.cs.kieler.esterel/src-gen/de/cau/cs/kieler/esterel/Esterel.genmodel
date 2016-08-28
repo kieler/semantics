@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.esterel.editor/src" modelPluginID="de.cau.cs.kieler.esterel"
     forceOverwrite="true" modelName="Esterel" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
-    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.11" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.esterel.editor" runtimeVersion="2.11" usedGenPackages="platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
       ecorePackage="Esterel.ecore#/">
     <genClasses ecoreClass="Esterel.ecore#//Program">

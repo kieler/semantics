@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->
