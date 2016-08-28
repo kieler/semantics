@@ -123,8 +123,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         
         val callRegion = state.createControlflowRegion("")
         val crInitial = callRegion.createInitialState(GENERATED_PREFIX + "init")
-//        val crFinal = callRegion.createFinalState(GENERATED_PREFIX + "final")
-        val crTransition = crInitial.createTransitionTo(crInitial) 
+        val crFinal = callRegion.createState(GENERATED_PREFIX + "do")
+        val crTransition = crInitial.createImmediateTransitionTo(crFinal)
+        crFinal.createTransitionTo(crInitial) 
         
         val crAction = KEffectsFactory.eINSTANCE.createReferenceCallEffect 
         crAction.valuedObject = rVO
