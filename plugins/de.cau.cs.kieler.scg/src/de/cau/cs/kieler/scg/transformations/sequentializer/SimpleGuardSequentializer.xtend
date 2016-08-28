@@ -132,7 +132,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
 //        ]
         
         for(entry : entryNodes) {
-            val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it ]
+            val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it id = entry.id ]
             val scheduledNodes = entry.getSchedule
             
             val AAMap = <Node, Node> newHashMap => [ put(entry, entryNode)]

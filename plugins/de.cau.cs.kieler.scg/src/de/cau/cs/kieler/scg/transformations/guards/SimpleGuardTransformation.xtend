@@ -125,7 +125,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
         val deadGuards = <Guard> newHashSet
-        val mainThreadEntries = <Assignment> newHashSet
+        val mainThreadEntries = <Assignment, String> newHashMap
         val mainThreadExits = <Assignment> newHashSet
 
         for(bb : scg.basicBlocks) {
@@ -157,7 +157,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
                     for(node : sb.nodes) {
                         if (node instanceof Entry)
                         if (node.incoming.filter(ControlFlow).empty) 
-                            mainThreadEntries += assignment
+                            mainThreadEntries.put(assignment, node.id)
                         if (node instanceof Exit)
                         if (node.next == null) 
                             mainThreadExits += assignment
@@ -223,8 +223,8 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		}
 		
 		// Add main thread entry and exit points
-		for(entry : mainThreadEntries) {
-		   val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it ]
+		for(entry : mainThreadEntries.keySet) {
+		   val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it id = mainThreadEntries.get(entry) ]
 // 		   entryNode.next = ScgFactory.eINSTANCE.createControlFlow => [ target = entry ]
            entryNode.createControlDependency(entry)
 		}

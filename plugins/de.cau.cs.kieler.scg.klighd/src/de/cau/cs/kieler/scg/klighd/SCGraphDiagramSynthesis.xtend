@@ -92,6 +92,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.SCGAnnotations
 import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 import com.google.common.collect.Multimap
+import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -384,6 +385,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     /** The root node */
     private KNode rootNode;
+    private String mainEntry
     
     private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
@@ -442,6 +444,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             rootNode = node
             isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
             isGuardSCG = scg.hasAnnotation(SCGFeatures::GUARDS_ID) 
+            mainEntry = scg.getStringAnnotationValue("main")
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
             if (topdown)
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
@@ -861,6 +864,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
+            
+            if (!entry.id.nullOrEmpty) {
+                val label = entry.id.createLabel(node).associateWith(entry).
+                    configureOutsideTopCenteredNodeLabel(entry.id, 7, KlighdConstants::DEFAULT_FONT_NAME)
+                 label.KRendering.foreground = "black".color
+                 node.setLayoutOption(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::outsideTopCenter)
+                 label.setLayoutOption(LayoutOptions::NODE_LABEL_PLACEMENT, null)
+                 if (entry.id.equals(mainEntry)) {
+                     label.KRendering.fontBold = true
+                 }
+            }
+            
+            
             // Add ports for control-flow routing.
             if (isGuardSCG) {
                 node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)

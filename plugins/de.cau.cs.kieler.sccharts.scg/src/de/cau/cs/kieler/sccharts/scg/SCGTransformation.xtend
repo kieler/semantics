@@ -310,7 +310,10 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for SCG generation finished (time elapsed: " + (time / 1000) + "s).")
 
-        rootStateEntry = sCGraph.addEntry.trace(rootState) => [setExit(sCGraph.addExit.trace(rootState))]
+        rootStateEntry = sCGraph.addEntry.trace(rootState) => [
+            id = rootState.id
+            setExit(sCGraph.addExit.trace(rootState))
+        ]
 
         rootState.transformSCGGenerateNodes(sCGraph)
         rootState.transformSCGConnectNodes(sCGraph)
@@ -373,6 +376,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         for(rs: sccharts.rootStates) {
             scg = rs.transform(context, scg)   
         }
+        
+        scg.createStringAnnotation("main", sccharts.rootStates.head.id)
+        
         scg
     }      
 
