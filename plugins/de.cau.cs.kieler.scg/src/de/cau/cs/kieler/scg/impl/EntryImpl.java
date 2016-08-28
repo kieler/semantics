@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getExit <em>Exit</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.EntryImpl#getMaster <em>Master</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,6 +50,16 @@ public class EntryImpl extends NodeImpl implements Entry {
      * @ordered
      */
     protected ControlFlow next;
+
+    /**
+     * The cached value of the '{@link #getMaster() <em>Master</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaster()
+     * @generated
+     * @ordered
+     */
+    protected Entry master;
 
     /**
      * <!-- begin-user-doc -->
@@ -177,6 +188,44 @@ public class EntryImpl extends NodeImpl implements Entry {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Entry getMaster() {
+        if (master != null && master.eIsProxy()) {
+            InternalEObject oldMaster = (InternalEObject)master;
+            master = (Entry)eResolveProxy(oldMaster);
+            if (master != oldMaster) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.ENTRY__MASTER, oldMaster, master));
+            }
+        }
+        return master;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Entry basicGetMaster() {
+        return master;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaster(Entry newMaster) {
+        Entry oldMaster = master;
+        master = newMaster;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ENTRY__MASTER, oldMaster, master));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -217,6 +266,9 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return basicGetExit();
             case ScgPackage.ENTRY__NEXT:
                 return getNext();
+            case ScgPackage.ENTRY__MASTER:
+                if (resolve) return getMaster();
+                return basicGetMaster();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -234,6 +286,9 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return;
             case ScgPackage.ENTRY__NEXT:
                 setNext((ControlFlow)newValue);
+                return;
+            case ScgPackage.ENTRY__MASTER:
+                setMaster((Entry)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -253,6 +308,9 @@ public class EntryImpl extends NodeImpl implements Entry {
             case ScgPackage.ENTRY__NEXT:
                 setNext((ControlFlow)null);
                 return;
+            case ScgPackage.ENTRY__MASTER:
+                setMaster((Entry)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -269,6 +327,8 @@ public class EntryImpl extends NodeImpl implements Entry {
                 return exit != null;
             case ScgPackage.ENTRY__NEXT:
                 return next != null;
+            case ScgPackage.ENTRY__MASTER:
+                return master != null;
         }
         return super.eIsSet(featureID);
     }

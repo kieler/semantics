@@ -59,6 +59,7 @@
         eOpposite="#//Exit/entry"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="master" eType="#//Entry"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Exit" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" lowerBound="1" eType="#//Entry"

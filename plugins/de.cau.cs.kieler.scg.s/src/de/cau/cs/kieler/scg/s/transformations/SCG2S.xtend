@@ -150,9 +150,11 @@ class SCG2S extends AbstractProductionTransformation {
         ]
         val instructionCache = <Instruction>newLinkedList
 
-        nodeList += scg.nodes.head
-        nodeInstructionMap.put(scg.nodes.head, instructionCache)
-
+//        nodeList += scg.nodes.head
+//        nodeInstructionMap.put(scg.nodes.head, instructionCache)
+        nodeList += scg.nodes.filter[ incoming.size == 0 ].head
+        nodeInstructionMap.put(nodeList.head, instructionCache)
+        
         while (!nodeList.empty) {
             val node = nodeList.head
             val instructionList = nodeInstructionMap.get(node)

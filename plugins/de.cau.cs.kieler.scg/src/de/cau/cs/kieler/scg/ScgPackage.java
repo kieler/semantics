@@ -746,13 +746,22 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
+     * The feature id for the '<em><b>Master</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__MASTER = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Entry</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
@@ -1797,6 +1806,17 @@ public interface ScgPackage extends EPackage {
 	EReference getEntry_Next();
 
 	/**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Entry#getMaster <em>Master</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Master</em>'.
+     * @see de.cau.cs.kieler.scg.Entry#getMaster()
+     * @see #getEntry()
+     * @generated
+     */
+    EReference getEntry_Master();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Exit <em>Exit</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2455,6 +2475,14 @@ public interface ScgPackage extends EPackage {
 		EReference ENTRY__NEXT = eINSTANCE.getEntry_Next();
 
 		/**
+         * The meta object literal for the '<em><b>Master</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ENTRY__MASTER = eINSTANCE.getEntry_Master();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
