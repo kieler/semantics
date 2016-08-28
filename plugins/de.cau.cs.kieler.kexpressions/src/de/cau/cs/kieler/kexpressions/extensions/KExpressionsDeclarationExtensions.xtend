@@ -101,6 +101,7 @@ class KExpressionsDeclarationExtensions {
     def ReferenceDeclaration createReferenceDeclaration(ReferenceDeclaration declaration) {
         (createReferenceDeclaration as ReferenceDeclaration) => [
             reference = declaration.reference
+            extern = declaration.extern
         ]
     }
     

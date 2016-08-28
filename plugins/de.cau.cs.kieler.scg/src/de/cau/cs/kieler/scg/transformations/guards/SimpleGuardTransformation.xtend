@@ -110,7 +110,7 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
         	label = scg.label
-        	scg.copyAnnotations(it, <String> newHashSet("main"))
+        	scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
         creationalTransformation(scg,newSCG)

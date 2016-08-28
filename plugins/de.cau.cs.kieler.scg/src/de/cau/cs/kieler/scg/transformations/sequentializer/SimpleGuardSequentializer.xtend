@@ -107,7 +107,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
-            scg.copyAnnotations(it, <String> newHashSet("main"))
+            scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
         creationalTransformation(scg, newSCG)

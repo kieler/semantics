@@ -35,6 +35,13 @@ import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.
 import java.util.Stack
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import java.util.List
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author ssm
@@ -47,6 +54,8 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     @Inject extension AnnotationsExtensions
     @Inject extension SCG2CSerializeHRExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SCGDeclarationExtensions
     
     public static val TICK_LOGIC_FUNCTION_NAME = "tickLogic"
     public static val TICK_FUNCTION_NAME = "tick"
@@ -59,8 +68,10 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     public static val GUARD_TYPE = "char"
     public static val DEFAULT_PRE_PREFIX = "p"
     
-    // ID, Tick function
+    // ID, Tick function prefix
     protected val entryMapping = <String, String> newHashMap 
+    protected val VOCalleeMap = <ValuedObject, String> newHashMap
+    protected val parameterMapping = <String, List<String>> newHashMap 
 
     override getId() {
         return SCGTransformations.SCG2C_ID
@@ -96,6 +107,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         val implSB = new StringBuilder
         
         entryMapping.clear
+        parameterMapping.clear
         val mainEntry = scg.getStringAnnotationValue("main")
         for(tickStart : tickStarts) {
             if (tickStart.id.equals(mainEntry)) {
@@ -103,9 +115,24 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             } else {
                 entryMapping.put(tickStart.id, suffixCounter.toString)
             }
+            
+            val parameterList = <String> newArrayList
+            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickStart.id)]) {
+                parameterList += tsa.type
+            }
+            parameterMapping.put(tickStart.id, parameterList)
         }
         
-        for (tickStart : tickStarts) {
+        VOCalleeMap.clear
+        for(referenceDeclaration : scg.declarations.filter(ReferenceDeclaration)) {
+            val calleeTick = referenceDeclaration.extern
+            for(vo : referenceDeclaration.valuedObjects) {
+                VOCalleeMap.put(vo, calleeTick)            
+            }
+        }
+        
+        // TODO: Sort by actual references!
+        for (tickStart : tickStarts.sortBy[ it.id ]) {
             functionSuffix = entryMapping.get(tickStart.id)
             tickStart.addTick(initSB, implSB, scg, functionSuffix)
             suffixCounter++
@@ -121,6 +148,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         var Node node = tickEntry.next.target
         val tickLogicFunction = new StringBuilder
         val resetFunction = new StringBuilder
+        val resetCallee = new StringBuilder
         val tickFunction = new StringBuilder
         val tickStruct = new StringBuilder
         var String indent = DEFAULT_INDENTATION;
@@ -168,13 +196,48 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                         conditionalStack.push(conditional)
                         conditionalSet += conditional
                     }
-                }                
+                }      
                 
-                valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
-                tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
                 expression = node.expression
-                if (node.valuedObject != null) VOs += node.valuedObject
-                
+                if (expression instanceof ReferenceCall) {
+                    valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"                    
+                    val calleeDataStructName = TICK_LOCAL_DATA_NAME + "->" + expression.valuedObject.name
+                    
+                    val calleeTick = entryMapping.get(VOCalleeMap.get(expression.valuedObject))
+                    val calleePL = parameterMapping.get(VOCalleeMap.get(expression.valuedObject))
+                    for(var i = 0; i< calleePL.size; i++) {
+                        val vo = scg.findValuedObjectByName(calleePL.get(i))
+                        val declaration = vo.declaration
+                        if (declaration instanceof VariableDeclaration) {
+                            if (declaration.input) {
+                                var binding = calleeDataStructName + "." + vo.name + " = " + 
+                                    expression.parameters.get(i).expression.serializeHR
+                                tickLogicFunction.append(indent).append(binding).append(";\n")
+                            }                            
+                        }
+                    }
+                    
+                    tickLogicFunction.append(indent).append(TICK_LOGIC_FUNCTION_NAME).append(calleeTick).append("(&")
+                    tickLogicFunction.append(calleeDataStructName)
+                    tickLogicFunction.append(");\n")
+                    
+                    for(var i = 0; i< calleePL.size; i++) {
+                        val vo = scg.findValuedObjectByName(calleePL.get(i))
+                        val declaration = vo.declaration
+                        if (declaration instanceof VariableDeclaration) {
+                            if (declaration.output) {
+                                var binding = expression.parameters.get(i).expression.serializeHR
+                                    + " = " + 
+                                    calleeDataStructName + "." + vo.name                                 
+                                tickLogicFunction.append(indent).append(binding).append(";\n")
+                            }                            
+                        }
+                    }                    
+                } else {       
+                    valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
+                    tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
+                    VOs += node.valuedObject
+                }                
                 node = node.next?.target
             } else if (node instanceof Conditional) {
                 valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
@@ -197,9 +260,20 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             }
             
             for(vo : VOs.filter[ !VOSet.contains(it) ]) {
-                tickStruct.append(DEFAULT_INDENTATION).append(GUARD_TYPE).append(" ")
                 valuedObjectPrefix = ""
-                tickStruct.append(vo.serializeHR).append(";\n")
+                tickStruct.append(DEFAULT_INDENTATION)
+                if (vo.declaration instanceof ReferenceDeclaration) {
+                    val calleeTick = entryMapping.get(VOCalleeMap.get(vo))
+                    tickStruct.append(TICK_STRUCT_NAME + calleeTick)
+                    
+                    resetCallee.append(DEFAULT_INDENTATION)
+                    resetCallee.append(RESET_FUNCTION_NAME).append(calleeTick).append("(&")
+                    resetCallee.append(TICK_LOCAL_DATA_NAME + "->").append(vo.serializeHR)
+                    resetCallee.append(");\n")
+                } else {
+                    tickStruct.append(GUARD_TYPE)
+                }
+                tickStruct.append(" ").append(vo.serializeHR).append(";\n")
                 VOSet += vo
             }
             
@@ -219,6 +293,15 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         for(var i = 0; i < conditionalStack.size; i++) {
             indent = indent.substring(0, indent.length - 2)
             tickLogicFunction.append(indent).append("}\n")            
+        }
+        
+        for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(tickEntry.id)]) {
+            if (!VOSet.exists[ it.name.equals(tsa.type)]) {
+                valuedObjectPrefix = ""
+                tickStruct.append(DEFAULT_INDENTATION)
+                tickStruct.append(GUARD_TYPE)
+                tickStruct.append(" ").append(tsa.type).append(";\n")
+            }
         }
         
         
@@ -246,6 +329,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             tickFunction.append(pre.serializeHR).append(";\n")
         }                              
         
+        resetFunction.append("\n").append(resetCallee)
         
         tickLogicFunction.append("}\n");
         resetFunction.append("}\n");

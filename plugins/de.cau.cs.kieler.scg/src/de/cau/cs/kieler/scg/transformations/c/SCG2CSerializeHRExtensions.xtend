@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * @author ssm
@@ -78,5 +79,11 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
         val s = expression.subExpressions.head.serializeHR
         valuedObjectPrefix = prefix
         return s
-    }       
+    }  
+    
+    override dispatch CharSequence serialize(BoolValue expression) {
+        if(expression.value == true) return "1"
+        return "0"
+    }
+    
 }

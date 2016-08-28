@@ -1309,7 +1309,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(80f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULE) {
-            kContainer.addRoundedRectangle(1, 1, 7) => [
+            kContainer.addRoundedRectangle(1, 1, 2) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]

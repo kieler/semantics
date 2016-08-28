@@ -71,6 +71,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -275,8 +277,21 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 val newValuedObject = it.copy
                 newDeclaration.valuedObjects += newValuedObject
                 newValuedObject.map(it)
+                
+                if (declaration instanceof VariableDeclaration)
+                if (declaration.input || declaration.output) {
+                    sCGraph.annotations += createTypedStringAnnotation("voLink", it.name, rootState.id)
+                }
             ]
             sCGraph.declarations += newDeclaration
+            
+            if (newDeclaration instanceof ReferenceDeclaration) {
+                var reference = newDeclaration.reference
+                if (reference instanceof State) {
+                    newDeclaration.extern = reference.id
+                    newDeclaration.reference = null
+                }
+            }
         }
 
         val hostcodeAnnotations = state.getAnnotations(ANNOTATION_HOSTCODE)
@@ -374,7 +389,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
         ]
 
         for(rs: sccharts.rootStates) {
-            scg = rs.transform(context, scg)   
+            scg = rs.transform(context, scg)  
         }
         
         scg.createStringAnnotation("main", sccharts.rootStates.head.id)
@@ -829,7 +844,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
             expression.parameters.forEach[fc.parameters += it.convertToSCGParameter]
         ]
     }
-
+    
     def Parameter convertToSCGParameter(Parameter parameter) {
         createParameter.trace(parameter) => [
             callByReference = parameter.callByReference

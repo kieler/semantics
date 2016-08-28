@@ -52,6 +52,14 @@ class AnnotationsExtensions {
 			it.values += value
 		]
 	}
+	
+	def public Annotation createTypedStringAnnotation(String name, String type, String value) {
+        AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
+            it.name = name
+            it.values += value
+            it.type = type
+        ]
+	}
 		
 	def public void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
