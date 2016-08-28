@@ -217,7 +217,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                         }
                     }
                     
-                    tickLogicFunction.append(indent).append(TICK_LOGIC_FUNCTION_NAME).append(calleeTick).append("(&")
+                    tickLogicFunction.append(indent).append(TICK_FUNCTION_NAME).append(calleeTick).append("(&")
                     tickLogicFunction.append(calleeDataStructName)
                     tickLogicFunction.append(");\n")
                     

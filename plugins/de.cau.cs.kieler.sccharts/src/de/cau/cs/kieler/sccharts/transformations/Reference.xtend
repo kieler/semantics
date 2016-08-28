@@ -119,6 +119,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             reference = state.referencedScope
         ]
         val rVO = createValuedObject(CALLVO_NAME + callCounter).attachTo(referenceDeclaration)
+        callCounter++
         
         val callRegion = state.createControlflowRegion("")
         val crInitial = callRegion.createInitialState(GENERATED_PREFIX + "init")
