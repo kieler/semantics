@@ -40,6 +40,9 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Exit
 
 /** 
  * @author ssm
@@ -122,6 +125,8 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
         val deadGuards = <Guard> newHashSet
+        val mainThreadEntries = <Assignment> newHashSet
+        val mainThreadExits = <Assignment> newHashSet
 
         for(bb : scg.basicBlocks) {
             if (bb.deadBlock) {
@@ -149,6 +154,14 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		    // Can be null if removed because the bb is dead
             		if (sb.nodes.head instanceof Join) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Join")
             		if (sb.nodes.last instanceof Fork) assignment.createStringAnnotation(SCGAnnotations.ANNOTATION_HEADNODE, "Fork")
+                    for(node : sb.nodes) {
+                        if (node instanceof Entry)
+                        if (node.incoming.filter(ControlFlow).empty) 
+                            mainThreadEntries += assignment
+                        if (node instanceof Exit)
+                        if (node.next == null) 
+                            mainThreadExits += assignment
+                    }
         		}
         	}
         }
@@ -208,6 +221,18 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 			} 
 		}
+		
+		// Add main thread entry and exit points
+		for(entry : mainThreadEntries) {
+		   val entryNode = ScgFactory.eINSTANCE.createEntry => [ newSCG.nodes += it ]
+// 		   entryNode.next = ScgFactory.eINSTANCE.createControlFlow => [ target = entry ]
+           entryNode.createControlDependency(entry)
+		}
+        for(exit : mainThreadExits) {
+           val exitNode = ScgFactory.eINSTANCE.createExit => [ newSCG.nodes += it ]
+//           exit.next = ScgFactory.eINSTANCE.createControlFlow => [ target = exitNode ]
+            exit.createControlDependency(exitNode)
+        }
 
         newSCG     	
     }

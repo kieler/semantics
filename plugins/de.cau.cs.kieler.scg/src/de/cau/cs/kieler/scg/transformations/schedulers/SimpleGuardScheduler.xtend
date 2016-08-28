@@ -31,6 +31,9 @@ import java.util.LinkedHashSet
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -111,6 +114,8 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	for(var i = 0; i < schedule.size-1; i++) {
     		schedule.get(i).createScheduleDependency(schedule.get(i+1))
     	}
+    	val threadEntry = ScgFactory.eINSTANCE.createEntry
+    	val threadExit = ScgFactory.eINSTANCE.createExit
     	
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
@@ -118,7 +123,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	} else {
     		System.out.println("The SCG is asc-schedulable.")
     		for(s : schedule) {
-    			System.out.print((s as Assignment).valuedObject.name + " ")
+    			System.out.print(s.printNode + " ")
     		}
     		System.out.println
     	}
@@ -152,15 +157,15 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		// Check if all required nodes were scheduled. If not, abort.
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
-				System.out.println("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
-					" to " + dependency.target.asAssignment.valuedObject.name
+				System.out.println("Cant schedule node " + dependency.eContainer.asNode.printNode + 
+					" to " + dependency.target.printNode
 				)
 				return
 			}
 		}
 		
 		// Add this node to the schedule.
-		System.out.println(node.asAssignment.valuedObject.name)
+		System.out.println(node.printNode)
 		schedule += node
 	}
 	
@@ -178,6 +183,18 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 			d instanceof ControlDependency ||
 			(d instanceof DataDependency && ((d as DataDependency).concurrent && !(d as DataDependency).confluent))
 		]
+	}
+	
+	protected def dispatch printNode(Assignment assignment) {
+	    assignment.valuedObject.name
+	}
+	
+	protected def dispatch printNode(Entry entry) {
+	    "ENTRY"
+	}
+	
+	protected def dispatch printNode(Exit exit) {
+	    "EXIT"
 	}
 
 }

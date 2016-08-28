@@ -70,6 +70,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -599,6 +600,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                 assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
                 assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+            } else if (effect instanceof ReferenceCallEffect) {
+                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional

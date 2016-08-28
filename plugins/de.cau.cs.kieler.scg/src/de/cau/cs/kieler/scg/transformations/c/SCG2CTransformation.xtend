@@ -33,6 +33,8 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import java.util.Stack
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 
 /**
  * @author ssm
@@ -84,7 +86,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
     }
 
     protected def addProgram(StringBuilder sb, SCGraph scg) {
-        val tickStarts = scg.nodes.filter(Assignment).filter[incoming.filter(ControlFlow).empty].toList
+        val tickStarts = scg.nodes.filter(Entry).toList
         var suffixCounter = 0
         var String functionSuffix
         val initSB = new StringBuilder
@@ -104,9 +106,9 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         sb.append(implSB).append("\n")
     }
 
-    protected def addTick(Assignment tickStart, StringBuilder initSB, StringBuilder implSB, SCGraph scg,
+    protected def addTick(Entry tickEntry, StringBuilder initSB, StringBuilder implSB, SCGraph scg,
         String functionSuffix) {
-        var Node node = tickStart
+        var Node node = tickEntry.next.target
         val tickLogicFunction = new StringBuilder
         val resetFunction = new StringBuilder
         val tickFunction = new StringBuilder
@@ -138,7 +140,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
         
         prePrefix = DEFAULT_PRE_PREFIX 
         
-        while (node != null) {
+        while (node != null && !(node instanceof Exit)) {
             var Expression expression = null
             val VOs = <ValuedObject> newHashSet      
             val PREs = <ValuedObject> newHashSet      
@@ -161,7 +163,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                 valuedObjectPrefix = TICK_LOCAL_DATA_NAME + "->"
                 tickLogicFunction.append(indent).append(node.serializeHR).append(";\n")
                 expression = node.expression
-                VOs += node.valuedObject
+                if (node.valuedObject != null) VOs += node.valuedObject
                 
                 node = node.next?.target
             } else if (node instanceof Conditional) {
@@ -202,6 +204,11 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                 PRESet += pre 
             }            
             
+        }
+        
+        for(var i = 0; i < conditionalStack.size; i++) {
+            indent = indent.substring(0, indent.length - 2)
+            tickLogicFunction.append(indent).append("}\n")            
         }
         
         

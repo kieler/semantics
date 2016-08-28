@@ -93,7 +93,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.key) + joiner.join(parts.value);
     }
 
-    def Pair<List<String>, List<String>> serializeComponents(Action action, boolean hr) {
+    def dispatch Pair<List<String>, List<String>> serializeComponents(Action action, boolean hr) {
         val keywords = newLinkedList;
         val content = newLinkedList;
 
@@ -145,7 +145,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.key) + joiner.join(parts.value);
     }
     
-    def Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration, boolean hr) {
+    def dispatch Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration, boolean hr) {
         val keywords = newLinkedList;
         val content = newLinkedList;
 
@@ -228,17 +228,16 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.key) + joiner.join(parts.value);
     }
     
-    def Pair<List<String>, List<String>> serializeComponents(ReferenceDeclaration declaration, boolean hr) {
+    def dispatch Pair<List<String>, List<String>> serializeComponents(ReferenceDeclaration declaration, boolean hr) {
         val keywords = newLinkedList;
         val content = newLinkedList;
         
-        keywords += "["
+        keywords += "ref"
         if (declaration.reference instanceof Identifiable) {
             keywords += (declaration.reference as Identifiable).id
         } else {
             keywords += declaration.reference.class.name
         }
-        keywords += "]"
 
         //Content
         val voIter = declaration.valuedObjects.iterator;
