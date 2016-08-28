@@ -68,10 +68,13 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     }
     
     public def CharSequence serializeAssignmentRoot(Assignment assignment) {
-        var res = assignment.valuedObject.name
-        if (!assignment.indices.nullOrEmpty) {
-            for(index : assignment.indices) {
-                res = res + "[" + index.serialize + "]"
+        var String res = ""
+        if (assignment.valuedObject != null) {
+            res = res + assignment.valuedObject.name
+            if (!assignment.indices.nullOrEmpty) {
+                for(index : assignment.indices) {
+                    res = res + "[" + index.serialize + "]"
+                }
             }
         }
         return res        
@@ -80,7 +83,9 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     public def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = assignment.serializeAssignmentRoot.toString
         
-        res = res + assignment.operator.serializeAssignOperator
+        if (!res.nullOrEmpty) {
+            res = res + assignment.operator.serializeAssignOperator
+        }
         
         if (expressionStr != null) {
             res = res + expressionStr

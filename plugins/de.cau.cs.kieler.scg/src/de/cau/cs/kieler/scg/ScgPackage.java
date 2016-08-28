@@ -162,13 +162,22 @@ public interface ScgPackage extends EPackage {
 	int NODE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+	int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
@@ -177,7 +186,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
@@ -186,7 +195,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
      * The number of structural features of the '<em>Node</em>' class.
@@ -195,7 +204,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -217,6 +226,15 @@ public interface ScgPackage extends EPackage {
 	int CONDITIONAL__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -299,6 +317,15 @@ public interface ScgPackage extends EPackage {
 	int SURFACE__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -363,6 +390,15 @@ public interface ScgPackage extends EPackage {
 	int DEPTH__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -436,6 +472,15 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -545,6 +590,15 @@ public interface ScgPackage extends EPackage {
 	int FORK__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -618,6 +672,15 @@ public interface ScgPackage extends EPackage {
 	int JOIN__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -701,6 +764,15 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -746,22 +818,13 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__NEXT = NODE_FEATURE_COUNT + 1;
 
 	/**
-     * The feature id for the '<em><b>Master</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY__MASTER = NODE_FEATURE_COUNT + 2;
-
-    /**
      * The number of structural features of the '<em>Entry</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
+	int ENTRY_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
@@ -783,6 +846,15 @@ public interface ScgPackage extends EPackage {
 	int EXIT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1108,6 +1180,15 @@ public interface ScgPackage extends EPackage {
 	int GUARD__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1806,17 +1887,6 @@ public interface ScgPackage extends EPackage {
 	EReference getEntry_Next();
 
 	/**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Entry#getMaster <em>Master</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Master</em>'.
-     * @see de.cau.cs.kieler.scg.Entry#getMaster()
-     * @see #getEntry()
-     * @generated
-     */
-    EReference getEntry_Master();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Exit <em>Exit</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2475,14 +2545,6 @@ public interface ScgPackage extends EPackage {
 		EReference ENTRY__NEXT = eINSTANCE.getEntry_Next();
 
 		/**
-         * The meta object literal for the '<em><b>Master</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference ENTRY__MASTER = eINSTANCE.getEntry_Master();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ExitImpl <em>Exit</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

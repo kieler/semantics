@@ -123,10 +123,12 @@ class KExpressionsValuedObjectExtensions {
     }     
 
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
-        declaration => [
-            valuedObjects += valuedObject
-        ]
-    }     
+        declaration => [ valuedObjects += valuedObject ]
+    } 
+    
+    def ValuedObject attachTo(ValuedObject valuedObject, Declaration declaration) {
+        valuedObject => [ declaration.valuedObjects += valuedObject ]
+    }         
     
     
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
