@@ -15,10 +15,9 @@
  */
 package de.cau.cs.kieler.circuit.util;
 
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.circuit.*;
-
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.NamedObject;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

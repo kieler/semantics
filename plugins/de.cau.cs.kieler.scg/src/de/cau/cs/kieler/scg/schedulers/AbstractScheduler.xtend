@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.schedulers
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.SCGraph
-import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. 

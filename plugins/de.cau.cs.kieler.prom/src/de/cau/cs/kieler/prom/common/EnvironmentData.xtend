@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.jface.preference.IPreferenceStore
@@ -54,26 +54,16 @@ class EnvironmentData extends ConfigurationSerializable {
     protected String associatedProjectWizardClass = ""
     
     /**
-     * A path to a file with the initial contents of a newly created main file of this environment.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/path/to/my/Main.java').
-     */
-    @Accessors
-    protected String mainFileOrigin = ""
-    
-    /**
-     * The project relative path for initial the model file, but without file extension. 
+     * The project relative path to the initial model file. 
      */
     @Accessors
     protected String modelFile = ""
-    
+
     /**
-     * A path to a directory with the default contents for the snippet directory when creating a new project.
-     * This might either be a file system path or a URL with the platform protocol provided by eclipse
-     * (e.g. 'platform:/plugin/org.myplugin/directory/with/snippets').
+     * The files and folders that should be created at project setup.
      */
     @Accessors
-    protected String wrapperCodeSnippetsOrigin = ""
+    protected List<FileData> initialResources = newArrayList()
     
     /**
      * Creates a new instance of the class.
@@ -147,11 +137,11 @@ class EnvironmentData extends ConfigurationSerializable {
      */
     def void applyToLaunchConfiguration(ILaunchConfigurationWorkingCopy config){
         // Save which environment was used to initialize this launch config
-        config.setAttribute(LaunchConfiguration.ATTR_ENVIRONMENT, name)
+        config.setAttribute(KiCoLaunchConfig.ATTR_ENVIRONMENT, name)
         // Load data
         val loadedLaunchData = KiCoLaunchData.loadFromConfiguration(config)
         // Copy values of fields
-        loadedLaunchData.targetLanguage = launchData.targetLanguage
+        loadedLaunchData.setTargetLanguage(launchData.targetLanguage)
         loadedLaunchData.targetLanguageFileExtension = launchData.targetLanguageFileExtension
         loadedLaunchData.targetTemplate = launchData.targetTemplate
         loadedLaunchData.targetDirectory = launchData.targetDirectory

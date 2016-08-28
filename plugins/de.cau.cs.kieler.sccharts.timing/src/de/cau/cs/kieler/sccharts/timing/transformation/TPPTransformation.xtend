@@ -16,9 +16,9 @@ package de.cau.cs.kieler.sccharts.timing.transformation
 import com.google.common.collect.Iterators
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException

@@ -34,12 +34,12 @@
          
          @Wrapper ResetClock, clockVariable;
          output bool resetClock; -->
-<#macro ResetClock clockVariable autoFalse = 'true'>
+<#macro ResetClock clockVariable autoFalse=true>
     <@output>
         // ResetClock
         if(scchart.${varname}){
             ${clockVariable}Counter = System.currentTimeMillis();
-            <#if autoFalse == 'true'>
+            <#if autoFalse>
             scchart.${varname} = false;
             </#if>
         }
@@ -74,7 +74,7 @@
      Example for SCCharts:
          @Wrapper TickDuration, "50"
          output int tickDuration; -->
-<#macro TickDuration targetMillis='0'>
+<#macro TickDuration targetMillis=0>
     <@init>
         long tickDurationCounter = System.currentTimeMillis();
         boolean isFirstTick = true;
@@ -86,7 +86,7 @@
         } else {
             // Set actual tick duration
             scchart.${varname} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
-            <#if targetMillis != '0' >
+            <#if targetMillis != 0 >
             // Wait until target duration of tick reached
             if ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
                 try {

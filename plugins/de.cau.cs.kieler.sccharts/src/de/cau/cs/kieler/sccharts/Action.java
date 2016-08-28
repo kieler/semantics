@@ -13,11 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -46,6 +44,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}</li>
@@ -53,7 +52,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction()
  * @model
@@ -69,7 +67,7 @@ public interface Action extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.keffects.Effect}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Effect}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Effects</em>' containment reference list isn't clear,

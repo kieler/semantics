@@ -163,7 +163,7 @@
         eType="#//CombineOperator"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostCombineOperator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Base Class for Variables and Signals. A ValuedObject has a name and may carry a value. &#xA;Therefore the class has a type attribute which specifies the type of the value. &#xA;The type might either be given from a predefined list of internal (primitive) types or by the hostType String that &#xA;references some type in the target language, e.g. a Type in C or Java. An initial value can be given in String format.&#xA;"/>
     </eAnnotations>

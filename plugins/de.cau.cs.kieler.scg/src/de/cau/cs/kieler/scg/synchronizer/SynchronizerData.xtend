@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node

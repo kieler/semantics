@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.esterel.scl.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
@@ -58,7 +58,7 @@ class TransformExpression {
      * @param operatorExpression The Esterel OperatorExpression to transform
      * @return The corresponding SCL OperatorExpression
      */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(OperatorExpression operatorExpression) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(OperatorExpression operatorExpression) {
         val operatorType = OperatorType::getByName(operatorExpression.operator.getName())
 
         // ? Operator: Return variable holding the value
@@ -88,8 +88,8 @@ class TransformExpression {
      * @param combineOperator The Esterel combine operator to translate
      * @return The corresponding SCL combine operator
      */
-    def de.cau.cs.kieler.core.kexpressions.CombineOperator transformCombineOperator(CombineOperator combineOperator) {
-        return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(combineOperator.toString)
+    def de.cau.cs.kieler.kexpressions.CombineOperator transformCombineOperator(CombineOperator combineOperator) {
+        return de.cau.cs.kieler.kexpressions.CombineOperator::get(combineOperator.toString)
     }
 
     /**
@@ -99,7 +99,7 @@ class TransformExpression {
 	 * @param complexExpression The Esterel complex expression to transform
 	 * @return The corresponding ValuedObjectReference
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(ComplexExpression complexExpression) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(ComplexExpression complexExpression) {
         if (complexExpression instanceof ValuedObjectReference) {
             transformExpression(complexExpression as ValuedObjectReference)
         } else {
@@ -113,7 +113,7 @@ class TransformExpression {
 	 * @param valuedObjectReference The Esterel ValuedObjectReference to transform
 	 * @return The corresponding KExpressions ValuedObjectReference
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(
         ValuedObjectReference valuedObjectReference) {
         getValuedObjectReferenceByName(valuedObjectReference.valuedObject.name)
     }
@@ -124,7 +124,7 @@ class TransformExpression {
      * @param valuedObjectReference The Esterel ValuedObjectReference to transform
      * @return The corresponding KExpressions ValuedObjectReference
      */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(TrapExpression trapExpression) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(TrapExpression trapExpression) {
         valuedExitVariables.get(trapExpression.trap).createValuedObjectReference
     }
 
@@ -135,7 +135,7 @@ class TransformExpression {
 	 * @param type The type of the expression
 	 * @return The corresponding KExressions expression
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(String expression, String type) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExp(String expression, String type) {
         val esterelExpression = EsterelFactory::eINSTANCE.createConstantExpression => [
             value = expression
         ]
@@ -152,7 +152,7 @@ class TransformExpression {
 	 * @param type The type of the expression
 	 * @return The corresponding KExpressions expression
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression expression, String type) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExp(Expression expression, String type) {
 
         // If it is no ConstantExpression, it can be transformed without additional type information
         if (!(expression instanceof ConstantExpression)) {
@@ -213,7 +213,7 @@ class TransformExpression {
 	 * @param booleanValue The Esterel boolean value
 	 * @return The corresponding KExpressions boolean value
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(BooleanValue booleanValue) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(BooleanValue booleanValue) {
         return createBoolValue(booleanValue.value)
     }
 
@@ -223,7 +223,7 @@ class TransformExpression {
      * @param intValue The Esterel integer value
      * @return The corresponding KExpressions integer value
      */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(IntValue intValue) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(IntValue intValue) {
         if (intValue.value < 0)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::SUB
@@ -238,7 +238,7 @@ class TransformExpression {
      * @param floatValue The Esterel float value
      * @return The corresponding KExpressions integer value
      */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(FloatValue floatValue) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(FloatValue floatValue) {
         if (floatValue.value < 0)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::SUB
@@ -253,7 +253,7 @@ class TransformExpression {
 	 * @param functionExpression The function expression to transform
 	 * @return The corresponding KExpressions FunctionCall
 	 */
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExpression(FunctionExpression functionExpression) {
+    def dispatch de.cau.cs.kieler.kexpressions.Expression transformExpression(FunctionExpression functionExpression) {
         val functionCall = KExpressionsFactory::eINSTANCE.createFunctionCall
         functionCall.functionName = functionExpression.function.name
         var typeIndex = 0 // Index of the current variable to get its type

@@ -14,16 +14,16 @@
 package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
@@ -43,15 +43,15 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
-import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
 import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -118,16 +118,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SynchronizerSelector
-    
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
-    
-    public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-    
+        
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
 

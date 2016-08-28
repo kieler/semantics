@@ -1,0 +1,13 @@
+module de.cau.cs.kieler.core.kexpressions.text.related
+
+
+Workflow {
+	
+	component =  @de.cau.cs.kieler.annotations.Annotations auto-inject {}
+	
+	component =  @de.cau.cs.kieler.kexpressions.KExpressions auto-inject {}
+
+	component =  @de.cau.cs.kieler.kexpressions.keffects.KEffects auto-inject {}
+
+    component =  @de.cau.cs.kieler.kexpressions.kext.KExt auto-inject {}   
+}

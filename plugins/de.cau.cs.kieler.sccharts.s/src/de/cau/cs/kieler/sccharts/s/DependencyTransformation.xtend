@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.s
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
@@ -24,8 +24,8 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states

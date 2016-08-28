@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;

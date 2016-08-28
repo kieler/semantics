@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.scg.klighd
 
 import com.google.inject.Singleton
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.scoping.KExpressionsScopeProvider
 import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference

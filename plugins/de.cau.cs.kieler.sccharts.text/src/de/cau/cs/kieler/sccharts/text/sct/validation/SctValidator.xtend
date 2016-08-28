@@ -18,10 +18,9 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
 
 /**
@@ -115,13 +114,29 @@ class SctValidator extends SctJavaValidator {
     } 
 
     /**
+     * Checks if the given state has abort transitions without trigger and adds a warning.
+     * In most cases an abort without trigger is meant to be a termination transition.
+     */
+    @Check
+    public def void checkAbortHasTrigger(de.cau.cs.kieler.sccharts.State state) {
+        if(state.isHierarchical) {
+            for (transition : state.outgoingTransitions) {
+                if ((transition.type == TransitionType.STRONGABORT || transition.type == TransitionType.WEAKABORT)
+                    && transition.trigger == null) {
+                    warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
+                }
+            }
+        }
+    } 
+    
+    /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
      * that handles valued signals without combination function (see KISEMA-1071).   
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
-    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator

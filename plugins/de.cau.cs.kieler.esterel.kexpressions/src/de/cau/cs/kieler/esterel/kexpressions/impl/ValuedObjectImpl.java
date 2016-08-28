@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
-import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.esterel.kexpressions.ValueType;
@@ -24,17 +24,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectImpl#getHostType <em>Host Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
+public class ValuedObjectImpl extends de.cau.cs.kieler.annotations.impl.AnnotatableImpl implements ValuedObject {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->

@@ -13,22 +13,20 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.

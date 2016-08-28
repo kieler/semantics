@@ -19,12 +19,12 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
-
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * 

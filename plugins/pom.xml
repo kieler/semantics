@@ -22,18 +22,10 @@
     <module>de.cau.cs.kieler.circuit</module>
     <module>de.cau.cs.kieler.circuit.kivi</module>
     <module>de.cau.cs.kieler.circuit.klighd</module>
-    <module>de.cau.cs.kieler.core.annotations</module>
-    <module>de.cau.cs.kieler.core.annotations.edit</module>
-    <module>de.cau.cs.kieler.core.annotations.text</module>
-    <module>de.cau.cs.kieler.core.annotations.text.ui</module>
-    <module>de.cau.cs.kieler.core.kexpressions</module>
-    <module>de.cau.cs.kieler.core.kexpressions.edit</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects.edit</module>
-    <module>de.cau.cs.kieler.core.kexpressions.keffects.ui</module>
-    <module>de.cau.cs.kieler.core.kexpressions.text</module>
-    <module>de.cau.cs.kieler.core.kexpressions.text.ui</module>
-    <module>de.cau.cs.kieler.core.kexpressions.ui</module>
+    <module>de.cau.cs.kieler.annotations</module>
+    <module>de.cau.cs.kieler.annotations.ui</module>
+    <module>de.cau.cs.kieler.kexpressions</module>
+    <module>de.cau.cs.kieler.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.perspectives</module> 
     <module>de.cau.cs.kieler.core.product</module>
@@ -45,7 +37,6 @@
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
     <module>de.cau.cs.kieler.esterel.cec.sim</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
-    <module>de.cau.cs.kieler.esterel.kexpressions.edit</module>
     <module>de.cau.cs.kieler.esterel.kexpressions.ui</module>
     <module>de.cau.cs.kieler.esterel.kexpressions</module>
     <module>de.cau.cs.kieler.esterel.prom</module>
@@ -75,8 +66,6 @@
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sccharts</module>
-    <module>de.cau.cs.kieler.sccharts.edit</module>
-    <module>de.cau.cs.kieler.sccharts.editor</module>
     <module>de.cau.cs.kieler.sccharts.kivi</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
@@ -88,8 +77,6 @@
 	<module>de.cau.cs.kieler.sccharts.timing</module>
     <module>de.cau.cs.kieler.scg</module>
     <module>de.cau.cs.kieler.scg.circuit</module>
-    <module>de.cau.cs.kieler.scg.edit</module>
-    <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>

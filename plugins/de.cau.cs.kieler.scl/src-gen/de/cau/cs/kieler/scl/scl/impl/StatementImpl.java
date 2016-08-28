@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
-
+import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 
@@ -27,10 +26,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

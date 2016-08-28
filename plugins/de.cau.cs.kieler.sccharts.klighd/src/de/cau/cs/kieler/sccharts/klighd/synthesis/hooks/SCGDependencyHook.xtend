@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KNode

@@ -13,22 +13,21 @@
  */
 package de.cau.cs.kieler.scg.optimizations
 
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kico.transformation.Processor
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Removes conditional nodes holding a constant (true/false)

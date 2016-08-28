@@ -5,12 +5,12 @@
      Example for SCCharts:
          @Wrapper Print
          output string text; -->
-<#macro Print autoReset = "true">
+<#macro Print autoReset=true>
     <@output>
         // Print to display
         if(scchart.${varname} != null && !scchart.${varname}.equals("")) {
             System.out.println(scchart.${varname});
-            <#if autoReset == "true">
+            <#if autoReset>
             scchart.${varname} = "";
             </#if>
         }

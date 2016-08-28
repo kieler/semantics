@@ -55,6 +55,8 @@ public class AsynchronousCompilation extends Job {
     private final Pair<KielerCompilerSelection, Boolean> selection;
     /** Flag if additional progress information should be displayed. */
     private final boolean tracing;
+    /** Flag if debug mode is active or not. */
+    private final boolean debugMode;
     /** Flag if this job should update corresponding ModelView when finished compiling. */
     private boolean notifyWhenFinished = false;
     /** Model to display in ModeView depending on current compilation state. */
@@ -77,10 +79,13 @@ public class AsynchronousCompilation extends Job {
      *            the selection
      * @param tracing
      *            tracing flag
+     * @param debugMode
+     *            debug mode flag
      */
     public AsynchronousCompilation(final KiCoModelUpdateController controller,
             final EObject sourceModel, final String sourceFile,
-            final Pair<KielerCompilerSelection, Boolean> selection, final boolean tracing) {
+            final Pair<KielerCompilerSelection, Boolean> selection, final boolean tracing,
+            final boolean debugMode) {
         super("Compiling: " + sourceFile);
 
         this.viewController = controller;
@@ -95,6 +100,7 @@ public class AsynchronousCompilation extends Job {
         this.sourceModel = sourceModel;
         this.selection = selection;
         this.tracing = tracing;
+        this.debugMode = debugMode;
 
         // compilation placeholder
         this.model = new MessageModel("Compilation in progress...");
@@ -115,7 +121,7 @@ public class AsynchronousCompilation extends Job {
                 context.setProperty(Tracing.ACTIVE_TRACING, true);
             }
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
-            context.setCreateDummyResource(true);
+            context.setCreateDummyResource(debugMode);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {

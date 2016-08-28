@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Joiner
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction

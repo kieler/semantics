@@ -13,15 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.scoping
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
-import de.cau.cs.kieler.sccharts.DefineNode
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State

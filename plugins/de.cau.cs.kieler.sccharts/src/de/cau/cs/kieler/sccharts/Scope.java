@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -44,6 +43,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
@@ -52,7 +52,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
  * @model abstract="true"
@@ -178,7 +177,7 @@ public interface Scope extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
