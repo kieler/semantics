@@ -304,7 +304,7 @@ class CompilationTab extends AbstractKiCoLaunchConfigTab implements IProjectHold
             }
         })
         targetTemplate.toolTipText = "Template for the compiled output.\n"
-            + "Use ${" + KiCoLaunchConfig.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+            + "Use ${" + KiCoLaunchConfig.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
             
         // Create target directory control
         val comp4 = UIUtil.createComposite(group, 1)

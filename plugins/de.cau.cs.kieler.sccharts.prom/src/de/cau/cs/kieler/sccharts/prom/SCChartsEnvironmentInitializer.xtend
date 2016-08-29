@@ -29,16 +29,14 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
     
     override getDefaultEnvironments() {
         val List<EnvironmentData> datas = newArrayList()
-              
         // Mindstorms NXJ
         datas += getMindstormsNXJDefaultEnvironment()
-        
         // Mindstorms EV3
         datas += getMindstormsEV3DefaultEnvironment()
-        
         // Arduino
         datas += getArduinoDefaultEnvironment()
-
+        // C Code Simulation
+        datas += getCSimulationEnvironment()
         return datas
     }
     
@@ -120,6 +118,31 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.initialResources = initialResources
         env.modelFile = "${project_name}Model"
         env.associatedProjectWizardClass = "it.baeyens.arduino.ui.NewSketchWizard"
+        return env
+    }
+    
+    /**
+     * Creates a default environment to compile and simulate C code.
+     * @return the created environment
+     */
+    private static def EnvironmentData getCSimulationEnvironment() {
+        var launchData = new KiCoLaunchData()
+        launchData.targetLanguage = "s.c"
+        launchData.targetLanguageFileExtension = ".c"
+        launchData.targetTemplate = "simulationTemplate.ftl"
+        launchData.wrapperCodeSnippetDirectory = "snippets"
+        
+        val initialResources = newArrayList() 
+        initialResources += new FileData("simulationTemplate.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/simulationTemplate.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/snippets")
+        initialResources += new FileData("cJSON.h", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/cJSON.h")
+        initialResources += new FileData("cJSON.c", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/simulation/cJSON.c")
+        
+        var env = new EnvironmentData("C Simulation")
+        env.launchData = launchData
+        env.initialResources = initialResources
+        env.modelFile = "${project_name}"
+        env.associatedProjectWizardClass = "org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
         return env
     }
 }
