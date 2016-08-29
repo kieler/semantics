@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.scg.klighd
 
 import com.google.inject.Injector
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -399,6 +401,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private SCGraph SCGraph
     protected boolean isSCPDG
     protected boolean isGuardSCG
+    
+    protected val HashMultimap<KNode, KNode> hierarchyAttachment = HashMultimap.create  
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -420,6 +424,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         // Invoke the synthesis.
         SCGraph = model
+        hierarchyAttachment.clear
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCG synthesis...")
         val newModel = model.synthesize();
@@ -482,6 +487,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
                 if (n.schizophrenic) {
                     aNode.KRendering.foreground = SCHIZO_COLOR.copy
+                    if (n instanceof Assignment) {
+                        if (n.next == null) {
+                            node.children += aNode.createDeadend(SCGPORTID_OUTGOING)
+                        }
+                    }
+                    else if (n instanceof Conditional) {
+                        if (n.then == null) {
+                            node.children += aNode.createDeadend(SCGPORTID_OUTGOING_THEN)
+                        }
+                        if (n.^else == null) {
+                            node.children += aNode.createDeadend(SCGPORTID_OUTGOING_ELSE)
+                        }
+                    }
                 }                 
             }
             // For each node transform the control flow edges.
@@ -1103,6 +1121,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
         ]
     }
+    
+    private def KNode createDeadend(KNode node, String outgoingPortId) {
+        val deadend = createNode() => [ n |
+            val figure = n.addEllipse()
+            figure => [
+                n.setMinimalNodeSize(8, 8)
+                foreground = SCHIZO_COLOR.copy
+                background = SCHIZO_COLOR.copy
+            ]
+        ]
+
+        createNewEdge() => [ edge |
+            // Get and set source and target information.
+            var sourceNode = node
+            var targetNode = deadend
+            edge.source = sourceNode
+            edge.target = targetNode
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            edge.sourcePort = sourceNode.getPort(outgoingPortId)
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
+                it.lineStyle = LineStyle::SOLID
+//                it.addArrowDecorator
+                it.foreground = SCHIZO_COLOR.copy
+            ]
+        ]
+        hierarchyAttachment.put(node, deadend)
+
+        deadend
+    }
+    
 
     /**
 	 * Synthesize a (single) dependency.
@@ -1218,7 +1266,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val kParent = firstNode.node.eContainer as KNode
         val kContainer = firstNode.createNode("hierarchy" + nodeGrouping.toString)
         val kNodeList = new ArrayList<KNode>
-        nodes.forEach[e|kNodeList.add(e.node)]
+        nodes.forEach[e|
+            kNodeList.add(e.node)
+            val attachments = hierarchyAttachment.get(e.node)
+            if (!attachments.empty) {
+                attachments.forEach[ kNodeList += it]
+            }
+        ]
 
         // Determine all interleaving edges...        
         val iSecEdges = new ArrayList<KEdge>
@@ -1289,8 +1343,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         // Add the nodes to the container.
         // They will be removed from the original parent!
-        for (tn : nodes) {
-            kContainer.children += tn.node
+        for (tn : kNodeList) {
+            kContainer.children += tn
 
 // FIXME: this doesnt work properly. See KIPRA-1788.
 // The boxed first layer feature should be implemented in the new synthesis.
