@@ -204,7 +204,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                     // Inside every region create a _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final && isConnector]) {
+                    for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
