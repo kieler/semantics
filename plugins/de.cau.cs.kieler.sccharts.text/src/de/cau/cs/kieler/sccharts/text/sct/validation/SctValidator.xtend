@@ -148,6 +148,17 @@ class SctValidator extends SctJavaValidator {
     } 
     
     /**
+     * Checks that static variables are initialized.
+     * If it is not initialized the static modifier is useless from a modeling perspective.   
+     */
+    @Check
+    public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+        if(valuedObject.isStatic && valuedObject.initialValue == null) {
+            warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
+        }
+    } 
+    
+    /**
      * Checks binding for reference states.
      */
     @Check
