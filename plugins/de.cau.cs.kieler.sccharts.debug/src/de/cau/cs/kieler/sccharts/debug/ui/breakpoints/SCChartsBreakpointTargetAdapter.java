@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.debug.ui.breakpoints;
 
 import java.util.HashMap;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -32,6 +33,7 @@ import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.impl.HiddenLeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint;
@@ -43,18 +45,31 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * An Adapter to create breakpoints in .sct-files using the XText Editor. This class gets
  * instantiated by the {@link SCChartsBreakpointTargetAdapterFactory#getAdapter(Object, Class)}
  * adapter factory for the XText editor.
- *  
+ * 
  * @author lgr
  * 
  */
 public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget {
 
-    /** 
+    /**
      * For the current element, maps a line number to the corresponding EObject.
      */
     public static HashMap<Integer, EObject> lineToModelElement = new HashMap<>();
+    
+    private static SCChartsBreakpointTargetAdapter instance;
 
     private IResource activeResource = null;
+
+    public SCChartsBreakpointTargetAdapter() {
+        instance = this;
+    }
+
+    public static SCChartsBreakpointTargetAdapter getInstance() {
+        if (instance == null) {
+            instance = new SCChartsBreakpointTargetAdapter();
+        }
+        return instance;
+    }
 
     /**
      * {@inheritDoc}
@@ -74,7 +89,7 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
 
             activeResource = resource;
             updateLineEObjectMap();
-            
+
             int lineNumber = ruler.getLineOfLastMouseButtonActivity();
 
             IBreakpoint[] breakpoints = DebugPlugin.getDefault().getBreakpointManager()
@@ -108,14 +123,14 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
     /**
      * This will updated the map that maps a line number to an EObject.
      */
-    public void updateLineEObjectMap() {
+    public void updateLineEObjectMap(EObject rootObject) {
         lineToModelElement.clear();
 
-        IPath p = activeResource.getFullPath();
-        HashMap<IPath, EObject> rootMap = KiemPlugin.getOpenedModelRootObjects();
-        EObject rootObject = rootMap.get(p);
+        // IPath p = activeResource.getFullPath();
+        // HashMap<IPath, EObject> rootMap = KiemPlugin.getOpenedModelRootObjects();
+        // EObject rootObject = rootMap.get(p);
 
-        ICompositeNode rootNode = NodeModelUtils.findActualNodeFor(rootObject);
+        ICompositeNode rootNode = NodeModelUtils.findActualNodeFor((EObject) rootObject);
         Iterable<ILeafNode> leafs = rootNode.getLeafNodes();
 
         for (ILeafNode leaf : leafs) {
@@ -126,6 +141,13 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
             if (validLeaf && leafOfInterest)
                 lineToModelElement.put(leaf.getStartLine(), leaf.getSemanticElement());
         }
+    }
+
+    private void updateLineEObjectMap() {
+        IPath p = activeResource.getFullPath();
+        HashMap<IPath, EObject> rootMap = KiemPlugin.getOpenedModelRootObjects();
+        EObject rootObject = rootMap.get(p);
+        updateLineEObjectMap(rootObject);
     }
 
     /**

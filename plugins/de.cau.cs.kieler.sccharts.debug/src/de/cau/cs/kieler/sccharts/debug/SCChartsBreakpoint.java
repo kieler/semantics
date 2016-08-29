@@ -52,7 +52,8 @@ public class SCChartsBreakpoint extends LineBreakpoint {
         this(resource, lineNumber, true);
     }
 
-    /**
+    /** 
+     * Constructor for creating a breakpoint.
      * 
      * @param resource
      *            The resource that the breakpoint should be added to.

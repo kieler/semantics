@@ -15,15 +15,11 @@ package de.cau.cs.kieler.sccharts.debug;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.nodemodel.ICompositeNode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,7 +35,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * This class is the main entry point into the debugger. A datacomponent is defined, that needs to
+ * This class is the main entry point into the debugger. A data component is defined, that needs to
  * be added to the execution manager and as consequence enables debugging features. It is
  * recommended to enable the KART data component, so that input can be provided.
  * 
@@ -127,8 +123,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     }
 
-    /*
-     * ********************************************************************************************
+    /* ********************************************************************************************
      * STEP METHOD
      *******************************************************************************************/
     /**
@@ -194,16 +189,16 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                 if (elem instanceof Transition) {
                     boolean stop = false;
                     // Check on a transition breakpoint first.
-                    if (isEObjectInLine(elem)) {
+                    if (plugin.isEObjectInLine(elem)) {
                         stop = true;
                     }
 
-                    // Afterwards check the target states. 
+                    // Afterwards check the target states.
                     // It's important to check on possible hierarchy.
                     if (!stop) {
                         State s = ((Transition) elem).getTargetState();
 
-                        if (isEObjectInLine((EObject) s)) {
+                        if (plugin.isEObjectInLine((EObject) s)) {
                             stop = true;
                         } else {
                             if (checkHierachicalNesting(s)) {
@@ -254,7 +249,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
                 for (State cfstate : cfstates) {
                     if (cfstate.isInitial()) {
-                        if (isEObjectInLine((EObject) cfstate)) {
+                        if (plugin.isEObjectInLine((EObject) cfstate)) {
                             stop = true;
                         }
                         initialStatesInRegions.add(cfstate);
@@ -290,29 +285,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         currentModelFile = KiemPlugin.getCurrentModelFile();
         rootElement = KiemPlugin.getOpenedModelRootObjects().get(currentModelFile);
         resource = rootElement.eResource();
-    }
-
-    /**
-     * For a given EObject checks whether there is a breakpoint specified that is associated with
-     * this object.
-     * 
-     * @param obj
-     *            The object of interest.
-     * @return Returns true is there is a breakpoint associated with the object, otherwise false.
-     */
-    private boolean isEObjectInLine(EObject obj) {
-        plugin.updateBreakpointLines();
-        ICompositeNode n = NodeModelUtils.getNode(obj);
-        int line = n.getStartLine();
-        try {
-            IBreakpoint b = plugin.getBreakpointLines().get(line);
-            if (b != null && b.isEnabled()) {
-                return true;
-            }
-        } catch (CoreException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     // ------------------------------ METHODS NEEDED FOR INTERN EOBJECT MAP -----------------------

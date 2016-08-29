@@ -20,7 +20,7 @@ import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 
 /**
- * The event listener for kiem events so it can be reacted accordingly.
+ * The event listener for KIEM events so it can be reacted accordingly.
  * 
  * @author lgr
  *

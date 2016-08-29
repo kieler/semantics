@@ -15,15 +15,21 @@ package de.cau.cs.kieler.sccharts.debug;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.IBreakpointListener;
 import org.eclipse.debug.core.IBreakpointManager;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
@@ -50,12 +56,17 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     public static final String DEFAULT_DEBUG_POSTFIX = "_debug.execution";
 
     /**
+     * The instance for the breakpoint listener.
+     */
+    public BreakpointListener listener = new BreakpointListener();
+
+    /**
      * Saves the data corresponding to a debug schedule in relation to the schedule chosen.
      */
     public ScheduleData debugSchedule;
 
     /**
-     * Saves teh data corresponding to a non-debug schedule in relation to the schedule chosen.
+     * Saves the data corresponding to a non-debug schedule in relation to the schedule chosen.
      */
     public ScheduleData nonDebugSchedule;
 
@@ -69,12 +80,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * The shared instance.
      */
     private static SCChartsDebugPlugin plugin;
-    
-    public BreakpointListener listener = new BreakpointListener();
 
-    // ------------------------------- CURRENT BREAKPOINTS ----------------------------------------
     /**
-     * Save the current breakpoints with its corresponding line.
+     * Save the current breakpoints with its corresponding line. This is needed to determine whether
+     * there is a breakpoint associated with a line.
      */
     private HashMap<Integer, IBreakpoint> breakpointLines = new HashMap<>();
 
@@ -83,15 +92,29 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      */
     private boolean dirtyBreakpointList = true;
 
+    private IResourceChangeListener resLis = new IResourceChangeListener() {
+
+        @Override
+        public void resourceChanged(IResourceChangeEvent event) {
+            
+            if (event.getType() == IResourceChangeEvent.POST_CHANGE
+                    && event.getDelta().getKind() == IResourceDelta.CHANGED) {
+                updateBreakpointLines();
+            }
+            System.out.println();
+        }
+    };
+
+    // --------------------------------------------------------------------------------------------
+
     /**
-     * The constructor. The loaded only needs to indicate false in case the debug schedule is
-     * initially turned on.
+     * The constructor. The loaded variable only needs to indicate false in case the debug schedule
+     * is initially turned on.
      */
     public SCChartsDebugPlugin() {
         loaded = DataComponent.DEBUG_MODE ? false : true;
     }
-
-    // --------------------------------------- PLUGIN METHODS -------------------------------------
+    
     /*
      * (non-Javadoc)
      * 
@@ -101,9 +124,12 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
 
+        // Add the breakpoint listener to the breakpoint manager.
         IBreakpointManager manager = DebugPlugin.getDefault().getBreakpointManager();
         manager.addBreakpointListener(listener);
 
+        // Add a resource listener so highlighting can be adjusted accordingly.
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(resLis);
     }
 
     /*
@@ -240,6 +266,29 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
         } catch (ScheduleFileMissingException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * For a given EObject checks whether there is a breakpoint specified that is associated with
+     * this object.
+     * 
+     * @param obj
+     *            The object of interest.
+     * @return Returns true is there is a breakpoint associated with the object, otherwise false.
+     */
+    public boolean isEObjectInLine(EObject obj) {
+        plugin.updateBreakpointLines();
+        ICompositeNode n = NodeModelUtils.getNode(obj);
+        int line = n.getStartLine();
+        try {
+            IBreakpoint b = plugin.getBreakpointLines().get(line);
+            if (b != null && b.isEnabled()) {
+                return true;
+            }
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

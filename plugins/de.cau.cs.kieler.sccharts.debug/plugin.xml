@@ -123,5 +123,11 @@
              id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
     </editorContribution>
  </extension>
+    <extension
+          point="de.cau.cs.kieler.sccharts.klighd.hooks">
+       <hook
+             class="de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook">
+       </hook>
+    </extension>
  
 </plugin>
