@@ -13,9 +13,13 @@
  */
 package de.cau.cs.kieler.sccharts.sim.c;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -30,16 +34,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import com.google.common.io.Files;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
+import de.cau.cs.kieler.sc.SCPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
@@ -69,7 +76,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 8;
+    private static final int KIEM_PROPERTY_MAX = 9;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
@@ -123,6 +130,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
+    
+    /** The Constant KIEM_PROPERTY_IMPORTED_PROJECT_Path. */
+    private static final int KIEM_PROPERTY_IMPORTED_PROJECT_PATH = 8;
+    /** The Constant KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH. */
+    private static final String KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH = 
+            "Import sc Files";
+    /** The Constant KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH. */
+    private static final String KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH = "";
+    
+    //TODO LARS: PropertyModder/Developer
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -193,6 +210,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
                         KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_IMPORTED_PROJECT_PATH] =
+                new KiemProperty(KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH,
+                        KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH);
+        
+        
+
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -507,7 +530,6 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
-
             KielerCompilerContext lowLevelContext =
                     new KielerCompilerContext(lowLevelTransformations, stateOrSCG);
             lowLevelContext.setCreateDummyResource(true);
@@ -516,7 +538,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
 //            System.out.println("13");
-
+            
             String cSCChartCCode = lowLevelCompilationResult.getString();
 //            System.out.println("14 " + cSCChartCCode);
             if (cSCChartCCode == null) {
@@ -577,6 +599,49 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // generatedSCFiles.add(outputFileSCChart);
             generatedSCFiles.add("-I " + includePath);
             String modelName = "SCG";
+
+            // Copy files from the specified path to the temporary folder for compiling purposes
+            // Copies either from a plugin project or from an absolute path
+            String importedProjectPath = this.getProperties()[KIEM_PROPERTY_IMPORTED_PROJECT_PATH + KIEM_PROPERTY_DIFF]
+                    .getValue();
+            String bundleLocation = null;
+            if(importedProjectPath.startsWith("platform:/plugin/")) {
+                String folderDir = importedProjectPath.substring(17);
+                int index = folderDir.indexOf("/");
+                if(index > 0 && folderDir.length() > index + 1) {
+                    String fileDir = folderDir.substring(index + 1);
+                    folderDir = folderDir.substring(0, index);
+                    
+                    URL url = null;
+                    try {
+                        url = FileLocator.toFileURL(ModelUtil.resolveBundleOrWorkspaceFile(fileDir, folderDir));
+                        IPath path = new Path(url.getPath());
+                        bundleLocation = path.toOSString();            
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                    }
+                }
+                
+                
+            } else if(importedProjectPath.startsWith("file:/")) {
+                bundleLocation = importedProjectPath.substring(5);
+            }
+            
+            if(bundleLocation != null) {
+                
+                File srcDir = new File(bundleLocation);
+                try {
+                    for(File file : srcDir.listFiles()) {
+                        String dest = outputFolder + file.getName();
+                        File dstDir = new File(dest);
+                        Files.copy(file, dstDir);
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            
             if (myModel instanceof State) {
                 modelName = ((State) myModel).getId();
             }
@@ -641,7 +706,6 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         try {
             String out = jSONObject.toString();
-//            System.out.println("> " + out);
             cExecution.getInterfaceToExecution().write(out + "\n");
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
@@ -650,6 +714,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
+
+            while(cExecution.getInterfaceFromExecution().ready()) {
+                receivedMessage = cExecution.getInterfaceFromExecution().readLine();
+            }
 
 //            System.out.println("< " + receivedMessage);
             // if (debugConsole) {
