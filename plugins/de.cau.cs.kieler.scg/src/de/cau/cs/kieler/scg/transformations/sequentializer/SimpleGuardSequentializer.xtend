@@ -156,7 +156,7 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                             newSCG.nodes += it
                             AAMap.put(gd.target as Assignment, it)
                         ]                    
-                        if (gd.target.asAssignment.dependencies.filter(ControlDependency).empty) {
+                        if (gd.target.asAssignment.incoming.filter(ControlDependency).empty) {
                             nextAssignment = gd.target as Assignment
                         }
                     }
