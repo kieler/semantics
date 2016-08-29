@@ -241,6 +241,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
                     val newLabel = "label_" + labelNr++
                     labeledNodes.put(node, newLabel)
                     sb.appendInd(newLabel + ":\n")
+                    sb.appendInd("((void)0);\n");
                 
                 }                
             }
@@ -342,14 +343,22 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var prioList = <Integer> newArrayList
         var Node nodeHead
         var String labelHead
+        var max = -1;
+        
+        for(cFlow : fork.next) {
+            val prio = cFlow.target.getAnnotation("optPrioIDs") as IntAnnotation
+            if(max < prio.value) {
+                max = prio.value
+            }
+        }
         
         for (cFlow : fork.next) {
-            if (cFlow.equals(fork.next.head)) {
-                nodeHead = cFlow.target
-            }
             val nxt = cFlow.target
             val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
-            if(!cFlow.equals(fork.next.head)) {                
+            if (ann.value == max) {
+                nodeHead = cFlow.target
+            }
+            if(ann.value != max) {                
                 nodeList.add(nxt)
                 prioList.add(ann.value)
                 if (nxt.getStringAnnotationValue("regionName") == "") {
