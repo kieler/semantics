@@ -34,8 +34,8 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.KExpressionsStandaloneSetup;
 
 /**
  * JUnit Test Case for the kexpressions parser and serializer.

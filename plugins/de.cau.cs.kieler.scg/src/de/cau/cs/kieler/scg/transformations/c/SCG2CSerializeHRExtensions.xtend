@@ -14,10 +14,10 @@ package de.cau.cs.kieler.scg.transformations.c
 
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 
 /**
  * @author ssm

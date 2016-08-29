@@ -39,10 +39,10 @@ package de.cau.cs.kieler.sccharts;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSuspendAction()
  * @model

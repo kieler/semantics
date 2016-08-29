@@ -23,8 +23,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.DataDependencyType
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import java.util.List
 import de.cau.cs.kieler.scg.Entry
 import java.util.Map

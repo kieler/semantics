@@ -15,11 +15,10 @@
  */
 package de.cau.cs.kieler.circuit.impl;
 
+import de.cau.cs.kieler.annotations.impl.NamedObjectImpl;
 import de.cau.cs.kieler.circuit.CircuitPackage;
 import de.cau.cs.kieler.circuit.Link;
 import de.cau.cs.kieler.circuit.Linkable;
-
-import de.cau.cs.kieler.core.annotations.impl.NamedObjectImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

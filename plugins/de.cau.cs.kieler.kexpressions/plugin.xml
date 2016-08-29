@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://kieler.cs.cau.de/kexpressions/0.1.2"
+            class="de.cau.cs.kieler.kexpressions.KExpressionsPackage"
+            genModel="model/kexpressions.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated keffects -->
+      <package
+            uri="http://kieler.cs.cau.de/keffects/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage"
+            genModel="model/keffects.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated KEXT -->
+      <package
+            uri="http://kieler.cs.cau.de/kext/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.kext.KextPackage"
+            genModel="model/kext.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated kext -->
+      <package
+            uri="http://kieler.cs.cau.de/kext/0.1.0"
+            class="de.cau.cs.kieler.kexpressions.kext.KExtPackage"
+            genModel="model/kext.genmodel"/>
+   </extension>
+
+</plugin>

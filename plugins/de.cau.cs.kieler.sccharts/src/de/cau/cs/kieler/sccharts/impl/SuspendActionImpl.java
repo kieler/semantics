@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl#isWeak <em>Weak</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

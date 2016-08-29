@@ -13,15 +13,7 @@
  */
 package de.cau.cs.kieler.scg.transformations.guards
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * 
