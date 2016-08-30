@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
@@ -76,7 +77,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 9;
+    private static final int KIEM_PROPERTY_MAX = 10;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
@@ -135,19 +136,24 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final int KIEM_PROPERTY_IMPORTED_PROJECT_PATH = 8;
     /** The Constant KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH. */
     private static final String KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH = 
-            "Import sc Files";
+            "Imported Files";
     /** The Constant KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH. */
     private static final String KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH = "";
     
-    //TODO LARS: PropertyModder/Developer
-
+    /** The Constant KIEM_PROPERTY_DIRTY_DEVELOPER */
+    private static final int KIEM_PROPERTY_DIRTY_DEVELOPER = 9;
+    /** The Constant KIEM_PROPERTY_NAME_DIRTY_DEVELOPER */
+    private static final String KIEM_PROPERTY_NAME_DIRTY_DEVELOPER = "Modeler or Developer";
+    /** The Constant KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER */
+    private static final String KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER = "Modeler";
+    
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
 
     /** The source file size. */
     private long sourceFileSize = 0;
 
-    /** The executabe file size. */
+    /** The executable file size. */
     private long executabeFileSize = 0;
 
     /** The compile time for benchmark. */
@@ -213,6 +219,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_IMPORTED_PROJECT_PATH] =
                 new KiemProperty(KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH,
                         KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH);
+        String[] items = {"Modeler", "Developer"};
+        properties[KIEM_PROPERTY_DIRTY_DEVELOPER] =
+                new KiemProperty(KIEM_PROPERTY_NAME_DIRTY_DEVELOPER,
+                        new KiemPropertyTypeChoice(items), 
+                        KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER);
         
         
 
@@ -253,6 +264,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     public boolean isDirty() {
         // Calculate a dirty indicator from ALL model elements and their textual representation's
         // hash code.
+        String dirtyDeveloper = this.getProperties()[KIEM_PROPERTY_DIRTY_DEVELOPER + KIEM_PROPERTY_DIFF].getValue();
+        if(dirtyDeveloper != null && dirtyDeveloper.equals("Developer")) {
+            return true;
+        }
+        
         int newDirtyIndicator = 0;
         TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
         while (treeIterator.hasNext()) {
