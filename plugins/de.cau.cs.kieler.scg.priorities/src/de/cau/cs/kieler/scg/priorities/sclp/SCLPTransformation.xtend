@@ -228,22 +228,22 @@ class SCLPTransformation extends AbstractProductionTransformation{
             }
         }
         
-        //If the node has already been visited before, add a goto, instead of translating it again
-        if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
-        //if(labeledNodes.containsKey(node)) {
-            sb.appendInd("goto " + labeledNodes.get(node) + ";\n")
-            return
-        } else {
-            if(!labeledNodes.containsKey(node)) {
-                //If a node has multiple incoming control flows, create a goto label
-                val incomingControlFlows = node.incoming.filter(ControlFlow).toList
-                if(incomingControlFlows.size > 1) {
-                    val newLabel = "label_" + labelNr++
-                    labeledNodes.put(node, newLabel)
-                    sb.appendInd(newLabel + ":\n")
-                    sb.appendInd("((void)0);\n");
-                
-                }                
+        if(!(node instanceof Exit)) {
+            //If the node has already been visited before, add a goto, instead of translating it again
+            if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
+            //if(labeledNodes.containsKey(node)) {
+                sb.appendInd("goto " + labeledNodes.get(node) + ";\n")
+                return
+            } else {
+                if(!labeledNodes.containsKey(node)) {
+                    //If a node has multiple incoming control flows, create a goto label
+                    val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+                    if(incomingControlFlows.size > 1) {
+                        val newLabel = "label_" + labelNr++
+                        labeledNodes.put(node, newLabel)
+                        sb.appendInd(newLabel + ":\n")
+                    }                
+                }
             }
         }
         visited.put(node, true)
