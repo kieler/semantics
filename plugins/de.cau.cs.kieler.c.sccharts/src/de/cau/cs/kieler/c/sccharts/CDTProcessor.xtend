@@ -418,7 +418,7 @@ class CDTProcessor {
 
         // Switch statement state.
         val switchState = scc.createState => [ s |
-            s.id = trC + "_switch"
+            s.id = trC + "_switch_cs"
             s.label = "switch"
             state.parentRegion.states += s
         ]
@@ -635,7 +635,7 @@ class CDTProcessor {
 
         // While loop state.
         val whileState = scc.createState => [ s |
-            s.id = trC + "_while"
+            s.id = trC + "_while_cs"
             s.label = "while"
             state.parentRegion.states += s
         ]
@@ -737,7 +737,7 @@ class CDTProcessor {
 
         // do-while loop state
         val doWhileState = scc.createState => [ s |
-            s.id = trC + "_doWhile"
+            s.id = trC + "_doWhile_cs"
             s.label = "doWhile"
             state.parentRegion.states += s
         ]
@@ -856,20 +856,42 @@ class CDTProcessor {
             ]
 
             val initializer = declarator.children.filter(typeof(CASTEqualsInitializer)).head
-            if (initializer != null) {
-
+            if (initializer != null) {                
                 // A initialization of a variable which depends on an other variable does not become an entry action.
                 if (initializer.children.head instanceof IASTExpression) {
                     var exp = (initializer.children.head as IASTExpression)
                     val initChild = initializer.children.head
                     val childList = initChild.children.toList
                     
-                    if (initChild instanceof CASTIdExpression) {
-                       // Write into previous state if there also is an other variable initialization.
-                       if (parent.id.contains("_varInit")) {
+                    // Variable declarations inside a control structure must not become entry actions of the control
+                    // structure state, since the declaration is only done if the condition is met.
+                    if (parent.parentRegion.parentState.id.contains("_cs")) {
+                        if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
                            var entryAction = parent.createEntryAction
                            entryAction.createAssignment(value, exp.createKExpression)
-                       } 
+                           return parent
+                       } else {
+                           val initVarState = scc.createState => [ s |
+                                s.id = parent.id + "_varInit"
+                                s.label = createLabel(statement)
+                                parent.parentRegion.states += s
+                            ]
+                            var entryAction = initVarState.createEntryAction
+                            entryAction.createAssignment(value, exp.createKExpression)
+                            // Create transition which connects the parent state "state" to the codeState.
+                            createConnectingTransition(parent, initVarState, statement)
+                            return initVarState
+                       }
+                    
+                    }
+                    
+                    
+                    if (initChild instanceof CASTIdExpression) {
+                       // Write into previous state if there also is an other variable initialization.
+                       if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
+                           var entryAction = parent.createEntryAction
+                           entryAction.createAssignment(value, exp.createKExpression)
+                       }
                        // If this is not the case, create an extra state.
                        else {
                             val initVarState = scc.createState => [ s |
@@ -897,7 +919,7 @@ class CDTProcessor {
                             // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
                             if (parent.id.contains("_varInit")) {
                                var entryAction = parent.createEntryAction
-                                entryAction.createAssignment(value, exp.createKExpression)
+                               entryAction.createAssignment(value, exp.createKExpression)
                             }
                             // ... sonst separate state
                             else {
@@ -963,7 +985,7 @@ class CDTProcessor {
         
         // If construct state.
         val ifState = scc.createState => [ s |
-            s.id = trC + "_if"
+            s.id = trC + "_if_cs"
             s.label = "if"
             state.parentRegion.states += s
         ]
@@ -1172,7 +1194,7 @@ class CDTProcessor {
         
         // For loop state
         val forState = scc.createState => [ s |
-            s.id = trC + "_for"
+            s.id = trC + "_for_cs"
             s.label = "for"
             state.parentRegion.states += s
         ]
@@ -1242,33 +1264,41 @@ class CDTProcessor {
 //            state.outgoingTransitions += it
 //        ]
 
-        val iterateState = scc.createState => [ s |
-            s.id = trC + "T"
-            s.label = createLabel(statement)
-
-            forStateRegion.states += s
-        ]
+        
 
         // Iterate-action
         val body = f.body as CASTCompoundStatement
 
         val bodyState = body.transformCompound(condState, condState)
-        val iterateExp = (f.iterationExpression as CASTBinaryExpression).createDataflow(iterateState)
-        val iterateTrans = scc.createTransition => [
-            targetState = iterateState
-            if (bodyState.hasInnerStatesOrControlflowRegions) {
-                type = TransitionType::TERMINATION
-            } else {
-                immediate = true
-            }
-            bodyState.outgoingTransitions += it
-        ]
+        var State iterateExp = null
+        if (bodyState.id.contains("_varInit") || bodyState.id.contains("_binEx")) {
+            iterateExp = (f.iterationExpression as CASTBinaryExpression).createDataflow(bodyState)
+        } else {
+            val iterateState = scc.createState => [ s |
+                s.id = trC + "T"
+                s.label = createLabel(statement)
+    
+                forStateRegion.states += s
+            ]
+            iterateExp = (f.iterationExpression as CASTBinaryExpression).createDataflow(iterateState)
+            val iterateTrans = scc.createTransition => [
+                targetState = iterateState
+                if (bodyState.hasInnerStatesOrControlflowRegions) {
+                    type = TransitionType::TERMINATION
+                } else {
+                    immediate = true
+                }
+                bodyState.outgoingTransitions += it
+            ]
+        }
+        
+        
 
         val backTransition = scc.createTransition => [
             targetState = condState
             immediate = true
-            iterateExp.outgoingTransitions += it
         ]
+        iterateExp.outgoingTransitions += backTransition
         
         // Final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
@@ -1797,7 +1827,7 @@ class CDTProcessor {
     }
     
     // Creates the outgoing transition of a condState with the condition of the respective control structure.
-    private def Transition createConnectingTransition(State src, State dst, ASTAttributeOwner statement) {
+    private def Transition createConnectingTransition(State src, State dst, ASTNode statement) {
         // Connects switch statement to the parent.
         val connector = scc.createTransition => [
             targetState = dst

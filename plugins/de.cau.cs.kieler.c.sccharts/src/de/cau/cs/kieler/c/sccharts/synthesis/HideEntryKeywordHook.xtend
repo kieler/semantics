@@ -43,7 +43,7 @@ class HideEntryKeywordHook extends SynthesisHook {
     extension SCChartsExtension
 
     /** Keyword for the hide annotation */
-    public static final String HIDE_ANNOTATION_KEYWORD = "cgeneratedscchart";
+    public static final String HIDE_ANNOTATION_KEYWORD = "CbasedSCChart";
     
     /** The related synthesis option */
     public static final SynthesisOption HIDE_ENTRY = SynthesisOption.createCheckOption("Hide Entry Keyword",
@@ -54,7 +54,7 @@ class HideEntryKeywordHook extends SynthesisHook {
     }
     
     override processState(State state, KNode node) {
-        if (HIDE_ENTRY.booleanValue && state.getRootState.hasHideAnnotation) {
+        if (HIDE_ENTRY.booleanValue) { // && state.getRootState.hasHideAnnotation) {
             if (state.declarations.empty && !state.localActions.empty &&
                 state.localActions.size == state.entryActions.size) { // Remove content
             // Remove entry actions
