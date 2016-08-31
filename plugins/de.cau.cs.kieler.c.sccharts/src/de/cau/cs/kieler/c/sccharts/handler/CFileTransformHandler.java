@@ -57,7 +57,7 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
     // -------------------------------------------------------------------------
 
     public String getDiagramEditorID() {
-        return SCChartsPlugin.TEXT_EDITOR_ID;
+        return "de.cau.cs.kieler.sccharts.text.SCT";
     }
 
     // -------------------------------------------------------------------------

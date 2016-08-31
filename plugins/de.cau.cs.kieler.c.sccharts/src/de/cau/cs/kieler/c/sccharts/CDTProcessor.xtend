@@ -14,19 +14,19 @@
 package de.cau.cs.kieler.c.sccharts
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -72,8 +72,8 @@ import org.eclipse.cdt.core.model.ITranslationUnit
 import org.eclipse.cdt.internal.core.dom.parser.ASTNode
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.transformations.Termination
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
@@ -81,7 +81,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
 import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
 import org.eclipse.cdt.core.dom.ast.IASTExpressionList
-import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.Parameter
 import org.eclipse.cdt.internal.core.model.VariableDeclaration
 
 /**
@@ -300,11 +300,11 @@ class CDTProcessor {
         
         // In case the function is of type void, we need to create a endState as there is no return statement.
         if (returnDeclaration.type == ValueType.PURE) {
-            val endState = scc.createState => [s |
-                s.id = trC + "_end"
-                s.label = "End"
-                s.final = true
-                funcRegion.states += s
+            val endState = scc.createState => [
+                id = trC + "_end"
+                label = "End"
+                final = true
+                funcRegion.states += it
             ]
         
             // transition to endState
@@ -341,12 +341,11 @@ class CDTProcessor {
         var State newState
         if (state == null) {
             // initial state of a function
-            newState = scc.createState => [ s |
-                s.id = "_S" + trC + "_initFuncState"
-                s.label = "Init"
-                s.initial = true
-
-                parentState.regions.filter(typeof(ControlflowRegion)).head.states += s
+            newState = scc.createState => [
+                id = "_S" + trC + "_initFuncState"
+                label = "Init"
+                initial = true
+                parentState.regions.filter(typeof(ControlflowRegion)).head.states += it
             ]
         } else {
             newState = state
@@ -417,24 +416,24 @@ class CDTProcessor {
         var Boolean noBreakBefore = false // Saves whether the case before does not have a break statement.
 
         // Switch statement state.
-        val switchState = scc.createState => [ s |
-            s.id = trC + "_switch_cs"
-            s.label = "switch"
-            state.parentRegion.states += s
+        val switchState = scc.createState => [
+            id = trC + "_switch_cs"
+            label = "switch"
+            state.parentRegion.states += it
         ]
         
         // Region of switchState. It contains all states of the switch statement.
-        val switchStateRegion = scc.createControlflowRegion => [ region |
-                region.id = switchState.id + "_region"
-                region.label = ""
-                switchState.regions += region
+        val switchStateRegion = scc.createControlflowRegion => [
+                id = switchState.id + "_region"
+                label = ""
+                switchState.regions += it
         ]
 
-        val condState = scc.createState => [ s |
-            s.id = trC.toString + "_cond"
-            s.label = createLabel(statement) + "cond"
-            s.initial = true
-            switchStateRegion.states += s
+        val condState = scc.createState => [
+            id = trC.toString + "_cond"
+            label = createLabel(statement) + "cond"
+            initial = true
+            switchStateRegion.states += it
         ]
         
         // Create transition which connects the parent state "state" to the switchState.

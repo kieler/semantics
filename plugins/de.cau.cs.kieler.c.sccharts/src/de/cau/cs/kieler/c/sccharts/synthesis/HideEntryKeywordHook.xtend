@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.c.sccharts.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.Annotatable
+import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KText

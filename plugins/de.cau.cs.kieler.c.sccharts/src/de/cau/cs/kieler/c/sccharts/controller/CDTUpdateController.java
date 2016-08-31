@@ -20,8 +20,8 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.c.sccharts.CDTProcessor;
 import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature;
-import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.State;
