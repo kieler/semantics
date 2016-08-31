@@ -13,10 +13,13 @@
  */
  package de.cau.cs.kieler.scg.circuit
 
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Assignment
+import java.util.List
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 
 /**
@@ -25,7 +28,7 @@ import de.cau.cs.kieler.circuit.CircuitFactory
  * This class creates the initialization region of the circuit containing reset logic and input registers.
  * 
  */
-class CircuitInitialization {
+class CircuitInitialization implements Traceable {
 
 	def initialize(List<Declaration> declarations, Actor init, Actor logic, Actor newCircuit) {
 		
@@ -160,9 +163,9 @@ class CircuitInitialization {
 
 
 	
-	def createConstantZero(Actor actor, String outputPortName) {
+	def createConstantZero(Actor actor, String outputPortName, Assignment originalNode) {
 
-		val const0 = CircuitFactory::eINSTANCE.createActor
+		val const0 = CircuitFactory::eINSTANCE.createActor.trace(originalNode)
 		const0.name = outputPortName
 		const0.type = "gnd"
 
@@ -172,8 +175,8 @@ class CircuitInitialization {
 
 	}
 
-	def createConstantOne(Actor actor, String outputPortName) {
-		val const1 = CircuitFactory::eINSTANCE.createActor
+	def createConstantOne(Actor actor, String outputPortName, Assignment originalNode) {
+		val const1 = CircuitFactory::eINSTANCE.createActor.trace(originalNode)
 		const1.name = outputPortName
 		const1.type = "vcc"
 		
