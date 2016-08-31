@@ -142,7 +142,9 @@ class SCChartsExtension {
 
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
-        scope.sccAllStates; //eAllContents().filter(typeof(State))
+        //TODO:  getAllContainedStates iterator
+        //scope.sccAllContainedStates; 
+        scope.eAllContents().filter(typeof(State))
     //        scope.eAllContents().filter(typeof(State))
     }
 
@@ -632,7 +634,7 @@ class SCChartsExtension {
 
     // These are actions that expand to INNER content like during or exit actions.
     def boolean hasInnerActions(State state) {
-        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
+        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty || !state.entryActions.nullOrEmpty)
     }
 
     //========== TRANSITIONS ===========
@@ -968,6 +970,12 @@ class SCChartsExtension {
     def Assignment assignRelative(ValuedObject valuedObject, Expression newValue) {
         valuedObject.assign(valuedObject.reference.or(newValue))
     }
+    
+    
+    // Create a valued relative AND Assignment. 
+    def Assignment assignRelativeAnd(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.assign(valuedObject.reference.and(newValue))
+    }    
     
     // Creates a combine assignment if a combination function is given, otherwise
     // it creates a normal (fallback) assignment

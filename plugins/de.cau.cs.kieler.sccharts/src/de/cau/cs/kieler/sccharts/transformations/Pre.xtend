@@ -18,8 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
@@ -33,6 +31,8 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * SCCharts Pre Transformation.
@@ -59,11 +59,11 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID)
+        return Sets.newHashSet(SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID, SCChartsFeature::SIGNAL_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -105,6 +105,12 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
     def void transformPre(State state, State targetRootState) {
+        
+        // If the state has outgoing terminations, we need to finalize the during
+        // actions in case we end the states over these transitions
+         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+         val hasOutgoingTerminations = outgoingTerminations.length > 0
+         val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
@@ -114,27 +120,41 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                     action|
                         action.getPreExpression(valuedObject).hasNext ||
                             action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+
+        var ControlflowRegion preRegion = null;
+        var State preInit = null;
+        var State preWait = null;
+        var Transition transInitWait = null;
+        var Transition transWaitInit = null;
         
 		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+		    if (preRegion == null || preInit == null || preWait == null) {
+		        preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+		        preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
+                preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
+                if (complexPre) {
+                    preWait.setFinal
+                    preInit.setFinal
+                }
+                
+                transInitWait = preInit.createImmediateTransitionTo(preWait);
+                transWaitInit = preWait.createTransitionTo(preInit);
+            }
+		    
 		    // Tracing
             preValuedObject.setDefaultTrace
             
             val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
                 + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
             newPre.copyAttributes(preValuedObject)
-            val newAux = state.createVariable(GENERATED_PREFIX + "cur" + GENERATED_PREFIX 
+            val newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
                 + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
             newAux.copyAttributes(preValuedObject)
 
-            val preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
-            val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 
             //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
-            val transInitWait = preInit.createImmediateTransitionTo(preWait)
             transInitWait.addEffect(newAux.assign(preValuedObject.reference))
 
-            val transWaitInit = preWait.createTransitionTo(preInit)
             transWaitInit.addEffect(newPre.assign(newAux.reference))
 
             //            val transWaitDone = preWait.createTransitionTo(preDone)
@@ -165,7 +185,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                         (container as Assignment).expression = newPre.reference
                     } else if (container instanceof Emission) {
 
-                        // If PRE directly a emitted value
+                        // If PRE directly an emitted value
                         (container as Emission).newValue = newPre.reference
                     }
                 }

@@ -274,7 +274,8 @@ public final class CEC {
      *             the file not found exception
      */
     public static InputStream runSTRL(final URI strlFile) throws FileNotFoundException {
-        return new FileInputStream(strlFile.getPath());
+        String path = strlFile.toString();
+        return new FileInputStream(path);
     }
 
     // -------------------------------------------------------------------------
