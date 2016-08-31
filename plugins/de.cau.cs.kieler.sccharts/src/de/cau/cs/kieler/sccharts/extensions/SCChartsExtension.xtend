@@ -257,7 +257,7 @@ class SCChartsExtension {
     }
 
     def boolean isRootState(State state) {
-        state.parentRegion == null
+        state.parentRegion == null 
     }
 
     def dispatch State getRootState(State state) {
