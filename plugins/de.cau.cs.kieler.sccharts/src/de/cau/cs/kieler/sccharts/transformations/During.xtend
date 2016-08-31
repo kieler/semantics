@@ -100,8 +100,75 @@ class During extends AbstractExpansionTransformation implements Traceable {
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
+
+
+
+
+    // Traverse all super states with outgoing terminations that have actions to transform. 
+    // This default implementation will create / use a complex final state
+    def void transformDuring(State state, State targetRootRegion) {
+
+
+         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+         val hasOutgoingTerminations = outgoingTerminations.length > 0
+
+        // If the state has outgoing terminations, we need to finalize the during
+        // actions in case we end the states over these transitions
+        val complexDuring = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
+
+        // Create the body of the dummy state - containing the during action
+        // For every during action: Create a region
+        for (duringAction : state.duringActions.immutableCopy) {
+            // Tracing
+            duringAction.setDefaultTrace;
+            
+            val immediateDuringAction = duringAction.isImmediate
+            val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
+            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+            var Transition duringTransition = null
+            if (immediateDuringAction) {
+                val secondState = region.createState(GENERATED_PREFIX + "S");
+                duringTransition = initialState.createTransitionTo(secondState)
+
+                // because we have a second state, we need another transition
+                secondState.createTransitionTo(initialState)
+                if (complexDuring) {
+                    secondState.setFinal
+                }
+            } else {
+
+                // Self loop in the non-immediate case
+                duringTransition = initialState.createTransitionTo(initialState)
+            }
+    
+            if (complexDuring) {
+                 initialState.setFinal
+            }
+
+            duringTransition.setDelay(duringAction.delay);
+            duringTransition.setImmediate(immediateDuringAction);
+            duringTransition.setTrigger(duringAction.trigger.copy);
+            for (action : duringAction.effects) {
+                duringTransition.addEffect(action.copy);
+            }
+
+            // After transforming during actions, erase them
+            state.localActions.remove(duringAction)
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, State targetRootState) {
+    def void transformDuringOld(State state, State targetRootState) {
 
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 
@@ -126,18 +193,20 @@ class During extends AbstractExpansionTransformation implements Traceable {
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
             if ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate) {
-                state.transformDuringComplexFinalStates(targetRootState)
+                state.transformDuringComplexFinalStatesOld(targetRootState)
             } else {
-                state.transformDuringSimple(targetRootState)
+                state.transformDuringSimpleOld(targetRootState)
             }
 
         }
     }
+        
     
-
-    // Traverse all simple states or super states w/o outgoing terminations that have actions to 
+    
+    
+       // Traverse all simple states or super states w/o outgoing terminations that have actions to 
     // transform
-    def void transformDuringSimple(State state, State targetRootRegion) {
+    def void transformDuringSimpleOld(State state, State targetRootRegion) {
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -169,11 +238,14 @@ class During extends AbstractExpansionTransformation implements Traceable {
             state.localActions.remove(duringAction)
         }
     }
-
-
-    // Traverse all super states with outgoing terminations that have actions to transform. 
+    
+    
+    
+    
+    
+        // Traverse all super states with outgoing terminations that have actions to transform. 
     // This default implementation will create / use a complex final state
-    def void transformDuringComplexFinalStates(State state, State targetRootRegion) {
+    def void transformDuringComplexFinalStatesOld(State state, State targetRootRegion) {
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -216,6 +288,9 @@ class During extends AbstractExpansionTransformation implements Traceable {
             state.localActions.remove(duringAction)
         }
     }
+    
+    
+    
     
 
     // Traverse all super states with outgoing terminations that have actions to transform. 

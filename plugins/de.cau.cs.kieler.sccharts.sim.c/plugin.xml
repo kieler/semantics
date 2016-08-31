@@ -14,7 +14,7 @@
       <executionFile
             file="execution/sccharts_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>
@@ -32,7 +32,7 @@
       <executionFile
             file="execution/sccharts_c_no_visualization.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="99">
          </editor>
@@ -50,7 +50,7 @@
       <executionFile
             file="execution/sccharts_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>
@@ -68,7 +68,7 @@
       <executionFile
             file="execution/sccharts_c_novis.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>
@@ -86,7 +86,7 @@
       <executionFile
             file="execution/scg_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>
@@ -104,7 +104,7 @@
       <executionFile
             file="execution/scg_c_novis.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               id="de.cau.cs.kieler.sccharts.text.SCT"
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>

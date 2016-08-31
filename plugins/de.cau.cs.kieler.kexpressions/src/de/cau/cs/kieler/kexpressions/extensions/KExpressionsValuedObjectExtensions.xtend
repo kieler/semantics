@@ -51,6 +51,14 @@ class KExpressionsValuedObjectExtensions {
             null
     }     
     
+    def asVariableDeclaration(EObject eObject) {
+        eObject as VariableDeclaration
+    }
+    
+    def asReferenceDeclaration(EObject eObject) {
+        eObject as ReferenceDeclaration
+    }
+    
     // Create a ValuedObjectReference to a valuedObject
     def ValuedObjectReference reference(ValuedObject valuedObject) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference() => [
@@ -67,9 +75,9 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.variableDeclaration.type
     }
     
-    def public ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
+    def ImmutableList<ValuedObject> getValuedObjects(EObject eObject) {
         ImmutableList.copyOf(<ValuedObject> newArrayList => [ list |
-            eObject.eContents.filter(typeof(Declaration)).forEach[ list += valuedObjects ]
+            eObject.eContents.filter(Declaration).forEach[ list += valuedObjects ]
         ])
     }  
     
@@ -79,27 +87,27 @@ class KExpressionsValuedObjectExtensions {
     }  
     
     def boolean isInput(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isInput
     }
 
     def boolean isOutput(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isOutput
     }
 
     def boolean isStatic(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isStatic
     }
 
     def boolean isConst(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isConst
     }
 
     def boolean isExtern(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isExtern
     }
 
@@ -108,7 +116,7 @@ class KExpressionsValuedObjectExtensions {
     }
 
     def boolean isSignal(ValuedObject valuedObject) {
-        if (!valuedObject.isModelReference) return false
+        if (valuedObject.isModelReference) return false
         valuedObject.variableDeclaration.isSignal
     }   
     
@@ -123,10 +131,12 @@ class KExpressionsValuedObjectExtensions {
     }     
 
     def Declaration attach(Declaration declaration, ValuedObject valuedObject) {
-        declaration => [
-            valuedObjects += valuedObject
-        ]
-    }     
+        declaration => [ valuedObjects += valuedObject ]
+    } 
+    
+    def ValuedObject attachTo(ValuedObject valuedObject, Declaration declaration) {
+        valuedObject => [ declaration.valuedObjects += valuedObject ]
+    }         
     
     
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {

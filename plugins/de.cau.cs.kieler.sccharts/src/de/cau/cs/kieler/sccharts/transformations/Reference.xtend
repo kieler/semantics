@@ -89,6 +89,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
     static private final String PROPAGATE_ANNOTATION = "propagate"
+    
+    static private final val CALLVO_NAME = GENERATED_PREFIX + "call" 
+    private var callCounter = 0
 
     private val propagatedBindings = <String, Binding>newHashMap
 
@@ -97,6 +100,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
+        callCounter = 0
+        
         val targetRootState = rootState.fixAllPriorities;
         // Transform dataflows first
 		targetRootState.transformDataflows
@@ -107,8 +112,32 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         
         targetRootState;
     }
+    
+    def void transformReference(State state, State rootState) {
+        val referenceDeclaration = createReferenceDeclaration => [
+            rootState.declarations += it
+            reference = state.referencedScope
+        ]
+        val rVO = createValuedObject(CALLVO_NAME + callCounter).attachTo(referenceDeclaration)
+        callCounter++
+        
+        val callRegion = state.createControlflowRegion("")
+        val crInitial = callRegion.createInitialState(GENERATED_PREFIX + "init")
+        val crFinal = callRegion.createState(GENERATED_PREFIX + "do")
+        val crTransition = crInitial.createImmediateTransitionTo(crFinal)
+        crFinal.createTransitionTo(crInitial) 
+        
+        val crAction = KEffectsFactory.eINSTANCE.createReferenceCallEffect 
+        crAction.valuedObject = rVO
+        state.parameters.forEach[ crAction.parameters += it.copy ]
+        
+        crTransition.addEffect(crAction)       
+        
+        state.referencedScope = null    
+        state.parameters.removeIf[true] 
+    }
 
-    def void transformReference(State state, State targetRootState) {        
+    def void transformReference2(State state, State targetRootState) {        
         state.setDefaultTrace
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.

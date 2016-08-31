@@ -50,6 +50,7 @@ class SynchronizerSelector {
         typeof(InstantaneousSynchronizer),
         typeof(DepthSynchronizer),
         typeof(SurfaceSynchronizer),
+        typeof(MasterSlaveSynchronizer),
         typeof(DepthJoinSynchronizer),
         typeof(SurfaceSynchronizer)
     )

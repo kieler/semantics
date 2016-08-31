@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /**
  * @author ssm
@@ -45,5 +46,10 @@ class KEffectsExtensions {
             it.expression = expression
         ]
     }
+    
+    def ReferenceCallEffect createReferenceCallEffect() {
+        KEffectsFactory::eINSTANCE.createReferenceCallEffect()
+    }
+    
 
 }

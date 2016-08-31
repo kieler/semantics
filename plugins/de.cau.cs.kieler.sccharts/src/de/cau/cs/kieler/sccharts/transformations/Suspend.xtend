@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -39,9 +39,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
  */
 class Suspend extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::SUSPEND_ID
     }
@@ -62,30 +62,30 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
         return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension KExpressionsCreateExtensions
 
     @Inject
     extension KExpressionsComplexCreateExtensions
-    
+
     @Inject
-    extension KExpressionsDeclarationExtensions    
-    
+    extension KExpressionsDeclarationExtensions
+
     @Inject
-    extension KExpressionsValuedObjectExtensions   
-    
+    extension KExpressionsValuedObjectExtensions
+
     @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--                          S U S P E N D                              --
-    //-------------------------------------------------------------------------
-    //@requires: during
-    //@run-before: entry (because these are considered here)
+    // -------------------------------------------------------------------------
+    // --                          S U S P E N D                              --
+    // -------------------------------------------------------------------------
+    // @requires: during
+    // @run-before: entry (because these are considered here)
     // For a suspend statement of state S create a new top-level region
     // with two states (NotSuspended (initial) and Suspended). Connect them
     // with the suspension trigger.
@@ -107,6 +107,49 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformSuspend(State state, State targetRootState) {
+
+        val suspendList = state.suspendActions.filter[!weak].toList.immutableCopy
+
+        if (suspendList.size == 0) {
+            // No suspends, exit here
+            return
+        }
+
+        // One unique suspend flag
+        val suspendFlag = state.createValuedObject(GENERATED_PREFIX + "enabled", createBoolDeclaration).uniqueName
+
+        // Do not consider other suspends as actions
+        val allInnerActions = state.allContainedActions.filter(e|!(e instanceof SuspendAction))
+        for (action : allInnerActions) {
+            action.setTrigger(action.trigger.and(suspendFlag.reference))
+        }
+
+        // DO THE FOLLOWING ONLY _AFTER_ SUSPENDING ALL INNER ACTIONS!!! WE DO NOT WANT TO SUSPEND THE RESET ACTION!
+        // Immediate during action setting suspend flag to (absolute) true in each tick!
+        val resetDuringAction = state.createDuringAction
+        resetDuringAction.setImmediate(true)
+        resetDuringAction.setTrigger(null)
+        resetDuringAction.addEffect(suspendFlag.assign(TRUE))
+
+        for (suspension : suspendList) {
+            suspension.setDefaultTrace
+            val suspendTrigger = suspension.trigger;
+            val notSuspendTrigger = not(suspendTrigger)
+            val immediateSuspension = suspension.isImmediate;
+
+            // add during action AFTER modifying allInnerActions so that we
+            // do not modify our new during action
+            val duringAction = state.createDuringAction
+            duringAction.setImmediate(immediateSuspension)
+            duringAction.setTrigger(null)
+            duringAction.addEffect(suspendFlag.assignRelativeAnd(notSuspendTrigger))
+
+            // remove suspend action
+            state.localActions.remove(suspension)
+        }
+    }
+
+    def void transformSuspendOld(State state, State targetRootState) {
         for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
             suspension.setDefaultTrace
             val suspendTrigger = suspension.trigger;

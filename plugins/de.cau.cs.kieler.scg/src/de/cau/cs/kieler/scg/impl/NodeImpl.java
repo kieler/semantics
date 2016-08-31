@@ -3,6 +3,8 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.scg.Dependency;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
@@ -34,6 +37,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class NodeImpl extends AnnotatableImpl implements Node {
+    /**
+     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected static final String ID_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getId()
+     * @generated
+     * @ordered
+     */
+    protected String id = ID_EDEFAULT;
+
     /**
      * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
      * <!-- begin-user-doc -->
@@ -91,6 +114,27 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     protected EClass eStaticClass() {
         return ScgPackage.Literals.NODE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setId(String newId) {
+        String oldId = id;
+        id = newId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__ID, oldId, id));
     }
 
     /**
@@ -177,6 +221,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case ScgPackage.NODE__ID:
+                return getId();
             case ScgPackage.NODE__INCOMING:
                 return getIncoming();
             case ScgPackage.NODE__IS_INITIAL:
@@ -196,6 +242,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case ScgPackage.NODE__ID:
+                setId((String)newValue);
+                return;
             case ScgPackage.NODE__INCOMING:
                 getIncoming().clear();
                 getIncoming().addAll((Collection<? extends Link>)newValue);
@@ -219,6 +268,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case ScgPackage.NODE__ID:
+                setId(ID_EDEFAULT);
+                return;
             case ScgPackage.NODE__INCOMING:
                 getIncoming().clear();
                 return;
@@ -240,6 +292,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case ScgPackage.NODE__ID:
+                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case ScgPackage.NODE__INCOMING:
                 return incoming != null && !incoming.isEmpty();
             case ScgPackage.NODE__IS_INITIAL:
@@ -256,11 +310,45 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @generated
      */
     @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Identifiable.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.NODE__ID: return KExpressionsPackage.IDENTIFIABLE__ID;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Identifiable.class) {
+            switch (baseFeatureID) {
+                case KExpressionsPackage.IDENTIFIABLE__ID: return ScgPackage.NODE__ID;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (isInitial: ");
+        result.append(" (id: ");
+        result.append(id);
+        result.append(", isInitial: ");
         result.append(isInitial);
         result.append(')');
         return result.toString();

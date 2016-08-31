@@ -9,6 +9,7 @@ import de.cau.cs.kieler.annotations.CommentAnnotation
 import java.util.List
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import java.util.Set
 
 /**
  * Annotations extensions
@@ -60,12 +61,17 @@ class AnnotationsExtensions {
         ]
     }
 
-		
 	def public void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
 	        target.annotations += it.copy
 	    ]
 	}
+
+    def public void copyAnnotations(Annotatable source, Annotatable target, Set<String> filter) {
+        source.annotations.filter[ filter.contains(it.name) ].forEach[
+            target.annotations += it.copy
+        ]
+    }
 	
 	def public boolean hasAnnotation(Annotatable annotatable, String name) {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
