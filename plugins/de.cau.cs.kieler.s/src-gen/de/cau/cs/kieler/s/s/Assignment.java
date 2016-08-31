@@ -13,6 +13,6 @@ package de.cau.cs.kieler.s.s;
  * @model
  * @generated
  */
-public interface Assignment extends Instruction, de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+public interface Assignment extends Instruction, de.cau.cs.kieler.kexpressions.keffects.Assignment
 {
 } // Assignment

@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -26,12 +26,13 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * SCCharts Abort WTO Transformation. This may require an advanced SCG compiler that can handle depth join.
@@ -203,7 +204,7 @@ class AbortWTO extends AbstractExpansionTransformation {
                     // Inside every region create a _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final]) {
+                    for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
@@ -250,6 +251,7 @@ class AbortWTO extends AbstractExpansionTransformation {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
+                    ctrlTransition.setLowestPriority
                     if (transition.immediate2) {
 
                         // if the transition was immediate then set the ctrl transition to be immediate
@@ -530,6 +532,16 @@ class AbortWTO extends AbstractExpansionTransformation {
                 state.parentRegion.states.remove(outgoingConnectorState)
             }
 
+        }
+        else {
+            // Because we do not have (abortable) internal controlflow, change all strong aborts to be "weak" aborts
+            // This can only happen for entry or exit actions inside a state with no further internal behavior
+            // because entry and exit actions (at this point) cannot be aborted (TODO: think about additional before and after actions!)
+            for (transition : state.outgoingTransitions) {
+                if (transition.isTypeStrongAbort) {
+                    transition.setTypeWeakAbort
+                }
+            }
         }
     }
 

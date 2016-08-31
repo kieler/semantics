@@ -18,7 +18,7 @@ public class SCTStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.core.kexpressions.text.KEXTStandaloneSetup.doSetup();
+		de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

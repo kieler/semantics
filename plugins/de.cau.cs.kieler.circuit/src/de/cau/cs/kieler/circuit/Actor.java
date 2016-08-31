@@ -14,8 +14,9 @@
 
 package de.cau.cs.kieler.circuit;
 
-import de.cau.cs.kieler.core.annotations.NamedObject;
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.annotations.NamedObject;
 
 /**
  * <!-- begin-user-doc -->

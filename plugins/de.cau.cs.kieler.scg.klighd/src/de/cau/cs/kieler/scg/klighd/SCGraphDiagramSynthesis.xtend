@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.scg.klighd
 
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
@@ -92,6 +92,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.SCGAnnotations
 import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
 import com.google.common.collect.Multimap
+import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -384,6 +385,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     /** The root node */
     private KNode rootNode;
+    private String mainEntry
     
     private CompilationResult compilationResult;
     private var Set<Node> PIL_Nodes = <Node> newHashSet
@@ -442,6 +444,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             rootNode = node
             isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
             isGuardSCG = scg.hasAnnotation(SCGFeatures::GUARDS_ID) 
+            mainEntry = scg.getStringAnnotationValue("main")
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
             if (topdown)
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
@@ -580,7 +583,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (SHOW_DEPENDENCIES.booleanValue && !(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)) {
-                scg.nodes.filter(Assignment).forEach[
+                scg.nodes.forEach[
                     it.dependencies.forEach[ synthesizeDependency ]
                 ]
             }
@@ -861,8 +864,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
+            
+            if (!entry.id.nullOrEmpty) {
+                val label = entry.id.createLabel(node).associateWith(entry).
+                    configureOutsideTopCenteredNodeLabel(entry.id, 7, KlighdConstants::DEFAULT_FONT_NAME)
+                 label.KRendering.foreground = "black".color
+                 node.setLayoutOption(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::outsideTopCenter)
+                 label.setLayoutOption(LayoutOptions::NODE_LABEL_PLACEMENT, null)
+                 if (entry.id.equals(mainEntry)) {
+                     label.KRendering.fontBold = true
+                 }
+            }
+            
+            
             // Add ports for control-flow routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            if (isGuardSCG) {
+                node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
+            } else {
+                node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            }
+            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
+            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -898,7 +920,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             // Add ports for control-flow routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            if (isGuardSCG) {
+                node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
+            } else {
+                node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            }
+            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
+            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -1281,7 +1309,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(80f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULE) {
-            kContainer.addRoundedRectangle(1, 1, 7) => [
+            kContainer.addRoundedRectangle(1, 1, 2) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
             ]

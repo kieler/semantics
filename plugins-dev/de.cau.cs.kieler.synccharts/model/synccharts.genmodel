@@ -5,7 +5,7 @@
     modelDirectory="/de.cau.cs.kieler.synccharts/src" modelPluginID="de.cau.cs.kieler.synccharts"
     templateDirectory="de.cau.cs.kieler.synccharts/templates" dynamicTemplates="true"
     redirection="" modelName="Synccharts" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    complianceLevel="5.0" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <foreignModel>synccharts.ecore</foreignModel>
   <genPackages prefix="Synccharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="kixs" ecorePackage="synccharts.ecore#/">

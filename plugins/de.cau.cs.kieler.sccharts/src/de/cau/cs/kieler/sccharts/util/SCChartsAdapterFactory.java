@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.kexpressions.Identifiable;
-import de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Identifiable;
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -479,13 +479,13 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
 				/**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.annotations.Annotatable
+     * @see de.cau.cs.kieler.annotations.Annotatable
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
@@ -493,13 +493,13 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope <em>Declaration Scope</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.DeclarationScope <em>Declaration Scope</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.text.kext.DeclarationScope
+     * @see de.cau.cs.kieler.kexpressions.kext.DeclarationScope
      * @generated
      */
     public Adapter createDeclarationScopeAdapter() {
@@ -507,13 +507,13 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Identifiable <em>Identifiable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Identifiable <em>Identifiable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Identifiable
+     * @see de.cau.cs.kieler.kexpressions.Identifiable
      * @generated
      */
     public Adapter createIdentifiableAdapter() {

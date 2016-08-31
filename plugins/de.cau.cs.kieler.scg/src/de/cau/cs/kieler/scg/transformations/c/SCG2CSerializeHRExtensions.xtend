@@ -14,10 +14,11 @@ package de.cau.cs.kieler.scg.transformations.c
 
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.BoolValue
 
 /**
  * @author ssm
@@ -53,14 +54,18 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
     }    
     
     public override CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
-        var res = valuedObjectPrefix + assignment.valuedObject.name
-        if (!assignment.indices.nullOrEmpty) {
-            for(index : assignment.indices) {
-                res = res + "[" + index.serialize + "]"
-            }
-        }
+        var res = ""
         
-        res = res + assignment.operator.serializeAssignOperator
+        if (assignment.valuedObject != null) {
+            res = res + valuedObjectPrefix + assignment.valuedObject.name
+            if (!assignment.indices.nullOrEmpty) {
+                for(index : assignment.indices) {
+                    res = res + "[" + index.serialize + "]"
+                }
+            }
+            
+            res = res + assignment.operator.serializeAssignOperator
+        }
         if (expressionStr != null) {
             res = res + expressionStr
         }
@@ -74,5 +79,11 @@ class SCG2CSerializeHRExtensions extends SCGSerializeHRExtensions {
         val s = expression.subExpressions.head.serializeHR
         valuedObjectPrefix = prefix
         return s
-    }       
+    }  
+    
+    override dispatch CharSequence serialize(BoolValue expression) {
+        if(expression.value == true) return "1"
+        return "0"
+    }
+    
 }

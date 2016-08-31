@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.impl;
 
@@ -22,22 +18,22 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class InterfaceDeclarationImpl extends EObjectImpl implements InterfaceDeclaration {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected InterfaceDeclarationImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return KExpressionsPackage.Literals.INTERFACE_DECLARATION;
-	}
+        return KExpressionsPackage.Literals.INTERFACE_DECLARATION;
+    }
 
 } //InterfaceDeclarationImpl

@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.

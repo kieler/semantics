@@ -13,19 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.prom
 
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.BooleanAnnotation
-import de.cau.cs.kieler.core.annotations.FloatAnnotation
-import de.cau.cs.kieler.core.annotations.IntAnnotation
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.BooleanAnnotation
+import de.cau.cs.kieler.annotations.FloatAnnotation
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * An analyzer for wrapper code annotations in SCT files.
@@ -55,7 +55,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                     // that is neither input nor output
                     for (annotation : decl.annotations) {
                          if(annotation.name == EXPLICIT_WRAPPER_CODE_ANNOTATION_NAME) {
-                             LaunchConfiguration.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
+                             KiCoLaunchConfig.writeToConsole('''Warning: Variable '«getVariableName(decl)»' is neither input nor output but has an explicit wrapper code annotation.''');
                          }
                     }
                 }

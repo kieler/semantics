@@ -9,12 +9,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.text3.Sct3StandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -40,7 +40,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.STransformation";
 
     /** Create an injector to load the transformation via guice. */
-    private static Injector injector = new Sct3StandaloneSetup()
+    private static Injector injector = new SCTStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
     // -------------------------------------------------------------------------

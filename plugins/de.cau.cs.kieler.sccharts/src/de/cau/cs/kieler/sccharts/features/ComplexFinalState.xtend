@@ -48,8 +48,8 @@ class ComplexFinalState extends Feature {
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             if (state.isFinal) {
-                if (((!state.outgoingTransitions.nullOrEmpty && state.allContainedStates.size > 0))
-                 || state.entryActions.size > 0 || state.duringActions.size > 0 || state.exitActions.size > 0) {
+                if (((!state.outgoingTransitions.nullOrEmpty || state.allContainedStates.size > 0))
+                 || state.duringActions.size > 0 || state.exitActions.size > 0) {
                      return true
                  }
             }

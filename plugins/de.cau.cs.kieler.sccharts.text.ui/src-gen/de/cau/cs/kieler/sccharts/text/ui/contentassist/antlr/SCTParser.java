@@ -93,6 +93,7 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPragmasAccess().getGroup_3(), "rule__Pragmas__Group_3__0");
 					put(grammarAccess.getPragmasAccess().getGroup_3_3(), "rule__Pragmas__Group_3_3__0");
 					put(grammarAccess.getPragmasAccess().getGroup_4(), "rule__Pragmas__Group_4__0");
+					put(grammarAccess.getPragmasAccess().getGroup_5(), "rule__Pragmas__Group_5__0");
 					put(grammarAccess.getRootStateAccess().getGroup(), "rule__RootState__Group__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_8_0(), "rule__State__Group_8_0__0");
@@ -268,6 +269,8 @@ public class SCTParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPragmasAccess().getNameAssignment_4_1(), "rule__Pragmas__NameAssignment_4_1");
 					put(grammarAccess.getPragmasAccess().getValuesAssignment_4_2(), "rule__Pragmas__ValuesAssignment_4_2");
 					put(grammarAccess.getPragmasAccess().getValuesAssignment_4_4(), "rule__Pragmas__ValuesAssignment_4_4");
+					put(grammarAccess.getPragmasAccess().getNameAssignment_5_1(), "rule__Pragmas__NameAssignment_5_1");
+					put(grammarAccess.getPragmasAccess().getValuesAssignment_5_2(), "rule__Pragmas__ValuesAssignment_5_2");
 					put(grammarAccess.getRootStateAccess().getAnnotationsAssignment_0(), "rule__RootState__AnnotationsAssignment_0");
 					put(grammarAccess.getRootStateAccess().getIdAssignment_2(), "rule__RootState__IdAssignment_2");
 					put(grammarAccess.getRootStateAccess().getLabelAssignment_3(), "rule__RootState__LabelAssignment_3");

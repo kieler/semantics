@@ -25,7 +25,6 @@ import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
@@ -34,7 +33,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -134,13 +133,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
 
             // Add declarations
-            for (declaration : state.variableDeclarations) {
+            for (declaration : state.declarations) {
                 node.addDeclarationLabel(declaration.serializeComponents(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                     associateWith(declaration);
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)];
                 ]
-            }
+            }           
 
             // Add actions
             for (action : state.localActions) {

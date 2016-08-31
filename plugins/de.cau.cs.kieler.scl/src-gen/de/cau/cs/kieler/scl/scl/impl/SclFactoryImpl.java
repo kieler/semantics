@@ -32,197 +32,197 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class SclFactoryImpl extends EFactoryImpl implements SclFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static SclFactory init() {
-		try {
-			SclFactory theSclFactory = (SclFactory)EPackage.Registry.INSTANCE.getEFactory(SclPackage.eNS_URI);
-			if (theSclFactory != null) {
-				return theSclFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new SclFactoryImpl();
-	}
+        try {
+            SclFactory theSclFactory = (SclFactory)EPackage.Registry.INSTANCE.getEFactory(SclPackage.eNS_URI);
+            if (theSclFactory != null) {
+                return theSclFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new SclFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SclFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case SclPackage.SCL_PROGRAM: return createSCLProgram();
-			case SclPackage.STATEMENT: return createStatement();
-			case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
-			case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
-			case SclPackage.ASSIGNMENT: return createAssignment();
-			case SclPackage.CONDITIONAL: return createConditional();
-			case SclPackage.GOTO: return createGoto();
-			case SclPackage.STATEMENT_SEQUENCE: return createStatementSequence();
-			case SclPackage.THREAD: return createThread();
-			case SclPackage.PARALLEL: return createParallel();
-			case SclPackage.PAUSE: return createPause();
-			case SclPackage.STATEMENT_SCOPE: return createStatementScope();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case SclPackage.SCL_PROGRAM: return createSCLProgram();
+            case SclPackage.STATEMENT: return createStatement();
+            case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
+            case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
+            case SclPackage.ASSIGNMENT: return createAssignment();
+            case SclPackage.CONDITIONAL: return createConditional();
+            case SclPackage.GOTO: return createGoto();
+            case SclPackage.STATEMENT_SEQUENCE: return createStatementSequence();
+            case SclPackage.THREAD: return createThread();
+            case SclPackage.PARALLEL: return createParallel();
+            case SclPackage.PAUSE: return createPause();
+            case SclPackage.STATEMENT_SCOPE: return createStatementScope();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCLProgram createSCLProgram() {
-		SCLProgramImpl sclProgram = new SCLProgramImpl();
-		return sclProgram;
-	}
+        SCLProgramImpl sclProgram = new SCLProgramImpl();
+        return sclProgram;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Statement createStatement() {
-		StatementImpl statement = new StatementImpl();
-		return statement;
-	}
+        StatementImpl statement = new StatementImpl();
+        return statement;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EmptyStatement createEmptyStatement() {
-		EmptyStatementImpl emptyStatement = new EmptyStatementImpl();
-		return emptyStatement;
-	}
+        EmptyStatementImpl emptyStatement = new EmptyStatementImpl();
+        return emptyStatement;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public InstructionStatement createInstructionStatement() {
-		InstructionStatementImpl instructionStatement = new InstructionStatementImpl();
-		return instructionStatement;
-	}
+        InstructionStatementImpl instructionStatement = new InstructionStatementImpl();
+        return instructionStatement;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Assignment createAssignment() {
-		AssignmentImpl assignment = new AssignmentImpl();
-		return assignment;
-	}
+        AssignmentImpl assignment = new AssignmentImpl();
+        return assignment;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Conditional createConditional() {
-		ConditionalImpl conditional = new ConditionalImpl();
-		return conditional;
-	}
+        ConditionalImpl conditional = new ConditionalImpl();
+        return conditional;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Goto createGoto() {
-		GotoImpl goto_ = new GotoImpl();
-		return goto_;
-	}
+        GotoImpl goto_ = new GotoImpl();
+        return goto_;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public StatementSequence createStatementSequence() {
-		StatementSequenceImpl statementSequence = new StatementSequenceImpl();
-		return statementSequence;
-	}
+        StatementSequenceImpl statementSequence = new StatementSequenceImpl();
+        return statementSequence;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public de.cau.cs.kieler.scl.scl.Thread createThread() {
-		ThreadImpl thread = new ThreadImpl();
-		return thread;
-	}
+        ThreadImpl thread = new ThreadImpl();
+        return thread;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Parallel createParallel() {
-		ParallelImpl parallel = new ParallelImpl();
-		return parallel;
-	}
+        ParallelImpl parallel = new ParallelImpl();
+        return parallel;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Pause createPause() {
-		PauseImpl pause = new PauseImpl();
-		return pause;
-	}
+        PauseImpl pause = new PauseImpl();
+        return pause;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public StatementScope createStatementScope() {
-		StatementScopeImpl statementScope = new StatementScopeImpl();
-		return statementScope;
-	}
+        StatementScopeImpl statementScope = new StatementScopeImpl();
+        return statementScope;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SclPackage getSclPackage() {
-		return (SclPackage)getEPackage();
-	}
+        return (SclPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static SclPackage getPackage() {
-		return SclPackage.eINSTANCE;
-	}
+        return SclPackage.eINSTANCE;
+    }
 
 } //SclFactoryImpl

@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.circuit;
 
-import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.NamedObject;
 
 
 /**

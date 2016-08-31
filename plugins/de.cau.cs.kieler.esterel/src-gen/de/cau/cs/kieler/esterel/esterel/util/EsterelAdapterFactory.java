@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
@@ -2361,13 +2361,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.Annotatable
+   * @see de.cau.cs.kieler.annotations.Annotatable
    * @generated
    */
   public Adapter createAnnotatableAdapter()

@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.BranchType;
@@ -1036,6 +1036,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Add supertypes to classes
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        nodeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());

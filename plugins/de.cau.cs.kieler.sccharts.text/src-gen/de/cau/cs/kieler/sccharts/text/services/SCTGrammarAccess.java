@@ -12,10 +12,10 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import de.cau.cs.kieler.core.kexpressions.text.services.KEXTGrammarAccess;
-import de.cau.cs.kieler.core.kexpressions.keffects.services.KEffectsGrammarAccess;
-import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
-import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
+import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess;
+import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
+import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 
 @Singleton
@@ -95,17 +95,25 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommaKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Assignment cValuesAssignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
 		private final RuleCall cValuesSTRINGTerminalRuleCall_4_4_0 = (RuleCall)cValuesAssignment_4_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Keyword cNumberSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cNameAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final Keyword cNameFontKeyword_5_1_0 = (Keyword)cNameAssignment_5_1.eContents().get(0);
+		private final Assignment cValuesAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cValuesSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cValuesAssignment_5_2.eContents().get(0);
 		
 		//Pragmas annotations::PragmaStringAnnotation:
 		//	'#' name='version' values+=SCXVersions |
 		//	'#' name='director' values+=SCXDirectors |
 		//	'#' name='import' values+=STRING |
 		//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
-		//	'#' name='symbol' values+=PrimeID ',' values+=STRING
+		//	'#' name='symbol' values+=PrimeID ',' values+=STRING |
+		//	'#' name='font' values+=STRING
 		@Override public ParserRule getRule() { return rule; }
 
 		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors | '#' name='import' values+=STRING |
-		//'#' name='symbols' values+=STRING (',' values+=PrimeID)? | '#' name='symbol' values+=PrimeID ',' values+=STRING
+		//'#' name='symbols' values+=STRING (',' values+=PrimeID)? | '#' name='symbol' values+=PrimeID ',' values+=STRING | '#'
+		//name='font' values+=STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'#' name='version' values+=SCXVersions
@@ -218,6 +226,24 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 		//STRING
 		public RuleCall getValuesSTRINGTerminalRuleCall_4_4_0() { return cValuesSTRINGTerminalRuleCall_4_4_0; }
+
+		//'#' name='font' values+=STRING
+		public Group getGroup_5() { return cGroup_5; }
+
+		//'#'
+		public Keyword getNumberSignKeyword_5_0() { return cNumberSignKeyword_5_0; }
+
+		//name='font'
+		public Assignment getNameAssignment_5_1() { return cNameAssignment_5_1; }
+
+		//'font'
+		public Keyword getNameFontKeyword_5_1_0() { return cNameFontKeyword_5_1_0; }
+
+		//values+=STRING
+		public Assignment getValuesAssignment_5_2() { return cValuesAssignment_5_2; }
+
+		//STRING
+		public RuleCall getValuesSTRINGTerminalRuleCall_5_2_0() { return cValuesSTRINGTerminalRuleCall_5_2_0; }
 	}
 
 	public class SCXVersionsElements extends AbstractParserRuleElementFinder {
@@ -1648,7 +1674,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final Grammar grammar;
 
-	private final KEXTGrammarAccess gaKEXT;
+	private final KExtGrammarAccess gaKExt;
 
 	private final KEffectsGrammarAccess gaKEffects;
 
@@ -1660,13 +1686,13 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	@Inject
 	public SCTGrammarAccess(GrammarProvider grammarProvider,
-		KEXTGrammarAccess gaKEXT,
+		KExtGrammarAccess gaKExt,
 		KEffectsGrammarAccess gaKEffects,
 		KExpressionsGrammarAccess gaKExpressions,
 		AnnotationsGrammarAccess gaAnnotations,
 		TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
-		this.gaKEXT = gaKEXT;
+		this.gaKExt = gaKExt;
 		this.gaKEffects = gaKEffects;
 		this.gaKExpressions = gaKExpressions;
 		this.gaAnnotations = gaAnnotations;
@@ -1719,8 +1745,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 
-	public KEXTGrammarAccess getKEXTGrammarAccess() {
-		return gaKEXT;
+	public KExtGrammarAccess getKExtGrammarAccess() {
+		return gaKExt;
 	}
 
 	public KEffectsGrammarAccess getKEffectsGrammarAccess() {
@@ -1760,7 +1786,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	'#' name='director' values+=SCXDirectors |
 	//	'#' name='import' values+=STRING |
 	//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
-	//	'#' name='symbol' values+=PrimeID ',' values+=STRING
+	//	'#' name='symbol' values+=PrimeID ',' values+=STRING |
+	//	'#' name='font' values+=STRING
 	public PragmasElements getPragmasAccess() {
 		return pPragmas;
 	}
@@ -2055,8 +2082,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// test entities may follow.
 	//Kext kext::Kext:
 	//	scopes+=RootScope
-	public KEXTGrammarAccess.KextElements getKextAccess() {
-		return gaKEXT.getKextAccess();
+	public KExtGrammarAccess.KextElements getKextAccess() {
+		return gaKExt.getKextAccess();
 	}
 	
 	public ParserRule getKextRule() {
@@ -2066,8 +2093,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//RootScope kext::KEXTScope:
 	//	{kext::KEXTScope} declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)*
-	public KEXTGrammarAccess.RootScopeElements getRootScopeAccess() {
-		return gaKEXT.getRootScopeAccess();
+	public KExtGrammarAccess.RootScopeElements getRootScopeAccess() {
+		return gaKExt.getRootScopeAccess();
 	}
 	
 	public ParserRule getRootScopeRule() {
@@ -2078,8 +2105,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	{kext::KEXTScope} id=ID? '{'
 	//	declarations+=Declaration*
 	//	entities+=TestEntity* ('scope' scopes+=Scope)* '}'
-	public KEXTGrammarAccess.ScopeElements getScopeAccess() {
-		return gaKEXT.getScopeAccess();
+	public KExtGrammarAccess.ScopeElements getScopeAccess() {
+		return gaKExt.getScopeAccess();
 	}
 	
 	public ParserRule getScopeRule() {
@@ -2090,8 +2117,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
 	//	expression=AnnotatedExpression | effect=Effect
-	public KEXTGrammarAccess.TestEntityElements getTestEntityAccess() {
-		return gaKEXT.getTestEntityAccess();
+	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
+		return gaKExt.getTestEntityAccess();
 	}
 	
 	public ParserRule getTestEntityRule() {
@@ -2105,8 +2132,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	'expression'
 	//	expression=Expression
-	public KEXTGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
-		return gaKEXT.getAnnotatedExpressionAccess();
+	public KExtGrammarAccess.AnnotatedExpressionElements getAnnotatedExpressionAccess() {
+		return gaKExt.getAnnotatedExpressionAccess();
 	}
 	
 	public ParserRule getAnnotatedExpressionRule() {
@@ -2121,8 +2148,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
 	//	VariableDeclaration | ReferenceDeclaration
-	public KEXTGrammarAccess.DeclarationElements getDeclarationAccess() {
-		return gaKEXT.getDeclarationAccess();
+	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
+		return gaKExt.getDeclarationAccess();
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -2131,8 +2158,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DeclarationWOSemicolon kexpressions::Declaration:
 	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon
-	public KEXTGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
-		return gaKEXT.getDeclarationWOSemicolonAccess();
+	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
+		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
 	
 	public ParserRule getDeclarationWOSemicolonRule() {
@@ -2146,8 +2173,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
-	public KEXTGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
-		return gaKEXT.getVariableDeclarationAccess();
+	public KExtGrammarAccess.VariableDeclarationElements getVariableDeclarationAccess() {
+		return gaKExt.getVariableDeclarationAccess();
 	}
 	
 	public ParserRule getVariableDeclarationRule() {
@@ -2161,8 +2188,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	static?='static'? (signal?='signal'? type=ValueType | signal?='signal') valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
-	public KEXTGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
-		return gaKEXT.getVariableDeclarationWOSemicolonAccess();
+	public KExtGrammarAccess.VariableDeclarationWOSemicolonElements getVariableDeclarationWOSemicolonAccess() {
+		return gaKExt.getVariableDeclarationWOSemicolonAccess();
 	}
 	
 	public ParserRule getVariableDeclarationWOSemicolonRule() {
@@ -2171,8 +2198,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 
 	//NamespaceID:
 	//	ID (':' PrimeID)*;
-	public KEXTGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
-		return gaKEXT.getNamespaceIDAccess();
+	public KExtGrammarAccess.NamespaceIDElements getNamespaceIDAccess() {
+		return gaKExt.getNamespaceIDAccess();
 	}
 	
 	public ParserRule getNamespaceIDRule() {
@@ -2182,8 +2209,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
-	public KEXTGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
-		return gaKEXT.getReferenceDeclarationAccess();
+	public KExtGrammarAccess.ReferenceDeclarationElements getReferenceDeclarationAccess() {
+		return gaKExt.getReferenceDeclarationAccess();
 	}
 	
 	public ParserRule getReferenceDeclarationRule() {
@@ -2193,8 +2220,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation* ('ref' reference=[kexpressions::Identifiable|NamespaceID] |
 	//	'extern' extern=STRING) valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
-	public KEXTGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
-		return gaKEXT.getReferenceDeclarationWOSemicolonAccess();
+	public KExtGrammarAccess.ReferenceDeclarationWOSemicolonElements getReferenceDeclarationWOSemicolonAccess() {
+		return gaKExt.getReferenceDeclarationWOSemicolonAccess();
 	}
 	
 	public ParserRule getReferenceDeclarationWOSemicolonRule() {
@@ -2231,8 +2258,8 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=INT ']')* ('=' initialValue=Expression)? ('combine'
 	//	combineOperator=CombineOperator)?
-	public KEXTGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
-		return gaKEXT.getValuedObjectAccess();
+	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
+		return gaKExt.getValuedObjectAccess();
 	}
 	
 	public ParserRule getValuedObjectRule() {

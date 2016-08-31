@@ -8,7 +8,7 @@ package de.cau.cs.kieler.sccharts.text.ui.quickfix;
  *
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#quick-fixes
  */
-public class SCTQuickfixProvider extends de.cau.cs.kieler.core.kexpressions.text.ui.quickfix.KEXTQuickfixProvider {
+public class SCTQuickfixProvider extends de.cau.cs.kieler.kexpressions.kext.ui.quickfix.KExtQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
 //	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {

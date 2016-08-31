@@ -6,7 +6,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.GuardDependency
 import java.util.LinkedHashSet
 import de.cau.cs.kieler.scg.Node
@@ -97,8 +97,8 @@ class DCGuardScheduler extends SimpleGuardScheduler {
 	    	for(var i = 0; i < schedule.size-1; i++) {
     			schedule.get(i).createScheduleDependency(schedule.get(i+1))
     			System.out.println("Scheduling dependency from " + 
-    				schedule.get(i).asAssignment.valuedObject.name + " to " + 
-    				schedule.get(i+1).asAssignment.valuedObject.name
+    				schedule.get(i).printNode + " to " + 
+    				schedule.get(i+1).printNode
     			)
     		}
     	}
@@ -108,9 +108,6 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     		System.err.println("The SCG is NOT asc-schedulable!")
     	} else {
     		System.out.println("The SCG is asc-schedulable.")
-//    		for(s : schedule) {
-//    			System.out.print((s as Assignment).valuedObject.name + " ")
-//    		}
     		System.out.println
     	} 
  

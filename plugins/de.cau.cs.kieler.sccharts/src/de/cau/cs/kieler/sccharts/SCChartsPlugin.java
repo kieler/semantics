@@ -24,11 +24,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.rating 2013-10-10 proposed yellow
  */
 public class SCChartsPlugin implements BundleActivator {
-
-        public static String EDITOR_ID = "de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID";
-        
-        public static String TEXT_EDITOR_ID = "de.cau.cs.kieler.sccharts.text.sct.Sct";
-        
+       
         /**
          * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
          */

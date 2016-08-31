@@ -17,15 +17,15 @@ import com.google.common.collect.BiMap
 import com.google.common.collect.HashBiMap
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 import de.cau.cs.kieler.esterel.kexpressions.IntValue
@@ -255,28 +255,28 @@ class SyncChartsTransformation {
             ]
             signal.map(syncSignal)
             if (syncSignal.type == ValueType::INT) {
-                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::INT
+                signalDeclaration.type = de.cau.cs.kieler.kexpressions.ValueType::INT
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Integer.parseInt(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createIntValue)
                 }
             }
             else if (syncSignal.type == ValueType::BOOL) {
-                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::BOOL
+                signalDeclaration.type = de.cau.cs.kieler.kexpressions.ValueType::BOOL
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Boolean.parseBoolean(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createBoolValue)
                 }
             }
             else if (syncSignal.type == ValueType::DOUBLE) {
-                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::DOUBLE
+                signalDeclaration.type = de.cau.cs.kieler.kexpressions.ValueType::DOUBLE
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createFloatValue)
                 }
             }
             else if (syncSignal.type == ValueType::FLOAT) {
-                signalDeclaration.type = de.cau.cs.kieler.core.kexpressions.ValueType::FLOAT
+                signalDeclaration.type = de.cau.cs.kieler.kexpressions.ValueType::FLOAT
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createFloatValue)

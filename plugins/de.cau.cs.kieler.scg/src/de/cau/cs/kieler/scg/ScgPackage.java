@@ -13,13 +13,13 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -162,13 +162,22 @@ public interface ScgPackage extends EPackage {
 	int NODE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+	int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
 	/**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
@@ -177,7 +186,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+	int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
      * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
@@ -186,7 +195,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
      * The number of structural features of the '<em>Node</em>' class.
@@ -195,7 +204,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -217,6 +226,15 @@ public interface ScgPackage extends EPackage {
 	int CONDITIONAL__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -299,6 +317,15 @@ public interface ScgPackage extends EPackage {
 	int SURFACE__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -363,6 +390,15 @@ public interface ScgPackage extends EPackage {
 	int DEPTH__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -436,6 +472,15 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -545,6 +590,15 @@ public interface ScgPackage extends EPackage {
 	int FORK__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -618,6 +672,15 @@ public interface ScgPackage extends EPackage {
 	int JOIN__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -701,6 +764,15 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -774,6 +846,15 @@ public interface ScgPackage extends EPackage {
 	int EXIT__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1099,6 +1180,15 @@ public interface ScgPackage extends EPackage {
 	int GUARD__ANNOTATIONS = NODE__ANNOTATIONS;
 
 	/**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD__ID = NODE__ID;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

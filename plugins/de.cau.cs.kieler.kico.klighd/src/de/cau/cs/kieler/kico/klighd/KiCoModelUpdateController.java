@@ -189,6 +189,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling chain display mode. */
     private Action tracingChainToggleAction;
     private static final boolean TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false;
+    
+    /** The action for toggling the debug mode. */
+    private Action debugModeToggleAction;
+    private static final boolean DEBUG_MODE_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     // -- Model --
 
@@ -331,6 +335,19 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 "Enable tranformation chain view in displaySideBySide display mode");
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
         tracingChainToggleAction.setChecked(TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE);
+        
+        // Debug mode
+        debugModeToggleAction = new Action("Debug Mode", IAction.AS_CHECK_BOX) {
+            @Override
+            public void run() {
+                update(ChangeEvent.COMPILE);
+            }
+        };
+        debugModeToggleAction.setId("debugModeToggleAction");
+        debugModeToggleAction.setText("Debug Mode");
+        debugModeToggleAction.setToolTipText("In enabled Debug Mode KiCo generates object serialization information " +
+                "that allow real-time visualization and debugging of models.");
+        debugModeToggleAction.setChecked(DEBUG_MODE_TOGGLE_ACTION_DEFAULT_STATE);
     }
 
     /**
@@ -417,6 +434,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         memento.putBoolean("tracingToggleAction", tracingToggleAction.isChecked());
         
         memento.putBoolean("tracingChainToggleAction", tracingChainToggleAction.isChecked());
+        
+        memento.putBoolean("debugModeToggleAction", debugModeToggleAction.isChecked());
     }
 
     /**
@@ -465,6 +484,13 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 tracingChainToggleAction.setChecked(tracingChainToggleActionValue);
             }
         }
+        
+        Boolean debugModeToggleActionValue = memento.getBoolean("debugModeToggleAction");
+        if (debugModeToggleActionValue != null) {
+            if (debugModeToggleAction != null) {
+                debugModeToggleAction.setChecked(debugModeToggleActionValue);
+            }
+        }
     }
 
     // -- View
@@ -485,6 +511,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(diagramPlaceholderToggleAction);
         menu.add(tracingChainToggleAction);
         menu.add(tracingToggleAction);
+        menu.add(debugModeToggleAction);
     }
 
     // -- Save model
@@ -787,7 +814,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
                     // create compilation job
                     currentCompilation = new AsynchronousCompilation(this, (EObject) sourceModel,
-                            recentEditor.getTitle(), selection, tracingToggleAction.isChecked());
+                            recentEditor.getTitle(), selection, tracingToggleAction.isChecked(),
+                            debugModeToggleAction.isChecked());
                     currentCompilationResult = null;
                     model = currentCompilation.getModel();
                     // start
