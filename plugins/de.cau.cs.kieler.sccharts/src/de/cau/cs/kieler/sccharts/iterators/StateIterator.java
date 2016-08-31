@@ -102,4 +102,31 @@ public final class StateIterator {
             throw new IllegalArgumentException("Scope type not supported.");
         }
     }
+    
+    
+    
+
+    public static Iterator<State> sccAllContainedStates(ControlflowRegion r) {
+        return concat(transform(r.getStates().iterator(),
+                new Function<State, Iterator<State>>() {
+        /**
+         * {@inheritDoc}
+         */
+        public Iterator<State> apply(State arg0) {
+            return sccAllContainedStates(arg0);
+        }
+        }));
+    };
+    
+    public static Iterator<State> sccAllContainedStates(Scope s) {
+        if (s instanceof State) {
+           return sccAllContainedStates((State) s);
+
+        } else if (s instanceof ControlflowRegion) {
+           return sccAllContainedStates((ControlflowRegion) s);
+        }
+        else {
+            throw new IllegalArgumentException("Scope type not supported.");
+        }
+    }    
 }

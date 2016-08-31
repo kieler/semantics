@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -41,9 +41,9 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  */
 class ComplexFinalState extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::COMPLEXFINALSTATE_ID
     }
@@ -64,76 +64,145 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension KExpressionsCreateExtensions
 
     @Inject
     extension KExpressionsComplexCreateExtensions
-    
+
     @Inject
-    extension KExpressionsDeclarationExtensions    
-    
+    extension KExpressionsDeclarationExtensions
+
     @Inject
-    extension KExpressionsValuedObjectExtensions   
-    
+    extension KExpressionsValuedObjectExtensions
+
     @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--              C O M P L E X   F I N A L   S T A T E                  --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --              C O M P L E X   F I N A L   S T A T E                  --
+    // -------------------------------------------------------------------------
     //
     // PRODUCES: ABORTS
     //
     // ...
     // Optimizations: 
     // (1)   In transitions from one ComplexFinalState (CFS) to another CFS
-    //       optimize: Do not set term to false and to true again later
-    //       (-> .filter[!complexFinalStates.contains(sourceState)])
-    //  ATTENTION: if using this optimization make sure that if there is a
-    //  final&INITIAL-state, the term-variable is initialized with TRUE!!! (not FALSE as usual) ***
+    // optimize: Do not set term to false and to true again later
+    // (-> .filter[!complexFinalStates.contains(sourceState)])
+    // ATTENTION: if using this optimization make sure that if there is a
+    // final&INITIAL-state, the term-variable is initialized with TRUE!!! (not FALSE as usual) ***
     // (2)   Share a unique final state if possible (-> retrieveFinalState())
     // (3)   If just one regions: No watcher region is needed, no abort signal and
-    //       only a single term signal 
-    //       (TODO)                
+    // only a single term signal 
+    // (TODO)                
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
-        val parentSatesContainingComplexFinalStates =  targetRootState.allContainedStates.filter[isParentContainingComplexFinalState]         
+        val parentSatesContainingComplexFinalStates = targetRootState.allStates.filter [
+            isParentContainingComplexFinalState
+        ]
         for (targetParentState : parentSatesContainingComplexFinalStates.toList) {
-            //val parentState = targetRegion.parentState
+            // val parentState = targetRegion.parentState
             targetParentState.transformComplexFinalState(rootState);
         }
 
         targetRootState.fixAllTextualOrdersByPriorities;
     }
-    
-    
+
     // Tells if a  state is a parent states that contain at least one region which directly contains a complex final state (or more)
     def boolean isParentContainingComplexFinalState(State state) {
         state.regions.filter[containsComplexFinalState].size > 0
     }
-    
+
     // Tells if a region directly contains a complex final state (or more)
     def boolean containsComplexFinalState(Region region) {
         if (region instanceof ControlflowRegion) {
-           return (region as ControlflowRegion).states.filter[isComplexFinalState].size > 0
+            return (region as ControlflowRegion).states.filter[isComplexFinalState].size > 0
         }
         return false
     }
-    
+
     // Tells if a state is a complex final state, i.e., it is final and has either inner actions (during/exit) or outgoing transitions
     def boolean isComplexFinalState(State state) {
-        state.isFinal && (!(state.outgoingTransitions.nullOrEmpty) || state.duringActions.size > 0 || state.exitActions.size > 0)
+        state.isFinal &&
+            ((!state.outgoingTransitions.nullOrEmpty) || state.duringActions.size > 0 || state.exitActions.size > 0 || (state.allContainedStates.size > 0))
     }
-    
 
     def void transformComplexFinalState(State parentState, State rootState) {
+        parentState.setDefaultTrace
+        var ArrayList<ValuedObject> termVariables = new ArrayList
+        
+        var state = parentState
+        
+        // If there are regions that cannot terminate, then we do not need to transform something
+        if (!state.regionsMayTerminate) {
+           return;
+        }
+        
+        // If the parent state is the root state then make an explicit termination transition
+        if (parentState.rootState) {
+            val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
+            val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
+            val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
+            for (mainRegion : parentState.regions.filter(e|e != r).toList.immutableCopy) {
+                    i.regions.add(mainRegion)
+            }
+            i.createImmediateTransitionTo(f).setTypeTermination
+            state = i;
+        }
+         
+        // For every region in such a parent state, we need to track if it finishes
+        for (region : state.regions.filter(ControlflowRegion)) {
+            val allFinalStates = region.states.size == region.states.filter[isFinal].size
+
+            // Use this new term variable to track final states of this region
+            val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+
+            if (!allFinalStates) {
+                val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
+                    uniqueName
+                termVariable.setInitialValue(FALSE)
+                if (region.initialState.final) {
+                    termVariable.setInitialValue(TRUE)
+                }
+                termVariables.add(termVariable)
+
+                for (finalState : finalStates) {
+                    for (transition : finalState.incomingTransitions.filter[!sourceState.isFinal]) {
+                        transition.addEffect(termVariable.assign(TRUE))
+                    }
+                    for (transition : finalState.outgoingTransitions.filter[!targetState.isFinal]) {
+                        transition.addEffect(termVariable.assign(FALSE))
+                    }
+                }
+            }
+
+            for (finalState : finalStates) {
+                if (finalState.complexFinalState) {
+                    finalState.final = false
+                }
+            }
+        }
+
+        // Modify all termination transitions by weak aborts
+        for (termination : state.outgoingTransitions.filter[isTypeTermination].toList) {
+            termination.setTypeWeakAbort
+
+            for (termVariable : termVariables) {
+                termination.setTrigger(termination.trigger.and(termVariable.reference))
+            }
+        }
+    }
+
+    // ----
+    // FIRST ALTERNATIVE
+    def void transformComplexFinalStateAlternative(State parentState, State rootState) {
         parentState.setDefaultTrace
         var ArrayList<ValuedObject> termVariables = new ArrayList
 
@@ -144,54 +213,53 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
 
         // For every region in such a parent state, we need to track if it finishes
         for (region : parentState.regions.filter(ControlflowRegion)) {
-                val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).uniqueName
-                termVariable.setInitialValue(FALSE)
-                if (region.initialState.final) {
-                    termVariable.setInitialValue(TRUE)
-                }
-                termVariables.add(termVariable)
-                
-                // Use this new term variable to track final states of this region
-                val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+            val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
+                uniqueName
+            termVariable.setInitialValue(FALSE)
+            if (region.initialState.final) {
+                termVariable.setInitialValue(TRUE)
+            }
+            termVariables.add(termVariable)
 
-                for (finalState : finalStates) {
-                    for (transition : finalState.incomingTransitions.filter[!sourceState.complexFinalState]) {
-                        transition.addEffect(termVariable.assign(TRUE))
-                    }
-                    for (transition : finalState.outgoingTransitions.filter[!targetState.complexFinalState]) {
-                        transition.addEffect(termVariable.assign(FALSE))
-                    }
+            // Use this new term variable to track final states of this region
+            val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+
+            for (finalState : finalStates) {
+                for (transition : finalState.incomingTransitions.filter[!sourceState.complexFinalState]) {
+                    transition.addEffect(termVariable.assign(TRUE))
                 }
+                for (transition : finalState.outgoingTransitions.filter[!targetState.complexFinalState]) {
+                    transition.addEffect(termVariable.assign(FALSE))
+                }
+            }
         }
 
-        //Add Watcher Region
+        // Add Watcher Region
         val watcherRegion = parentState.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
         val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
-                createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
+            createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
         watcherTransition.addEffect(abortFlag.assign(TRUE))
         for (termVariable : termVariables) {
-                watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
+            watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
         }
-
 
         // Now traverse all the complex final states and eliminate them by
         // 1. unsetting their final flag
         // 2. creating a new (real) final state that is entered if the abort for the other regions was triggered
-
         for (region : parentState.regions.filter(ControlflowRegion)) {
             if (region.containsComplexFinalState) {
-                
+
                 // Create a unique real final state in here
                 val auxiliaryFinalState = region.createFinalState(GENERATED_PREFIX + "Final").uniqueName
-                
+
                 for (state : region.states.filter[isComplexFinalState]) {
-                    
+
                     state.final = false;
                     val abortTransition = state.createImmediateTransitionTo(auxiliaryFinalState);
                     abortTransition.setLowestPriority.setTrigger(abortFlag.reference)
-                    
+
                     auxiliaryFinalState.trace(state)
-                    abortTransition.trace(state) 
+                    abortTransition.trace(state)
                 }
             }
         }
