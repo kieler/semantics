@@ -193,7 +193,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
 //                        action.setTrigger(action.trigger.trim)
 //                    }
                 }
-            }
+            } // ValuedObject
 
             // Change signal to variable
             presentVariable.setIsNotSignal

@@ -107,53 +107,53 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
-        valuedObject.isInput
+        valuedObject.declaration.isInput
     }
 
 // TODO: getInput/isInput?
     // Return whether the ValuedObject is an input.
     def public boolean isInput(ValuedObject valuedObject) {
-        valuedObject.isInput
+        valuedObject.declaration.isInput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean getOutput(ValuedObject valuedObject) {
-        valuedObject.isOutput
+        valuedObject.declaration.isOutput
     }
 
     // Return whether the ValuedObject is an output.
     def public boolean isOutput(ValuedObject valuedObject) {
-        valuedObject.isOutput
+        valuedObject.declaration.isOutput
     }
 
     // Return whether the ValuedObject is static.
     def public boolean getStatic(ValuedObject valuedObject) {
-        valuedObject.isStatic
+        valuedObject.declaration.isStatic
     }
 
     // Return whether the ValuedObject is static.
     def public boolean isStatic(ValuedObject valuedObject) {
-        valuedObject.isStatic
+        valuedObject.declaration.isStatic
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getConst(ValuedObject valuedObject) {
-        valuedObject.isConst
+        valuedObject.declaration.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isConst(ValuedObject valuedObject) {
-        valuedObject.isConst
+        valuedObject.declaration.isConst
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean getExtern(ValuedObject valuedObject) {
-        valuedObject.isExtern
+        valuedObject.declaration.isExtern
     }
 
     // Return whether the ValuedObject is a const.
     def public boolean isExtern(ValuedObject valuedObject) {
-        valuedObject.isExtern
+        valuedObject.declaration.isExtern
     }
 
     // Return whether the ValuedObject is an array.
@@ -163,12 +163,12 @@ class SCChartsTransformationExtension {
 
     // Return whether the ValuedObject is a signal.
     def public boolean getSignal(ValuedObject valuedObject) {
-        valuedObject.isSignal
+        valuedObject.declaration.isSignal
     }
 
     // Return whether the ValuedObject is a signal.
     def public boolean isSignal(ValuedObject valuedObject) {
-        valuedObject.isSignal
+        valuedObject.declaration.isSignal
     }
 
     // ========= ATTRIBUTE SETTER =========
@@ -383,6 +383,10 @@ class SCChartsTransformationExtension {
         val newDeclaration = createVariableDeclaration()
         if (existingDeclaration != null) {
            newDeclaration.copyAttributes(existingDeclaration)
+           val parent = existingDeclaration.eContainer
+           if (parent instanceof Scope) {
+               parent.declarations += newDeclaration
+           }
         } 
         newDeclaration
     }
