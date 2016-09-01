@@ -186,7 +186,8 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             val delayedWeakAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
             val mixedDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0 &&
                 outgoingTransitions.filter[e|!e.typeStrongAbort && e.immediate2].size > 0
-            val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final].size > 0].
+            //!!!CHANGED: !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE) == no "real" final states but just auxiliary ones which have been transformed to weak aborts! 
+            val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size > 0].
                 size > 0
 
             // !!!CHANGED

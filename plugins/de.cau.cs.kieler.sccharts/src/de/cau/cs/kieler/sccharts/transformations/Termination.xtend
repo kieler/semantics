@@ -155,7 +155,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         for (region : state.regions.filter(ControlflowRegion)) {
             // Setup the auxiliary termination valuedObject indicating that a normal termination
             // should be taken.
-            val finishedValuedObject = targetRootState.getRootState.createVariable(GENERATED_PREFIX + "term").
+            val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
                 setTypeBool.uniqueName;
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.assign(FALSE))
@@ -177,7 +177,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 }
                 //val T2 = finalState.createImmediateTransitionTo(Final)
                 // Set the final state flag to false
-                finalState.setFinal(false);
+                //finalState.setFinal(false);
                 finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
             }
 
