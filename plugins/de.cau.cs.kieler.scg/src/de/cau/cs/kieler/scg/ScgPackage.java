@@ -198,13 +198,22 @@ public interface ScgPackage extends EPackage {
 	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__SCHIZOPHRENIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -262,6 +271,15 @@ public interface ScgPackage extends EPackage {
 	int CONDITIONAL__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Then</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -353,6 +371,15 @@ public interface ScgPackage extends EPackage {
 	int SURFACE__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Depth</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -426,6 +453,15 @@ public interface ScgPackage extends EPackage {
 	int DEPTH__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Surface</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -508,6 +544,15 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -626,6 +671,15 @@ public interface ScgPackage extends EPackage {
 	int FORK__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Join</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -708,6 +762,15 @@ public interface ScgPackage extends EPackage {
 	int JOIN__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Fork</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -800,6 +863,15 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Exit</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -882,6 +954,15 @@ public interface ScgPackage extends EPackage {
 	int EXIT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Entry</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1216,6 +1297,15 @@ public interface ScgPackage extends EPackage {
 	int GUARD__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD__SCHIZOPHRENIC = NODE__SCHIZOPHRENIC;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1653,6 +1743,17 @@ public interface ScgPackage extends EPackage {
 	EReference getNode_Dependencies();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#isSchizophrenic <em>Schizophrenic</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Schizophrenic</em>'.
+     * @see de.cau.cs.kieler.scg.Node#isSchizophrenic()
+     * @see #getNode()
+     * @generated
+     */
+    EAttribute getNode_Schizophrenic();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Conditional <em>Conditional</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2353,6 +2454,14 @@ public interface ScgPackage extends EPackage {
 		EReference NODE__DEPENDENCIES = eINSTANCE.getNode_Dependencies();
 
 		/**
+         * The meta object literal for the '<em><b>Schizophrenic</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute NODE__SCHIZOPHRENIC = eINSTANCE.getNode_Schizophrenic();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

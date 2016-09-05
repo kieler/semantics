@@ -22,6 +22,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import com.google.inject.Guice
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -52,7 +54,7 @@ import de.cau.cs.kieler.scg.DataDependency
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
+class PotentiallyInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
 	@Inject
 	extension SCGControlFlowExtensions
@@ -144,6 +146,22 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
         (scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
         
         result
+    }
+    
+    static def createPotentiallyInstantaneousLoopData(SCGraph scg, KielerCompilerContext context) {
+        var pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult)?.head?.
+            criticalNodes?.toSet
+        
+        if (pilData == null) {
+            val PotentiallyInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
+            getInstance(PotentiallyInstantaneousLoopAnalyzer)
+            context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+            
+            pilData = context.compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head.
+                criticalNodes.toSet
+        }       
+        
+        return pilData         
     }
 	
 }

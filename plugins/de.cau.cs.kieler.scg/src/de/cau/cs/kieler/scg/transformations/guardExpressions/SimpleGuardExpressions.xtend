@@ -49,6 +49,8 @@ import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import com.google.inject.Guice
+import de.cau.cs.kieler.scg.processors.analyzer.PotentiallyInstantaneousLoopAnalyzer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -176,9 +178,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         val timestamp = System.currentTimeMillis
         compilerContext = context
 
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
-//            getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.addAuxiliaryData(potentialInstantaneousLoopAnalyzer.analyze(scg))
+//        PotentiallyInstantaneousLoopAnalyzer.createPotentiallyInstantaneousLoopData(scg, context)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**
@@ -649,7 +649,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
 
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BranchType blockType, SCGraph scg) {
         val twin = predecessorTwinCache.get(predecessor)
-        predecessorSBCache.get(twin).head
+        predecessorSBCache.get(twin)?.head
     }
 
     private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {

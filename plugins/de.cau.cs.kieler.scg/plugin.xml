@@ -66,6 +66,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.transformations.c.SCG2CTransformation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.transformations.StructuralDepthJoinTransformation">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
@@ -101,6 +104,9 @@
       </featureClass>
       <featureClass
             class="de.cau.cs.kieler.scg.features.C">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.features.StructuralDepthJoin">
       </featureClass>
    </extension>
 
