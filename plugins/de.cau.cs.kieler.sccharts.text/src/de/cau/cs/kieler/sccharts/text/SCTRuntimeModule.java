@@ -30,9 +30,9 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
 //        return SctResource.class;
 //    }  
     
-//    public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
-//        return SctTransientValueService.class;
-//    }    
+    public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
+        return SctTransientValueService.class;
+    }    
     
     public Class<? extends ILinker> bindILinker() {
         return SctLinker.class;

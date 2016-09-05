@@ -307,7 +307,7 @@ class CDTProcessor {
         // In case the function is of type void, we need to create a endState as there is no return statement.
         if (returnDeclaration.type == ValueType.PURE) {
             val endState = scc.createState => [
-                id = trC + "_end"
+                id = "_S" + trC + "_end"
                 label = "End"
                 final = true
                 funcRegion.states += it
@@ -480,7 +480,7 @@ class CDTProcessor {
 
 
         val connectorState = scc.createState => [ s |
-            s.id = trC.toString
+            s.id = "_C" + trC.toString
             s.label = s.id
             s.setTypeConnector
             switchStateRegion.states += s
@@ -601,7 +601,7 @@ class CDTProcessor {
 
         // Final state of switch statement.
         val endState = scc.createState => [s |
-            s.id = trC + "_end"
+            s.id = "_S" + trC + "_end"
             s.label = "End"
             s.final = true
             switchStateRegion.states += s
@@ -640,7 +640,7 @@ class CDTProcessor {
 
         // While loop state.
         val whileState = scc.createState => [ s |
-            s.id = trC + "_while_cs"
+            s.id = "_S" + trC + "_while_cs"
             s.label = "while"
             state.parentRegion.states += s
         ]
@@ -756,7 +756,7 @@ class CDTProcessor {
 
         // Initial state of do-while loop.
         val doState = scc.createState => [ s |
-            s.id = trC.toString + "_do"
+            s.id = "_S" + trC.toString + "_do"
             s.label = "do"
             s.initial = true
             doWhileStateRegion.states += s
@@ -767,7 +767,7 @@ class CDTProcessor {
         val bodyState = body.transformCompound(doState, doState)
 
         val condState = scc.createState => [ s |
-            s.id = trC.toString + "_cond"
+            s.id = "_S" + trC.toString + "_cond"
             s.label = createLabel(statement) + "cond"
             doWhileStateRegion.states += s
         ]
@@ -814,7 +814,7 @@ class CDTProcessor {
 
         // Final state of loop. It is reached when loop condition is not met anymore.
         val falseState = scc.createState => [s |
-            s.id = trC + "_end"
+            s.id = "_S" + trC + "_end"
             s.label = "End"
             s.final = true
             doWhileStateRegion.states += s
@@ -1009,7 +1009,7 @@ class CDTProcessor {
         
         // If construct state.
         val ifState = scc.createState => [ s |
-            s.id = trC + "_if_cs"
+            s.id = "_S" + trC + "_if_cs"
             s.label = "if"
             state.parentRegion.states += s
         ]
@@ -1058,7 +1058,7 @@ class CDTProcessor {
         
         // The outgoing transitions of the condState to check the condition of the if statement.
         val condState = scc.createState => [ s |
-            s.id = trC.toString + "_cond"
+            s.id = "_S" + trC.toString + "_cond"
             s.label = createLabel(ifs) + "cond"
             s.initial = true
             ifStateRegion.states += s
@@ -1066,7 +1066,7 @@ class CDTProcessor {
 
         // Connects states to the final endState of the if statement, if necessary.
         val connectorState = scc.createState => [ s |
-            s.id = trC.toString
+            s.id = "_S" + trC.toString
             s.label = s.id
             s.setTypeConnector
             ifStateRegion.states += s
@@ -1169,7 +1169,7 @@ class CDTProcessor {
             if (!bothBodiesFinal) {
                 // Final state of loop. It is reached when loop condition is not met anymore.
                 val endState = scc.createState => [s |
-                    s.id = trC + "_end"
+                    s.id = "_S" + trC + "_end"
                     s.label = "End"
                     s.final = true
                     ifStateRegion.states += s
@@ -1218,7 +1218,7 @@ class CDTProcessor {
         
         // For loop state
         val forState = scc.createState => [ s |
-            s.id = trC + "_for_cs"
+            s.id = "_S" + trC + "_for_cs"
             s.label = "for"
             state.parentRegion.states += s
         ]
@@ -1246,7 +1246,7 @@ class CDTProcessor {
         val kExp = exp.createKExpression
 
         val condState = scc.createState => [ s |
-            s.id = trC + "_cond"
+            s.id = "_S" + trC + "_cond"
             s.label = "cond"
             s.initial = true
 
@@ -1299,7 +1299,7 @@ class CDTProcessor {
             iterateExp = (f.iterationExpression as CASTBinaryExpression).createDataflow(bodyState)
         } else {
             val iterateState = scc.createState => [ s |
-                s.id = trC + "T"
+                s.id = "_S" + trC + "T"
                 s.label = createLabel(statement)
     
                 forStateRegion.states += s
@@ -1327,7 +1327,7 @@ class CDTProcessor {
         
         // Final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
-            s.id = trC + "_end"
+            s.id = "_S" + trC + "_end"
             s.label = "End"
             s.final = true
             forStateRegion.states += s
@@ -1380,6 +1380,8 @@ class CDTProcessor {
         
         var returnState = scc.createState
          => [
+              id = "_S" + trC.toString
+              label = ""
 //            id = trC.toString
 //            label = createLabel(returnStatement)
 //            state.parentRegion.states += it
@@ -1418,6 +1420,7 @@ class CDTProcessor {
             
             // ... add parameter to VOSet and give it a name.
             val value = kex.createValuedObject => [
+                id = trC.toString
                 name = "nestedReturn"
                 parameter.valuedObjects += it
                 VOSet += it
@@ -1442,7 +1445,7 @@ class CDTProcessor {
         } else {
             if (extraEndStateOption) {
                 val endState = scc.createState => [
-                    id = trC + "_end"
+                    id = "_S" + trC + "_end"
                     label = "End"
                     final = true
                     state.parentRegion.states += it
@@ -1518,7 +1521,7 @@ class CDTProcessor {
             // else -> create new state for variable assignment
             else {
                 val codeState = scc.createState => [ s |
-                    s.id = trC + "_binEx"
+                    s.id = "_S" + trC + "_binEx"
                     s.label = createLabel(es)
     
                     state.parentRegion.states += s
@@ -1550,7 +1553,7 @@ class CDTProcessor {
             
             // Create referencing state.
             val refState = scc.createState => [ s |
-                s.id = trC + "_ref"
+                s.id = "_S" + trC + "_ref"
                 s.label = "Call"
                 state.parentRegion.states += s
             ]
@@ -1973,7 +1976,7 @@ class CDTProcessor {
                 
                 // Create additional exit out of the nested control structures.
                 val endState = scc.createState => [s |
-                    s.id = trC + "_end" + "_nestedReturn"
+                    s.id = "_S" + trC + "_end" + "_nestedReturn"
                     s.label = "End"
                     s.final = true
                     parentRegion.states += s
