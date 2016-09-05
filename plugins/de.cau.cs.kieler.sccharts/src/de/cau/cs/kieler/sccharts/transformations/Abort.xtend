@@ -133,7 +133,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     targetState.transformTermination(targetRootState)
                 }
 
-                targetState.transformAbortNoWTO_NEW(targetRootState)
+               targetState.transformAbortNoWTO_NEW(targetRootState)
             }
 
         // done = true;
@@ -260,8 +260,12 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 transition)
                                 weakAbortImmediateTriggerTermination = true
                             } else {
-                                weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.trigger.copy).trace(
-                                    transition)
+                                if (transition.trigger == null) {
+                                    weakAbortImmediateTrigger = TRUE
+                                } else {
+                                    weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.trigger.copy).trace(
+                                        transition)
+                                }
                             }
                         } else {
                             // In case of a delayed weak abort, we need to take care of the delay in
