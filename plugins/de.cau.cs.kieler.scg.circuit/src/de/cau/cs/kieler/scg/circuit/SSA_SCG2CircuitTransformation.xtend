@@ -87,6 +87,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
     val LinkedList<Actor> createdActors = new LinkedList<Actor>
 
     val voExpressions = new HashMap<String, ValuedObject>
+    
+    protected static boolean SINGLE_FIGURE_REGIONS = true
 
     // -------------------------------------------------------------------------
     // --                          Transformation Start                       --
@@ -143,6 +145,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         // create actors of the circuit. chose entry node of SCG as starting point.
         val entry = scg.eAllContents.filter(Entry).head
         transformNodesToActors(entry.next.target, logicRegion)
+        
+//        deleteSingeFigureRegions(logicRegion)
 
         // -------------------------------------------------------
         // --              Create Links                         --
@@ -157,6 +161,23 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         // return the circuit
         newCircuit
 
+    }
+    
+    def deleteSingeFigureRegions(Actor logic) {
+        val regions = logic.innerActors.filter[innerActors.length > 0]
+        var removeRegions = new LinkedList<Actor>
+        for(region : regions){
+            println(region)
+            if(region.innerActors.length < 2){
+                removeRegions.add(region)
+                
+            }
+        }
+        for(region : removeRegions){
+            println("remove " + region.name)
+            logic.innerActors.remove(region)
+            logic.innerActors += region.innerActors.head
+        }
     }
 
     def deleteUnusedGates(Actor logicRegion, List<Actor> actors) {

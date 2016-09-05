@@ -179,7 +179,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
         val red = createKColor.setColor(222, 100, 100);
         val frame = renderingFactory.createKRoundedRectangle() => [ rect |
             rect.lineWidth = 0
-            if (actor.name != "Circuit Initialization" && actor.name != "Program Logic" && !actor.innerActors.empty) {
+            if (actor.name != "Circuit Initialization" && actor.name != "Program Logic" && !actor.innerActors.empty && actor.eContainer != null) {
                 rect.lineWidth = 1;
                 rect.setForeground(red);
             } else {

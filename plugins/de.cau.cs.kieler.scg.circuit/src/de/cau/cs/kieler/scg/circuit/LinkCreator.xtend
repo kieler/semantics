@@ -132,9 +132,7 @@ class LinkCreator {
         for (region : regionList) {
             var LinkedList<Port> regionPortList = new LinkedList<Port>
             regionPortList.addAll(region.eAllContents.filter(Port).toIterable)
-            println("new region: " + region.name)
-            println(regionPortList)
-            println()
+            
             for (port : regionPortList) {
                 if (port.type == "In" || port.type == "redOut" || port.type == "Sel") {
                     regionPortList.forEach [ pport |

@@ -69,7 +69,7 @@ class TickWireHook extends SynthesisActionHook implements IAction {
                     }
                 }
             }
-            return IAction$ActionResult.createResult(false);
+            return IAction$ActionResult.createResult(true);
         }
 
         def getBooleanValue(SynthesisOption option) {

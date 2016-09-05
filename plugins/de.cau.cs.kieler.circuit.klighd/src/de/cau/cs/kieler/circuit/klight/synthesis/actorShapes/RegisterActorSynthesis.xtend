@@ -19,6 +19,9 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kiml.options.PortAlignment
 
 /**
  * @author fry
@@ -51,6 +54,9 @@ class RegisterActorSynthesis implements IDrawableActor {
 				}
 				it.selectionBackground = "green".color;
 			]
+//			node.getData(KLayoutData).setProperty(LayoutOptions.PORT_SPACING, 20f)
+			node.getData(KLayoutData).setProperty(LayoutOptions.PORT_ALIGNMENT, PortAlignment.CENTER)
+			
 	return node;
 	}
 }

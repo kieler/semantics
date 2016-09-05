@@ -50,6 +50,10 @@ import de.cau.cs.kieler.klighd.DisplayedActionData
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsAction
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ExpandGuardRegionsAction
 import de.cau.cs.kieler.klay.layered.p4nodes.bk.CompactionStrategy
+import de.cau.cs.kieler.klay.layered.intermediate.compaction.GraphCompactionStrategy
+import de.cau.cs.kieler.klay.layered.intermediate.compaction.ConstraintCalculationStrategy
+import de.cau.cs.kieler.klay.layered.properties.GreedySwitchType
+import de.cau.cs.kieler.kiml.options.HierarchyHandling
 
 /** 
  * 
@@ -58,11 +62,11 @@ import de.cau.cs.kieler.klay.layered.p4nodes.bk.CompactionStrategy
  *  @author fry
  * 
  */
- @ViewSynthesisShared
+@ViewSynthesisShared
 class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
     @Inject ActorSynthesis actorSynthesis
-    
+
     @Inject HookHandlingBeforeUpdate hookHandling
 
     @Inject extension KNodeExtensions
@@ -72,15 +76,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
     @Inject extension KPolylineExtensions
     @Inject extension KColorExtensions
     @Inject extension KLabelExtensions
-    
+
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
-    
-    
+
 //    val logger = Logger.getLogger(this.class.name)
     public val ID = "de.cau.cs.kieler.circuit.klight.CircuitDiagramSynthesis"
     // -------------------------------------------------------------------------
     // -- KlighD Options
     // -------------------------------------------------------------------------
+    /** The Synthesis option */
+    public static final SynthesisOption SYNTHESIS = SynthesisOption::createChoiceOption("Circuit Synthesis",
+        <String>newLinkedList("All components", "No reset, no tick"), "Top-Down");
 
     /** The visibility category */
     public static final SynthesisOption VISIBILITY = SynthesisOption.createCategory("Visibility");
@@ -89,13 +95,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
     private static val SynthesisOption LAYOUT = SynthesisOption::createChoiceOption("Node Placement",
         <String>newLinkedList("Brandes Koepf", "Linear Segments", "Network Simplex", "Simple"), "Top-Down");
 
-    
     /**  
      * Returns a list of KlighD visualization options. Called by KlighD.
      * 
      */
     override public getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
+        options.addAll(SYNTHESIS)
         options.addAll(ResetWireHook.displayedSynthesisOptions);
         options.addAll(TickWireHook.displayedSynthesisOptions);
         options.addAll(ShowEntireCircuitHook.displayedSynthesisOptions);
@@ -105,35 +111,35 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         return options.toList
 
     }
-    
+
     override getDisplayedActions() {
         val actions = new LinkedList();
-        val collapseAction = DisplayedActionData.create(CollapseGuardRegionsAction.ID,"Collapse guard regions.")
-        val expandAction = DisplayedActionData.create(ExpandGuardRegionsAction.ID,"Expand guard regions.")
-        actions.addAll(collapseAction,expandAction)
+        val collapseAction = DisplayedActionData.create(CollapseGuardRegionsAction.ID, "Collapse guard regions.")
+        val expandAction = DisplayedActionData.create(ExpandGuardRegionsAction.ID, "Expand guard regions.")
+        actions.addAll(collapseAction, expandAction)
         return actions
     }
 
     override KNode transform(Actor model) {
 
-            val root = createNode().associateWith(model);
-//            root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
-            model.transformActor(root);
+        val root = createNode().associateWith(model);
+        root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+        model.transformActor(root);
 
-            /* Update diagram after refreshing.
-             * optionHooks gives hook information for option. */
-            val options = displayedSynthesisOptions.filter[updateAction != null]
-            val List<Pair<String,Boolean>> optionHooks = new LinkedList<Pair<String,Boolean>>
-            for(option : options){
-                val id = option.updateAction
-                val value = option.booleanValue
-                val pair = new Pair<String,Boolean>(id,value)
-                optionHooks.add(pair)
-                
-            }
-            hookHandling.updateDigram(root, optionHooks)
-            
-            return root;
+        /* Update diagram after refreshing.
+         * optionHooks gives hook information for option. */
+        val options = displayedSynthesisOptions.filter[updateAction != null]
+        val List<Pair<String, Boolean>> optionHooks = new LinkedList<Pair<String, Boolean>>
+        for (option : options) {
+            val id = option.updateAction
+            val value = option.booleanValue
+            val pair = new Pair<String, Boolean>(id, value)
+            optionHooks.add(pair)
+
+        }
+        hookHandling.updateDigram(root, optionHooks)
+
+        return root;
     }
 
     // -------------------------------------------------------------------------
@@ -152,13 +158,20 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         // rendering for edges and ports of actor
         actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
         actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
-        actorNode.setLayoutOption(LayoutOptions.PORT_SPACING, 20.0f)
+        actorNode.setLayoutOption(LayoutOptions.PORT_SPACING, 15.0f)
+        actorNode.setLayoutOption(LayoutOptions.SPACING, 15.0f)
         actorNode.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
         actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT);
 
+        actorNode.setLayoutOption(Properties.THOROUGHNESS, 1000)
+        actorNode.setLayoutOption(Properties.POST_COMPACTION, GraphCompactionStrategy.EDGE_LENGTH)
+        actorNode.setLayoutOption(Properties.POST_COMPACTION_COSTRAINTS, ConstraintCalculationStrategy.QUADRATIC)
+        actorNode.setLayoutOption(Properties.GREEDY_SWITCH_TYPE, GreedySwitchType.ONE_SIDED)
+        actorNode.setLayoutOption(LayoutOptions.SEPARATE_CC, false)
+
         if (LAYOUT.objectValue == "Brandes Koepf") {
             actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);
-//            actorNode.setLayoutOption(Properties.COMPACTION_STRATEGY, CompactionStrategy.IMPROVE_STRAIGHTNESS)
+            actorNode.setLayoutOption(Properties.COMPACTION_STRATEGY, CompactionStrategy.IMPROVE_STRAIGHTNESS)
         }
         if (LAYOUT.objectValue == "Linear Segments") {
             actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);
@@ -175,79 +188,21 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         // ------------------------------------------------------------------------
         // Layout options for ports
         for (port : actor.ports) {
-            val kPort = port.port.associateWith(port)
-            actorNode.ports += kPort => [
-                it.associateWith(port)
-                if (!atomicActor) {
-                    // TODO: FIX THIS _GO, g0 stuff...!
-                    if (port.name == "g0") {
-                        it.addInsidePortLabel("_GO", 8, KlighdConstants.DEFAULT_FONT_NAME)
-                    } // .associateWith(port)
-                    else {
-                        it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME)
-                    } // .associateWith(port)
+            if(actor.name == "Circuit Initialization"){
+                createPorts(actorNode, port, atomicActor)
+            }
+            else if (SYNTHESIS.objectValue == "No reset, no tick") {
+                if (port.name != "Tick" && port.name != "Reset_pre") {
+
+                    createPorts(actorNode, port, atomicActor)
+                } else if (actor.innerActors.length < 1) {
+                    createPorts(actorNode, port, atomicActor)
                 }
 
-                // --------------------------------------------------------------
-                // --   Input ports: are placed on the left side of actors     --
-                // --------------------------------------------------------------
-                if (port.type.startsWith("In") || port.type.startsWith("redIn")) {
+            } else {
+                createPorts(actorNode, port, atomicActor)
 
-                    // ports for the tick function are marked with triangle 
-                    if (port.name == "Tick") { // 
-                        it.setPortSize(0, 0)
-                        it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-                        it.addPolygon => [
-                            it.lineWidth = 1
-                            it.lineCap = LineCap.CAP_ROUND;
-                            it.lineJoin = LineJoin.JOIN_ROUND;
-                            it.background = "white".color;
-                            it.selectionBackground = "gray".color;
-                            it.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
-                            it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
-                            it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
-                        ]
-                    } // all other input ports have no special design
-                    else {
-                        it.setPortSize(5, 2);
-                        it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
-                        it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-                        it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-                    }
-
-                    // "In_1" and "In_0" are MUX input ports. They have a specified order to ensure the flap in simulation working correctly.
-                    if (port.type == "In_1") {
-                        actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-                        it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
-                    } else if (port.type == "In_0") {
-                        actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-                        it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
-                    }
-
-                } // --------------------------------------------------------------
-                // --  Output ports: are placed on the right side of actors    --
-                // --------------------------------------------------------------
-                else if (port.type.startsWith("Out") ||port.type.startsWith("redOut")) {
-                    it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-                    it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-                    if (port.outgoingLinks.length == 0) { // mark unnecessary nodes in circuit...
-                        it.addEllipse.setBackground("red".color).lineWidth = 0;
-                        it.setPortSize(6, 6);
-                    } else {
-                        it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-                        it.setPortSize(5, 2);
-                    }
-
-                } // --------------------------------------------------------------
-                // --   Selection ports: are placed at the bottom of actors    --
-                // --------------------------------------------------------------	
-                else if (port.type.startsWith("Sel")) {
-                    it.setPortSize(2, 5);
-                    it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
-                    it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-                    it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
-                }
-            ]
+            }
         }
 
         // ------------------------------------------------------------------------
@@ -261,7 +216,99 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         // --              Create KEdges for Links                               --
         // ------------------------------------------------------------------------
         actor.innerLinks.forEach [ l |
-            createEdgeForLink(l);
+            if (SYNTHESIS.objectValue == "All components") {
+                createEdgeForLink(l)
+            } else {
+                if(actor.name == "Circuit Initialization"){
+                    createEdgeForLink(l)
+                    
+                }
+                else{
+                val s = l.source as Port
+                if (!(s.name == "Tick") && !(s.name == "Reset_pre")) {
+                    createEdgeForLink(l)
+                }
+                
+                }
+
+            }
+        ]
+
+    }
+
+    def createPorts(KNode actorNode, Port port, Boolean atomicActor) {
+        val kPort = port.port.associateWith(port)
+        actorNode.ports += kPort => [
+            it.associateWith(port)
+            if (!atomicActor) {
+                // TODO: FIX THIS _GO, g0 stuff...!
+                if (port.name == "g0") {
+                    it.addInsidePortLabel("_GO", 8, KlighdConstants.DEFAULT_FONT_NAME)
+                } // .associateWith(port)
+                else {
+                    it.addInsidePortLabel(port.name, 8, KlighdConstants.DEFAULT_FONT_NAME)
+                } // .associateWith(port)
+            }
+
+            // --------------------------------------------------------------
+            // --   Input ports: are placed on the left side of actors     --
+            // --------------------------------------------------------------
+            if (port.type.startsWith("In") || port.type.startsWith("redIn")) {
+
+                // ports for the tick function are marked with triangle 
+                if (port.name == "Tick") { //
+                    it.setPortSize(0, 0)
+                    it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+                    it.addPolygon => [
+                        it.lineWidth = 1
+                        it.lineCap = LineCap.CAP_ROUND;
+                        it.lineJoin = LineJoin.JOIN_ROUND;
+                        it.background = "white".color;
+                        it.selectionBackground = "gray".color;
+                        it.addKPosition(LEFT, 0.5f, 0, TOP, 4, 0)
+                        it.addKPosition(RIGHT, -5, 0, TOP, 0, 0.5f)
+                        it.addKPosition(LEFT, 0.5f, 0, BOTTOM, 4, 0)
+                    ]
+                } // all other input ports have no special design
+                else {
+                    it.setPortSize(5, 2);
+                    it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+                    it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+                    it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+                }
+
+                // "In_1" and "In_0" are MUX input ports. They have a specified order to ensure the flap in simulation working correctly.
+                if (port.type == "In_1") {
+                    actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
+                    it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
+                } else if (port.type == "In_0") {
+                    actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
+                    it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
+                }
+
+            } // --------------------------------------------------------------
+            // --  Output ports: are placed on the right side of actors    --
+            // --------------------------------------------------------------
+            else if (port.type.startsWith("Out") || port.type.startsWith("redOut")) {
+                it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
+                it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+                if (port.outgoingLinks.length == 0) { // mark unnecessary nodes in circuit...
+                    it.addEllipse.setBackground("red".color).lineWidth = 0;
+                    it.setPortSize(6, 6);
+                } else {
+                    it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+                    it.setPortSize(5, 2);
+                }
+
+            } // --------------------------------------------------------------
+            // --   Selection ports: are placed at the bottom of actors    --
+            // --------------------------------------------------------------   
+            else if (port.type.startsWith("Sel")) {
+                it.setPortSize(2, 5);
+                it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
+                it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
+                it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+            }
         ]
 
     }
