@@ -277,13 +277,19 @@ class CDTProcessor {
             // org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@4d5de8d3
             // org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@50609c53
             // n        
+            
+        // Transform parameters of a function.
+        
         declarator.children.filter(typeof(CASTParameterDeclaration)).forEach [ parameter |
-            val iName = parameter.children.filter(typeof(CASTDeclarator)).head.children.head.toString
+            println("PARAMETER: " + parameter)
+            val iName = parameter.declarator.name.toString
+            println("NAME: " + iName)
             val iParamater = kex.createVariableDeclaration => [
                 type = parseCDTType(parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
                 input = true
                 funcState.declarations += it
             ]
+            println("TYPE: " + iParamater.type)
             // Add parameter to VOSet to give it a name.
             kex.createValuedObject => [
                 name = iName
@@ -828,104 +834,89 @@ class CDTProcessor {
 
     //TODO Da noch mal drüber schauen....
     def State castDeclaration(CASTDeclarationStatement statement, State parent) {
-
+        
+        // Stores the state which will be returned at the end of this method.
+        var State returnState = null
         val simpleDeclaration = statement.children.filter(typeof(CASTSimpleDeclaration)).head
-        val declarator = simpleDeclaration.children.filter(typeof(CASTDeclarator)).head
-        if (declarator != null) {
-
-            val iName = declarator.children.head.toString
-            val intParamater = kex.createVariableDeclaration => [
-                type = parseCDTType(simpleDeclaration.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
-                input = false
-                //funcGlobalState.declarations += it
+        /* org.eclipse.cdt.internal.core.dom.parser.c.CASTCompoundStatement@632de6a4
+            org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement@39a94146
+             org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration@2603a455
+              org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclSpecifier@286a4709
+               org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@247e9c66
+                a
+               org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator@57ae4ade
+                b */
                 
-                // If the declaration is the initializer of a for statement, it needs to be added to the forState.
-                if (parent.id.contains("_for")) {
-                    parent.declarations += it
-                } else {
-                    // Add declaration of variable to the state which is one hierarchy above.
-                    parent.parentRegion.parentState.declarations += it
-                }
-            ]
-            
-            val value = kex.createValuedObject => [
-                name = iName
-                intParamater.valuedObjects += it
-                VOSet += it
-            ]
-
-            val initializer = declarator.children.filter(typeof(CASTEqualsInitializer)).head
-            if (initializer != null) {                
-                // A initialization of a variable which depends on an other variable does not become an entry action.
-                if (initializer.children.head instanceof IASTExpression) {
-                    var exp = (initializer.children.head as IASTExpression)
-                    val initChild = initializer.children.head
-                    val childList = initChild.children.toList
+        // Contains all declarators of a DeclarationStatement
+        val declaratorList = simpleDeclaration.children.filter(typeof(CASTDeclarator))
+        
+        // Convert each declarator
+        for (declarator : declaratorList) {
+            println(declarator.name)
+        
+            if (declarator != null) {
+    
+                val iName = declarator.children.head.toString
+                val intParamater = kex.createVariableDeclaration => [
+                    type = parseCDTType(simpleDeclaration.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
+                    input = false
                     
-                    // Variable declarations inside a control structure must not become entry actions of the control
-                    // structure state, since the declaration is only done if the condition is met.
-                    if (parent.parentRegion.parentState.id.contains("_cs")) {
-                        if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
-                           var entryAction = parent.createEntryAction
-                           entryAction.createAssignment(value, exp.createKExpression)
-                           return parent
-                       } else {
-                           val initVarState = scc.createState => [ s |
-                                s.id = parent.id + "_varInit"
-                                s.label = createLabel(statement)
-                                parent.parentRegion.states += s
-                            ]
-                            var entryAction = initVarState.createEntryAction
-                            entryAction.createAssignment(value, exp.createKExpression)
-                            // Create transition which connects the parent state "state" to the codeState.
-                            createConnectingTransition(parent, initVarState, statement)
-                            return initVarState
-                       }
-                    
+                    // If the declaration is the initializer of a for statement, it needs to be added to the forState.
+                    if (parent.id.contains("_for")) {
+                        parent.declarations += it
+                    } else {
+                        // Add declaration of variable to the state which is one hierarchy above.
+                        parent.parentRegion.parentState.declarations += it
                     }
-                    
-                    
-                    if (initChild instanceof CASTIdExpression) {
-                       // Write into previous state if there also is an other variable initialization.
-                       if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
-                           var entryAction = parent.createEntryAction
-                           entryAction.createAssignment(value, exp.createKExpression)
-                       }
-                       // If this is not the case, create an extra state.
-                       else {
-                            val initVarState = scc.createState => [ s |
-                                s.id = parent.id + "_varInit"
-                                s.label = createLabel(statement)
-                                parent.parentRegion.states += s
-                            ]
-                            val trans = scc.createTransition => [
-                                targetState = initVarState
-                                immediate = true
-                                if (parent.hasInnerStatesOrControlflowRegions) {
-                                    type = TransitionType::TERMINATION
-                                }
-                                parent.outgoingTransitions += it
-                            ]
-                            var entryAction = initVarState.createEntryAction
-                            entryAction.createAssignment(value, exp.createKExpression)
-                            return initVarState 
-                            
-                       }
+                ]
+                
+                val value = kex.createValuedObject => [
+                    name = iName
+                    intParamater.valuedObjects += it
+                    VOSet += it
+                ]
+    
+                val initializer = declarator.children.filter(typeof(CASTEqualsInitializer)).head
+                if (initializer != null) {                
+                    // A initialization of a variable which depends on an other variable does not become an entry action.
+                    if (initializer.children.head instanceof IASTExpression) {
+                        var exp = (initializer.children.head as IASTExpression)
+                        val initChild = initializer.children.head
+                        val childList = initChild.children.toList
                         
-                    } else if (initChild instanceof CASTBinaryExpression) {
-                        // Falls die Variablenzuweisung abhängig von einer anderen Variable ist...
-                        if (childList.filter(typeof(CASTSimpleDeclSpecifier)) != []) {
-                            // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
-                            if (parent.id.contains("_varInit")) {
+                        // Variable declarations inside a control structure must not become entry actions of the control
+                        // structure state, since the declaration is only done if the condition is met.
+                        if (parent.parentRegion.parentState.id.contains("_cs")) {
+                            if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
                                var entryAction = parent.createEntryAction
                                entryAction.createAssignment(value, exp.createKExpression)
-                            }
-                            // ... sonst separate state
-                            else {
+                               returnState = parent
+                           } else {
+                               val initVarState = scc.createState => [ s |
+                                    s.id = parent.id + "_varInit"
+                                    s.label = createLabel(statement)
+                                    parent.parentRegion.states += s
+                                ]
+                                var entryAction = initVarState.createEntryAction
+                                entryAction.createAssignment(value, exp.createKExpression)
+                                // Create transition which connects the parent state "state" to the codeState.
+                                createConnectingTransition(parent, initVarState, statement)
+                                returnState = initVarState
+                           }
+                        }
+                        
+                        
+                        if (initChild instanceof CASTIdExpression) {
+                           // Write into previous state if there also is an other variable initialization.
+                           if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
+                               var entryAction = parent.createEntryAction
+                               entryAction.createAssignment(value, exp.createKExpression)
+                           }
+                           // If this is not the case, create an extra state.
+                           else {
                                 val initVarState = scc.createState => [ s |
                                     s.id = parent.id + "_varInit"
                                     s.label = createLabel(statement)
-                
                                     parent.parentRegion.states += s
                                 ]
                                 val trans = scc.createTransition => [
@@ -938,27 +929,61 @@ class CDTProcessor {
                                 ]
                                 var entryAction = initVarState.createEntryAction
                                 entryAction.createAssignment(value, exp.createKExpression)
-                                return initVarState 
+                                returnState = initVarState 
                                 
+                           }
+                            
+                        } else if (initChild instanceof CASTBinaryExpression) {
+                            // Falls die Variablenzuweisung abhängig von einer anderen Variable ist...
+                            if (childList.filter(typeof(CASTSimpleDeclSpecifier)) != []) {
+                                // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
+                                if (parent.id.contains("_varInit")) {
+                                   var entryAction = parent.createEntryAction
+                                   entryAction.createAssignment(value, exp.createKExpression)
+                                }
+                                // ... sonst separate state
+                                else {
+                                    val initVarState = scc.createState => [ s |
+                                        s.id = parent.id + "_varInit"
+                                        s.label = createLabel(statement)
+                    
+                                        parent.parentRegion.states += s
+                                    ]
+                                    val trans = scc.createTransition => [
+                                        targetState = initVarState
+                                        immediate = true
+                                        if (parent.hasInnerStatesOrControlflowRegions) {
+                                            type = TransitionType::TERMINATION
+                                        }
+                                        parent.outgoingTransitions += it
+                                    ]
+                                    var entryAction = initVarState.createEntryAction
+                                    entryAction.createAssignment(value, exp.createKExpression)
+                                    returnState = initVarState 
+                                    
+                                }
                             }
                         }
+                         
+                        var EntryAction entryAction = null
+                        // If the declaration is the initializer of a for statement, create entryAction for forState
+                        if (parent.id.contains("_for")) {
+                            entryAction = parent.createEntryAction
+                        } else {
+                            // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
+                            entryAction = parent.parentRegion.parentState.createEntryAction
+                        }
+                        entryAction.createAssignment(value, exp.createKExpression)
                     }
-                     
-                    var EntryAction entryAction = null
-                    // If the declaration is the initializer of a for statement, create entryAction for forState
-                    if (parent.id.contains("_for")) {
-                        entryAction = parent.createEntryAction
-                    } else {
-                        // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
-                        entryAction = parent.parentRegion.parentState.createEntryAction
-                    }
-                    entryAction.createAssignment(value, exp.createKExpression)
+                } else {
+                    returnState = parent
                 }
-            } else {
-                return parent
             }
-        }
         
+        }
+        if (returnState != null) {
+            return returnState
+        }
         parent
     }
 
