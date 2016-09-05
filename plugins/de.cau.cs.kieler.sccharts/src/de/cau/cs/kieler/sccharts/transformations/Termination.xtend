@@ -173,7 +173,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             // For all final states add immeditae transition to Final
             for (finalState : finalStates.toList.immutableCopy) {
                 
-                // for more than one incoming transition make a connector!
+                //Optimization: for more than one incoming transition make a connector!
                 val connectorCase = (!finalState.incomingTransitions.nullOrEmpty) && finalState.incomingTransitions.size > 1;
                 
                 if (!connectorCase) {
@@ -181,6 +181,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                         transition.effects.add(finishedValuedObject.assign(TRUE))
                     }
                 } else {
+                    //Optimization-case:
                     // in the connector case create just one transition with the assignment and
                     // re-route all incoming transitions to this connector
                     val connector = finalState.parentRegion.createState(GENERATED_PREFIX + "c").setTypeConnector
