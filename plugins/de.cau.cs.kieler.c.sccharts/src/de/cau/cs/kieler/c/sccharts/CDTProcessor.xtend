@@ -83,6 +83,8 @@ import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
 import org.eclipse.cdt.core.dom.ast.IASTExpressionList
 import de.cau.cs.kieler.kexpressions.Parameter
 import org.eclipse.cdt.internal.core.model.VariableDeclaration
+import java.util.Set
+import java.util.HashSet
 
 /**
  * @author ssm
@@ -131,7 +133,7 @@ class CDTProcessor {
     
     
     // Contains all defined functions of the given C code.
-    ArrayList<State> functions = new ArrayList<State>();
+    val functions = new ArrayList<Pair<State, Set<ValuedObject>>>();
     
     
 
@@ -174,10 +176,15 @@ class CDTProcessor {
         
         // For each function definition add a new rootState to the rootSCChart
         ast.children.forEach [ func | // for each defined function
+            // ssm: RESET VO SET for each function!
+            // The scoper will not look for the VOs in other root states.
+            VOSet.clear  
+//            functionCallRefs.clear
+            
             if (func instanceof CASTFunctionDefinition) {
                 val rootFunctionDefinition = func as CASTFunctionDefinition
                 val model = rootFunctionDefinition.transformFunction
-                functions.add(model)
+                functions.add(new Pair(model, VOSet.clone))
                 rootSCChart.rootStates += model
             }
         ]
@@ -189,10 +196,14 @@ class CDTProcessor {
                  * it to the referencing state (value). */
                 val funcCallExp = entry.key
                 val referencingState = entry.value
+                val rootState = referencingState.getRootState
+                
+                VOSet.clear
+                VOSet += functions.filter[ key == rootState ].head.value                
                 
                 val funcID = funcCallExp.functionNameExpression.children.head.toString
                 // Search the list functions for the to be referenced function state
-                val referencedState = lookForFunctions(funcID)
+                val State referencedState = lookForFunctions(funcID)
                 if (referencedState != null) {
                     referencingState.referencedScope = referencedState
                 }
@@ -255,7 +266,7 @@ class CDTProcessor {
             }
             
             if (label == "main") { 
-                initial = true
+//                initial = true
             }
         ]
         val funcStateLabel = funcState.label
@@ -1897,8 +1908,8 @@ class CDTProcessor {
     // Return the entry of the global function list which has the same id as the one we are looking for.
     private def State lookForFunctions(String id) {
         for (s : functions) {
-            if (s.id.contains(id)) {
-                return s
+            if (s.key.id.contains(id)) {
+                return s.key
             }
         }
         // If there is no such entry, return null.
