@@ -14,7 +14,7 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    annotations+=Pragmas*
+    annotations+=PragmaAnnotation*
     rootStates+=RootState*;
     
 Pragmas returns annotations::PragmaStringAnnotation:

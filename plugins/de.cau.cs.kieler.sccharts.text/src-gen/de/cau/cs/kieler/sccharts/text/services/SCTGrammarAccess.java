@@ -26,7 +26,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCT.SCCharts");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsPragmasParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsPragmaAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cRootStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cRootStatesRootStateParserRuleCall_1_0 = (RuleCall)cRootStatesAssignment_1.eContents().get(0);
 		
@@ -35,18 +35,18 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 		////  SCCharts Rules  // 
 		//// ---------------- //
 		//SCCharts sccharts::SCCharts:
-		//	annotations+=Pragmas*
+		//	annotations+=PragmaAnnotation*
 		//	rootStates+=RootState*
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Pragmas* rootStates+=RootState*
+		//annotations+=PragmaAnnotation* rootStates+=RootState*
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=Pragmas*
+		//annotations+=PragmaAnnotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//Pragmas
-		public RuleCall getAnnotationsPragmasParserRuleCall_0_0() { return cAnnotationsPragmasParserRuleCall_0_0; }
+		//PragmaAnnotation
+		public RuleCall getAnnotationsPragmaAnnotationParserRuleCall_0_0() { return cAnnotationsPragmaAnnotationParserRuleCall_0_0; }
 
 		//rootStates+=RootState*
 		public Assignment getRootStatesAssignment_1() { return cRootStatesAssignment_1; }
@@ -1771,7 +1771,7 @@ public class SCTGrammarAccess extends AbstractGrammarElementFinder {
 	////  SCCharts Rules  // 
 	//// ---------------- //
 	//SCCharts sccharts::SCCharts:
-	//	annotations+=Pragmas*
+	//	annotations+=PragmaAnnotation*
 	//	rootStates+=RootState*
 	public SCChartsElements getSCChartsAccess() {
 		return pSCCharts;
