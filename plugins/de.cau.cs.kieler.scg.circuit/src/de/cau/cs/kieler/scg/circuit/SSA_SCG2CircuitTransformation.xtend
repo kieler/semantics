@@ -232,7 +232,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
             } else if (thenNode instanceof Assignment) {
 
                 // --           Create new MUX           --
-                val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source, thenNode, thenNode.valuedObject,
+                val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source, thenNode,elseNode, thenNode.valuedObject,
                     thenNode.assignment)
                 newMUX.type = "MUX"
                 newMUX.name = thenNode.valuedObject.name
@@ -311,6 +311,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
      * 
      */
     def transformAssignment(Assignment assignment, Actor logic) {
+        
 
         // Get the right side of assignment. 
         val expr = assignment.assignment
@@ -344,6 +345,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                     System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
                 }
             }
+            
 
             // create regions for guards
             val actorRegion = CircuitFactory::eINSTANCE.createActor.trace(assignment)
@@ -492,6 +494,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                         addRegisterPorts(actor, "Reset_pre")
                     }
                     default: {
+                        actor.type = expr.getOperator.getName
                         System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
                     }
                 }

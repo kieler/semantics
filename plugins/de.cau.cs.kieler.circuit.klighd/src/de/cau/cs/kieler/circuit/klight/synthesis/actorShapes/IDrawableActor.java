@@ -25,7 +25,10 @@ import de.cau.cs.kieler.core.kgraph.KNode;
  * Note: for simulation mark highlightable parts of your shape with id = "highlightable"  
  */
 public interface IDrawableActor  {
-
+    
+    public static float NODE_SIZE_SQUARES = 40;
+//    public static float NODE_SIZE_LONG_SIDE = 
+    
 	public abstract KNode draw(Actor a);
 
 }

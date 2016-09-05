@@ -44,7 +44,7 @@ class FlipFlopActorSynthesis implements IDrawableActor {
 	override draw(Actor actor) {
 		val KNode node = actor.node
 
-		node.setNodeSize(40, 40);
+		node.setNodeSize(NODE_SIZE_SQUARES, NODE_SIZE_SQUARES);
 
 		node.addRectangle =>
 			[

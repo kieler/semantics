@@ -49,6 +49,7 @@ import javax.inject.Inject
 import de.cau.cs.kieler.klighd.DisplayedActionData
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.CollapseGuardRegionsAction
 import de.cau.cs.kieler.circuit.klighd.synthesis.hooks.ExpandGuardRegionsAction
+import de.cau.cs.kieler.klay.layered.p4nodes.bk.CompactionStrategy
 
 /** 
  * 
@@ -157,6 +158,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
         if (LAYOUT.objectValue == "Brandes Koepf") {
             actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);
+//            actorNode.setLayoutOption(Properties.COMPACTION_STRATEGY, CompactionStrategy.IMPROVE_STRAIGHTNESS)
         }
         if (LAYOUT.objectValue == "Linear Segments") {
             actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);
