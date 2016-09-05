@@ -132,7 +132,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     targetState.transformTermination(targetRootState)
                 }
 
-                targetState.transformAbortNoWTO_NEW(targetRootState)
+                //targetState.transformAbortNoWTO_NEW(targetRootState)
             }
 
         // done = true;

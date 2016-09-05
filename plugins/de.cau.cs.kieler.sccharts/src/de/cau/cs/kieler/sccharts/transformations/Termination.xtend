@@ -171,9 +171,26 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 //            }
 
             // For all final states add immeditae transition to Final
-            for (finalState : finalStates) {
-                for (transition : finalState.incomingTransitions) {
-                    transition.effects.add(finishedValuedObject.assign(TRUE))
+            for (finalState : finalStates.toList.immutableCopy) {
+                
+                // for more than one incoming transition make a connector!
+                val connectorCase = (!finalState.incomingTransitions.nullOrEmpty) && finalState.incomingTransitions.size > 1;
+                
+                if (!connectorCase) {
+                    for (transition : finalState.incomingTransitions) {
+                        transition.effects.add(finishedValuedObject.assign(TRUE))
+                    }
+                } else {
+                    // in the connector case create just one transition with the assignment and
+                    // re-route all incoming transitions to this connector
+                    val connector = finalState.parentRegion.createState(GENERATED_PREFIX + "c").setTypeConnector
+                    for (transition : finalState.incomingTransitions.toList.immutableCopy) {
+                        //transition.effects.add(finishedValuedObject.assign(TRUE))
+                        transition.setTargetState(connector)
+                    }
+                    val connectorTransition = connector.createTransitionTo(finalState).setImmediate
+                    connectorTransition.effects.add(finishedValuedObject.assign(TRUE))
+                    
                 }
                 //val T2 = finalState.createImmediateTransitionTo(Final)
                 // Set the final state flag to false
