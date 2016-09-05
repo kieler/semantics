@@ -1159,7 +1159,7 @@ class CDTProcessor {
             val elseTransition = condState.outgoingTransitions.last // condState's last transition in list is always the else transition.
             elseTransition.trigger = null
             elseTransition.immediate = true
-            elseTransition.annotations.add(createStringAnnotation("notImmediate",""))
+//            elseTransition.annotations.add(createStringAnnotation("notImmediate",""))
 
         }
         
@@ -1180,7 +1180,7 @@ class CDTProcessor {
                     val defaultTrans = scc.createTransition => [
                         targetState = connectorState
                         immediate = true
-                        annotations.add(createStringAnnotation("notImmediate",""))
+//                        annotations.add(createStringAnnotation("notImmediate",""))
                         condState.outgoingTransitions += it
                     ]
                 }
@@ -1321,6 +1321,7 @@ class CDTProcessor {
         val backTransition = scc.createTransition => [
             targetState = condState
             immediate = true
+            annotations.add(createStringAnnotation("notImmediate",""))
         ]
         iterateExp.outgoingTransitions += backTransition
         
@@ -1875,7 +1876,7 @@ class CDTProcessor {
                 }
                 
                 trigger = condKExp
-                annotations.add(createStringAnnotation("notImmediate",""))
+//                annotations.add(createStringAnnotation("notImmediate",""))
                 immediate = true
          
             } else if(src.hasInnerStatesOrControlflowRegions) {
