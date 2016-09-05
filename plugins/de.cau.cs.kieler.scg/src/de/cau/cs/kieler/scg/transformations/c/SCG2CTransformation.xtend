@@ -259,7 +259,7 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                 }
             }
             
-            for(vo : VOs.filter[ !VOSet.contains(it) ]) {
+            for(vo : VOs.filter[ !VOSet.contains(it) ].filter[ it != null ]) {
                 valuedObjectPrefix = ""
                 tickStruct.append(DEFAULT_INDENTATION)
                 if (vo.declaration instanceof ReferenceDeclaration) {
