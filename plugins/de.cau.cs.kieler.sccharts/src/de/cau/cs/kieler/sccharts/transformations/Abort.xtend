@@ -103,7 +103,9 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     static public final String GENERATED_PREFIX = "_"
 
     private val nameCache = <String>newArrayList("_term")
-
+    
+    
+    
     // FIXME: Delayed weak aborts need to be treated with a watcher region and a
     // delaying auxiliary signal there.
     // -------------------------------------------------------------------------
@@ -132,7 +134,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     targetState.transformTermination(targetRootState)
                 }
 
-                //targetState.transformAbortNoWTO_NEW(targetRootState)
+                targetState.transformAbortNoWTO_NEW(targetRootState)
             }
 
         // done = true;
@@ -142,7 +144,12 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 
 
 
-
+    def Expression getTriggerOrTrue(Transition t) {
+        if (t.trigger == null) {
+            return TRUE
+        }
+        return t.trigger
+    }
 
 
 
@@ -235,7 +242,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     transition.setDefaultTrace;
                     if (transition.typeStrongAbort) {
                         if (transition.immediate2) {
-                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(transition.trigger.copy).trace(
+                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(transition.getTriggerOrTrue.copy).trace(
                                 transition)
                         } else {
                             if (mixedDelayedStrongAborts) {
@@ -247,19 +254,20 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
                                     transition)
                             } else {
-                                strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
+                                strongAbortTrigger = strongAbortTrigger.or(transition.getTriggerOrTrue.copy).trace(transition)
                             }
                         }
                     } else if (transition.typeWeakAbort) {
                         if (transition.immediate2) {
+                            //OPTIMIZATION
                             //!!!CHANGED
                             // TODO: check if optimization is correct in all cases!
                             if (transition.hasAnnotation(Termination.ANNOTATION_TERMINATIONTRANSITION)) {
-                                weakAbortImmediateTerminationTrigger = weakAbortImmediateTerminationTrigger.or(transition.trigger.copy).trace(
+                                weakAbortImmediateTerminationTrigger = weakAbortImmediateTerminationTrigger.or(transition.getTriggerOrTrue.copy).trace(
                                 transition)
                                 weakAbortImmediateTriggerTermination = true
                             } else {
-                                weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.trigger.copy).trace(
+                                weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.getTriggerOrTrue.copy).trace(
                                     transition)
                             }
                         } else {
@@ -327,6 +335,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 strongAbort.setImmediate(true)
                             }
                             if (weakAbortImmediateTrigger != null || weakAbortImmediateTerminationTrigger != null) {
+                                //OPTIMIZATION
                                 //!!!CHANGED
                                 // only create a weak abort immediate transition
                                 var Expression trigger;
