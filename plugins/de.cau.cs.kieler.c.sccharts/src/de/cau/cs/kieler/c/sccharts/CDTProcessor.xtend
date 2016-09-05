@@ -222,7 +222,7 @@ class CDTProcessor {
         }
         
 //        removeConnectorStates();
-        rootSCChart.createStringAnnotation(CbasedSCChartFeature.ID,"")
+        rootSCChart.rootStates.head.createStringAnnotation(CbasedSCChartFeature.ID,"")
         rootSCChart
     }
 

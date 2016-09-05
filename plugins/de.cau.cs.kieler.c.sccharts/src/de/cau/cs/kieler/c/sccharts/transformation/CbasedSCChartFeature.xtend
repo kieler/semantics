@@ -39,7 +39,7 @@ class CbasedSCChartFeature extends Feature {
     extension AnnotationsExtensions
     
     def boolean isContained(SCCharts scchart) {
-        scchart.hasAnnotation(ID)
+        scchart.rootStates.head.hasAnnotation(ID)
     }
     
 }
