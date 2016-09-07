@@ -792,6 +792,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         UIUtil.createUpButton(bcomp, list)
         // Create down button 
         UIUtil.createDownButton(bcomp, list)
+        
+        // Add drag and drop support to change order of items
+        UIUtil.addDragAndDropSupportToChangeOrder(list)
     }
 
     /**
