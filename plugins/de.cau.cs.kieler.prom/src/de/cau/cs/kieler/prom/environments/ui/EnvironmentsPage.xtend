@@ -577,7 +577,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
-        + "Use ${" + KiCoLaunchConfig.COMPILED_CODE_PLACEHOLDER + "} in the template file as placeholder."
+        + "Use ${" + KiCoLaunchConfig.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
         
         // Create target directory control
         val comp = UIUtil.createComposite(group, 3)
@@ -792,6 +792,9 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         UIUtil.createUpButton(bcomp, list)
         // Create down button 
         UIUtil.createDownButton(bcomp, list)
+        
+        // Add drag and drop support to change order of items
+        UIUtil.addDragAndDropSupportToChangeOrder(list)
     }
 
     /**

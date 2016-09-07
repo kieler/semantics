@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import java.util.Map
 
 /**
  * This class generates wrapper code for models.
@@ -62,7 +63,7 @@ class WrapperCodeGenerator {
      * that is created during wrapper code generation.
      */
     private static val FILE_NAME_VARIABLE = "file_name"
-
+    
     private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
     private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
     private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
@@ -87,37 +88,43 @@ class WrapperCodeGenerator {
      */
     private String modelName = ""
 
-    private String resolvedWrapperCodeTemplate
-    private String resolvedWrapperCodeSnippetDirectory
-    private String resolvedWrapperCodeTargetLocation
+    private String templatePath
     
     new(KiCoLaunchConfig launchConfig) {
         this.launchConfig = launchConfig
     }
     
     /**
-     * Generates and saves the wrapper code for a list of files.
+     * Generates wrapper code for a list of annotated model files.
      * 
-     * @param datas The data objects to generate wrapper code for 
+     * @param templatePath The project relative path to the wrapper code template
+     * @param datas The model files to generate wrapper code for
      */
-    def public void generateWrapperCode(FileData... datas) {
-
-        // Resolve variables
-        val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        resolvedWrapperCodeTemplate = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate)
-        resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
-        resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
-
+    def public String generateWrapperCode(String templatePath, FileData... datas) {
+        generateWrapperCode(templatePath, #{}, datas)
+    }
+    
+    /**
+     * Generates wrapper code for a list of annotated model files.
+     * 
+     * @param templatePath The project relative path to the wrapper code template
+     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
+     * @param datas The model files to generate wrapper code for
+     */
+    def public String generateWrapperCode(String templatePath, Map<String,String> additionalMappings, FileData... datas) {
+        this.templatePath = templatePath
+        
         // Check consistency of path
-        if (!resolvedWrapperCodeTemplate.isNullOrEmpty()) {
-
-            val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
+        if (!this.templatePath.isNullOrEmpty()) {
+            val templateWithMacroCalls = getTemplateWithMacroCalls(additionalMappings, datas)
 
             // Debug log macro calls
-            System.err.println(templateWithMacroCalls)
+//            System.err.println(templateWithMacroCalls)
 
-            processTemplateAndSaveOutput(templateWithMacroCalls)
+            val wrapperCode = processTemplateWithSnippetDefinitions(templateWithMacroCalls)
+            return wrapperCode
         }
+        return ""
     }
 
     /**
@@ -128,7 +135,7 @@ class WrapperCodeGenerator {
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(FileData... datas) {
+    private def String getTemplateWithMacroCalls(Map<String,String> additionalMappings, FileData... datas) {
 
         // Get all annotations of input and output variables from the files.
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
@@ -141,15 +148,18 @@ class WrapperCodeGenerator {
         
         // Add name of model 
         map.put(MODEL_NAME_VARIABLE, modelName)
-        
+       
         // Add name of output file 
-        val fileName = new File(resolvedWrapperCodeTargetLocation).name
+        val fileName = new File(templatePath).name
         val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
         map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
         
+        // Add additional mappings
+        map.putAll(additionalMappings)
+        
         // Inject macro calls in input template
         FreeMarkerPlugin.newConfiguration(launchConfig.project.location.toOSString())
-        val template = FreeMarkerPlugin.configuration.getTemplate(resolvedWrapperCodeTemplate)
+        val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -163,7 +173,11 @@ class WrapperCodeGenerator {
      * 
      * @param templateWithMacroCalls The template text to be processed 
      */
-    private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
+    private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls) {
+        
+        // Resolve snippet path
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        val resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
         
         // Load snippet definitions
         if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
@@ -191,10 +205,11 @@ class WrapperCodeGenerator {
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
-        // Process template and write output directly to target file
-        val writer = new FileWriter(resolvedWrapperCodeTargetLocation)
+        // Process template and write output in string
+        val writer = new StringWriter()
         template.process(newHashMap(), writer)
         writer.close()
+        return writer.toString
     }
 
     /**

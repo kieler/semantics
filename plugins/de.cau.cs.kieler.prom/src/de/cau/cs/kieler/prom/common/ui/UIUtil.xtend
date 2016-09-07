@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IPath
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.debug.ui.StringVariableSelectionDialog
+import org.eclipse.jface.util.LocalSelectionTransfer
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CheckStateChangedEvent
 import org.eclipse.jface.viewers.CheckboxTableViewer
@@ -48,6 +49,13 @@ import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.TextCellEditor
 import org.eclipse.swt.SWT
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DragSource
+import org.eclipse.swt.dnd.DragSourceAdapter
+import org.eclipse.swt.dnd.DragSourceEvent
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DropTargetAdapter
+import org.eclipse.swt.dnd.DropTargetEvent
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.layout.GridData
@@ -607,6 +615,9 @@ class UIUtil {
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
 
+        // Add drag and drop support to change order of items
+        addDragAndDropSupportToChangeOrder(viewer)
+
         // Create editable cells
         val nameEditor = new TextCellEditor(table);
         val commandEditor = new TextCellEditor(table);
@@ -652,7 +663,7 @@ class UIUtil {
         
         return viewer
     }
-
+    
     /**
      * Creates a column for a table viewer with the given title and width.
      * 
@@ -793,6 +804,59 @@ class UIUtil {
      */
     public static def Label createLabel(Composite parent, String label) {
         return SWTFactory.createLabel(parent, label, 1)
+    }
+    
+    public static def void addDragAndDropSupportToChangeOrder(TableViewer viewer) {
+        val table = viewer.control as Table
+        // Create transfer type
+        val transfer = LocalSelectionTransfer.getTransfer()
+        val types = #[ transfer ]
+        
+        // Create drag source
+        val source = new DragSource(table, DND.DROP_MOVE);
+        source.setTransfer(types);
+        source.addDragListener(new DragSourceAdapter() {
+            
+            override dragSetData(DragSourceEvent event) {
+                // Get the selected items in the table
+                // and set it as the event data
+                transfer.setSelection(new StructuredSelection(table.selection));
+                event.data = transfer
+            }
+        })
+        
+        // Create drag target
+        val target = new DropTarget(table, DND.DROP_MOVE)
+        target.setTransfer(types);
+        target.addDropListener(new DropTargetAdapter() {
+            override dragEnter(DropTargetEvent event) {
+                // Allowed types
+                for (var i = 0; i < event.dataTypes.length; i++) {
+                    if (LocalSelectionTransfer.getTransfer().isSupportedType(event.dataTypes.get(i))) {
+                        event.currentDataType = event.dataTypes.get(i);
+                    }
+                }
+            }
+    
+            override dragOver(DropTargetEvent event) {
+            }
+    
+            override drop(DropTargetEvent event) {
+                if (LocalSelectionTransfer.getTransfer().isSupportedType(event.currentDataType)) {
+                  // Get the item that is the source of the drag action
+                  val sel = event.data as StructuredSelection
+                  val source = sel.firstElement as TableItem
+                  // Get the item that is the target of the drag action
+                  val target = event.item as TableItem
+                  // Swap source and target
+                  if(source != null && target != null && source != target) {
+                    val inputList = viewer.input as List<Object>
+                    Collections.swap(inputList, inputList.indexOf(source.data), inputList.indexOf(target.data))
+                    viewer.refresh()
+                  }
+                }
+            }
+        })
     }
 
     /**

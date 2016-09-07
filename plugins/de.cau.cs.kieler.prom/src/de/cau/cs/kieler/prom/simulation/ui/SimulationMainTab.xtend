@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.prom.simulation.ui
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
-import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.FileData
+import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.SimulationLaunchData
 import de.cau.cs.kieler.prom.common.ui.UIUtil
 import java.util.EnumSet
@@ -38,6 +38,14 @@ import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.swt.SWT
+import org.eclipse.swt.dnd.DND
+import org.eclipse.swt.dnd.DragSource
+import org.eclipse.swt.dnd.DragSourceAdapter
+import org.eclipse.swt.dnd.DragSourceEvent
+import org.eclipse.swt.dnd.DropTarget
+import org.eclipse.swt.dnd.DropTargetAdapter
+import org.eclipse.swt.dnd.DropTargetEvent
+import org.eclipse.swt.dnd.TextTransfer
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.layout.GridData
@@ -45,6 +53,10 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.swt.widgets.Text
+import org.eclipse.swt.widgets.TableItem
+import org.eclipse.jface.util.LocalSelectionTransfer
+import java.util.Collection
+import java.util.Collections
 
 class SimulationMainTab  extends AbstractLaunchConfigurationTab{
     
@@ -169,6 +181,9 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
         
+        // Add drag and drop support to change the order
+        UIUtil.addDragAndDropSupportToChangeOrder(viewer)
+        
         return viewer
     }
     
@@ -259,6 +274,9 @@ class SimulationMainTab  extends AbstractLaunchConfigurationTab{
                 launchData.simulatorClassName = config.getAttribute("class")    
             }
         }
+        
+        // Set files
+        launchData.files = files.input as List<FileData>
         
         // Flush to configuration
         SimulationLaunchData.saveToConfiguration(configuration, launchData)

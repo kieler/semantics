@@ -118,6 +118,12 @@
                id="org.eclipse.ui.wizards.new.folder">
          </newWizardShortcut>
       </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="org.eclipse.ui.wizards.new.folder">
+         </newWizardShortcut>
+      </perspectiveExtension>
    </extension>
    <extension
          point="de.cau.cs.kieler.prom.simulator">
