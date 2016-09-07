@@ -159,7 +159,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 duringAction.setImmediate(weakSuspend.immediate)
                 //duringAction.setTrigger(weakSuspend.trigger.copy)
                 //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
-                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
+                duringAction.addEffect(weakSuspendFlag.assign(weakSuspendFlag.reference.or(weakSuspend.trigger.copy)))
                 state.localActions.remove(weakSuspend)
             }
 
