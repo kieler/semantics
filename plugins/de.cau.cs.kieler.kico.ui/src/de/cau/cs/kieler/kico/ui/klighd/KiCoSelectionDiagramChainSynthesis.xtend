@@ -69,8 +69,6 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.addSpline(2) => [
             //    it.setForeground(DARKGRAY.copy)
             //    it.addArrowDecorator()
