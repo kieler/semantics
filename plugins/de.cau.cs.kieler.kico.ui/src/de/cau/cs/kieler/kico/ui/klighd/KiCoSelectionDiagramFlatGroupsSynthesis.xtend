@@ -99,6 +99,9 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
 
         val knode = model.createNode();
 
+        // Apply spline edge routing on root level
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+
         for (elem : model.visibleFeatures) {
 
             System.out.println("TRANSFORM " + elem.id);

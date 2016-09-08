@@ -69,7 +69,8 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            // The following option MUST be set on the container node!
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.addSpline(2) => [
             //    it.setForeground(DARKGRAY.copy)
@@ -90,6 +91,10 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
         clearCache()
 
         val knode = model.createNode();
+        
+        // Apply spline edge routing on root level
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        
 
         knode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
         knode.setLayoutOption(LayoutOptions::SPACING, 25f);
