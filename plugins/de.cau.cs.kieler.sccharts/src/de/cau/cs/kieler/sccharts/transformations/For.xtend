@@ -100,10 +100,8 @@ class For extends AbstractExpansionTransformation {
                     firstInstanceR.states.add(subState)
                 }
             }
-
             val start = region.createInitialState(GENERATED_PREFIX + "startFor")
             val end = region.createFinalState(GENERATED_PREFIX + "endFor")
-
             var State lastInstance = firstInstance
             for (var c = forData.start + 1; c <= forData.end; c++) {
                 val instance = region.createState(GENERATED_PREFIX + "For" + c)
@@ -113,18 +111,13 @@ class For extends AbstractExpansionTransformation {
                     lastInstance.createTransitionTo(instance).setTypeTermination.effects.add(
                         forData.valuedObject.assign(c.createIntValue))
                 }
-
                 lastInstance = instance
             }
-
             start.createImmediateTransitionTo(firstInstance).effects.add(
                 forData.valuedObject.assign(forData.start.createIntValue))
             lastInstance.createTransitionTo(end).setTypeTermination
-
             // Reset the region label
             region.label = ""
-        // val regionCopy = 
-        // val startState = region.c
         }
     }
 
@@ -157,6 +150,9 @@ class For extends AbstractExpansionTransformation {
         val vEnd = data2.get(1).trim
         val ForData returnData = new ForData()
         returnData.valuedObject = region.findValuedObject(valuedObjectName)
+        if (returnData.valuedObject == null) {
+            return null;
+        }
         try {
             returnData.start = Integer.parseInt(vStart)
         } catch (Exception e) {
