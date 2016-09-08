@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -20,6 +20,14 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import com.google.inject.Scopes
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts For Transformation.
@@ -30,9 +38,9 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
  */
 class For extends AbstractExpansionTransformation {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::FOR_ID
     }
@@ -50,32 +58,131 @@ class For extends AbstractExpansionTransformation {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID, SCChartsFeature::MAP_ID) //TODO check MAP dependency
+        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID, SCChartsFeature::MAP_ID) // TODO check MAP dependency
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
+
+    @Inject
+    extension KExpressionsCreateExtensions
+
+    // @Inject
+    // extension KExpressionsValuedObjectExtensions
+    @Inject
+    extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--                             F O R                                   --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                             F O R                                   --
+    // -------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformFor(targetRootState);
         }
-        targetRootState;
+        targetRootState.fixAllTextualOrdersByPriorities
     }
 
     def void transformFor(State state, State targetRootState) {
-        //TODO
+        for (region : state.regions) {
+            if (region instanceof ControlflowRegion) {
+                val forData = region.parseFor
+                if (forData != null) {
+
+                    val firstInstance = region.createState(GENERATED_PREFIX + "For")
+                    val firstInstanceR = firstInstance.createControlflowRegion(GENERATED_PREFIX + "ForInstance")
+                    for (subState : region.states.toList.immutableCopy) {
+                        if (subState != firstInstance) {
+                            firstInstanceR.states.add(subState)
+                        }
+                    }
+
+                    val start = region.createInitialState(GENERATED_PREFIX + "startFor")
+                    val end = region.createFinalState(GENERATED_PREFIX + "endFor")
+
+
+                    var State lastInstance = firstInstance
+                    for (var c = forData.start + 1; c <= forData.end; c++) {
+                        val instance = region.createState(GENERATED_PREFIX + "For" + c)
+                        instance.regions.add(firstInstanceR.copy)
+                        if (lastInstance != null) {
+                            // connect
+                            lastInstance.createTransitionTo(instance).setTypeTermination.effects.add(forData.valuedObject.assign(c.createIntValue))
+                        }
+                        
+                        lastInstance = instance
+                    }
+
+                    start.createImmediateTransitionTo(firstInstance).effects.add(forData.valuedObject.assign(forData.start.createIntValue))
+                    lastInstance.createTransitionTo(end).setTypeTermination
+
+                    System.out.println("FOR TRIGGERED!!! " + forData.valuedObject.name + " to " + forData.end)
+
+                // val regionCopy = 
+                // val startState = region.c
+                }
+            }
+        }
+    }
+
+    public static class ForData {
+        ValuedObject valuedObject;
+        int start;
+        int end;
+    }
+
+    def public ForData parseFor(Region region) {
+        val data0 = region.label.trim
+        if (!data0.startsWith("for")) {
+            return null
+        }
+        val data1 = data0.substring(3).split("=");
+        if (data1.nullOrEmpty || data1.size != 2) {
+            return null;
+        }
+        val valuedObjectName = data1.get(0).trim()
+        val data2 = data1.get(1).trim().split("to")
+        if (data2.nullOrEmpty || data2.size != 2) {
+            return null;
+        }
+        val vStart = data2.get(0).trim
+        val vEnd = data2.get(1).trim
+        val ForData returnData = new ForData()
+        returnData.valuedObject = region.findValuedObject(valuedObjectName)
+        try {
+            returnData.start = Integer.parseInt(vStart)
+        } catch (Exception e) {
+        }
+        try {
+            returnData.end = Integer.parseInt(vEnd)
+        } catch (Exception e) {
+        }
+        if (returnData.start > returnData.end) {
+            return null;
+        }
+        returnData
+    }
+
+    def public ValuedObject findValuedObject(Region region, String valuedObjectName) {
+        // System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
+        if (region.parentState != null) {
+            val list = region.parentState.valuedObjects.filter[e|e.name.equals(valuedObjectName)].toList
+            if (!list.nullOrEmpty) {
+                // System.out.println("FOR findValuedObject" + list.size)
+                return list.get(0)
+            }
+            if (region.parentState.parentRegion != null) {
+                return region.parentState.parentRegion.findValuedObject(valuedObjectName)
+            }
+        }
+        return null;
     }
 
 }

@@ -70,10 +70,8 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     }
 
     // -------------------------------------------------------------------------
-
 //    @Inject
 //    extension KExpressionsValuedObjectExtensions
-
     @Inject
     extension KExpressionsCreateExtensions
 
@@ -117,12 +115,32 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     def void transformSignal(State state, State targetRootState) {
         val allSignals = state.signals
 
+        // !!!CHANGED
+        if (allSignals.nullOrEmpty) {
+            return
+        }
+
         // One absentDuringAction for all signals
-        var DuringAction absentDuringAction 
+        var DuringAction absentDuringAction
+
+        // The following is necessary only if there are state actions which could
+        // possibly modify the signal!
+        if (!state.localActions.nullOrEmpty) {
+            val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "main")
+            val mainState = mainRegion.createState(GENERATED_PREFIX + "main").setInitial
+            for (region : state.regions.toList.immutableCopy) {
+                if (region != mainRegion) {
+                    mainState.regions.add(region)
+                }
+            }
+            for (action : state.localActions.toList.immutableCopy) {
+                mainState.localActions.add(action)
+            }
+        }
 
         if (!allSignals.nullOrEmpty) {
-                absentDuringAction = state.createDuringAction
-                absentDuringAction.setImmediate(true);
+            absentDuringAction = state.createDuringAction
+            absentDuringAction.setImmediate(true);
         }
 
         // Go thru all signals
@@ -142,7 +160,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 // to the current value
                 val updateDuringAction = state.createImmediateDuringAction
                 updateDuringAction.createAssignment(valueVariable, currentValueVariable.reference)
-                updateDuringAction.setTrigger(presentVariable.reference) 
+                updateDuringAction.setTrigger(presentVariable.reference)
 
                 // Add an immediate during action that resets the current value
                 // in each tick to the neutral element of the type w.r.t. combination function
@@ -157,8 +175,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 valueVariable.setOutput(signal.isOutput);
                 valueVariable.copyAttributes(signal)
                 valueVariable.type = signal.declaration.type
-                
-                
+
                 val allActions = state.eAllContents.filter(typeof(Action)).toList
                 for (Action action : allActions) {
 
@@ -177,9 +194,11 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                     }
 
                     // Wherever an val test is, put the valueVariable there instead
-                    val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).filter( e |
-                        e.operator == OperatorType::VAL && e.subExpressions.get(0) instanceof ValuedObjectReference &&
-                            (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal
+                    val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).filter(
+                        e |
+                            e.operator == OperatorType::VAL &&
+                                e.subExpressions.get(0) instanceof ValuedObjectReference &&
+                                (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal
                     ).toList
                     for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
                         // Remove signal reference from operator and replace val-operator with reference
@@ -225,8 +244,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
                 }
 
                 // Wherever a present test is, put an Operator Expression (presentVariable == TRUE) there instead
-                val allSignalTests = action.eAllContents.filter(typeof(ValuedObjectReference)).filter( e |
-                    e.valuedObject == signal
+                val allSignalTests = action.eAllContents.filter(typeof(ValuedObjectReference)).filter(
+                    e |
+                        e.valuedObject == signal
                 ).toList
                 for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
                     val presentVariableTest = signalTest.valuedObject.reference // .isEqual(TRUE);
