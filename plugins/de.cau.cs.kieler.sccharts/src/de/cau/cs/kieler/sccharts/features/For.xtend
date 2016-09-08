@@ -47,15 +47,11 @@ class For extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            for (region : state.regions) {
+        val allRegions = model.allContainedControlflowRegions.toList
+            for (region : allRegions) {
                 if (region.parseFor != null) {
                    return true
-               }
-            }
-            // TODO: Check for this feature
-            return false;
+                }
         }
         return false
     }

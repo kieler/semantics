@@ -84,51 +84,47 @@ class For extends AbstractExpansionTransformation {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
-            targetTransition.transformFor(targetRootState);
+        for (targetRegion : targetRootState.allContainedControlflowRegions.immutableCopy) {
+            targetRegion.transformFor(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities
     }
 
-    def void transformFor(State state, State targetRootState) {
-        for (region : state.regions) {
-            if (region instanceof ControlflowRegion) {
-                val forData = region.parseFor
-                if (forData != null) {
-
-                    val firstInstance = region.createState(GENERATED_PREFIX + "For")
-                    val firstInstanceR = firstInstance.createControlflowRegion(GENERATED_PREFIX + "ForInstance")
-                    for (subState : region.states.toList.immutableCopy) {
-                        if (subState != firstInstance) {
-                            firstInstanceR.states.add(subState)
-                        }
-                    }
-
-                    val start = region.createInitialState(GENERATED_PREFIX + "startFor")
-                    val end = region.createFinalState(GENERATED_PREFIX + "endFor")
-
-
-                    var State lastInstance = firstInstance
-                    for (var c = forData.start + 1; c <= forData.end; c++) {
-                        val instance = region.createState(GENERATED_PREFIX + "For" + c)
-                        instance.regions.add(firstInstanceR.copy)
-                        if (lastInstance != null) {
-                            // connect
-                            lastInstance.createTransitionTo(instance).setTypeTermination.effects.add(forData.valuedObject.assign(c.createIntValue))
-                        }
-                        
-                        lastInstance = instance
-                    }
-
-                    start.createImmediateTransitionTo(firstInstance).effects.add(forData.valuedObject.assign(forData.start.createIntValue))
-                    lastInstance.createTransitionTo(end).setTypeTermination
-
-                    System.out.println("FOR TRIGGERED!!! " + forData.valuedObject.name + " to " + forData.end)
-
-                // val regionCopy = 
-                // val startState = region.c
+    def void transformFor(ControlflowRegion region, State targetRootState) {
+        val forData = region.parseFor
+        if (forData != null) {
+            val firstInstance = region.createState(GENERATED_PREFIX + "For")
+            val firstInstanceR = firstInstance.createControlflowRegion(GENERATED_PREFIX + "ForInstance")
+            for (subState : region.states.toList.immutableCopy) {
+                if (subState != firstInstance) {
+                    firstInstanceR.states.add(subState)
                 }
             }
+
+            val start = region.createInitialState(GENERATED_PREFIX + "startFor")
+            val end = region.createFinalState(GENERATED_PREFIX + "endFor")
+
+            var State lastInstance = firstInstance
+            for (var c = forData.start + 1; c <= forData.end; c++) {
+                val instance = region.createState(GENERATED_PREFIX + "For" + c)
+                instance.regions.add(firstInstanceR.copy)
+                if (lastInstance != null) {
+                    // connect
+                    lastInstance.createTransitionTo(instance).setTypeTermination.effects.add(
+                        forData.valuedObject.assign(c.createIntValue))
+                }
+
+                lastInstance = instance
+            }
+
+            start.createImmediateTransitionTo(firstInstance).effects.add(
+                forData.valuedObject.assign(forData.start.createIntValue))
+            lastInstance.createTransitionTo(end).setTypeTermination
+
+            // Reset the region label
+            region.label = ""
+        // val regionCopy = 
+        // val startState = region.c
         }
     }
 
@@ -139,7 +135,12 @@ class For extends AbstractExpansionTransformation {
     }
 
     def public ForData parseFor(Region region) {
+        if (region.label == null) {
+            return null
+        }
         val data0 = region.label.trim
+        System.out.println("FOR label '" + data0 + "' ")
+        
         if (!data0.startsWith("for")) {
             return null
         }
@@ -171,11 +172,11 @@ class For extends AbstractExpansionTransformation {
     }
 
     def public ValuedObject findValuedObject(Region region, String valuedObjectName) {
-        // System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
+        System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
         if (region.parentState != null) {
             val list = region.parentState.valuedObjects.filter[e|e.name.equals(valuedObjectName)].toList
             if (!list.nullOrEmpty) {
-                // System.out.println("FOR findValuedObject" + list.size)
+                System.out.println("FOR findValuedObject" + list.size)
                 return list.get(0)
             }
             if (region.parentState.parentRegion != null) {
