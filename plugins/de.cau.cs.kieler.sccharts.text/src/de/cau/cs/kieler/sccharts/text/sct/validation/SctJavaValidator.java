@@ -59,6 +59,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String NON_SIGNAL_EMISSION = "Non-signals cannot be used in an emission";
     public static final String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
+    public static final String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized";
     //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
     public static final String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function";
     
