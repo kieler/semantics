@@ -138,7 +138,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all transitions
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformWeakSuspend(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -148,6 +148,8 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     def void transformWeakSuspend(State state, State targetRootState) {
         val weakSuspends = state.suspendActions.filter[weak].toList
         weakSuspends.setDefaultTrace
+        
+        System.out.println("WEAKSUSPEND >>> " + weakSuspends.size)
         
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
