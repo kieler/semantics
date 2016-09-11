@@ -1391,10 +1391,12 @@ class CDTProcessor {
         
         var returnState = scc.createState
          => [
+
               id = "_S" + trC.toString
               label = ""
 //            id = trC.toString
 //            label = createLabel(returnStatement)
+
 //            state.parentRegion.states += it
         ]
         
@@ -1416,11 +1418,11 @@ class CDTProcessor {
         
             createConnectingTransition(state, returnState, returnStatement)
             
-            }
+        }
         
-            val entryact = returnState.createEntryAction
-            entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
-                                      returnStatement.returnValue.createKExpression)
+        val entryact = returnState.createEntryAction
+        entryact.createAssignment(VOSet.filter[name.equals(RETURNVONAME)].head,
+                                  returnStatement.returnValue.createKExpression)
 //        }
         
         // In case of a nested return statement...
@@ -1587,6 +1589,9 @@ class CDTProcessor {
         null
     }
     
+    
+    
+    
 
     def ValuedObject createFunctionCallValuedObject(CASTFunctionCallExpression expression) {
         val cal = kex.createValuedObject;
@@ -1664,7 +1669,7 @@ class CDTProcessor {
         if (exp instanceof CASTIdExpression) {
             return (exp as CASTIdExpression).createVOReference
         } else if (exp instanceof CASTFunctionCallExpression) {
-            return (exp as CASTFunctionCallExpression).transformFunctionCall
+//            return (exp as CASTFunctionCallExpression).transformFunctionCall
         } else if (exp instanceof CASTBinaryExpression) {
             return (exp as CASTBinaryExpression).createKExpression
         } else if (exp instanceof CASTUnaryExpression) {
@@ -1679,23 +1684,23 @@ class CDTProcessor {
         (expression.children.head as IASTExpression).createKExpression
     }
 
-    def Expression transformFunctionCall(CASTFunctionCallExpression expression) {
-
-        val opExp = kex.createOperatorExpression
-
-        expression.createFunctionCallValuedObject
-
-        // opExp.addValuedObject(expression.createFunctionCallValuedObject) //= expression.functionNameExpression.createKExpression
-        val exp = kex.createTextExpression
-        exp.text = expression.createFunctionCallValuedObject.name
-
-        // exp.addValuedObject(expression.createFunctionCallValuedObject)
-        //
-        // for (IASTExpression child : expression.arguments.filter(IASTExpression)) {
-        // opExp.subExpressions += createKExpression(child)
-        // }
-        return exp // opExp
-    }
+//    def Expression transformFunctionCall(CASTFunctionCallExpression expression) {
+//
+//        val opExp = kex.createOperatorExpression
+//
+//        expression.createFunctionCallValuedObject
+//
+//        // opExp.addValuedObject(expression.createFunctionCallValuedObject) //= expression.functionNameExpression.createKExpression
+//        val exp = kex.createTextExpression
+//        exp.text = expression.createFunctionCallValuedObject.name
+//
+//        // exp.addValuedObject(expression.createFunctionCallValuedObject)
+//        //
+//        // for (IASTExpression child : expression.arguments.filter(IASTExpression)) {
+//        // opExp.subExpressions += createKExpression(child)
+//        // }
+//        return exp // opExp
+//    }
 
     def Expression createKExpression(CASTBinaryExpression exp) {
 
@@ -1861,8 +1866,8 @@ class CDTProcessor {
      *   return false = create only a separate endState for each construct if necessary
      */
     private def boolean getExtraEndStateOption() {
-        return false;
-//        return true;
+//        return false;
+        return true;
     }
     
     // Creates the outgoing transition of a condState with the condition of the respective control structure.
