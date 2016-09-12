@@ -292,15 +292,12 @@ class CDTProcessor {
         // Transform parameters of a function.
         
         declarator.children.filter(typeof(CASTParameterDeclaration)).forEach [ parameter |
-            println("PARAMETER: " + parameter)
             val iName = parameter.declarator.name.toString
-            println("NAME: " + iName)
             val iParamater = kex.createVariableDeclaration => [
                 type = parseCDTType(parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type)
                 input = true
                 funcState.declarations += it
             ]
-            println("TYPE: " + iParamater.type)
             // Add parameter to VOSet to give it a name.
             kex.createValuedObject => [
                 name = iName
@@ -862,9 +859,7 @@ class CDTProcessor {
         val declaratorList = simpleDeclaration.children.filter(typeof(CASTDeclarator))
         
         // Convert each declarator
-        for (declarator : declaratorList) {
-            println(declarator.name)
-        
+        for (declarator : declaratorList) {        
             if (declarator != null) {
     
                 val iName = declarator.children.head.toString
@@ -876,7 +871,7 @@ class CDTProcessor {
                     if (parent.id.contains("_for")) {
                         parent.declarations += it
                     } else {
-                        // Add declaration of variable to the state which is one hierarchy above.
+                        // Add local declaration of variable to the state which is one hierarchy above.
                         parent.parentRegion.parentState.declarations += it
                     }
                 ]
@@ -889,7 +884,7 @@ class CDTProcessor {
     
                 val initializer = declarator.children.filter(typeof(CASTEqualsInitializer)).head
                 if (initializer != null) {                
-                    // A initialization of a variable which depends on an other variable does not become an entry action.
+                    // An initialization of a variable which depends on an other variable does not become an entry action.
                     if (initializer.children.head instanceof IASTExpression) {
                         var exp = (initializer.children.head as IASTExpression)
                         val initChild = initializer.children.head
@@ -897,12 +892,12 @@ class CDTProcessor {
                         
                         // Variable declarations inside a control structure must not become entry actions of the control
                         // structure state, since the declaration is only done if the condition is met.
-                        if (parent.parentRegion.parentState.id.contains("_cs")) {
+                        if (parent.parentRegion.parentState.id.contains("_cs") && returnState == null) {
                             if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
                                var entryAction = parent.createEntryAction
                                entryAction.createAssignment(value, exp.createKExpression)
                                returnState = parent
-                           } else {
+                           } else if (!parent.id.contains("_for")) {
                                val initVarState = scc.createState => [ s |
                                     s.id = parent.id + "_varInit"
                                     s.label = createLabel(statement)
@@ -917,7 +912,7 @@ class CDTProcessor {
                         }
                         
                         
-                        if (initChild instanceof CASTIdExpression) {
+                        if (initChild instanceof CASTIdExpression && returnState == null) {
                            // Write into previous state if there also is an other variable initialization.
                            if (parent.id.contains("_varInit") || parent.id.contains("_binEx")) {
                                var entryAction = parent.createEntryAction
@@ -944,7 +939,7 @@ class CDTProcessor {
                                 
                            }
                             
-                        } else if (initChild instanceof CASTBinaryExpression) {
+                        } else if (initChild instanceof CASTBinaryExpression  && returnState == null) {
                             // Falls die Variablenzuweisung abhängig von einer anderen Variable ist...
                             if (childList.filter(typeof(CASTSimpleDeclSpecifier)) != []) {
                                 // Schreibe in den vorherigen State, falls direkt davor auch schon eine Variablenzuweisung war...
@@ -975,16 +970,17 @@ class CDTProcessor {
                                 }
                             }
                         }
-                         
-                        var EntryAction entryAction = null
-                        // If the declaration is the initializer of a for statement, create entryAction for forState
-                        if (parent.id.contains("_for")) {
-                            entryAction = parent.createEntryAction
-                        } else {
-                            // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
-                            entryAction = parent.parentRegion.parentState.createEntryAction
+                        if (returnState == null) {
+                            var EntryAction entryAction = null
+                            // If the declaration is the initializer of a for statement, create entryAction for forState
+                            if (parent.id.contains("_for") ) {
+                                entryAction = parent.createEntryAction
+                            } else {
+                                // For declaration, create entryAction for parentState (der in der Hierarchie eins oben drüber)
+                                entryAction = parent.parentRegion.parentState.createEntryAction
+                            }
+                            entryAction.createAssignment(value, exp.createKExpression)
                         }
-                        entryAction.createAssignment(value, exp.createKExpression)
                     }
                 } else {
                     returnState = parent
@@ -1242,10 +1238,10 @@ class CDTProcessor {
                 forState.regions += region
         ]
         
-        // Initializer
+        // Declare/Initialize counter variable of for loop.
         if (f.initializerStatement instanceof CASTDeclarationStatement) {
             val initializationExp = f.initializerStatement as CASTDeclarationStatement
-            initializationExp.castDeclaration(forState) // add declaration to function head
+            initializationExp.castDeclaration(forState)
         } else {
             forState.id = "_initFor"
             (f.initializerStatement as CASTExpressionStatement).transformExpression(forState)
@@ -1303,7 +1299,7 @@ class CDTProcessor {
 
         // Iterate-action
         val body = f.body as CASTCompoundStatement
-
+        
         val bodyState = body.transformCompound(condState, condState)
         var State iterateExp = null
         if (bodyState.id.contains("_varInit") || bodyState.id.contains("_binEx")) {
