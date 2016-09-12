@@ -406,6 +406,13 @@
              editorID="de.cau.cs.kieler.scl.SCL">
        </editor>
     </extension>
+    <extension
+          point="de.cau.cs.kieler.klighd.diagramSyntheses">
+       <diagramSynthesis
+             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.ui.synthesis.SCLSynthesis"
+             id="de.cau.cs.kieler.SCLasSCGSynthesis">
+       </diagramSynthesis>
+    </extension>
     <!--<extension
           point="de.cau.cs.kieler.kico.ui.transformation">
        <editor

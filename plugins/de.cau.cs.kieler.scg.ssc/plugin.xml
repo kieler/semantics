@@ -18,9 +18,6 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
       </featureGroupClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.ssc.features.PureSignalsFeature">
-      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -35,9 +32,6 @@
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.ssa.domtree.DomTreeTransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.types.PureSignalTransformation">
       </productionTransformationClass>
    </extension>
    <extension

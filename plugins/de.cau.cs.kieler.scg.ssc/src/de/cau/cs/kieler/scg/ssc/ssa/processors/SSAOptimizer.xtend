@@ -41,6 +41,10 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.Parameter
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.ssc.ssa.MergeExpressionExtension
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * @author als
@@ -87,272 +91,19 @@ class SSAOptimizer extends AbstractProductionTransformation {
     extension SSACoreExtensions
     @Inject
     extension SSACacheExtensions
+    
+    @Inject
+    extension MergeExpressionExtension
 
     // -------------------------------------------------------------------------
     
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-        // ---------------
-        // 1. Remove phi nodes for assignments in the same basic block
-        // ---------------
-//        scg.removeSequentialDominatedPhi(context)
 
-        // ---------------
-        // 2. Remove superflouse sequential reaching parameter
-        // ---------------
-//        scg.removeSequentialReachingDef(context)
 
-        // Schedule Sequential access of updates?
-
-        // ---------------
-        // 3. Remove unused join phi nodes
-        // ---------------
-        scg.removeUnusedJoinDefs(context)
-        
-        // ---------------
-        // 3. Remove SSA functions with only one parameter
-        // ---------------
-        scg.removeTrivialSSAFunctions(context)
-       
-        // ---------------
-        // 4. Remove unused ssa versions
-        // ---------------
-        scg.removeUnusedSSAVersions(context)
-
-        // ---------------
-        // 5. Update SSA VO version numbering
-        // ---------------   
-        scg.updateSSAVersions
-        context.markSSACreatedAssignmentVariables(scg)
+//        context.markSSACreatedAssignmentVariables(scg)
 
         scg.createStringAnnotation(SSAOptFeature.ID, SSAOptFeature.ID)
         return scg
     }
-    
-    /**
-     * Removes init and update if nodes are in the same BB.
-     */
-    def removeSequentialDominatedPhi(SCGraph scg, KielerCompilerContext context) {
-        val readJoinDefs = context.getReadAndJoinDef(scg)
-        val def = context.getDef(scg)
-        val use = context.getUse(scg)
-        for (asm : readJoinDefs) {
-            val fc = asm.assignment as FunctionCall
-            val updateFC = fc.ssaParameterFunction(UPDATE)
-            if (updateFC != null) {
-                val psiRefAsmBlocks = updateFC.parameters.map[expression as ValuedObjectReference].map[valuedObject].map[def.get(it)].groupBy[basicBlock]
-                for (blockAsmListPair : psiRefAsmBlocks.entrySet) {
-                    val asmList = blockAsmListPair.value
-                    val bb = blockAsmListPair.key
-                    if (asmList.size > 1) {
-                        val bbNodes = bb.nodes
-                        val seqAsm = asmList.sortBy[bbNodes.indexOf(it)]
-                        for (ignore : seqAsm.take(seqAsm.size - 1).map[valuedObject]) {
-                            val ignoreUse = HashMultimap.create
-                            for (ignoredUse : use.get(ignore)) {
-                                if (bbNodes.contains(ignoredUse)) {
-                                    val useNodeIndex = bbNodes.indexOf(ignoredUse)
-                                    val seqDominantNode = seqAsm.findLast[bbNodes.indexOf(it) < useNodeIndex]
-                                    val refs = ignoredUse.eAllContents.filter(ValuedObjectReference).toMap[valuedObject]
-                                    if (refs.containsKey(seqDominantNode.valuedObject)) {
-                                        // remove parameter
-                                        refs.get(ignore).eContainer.remove
-                                        ignoreUse.remove(ignore, ignoredUse)
-                                    }
-                                } else {
-                                    val seqDominantNode = seqAsm.last
-                                    val refs = ignoredUse.eAllContents.filter(ValuedObjectReference).toMap[valuedObject]
-                                    if (refs.containsKey(seqDominantNode.valuedObject)) {
-                                        // remove parameter
-                                        refs.get(ignore).eContainer.remove
-                                        ignoreUse.remove(ignore, ignoredUse)
-                                    }
-                                }
-                            }
-                            ignoreUse.entries.forEach[use.remove(key,value)]
-                        }
-                    }
-                }
-            }
-            val initFC = fc.ssaParameterFunction(INIT)
-            if (initFC != null) {
-                val piRefAsmBlocks = initFC.parameters.map[expression as ValuedObjectReference].map[valuedObject].map[def.get(it)].groupBy[basicBlock]
-                for (blockAsmListPair : piRefAsmBlocks.entrySet) {
-                    val asmList = blockAsmListPair.value
-                    val bb = blockAsmListPair.key
-                    if (asmList.size > 1) {
-                        val bbNodes = bb.nodes
-                        val seqAsm = asmList.sortBy[bbNodes.indexOf(it)]
-                        for (ignore : seqAsm.take(seqAsm.size - 1).map[valuedObject]) {
-                            for (ignoredUse : use.get(ignore)) {
-                                if (!bbNodes.contains(ignoredUse)) {
-                                    val seqDominantNode = seqAsm.last
-                                    val refs = ignoredUse.eAllContents.filter(ValuedObjectReference).toMap[valuedObject]
-                                    if (refs.containsKey(seqDominantNode.valuedObject)) {
-                                        // remove parameter
-                                        refs.get(ignore).eContainer.remove
-                                        use.remove(ignore, ignoredUse)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    /**
-     * Removes the parameter of the sequential reaching definition for shared variables if the variable is always written.
-     */
-    def removeSequentialReachingDef(SCGraph scg, KielerCompilerContext context) {
-        val dt = context.getDominatorTree(scg)
-        val joinDefs = context.getJoinDef(scg)
-        val def = context.getDef(scg)
-        val use = context.getUse(scg)
-        // if any assignment in any thread dominates the exit node, the sequential value can never reach the join and can be removed
-        for (asm : joinDefs) {
-            var Node joinNode = asm
-            while(!(joinNode instanceof Join)) {
-                joinNode = joinNode.allPrevious.head.eContainer as Node
-            }
-            val exitBBs = joinNode.allPrevious.map[eContainer as Exit].map[basicBlock].toSet
-            val fc = asm.assignment as FunctionCall
-            val refVO = newArrayList
-            val updateFC = fc.ssaParameterFunction(UPDATE)
-            if (updateFC != null) {
-                refVO.addAll(updateFC.parameters.map[expression as ValuedObjectReference].map[valuedObject])
-            }
-            val initFC = fc.ssaParameterFunction(INIT)
-            if (initFC != null) {
-                refVO.addAll(initFC.parameters.map[expression as ValuedObjectReference].map[valuedObject])
-            }
-            val exitDominantWrites = newArrayList
-            for (vo : refVO) {
-                val write = def.get(vo)
-                val writeBB = write.basicBlock
-                if (exitBBs.contains(writeBB) || exitBBs.exists[dt.isDominator(writeBB, it)] ) {
-                    exitDominantWrites.add(write)
-                }
-            }
-            if (!exitDominantWrites.empty) {
-                // remove seq reaching value
-                var seqReachingValueParam = fc.parameters.findFirst[expression instanceof ValuedObjectReference]
-                var seqReachingVO = (seqReachingValueParam.expression as ValuedObjectReference).valuedObject
-                fc.parameters.remove(seqReachingValueParam)
-                use.remove(seqReachingVO, asm)
-                // if any node is also in the surface of the thread, the sequential value can be removed from all concurrent read accesses
-                val isSurface = exitDominantWrites.exists[
-                    !(it.threadEntry.getInstantaneousControlFlows(it).empty)
-                ]
-                if (isSurface) {
-                    val allThreadNodes = newHashSet()
-                    (joinNode as Join).fork.allNext.map[target as Entry].forEach[
-                        allThreadNodes.addAll(it.shallowThreadNodes)
-                    ]
-                    for (rem : use.get(seqReachingVO).filter[allThreadNodes.contains(it) && isSSA].filter(Assignment).filter[
-                        // The first relative read must read the seq value if no init was executed
-                        use.get(it.valuedObject).exists[!it.dependencies.exists[it instanceof RelativeWrite_Read]]
-                    ]) {
-                        val remFC = rem.assignment as FunctionCall
-                        seqReachingValueParam = remFC.parameters.findFirst[expression instanceof ValuedObjectReference]
-                        seqReachingVO = (seqReachingValueParam.expression as ValuedObjectReference).valuedObject
-                        remFC.parameters.remove(seqReachingValueParam)
-                        use.remove(seqReachingVO, asm)
-                    }
-                }
-            }
-        }
-    }
-    
-        
-    /**
-     * Removes join phi node which variable is not used.
-     */
-    def removeUnusedJoinDefs(SCGraph scg, KielerCompilerContext context) {
-        val joinDefs = context.getJoinDef(scg)
-        val def = context.getDef(scg)
-        val use = context.getUse(scg)
-        while (joinDefs.map[valuedObject].exists[use.get(it).empty]) {
-            val rem = newArrayList
-            for (vo : joinDefs.map[valuedObject].filter[use.get(it).empty && !(it.eContainer as Declaration).output]) {
-                val asm = def.get(vo)
-                // remove def / use
-                use.values.removeIf[it == asm]
-                rem.add(vo)
-                // remove vo
-                (vo.eContainer as Declaration).valuedObjects.remove(vo)
-                // remove node
-                asm.allPrevious.toList.forEach[target = asm.next.target]
-                asm.schedulingBlock.nodes.remove(asm)
-                scg.nodes.remove(asm)
-            }
-            def.keySet.removeAll(rem)
-            //
-            joinDefs.removeIf[rem.contains(it.valuedObject)]
-        }
-    }
-   
-    /**
-     * Remove SSA functions with only one parameter.
-     */
-    def removeTrivialSSAFunctions(SCGraph scg, KielerCompilerContext context) {
-        val readJoinDefs = context.getReadAndJoinDef(scg)
-        val use = context.getUse(scg)
-        val removeSSAAsm = newLinkedList
-        for (asm : readJoinDefs) {
-            val fc = asm.assignment as FunctionCall
-            if (fc.parameters.size == 1) {
-                // Assumes that SSA function are only nested with depth 2 and and consists of other SSA function or VO references
-                val paramExp = fc.parameters.head.expression
-                if (paramExp instanceof FunctionCall) {
-                    // If expression id function call remove if it has only one parameter
-                    if(paramExp.parameters.size == 1) {
-                        asm.assignment = paramExp.parameters.head.expression
-                        removeSSAAsm += asm
-                    }
-                } else {
-                    // remove if only one reference is parameter
-                    asm.assignment = paramExp
-                    removeSSAAsm += asm
-                }
-            }
-        }
-        for (rem : removeSSAAsm) {
-            val replacementVO = (rem.assignment as ValuedObjectReference).valuedObject
-            // Replace in usage
-            for (used : use.get(rem.valuedObject)) {
-                var refs = emptyList
-                if(used instanceof Assignment) {
-                    refs = used.assignment.allReferences
-                } else if (used instanceof Conditional) {
-                    refs = used.condition.allReferences
-                }
-                for (ref : refs) {
-                    if (ref.valuedObject == rem.valuedObject) {
-                        ref.valuedObject = replacementVO
-                    }
-                }
-                // Update usage
-                use.remove(rem.valuedObject, used)
-                use.put(replacementVO, used)
-            }
-            // Fix controlflow
-            rem.allPrevious.toList.forEach[target = rem.next.target]
-            // Remove node
-            rem.schedulingBlock.nodes.remove(rem)
-            scg.nodes.remove(rem)
-        }
-    }
 
-    /**
-     * Remove unused ssa versions.
-     */
-    def removeUnusedSSAVersions(SCGraph scg, KielerCompilerContext context) {
-        val use = context.getUse(scg)
-        val def = context.getDef(scg)
-        for (decl : scg.declarations) {
-            decl.valuedObjects.removeIf[use.get(it).empty && !def.containsKey(it)]
-        }
-        scg.removeUnusedSSADeclarations 
-    }
 }

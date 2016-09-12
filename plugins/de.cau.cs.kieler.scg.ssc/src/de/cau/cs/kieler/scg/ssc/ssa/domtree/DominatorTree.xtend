@@ -193,6 +193,13 @@ class DominatorTree {
     // -- Tree Access
     // -------------------------------------------------------------------------
     
+    def isStrictDominator(BasicBlock dominator, BasicBlock bb) {
+        if (dominator != bb) {
+            return dominator.isDominator(bb)
+        }
+        return false
+    }   
+    
     def isDominator(BasicBlock dominator, BasicBlock bb) {
         var ancestor = bb
         while (ancestor != null) {

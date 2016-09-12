@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.Expression
 import com.google.common.collect.ImmutableList
+import java.util.Collection
 
 /**
  * @author ssm
@@ -153,6 +154,14 @@ class KExpressionsValuedObjectExtensions {
             newDeclaration.valuedObjects += valuedObject
             newDeclaration
         }
+    }
+    
+    def getAllValuedObjects(Collection<Declaration> declarations) {
+        val vars = newHashSet
+        declarations.forEach[
+            vars.addAll(it.valuedObjects)
+        ]
+        return vars
     }
 
 }

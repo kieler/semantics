@@ -16,6 +16,7 @@ import com.google.common.collect.HashBiMap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
@@ -26,10 +27,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.core.annotations.ReferenceAnnotation
 import static extension java.lang.Character.*
+
 /**
  * @author als
  * @kieler.design proposed
@@ -47,7 +49,8 @@ class SSACoreExtensions {
     extension KExpressionsDeclarationExtensions
     @Inject
     extension KExpressionsCreateExtensions   
-    
+    @Inject
+    extension IOPreserverExtensions      
     @Inject
     extension AnnotationsExtensions
     extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
@@ -107,27 +110,41 @@ class SSACoreExtensions {
     }
     
     def updateSSAVersions(SCGraph scg) {
+        val names = newHashSet
+        for (decl : scg.declarations.filter[!isSSA]) {
+            for (vo : decl.valuedObjects) {
+                names += vo.name
+            }
+        }
         for (decl : scg.declarations.filter[isSSA]) {
-            // TODO handle nimberted variables e.g. term, term1, etc
-            for (vo : decl.valuedObjects.indexed) {
-//                vo.value.name = vo.value.name.replaceAll("[0-9]*$", "") + vo.key
-                vo.value.name = decl.ssaOrigVO.name + vo.key
+            for (vo : decl.valuedObjects.filter[!isRegister && !isTerm].indexed) {
+                val origName = decl.ssaOrigVO.name
+                var newName = new StringBuilder(origName + vo.key)
+                if (origName.charAt(origName.length - 1).isDigit) {
+                    newName.insert(origName.length, '_')
+                }
+                while(names.contains(newName.toString)) {
+                    newName.insert(origName.length, '_')
+                }
+                vo.value.name = newName.toString
             }
         }
     }
         
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
+        val newDecl = newArrayList // Preserve Order
         for (decl : scg.declarations) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
                     markSSADecl(vo)
                     type = decl.type
                     valuedObjects += vo.copy
+                    newDecl.add(it)
                 ])
             }
         }
-        scg.declarations.addAll(ssaDecl.values)
+        scg.declarations.addAll(newDecl)
         return ssaDecl
     }
     
@@ -141,27 +158,10 @@ class SSACoreExtensions {
     
     def int SSAVersion(ValuedObject vo) {
         return (vo.eContainer as Declaration).valuedObjects.indexOf(vo)
-    } 
-    
-    def removeUnusedSSADeclarations(SCGraph scg) {
-        // TODO remove unused declarations maybe fix rename vo initalization expression
-        // TODO keep pause preserve values in mind
-//        for (decl : scg.declarations) {
-//            if (decl.valuedObjects.size > 1) {
-//                val decl = declPair.key.eContainer as Declaration
-//                decl.valuedObjects.remove(declPair.key)
-//                if (decl.valuedObjects.empty) {
-//                    scg.declarations.remove(decl)
-//                }
-//            } else {
-//                declPair.value.valuedObjects.head.name = declPair.key.name
-//                val decl = declPair.key.eContainer as Declaration
-//                decl.valuedObjects.remove(declPair.key)
-//                if (decl.valuedObjects.empty) {
-//                    scg.declarations.remove(decl)
-//                }
-//            }
-//        } 
-        scg.declarations.removeIf[it.valuedObjects.empty]    
     }
+    
+    def isDelayed(SCGraph scg) {
+        return scg.nodes.exists[it instanceof Surface]
+    }
+   
 }

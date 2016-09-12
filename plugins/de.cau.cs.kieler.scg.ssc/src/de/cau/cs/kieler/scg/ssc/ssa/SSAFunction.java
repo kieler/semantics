@@ -25,7 +25,8 @@ public enum SSAFunction {
 	READ("de.cau.cs.kieler.scg.ssc.ssa.read", "R"), //"\u03A6"
 	JOIN("de.cau.cs.kieler.scg.ssc.ssa.join", "R"), //"\u03A6"
 	SEQ("de.cau.cs.kieler.scg.ssc.ssa.seq", "seq"),
-	CONC("de.cau.cs.kieler.scg.ssc.ssa.conc", "conc");
+	CONC("de.cau.cs.kieler.scg.ssc.ssa.conc", "conc"),
+	COMBINE("de.cau.cs.kieler.scg.ssc.ssa.combine", "combine");
 
 	private SSAFunction(String id, String symbol) {
 		this.id = id;

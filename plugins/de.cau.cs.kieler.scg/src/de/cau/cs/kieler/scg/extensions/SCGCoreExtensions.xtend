@@ -136,6 +136,18 @@ class SCGCoreExtensions {
         node.schedulingBlock?.basicBlock
     }
 
+    /**
+     * Retrieves the nodes of a basic block.
+     * 
+     * @param node
+     *          the basic block
+     * @return Returns a list of nodes. May return null.
+     */
+    def List<Node> nodes(BasicBlock bb) {
+        val list = newArrayList
+        bb.schedulingBlocks.forEach[list.addAll(nodes)]
+        return list
+    }
 
 	/**
 	 * Retrieves all nodes of a schedule.

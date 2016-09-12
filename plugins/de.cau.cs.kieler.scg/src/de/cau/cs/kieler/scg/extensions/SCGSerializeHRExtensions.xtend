@@ -65,7 +65,30 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
     }
     
+    dispatch override CharSequence serialize(FunctionCall fc) {
+        var funcCall = fc.functionName + "("
+
+        var cnt = 0
+        for (par : fc.parameters) {
+            if (cnt > 0) {
+                funcCall = funcCall + ", "
+            }
+            if (par.pureOutput) {
+                funcCall = funcCall + "!"
+            }
+            if (par.callByReference) {
+                funcCall = funcCall + "&"
+            }
+            funcCall = funcCall + par.expression.serialize
+            cnt = cnt + 1
+        }
+        funcCall = funcCall + ")"
+        return funcCall
+    }
     
+    dispatch override CharSequence serializeHR(FunctionCall fc) {
+        return fc.serialize
+    }
     
     protected def CharSequence serializeIndices(List<Expression> indices) {
         var String indicesStr = ""

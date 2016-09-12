@@ -349,6 +349,11 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
                     } else 
                     if (iAmAbsoluteWriter && !isRelW) {
                         dependency = ScgFactory::eINSTANCE.createWrite_Write       
+                    } else
+                    // FIXME ONLY for SSA shared variable detection ?
+                    if (!iAmAbsoluteWriter && isRelW) {
+                        dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read
+                        dependency.confluent = true       
                     }
                 } else
                 // Otherwise, check if the assignment reads the variable and add the dependency

@@ -80,6 +80,9 @@ class SCGToSCLTransformation {
     // -------------------------------------------------------------------------
     
     def SCLProgram transformSCGToSCL(SCGraph scg) {
+        processedNodes.clear
+        valuedObjectMapping.clear 
+        
         // Create new SCL program...
         val scl = SclFactory::eINSTANCE.createSCLProgram()
         scl.name = 'M' + scg.hashCode.toString
@@ -87,6 +90,7 @@ class SCGToSCLTransformation {
         // ... and copy declarations.
         for(declaration : scg.declarations) {
             val newDeclaration = createDeclaration(declaration)
+            newDeclaration.annotations += declaration.annotations.map[copy]
             for (valuedObject : declaration.valuedObjects) {
             	val newValuedObject = createValuedObject(valuedObject.name)
             	newDeclaration.valuedObjects += newValuedObject

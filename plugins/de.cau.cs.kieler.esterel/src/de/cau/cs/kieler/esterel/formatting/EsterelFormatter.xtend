@@ -76,7 +76,7 @@ class EsterelFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap.after(g.thenPartAccess.thenKeyword_0)
         c.setIndentationIncrement.before(g.thenPartAccess.statementStatementParserRuleCall_1_0)
         c.setLinewrap.after(g.thenPartRule)
-        c.setIndentationDecrement.after(g.thenPartRule)
+//        c.setIndentationDecrement.after(g.thenPartRule)
         // elif
         c.setIndentationDecrement.before(g.elsIfAccess.elsifKeyword_0)
         c.setLinewrap.before(g.elsIfAccess.elsifKeyword_0)
@@ -86,7 +86,7 @@ class EsterelFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap.after(g.elsePartAccess.elseKeyword_0)
         c.setIndentationIncrement.before(g.elsePartAccess.statementStatementParserRuleCall_1_0)
         c.setLinewrap.after(g.elsePartRule)
-        c.setIndentationDecrement.after(g.elsePartRule)
+//        c.setIndentationDecrement.after(g.elsePartRule)
         // present case
         c.setIndentationIncrement.before(g.presentCaseListAccess.casesPresentCaseParserRuleCall_0_0)
         c.setLinewrap.before(g.presentCaseAccess.caseKeyword_0)

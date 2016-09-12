@@ -196,5 +196,12 @@
             priority="80">
       </editor>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+            editorID="de.cau.cs.kieler.esterel.Esterel">
+      </editor>
+   </extension>
 
 </plugin>
