@@ -57,6 +57,8 @@ import static extension java.lang.Math.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.Value
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
+import de.cau.cs.kieler.esterel.esterel.Sequence
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * @author als
@@ -162,24 +164,25 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
         
         var StatementContainer signalNestingHead = null
-        if (!voSigMap.empty) {
-            val sigDecl = createLocalSignalDecl
-            sigDecl.optEnd = "signal"
-            val sigs = createLocalSignal
-            sigDecl.signalList = sigs
-            for (vo : voSigMap.keySet) {
-                sigs.signal += createISignal => [
-                    voPSigMap.put(vo, it)
-                    name = vo.name+"p"
-                ]
-            }
-            if (signalNestingHead == null) {
-                body.statements += sigDecl
-            } else {
-                signalNestingHead.statement = sigDecl
-            }
-            signalNestingHead = sigDecl
-        }
+        // Presence sigs for io
+//        if (!voSigMap.empty) {
+//            val sigDecl = createLocalSignalDecl
+//            sigDecl.optEnd = "signal"
+//            val sigs = createLocalSignal
+//            sigDecl.signalList = sigs
+//            for (vo : voSigMap.keySet) {
+//                sigs.signal += createISignal => [
+//                    voPSigMap.put(vo, it)
+//                    name = vo.name+"p"
+//                ]
+//            }
+//            if (signalNestingHead == null) {
+//                body.statements += sigDecl
+//            } else {
+//                signalNestingHead.statement = sigDecl
+//            }
+//            signalNestingHead = sigDecl
+//        }
         for (decl : scl.declarations.filter[!(input || output) && type == de.cau.cs.kieler.core.kexpressions.ValueType.BOOL]) {
             val sigDecl = createLocalSignalDecl
             sigDecl.optEnd = "signal"
@@ -219,6 +222,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 name = term.name
                 termSig = new Pair(term, it)
             ]            
+        } else {
+            termSig = null
         }
         if (signalNestingHead == null) {
             body.statements += sigDecl
@@ -293,7 +298,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
 
     private dispatch def List<Statement> translate(Assignment asm) {
         val s = newArrayList
-        if (asm.valuedObject == termSig.key) {
+        if (termSig != null && asm.valuedObject == termSig.key) {
             s.add(createEmit => [
                 signal = termSig.value
             ])
@@ -301,58 +306,93 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             s.add(asm.translateSSA)
         } else if (asm.expression instanceof OperatorExpression) {
             val oe = asm.expression as OperatorExpression
+            val e0 = oe.subExpressions.get(0)
+            val e1 = if (oe.subExpressions.size > 1) {oe.subExpressions.get(1)}
+            val voA = asm.valuedObject
             if (oe.operator == de.cau.cs.kieler.core.kexpressions.OperatorType.NOT) {
-                s.add(createPresent => [
+                val p = createPresent => [
                     body = createPresentEventBody => [
-                        event = createPresentEvent => [
-                            expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(true)
-                        ]
-                        thenPart = createThenPart => [
-                            statement = createSequence => [
-                                list.add(
-                                    createEmit => [
-                                        signal = voPSigMap.get(asm.valuedObject)
-                                    ]
-                                )
-                                list.add(
-                                    createPresent => [
-                                        body = createPresentEventBody => [
-                                            event = createPresentEvent => [
-                                                expression = createOperatorExpression => [
-                                                    operator = OperatorType.NOT
-                                                    subExpressions.add(oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false))
-                                                ]
+                        if (voPSigMap.containsKey((e0 as ValuedObjectReference).valuedObject)) {
+                            event = createPresentEvent => [
+                                expression = (e0 as ValuedObjectReference).signalReference(true)
+                            ]
+                            thenPart = createThenPart => [
+                                statement = createSequence => [
+                                    if (voPSigMap.containsKey(voA)) {
+                                        list.add(
+                                            createEmit => [
+                                                signal = voPSigMap.get(voA)
                                             ]
-                                            thenPart = createThenPart => [
-                                                statement = createEmit => [
-                                                    signal = voSigMap.get(asm.valuedObject)
+                                        )
+                                    }
+                                    list.add(
+                                        createPresent => [
+                                            body = createPresentEventBody => [
+                                                event = createPresentEvent => [
+                                                    expression = createOperatorExpression => [
+                                                        operator = OperatorType.NOT
+                                                        subExpressions.add(oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false))
+                                                    ]
+                                                ]
+                                                thenPart = createThenPart => [
+                                                    statement = createEmit => [
+                                                        signal = voSigMap.get(voA)
+                                                    ]
                                                 ]
                                             ]
                                         ]
+                                    )
+                                ]
+                                if (!voPSigMap.containsKey(voA)) {
+                                    statement = (statement as Sequence).list.get(0)
+                                }
+                            ]
+                        } else {
+                            if (voPSigMap.containsKey(voA)) {
+                                s.add(
+                                    createEmit => [
+                                        signal = voPSigMap.get(voA)
                                     ]
                                 )
+                            }
+                            event = createPresentEvent => [
+                                expression = createOperatorExpression => [
+                                    operator = OperatorType.NOT
+                                    subExpressions.add((e0 as ValuedObjectReference).signalReference(false))
+                                ]
                             ]
-                        ]
+                            thenPart = createThenPart => [
+                                statement = createEmit => [
+                                    signal = voSigMap.get(asm.valuedObject)
+                                ]
+                            ]
+                        }
                     ]
-                ])
+                ]
+                s.add(p)
             } else if (oe.operator == de.cau.cs.kieler.core.kexpressions.OperatorType.EQ) {
+                if ((e0 instanceof ValuedObjectReference && !voPSigMap.containsKey((e0 as ValuedObjectReference).valuedObject)) || e1 instanceof ValuedObjectReference && !voPSigMap.containsKey((e1 as ValuedObjectReference).valuedObject)) {
+                    throw new UnsupportedOperationException("Equals test on inputs not yet supported")
+                }
                 switch (oe.subExpressions.filter(ValuedObjectReference).size) {
                     case 2: s.add(createPresent => [
                         body = createPresentEventBody => [
                             event = createPresentEvent => [
                                 expression = createOperatorExpression => [
                                     operator = OperatorType.AND
-                                    subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(true))
-                                    subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(true))
+                                    subExpressions.add((e0 as ValuedObjectReference).signalReference(true))
+                                    subExpressions.add((e1 as ValuedObjectReference).signalReference(true))
                                 ]
                             ]
                             thenPart = createThenPart => [
                                 statement = createSequence => [
-                                    list.add(
-                                        createEmit => [
-                                            signal = voPSigMap.get(asm.valuedObject)
-                                        ]
-                                    )
+                                    if (voPSigMap.containsKey(voA)) {
+                                        list.add(
+                                            createEmit => [
+                                                signal = voPSigMap.get(voA)
+                                            ]
+                                        )
+                                    }
                                     list.add(
                                         createPresent => [
                                             body = createPresentEventBody => [
@@ -362,8 +402,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                                         subExpressions.add(
                                                             createOperatorExpression => [
                                                                 operator = OperatorType.AND
-                                                                subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(false))
-                                                                subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(false))
+                                                                subExpressions.add((e0 as ValuedObjectReference).signalReference(false))
+                                                                subExpressions.add((e1 as ValuedObjectReference).signalReference(false))
                                                             ]
                                                         )
                                                         subExpressions.add(
@@ -372,13 +412,13 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                                                 subExpressions.add(
                                                                     createOperatorExpression => [
                                                                         operator = OperatorType.NOT
-                                                                        subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(false))
+                                                                        subExpressions.add((e0 as ValuedObjectReference).signalReference(false))
                                                                     ]
                                                                 )
                                                                 subExpressions.add(
                                                                     createOperatorExpression => [
                                                                         operator = OperatorType.NOT
-                                                                        subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(false))
+                                                                        subExpressions.add((e1 as ValuedObjectReference).signalReference(false))
                                                                     ]
                                                                 )
                                                             ]
@@ -394,158 +434,68 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                         ]
                                     )
                                 ]
+                                if (!voPSigMap.containsKey(voA)) {
+                                    statement = (statement as Sequence).list.get(0)
+                                }
                             ]
                         ]
                     ])
-                case 1:
-                    s.add(createPresent => [
-                        body = createPresentEventBody => [
-                            event = createPresentEvent => [
-                                expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(true)
-                            ]
-                            thenPart = createThenPart => [
-                                statement = createSequence => [
-                                    list.add(
-                                        createEmit => [
-                                            signal = voPSigMap.get(asm.valuedObject)
-                                        ]
-                                    )
-                                    list.add(
-                                        createPresent => [
-                                            body = createPresentEventBody => [
-                                                event = createPresentEvent => [
-                                                    if (oe.subExpressions.filter(BoolValue).map[
-                                                        value
-                                                    ].head) {
-                                                        expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false)
-                                                    } else {
-                                                        expression = createOperatorExpression => [
-                                                            operator = OperatorType.NOT
-                                                            subExpressions.add(oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false))
-                                                        ]
-                                                    }
+                case 1: {
+                        val p = createPresent => [
+                            body = createPresentEventBody => [
+                                event = createPresentEvent => [
+                                    expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(true)
+                                ]
+                                thenPart = createThenPart => [
+                                    statement = createSequence => [
+                                        if (voPSigMap.containsKey(voA)) {
+                                            list.add(
+                                                createEmit => [
+                                                    signal = voPSigMap.get(voA)
                                                 ]
-                                                thenPart = createThenPart => [
-                                                    statement = createEmit => [
-                                                        signal = voSigMap.get(asm.valuedObject)
+                                            )
+                                        }
+                                        list.add(
+                                            createPresent => [
+                                                body = createPresentEventBody => [
+                                                    event = createPresentEvent => [
+                                                        if (oe.subExpressions.filter(BoolValue).map[
+                                                            value
+                                                        ].head) {
+                                                            expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false)
+                                                        } else {
+                                                            expression = createOperatorExpression => [
+                                                                operator = OperatorType.NOT
+                                                                subExpressions.add(oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false))
+                                                            ]
+                                                        }
+                                                    ]
+                                                    thenPart = createThenPart => [
+                                                        statement = createEmit => [
+                                                            signal = voSigMap.get(asm.valuedObject)
+                                                        ]
                                                     ]
                                                 ]
                                             ]
-                                        ]
-                                    )
+                                        )
+                                    ]
+                                    if (!voPSigMap.containsKey(voA)) {
+                                        statement = (statement as Sequence).list.get(0)
+                                    }
                                 ]
                             ]
-                        ]
-                    ])
+                        ];
+                        s.add(p)
+                    }
                 case 0: 
                     throw new UnsupportedOperationException("Constant evaluation not yet supported") 
                }             
             } else if (oe.operator == de.cau.cs.kieler.core.kexpressions.OperatorType.NE) {
-                switch (oe.subExpressions.filter(ValuedObjectReference).size) {
-                    case 2: s.add(createPresent => [
-                        body = createPresentEventBody => [
-                            event = createPresentEvent => [
-                                expression = createOperatorExpression => [
-                                    operator = OperatorType.AND
-                                    subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(true))
-                                    subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(true))
-                                ]
-                            ]
-                            thenPart = createThenPart => [
-                                statement = createSequence => [
-                                    list.add(
-                                        createEmit => [
-                                            signal = voPSigMap.get(asm.valuedObject)
-                                        ]
-                                    )
-                                    list.add(
-                                        createPresent => [
-                                            body = createPresentEventBody => [
-                                                event = createPresentEvent => [
-                                                    expression = createOperatorExpression => [
-                                                        operator = OperatorType.OR
-                                                        subExpressions.add(
-                                                            createOperatorExpression => [
-                                                                operator = OperatorType.AND
-                                                                subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(false))
-                                                                subExpressions.add(
-                                                                    createOperatorExpression => [
-                                                                        operator = OperatorType.NOT
-                                                                        subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(false))
-                                                                    ]
-                                                                )
-                                                            ]
-                                                        )
-                                                        subExpressions.add(
-                                                            createOperatorExpression => [
-                                                                operator = OperatorType.AND
-                                                                subExpressions.add(
-                                                                    createOperatorExpression => [
-                                                                        operator = OperatorType.NOT
-                                                                        subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(false))
-                                                                    ]
-                                                                )
-                                                                subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(false))
-                                                            ]
-                                                        )
-                                                    ]
-                                                ]
-                                                thenPart = createThenPart => [
-                                                    statement = createEmit => [
-                                                        signal = voSigMap.get(asm.valuedObject)
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    )
-                                ]
-                            ]
-                        ]
-                    ])
-                case 1:
-                    s.add(createPresent => [
-                        body = createPresentEventBody => [
-                            event = createPresentEvent => [
-                                expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(true)
-                            ]
-                            thenPart = createThenPart => [
-                                statement = createSequence => [
-                                    list.add(
-                                        createEmit => [
-                                            signal = voPSigMap.get(asm.valuedObject)
-                                        ]
-                                    )
-                                    list.add(
-                                        createPresent => [
-                                            body = createPresentEventBody => [
-                                                event = createPresentEvent => [
-                                                    if (oe.subExpressions.filter(BoolValue).map[
-                                                        !value
-                                                    ].head) {
-                                                        expression = oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false)
-                                                    } else {
-                                                        expression = createOperatorExpression => [
-                                                            operator = OperatorType.NOT
-                                                            subExpressions.add(oe.subExpressions.filter(ValuedObjectReference).head.signalReference(false))
-                                                        ]
-                                                    }
-                                                ]
-                                                thenPart = createThenPart => [
-                                                    statement = createEmit => [
-                                                        signal = voSigMap.get(asm.valuedObject)
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    )
-                                ]
-                            ]
-                        ]
-                    ])
-                case 0: 
-                    throw new UnsupportedOperationException("Constant evaluation not yet supported") 
-               }
+                throw new UnsupportedOperationException("NotEqual not yet supported")
             } else {
+                if ((e0 instanceof ValuedObjectReference && !voPSigMap.containsKey((e0 as ValuedObjectReference).valuedObject)) || e1 instanceof ValuedObjectReference && !voPSigMap.containsKey((e1 as ValuedObjectReference).valuedObject)) {
+                    throw new UnsupportedOperationException("Operations on inputs not yet supported")
+                }
                 s.add(createPresent => [
                     body = createPresentEventBody => [
                         event = createPresentEvent => [
@@ -557,17 +507,19 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                         ]
                         thenPart = createThenPart => [
                             statement = createSequence => [
-                                list.add(
-                                    createEmit => [
-                                        signal = voPSigMap.get(asm.valuedObject)
-                                    ]
-                                )
+                                if (voPSigMap.containsKey(voA)) {
+                                    list.add(
+                                        createEmit => [
+                                            signal = voPSigMap.get(voA)
+                                        ]
+                                    )
+                                }
                                 list.add(
                                     createPresent => [
                                         body = createPresentEventBody => [
                                             event = createPresentEvent => [
                                                 expression = createOperatorExpression => [
-                                                    operator = OperatorType::getByName(oe.operator.getName)
+                                                    operator = oe.operator.translateOP
                                                     subExpressions.add((oe.subExpressions.get(0) as ValuedObjectReference).signalReference(false))
                                                     subExpressions.add((oe.subExpressions.get(1) as ValuedObjectReference).signalReference(false))
                                                 ]
@@ -581,61 +533,96 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                     ]
                                 )
                             ]
+                            if (!voPSigMap.containsKey(voA)) {
+                                statement = (statement as Sequence).list.get(0)
+                            }
                         ]
                     ]
                 ])
             }
         } else if (asm.expression instanceof ValuedObjectReference) {
-            val vo = asm.expression as ValuedObjectReference
-            s.add(createPresent => [
-                body = createPresentEventBody => [
-                    event = createPresentEvent => [
-                        expression = vo.signalReference(true)
-                    ]
-                    thenPart = createThenPart => [
-                        statement = createSequence => [
-                            list.add(
-                                createEmit => [
-                                    signal = voPSigMap.get(asm.valuedObject)
-                                ]
-                            )
-                            list.add(
-                                createPresent => [
-                                    body = createPresentEventBody => [
-                                        event = createPresentEvent => [
-                                            expression = vo.signalReference(false)
+            val vor = asm.expression as ValuedObjectReference
+            val voA = asm.valuedObject
+            if (voPSigMap.containsKey(vor.valuedObject)) {
+                s.add(createPresent => [
+                    body = createPresentEventBody => [
+                        event = createPresentEvent => [
+                            expression = vor.signalReference(true)
+                        ]
+                        thenPart = createThenPart => [
+                            statement = createSequence => [
+                                if (voPSigMap.containsKey(voA)) {
+                                    list.add(
+                                        createEmit => [
+                                            signal = voPSigMap.get(voA)
                                         ]
-                                        thenPart = createThenPart => [
-                                            statement = createEmit => [
-                                                signal = voSigMap.get(asm.valuedObject)
+                                    )
+                                }
+                                list.add(
+                                    createPresent => [
+                                        body = createPresentEventBody => [
+                                            event = createPresentEvent => [
+                                                expression = vor.signalReference(false)
+                                            ]
+                                            thenPart = createThenPart => [
+                                                statement = createEmit => [
+                                                    signal = voSigMap.get(asm.valuedObject)
+                                                ]
                                             ]
                                         ]
                                     ]
-                                ]
-                            )
+                                )
+                            ]
+                            if (!voPSigMap.containsKey(voA)) {
+                                statement = (statement as Sequence).list.get(0)
+                            }
                         ]
                     ]
-                ]
-                elsePart = createElsePart => [
-                    statement = createEmit => [
-                        signal = error
+                    elsePart = createElsePart => [
+                        statement = createEmit => [
+                            signal = error
+                        ]
                     ]
-                ]
-            ])
+                ])
+             } else {
+                if (voPSigMap.containsKey(voA)) {
+                    s.add(
+                        createEmit => [
+                            signal = voPSigMap.get(voA)
+                        ]
+                    )
+                }
+                s.add(createPresent => [
+                    body = createPresentEventBody => [
+                        event = createPresentEvent => [
+                            expression = vor.signalReference(false)
+                        ]
+                        thenPart = createThenPart => [
+                            statement = createEmit => [
+                                signal = voSigMap.get(asm.valuedObject)
+                            ]
+                        ]
+                    ]
+               ])
+             }
         } else if (asm.expression instanceof BoolValue) {
             val asmExp = asm.expression as BoolValue
+            val voA = asm.valuedObject
             if (asmExp.value) {
+                if (voPSigMap.containsKey(voA)) {
+                    s.add(
+                        createEmit => [
+                            signal = voPSigMap.get(voA)
+                        ]
+                    )
+                }
                 s.add(
                     createEmit => [
-                        signal = voPSigMap.get(asm.valuedObject)
+                        signal = voSigMap.get(voA)
                     ])
-                s.add(
-                    createEmit => [
-                        signal = voSigMap.get(asm.valuedObject)
-                    ])
-            } else {
+            } else if (voPSigMap.containsKey(voA)) {
                 s.add(createEmit => [
-                    signal = voPSigMap.get(asm.valuedObject)
+                    signal = voPSigMap.get(voA)
                 ])
             }
         }
@@ -663,21 +650,44 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             ])
         } else if (cond.expression instanceof ValuedObjectReference) {
             val vor = cond.expression as ValuedObjectReference
-            s.add(createPresent => [
-                body = createPresentEventBody => [
-                    event = createPresentEvent => [
-                        expression = vor.signalReference(true)
-                    ]
-                    thenPart = createThenPart => [
-                        statement = createPresent => [
-                            body = createPresentEventBody => [
-                                event = createPresentEvent => [
-                                    expression = vor.signalReference(false)
+            if (voPSigMap.containsKey(vor.valuedObject)) {
+                s.add(createPresent => [
+                    body = createPresentEventBody => [
+                        event = createPresentEvent => [
+                            expression = vor.signalReference(true)
+                        ]
+                        thenPart = createThenPart => [
+                            statement = createPresent => [
+                                body = createPresentEventBody => [
+                                    event = createPresentEvent => [
+                                        expression = vor.signalReference(false)
+                                    ]
+                                    if (!cond.statements.nullOrEmpty) {
+                                        thenPart = createThenPart => [
+                                            if (cond.statements.size == 1) {
+                                                val t = cond.statements.head.translate
+                                                if (t.size > 1) {
+                                                    statement = createSequence => [
+                                                        list.addAll(t)
+                                                    ]
+                                                } else {
+                                                    statement = t.head
+                                                }
+                                            } else {
+                                                statement = createSequence => [
+                                                    cond.statements.translateAddTo(list)
+    //                                                for (i : cond.statements.map[translate]){
+    //                                                    list.addAll(i)
+    //                                                }
+                                                ]
+                                            }
+                                        ]
+                                    }
                                 ]
-                                if (!cond.statements.nullOrEmpty) {
-                                    thenPart = createThenPart => [
-                                        if (cond.statements.size == 1) {
-                                            val t = cond.statements.head.translate
+                                if (!cond.elseStatements.nullOrEmpty) {
+                                    elsePart = createElsePart => [
+                                        if (cond.elseStatements.size == 1) {
+                                            val t = cond.elseStatements.head.translate
                                             if (t.size > 1) {
                                                 statement = createSequence => [
                                                     list.addAll(t)
@@ -687,47 +697,70 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                             }
                                         } else {
                                             statement = createSequence => [
-                                                cond.statements.translateAddTo(list)
-//                                                for (i : cond.statements.map[translate]){
-//                                                    list.addAll(i)
-//                                                }
+                                                cond.elseStatements.translateAddTo(list)
+    //                                            for (i : cond.elseStatements.map[translate]) {
+    //                                                list.addAll(i)
+    //                                            }
                                             ]
                                         }
                                     ]
                                 }
                             ]
-                            if (!cond.elseStatements.nullOrEmpty) {
-                                elsePart = createElsePart => [
-                                    if (cond.elseStatements.size == 1) {
-                                        val t = cond.elseStatements.head.translate
-                                        if (t.size > 1) {
-                                            statement = createSequence => [
-                                                list.addAll(t)
-                                            ]
-                                        } else {
-                                            statement = t.head
-                                        }
-                                    } else {
+                        ]
+                    ]
+                    elsePart = createElsePart => [
+                        statement = createEmit => [
+                            signal = error
+                        ]
+                    ]
+                ])
+            } else {
+                s.add(createPresent => [
+                    body = createPresentEventBody => [
+                        event = createPresentEvent => [
+                            expression = vor.signalReference(false)
+                        ]
+                        if (!cond.statements.nullOrEmpty) {
+                            thenPart = createThenPart => [
+                                if (cond.statements.size == 1) {
+                                    val t = cond.statements.head.translate
+                                    if (t.size > 1) {
                                         statement = createSequence => [
-                                            cond.elseStatements.translateAddTo(list)
-//                                            for (i : cond.elseStatements.map[translate]) {
-//                                                list.addAll(i)
-//                                            }
+                                            list.addAll(t)
                                         ]
+                                    } else {
+                                        statement = t.head
                                     }
+                                } else {
+                                    statement = createSequence => [
+                                        cond.statements.translateAddTo(list)
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                    if (!cond.elseStatements.nullOrEmpty) {
+                        elsePart = createElsePart => [
+                            if (cond.elseStatements.size == 1) {
+                                val t = cond.elseStatements.head.translate
+                                if (t.size > 1) {
+                                    statement = createSequence => [
+                                        list.addAll(t)
+                                    ]
+                                } else {
+                                    statement = t.head
+                                }
+                            } else {
+                                statement = createSequence => [
+                                    cond.elseStatements.translateAddTo(list)
                                 ]
                             }
                         ]
-                    ]
-                ]
-                elsePart = createElsePart => [
-                    statement = createEmit => [
-                        signal = error
-                    ]
-                ]
-            ])
+                    }
+                ])
+            }
         } else {
-            throw new UnsupportedOperationException("")
+            throw new UnsupportedOperationException("Unhandled Conditional Expression")
         }
         return s
     }
@@ -748,12 +781,6 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                     } else {
                         list += createSequence => [
                              th.statements.translateAddTo(list)
-//                            for ( s : th.statements) {
-//                                val l = s.translate
-//                                for (i : l) {
-//                                    list.addAll(i)
-//                                }
-//                            }
                         ]
                     }
                 }
@@ -778,6 +805,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     private def Statement translateSSA(Assignment asm) {
         val fc = asm.expression as FunctionCall
         if (fc.functionName == SEQ.symbol) {
+            val voA = asm.valuedObject
             val e = fc.parameters.get(0).expression
             val isRegisterRead = e instanceof OperatorExpression && (e as OperatorExpression).operator == de.cau.cs.kieler.core.kexpressions.OperatorType.PRE
             val v1 = fc.parameters.get(1).expression as ValuedObjectReference
@@ -788,11 +816,13 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                     ]
                     thenPart = createThenPart => [
                         statement = createSequence => [
-                            list.add(
-                                createEmit => [
-                                    signal = voPSigMap.get(asm.valuedObject)
-                                ]
-                            )
+                            if (voPSigMap.containsKey(voA)) {
+                                list.add(
+                                    createEmit => [
+                                        signal = voPSigMap.get(voA)
+                                    ]
+                                )
+                            }
                             list.add(
                                 createPresent => [
                                     body = createPresentEventBody => [
@@ -808,6 +838,9 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                 ]
                             )
                         ]
+                        if (!voPSigMap.containsKey(voA)) {
+                            statement = (statement as Sequence).list.get(0)
+                        }
                     ]
                 ]
                 if (isRegisterRead) {
@@ -823,11 +856,13 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                 ]
                                 thenPart = createThenPart => [
                                     statement = createSequence => [
-                                        list.add(
-                                            createEmit => [
-                                                signal = voPSigMap.get(asm.valuedObject)
-                                            ]
-                                        )
+                                        if (voPSigMap.containsKey(voA)) {
+                                            list.add(
+                                                createEmit => [
+                                                    signal = voPSigMap.get(voA)
+                                                ]
+                                            )
+                                        }
                                         list.add(
                                             createPresent => [
                                                 body = createPresentEventBody => [
@@ -846,11 +881,14 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                             ]
                                         )
                                     ]
+                                    if (!voPSigMap.containsKey(voA)) {
+                                        statement = (statement as Sequence).list.get(0)
+                                    }
                                 ]
                             ]
                         ]
                     ]
-                } else {
+                } else if (voPSigMap.containsKey((e as ValuedObjectReference).valuedObject)) {
                     val v0 = e as ValuedObjectReference
                     elsePart = createElsePart => [
                         statement = createPresent => [
@@ -860,11 +898,13 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                 ]
                                 thenPart = createThenPart => [
                                     statement = createSequence => [
-                                        list.add(
-                                            createEmit => [
-                                                signal = voPSigMap.get(asm.valuedObject)
-                                            ]
-                                        )
+                                        if (voPSigMap.containsKey(voA)) {
+                                            list.add(
+                                                createEmit => [
+                                                    signal = voPSigMap.get(voA)
+                                                ]
+                                            )
+                                        }
                                         list.add(
                                             createPresent => [
                                                 body = createPresentEventBody => [
@@ -880,9 +920,42 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                             ]
                                         )
                                     ]
+                                    if (!voPSigMap.containsKey(voA)) {
+                                        statement = (statement as Sequence).list.get(0)
+                                    }
                                 ]
                             ]
                         ]
+                    ]
+                } else { // Read input
+                    val v0 = e as ValuedObjectReference
+                    elsePart = createElsePart => [
+                        statement = createSequence => [
+                            if (voPSigMap.containsKey(voA)) {
+                                list.add(
+                                    createEmit => [
+                                        signal = voPSigMap.get(voA)
+                                    ]
+                                )
+                            }
+                            list.add(
+                                createPresent => [
+                                    body = createPresentEventBody => [
+                                        event = createPresentEvent => [
+                                            expression = v0.signalReference(false)
+                                        ]
+                                        thenPart = createThenPart => [
+                                            statement = createEmit => [
+                                                signal = voSigMap.get(asm.valuedObject)
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            )
+                        ]
+                        if (!voPSigMap.containsKey(voA)) {
+                            statement = (statement as Sequence).list.get(0)
+                        }
                     ]
                 }
             ]
@@ -1004,7 +1077,232 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 ]
             ]
         } else if (fc.functionName == COMBINE.symbol) {
-            throw new UnsupportedOperationException("Combine not yet supported")
+            val voA = asm.valuedObject
+            val op = (fc.parameters.get(0).expression as StringValue).value
+            val e = fc.parameters.get(1).expression
+            val isRegisterRead = e instanceof OperatorExpression && (e as OperatorExpression).operator == de.cau.cs.kieler.core.kexpressions.OperatorType.PRE
+            val up = fc.parameters.get(2).expression as ValuedObjectReference
+            if (isRegisterRead) {
+                val read = (e as OperatorExpression).subExpressions.head as ValuedObjectReference
+                return createPresent => [
+                    body = createPresentEventBody => [
+                        event = createPresentEvent => [
+                            expression =  createOperatorExpression => [
+                                operator = OperatorType.PRE
+                                subExpressions += read.signalReference(true)
+                            ]
+                        ]
+                        thenPart = createThenPart => [
+                            statement = createSequence => [
+                                if (voPSigMap.containsKey(voA)) {
+                                    list.add(
+                                        createEmit => [
+                                            signal = voPSigMap.get(voA)
+                                        ]
+                                    )
+                                }
+                                list.add(
+                                    createPresent => [
+                                        body = createPresentEventBody => [
+                                            event = createPresentEvent => [
+                                                expression = up.signalReference(true)
+                                            ]
+                                            thenPart = createThenPart => [
+                                                statement = createPresent => [
+                                                    body = createPresentEventBody => [
+                                                        event = createPresentEvent => [
+                                                            expression = createOperatorExpression => [
+                                                                operator = op.translateOP
+                                                                subExpressions.add( createOperatorExpression => [
+                                                                    operator = OperatorType.PRE
+                                                                    subExpressions += read.signalReference(false)
+                                                                ])
+                                                                subExpressions.add(up.signalReference(false))
+                                                            ]
+                                                        ]
+                                                        thenPart = createThenPart => [
+                                                            statement = createEmit => [
+                                                                signal = voSigMap.get(asm.valuedObject)
+                                                            ]
+                                                        ]
+                                                    ]
+                                                    elsePart = createElsePart => [
+                                                        statement = createPresent => [
+                                                            body = createPresentEventBody => [
+                                                                event = createPresentEvent => [
+                                                                    expression = read.signalReference(false)
+                                                                ]
+                                                                thenPart = createThenPart => [
+                                                                    statement = createEmit => [
+                                                                        signal = voSigMap.get(asm.valuedObject)
+                                                                    ]
+                                                                ]
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                )
+                            ]
+                            if (!voPSigMap.containsKey(voA)) {
+                                statement = (statement as Sequence).list.get(0)
+                            }
+                        ]
+                    ]
+                    elsePart = createElsePart => [
+                        statement = createPresent => [
+                            body = createPresentEventBody => [
+                                event = createPresentEvent => [
+                                    expression = up.signalReference(true)
+                                ]
+                                thenPart = createThenPart => [
+                                    statement = createEmit => [
+                                        signal = error
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            } else {
+                val read = e as ValuedObjectReference
+                if (voPSigMap.containsKey(read.valuedObject)) {
+                    val s = createSequence => [
+                        if (voPSigMap.containsKey(voA)) {
+                            list.add(
+                                createEmit => [
+                                    signal = voPSigMap.get(voA)
+                                ]
+                            )
+                        }
+                        list.add(
+                            createPresent => [
+                                body = createPresentEventBody => [
+                                    event = createPresentEvent => [
+                                        expression = up.signalReference(true)
+                                    ]
+                                    thenPart = createThenPart => [
+                                        statement = createPresent => [
+                                            body = createPresentEventBody => [
+                                                event = createPresentEvent => [
+                                                    expression = createOperatorExpression => [
+                                                        operator = op.translateOP
+                                                        subExpressions.add(read.signalReference(false))
+                                                        subExpressions.add(up.signalReference(false))
+                                                    ]
+                                                ]
+                                                thenPart = createThenPart => [
+                                                    statement = createEmit => [
+                                                        signal = voSigMap.get(asm.valuedObject)
+                                                    ]
+                                                ]
+                                            ]
+                                            elsePart = createElsePart => [
+                                                statement = createPresent => [
+                                                    body = createPresentEventBody => [
+                                                        event = createPresentEvent => [
+                                                            expression = read.signalReference(false)
+                                                        ]
+                                                        thenPart = createThenPart => [
+                                                            statement = createEmit => [
+                                                                signal = voSigMap.get(asm.valuedObject)
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        )
+                    ]
+                    if (!voPSigMap.containsKey(voA)) {
+                        return (s as Sequence).list.get(0)
+                    }else {
+                        return s
+                    }
+                }else{
+                    return createPresent => [
+                        body = createPresentEventBody => [
+                            event = createPresentEvent => [
+                                expression = read.signalReference(true)
+                            ]
+                            thenPart = createThenPart => [
+                                statement = createSequence => [
+                                    if (voPSigMap.containsKey(voA)) {
+                                        list.add(
+                                            createEmit => [
+                                                signal = voPSigMap.get(voA)
+                                            ]
+                                        )
+                                    }
+                                    list.add(
+                                        createPresent => [
+                                            body = createPresentEventBody => [
+                                                event = createPresentEvent => [
+                                                    expression = up.signalReference(true)
+                                                ]
+                                                thenPart = createThenPart => [
+                                                    statement = createPresent => [
+                                                        body = createPresentEventBody => [
+                                                            event = createPresentEvent => [
+                                                                expression = createOperatorExpression => [
+                                                                    operator = op.translateOP
+                                                                    subExpressions.add(read.signalReference(false))
+                                                                    subExpressions.add(up.signalReference(false))
+                                                                ]
+                                                            ]
+                                                            thenPart = createThenPart => [
+                                                                statement = createEmit => [
+                                                                    signal = voSigMap.get(asm.valuedObject)
+                                                                ]
+                                                            ]
+                                                        ]
+                                                        elsePart = createElsePart => [
+                                                            statement = createPresent => [
+                                                                body = createPresentEventBody => [
+                                                                    event = createPresentEvent => [
+                                                                        expression = read.signalReference(false)
+                                                                    ]
+                                                                    thenPart = createThenPart => [
+                                                                        statement = createEmit => [
+                                                                            signal = voSigMap.get(asm.valuedObject)
+                                                                        ]
+                                                                    ]
+                                                                ]
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    )
+                                ]
+                                if (!voPSigMap.containsKey(voA)) {
+                                    statement = (statement as Sequence).list.get(0)
+                                }
+                            ]
+                        ]
+                        elsePart = createElsePart => [
+                            statement = createPresent => [
+                                body = createPresentEventBody => [
+                                    event = createPresentEvent => [
+                                        expression = up.signalReference(true)
+                                    ]
+                                    thenPart = createThenPart => [
+                                        statement = createEmit => [
+                                            signal = error
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                }
+            }
         }
     }
     
@@ -1045,48 +1343,44 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             ]
         ]
     }
+    
 
-    private dispatch def Expression translateExpression(ValuedObjectReference ref) {
-        if ((ref.valuedObject.eContainer as Declaration).type == de.cau.cs.kieler.core.kexpressions.ValueType.PURE) {
-            return createValuedObjectReference => [
-                valuedObject = voSigMap.get(ref.valuedObject)
-            ]            
-        } else {
-            return createOperatorExpression => [
-                operator = OperatorType::VAL
-                subExpressions += createValuedObjectReference => [
-                    valuedObject = voSigMap.get(ref.valuedObject)
-                ]
-            ]
+    private def dispatch OperatorType translateOP(String t) {
+        var match = OperatorType.getByName(t)
+        if (match == null) {
+           match = de.cau.cs.kieler.core.kexpressions.OperatorType.getByName(t).translateOP
         }
-    }
-
-    private dispatch def Expression translateExpression(OperatorExpression exp) {
-        return createOperatorExpression => [
-            operator = OperatorType::getByName(exp.operator.getName)
-            for (subExp : exp.subExpressions) {
-                subExpressions += subExp.translateExpression
-            }
-        ]
-    }
-
-    private def dispatch Expression translateExpression(BoolValue exp) {
-        createConstantExpression => [
-            value = Boolean.toString(exp.value)
-        ]
-    }
-
-    private def dispatch Expression translateExpression(IntValue exp) {
-        createConstantExpression => [
-            value = Integer.toString(exp.value)
-        ]
-    }
-
-    private def dispatch Expression translateExpression(FloatValue exp) {
-        createConstantExpression => [
-            value = Float.toString(exp.value)
-        ]
-    }
+        if (match == null) {
+           throw new IllegalArgumentException("Illegal Operator: "+t)
+        }
+        return match
+    }   
+    
+    private def dispatch OperatorType translateOP(de.cau.cs.kieler.core.kexpressions.OperatorType t) {
+        return switch (t) {
+//            case EQ: OperatorType.EQ
+//            case LT: 
+//            case LEQ: 
+//            case GT:
+//            case GEQ:
+            case NOT: OperatorType.NOT
+//            case VAL:
+            case PRE: OperatorType.PRE
+//            case NE:  OperatorType.NE
+            case LOGICAL_AND: OperatorType.AND
+            case LOGICAL_OR: OperatorType.OR
+//            case ADD: OperatorType.ADD
+//            case SUB:
+//            case MULT:
+//            case DIV:
+//            case MOD:
+            case BITWISE_OR: OperatorType.AND
+            case BITWISE_AND: OperatorType.OR
+//            case POSTFIX_ADD:
+//            case POSTFIX_SUB:
+            default: throw new IllegalArgumentException("Illegal Operator: "+t.getName)
+        }
+    } 
     
     private def Expression signalReference(ValuedObjectReference ref, boolean presentSignal) {
         return createValuedObjectReference => [
@@ -1102,7 +1396,11 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         for (s : stms) {
             val l = s.translate
             for (i : l) {
-                list.addAll(i)
+                if (i instanceof Sequence) {
+                    list.addAll(i.list)
+                } else {
+                    list.add(i)
+                }
             }
         }
     }

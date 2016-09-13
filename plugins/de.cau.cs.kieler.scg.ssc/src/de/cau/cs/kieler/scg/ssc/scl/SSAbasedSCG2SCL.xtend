@@ -233,14 +233,15 @@ class SSAbasedSCG2SCL extends SCGToSCLTransformation {
             }
         }
 
-        var Node join = null
+        var Node j = null
         for (t : thenPath) {
             for (e : elsePath) {
-                if (join == null && t == e) {
-                    join = t
+                if (j == null && t == e) {
+                    j = t
                 }
             }
         }
+        val join = j
         if (join == null && (thenLoop || elseLoop)) {
             val loopPath = if (thenLoop) {
                     thenPath
@@ -289,6 +290,7 @@ class SSAbasedSCG2SCL extends SCGToSCLTransformation {
         } else {
             val statement = createInstructionStatement
             sSeq.statements.add(statement)
+            val joinVisted = join.isVisted
             if (join != null) {
                 join.transform(sSeq)
             }
@@ -299,6 +301,18 @@ class SSAbasedSCG2SCL extends SCGToSCLTransformation {
                 conditional.getElse.target.transform(stmContainer as StatementSequence)
                 it.elseStatements.addAll(stmContainer.statements)
             ]
+            if (joinVisted) {
+                val c = (statement.instruction as de.cau.cs.kieler.scl.scl.Conditional)
+                (c as StatementSequence).statements.remove((c as StatementSequence).statements.size -1)
+                c.elseStatements.remove(c.elseStatements.size -1)
+                sSeq.statements += createInstructionStatement => [
+                    instruction = createGoto => [
+                        val label = loops.get(join)
+                        targetLabel = label.label
+                        gotos.put(it, label)
+                    ]
+                ]
+            }
         }
 
 //        // find branch join with dominator tree

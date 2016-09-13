@@ -26,9 +26,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 
+import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
 
@@ -126,6 +128,9 @@ class SSACoreExtensions {
                 while(names.contains(newName.toString)) {
                     newName.insert(origName.length, '_')
                 }
+                if (vo.value.isSSA(COMBINE)) {
+                    newName.append("up")
+                }
                 vo.value.name = newName.toString
             }
         }
@@ -162,6 +167,10 @@ class SSACoreExtensions {
     
     def isDelayed(SCGraph scg) {
         return scg.nodes.exists[it instanceof Surface]
+    }
+    
+    def isUpdate(Assignment asm) {
+        return asm.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
     }
    
 }

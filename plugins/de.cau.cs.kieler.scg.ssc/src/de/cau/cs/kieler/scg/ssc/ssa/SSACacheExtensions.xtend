@@ -77,23 +77,23 @@ class SSACacheExtensions {
         
     def getDef(KielerCompilerContext context, SCGraph scg) {
         var pair = context.getProperty(DEF)
-        if (pair == null || pair.key != scg) {
+//        if (pair == null || pair.key != scg) {
             context.analyseDefUse(scg)
             pair = context.getProperty(DEF)
-        } else {          
-            pair.value.entrySet.removeIf[key.eContainer == null || value.eContainer == null]
-        }
+//        } else {          
+//            pair.value.entrySet.removeIf[key.eContainer == null || value.eContainer == null]
+//        }
         return pair.value
     }
 
     def getUse(KielerCompilerContext context, SCGraph scg) {
         var pair = context.getProperty(USE)
-        if (pair == null || pair.key != scg) {
+//        if (pair == null || pair.key != scg) {
             context.analyseDefUse(scg)
             pair = context.getProperty(USE)
-        } else {
-            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
-        }
+//        } else {
+//            pair.value.entries.removeIf[key.eContainer == null || value.eContainer == null]
+//        }
         return pair.value
     }
 

@@ -25,9 +25,12 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -35,13 +38,18 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.Collection
+import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtend.lib.annotations.Data
 
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
@@ -64,6 +72,7 @@ class MergeExpressionExtension {
     @Inject
     extension SCGThreadExtensions
 
+    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     @Inject
     extension KExpressionsValuedObjectExtensions
 
@@ -78,7 +87,7 @@ class MergeExpressionExtension {
     extension SSACacheExtensions
 
     // CANNOT HANDLE CYCLES
-    val Table<SCGraph, ValuedObject, SeqConcPattern> cache = HashBasedTable.create
+    val Table<SCGraph, ValuedObject, MergeExpression> cache = HashBasedTable.create
     var KielerCompilerContext context = null
 
     def createMergeExpression(Node node, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, KielerCompilerContext context) {
@@ -88,8 +97,9 @@ class MergeExpressionExtension {
     def createMergeExpression(List<Node> nodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, KielerCompilerContext context) {
         this.context = context
         val scg = nodes.head.eContainer as SCGraph
-        val expression = if (scg.hasUpdates(vo)) {
-            null
+        val scheduled = scg.hasUpdates(vo)
+        val expression = if (scheduled) {
+            scg.getScheduledExpression(vo, ssaDecl)
         }else{
             scg.getPatternExpression(vo)
         }
@@ -127,7 +137,8 @@ class MergeExpressionExtension {
 //            (pattern.exp as FunctionCall).parameters.remove(0)
 //        }
         
-        if (vo.declaration.input) {
+
+        if (!scheduled && vo.declaration.input) {
             return SEQ.createFunction => [
                 parameters += createParameter => [
                     expression = vo.reference
@@ -136,7 +147,7 @@ class MergeExpressionExtension {
                     expression = expression.exp
                 ]
             ]
-        } else if (scg.isDelayed) {
+        } else if (!scheduled && scg.isDelayed) {
             return SEQ.createFunction => [
                 parameters += createParameter => [
                     expression = createOperatorExpression(OperatorType.PRE) => [
@@ -153,7 +164,7 @@ class MergeExpressionExtension {
     }
     
     private def hasUpdates(SCGraph scg, ValuedObject vo) {
-        return false        
+        return scg.nodes.filter(Assignment).filter[valuedObject == vo].exists[isUpdate]        
     }
     
     def getPatternExpression(SCGraph scg, ValuedObject vo) {
@@ -176,8 +187,8 @@ class MergeExpressionExtension {
 //            ]
 //            entry.createSeqConcFunction(vo, ssaReferences, newHashSet).addTo(parameters)
 //        ]
-val exp = entry.createSeqConcFunction(vo, ssaReferences, newHashSet).expression
-        return new SeqConcPattern(exp, ssaReferences)
+        val exp = entry.createSeqConcFunction(vo, ssaReferences, newHashSet).expression
+        return new MergeExpression(exp, ssaReferences)
 //            cache.put(scg, vo, new SeqConcPattern(exp, ssaReferences))
 //        }
 //        return cache.get(scg, vo)
@@ -278,7 +289,7 @@ val exp = entry.createSeqConcFunction(vo, ssaReferences, newHashSet).expression
     private def boolean noLoop(Node t, Node s) {
         val dt = context.getDominatorTree(s.eContainer as SCGraph)
 //        return !dt.isStrictDominator(t.basicBlock, s.basicBlock)
-return true
+        return true
     }
 
     private def void addTo(Iterable<Parameter> parameters, EList<Parameter> list) {
@@ -290,8 +301,6 @@ return true
             list.add(parameter)
         }
     }
-
-
 
     def Expression reduce(Expression ssaFunction) {
         if (ssaFunction instanceof FunctionCall) {
@@ -306,12 +315,16 @@ return true
             while (changed) {
                 changed = false
                 for (fc : fcalls) {
-                    if (fc.parameters.size == 0 && fc.eContainer instanceof Parameter) {
-                        fc.eContainer.remove
-                    } else if (fc.parameters.size == 1) {
-                        val container = fc.eContainer
-                        if (container instanceof Parameter) {
-                            container.expression = fc.parameters.head.expression
+                    if (fc.functionName == COMBINE.symbol) {
+                        
+                    } else {
+                        if (fc.parameters.size == 0 && fc.eContainer instanceof Parameter) {
+                            fc.eContainer.remove
+                        } else if (fc.parameters.size == 1) {
+                            val container = fc.eContainer
+                            if (container instanceof Parameter) {
+                                container.expression = fc.parameters.head.expression
+                            }
                         }
                     }
                 }
@@ -319,18 +332,22 @@ return true
             }
             // reduce nesting
             for (fc : fcalls) {
-                var index = 0;
-                while (index < fc.parameters.size) {
-                    val paramExp = fc.parameters.get(index).expression
-                    if (paramExp instanceof FunctionCall) {
-                        if (paramExp.functionName == fc.functionName) {
-                            fc.parameters.remove(index)
-                            fc.parameters.addAll(index, paramExp.parameters)
-                            paramExp.parameters.clear
-                            index-- // do not increment to analyze first inserted parameter next
+                if (fc.functionName == COMBINE.symbol) {
+                        
+                } else {
+                    var index = 0;
+                    while (index < fc.parameters.size) {
+                        val paramExp = fc.parameters.get(index).expression
+                        if (paramExp instanceof FunctionCall) {
+                            if (paramExp.functionName == fc.functionName) {
+                                fc.parameters.remove(index)
+                                fc.parameters.addAll(index, paramExp.parameters)
+                                paramExp.parameters.clear
+                                index-- // do not increment to analyze first inserted parameter next
+                            }
                         }
+                        index++
                     }
-                    index++
                 }
             }
             if (ssaFunction.parameters.size == 1) {
@@ -350,20 +367,24 @@ return true
 //                return ssaFunction
 //            }
             for (fc : fcalls) {
-                if (fc.parameters.size > 2 ) {
-                    val paramsIter = fc.parameters.immutableCopy.iterator
-                    var prev = paramsIter.next
-                    while (paramsIter.hasNext) {
-                        val next = paramsIter.next
-                        if (paramsIter.hasNext) {
-                            val param0 = prev.copy
-                            val param1 = next
-                            val func = createFunctionCall => [
-                                functionName = fc.functionName
-                            ]
-                            (next.eContainer as FunctionCall).parameters.remove(next)
-                            func.parameters.addAll(param0, param1)
-                            prev.expression = func
+                if (fc.functionName == COMBINE.symbol) {
+                        
+                } else {
+                    if (fc.parameters.size > 2 ) {
+                        val paramsIter = fc.parameters.immutableCopy.iterator
+                        var prev = paramsIter.next
+                        while (paramsIter.hasNext) {
+                            val next = paramsIter.next
+                            if (paramsIter.hasNext) {
+                                val param0 = prev.copy
+                                val param1 = next
+                                val func = createFunctionCall => [
+                                    functionName = fc.functionName
+                                ]
+                                (next.eContainer as FunctionCall).parameters.remove(next)
+                                func.parameters.addAll(param0, param1)
+                                prev.expression = func
+                            }
                         }
                     }
                 }
@@ -389,10 +410,130 @@ return true
         }
         return map
     }
+    
+    static val schedules = <ValuedObject, List<Assignment>>newHashMap
+    
+    def getScheduledExpression(SCGraph scg, ValuedObject vo, BiMap<ValuedObject, Declaration> ssaDecl) {
+        val ssaReferences = HashMultimap.<Assignment, Parameter>create
+        val schedule = newLinkedList
+        schedule.addAll(schedules.get(vo).reverseView)
+        // Prepend inputs and register reads
+        if (vo.declaration.input) {
+            schedule.add(createAssignment => [
+                assignment = vo.reference
+            ])
+        } else if (scg.isDelayed) {
+            schedule.add(createAssignment => [
+                assignment = createOperatorExpression(OperatorType.PRE) => [
+                    subExpressions += ssaDecl.get(vo).valuedObjects.findFirst[isRegister].reference
+                ]
+            ])
+        }
+        val exp = createScheduledExpression(schedule, ssaReferences)
+        return new MergeExpression(exp, ssaReferences)
+    }
+    
+    def Expression createScheduledExpression(LinkedList<Assignment> assignments, HashMultimap<Assignment, Parameter> ssaReferences) {
+        val head = assignments.pop
+        if (assignments.empty) {
+            if (head.valuedObject == null) {
+                return SEQ.createFunction => [
+                    parameters += createParameter => [
+                        expression = head.assignment
+                    ]
+                ]                
+            } else {
+                return SEQ.createFunction => [
+                    parameters += createParameter => [
+                        ssaReferences.put(head, it)
+                        expression = head.valuedObject.reference
+                    ]
+                ]
+            }
+        } else if (head.isUpdate){
+             return COMBINE.createFunction => [
+                parameters += createParameter => [
+                    var op = (head.assignment as OperatorExpression).operator.getName
+                    if (op.contains("_")) {
+                        op = op.substring(op.indexOf('_')+1)
+                    }
+                    expression = createStringValue(op)
+                ]
+                parameters += createParameter => [
+                    expression = assignments.createScheduledExpression(ssaReferences)
+                ]
+                parameters += createParameter => [
+                    ssaReferences.put(head, it)
+                    expression = head.valuedObject.reference
+                ]
+            ]
+        } else {
+            return SEQ.createFunction => [
+                parameters += createParameter => [
+                    expression = assignments.createScheduledExpression(ssaReferences)
+                ]
+                parameters += createParameter => [
+                    ssaReferences.put(head, it)
+                    expression = head.valuedObject.reference
+                ]
+            ]
+        }
+    }
+
+    
+    def prepareUpdateScheduling(SCGraph scg) {
+        schedules.clear
+        val updateVOs = scg.nodes.filter(Assignment).filter[isUpdate].map[valuedObject].toSet
+        for (vo : updateVOs) {
+            val copier = new Copier();
+            val SCGraph copy = copier.copy(scg) as SCGraph
+            copier.copyReferences();
+            // Remove current analysis
+            copy.annotations.clear
+            copy.basicBlocks.clear
+            copy.nodes.forEach[dependencies.clear]
+            // Remove independent nodes
+            val voCopy = copier.get(vo)      
+            val independentNodes = copy.nodes.filter(Assignment).filter[valuedObject != voCopy && !eAllContents.filter(ValuedObjectReference).exists[valuedObject == voCopy]].toList
+            for (in : independentNodes) {
+                in.incoming.immutableCopy.forEach[ target = in.next.target]
+                in.next.target = null
+            }
+            copy.nodes.removeAll(independentNodes)
+            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
+            context.advancedSelect = false;
+            context.setProperty(Tracing.ACTIVE_TRACING, true);
+            val result = KielerCompiler.compile(context);
+            if (!result.postponedErrors.empty) {
+                throw new IllegalArgumentException("SCG with ValuedObject "+vo.name+" cannot be scheduled",result.postponedErrors.head)
+            }
+            val schedSCG = result.object as SCGraph
+            val mapping = result.getAuxiliaryData(Tracing).head?.getMapping(schedSCG, copy);
+            var ValuedObject findCopyVO = null
+            for (d : schedSCG.declarations) {
+                for (v : d.valuedObjects) {
+                    if (mapping.get(v).filter(ValuedObject).head == voCopy) {
+                        findCopyVO = v
+                    }
+                }
+            }
+            val schedVO = findCopyVO
+            val schedule = <Assignment>newArrayList
+            for (sb : schedSCG.schedules.head.scheduleBlocks.map[schedulingBlock]) {
+                for (a : sb.nodes.filter(Assignment).filter[valuedObject == schedVO]) {
+                    val copyAsm = mapping.get(a).filter(Assignment).head
+                    val asm = copier.entrySet.findFirst[value == copyAsm].key
+                    schedule.add(asm as Assignment)
+                }
+            }
+            schedules.put(vo, schedule)
+        }
+    }
+    
 }
 
 @Data
-class SeqConcPattern {
+class MergeExpression {
     Expression exp
     Multimap<Assignment, Parameter> refs
 }

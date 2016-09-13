@@ -12,34 +12,27 @@
  */
 package de.cau.cs.kieler.scg.ssc.ssa
 
-import com.google.common.base.Function
 import com.google.common.collect.BiMap
-import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
-import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
@@ -50,26 +43,16 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer
+import de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer
 import java.util.Collection
-import java.util.Deque
-import java.util.LinkedList
 import javax.inject.Inject
 
 import static com.google.common.collect.Lists.*
-import static com.google.common.collect.Maps.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer
-import de.cau.cs.kieler.scg.DataDependency
-import java.util.List
-import java.util.Iterator
-import org.eclipse.emf.common.util.EList
-import com.google.common.collect.HashBasedTable
-import com.google.common.collect.Table
 
 /**
  * The SSA transformation for SCGs
@@ -115,11 +98,6 @@ class SSATransformation extends AbstractProductionTransformation {
     @Inject
     extension KExpressionsValuedObjectExtensions
 
-    @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension AnnotationsExtensions
@@ -134,11 +112,6 @@ class SSATransformation extends AbstractProductionTransformation {
     extension IOPreserverExtensions
     @Inject
     extension MergeExpressionExtension    
-    
-    @Inject
-    extension SSAOptimizer optimizer
-    @Inject
-    extension SeqConcTransformer seqConc   
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
@@ -153,6 +126,11 @@ class SSATransformation extends AbstractProductionTransformation {
         val ssaReferences = HashMultimap.<Assignment, Parameter>create
         
         val ssaDecl = scg.createSSADeclarations
+
+        // ---------------
+        // 1. Prepare Update Scheduling
+        // ---------------
+        scg.prepareUpdateScheduling
 
         // ---------------
         // 1. Preserve output behavior
@@ -210,7 +188,12 @@ class SSATransformation extends AbstractProductionTransformation {
         val nodes = newLinkedHashSet
         for (node : newArrayList(scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))))) {
             val expr = node.eContents.filter(Expression).head
-            for (vor : newArrayList(expr.allReferences)) {
+            val refs = if (node instanceof Assignment) {
+                newArrayList(expr.allReferences.filter[valuedObject != node.valuedObject])
+            } else {
+                newArrayList(expr.allReferences)
+            }
+            for (vor : refs) {
                 val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
                 val mergeExp = if (concurrentNodes.empty) {
                     node.createMergeExpression(vor.valuedObject, ssaReferences, ssaDecl, context)
@@ -240,11 +223,22 @@ class SSATransformation extends AbstractProductionTransformation {
                 // rename def
                 if (s instanceof Assignment) {
                     if (!s.outputPreserver) {
+                        val isUpdate = s.isUpdate
                         // create new version
-                        var vo = s.valuedObject
+                        val vo = s.valuedObject
                         val newVO = vo.copy
                         ssaDecl.get(vo).valuedObjects.add(newVO)
                         s.valuedObject = newVO
+                        // transform update
+                        if (isUpdate) {
+                            s.valuedObject.markSSA(COMBINE)
+                            val oe = s.assignment as OperatorExpression
+                            if (oe.subExpressions.size > 2) {
+                                oe.subExpressions.removeIf[it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo]
+                            } else {
+                                s.assignment = oe.subExpressions.filter[!(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo)].head
+                            }
+                        }
                     }
                 }
             }
