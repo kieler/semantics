@@ -127,7 +127,13 @@ class NodePriorities {
     }
     
     
-    
+    /**
+     *  Optimizes node priorities by finding surface or exit nodes and searching their parent nodes for higher 
+     *  node priorities. This results in less context switches.
+     *  
+     *  @param nodes
+     *              The nodes of the SCG
+     */
     private def optimizeNodePrios(List<Node> nodes) {
         visitedNodes = <Node, Boolean>newHashMap
         var surfaceOrExit = nodes.filter[it instanceof Surface || it instanceof Exit]
@@ -139,16 +145,30 @@ class NodePriorities {
         }
     }
     
+    /**
+     *  Finds join, entry or depth nodes, or nodes that have incoming dependencies. If these are encountered, they return 
+     *  their node priority and propagate them to their following nodes.
+     * 
+     *  @param currentNode
+     *          The currently observed node
+     * 
+     *  @returns
+     *          The (new) node priority of the currentNode
+     * 
+     */
     private def int propagateUpwards(Node currentNode) {
         visitedNodes.put(currentNode, true)
         var dependencyExists = false
+        //Detect any incoming concurrent dependencies
         for(inc : currentNode.incoming) {
             dependencyExists = dependencyExists || (inc instanceof DataDependency && (inc as DataDependency).concurrent 
                                                               && !(inc as DataDependency).confluent)
         }
         
-        if(currentNode instanceof Entry || currentNode instanceof Depth || dependencyExists) {
+        //Check for termination condition. If we encounter one of these nodes, we should not look further.
+        if(currentNode instanceof Join || currentNode instanceof Entry || currentNode instanceof Depth || dependencyExists) {
             return nodePrio.get(currentNode)
+        //Get the node priorities of the predecessors and compare them to the node priority of the current node
         } else {
             var min = Integer.MAX_VALUE
             for(incControlFlow : currentNode.incoming) {

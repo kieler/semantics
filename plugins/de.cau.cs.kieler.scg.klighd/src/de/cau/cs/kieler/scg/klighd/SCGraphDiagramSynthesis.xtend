@@ -1440,6 +1440,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (outgoingPortId == SCGPORTID_OUTGOING_THEN) {
                 edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
             }
+            
+            //Visualize the prio-statements of the priority-based approach
             if(!(sourceObj instanceof Fork) && !(sourceObj instanceof Depth) && !(targetObj instanceof Join)){
                 val srcNode = sourceObj as Node
                 val tgtNode = targetObj as Node
