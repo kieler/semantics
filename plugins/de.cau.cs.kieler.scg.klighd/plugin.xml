@@ -33,5 +33,9 @@
             class="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
             id="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions">
       </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.priorityStatements">
+      </action>
    </extension>
 </plugin>

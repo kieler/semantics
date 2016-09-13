@@ -98,6 +98,9 @@ import org.eclipse.xtext.serializer.ISerializer
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.core.kgraph.impl.KLabeledGraphElementImpl
+import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -252,6 +255,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     public static val THREAD_PRIO_PROPERTY = new Property<Boolean>("scgPriority.ThreadPriority", false)
     
     public static val SCC_PROPERTY = new Property<Boolean>("scgPriority.SCCPriority", false)
+    
+    public static val PRIO_STATEMENTS_PROPERTY = new Property<Boolean>("scgPriority.PrioStatements", false)
         
 
     // Text constants for the dependency types filter
@@ -318,7 +323,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             OptNodePrioActions.SHOW_OPT_PRIO_ID,
             NodePriorityActions.SHOW_NODE_PRIORITY,
             ThreadPriorityActions.SHOW_THREAD_PRIO,
-            SCCActions.SHOW_SCC
+            SCCActions.SHOW_SCC,
+            PrioStatementsActions.SHOW_PRIO_STATEMENTS
         );
     }
 
@@ -1433,6 +1439,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoingPortId == SCGPORTID_OUTGOING_THEN) {
                 edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+            }
+            if(!(sourceObj instanceof Fork) && !(sourceObj instanceof Depth) && !(targetObj instanceof Join)){
+                val srcNode = sourceObj as Node
+                val tgtNode = targetObj as Node
+                if(srcNode.hasAnnotation("optPrioIDs") && tgtNode.hasAnnotation("optPrioIDs")) {
+                    val srcPrio = srcNode.getAnnotation("optPrioIDs") as IntAnnotation
+                    val tgtPrio = tgtNode.getAnnotation("optPrioIDs") as IntAnnotation
+                    if(srcPrio.value > tgtPrio.value) {
+                        var prio = edge.addCenterEdgeLabel("prio(" + tgtPrio.value + ")")
+                        prio.KRendering.foreground = OPT_PRIORITY_COLOR.copy
+                        prio.KRendering.fontItalic = true
+                        prio.KRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
+                    }
+                    
+                }
             }
         ]
     }
