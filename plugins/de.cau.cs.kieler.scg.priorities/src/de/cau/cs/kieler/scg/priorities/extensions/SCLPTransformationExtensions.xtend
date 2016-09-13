@@ -89,7 +89,9 @@ class SCLPTransformationExtensions {
      *  Translates a String Value
      */
     dispatch def expand(StringBuilder sb, StringValue value) {
+        sb.append("\"")
         sb.append(value.value)
+        sb.append("\"")
     }
     
     /**

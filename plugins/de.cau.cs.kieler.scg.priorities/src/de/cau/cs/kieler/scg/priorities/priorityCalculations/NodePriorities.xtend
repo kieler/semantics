@@ -12,10 +12,17 @@
  */
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
+import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import java.util.HashMap
 import java.util.LinkedList
+import java.util.List
 import javax.inject.Inject
 
 /**
@@ -33,9 +40,10 @@ class NodePriorities {
     private HashMap<Node, Integer> sccMap
     private HashMap<LinkedList<Node>, Integer> sccPrio
     private HashMap<Node, Integer> nodePrio
+    private HashMap<Node, Boolean> visitedNodes
     
     /**
-     * Calculates the Node Priorities of the SCG provided as a list of 
+     * Calculates the Node Priorities of the SCG provided in the form of a list of 
      * Strongly Connected Components. 
      * 
      * @param sccs
@@ -44,7 +52,8 @@ class NodePriorities {
      *              A HashMap that maps each node in the SCG to the SCC it belongs to
      * 
      */
-    public def HashMap<Node, Integer> calcNodePrios(LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccMap) {
+    public def HashMap<Node, Integer> calcNodePrios(LinkedList<LinkedList<Node>> sccs, HashMap<Node,Integer> sccMap, 
+                                                        List<Node> nodes) {
         visited = newHashMap
         index = newHashMap
         sccPrio = newHashMap
@@ -72,6 +81,8 @@ class NodePriorities {
             }
 
         }
+        
+        optimizeNodePrios(nodes)
         
         return nodePrio
     }
@@ -113,6 +124,46 @@ class NodePriorities {
         }
         sccPrio.put(currentSCC, prio)
         
+    }
+    
+    
+    
+    private def optimizeNodePrios(List<Node> nodes) {
+        visitedNodes = <Node, Boolean>newHashMap
+        var surfaceOrExit = nodes.filter[it instanceof Surface || it instanceof Exit]
+        for(node : surfaceOrExit) {
+            for(visNode : nodes) {
+                visitedNodes.put(visNode, false)
+            }
+            propagateUpwards(node)
+        }
+    }
+    
+    private def int propagateUpwards(Node currentNode) {
+        visitedNodes.put(currentNode, true)
+        var dependencyExists = false
+        for(inc : currentNode.incoming) {
+            dependencyExists = dependencyExists || (inc instanceof DataDependency && (inc as DataDependency).concurrent 
+                                                              && !(inc as DataDependency).confluent)
+        }
+        
+        if(currentNode instanceof Entry || currentNode instanceof Depth || dependencyExists) {
+            return nodePrio.get(currentNode)
+        } else {
+            var min = Integer.MAX_VALUE
+            for(incControlFlow : currentNode.incoming) {
+                if(!(incControlFlow instanceof DataDependency)) {
+                    if(!visitedNodes.containsKey(incControlFlow.eContainer as Node) || !visitedNodes.get(incControlFlow.eContainer as Node)) {
+                        val curr = propagateUpwards(incControlFlow.eContainer as Node)
+                        min = Math.min(curr, min)
+                    }                    
+                }
+            }
+            if(nodePrio.get(currentNode) < min && min != Integer.MAX_VALUE) {
+                nodePrio.put(currentNode, min)                
+            }
+            return nodePrio.get(currentNode)
+        }
     }
     
 }

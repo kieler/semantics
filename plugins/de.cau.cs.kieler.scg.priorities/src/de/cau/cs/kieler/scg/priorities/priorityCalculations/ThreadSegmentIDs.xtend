@@ -108,13 +108,14 @@ class ThreadSegmentIDs {
             if(node instanceof Fork) {
                 val sortedNeighbors = neighbors.sortBy[neighbor | nodePrios.get(neighbor)]
                 
-                var LinkedList<Integer> childIDs = <Integer> newLinkedList
+                //var LinkedList<Integer> childIDs = <Integer> newLinkedList
                 for(n : sortedNeighbors) {
                     tID = assignThreadSegmentIDs(n, tID)
-                    childIDs.add(tID)
+                    //childIDs.add(tID)
                     tID++
                 }
-                tID = childIDs.max
+                //tID = childIDs.max
+                tID--
                 threadSegmentIDs.put(node, tID)
                 
             } else {

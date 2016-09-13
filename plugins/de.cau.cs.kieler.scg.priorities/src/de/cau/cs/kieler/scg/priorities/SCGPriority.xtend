@@ -84,7 +84,7 @@ class SCGPriority extends AbstractProductionTransformation{
         if(schedulable(scc)) {
             
             val sccMap = createNodeToSCCMap(scc)
-            val nodePrios = calcNodePrios(scc, sccMap)
+            val nodePrios = calcNodePrios(scc, sccMap, nodes)
             val auxData = new PriorityAuxiliaryData()
             auxData.stronglyConnectedComponents = scc
             auxData.sccMap = sccMap

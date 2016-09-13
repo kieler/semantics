@@ -36,6 +36,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import java.util.Stack
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * @author lpe
@@ -89,7 +90,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      * Transform the SCG to C code based on the priority compilation.
      * 
      * @param scg
-     *          The SCGraph from which the code is translated from
+     *          The SCGraph which the code is translated from
      * @param context
      *          The KielerCompilerContext required to hand over information about node priorities
      * 
@@ -121,6 +122,11 @@ class SCLPTransformation extends AbstractProductionTransformation{
     /**
      *  Starts the translation of the scg
      * 
+     *  @param sb
+     *          The StringBuilder the program writes the code into
+     *  @param scg
+     *          The SCGraph which the code is translated from
+     * 
      */
     protected def void addProgram(StringBuilder sb, SCGraph scg) {
         
@@ -143,14 +149,19 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *  @param sb
      *              The StringBuilder the program writes the code into
      *  @param scg
-     *              The SCG the method extracts the variables from
+     *              The SCGraph the method extracts the variables from
      * 
      */
     protected def void declareVariables(StringBuilder sb, SCGraph scg) {
         
         for(declaration : scg.declarations) {
-            //sb.appendInd(declaration.type.toString)
-            sb.append("int")
+            println(declaration)
+            if(declaration.type.toString == "string" || declaration.type.toString == "STRING") {
+                sb.append("char*")
+            } else {
+                sb.appendInd(declaration.type.toString)
+            }
+            //sb.append("int")
             sb.append(" ")
             sb.append(declaration.valuedObjects.head.name)
             sb.append(";\n")
@@ -220,7 +231,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             val prevPrio = prev.getAnnotation("optPrioIDs") as IntAnnotation
             val prio = node.getAnnotation("optPrioIDs") as IntAnnotation
             
-            if(!(prev instanceof Fork) && prevPrio.value > prio.value) {
+            if(!(prev instanceof Fork) && prevPrio.value != prio.value) {
                 sb.appendInd("prio(" + prio.value + ");\n")
             }
             if(prev instanceof Entry) {
@@ -337,7 +348,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
      */
     private def void transformNode(StringBuilder sb, Fork fork) {
 
-        //TODO: Correct Handling of Priorities (I think ok now?)
         var labelList = <String> newArrayList
         var nodeList = <Node> newArrayList
         var prioList = <Integer> newArrayList
@@ -469,6 +479,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
     private def void transformNode(StringBuilder sb, Exit exit) {
         //Does absolutely nothing
         //Cannot have more than one incoming edge and cannot lower the priority.
+        sb.appendInd("\n")
         if(exit.next != null) {
             sb.transformNode(exit.next.target)
         }
@@ -613,49 +624,4 @@ class SCLPTransformation extends AbstractProductionTransformation{
             generatedJoins.add(n)
         }
     }
-     
-     
-     
-     
-    /*
-    private def generateForkn(StringBuilder sb, int n, ArrayList<String> labels, ArrayList<Integer> prios) {
-        if(n != labels.size || n != prios.size) {
-            //Somethings wrong
-        }
-        
-        if(n <= 4) {
-            sb.appendInd("fork" + n + "(")
-            for(var i = 0; i < n-1; i++) {                
-                sb.append(labels.get(i) + ", " + prios.get(i) + ", ")
-            }
-            sb.append(labels.get(n-1) + ", " + prios.get(n-1) + ") {\n")
-            currentIndentation += DEFAULT_INDENTATION
-            
-        } else {
-            val div = n/4
-            val mod = n%4
-            
-            for(var i = 0; i < div; i++) {
-                sb.appendInd("fork4" + "(")
-                for(var j = i*4; j < (i+1)*4 - 1; j++) {
-                    sb.append(labels.get(j) + ", " + prios.get(j) + ", ")
-                }
-                sb.append(labels.get((i+1)*4 - 1) + ", " + prios.get((i+1)*4 -1) + ") {\n")
-                currentIndentation+=DEFAULT_INDENTATION
-            }
-            
-            if(mod > 0) {
-                sb.appendInd("fork" + mod + "(")
-                for(var i = 0; i < mod - 1; i++) {
-                    sb.append(labels.get(div*4 + i) + ", " + prios.get(div*4 + i) + ", ")
-                }
-                sb.append(labels.get(div*4 + mod-1) + ", " + prios.get(div*4 + mod-1) + ") {\n")
-                currentIndentation+=DEFAULT_INDENTATION
-            }
-        }
-    }
-    */
-    
-    
-    
 }

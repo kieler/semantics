@@ -13,14 +13,21 @@
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import java.util.HashMap
 import java.util.List
+import javax.inject.Inject
 
 /**
  * @author lpe
  *
  */
 class PrioIDs {
+
+    @Inject
+    extension SCCExtensions
+    
+    HashMap<Node, Boolean> visited = <Node, Boolean>newHashMap
     
     /**
      * Calculates the priority IDs of every node using the node priorities, the thread segment IDs and the overall 
@@ -53,7 +60,12 @@ class PrioIDs {
             prioIDs.put(node, prioID)
         }
         
+        visited = <Node, Boolean>newHashMap
+        
         prioIDs
         
     }
+    
+    
+    
 }
