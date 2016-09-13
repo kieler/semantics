@@ -23,6 +23,10 @@ import java.util.LinkedList
  */
 class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     
+    public static final String OPTIMIZED_NODE_PRIORITIES_ANNOTATION = "optPrioIDs"
+    public static final String NODE_PRIORITIES_ANNOTATION = "nodePrios"
+    public static final String THREAD_SEGMENT_ANNOTATION = "threadSegmentIDs"
+    
     private LinkedList<LinkedList<Node>> stronglyConnectedComponents
     private HashMap<Node, Integer> sccMap
     

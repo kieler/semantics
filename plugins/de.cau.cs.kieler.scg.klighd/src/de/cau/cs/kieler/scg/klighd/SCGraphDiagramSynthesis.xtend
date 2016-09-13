@@ -631,9 +631,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     
                                 }
                                 var threadSegmentIDText = ""
-                                if(entry.hasAnnotation("threadSegmentIDs")) {
+                                if(entry.hasAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION)) {
                                     threadSegmentIDText = "ThreadID: " + 
-                                        (entry.getAnnotation("threadSegmentIDs") as IntAnnotation).value.toString  
+                                        (entry.getAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION) 
+                                                                as IntAnnotation).value.toString  
                                     val labelTR = addInsideTopRightNodeLabel(threadSegmentIDText, 10, 
                                                                         KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(SCGraphDiagramSynthesis.REGIONLABEL.copy)
@@ -773,8 +774,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(assignment.hasAnnotation("nodePrios")) {
-                nodePrio = (assignment.getAnnotation("nodePrios") as IntAnnotation).value
+            if(assignment.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (assignment.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 
                 var container = node.KContainerRendering
                 val txt = container.addText(nodePrio.toString)
@@ -786,8 +787,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(assignment.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (assignment.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(assignment.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (assignment.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation).value
                 
                 val container = node.KContainerRendering
                 val txt = container.addText(optNodePrio.toString)
@@ -873,8 +875,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(conditional.hasAnnotation("nodePrios")) {
-                nodePrio = (conditional.getAnnotation("nodePrios") as IntAnnotation).value
+            if(conditional.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (conditional.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 
                 val container = node.KContainerRendering
                 val txt = container.addText(nodePrio.toString)
@@ -887,8 +889,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(conditional.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (conditional.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(conditional.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (conditional.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -948,8 +951,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(surface.hasAnnotation("nodePrios")) {
-                nodePrio = (surface.getAnnotation("nodePrios") as IntAnnotation).value
+            if(surface.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (surface.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
                 
                 val txt = container.addText(nodePrio.toString)
@@ -962,8 +965,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(surface.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (surface.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(surface.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (surface.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                        as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1026,8 +1030,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(depth.hasAnnotation("nodePrios")) {
-                nodePrio = (depth.getAnnotation("nodePrios") as IntAnnotation).value
+            if(depth.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (depth.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(nodePrio.toString)
@@ -1040,8 +1044,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(depth.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (depth.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(depth.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (depth.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1092,9 +1097,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             var nodePrio    = -1
             var optNodePrio = -1
 
-            if(entry.hasAnnotation("nodePrios")) {
+            if(entry.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
 
-                nodePrio = (entry.getAnnotation("nodePrios") as IntAnnotation).value
+                nodePrio = (entry.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(nodePrio.toString)
@@ -1107,8 +1112,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(entry.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (entry.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(entry.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (entry.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1158,8 +1164,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(exit.hasAnnotation("nodePrios")) {
-                nodePrio = (exit.getAnnotation("nodePrios") as IntAnnotation).value
+            if(exit.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (exit.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(nodePrio.toString)
@@ -1172,8 +1178,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(exit.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (exit.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(exit.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (exit.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1235,8 +1242,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(fork.hasAnnotation("nodePrios")) {
-                nodePrio = (fork.getAnnotation("nodePrios") as IntAnnotation).value
+            if(fork.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (fork.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(nodePrio.toString)
@@ -1249,8 +1256,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(fork.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (fork.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(fork.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (fork.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1314,8 +1322,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //Draw the node priorities
             var nodePrio    = -1
             var optNodePrio = -1
-            if(join.hasAnnotation("nodePrios")) {
-                nodePrio = (join.getAnnotation("nodePrios") as IntAnnotation).value
+            if(join.hasAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION)) {
+                nodePrio = (join.getAnnotation(PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION) as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(nodePrio.toString)
@@ -1328,8 +1336,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             //Draw the optimized node priority IDs
-            if(join.hasAnnotation("optPrioIDs")) {
-                optNodePrio = (join.getAnnotation("optPrioIDs") as IntAnnotation).value
+            if(join.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                optNodePrio = (join.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                    as IntAnnotation).value
                 val container = node.KContainerRendering
 
                 val txt = container.addText(optNodePrio.toString)
@@ -1445,9 +1454,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if(!(sourceObj instanceof Fork) && !(sourceObj instanceof Depth) && !(targetObj instanceof Join)){
                 val srcNode = sourceObj as Node
                 val tgtNode = targetObj as Node
-                if(srcNode.hasAnnotation("optPrioIDs") && tgtNode.hasAnnotation("optPrioIDs")) {
-                    val srcPrio = srcNode.getAnnotation("optPrioIDs") as IntAnnotation
-                    val tgtPrio = tgtNode.getAnnotation("optPrioIDs") as IntAnnotation
+                if(srcNode.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                    && tgtNode.hasAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION)) {
+                    val srcPrio = srcNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation
+                    val tgtPrio = tgtNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
+                                                            as IntAnnotation
                     if(srcPrio.value > tgtPrio.value) {
                         var prio = edge.addCenterEdgeLabel("prio(" + tgtPrio.value + ")")
                         prio.KRendering.foreground = OPT_PRIORITY_COLOR.copy

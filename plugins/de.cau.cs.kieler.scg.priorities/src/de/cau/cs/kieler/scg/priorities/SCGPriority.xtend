@@ -98,15 +98,15 @@ class SCGPriority extends AbstractProductionTransformation{
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
             for(node : scg.nodes) {
                 node.annotations += createIntAnnotation => [
-                    name  = "optPrioIDs"
+                    name  = PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION
                     value = optPrioIDs.get(node)
                 ]
                 node.annotations += createIntAnnotation => [
-                    name  = "nodePrios"
+                    name  = PriorityAuxiliaryData.NODE_PRIORITIES_ANNOTATION
                     value = nodePrios.get(node)
                 ]
                 node.annotations += createIntAnnotation => [
-                    name  = "threadSegmentIDs"
+                    name  = PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION
                     if(threadSegmentIDs.containsKey(node)) {
                         value = threadSegmentIDs.get(node)                        
                     }
