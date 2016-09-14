@@ -135,12 +135,10 @@ class NodePriorities {
      *              The nodes of the SCG
      */
     private def optimizeNodePrios(List<Node> nodes) {
-        visitedNodes = <Node, Boolean>newHashMap
+        visitedNodes = <Node, Boolean> newHashMap
         var surfaceOrExit = nodes.filter[it instanceof Surface || it instanceof Exit]
         for(node : surfaceOrExit) {
-            for(visNode : nodes) {
-                visitedNodes.put(visNode, false)
-            }
+            visitedNodes = <Node, Boolean> newHashMap
             propagateUpwards(node)
         }
     }
@@ -173,10 +171,13 @@ class NodePriorities {
             var min = Integer.MAX_VALUE
             for(incControlFlow : currentNode.incoming) {
                 if(!(incControlFlow instanceof DataDependency)) {
-                    if(!visitedNodes.containsKey(incControlFlow.eContainer as Node) || !visitedNodes.get(incControlFlow.eContainer as Node)) {
-                        val curr = propagateUpwards(incControlFlow.eContainer as Node)
+                    val pred = incControlFlow.eContainer as Node
+                    if(!visitedNodes.containsKey(pred) || !visitedNodes.get(pred)) {
+                        val curr = propagateUpwards(pred)
                         min = Math.min(curr, min)
-                    }                    
+                    } else if(visitedNodes.containsKey(pred) && visitedNodes.get(pred)) {
+                        min = Math.min(nodePrio.get(pred), min)
+                    }                   
                 }
             }
             if(nodePrio.get(currentNode) < min && min != Integer.MAX_VALUE) {
