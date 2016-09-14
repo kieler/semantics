@@ -120,7 +120,7 @@ class ControlflowRegionStyles {
      * Adds a label in declaration style with the given components.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
+    def KRectangle addDeclarationLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
         container.getProperty(DECLARATIONS_CONTAINER)?.addKeywordLabel(components);
     }
     

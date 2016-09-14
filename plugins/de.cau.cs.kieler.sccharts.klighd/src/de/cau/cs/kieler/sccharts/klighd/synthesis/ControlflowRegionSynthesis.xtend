@@ -95,7 +95,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     addStatesAndDeclarationsArea();
                     // Add declarations
                     for (declaration : region.declarations) {
-                        addDeclarationLabel(declaration.serializeComponents(true)) => [
+                        addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);
                             eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
