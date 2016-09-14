@@ -138,7 +138,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
             }
         }
 
-        if (!allSignals.nullOrEmpty) {
+        if (!allSignals.nullOrEmpty && !allSignals.filter[!isInput].nullOrEmpty) {
             absentDuringAction = state.createDuringAction
             absentDuringAction.setImmediate(true);
         }

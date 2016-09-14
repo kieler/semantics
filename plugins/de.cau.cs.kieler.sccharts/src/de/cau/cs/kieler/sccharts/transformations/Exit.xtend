@@ -92,7 +92,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
 
         // Prepare all states so that each reagion has at most one final state
         targetRootState.getAllStates.toList.forEach [ targetState |
-            targetState.prepareExit(targetRootState);
+            //targetState.prepareExit(targetRootState);
         ]
 
         // Traverse all states
@@ -141,6 +141,13 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 firstState = region.retrieveFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
                 //firstState = region.finalStates.get(0) //every region MUST have a final state
                 firstState.setNotFinal
+                for (otherFinalState : region.finalStates) {
+                    if (otherFinalState != lastState) {
+                        otherFinalState.createImmediateTransitionTo(firstState)
+                        otherFinalState.setNotFinal
+                    }
+                }
+                
             } else { // state has several regions (or one region without any final state!)
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 firstState = region.createInitialState(GENERATED_PREFIX + "Main")

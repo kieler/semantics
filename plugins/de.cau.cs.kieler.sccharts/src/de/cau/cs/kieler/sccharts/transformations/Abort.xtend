@@ -284,7 +284,8 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     }
                 }
 
-                var Expression terminationTrigger;
+//!!!CHANGED : not needed any more, terminations should be handled already
+//                var Expression terminationTrigger;
 
                 state.outgoingTransitions.setDefaultTrace;
                 // For each region encapsulate it into a _Main state and add a _Term variable
@@ -362,9 +363,10 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     }
                 }
 
-                if (terminationTrigger == null) {
-                    terminationTrigger = TRUE;
-                }
+//!!!CHANGED : not needed any more, terminations should be handled already
+//                if (terminationTrigger == null) {
+//                    terminationTrigger = TRUE;
+//                }
 
                 // Only consider termination transitions here, in the WTO version
                 // we do not need a ctrlRegion iff there are no conditional terminations or
@@ -383,13 +385,14 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                             ctrlTransition.setImmediate(true)
                         }
 
-                        if (transition.typeTermination) {
-                            if (transition.trigger != null) {
-                                ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
-                            } else {
-                                ctrlTransition.setTrigger(terminationTrigger.copy)
-                            }
-                        } else {
+//!!!CHANGED : not needed any more, terminations should be handled already
+//                        if (transition.typeTermination) {
+//                            if (transition.trigger != null) {
+//                                ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
+//                            } else {
+//                                ctrlTransition.setTrigger(terminationTrigger.copy)
+//                            }
+//                        } else {
                             // this is the fallback were we copy in a NO WTO fashion the triggers
                             ctrlTransition.setTrigger(transition.trigger.copy)
 
@@ -404,7 +407,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
                             }
 //                            }
-                        }
+//                        }
 
                     }
                 }
