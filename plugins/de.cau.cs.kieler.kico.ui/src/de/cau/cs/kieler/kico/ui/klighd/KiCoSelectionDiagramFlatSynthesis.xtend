@@ -73,8 +73,6 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
                 if (inheritColor) {
@@ -96,8 +94,6 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
                 it.setForeground(BLUE3.copy)
@@ -118,8 +114,6 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
