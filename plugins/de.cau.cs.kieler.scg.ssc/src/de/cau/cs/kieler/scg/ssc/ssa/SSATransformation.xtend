@@ -195,12 +195,7 @@ class SSATransformation extends AbstractProductionTransformation {
             }
             for (vor : refs) {
                 val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
-                val mergeExp = if (concurrentNodes.empty) {
-                    node.createMergeExpression(vor.valuedObject, ssaReferences, ssaDecl, context)
-                } else {
-                    concurrentNodes.add(node)
-                    concurrentNodes.createMergeExpression(vor.valuedObject, ssaReferences, ssaDecl, context)
-                }
+                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, context)
                 vor.replace(mergeExp)
             }
         }

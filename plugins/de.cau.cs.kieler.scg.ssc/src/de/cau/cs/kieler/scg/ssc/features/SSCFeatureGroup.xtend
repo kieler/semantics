@@ -30,8 +30,7 @@ class SSCFeatureGroup extends FeatureGroup {
     }
 
     override getFeatureIds() {
-//        newHashSet("scg.domtree", "scg.ssa", "scg.ssa.opt", "scg.ssa.seqconc", "scl.ssa", "scl.ssa.signal", "esterel.ssa")
-        newHashSet("scg.domtree", "scg.ssa", "scl.ssa", "esterel.ssa")//"scg.signals",
+        newHashSet("scg.ssa", "scl.ssa", "esterel.ssa")
 
     }
 

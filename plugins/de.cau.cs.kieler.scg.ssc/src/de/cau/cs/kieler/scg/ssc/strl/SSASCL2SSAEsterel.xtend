@@ -1168,7 +1168,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 ]
             } else {
                 val read = e as ValuedObjectReference
-                if (voPSigMap.containsKey(read.valuedObject)) {
+                if (!voPSigMap.containsKey(read.valuedObject)) {
                     val s = createSequence => [
                         if (voPSigMap.containsKey(voA)) {
                             list.add(
@@ -1224,7 +1224,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                     }else {
                         return s
                     }
-                }else{
+                } else {
                     return createPresent => [
                         body = createPresentEventBody => [
                             event = createPresentEvent => [

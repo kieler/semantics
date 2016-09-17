@@ -12,9 +12,6 @@
       <featureClass
             class="de.cau.cs.kieler.scg.ssc.features.SSAEstFeature">
       </featureClass>
-      <featureClass
-            class="de.cau.cs.kieler.scg.ssc.features.DominatorTreeFeature">
-      </featureClass>
       <featureGroupClass
             class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
       </featureGroupClass>
@@ -29,9 +26,6 @@
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.strl.SSASCL2SSAEsterel">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.domtree.DomTreeTransformation">
       </productionTransformationClass>
    </extension>
    <extension

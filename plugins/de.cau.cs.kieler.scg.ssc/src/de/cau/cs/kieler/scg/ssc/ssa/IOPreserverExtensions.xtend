@@ -118,7 +118,7 @@ class IOPreserverExtensions {
                 if (!nodes.empty) {
                     map.put(vo, createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        assignment = nodes.createMergeExpression(vo, ssaReferences, ssaDecl, context)
+                        assignment = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, context)
                     ])
                 }
             }
@@ -129,7 +129,7 @@ class IOPreserverExtensions {
                     if (nodes.empty) {
                         assignment = iovo.reference
                     } else {
-                        assignment = nodes.createMergeExpression(iovo, ssaReferences, ssaDecl, context)
+                        assignment = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, context)
                     }
                 ])
             }
@@ -208,23 +208,24 @@ class IOPreserverExtensions {
                     scg.nodes += asm
                     prev = asm
                 }
-                
+                   
                 // Pause
                 val surf = createSurface
                 val depth = createDepth
                 surf.depth = depth
-                prev.createControlFlow.target = surf
+                depth.createControlFlow.target = cExit
                 scg.nodes.addAll(surf, depth)
-                
+                                
                 // Termination
                 val termCond = createConditional => [
                     condition = createOperatorExpression(OperatorType.NOT) => [
                         subExpressions += term.reference
                     ]
                     then = createControlFlow => [target = cEntry.next.target]
-                    ^else = createControlFlow => [target = cExit]
+                    ^else = createControlFlow => [target = surf]
                 ]
-                depth.createControlFlow.target = termCond
+                prev.createControlFlow.target = termCond
+                
                 scg.nodes += termCond
             }
         }

@@ -90,13 +90,9 @@ class MergeExpressionExtension {
     val Table<SCGraph, ValuedObject, MergeExpression> cache = HashBasedTable.create
     var KielerCompilerContext context = null
 
-    def createMergeExpression(Node node, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, KielerCompilerContext context) {
-        return newLinkedList(node).createMergeExpression(vo, ssaReferences, ssaDecl, context)
-    }
-
-    def createMergeExpression(List<Node> nodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, KielerCompilerContext context) {
+    def createMergeExpression(Node readingNode, List<Node> concurrentNodes, ValuedObject vo, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl, KielerCompilerContext context) {
         this.context = context
-        val scg = nodes.head.eContainer as SCGraph
+        val scg = readingNode.eContainer as SCGraph
         val scheduled = scg.hasUpdates(vo)
         val expression = if (scheduled) {
             scg.getScheduledExpression(vo, ssaDecl)
@@ -105,21 +101,34 @@ class MergeExpressionExtension {
         }
         
         // Reduce to context
-        val allPreceedingNodes = newHashSet
-        allPreceedingNodes.addAll(nodes)
+        val dt = context.getDominatorTree(scg)
+        val reachinDefinitions = newHashSet
         val addQueue = newLinkedList
-        addQueue.addAll(nodes)
+        addQueue.addAll(readingNode)
+        var Node idom
         while (!addQueue.isEmpty) {
             val next = addQueue.pop
             for (pred : next.allPrevious.map[eContainer as Node]) {
-                if (!allPreceedingNodes.contains(pred)) {
-                    allPreceedingNodes.add(pred)
+                if (!reachinDefinitions.contains(pred)) {
+                    if (pred instanceof Assignment) {
+                        if (pred.valuedObject == vo) {
+                            val dom = dt.isDominator(pred.basicBlock, readingNode.basicBlock)
+                            if (dom && idom == null) {
+                                idom = pred
+                                reachinDefinitions.add(pred)
+                            } else if (!dom) {
+                                reachinDefinitions.add(pred)
+                            }
+                        }
+                    }
                     addQueue.push(pred)
                 }
             }
         }
+        reachinDefinitions.addAll(concurrentNodes)
+        
         for (entry : expression.refs.entries) {
-            if (allPreceedingNodes.contains(entry.key)) {
+            if (reachinDefinitions.contains(entry.key)) {
                 ssaReferences.put(entry.key as Assignment, entry.value as Parameter)
             } else {
                 // remove all references to sequentially following nodes
@@ -128,7 +137,7 @@ class MergeExpressionExtension {
         }
 
         // TODO reduce non immediate dominators
-//        val dt = context.getDominatorTree(scg)
+//        
 //        if (allPreceedingNodes.filter(Assignment).filter[valuedObject == vo && !isSSA].exists[
 //            !scg.nodes.head.getInstantaneousControlFlows(it).empty && 
 //            // dominates all following exits

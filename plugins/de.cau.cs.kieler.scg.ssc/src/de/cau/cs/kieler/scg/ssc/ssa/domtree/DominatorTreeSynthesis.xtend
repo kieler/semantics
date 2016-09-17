@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.ssc.ssa.domtree
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -30,13 +31,17 @@ import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.List
 import java.util.Map
 
-class DominatorTreeSynthesis extends AbstractDiagramSynthesis<DominatorTreeModel> {
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+
+class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGControlFlowExtensions
     @Inject
@@ -46,28 +51,59 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<DominatorTreeModel
 
     @Inject
     extension KEdgeExtensions
-//
-//    @Inject
-//    extension KLabelExtensions
+
     @Inject
     extension KRenderingExtensions
 
     @Inject
-    extension KContainerRenderingExtensions
+    extension AnnotationsExtensions
 
     @Inject
     extension KPolylineExtensions
+    
+    @Inject
+    extension KContainerRenderingExtensions
     
     override getDisplayedLayoutOptions() {
         return newLinkedList(
             new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         )
     }
-//
-//    @Inject
-//    extension KColorExtensions
-    override transform(DominatorTreeModel dtm) {
-        val dt = dtm.dominatorTree
+
+    override transform(SCGraph scg) {
+        if (scg.hasAnnotation(SCGFeatures::BASICBLOCK_ID)) {
+            return new DominatorTree(scg).transform
+        } else {
+            return createNode() => [
+                children += createNode() => [
+                    it.addRectangle() => [
+                        it.invisible = true;
+                        it.setGridPlacement(1);
+                        //lower part is message
+                        it.addRoundedRectangle(7, 7) => [
+                            it.setGridPlacement(1);
+                            it.lineWidth = 2;
+                            //title
+                            it.addText("Cannot create Dominator Tree!") => [
+                                it.fontSize = 12;
+                                it.setFontBold = true;
+                                it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                                it.suppressSelectability;
+                            ]
+                            //message
+                            it.addText("SCG does not contain any basic blocks.") => [
+                                it.fontSize = 12;
+                                it.setGridPlacementData().from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                                it.suppressSelectability;
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        }
+    }
+
+    private def transform(DominatorTree dt) {
         val scg = dt.scg
         // Synthesize SCG
         val properties = new KlighdSynthesisProperties()
@@ -90,7 +126,7 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<DominatorTreeModel
         return dtDiagram
     }
 
-    def void createDTEdge(Map<BasicBlock, KNode> map, KNode node, BasicBlock bb, DominatorTree dt) {
+    private def void createDTEdge(Map<BasicBlock, KNode> map, KNode node, BasicBlock bb, DominatorTree dt) {
         val idom = dt.idom(bb)
         if (idom != null) {
             createEdge => [
