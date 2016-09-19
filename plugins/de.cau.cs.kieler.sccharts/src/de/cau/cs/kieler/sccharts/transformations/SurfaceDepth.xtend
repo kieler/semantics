@@ -304,7 +304,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                             val TK2 = TK2s.get(0)
                             if ((TK1.targetState == TK2.targetState) && // TODO: TK1.trigger.equals2 is currently only implemented for the most trivial triggers
                             ((TK1.trigger == TK2.trigger) ||
-                                (TK2.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
+                                (TK2.trigger != null && TK1.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
                                 stateAfterDepth = K1
 
                                 System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
