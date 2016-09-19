@@ -109,7 +109,7 @@ class CDTProcessor {
     @Inject
     extension AnnotationsExtensions
     
-    private static val RETURNVONAME = "return"
+    private static val RETURNVONAME = "ret"
     
     private static val NESTEDRETURN = "nestedReturn"
     
@@ -199,7 +199,7 @@ class CDTProcessor {
                 val rootState = referencingState.getRootState
                 
                 VOSet.clear
-                VOSet += functions.filter[ key == rootState ].head.value                
+                VOSet += functions.filter[ key == rootState ].head.value
                 
                 val funcID = funcCallExp.functionNameExpression.children.head.toString
                 // Search the list functions for the to be referenced function state
@@ -249,7 +249,7 @@ class CDTProcessor {
         ]
 
         val returnValue = kex.createValuedObject => [
-            name = "return"
+            name = "ret"
             returnDeclaration.valuedObjects += it
             VOSet += it
         ]
@@ -306,6 +306,7 @@ class CDTProcessor {
             ]
         ]
 
+        // Transform the compound of the defined function.
         val compound = function.children.filter(typeof(CASTCompoundStatement)).head
         var State lastState = null
         if (compound != null) {
@@ -711,6 +712,7 @@ class CDTProcessor {
         // transition returns to condition-check
         val backTransition = scc.createTransition => [
             targetState = condState
+            annotations.add(createStringAnnotation("notImmediate",""))
             if (bodyState.hasInnerStatesOrControlflowRegions) {
                 type = TransitionType::TERMINATION
             } else {
@@ -1862,8 +1864,8 @@ class CDTProcessor {
      *   return false = create only a separate endState for each construct if necessary
      */
     private def boolean getExtraEndStateOption() {
-//        return false;
-        return true;
+        return false;
+//        return true;
     }
     
     // Creates the outgoing transition of a condState with the condition of the respective control structure.
@@ -1871,7 +1873,7 @@ class CDTProcessor {
         // Connects switch statement to the parent.
         val connector = scc.createTransition => [
             targetState = dst
-
+            // In case the src is a condState, a transition with the correct trigger is needed.
             if(src.id.contains("_cond")) {
                 var Expression condKExp = null
                 var IASTExpression condCondition = null
@@ -1917,7 +1919,8 @@ class CDTProcessor {
         return null
     }
     
-    
+    /* Returns the variable to which the return value of the function call is written to.
+     * If the called function is of type void, this method returns null. */
     private def CASTIdExpression getAssignedVariableForReturnVal(CASTFunctionCallExpression f) {
         for (entry : functionCallAssignment) {
             val variable = entry.key

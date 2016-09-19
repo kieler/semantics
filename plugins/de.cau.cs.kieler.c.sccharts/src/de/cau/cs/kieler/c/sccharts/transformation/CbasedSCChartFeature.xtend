@@ -19,7 +19,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
- * @author SL
+ * @author sle
  *
  */
 class CbasedSCChartFeature extends Feature {

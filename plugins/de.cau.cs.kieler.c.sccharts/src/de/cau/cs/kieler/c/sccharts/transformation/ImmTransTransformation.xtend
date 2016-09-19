@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 
 /**
- * @author SL
+ * @author sle
  * 
  */
 class ImmTransTransformation extends AbstractExpansionTransformation {
@@ -72,13 +72,13 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
                                 }
                             }
                         }
-                        for (t : s.incomingTransitions) {
-                            if (t.annotations.head != null) {
-                                if (t.annotations.head.name.contains("notImmediate")) {
-                                    t.immediate = false
-                                }
-                            }
-                        }
+//                        for (t : s.incomingTransitions) {
+//                            if (t.annotations.head != null) {
+//                                if (t.annotations.head.name.contains("notImmediate")) {
+//                                    t.immediate = false
+//                                }
+//                            }
+//                        }
                         // If State s contains additional states that need to be checked for transitions add them to Todo list
                         var tmpRegions = s.regions.filter(ControlflowRegion)
                         if (!tmpRegions.empty) {
