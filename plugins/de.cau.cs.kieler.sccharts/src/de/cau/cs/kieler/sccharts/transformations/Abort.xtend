@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Abort Transformation.
@@ -357,6 +358,13 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                     // by other transitions and would NEVER be executed. This way it is made
                                     // sure that a weak abort is taken if control would rest otherwise
                                     weakAbort.setImmediate(true)
+                                    // Optimization: if the source state is an initial state, which has no
+                                    // incoming transitions, and the original transition was a weak abort
+                                    // then we can delay this specific transition safely which helps
+                                    // downstream synthesis
+                                    if (innerState.canBeDelayed) {
+                                        weakAbort.setImmediate(false)
+                                    } 
                                 }
                             }
                         }
@@ -383,6 +391,11 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         if (transition.immediate2) {
                             // if the transition was immediate then set the ctrl transition to be immediate
                             ctrlTransition.setImmediate(true)
+                            
+                            // Optimization: if there is a termD (for delayed) flag, then setImmediate(false)
+                            if (transition.trigger.containsDelayedTerm) {
+                                ctrlTransition.setImmediate(false)
+                            }
                         }
 
 //!!!CHANGED : not needed any more, terminations should be handled already
@@ -483,7 +496,27 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 
 
 
+//Optimization: (to help downstream compilation)
+// If initial state has no incoming transition, and there is an outgoing delayed weak abort, 
+// the aborting transition of the initial state may be delayed too
+def boolean canBeDelayed(State initialState) {
+    if (initialState.isInitial) {
+        if (initialState.incomingTransitions.nullOrEmpty) {
+            return true
+        }
+    }
+    return false
+} 
 
+// Optimization if a "termD" variable exist in an expression of an (original) termination trigger
+// then this means the termination cannot be taken immediately and it can (but is not necessary) safely be delayed!
+// Omitting the delay and making it immediate makes it harder for down stream compilation  
+def boolean containsDelayedTerm(Expression trigger) {
+    val contents = trigger.eContainer.eAllContents.toList
+    val list1 = contents.filter(typeof(ValuedObjectReference)).toList
+    val list2 = list1.filter[valuedObject.name.contains("_termD")].toList
+    return !(list2.nullOrEmpty)
+}
 
 
 

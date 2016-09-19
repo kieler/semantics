@@ -161,6 +161,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             resetFinished.effects.add(finishedValuedObject.assign(FALSE))
 
             val finalStates = region.states.filter(e|e.isFinal == true);
+            
 
 //            var State Final;
 //            if (finalStates.size > 0) {
@@ -170,8 +171,19 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
 //                Final.createStringAnnotation(ANNOTATION_FINALSTATE, "")
 //            }
 
+
+            // Optimization (see below)
+            var termTriggerDelayed = true;
+
             // For all final states add immeditae transition to Final
             for (finalState : finalStates.toList.immutableCopy) {
+                
+                // Optimization: Remember that we can reach at least ONE final state immediately
+                // => Term-Transition in watcher region MUST be immediate, otherwise (optimized) it 
+                // can be delayed to help down stream compilation
+                if (finalState.immediatelyReachable) {
+                    termTriggerDelayed = false;
+                }
                 
                 //Optimization: for more than one incoming transition make a connector!
                 val connectorCase = (!finalState.incomingTransitions.nullOrEmpty) && finalState.incomingTransitions.size > 1;
@@ -198,6 +210,13 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 //finalState.setFinal(false);
                 finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
             }
+            
+
+            // Optimiztion: see above            
+            if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
+                 finishedValuedObject.name = finishedValuedObject.name + "D"
+            }
+            
 
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;
@@ -225,5 +244,26 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
     }
+    
+    
+    
+    
+    
+    // Test if a final state is reachable immediately from an initial state
+    def boolean isImmediatelyReachable(State finalState) {
+        return finalState.isImmediatelyReachableHelper(finalState)
+    }
+    def boolean isImmediatelyReachableHelper(State finalState, State previousState) {
+        if (previousState.initial) {
+            return true
+        }
+        for (transition : previousState.incomingTransitions.filter[immediate]) {
+           if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
+               return true
+           }
+        }
+        return false
+    }
+    
 
 }
