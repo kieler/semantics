@@ -237,6 +237,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 var Expression strongAbortImmediateTrigger = null;
                 // var strongImmediateTrigger = false;
                 var boolean weakAbortImmediateTriggerTermination = false;
+                var boolean weakAbrortDelayOptimizationPossible = true;
                 var Expression weakAbortImmediateTerminationTrigger = null; //!!!CHANGED
                 var Expression weakAbortImmediateTrigger = null;
                 for (transition : outgoingTransitions) {
@@ -268,6 +269,8 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                 transition)
                                 weakAbortImmediateTriggerTermination = true
                             } else {
+                                // Attention: if there is a typical immediate weak abort, then we cannot make this optimization (weakAbrortDelayOptimizationPossible)
+                                weakAbrortDelayOptimizationPossible = false
                                 weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.getTriggerOrTrue.copy).trace(
                                     transition)
                             }
@@ -362,7 +365,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                     // incoming transitions, and the original transition was a weak abort
                                     // then we can delay this specific transition safely which helps
                                     // downstream synthesis
-                                    if (innerState.canBeDelayed) {
+                                    if (innerState.canBeDelayed && weakAbrortDelayOptimizationPossible) {
                                         weakAbort.setImmediate(false)
                                     } 
                                 }
