@@ -28,6 +28,8 @@ import javax.inject.Inject
 
 
 /**
+ * Class to calculate the priorities of nodes of an SCG for the priority based compilation.
+ * 
  * @author lpe
  *
  */
@@ -83,6 +85,7 @@ class SCGPriority extends AbstractProductionTransformation{
         //If we find a viable schedule, calculate the Priorities of the nodes.
         if(schedulable(scc)) {
             
+            //Calculate node priorities with the help of strongly connected components
             val sccMap = createNodeToSCCMap(scc)
             val nodePrios = calcNodePrios(scc, sccMap, nodes)
             val auxData = new PriorityAuxiliaryData()
@@ -90,13 +93,17 @@ class SCGPriority extends AbstractProductionTransformation{
             auxData.sccMap = sccMap
            
             
-            
+            //Calculate Thread Segment IDs
             val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
             
+            //Calculate Prio IDs of the nodes
             val prioIDs = calcPrioIDs(nodePrios, threadSegmentIDs, getNumberOfThreadSegmentIDs, nodes)
             
+            //Optimize the PrioIDs
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
-            for(node : scg.nodes) {
+            
+            //Create Annotations to pass the information to the klighd synthesis 
+            for(node : nodes) {
                 node.annotations += createIntAnnotation => [
                     name  = PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION
                     value = optPrioIDs.get(node)

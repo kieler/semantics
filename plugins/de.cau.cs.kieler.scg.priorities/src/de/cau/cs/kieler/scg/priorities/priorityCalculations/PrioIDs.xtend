@@ -17,6 +17,7 @@ import java.util.HashMap
 import java.util.List
 
 /**
+ * Class to calculate the PrioIDs of the nodes in an SCG.
  * @author lpe
  *
  */

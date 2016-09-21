@@ -24,27 +24,19 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
+ * Action class to display the node priority in the SCG.
  * @author lpe
  *
  */
 class NodePriorityActions implements IAction {
     
     private static final String NODE_ID    = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-//    private static final String OPT_ID     = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
-//    private static final String THREAD_ID  = "de.cau.cs.kieler.scg.klighd.actions.priorityActions"
     
     @Inject
     extension KRenderingExtensions
     
     public static final SynthesisOption SHOW_NODE_PRIORITY = SynthesisOption::createCheckOption("Node Priorities", 
         true).setUpdateAction(NODE_ID);
-
-//    public static final SynthesisOption SHOW_OPT_PRIO_ID = SynthesisOption::createCheckOption("Optimized Priority IDs", 
-//        true).setUpdateAction(OPT_ID);
-    
-    
-//    public static final SynthesisOption SHOW_THREAD_PRIO = SynthesisOption::createCheckOption("Thread Priority IDs", 
-//        true).setUpdateAction(THREAD_ID);
     
     
         
@@ -62,25 +54,7 @@ class NodePriorityActions implements IAction {
                             text.invisible = true
                         }
                     }
-                    
-//                    if(text.getProperty(SCGraphDiagramSynthesis.OPT_PRIO_PROPERTY)) {
-//                        if(SHOW_OPT_PRIO_ID.booleanValue(viewContext)) {
-//                            text.invisible = false
-//                        } else {
-//                            text.invisible = true
-//                        }
-//                    }
                 }
-//            } else {
-//                for(label : node.labels) {
-//                    if(label.KRendering.getProperty(SCGraphDiagramSynthesis.THREAD_PRIO_PROPERTY)) {
-//                        if(SHOW_THREAD_PRIO.booleanValue(viewContext)) {
-//                            label.KRendering.invisible = false
-//                        } else {
-//                            label.KRendering.invisible = true
-//                        }
-//                    }
-//                }
             }
         }
         

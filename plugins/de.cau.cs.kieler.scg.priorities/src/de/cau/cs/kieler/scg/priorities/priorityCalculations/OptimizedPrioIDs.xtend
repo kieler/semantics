@@ -18,6 +18,7 @@ import java.util.LinkedList
 import java.util.List
 
 /**
+ * Class for the optimization of prio IDs of an SCG. 
  * @author lpe
  *
  */

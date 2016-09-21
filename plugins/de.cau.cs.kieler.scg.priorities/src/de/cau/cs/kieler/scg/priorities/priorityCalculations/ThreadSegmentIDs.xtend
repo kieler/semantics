@@ -21,11 +21,12 @@ import java.util.List
 import javax.inject.Inject
 
 /**
+ * Calculates the Thread Segment IDs of the nodes in an SCG
  * @author lpe
  *
  */
 class ThreadSegmentIDs {
-    //TODO TODO TODO
+
     @Inject
     extension SCCExtensions
     

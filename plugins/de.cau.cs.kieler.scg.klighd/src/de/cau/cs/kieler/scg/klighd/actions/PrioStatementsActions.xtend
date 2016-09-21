@@ -26,6 +26,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 /**
+ * Action class to display the prio statements in the SCG.
  * @author lpe
  *
  */

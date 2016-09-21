@@ -26,6 +26,7 @@ import java.util.HashMap
 import java.util.LinkedList
 
 /**
+ * A class with extensions for the calculation of Strongly Connected Components
  * @author lpe
  *
  */

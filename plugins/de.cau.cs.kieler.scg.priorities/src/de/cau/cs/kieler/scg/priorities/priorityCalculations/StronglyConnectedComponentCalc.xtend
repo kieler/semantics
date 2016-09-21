@@ -22,7 +22,7 @@ import java.util.Stack
 import javax.inject.Inject
 
 /**
- * A class to determine the Strongly Connected Components of an SCG
+ * A class to determine the Strongly Connected Components of an SCG. Also determines schedulability of the SCG.
  * @author lpe
  *
  */

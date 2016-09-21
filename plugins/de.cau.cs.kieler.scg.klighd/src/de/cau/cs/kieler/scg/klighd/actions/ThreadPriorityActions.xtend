@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
+ * Action class to display the thread priorities in the SCG
  * @author lpe
  *
  */

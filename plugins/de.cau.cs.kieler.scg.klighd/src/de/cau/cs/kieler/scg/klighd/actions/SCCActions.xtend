@@ -26,6 +26,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
+ * Action class to display Strongly Connected Components in the SCG.
  * @author lpe
  *
  */

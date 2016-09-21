@@ -36,9 +36,9 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import java.util.Stack
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
+ * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
  * @author lpe
  *
  */
@@ -54,19 +54,34 @@ class SCLPTransformation extends AbstractProductionTransformation{
      
     /** Default indentation of a c file */
     private val DEFAULT_INDENTATION = "  "
+    
     /** Keeps track of the current indentation level */
     private var currentIndentation = ""
+    
     /** Maps nodes to their corresponding labels, if there are any */
     private var labeledNodes = <Node, String> newHashMap
+    
     /** Keeps track of the current label number for newly created labels */
     private var labelNr = 0
+    
     /** Keeps track of region numbers for regions without a name. They will then recieve a 
      *  unique region number. */
     private var regionNr = 0
+    
+    /** StringBuilder to keep track of forks and joins with more than 4 elements. 
+     *  There exists no macro for these forks and joins, therefore new macros are created if this happens. */
     private var forkJoinSb = new StringBuilder
+    
+    /** Keeps track of newly generated fork macros and prevents a fork macro to be generated multiple times */
     private var generatedForks = new ArrayList<Integer>
+
+    /** Keeps track of newly generated join macros and prevents a join macro to be generated multiple times */
     private var generatedJoins = new ArrayList<Integer>
+    
+    /** Keeps track of the previous node to allow prio()-statements to be made if necessary */
     private var previousNode = new Stack<Node>
+    
+    /** Keeps track of already visited nodes */
     private var visited = new HashMap<Node, Boolean>
     
     

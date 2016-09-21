@@ -26,6 +26,7 @@ import java.util.List
 import javax.inject.Inject
 
 /**
+ * Class for the calculation of node priorities of an SCG.
  * @author lpe
  *
  */

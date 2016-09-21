@@ -18,6 +18,9 @@ import java.util.HashMap
 import java.util.LinkedList
 
 /**
+ * Class that contains auxiliary data in the form of strongly connected components.
+ * Contains a list of lists of nodes that represent a strongly connected component as well as 
+ * a hash map that maps each node to a strongly connected component if the node is in one.
  * @author lpe
  *
  */
