@@ -64,21 +64,21 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
                     tmpList.clear
 
                     for (s : nextStates) {
-                        // Change all transitions of State s
-                        for (t : s.outgoingTransitions) {
-                            if (t.annotations.head != null) {
-                                if (t.annotations.head.name.contains("notImmediate")) {
-                                    t.immediate = false
-                                }
-                            }
-                        }
-//                        for (t : s.incomingTransitions) {
+//                        // Change all transitions of State s
+//                        for (t : s.outgoingTransitions) {
 //                            if (t.annotations.head != null) {
 //                                if (t.annotations.head.name.contains("notImmediate")) {
 //                                    t.immediate = false
 //                                }
 //                            }
 //                        }
+                        for (t : s.incomingTransitions) {
+                            if (t.annotations.head != null) {
+                                if (t.annotations.head.name.contains("notImmediate")) {
+                                    t.immediate = false
+                                }
+                            }
+                        }
                         // If State s contains additional states that need to be checked for transitions add them to Todo list
                         var tmpRegions = s.regions.filter(ControlflowRegion)
                         if (!tmpRegions.empty) {

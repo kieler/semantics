@@ -275,7 +275,8 @@ class CDTProcessor {
         // Function region
         val funcRegion = scc.createControlflowRegion => [
             id = funcStateLabel + "_function" // to identify nested return statements
-            label = "_" + funcStateLabel
+            //label = "_" + funcStateLabel
+            label = ""
             funcState.regions += it
         ]
         
@@ -317,7 +318,7 @@ class CDTProcessor {
         if (returnDeclaration.type == ValueType.PURE) {
             val endState = scc.createState => [
                 id = "_S" + trC + "_end"
-                label = "End"
+                label = ""
                 final = true
                 funcRegion.states += it
             ]
@@ -343,8 +344,10 @@ class CDTProcessor {
             funcState.declarations += parameter
             
             // Set nestedReturn variable to initially false.
-            var boolVal = kex.createBoolValue
-            boolVal.value = false
+            //var boolVal = kex.createBoolValue
+            var boolVal = kex.createIntValue
+            boolVal.value = 0
+            //boolVal.value = false
             var entryAction = funcState.createEntryAction
             entryAction.createAssignment(VOSet.filter[name.equals(NESTEDRETURN)].head, boolVal)
         }
@@ -358,7 +361,7 @@ class CDTProcessor {
             // initial state of a function
             newState = scc.createState => [
                 id = "_S" + trC + "_initFuncState"
-                label = "Init"
+                label = ""
                 initial = true
                 parentState.regions.filter(typeof(ControlflowRegion)).head.states += it
             ]
@@ -446,7 +449,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [
             id = trC.toString + "_cond"
-            label = createLabel(statement) + "cond"
+            label = ""
             initial = true
             switchStateRegion.states += it
         ]
@@ -611,7 +614,7 @@ class CDTProcessor {
         // Final state of switch statement.
         val endState = scc.createState => [s |
             s.id = "_S" + trC + "_end"
-            s.label = "End"
+            s.label = ""
             s.final = true
             switchStateRegion.states += s
         ]
@@ -663,7 +666,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = trC.toString + "_cond"
-            s.label = createLabel(statement) + "cond"
+            s.label = ""
             s.initial = true
             whileStateRegion.states += s
         ]
@@ -724,7 +727,7 @@ class CDTProcessor {
         // final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
             s.id = trC + "_end"
-            s.label = "End"
+            s.label = ""
             s.final = true
             whileStateRegion.states += s
         ]
@@ -733,7 +736,7 @@ class CDTProcessor {
         val falseTrans = scc.createTransition => [
             targetState = falseState
             immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
+            //annotations.add(createStringAnnotation("notImmediate",""))
             condState.outgoingTransitions += it
         ]
 
@@ -767,7 +770,7 @@ class CDTProcessor {
         // Initial state of do-while loop.
         val doState = scc.createState => [ s |
             s.id = "_S" + trC.toString + "_do"
-            s.label = "do"
+            s.label = ""
             s.initial = true
             doWhileStateRegion.states += s
         ]
@@ -776,9 +779,14 @@ class CDTProcessor {
         val body = f.body as CASTCompoundStatement
         val bodyState = body.transformCompound(doState, doState)
 
+        // Mark outgoing transition of doState for delay
+        val doTrans = doState.outgoingTransitions.head.annotations.add(createStringAnnotation("notImmediate",""))
+
+
         val condState = scc.createState => [ s |
             s.id = "_S" + trC.toString + "_cond"
-            s.label = createLabel(statement) + "cond"
+            s.label = ""
+            s.setTypeConnector
             doWhileStateRegion.states += s
         ]
 
@@ -817,7 +825,7 @@ class CDTProcessor {
         val backTransition = scc.createTransition => [
             targetState = doState
             immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
+            //annotations.add(createStringAnnotation("notImmediate",""))
             trigger = kExp
             condState.outgoingTransitions += it
         ]
@@ -825,7 +833,7 @@ class CDTProcessor {
         // Final state of loop. It is reached when loop condition is not met anymore.
         val falseState = scc.createState => [s |
             s.id = "_S" + trC + "_end"
-            s.label = "End"
+            s.label = ""
             s.final = true
             doWhileStateRegion.states += s
         ]
@@ -834,7 +842,7 @@ class CDTProcessor {
         val falseTrans = scc.createTransition => [
             targetState = falseState
             immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
+            //annotations.add(createStringAnnotation("notImmediate",""))
             condState.outgoingTransitions += it
         ]
         doWhileState
@@ -1068,7 +1076,7 @@ class CDTProcessor {
         // The outgoing transitions of the condState to check the condition of the if statement.
         val condState = scc.createState => [ s |
             s.id = "_S" + trC.toString + "_cond"
-            s.label = createLabel(ifs) + "cond"
+            s.label = ""
             s.initial = true
             ifStateRegion.states += s
         ]
@@ -1179,7 +1187,7 @@ class CDTProcessor {
                 // Final state of loop. It is reached when loop condition is not met anymore.
                 val endState = scc.createState => [s |
                     s.id = "_S" + trC + "_end"
-                    s.label = "End"
+                    s.label = ""
                     s.final = true
                     ifStateRegion.states += s
                 ]
@@ -1206,6 +1214,7 @@ class CDTProcessor {
                 
                 // Check whether the connectorState can be removed. If not, create transition from connectorState to endState.
                 checkRemoveConnector(connectorState, endState, ifStateRegion)
+                return ifState
             }
             // If connectorState has no incoming transitions, remove it.
             checkRemoveConnector(connectorState, null, ifStateRegion)
@@ -1256,7 +1265,7 @@ class CDTProcessor {
 
         val condState = scc.createState => [ s |
             s.id = "_S" + trC + "_cond"
-            s.label = "cond"
+            s.label = ""
             s.initial = true
 
             forStateRegion.states += s
@@ -1337,7 +1346,7 @@ class CDTProcessor {
         // Final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
             s.id = "_S" + trC + "_end"
-            s.label = "End"
+            s.label = ""
             s.final = true
             forStateRegion.states += s
         ]
@@ -1346,7 +1355,7 @@ class CDTProcessor {
         val falseTrans = scc.createTransition => [
             targetState = falseState
             immediate = true
-            annotations.add(createStringAnnotation("notImmediate",""))
+            //annotations.add(createStringAnnotation("notImmediate",""))
             condState.outgoingTransitions += it
         ]
 
@@ -1426,7 +1435,7 @@ class CDTProcessor {
         // In case of a nested return statement...
         if (!state.parentRegion.id.contains("_function")) {
             val parameter = kex.createVariableDeclaration => [
-                type = ValueType::BOOL
+                type = ValueType::INT
             ]
             
             // ... add parameter to VOSet and give it a name.
@@ -1441,8 +1450,10 @@ class CDTProcessor {
             nestedReturnParameter = parameter
             
             // Set nestedReturn variable to true, so that the exit condition for the nested return is met.
-            var boolVal = kex.createBoolValue
-            boolVal.value = true
+            //var boolVal = kex.createBoolValue
+            var boolVal = kex.createIntValue
+            //boolVal.value = true
+            boolVal.value = 1
             var entryAction = returnState.createEntryAction
             entryAction.createAssignment(value, boolVal)
             
@@ -1457,7 +1468,7 @@ class CDTProcessor {
             if (extraEndStateOption) {
                 val endState = scc.createState => [
                     id = "_S" + trC + "_end"
-                    label = "End"
+                    label = ""
                     final = true
                     state.parentRegion.states += it
                 ]
@@ -1935,26 +1946,38 @@ class CDTProcessor {
     
     // Check whether a given connectorState can be removed.
     private def checkRemoveConnector(State connectorState, State dst, ControlflowRegion region) {
+        // In order to iterate through list of transition and change destination, copy transitions to this list
+        val List<Transition> connTrans = new ArrayList<Transition>()
         // Final transition to endState.
         var incTransitions = connectorState.incomingTransitions
+        for(t : incTransitions) {
+            connTrans.add(t)
+        }
+
         // The connectorState can be removed if it only has none or one incoming transition.
-        if (incTransitions.length == 0) {
+        if (connTrans.length == 0) {
             region.states.remove(connectorState)
         }
         else if (dst != null) {
-            if (incTransitions.length == 1) {
-                // The incoming transition needs to be redirected to a given destination state (dst).
-                incTransitions.head.targetState = dst
-                region.states.remove(connectorState)
-            } else {
+//            if (incTransitions.length == 1) {
+//                // The incoming transition needs to be redirected to a given destination state (dst).
+//                incTransitions.head.targetState = dst
+//                region.states.remove(connectorState)
+//            } else {
+
                 // If the connectorState is not removed, connect it to a given destination state (dst).
-                scc.createTransition => [
-                    targetState = dst
-                    immediate = true
-                    connectorState.outgoingTransitions += it
-                ]
-            }
+//                scc.createTransition => [
+//                    targetState = dst
+//                    immediate = true
+//                    connectorState.outgoingTransitions += it
+//                ]
+                for (t : connTrans) {
+                    t.targetState = dst
+                }
+                region.states.remove(connectorState)
+//            }
         }
+        connTrans.clear
     }
    
     // Return a list of arguments of the given FunctionCallExpression.
@@ -1992,7 +2015,7 @@ class CDTProcessor {
                 // Create additional exit out of the nested control structures.
                 val endState = scc.createState => [s |
                     s.id = "_S" + trC + "_end" + "_nestedReturn"
-                    s.label = "End"
+                    s.label = ""
                     s.final = true
                     parentRegion.states += s
                 ]

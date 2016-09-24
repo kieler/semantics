@@ -54,10 +54,11 @@ class HideEntryKeywordHook extends SynthesisHook {
     }
     
     override processState(State state, KNode node) {
+        
         if (HIDE_ENTRY.booleanValue) { // && state.getRootState.hasHideAnnotation) {
-            if (state.declarations.empty && !state.localActions.empty &&
-                state.localActions.size == state.entryActions.size) { // Remove content
-            // Remove entry actions
+            if (!state.localActions.empty &&
+                state.localActions.size == state.entryActions.size) {
+                // Remove entry actions
                 val parent = node.contentContainer;
                 val actionsContainer = parent?.getProperty(StateStyles.ACTIONS_CONTAINER);
                 if (actionsContainer != null) {
