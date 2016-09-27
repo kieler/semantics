@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.ui.breakpoints;
+package de.cau.cs.kieler.sccharts.debug.ui;
 
 import java.util.HashMap;
 
@@ -37,8 +37,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint;
+import de.cau.cs.kieler.sccharts.debug.SCChartsBreakpointTargetAdapterFactory;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
-import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
@@ -55,7 +55,7 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
      * For the current element, maps a line number to the corresponding EObject.
      */
     public static HashMap<Integer, EObject> lineToModelElement = new HashMap<>();
-    
+
     private static SCChartsBreakpointTargetAdapter instance;
 
     private IResource activeResource = null;
@@ -124,6 +124,7 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
      * This will updated the map that maps a line number to an EObject.
      */
     public void updateLineEObjectMap(EObject rootObject) {
+        
         lineToModelElement.clear();
 
         // IPath p = activeResource.getFullPath();
@@ -131,15 +132,17 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
         // EObject rootObject = rootMap.get(p);
 
         ICompositeNode rootNode = NodeModelUtils.findActualNodeFor((EObject) rootObject);
-        Iterable<ILeafNode> leafs = rootNode.getLeafNodes();
+        if (rootNode != null) {
+            Iterable<ILeafNode> leafs = rootNode.getLeafNodes();
 
-        for (ILeafNode leaf : leafs) {
-            boolean validLeaf = !(leaf instanceof HiddenLeafNode)
-                    && !lineToModelElement.containsValue(leaf.getSemanticElement());
-            boolean leafOfInterest = leaf.getSemanticElement() instanceof State
-                    || leaf.getSemanticElement() instanceof Transition;
-            if (validLeaf && leafOfInterest)
-                lineToModelElement.put(leaf.getStartLine(), leaf.getSemanticElement());
+            for (ILeafNode leaf : leafs) {
+                boolean validLeaf = !(leaf instanceof HiddenLeafNode)
+                        && !lineToModelElement.containsValue(leaf.getSemanticElement());
+                boolean leafOfInterest = leaf.getSemanticElement() instanceof State
+                        || leaf.getSemanticElement() instanceof Transition;
+                if (validLeaf && leafOfInterest)
+                    lineToModelElement.put(leaf.getStartLine(), leaf.getSemanticElement());
+            }
         }
     }
 

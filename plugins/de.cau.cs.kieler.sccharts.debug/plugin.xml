@@ -29,6 +29,18 @@
             name="Toggle Breakpoint Command">
       </command>
    </extension>
+    <extension point="org.eclipse.ui.editorActions">
+    <editorContribution
+          targetID="de.cau.cs.kieler.sccharts.text.sct.Sct"
+          id="de.cau.cs.kieler.sccharts.debug.doubleClick">
+       <action
+             label="Not Used"
+             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+             style="push"
+             actionID="RulerDoubleClick"
+             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
+    </editorContribution>
+ </extension>
    <extension
          point="org.eclipse.debug.core.breakpoints">
       <breakpoint
@@ -57,8 +69,8 @@
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
-            adaptableType="de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter"
-            class="de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapterFactory">
+            adaptableType="de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter"
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpointTargetAdapterFactory">
          <adapter
                type="org.eclipse.xtext.ui.editor.XtextEditor">
          </adapter>
@@ -93,6 +105,9 @@
       <executionFile
             file="execution/scg_c_debug.execution">
       </executionFile>
+      <executionFile
+            file="execution/sccharts_c_no_visualization_debug.execution">
+      </executionFile>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -111,18 +126,6 @@
          </actionSet>
       </perspectiveExtension>
    </extension>
-    <extension point="org.eclipse.ui.editorActions">
-    <editorContribution
-          targetID="de.cau.cs.kieler.sccharts.text.sct.Sct"
-          id="de.cau.cs.kieler.sccharts.debug.doubleClick">
-       <action
-             label="Not Used"
-             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
-             style="push"
-             actionID="RulerDoubleClick"
-             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
-    </editorContribution>
- </extension>
     <extension
           point="de.cau.cs.kieler.sccharts.klighd.hooks">
        <hook

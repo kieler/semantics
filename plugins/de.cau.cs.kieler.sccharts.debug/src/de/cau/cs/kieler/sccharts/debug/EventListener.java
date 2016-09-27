@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 package de.cau.cs.kieler.sccharts.debug;
-
+ 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;

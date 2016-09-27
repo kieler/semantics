@@ -123,7 +123,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     }
 
-    /* ********************************************************************************************
+    /*
+     * ********************************************************************************************
      * STEP METHOD
      *******************************************************************************************/
     /**
@@ -134,7 +135,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      */
     @Override
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
-
         if (KiemPlugin.getDefault().getExecution() != null) {
             List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
             List<EObject> currentStepObjects = new ArrayList<EObject>();
@@ -184,39 +184,37 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      *            A list of active model elements.
      */
     private void checkOnPause(List<EObject> currentStepObjects) {
-        if (KiemPlugin.getDefault().getExecution().isRunning()) {
-            for (EObject elem : currentStepObjects) {
-                if (elem instanceof Transition) {
-                    boolean stop = false;
-                    // Check on a transition breakpoint first.
-                    if (plugin.isEObjectInLine(elem)) {
-                        stop = true;
-                    }
 
-                    // Afterwards check the target states.
-                    // It's important to check on possible hierarchy.
-                    if (!stop) {
-                        State s = ((Transition) elem).getTargetState();
-
-                        if (plugin.isEObjectInLine((EObject) s)) {
-                            stop = true;
-                        } else {
-                            if (checkHierachicalNesting(s)) {
-                                stop = true;
-                            }
-                        }
-                    }
-
-                    if (stop) {
-                        if (KiemPlugin.getDefault().initExecution()) {
-                            KiemPlugin.getDefault().getExecution().pauseExecutionSync();
-                            break;
-                        }
-                    }
-
+        for (EObject elem : currentStepObjects) {
+            if (elem instanceof Transition) {
+                boolean stop = false;
+                // Check on a transition breakpoint first.
+                if (plugin.isEObjectInLine(elem, resource)) {
+                    stop = true;
                 }
-            }
 
+                // Afterwards check the target states.
+                // It's important to check on possible hierarchy.
+                if (!stop) {
+                    State s = ((Transition) elem).getTargetState();
+
+                    if (plugin.isEObjectInLine((EObject) s, resource)) {
+                        stop = true;
+                    } else {
+                        if (checkHierachicalNesting(s)) {
+                            stop = true;
+                        }
+                    }
+                }
+
+                if (stop) {
+                    if (KiemPlugin.getDefault().initExecution()) {
+                        KiemPlugin.getDefault().getExecution().pauseExecutionSync();
+                        break;
+                    }
+                }
+
+            }
         }
     }
 
@@ -249,7 +247,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
                 for (State cfstate : cfstates) {
                     if (cfstate.isInitial()) {
-                        if (plugin.isEObjectInLine((EObject) cfstate)) {
+                        if (plugin.isEObjectInLine((EObject) cfstate, resource)) {
                             stop = true;
                         }
                         initialStatesInRegions.add(cfstate);

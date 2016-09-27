@@ -16,17 +16,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EList; 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
@@ -34,6 +36,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
@@ -58,7 +61,6 @@ import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
-import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 /**
@@ -75,8 +77,8 @@ public class BreakpointVisualizationHook extends SynthesisHook {
     private static HashMap<Transition, KEdge> transitions = new HashMap<>();
 
     private static BreakpointVisualizationHook instance;
-
-    private ViewContext viewContext; 
+ 
+    private ViewContext viewContext;
     private String ellipseId = "breakpoint";
     private static KRenderingFactory factory = KRenderingFactory.eINSTANCE;
     private ArrayList<KNode> kNodesExpanded = new ArrayList<KNode>();
@@ -139,7 +141,9 @@ public class BreakpointVisualizationHook extends SynthesisHook {
      */
     @Override
     public void start(Scope scope, KNode node) {
-        SCChartsBreakpointTargetAdapter.getInstance().updateLineEObjectMap((EObject) scope);
+        if (scope instanceof State) {
+            SCChartsBreakpointTargetAdapter.getInstance().updateLineEObjectMap((EObject) scope);
+        }
         viewContext = getUsedContext();
         states.clear();
         transitions.clear();
@@ -150,17 +154,29 @@ public class BreakpointVisualizationHook extends SynthesisHook {
      */
     @Override
     public void processState(State state, KNode node) {
-        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) state)) {
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage().getActiveEditor();
+        XtextEditor editorPart = (XtextEditor) editor;
+        IResource resource =
+                (IResource) editorPart.getEditorInput().getAdapter(IResource.class);
+        
+        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) state, resource)) {
             states.put(state, node);
         }
     }
-
+ 
     /**
      * {@inheritDoc}
      */
-    @Override
+    @Override 
     public void processTransition(Transition transition, KEdge edge) {
-        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) transition)) {
+        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage().getActiveEditor();
+        XtextEditor editorPart = (XtextEditor) editor;
+        IResource resource =
+                (IResource) editorPart.getEditorInput().getAdapter(IResource.class);
+        
+        if (SCChartsDebugPlugin.getDefault().isEObjectInLine((EObject) transition, resource)) {
             transitions.put(transition, edge);
         }
     }
@@ -183,13 +199,20 @@ public class BreakpointVisualizationHook extends SynthesisHook {
             IBreakpoint[] bs = DebugPlugin.getDefault().getBreakpointManager().getBreakpoints();
 
             for (IBreakpoint b : bs) {
-                if (b instanceof LineBreakpoint) {
+                IResource bResource = b.getMarker().getResource();
+                IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage().getActiveEditor();
+                XtextEditor editorPart = (XtextEditor) editor;
+                IResource resource =
+                        (IResource) editorPart.getEditorInput().getAdapter(IResource.class);
+
+                if (b instanceof LineBreakpoint && resource.equals(bResource)) {
                     try {
                         LineBreakpoint lb = (LineBreakpoint) b;
                         EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement
                                 .get(lb.getLineNumber());
                         handleHighlight(obj, true);
-                    } catch (CoreException e) {
+                    } catch (CoreException e) { 
                         e.printStackTrace();
                     }
                 }
@@ -199,12 +222,12 @@ public class BreakpointVisualizationHook extends SynthesisHook {
         }
     }
 
-    /* 
+    /*
      **********************************************************************************************
-     *                                HIGHLIGHTING                                                *
+     * HIGHLIGHTING *
      **********************************************************************************************
      */
-    
+
     /**
      * {@inheritDoc}
      */

@@ -10,12 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.debug.ui.breakpoints;
+package de.cau.cs.kieler.sccharts.debug;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.debug.ui.actions.IToggleBreakpointsTarget;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+
+import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
 
 /**
  * Instances for {@link SCChartsBreakpointTargetAdapter} are created with this

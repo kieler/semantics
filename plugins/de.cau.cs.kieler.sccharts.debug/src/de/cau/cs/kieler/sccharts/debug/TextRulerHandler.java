@@ -22,9 +22,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
-import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter;
-import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapterFactory;
+import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
 
 /**
  * This class is used as the Handler for the TextRulerContext command 'Toggle Breakpoint'.
@@ -45,21 +43,7 @@ public class TextRulerHandler extends AbstractHandler implements IEditorActionDe
      */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor();
-
-        SCChartsBreakpointTargetAdapterFactory factory =
-                new SCChartsBreakpointTargetAdapterFactory();
-        SCChartsBreakpointTargetAdapter target = (SCChartsBreakpointTargetAdapter) factory
-                .getAdapter(editor, SCChartsBreakpointTargetAdapter.class);
-
-        try {
-            target.toggleLineBreakpoints(HandlerUtil.getActivePart(event),
-                    HandlerUtil.getActiveMenuSelection(event));
-            Display.getDefault().update();
-        } catch (CoreException e) {
-            e.printStackTrace();
-        }
+        delegateToggleToTarget();
 
         return null; // Reserved for future use, must be null.
     }
@@ -69,6 +53,10 @@ public class TextRulerHandler extends AbstractHandler implements IEditorActionDe
      */
     @Override
     public void run(IAction action) {
+        delegateToggleToTarget();
+    }
+    
+    private void delegateToggleToTarget() {
         IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                 .getActiveEditor();
 

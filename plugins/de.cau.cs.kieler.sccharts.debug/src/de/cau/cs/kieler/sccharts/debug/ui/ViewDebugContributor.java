@@ -27,7 +27,7 @@ import de.cau.cs.kieler.sccharts.debug.DataComponent;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-
+ 
 /**
  * This class uses the contribution extension point of the KIEM view.
  * 

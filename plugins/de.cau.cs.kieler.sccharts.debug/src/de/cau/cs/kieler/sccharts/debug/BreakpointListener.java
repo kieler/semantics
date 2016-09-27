@@ -19,7 +19,7 @@ import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.emf.ecore.EObject;
 import de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook;
-import de.cau.cs.kieler.sccharts.debug.ui.breakpoints.SCChartsBreakpointTargetAdapter;
+import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
 
 /**
  * This class listens to adding breakpoints, changing them or removing them. According to the event
