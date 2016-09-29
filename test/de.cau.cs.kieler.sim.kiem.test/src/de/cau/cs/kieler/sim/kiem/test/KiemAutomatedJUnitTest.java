@@ -134,7 +134,7 @@ public abstract class KiemAutomatedJUnitTest {
      * by KART. This is configurable in the KART data component properties and need to be extracted
      * from the execution file.
      */
-    private static String errorSignalName = KartConstants.DEF_VAL_ERRORSTATE; // "errorState"
+    private static String errorSignalName = KartConstants.DEF_SIGNALVAR; // "errorSignal"
 
     // -------------------------------------------------------------------------
     // Private properties
@@ -238,8 +238,8 @@ public abstract class KiemAutomatedJUnitTest {
      *
      * @return the number of times
      */
-    protected int rerunbenchmark() {
-        return 3;
+    protected int rerunBenchmark() {
+        return 2;
     }
 
     // -------------------------------------------------------------------------
@@ -437,7 +437,6 @@ public abstract class KiemAutomatedJUnitTest {
         // Get the trace property of KART
         DataComponentWrapper kartReplay = getKartReplayComponent();
         KiemProperty traceProperty = getProperty(KartConstants.TRACENUM, kartReplay);
-        int rerunBenchmark = rerunbenchmark();
 
         // -----------------------------------------------------------------------------------------
         // For all ESO files grab the number of executions (separated by
@@ -452,7 +451,7 @@ public abstract class KiemAutomatedJUnitTest {
         // the traceProperty is required to be able to update the trace number
         if (!shouldSkip(null)) {
             testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId(),
-                    rerunBenchmark);
+                    rerunBenchmark());
         } else {
             // Skip due to previous error
             logger.info("Skipping File: " + currentEsoFile);
@@ -496,14 +495,11 @@ public abstract class KiemAutomatedJUnitTest {
      *            the trace property
      * @return a possible error string or null if no error
      */
-    private static String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
+    private static void testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
             final String executionFileName, final String pluginId, final int rerunbenchmark) {
 
-        boolean errorFlag = false;
         int benchmarkReRunCountdown = rerunbenchmark;
-        boolean benchmarkError = true;
-
-        String errorInformation = null;
+        boolean benchmarkError = false;
 
         // Get the corresponding model file
         IPath modelFilePath = modelFile.get(esoFilePath);
@@ -519,17 +515,14 @@ public abstract class KiemAutomatedJUnitTest {
         // }
 
 
-        while (benchmarkError && benchmarkReRunCountdown > 0) {
-            errorFlag = false;
+        do {
+            benchmarkError = false;
             
             // Set modelFile in execution manager
             // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
             // Set the global model file in KIEM, other components will retrieve this
             KiemPlugin.setCurrentModelFile(modelFilePath);
             logger.info("Model File: " + modelFilePath);
-
-            // initially set the error to false
-            benchmarkError = false;
 
             int numberOfTraces = KartPlugin.getNumberOfTraces(esoFilePath);
 
@@ -554,7 +547,7 @@ public abstract class KiemAutomatedJUnitTest {
 
                     // At this point we know that the execution is not null
                     int tick = 0;
-                    while (execution.isStarted() && !errorFlag) {
+                    while (execution.isStarted()) {
                         logger.info("Tick " + tick);
 
                         if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
@@ -621,14 +614,14 @@ public abstract class KiemAutomatedJUnitTest {
                                             while (kiemPlugin.getExecution() != null) {
                                                 pause();
                                             }
-                                            errorFlag = true;
-                                            errorInformation = "Error (" + (String) errorContent
+                                            String errorInformation = "Error (" + (String) errorContent
                                                     + ") in tick " + tick + " of trace "
                                                     + traceNumber + " of ESO file '"
                                                     + esoFilePath.toString()
                                                     + "' during execution '" + executionFileName
                                                     + "'.";
-                                            break;
+                                            System.err.println(errorInformation);
+                                            fail(errorInformation);
                                         }
                                     }
                                 }
@@ -638,22 +631,22 @@ public abstract class KiemAutomatedJUnitTest {
                                             .get(BenchmarkTestDataComponent.ERRORMESSAGE);
                                     if (errorContent instanceof String) {
                                         if (!((String) errorContent).equals("")) {
-                                            // !!! ERRROR DETECTED !!! //
-                                            //execution.stopExecutionSync();
-                                            //execution.cancel();
-//                                            while (kiemPlugin.getExecution() != null) {
-//                                                pause();
-//                                            }
-                                            if (!errorFlag) {
-                                                errorFlag = true;
-                                                errorInformation = "Benchmark Error ("
-                                                        + (String) errorContent + ") in tick " + tick
-                                                        + " of trace " + traceNumber + " of ESO file '"
-                                                        + esoFilePath.toString()
-                                                        + "' during execution '" + executionFileName
-                                                        + "'.";
+                                            benchmarkError = true;
+                                            if(benchmarkReRunCountdown > 0) {
+                                                System.err.println("*** BENCHMARK ERROR *** - COUNT DOWN " + benchmarkReRunCountdown + " for model " + modelFilePath);
+                                                benchmarkReRunCountdown--;
+                                            } else {
+                                                // Claim this a real benchmark error now
+                                                String errorInformation = "Benchmark Error ("
+                                                      + (String) errorContent + ") in tick " + tick
+                                                      + " of trace " + traceNumber + " of ESO file '"
+                                                      + esoFilePath.toString()
+                                                      + "' during execution '" + executionFileName
+                                                      + "'.";
+                                                System.err.println("*** BENCHMARK ERROR *** - FAILING ");
+                                                System.err.println(errorInformation);
+                                                fail(errorInformation);
                                             }
-//                                            break;
                                         }
                                     }
                                 }
@@ -664,38 +657,15 @@ public abstract class KiemAutomatedJUnitTest {
                         tick++;
                     } // while executing
 
-                    // If an error occurred tell!
-                    if (errorFlag) {
-                        benchmarkError = true;
-                    }
-
                 } else {
-                    errorInformation = "KIEM cannot initialize execution. "
+                    String errorInformation = "KIEM cannot initialize execution. "
                             + "Try to do this manually for the following scheduling file:'"
                             + executionFileName + "'. Error message: " + KiemPlugin.getLastError();
                     lastErrorMessage = errorInformation;
                     throw new RuntimeException(errorInformation);
                 }
             } // next trace
-
-            // ssm: deactivated benchmark errors
-            // basically, continuous compilation is broken.
-            // please let us find a better solution here.
-            benchmarkError = false;
-                    
-            if (benchmarkError) {
-                benchmarkReRunCountdown--;
-                System.out.println("*** BENCHMARK ERROR *** - COUNT DOWN " + benchmarkReRunCountdown + " for model " + modelFilePath);
-                if (benchmarkReRunCountdown == 0) {
-                    System.out.println("*** BENCHMARK ERROR *** - FAILING ");
-                    // Claim this a real benchmark error now
-                    fail(errorInformation);
-                }
-            }
-        }
-
-        // return a possible error message or null if no error
-        return errorInformation;
+        } while(benchmarkError);
     }
 
     // -------------------------------------------------------------------------
