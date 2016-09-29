@@ -252,9 +252,9 @@ public class TimingAnalysis extends Job {
 		String fileLocationString = null;
 		if (resource != null) {
 			IFile file = ResourceUtil.getFile(resource);
-			uriString = file.getLocationURI().toString();
+			uriString = file.getRawLocation().toFile().getAbsolutePath();
 			fileName = file.getName();
-			fileLocationString = uriString.replace("file:", "");
+			fileLocationString = uriString;
 			fileFolder = fileLocationString.replace(fileName, "");
 		} else {
 			return new Status(IStatus.ERROR, pluginId, "The resource for the given model could "
