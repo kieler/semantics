@@ -35,6 +35,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -76,15 +77,19 @@ class LayoutHook extends SynthesisHook {
 
     override start(Scope scope, KNode node) {
         depthMap.put(scope, if(scope instanceof State) 0 else -1)
+        var nextScope = scope
+        if (scope instanceof SCCharts) {
+            nextScope = scope.rootStates.head
+        }
         // Calculated depths
-        scope.allScopes.filter[it != scope].forEach [
+        nextScope.allScopes.filter[it != scope].forEach [
             val parentDepth = depthMap.get(it.eContainer) ?: 0
             // Increase depth only after regions because state have no layouted children
             val depth = if(it instanceof State) parentDepth + 1 else parentDepth
             depthMap.put(it, depth)
         ]
         // Find global direction annotation
-        for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
+        for (annotation : nextScope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
             if (data != null && data.id == LayoutOptions.DIRECTION.id) {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
