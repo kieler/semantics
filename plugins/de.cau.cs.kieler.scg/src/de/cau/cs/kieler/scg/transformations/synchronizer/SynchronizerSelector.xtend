@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -28,9 +28,9 @@ import java.util.List
  * @author ssm
  * @kieler.design 2014-09-24 proposed 
  * @kieler.rating 2014-09-24 proposed yellow
- *
+ * 
  */
- @Singleton
+@Singleton
 class SynchronizerSelector {
     
     @Inject

@@ -118,7 +118,7 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             // otherwise (for a strong abort) taking the strong abort transition would not be
             // allowed to be triggered from inside!
             // Add during action
-            val duringAction = parentState.createDuringAction
+            val duringAction = parentState.createImmediateDuringAction
             duringAction.setTrigger(transition.trigger)
             duringAction.addEffect(counter.assign((1.createIntValue).add(counter.reference)))
 
@@ -135,3 +135,4 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
     }
 
 }
+

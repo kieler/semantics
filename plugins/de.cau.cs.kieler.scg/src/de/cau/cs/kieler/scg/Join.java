@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.scg;
 
+import de.cau.cs.kieler.scg.Node;
+
 
 /**
  * <!-- begin-user-doc -->

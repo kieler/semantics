@@ -81,6 +81,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             if (par.callByReference) {
                 sb.append("&")
             }
+            if (par.expression == null) sb.append("NULL!!!") else 
             sb.append(par.expression.serializeHR)
             cnt = cnt + 1
         }

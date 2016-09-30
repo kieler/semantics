@@ -81,6 +81,11 @@ class AnnotationsExtensions {
         !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(PragmaStringAnnotation).filter[ it.name == name ].empty
     }
 	
+    def public void removeAnnotations(Annotatable annotatable, String name) {
+        if (!annotatable.annotations.nullOrEmpty) {
+            !annotatable.annotations.removeIf[ it.name.equals(name) ]
+        }    
+    }	
 	
 	def public boolean hasCommentAnnotation(Annotatable annotatable) {
 	   !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(typeof(CommentAnnotation)).empty    

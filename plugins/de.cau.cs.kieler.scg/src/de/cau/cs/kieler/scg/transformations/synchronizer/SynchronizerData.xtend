@@ -66,7 +66,6 @@ class SynchronizerData {
 
     @Property
     Guard guard
-
     
     /**
      * Map of additional assignments with respect to their scheduling blocks.

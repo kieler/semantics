@@ -509,7 +509,7 @@ public abstract class AbstractSCTSemanticSequencer extends KExtSemanticSequencer
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     ((annotations+=Pragmas+ rootStates+=RootState+) | rootStates+=RootState+)?
+	 *     ((annotations+=PragmaAnnotation+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

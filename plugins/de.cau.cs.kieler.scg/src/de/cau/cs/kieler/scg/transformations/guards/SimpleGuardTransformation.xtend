@@ -210,15 +210,17 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 			for(assignment : schedulingBlock.nodes.filter(Assignment)) {
 				val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
 				val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
-				newSCG.nodes += newAssignment
-				guardAssignment.createGuardDependency(newAssignment)
-				AAMap.put(assignment, newAssignment)
+				if (guardAssignment != null) {
+		  		    newSCG.nodes += newAssignment
+	   			    guardAssignment.createGuardDependency(newAssignment)
+    				AAMap.put(assignment, newAssignment)
+				}
 			}		
 		}
 		
 		// Restore sequential order in guarded assignments
 		for (assignment : AAMap.keySet) {
-			if ((assignment.next.target instanceof Assignment) &&
+			if (assignment.next != null && (assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
 				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
 			} 

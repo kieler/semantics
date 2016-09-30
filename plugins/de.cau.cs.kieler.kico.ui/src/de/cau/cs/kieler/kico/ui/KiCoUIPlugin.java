@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
+import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -291,6 +292,8 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
+    private static HashMap<IEditorPart, EObject> editorModelCache = new HashMap<IEditorPart, EObject>();
+    
     /**
      * Gets the currently active model.
      * 
@@ -298,12 +301,23 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      */
     public static EObject getActiveModel() {
         IEditorPart editor = de.cau.cs.kieler.core.model.util.EditorUtils.getLastActiveEditor();
-        if (editor instanceof XtextEditor) { // Get model from XTextEditor
-            return readModelFromXtextEditor((XtextEditor) editor);
-        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
-            return readModelFromEMFEditor((IEditingDomainProvider) editor);
+        EObject model = editorModelCache.get(editor);
+        List<DiagramView> diagramViews = DiagramView.getDiagramViews(editor);
+        for (DiagramView view : diagramViews) {
+            if(view.isLinkedWithActiveEditor()) {
+                Object viewModel = view.getViewContext().getInputModel();
+                if (viewModel instanceof EObject) {
+                    model = (EObject) viewModel;
+                }
+            }
         }
-        return null;
+        if (editor instanceof XtextEditor) { // Get model from XTextEditor
+            model = readModelFromXtextEditor((XtextEditor) editor);
+        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
+            model = readModelFromEMFEditor((IEditingDomainProvider) editor);
+        }
+        editorModelCache.put(editor, model);
+        return model;
     }
 
     // -------------------------------------------------------------------------
