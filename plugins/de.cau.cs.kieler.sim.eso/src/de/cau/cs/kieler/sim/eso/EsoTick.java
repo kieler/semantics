@@ -45,11 +45,7 @@ public class EsoTick implements ITick {
     public List<ISignal> getInputs() {
         LinkedList<ISignal> res = new LinkedList<ISignal>();
         for (signal s : tick.getInput()) {
-            if (s.isValued()) {
-                res.add(new EsoSignal(s.getName().trim(), s.getVal()));
-            } else {
-                res.add(new EsoSignal(s.getName().trim()));
-            }
+            res.add(new EsoSignal(s.getName(), s.getVal()));
         }
         return res;
     }
@@ -60,7 +56,7 @@ public class EsoTick implements ITick {
     public List<ISignal> getOutputs() {
         LinkedList<ISignal> res = new LinkedList<ISignal>();
         for (signal s : tick.getOutput()) {
-            res.add(new EsoSignal(s.getName()));
+            res.add(new EsoSignal(s.getName(), s.getVal()));
         }
         return res;
     }
