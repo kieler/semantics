@@ -197,6 +197,13 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             //!!!CHANGED: !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE) == no "real" final states but just auxiliary ones which have been transformed to weak aborts! 
             val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size > 0].
                 size > 0
+                
+            var aFinalStateInEveryRegion = true;
+            for (region : state.regions.filter(ControlflowRegion)) {
+                if (region.states.filter[ee|ee.final && !ee.hasAnnotation(Termination.ANNOTATION_FINALSTATE)].size == 0) {
+                    aFinalStateInEveryRegion = false;
+                }
+            }
 
             // !!!CHANGED
             // Only create a control region in the WTO case if there is at least one conditional termination
@@ -207,11 +214,11 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             // val terminationHandlingNeeded = (notCoreTerminations.size > 0)
             val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedDelayedStrongAborts
             val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
-            val anyFinalStatesButNoTermination = finalStates && !termination && !state.isRootState
+            val anyFinalStateInEveryRegionButNoTermination = aFinalStateInEveryRegion && !termination && !state.isRootState
             // !!!CHANGED
             // val needCtrlRegion = terminationHandlingNeeded || delayedAbortHandlingNeeded ||
             // anyFinalStatesButNoTermination
-            val needCtrlRegion = delayedAbortHandlingNeeded || anyFinalStatesButNoTermination
+            val needCtrlRegion = delayedAbortHandlingNeeded || anyFinalStateInEveryRegionButNoTermination
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
@@ -515,6 +522,9 @@ def boolean canBeDelayed(State initialState) {
 // then this means the termination cannot be taken immediately and it can (but is not necessary) safely be delayed!
 // Omitting the delay and making it immediate makes it harder for down stream compilation  
 def boolean containsDelayedTerm(Expression trigger) {
+    if (trigger == null) {
+        return false
+    }
     val contents = trigger.eContainer.eAllContents.toList
     val list1 = contents.filter(typeof(ValuedObjectReference)).toList
     val list2 = list1.filter[valuedObject.name.contains("_termD")].toList

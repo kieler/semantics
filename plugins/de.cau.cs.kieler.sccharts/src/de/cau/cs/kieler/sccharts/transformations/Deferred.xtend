@@ -104,6 +104,7 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
 
     def void transformDeferredState(State state) {
         val incomingDeferredTransitions = state.incomingTransitions.filter[deferred];
+        val incomingNonDeferredTransitions = state.incomingTransitions.filter[!deferred];
 
         // If there are any such transitions 
         if (!incomingDeferredTransitions.nullOrEmpty) {
@@ -126,6 +127,10 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
             for (transition : incomingDeferredTransitions) {
                 transition.setDeferred(false)
                 transition.addEffect(deferVariable.assign(TRUE)).trace(state, transition)
+            }
+            // Set all others to false explicitly (just to make sure in case the superstate was strongly immediate aborted)
+            for (transition : incomingNonDeferredTransitions) {
+                transition.addEffect(deferVariable.assign(FALSE)).trace(state, transition)
             }
 
             // Prevent any immediate internal behavior of the state and any immediate outgoing
