@@ -395,10 +395,11 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                 val inputPort = CircuitFactory::eINSTANCE.createPort.trace(subexpr)
                 actor.ports += inputPort
                 inputPort.type = "In"
+                    checkForVOassignments(subexpr) // this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
                 redRegionPorts.add(subexpr.serialize.toString)
 
                 if (!(expr.operator.getName == "PRE")) {
-                    checkForVOassignments(subexpr) // this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
+                    
                     transformExpressions(subexpr, actorRegion, redRegionPorts, assignment)
                 }
 
