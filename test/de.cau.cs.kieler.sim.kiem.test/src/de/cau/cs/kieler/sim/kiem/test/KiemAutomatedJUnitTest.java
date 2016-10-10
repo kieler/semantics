@@ -705,7 +705,7 @@ public abstract class KiemAutomatedJUnitTest {
         for (IPath bundleTestPath : bundleTestPaths) {
             // Search for all files in the test directory
             Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(),
-                    "*.*", false);
+                    "*.*", true);
             if (allBundleFilesUrl != null) {
                 logger.debug("add testpath:" + bundleTestPath.toString());
                 while (allBundleFilesUrl.hasMoreElements()) {

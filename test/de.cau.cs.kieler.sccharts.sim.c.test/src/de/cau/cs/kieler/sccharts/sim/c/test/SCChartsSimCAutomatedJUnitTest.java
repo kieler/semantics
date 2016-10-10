@@ -65,6 +65,10 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
         paths.add(new Path("/testdata-must-fail/"));
         // Add simple tests
         paths.add(new Path("/testdata-simple/"));
+        // Add tests that are based on the cmot's diss (cmot-diss > images > sccharts > features)
+//        paths.add(new Path("/testdata-cmot-diss/simple/"));
+//        paths.add(new Path("/testdata-cmot-diss/complex/"));
+//        paths.add(new Path("/testdata-cmot-diss/composite/"));
         // Add more complex tests
         paths.add(new Path("/testdata-advanced/"));
         return paths;
