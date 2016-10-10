@@ -60,10 +60,12 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected List<IPath> getBundleTestPaths() {
-        List paths = new ArrayList<IPath>();
-        // first test simple tests
+        List<IPath> paths = new ArrayList<IPath>();
+        // First add tests that have to fail. These are used to test the tests themself.
+        paths.add(new Path("/testdata-must-fail/"));
+        // Add simple tests
         paths.add(new Path("/testdata-simple/"));
-        // then test advanced tests (if no failure)
+        // Add more complex tests
         paths.add(new Path("/testdata-advanced/"));
         return paths;
     }

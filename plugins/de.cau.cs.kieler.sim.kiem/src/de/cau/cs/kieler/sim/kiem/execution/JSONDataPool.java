@@ -248,10 +248,7 @@ public class JSONDataPool {
         if (newData != null) {
             // merge new data
             this.dataDeltaPool.add(newData);
-            System.err.println("old:"+dataPool);
-            System.err.println("put:"+newData);
             this.dataPool = JSONMerger.mergeObjects(this.dataPool, newData);
-            System.err.println("new:"+dataPool);
             this.poolCounter++;
         } else {
             // no change
