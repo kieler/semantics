@@ -116,6 +116,12 @@ class EsterelFormatter extends AbstractDeclarativeFormatter {
         c.setIndentationIncrement.after(g.loopAccess.loopKeyword_0)
         c.setIndentationDecrement.before(g.endLoopRule)
         c.setLinewrap.before(g.endLoopRule)
+        
+        // trap
+        c.setLinewrap.after(g.trapAccess.inKeyword_2)
+        c.setIndentationIncrement.after(g.trapAccess.inKeyword_2)
+        c.setIndentationDecrement.before(g.trapAccess.endKeyword_5)
+        c.setLinewrap.before(g.trapAccess.endKeyword_5)
     }
 
 }
