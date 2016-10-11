@@ -208,24 +208,24 @@ class IOPreserverExtensions {
                     scg.nodes += asm
                     prev = asm
                 }
-                   
-                // Pause
-                val surf = createSurface
-                val depth = createDepth
-                surf.depth = depth
-                depth.createControlFlow.target = cExit
-                scg.nodes.addAll(surf, depth)
                                 
-                // Termination
+                // Termination check
                 val termCond = createConditional => [
                     condition = createOperatorExpression(OperatorType.NOT) => [
                         subExpressions += term.reference
                     ]
-                    then = createControlFlow => [target = cEntry.next.target]
-                    ^else = createControlFlow => [target = surf]
+                    
+                    // Pause
+                    val surf = createSurface
+                    val depth = createDepth
+                    surf.depth = depth
+                    scg.nodes.addAll(surf, depth)
+                    depth.createControlFlow.target = cEntry.next.target
+                    
+                    then = createControlFlow => [target = surf]
+                    ^else = createControlFlow => [target = cExit]
                 ]
                 prev.createControlFlow.target = termCond
-                
                 scg.nodes += termCond
             }
         }

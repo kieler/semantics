@@ -119,7 +119,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
         val use = context.getUse(scg)
         // TODO what to do with IO ?
         for (decl : scg.declarations.filter[type == ValueType.INT]) {
-            // TODO distignuish between ssa decl and normal decl with multiple vars
+            // TODO distinguish between ssa decl and normal decl with multiple vars
             if(decl.valuedObjects.filter[!isRegister].forall[it.isBoolDef(def) && it.isBoolUse(use)]) {
                 decl.type = ValueType.BOOL
             }
