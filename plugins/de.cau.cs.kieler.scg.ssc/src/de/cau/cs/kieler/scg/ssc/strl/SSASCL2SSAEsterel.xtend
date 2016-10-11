@@ -59,6 +59,7 @@ import de.cau.cs.kieler.core.kexpressions.Value
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.core.kexpressions.StringValue
+import java.util.LinkedList
 
 /**
  * @author als
@@ -105,9 +106,11 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     // TODO Currently only instantaneous, acyclic
     val Map<ValuedObject, ISignal> voSigMap = newHashMap
     val Map<ValuedObject, ISignal> voPSigMap = newHashMap
-    val Map<String, TrapDecl> trapSigMap = newHashMap
+    val LinkedList<TrapDecl> trapEntryStack = newLinkedList
+    val LinkedList<TrapDecl> trapExitStack = newLinkedList
     var ISignal error
     var Pair<ValuedObject, ISignal> termSig
+    
 //    val List<ValuedObject> unemit = newLinkedList
 
     def Program transform(SCLProgram scl, KielerCompilerContext context) {
@@ -133,7 +136,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         module.body = body
         voSigMap.clear
         voPSigMap.clear
-        trapSigMap.clear
+        trapEntryStack.clear
+        trapExitStack.clear
         
         if (scl.declarations.exists[input || output]) {
             module.interface = createModuleInterface => [
@@ -263,33 +267,34 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     }
 
     private dispatch def List<Statement> translate(EmptyStatement empty) {
-        if (empty.label?.startsWith("loop") && false) {
-            val b = createBlock => [
-                    statement = createTrap => [
-                        trapDeclList = createTrapDeclList => [
-                            trapDecls += createTrapDecl => [
-                                name = empty.label;
-                                trapSigMap.put(empty.label, it)
-                            ]
-                        ]
-                        optEnd = "trap"
-                        statement = createLoop => [
-                            body = createLoopBody => [
-                                statement = createNothing
-//                                createSequence => [
-//                                    for (i : .statements.map[translate]) {
-//                                        list.addAll(i)
-//                                    }
-//                                ]
-                            ]
-                            end1 = createEndLoop
-                        ]
-                    ]
-                ]
-            return newArrayList(b)
-        } else {
-            return newArrayList(createNothing)
-        }
+//        if (empty.label?.startsWith("loop") && false) {
+//            val b = createBlock => [
+//                    statement = createTrap => [
+//                        trapDeclList = createTrapDeclList => [
+//                            trapDecls += createTrapDecl => [
+//                                name = empty.label;
+//                                trapSigMap.put(empty.label, it)
+//                            ]
+//                        ]
+//                        optEnd = "trap"
+//                        statement = createLoop => [
+//                            body = createLoopBody => [
+//                                statement = createNothing
+////                                createSequence => [
+////                                    for (i : .statements.map[translate]) {
+////                                        list.addAll(i)
+////                                    }
+////                                ]
+//                            ]
+//                            end1 = createEndLoop
+//                        ]
+//                    ]
+//                ]
+//            return newArrayList(b)
+//        } else {
+//            return newArrayList(createNothing)
+//        }
+        return emptyList
     }
 
     private dispatch def List<Statement> translate(InstructionStatement stm) {
@@ -633,21 +638,37 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         val s = newArrayList
         if (cond.expression instanceof OperatorExpression && cond.expression.eAllContents.filter(ValuedObjectReference).exists[valuedObject == termSig.key]) {
             s.add(errorPattern)
+            // Before loop handling
+//            s.add(createPresent => [
+//                body = createPresentEventBody => [
+//                    event = createPresentEvent => [
+//                        expression = createOperatorExpression => [
+//                            operator = OperatorType.NOT
+//                            subExpressions += createValuedObjectReference => [
+//                                valuedObject = termSig.value
+//                            ]
+//                        ]
+//                    ]
+//                    thenPart = createThenPart => [
+//                        statement = createNothing // TODO Exit loop
+//                    ]
+//                ]
+//            ])
             s.add(createPresent => [
                 body = createPresentEventBody => [
                     event = createPresentEvent => [
-                        expression = createOperatorExpression => [
-                            operator = OperatorType.NOT
-                            subExpressions += createValuedObjectReference => [
-                                valuedObject = termSig.value
-                            ]
+                        expression = createValuedObjectReference => [
+                            valuedObject = termSig.value
                         ]
                     ]
                     thenPart = createThenPart => [
-                        statement = createNothing // TODO Exit loop
+                        statement = createExit => [
+                            trap = trapExitStack.peek
+                        ]
                     ]
                 ]
             ])
+            s.add(createPause)
         } else if (cond.expression instanceof ValuedObjectReference) {
             val vor = cond.expression as ValuedObjectReference
             if (voPSigMap.containsKey(vor.valuedObject)) {
@@ -709,9 +730,18 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                         ]
                     ]
                     elsePart = createElsePart => [
-                        statement = createEmit => [
-                            signal = error
-                        ]
+                        if (cond.eAllContents.exists[it instanceof Pause]) {
+                            statement = createSequence => [
+                                list.add(createEmit => [
+                                    signal = error
+                                ])                              
+                                list.add(createPause)
+                            ]
+                        } else {
+                            statement = createEmit => [
+                                signal = error
+                            ]
+                        }
                     ]
                 ])
             } else {
@@ -779,22 +809,104 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                             list += t.head
                         }
                     } else {
-                        list += createSequence => [
-                             th.statements.translateAddTo(list)
-                        ]
+                        // TODO correct loop handling
+                        val loops = th.statements.loops
+                        if (loops.empty) {
+                            list += createSequence => [
+                                 th.statements.translateAddTo(list)
+                            ]
+                        } else {
+                            // Simple loop pattern
+                            val loop = loops.head
+                            if (loop.size < th.statements.size) {
+                                list += createSequence => [
+                                    th.statements.takeWhile[!(loop.contains(it))].toList.translateAddTo(list)
+                                    list.add(createLoop(loop))
+                                    th.statements.dropWhile[!(loop.contains(it))].dropWhile[loop.contains(it)].toList.translateAddTo(list)
+                                ]
+                            } else {
+                                list += createLoop(loop)
+                            }
+                        }
                     }
                 }
             ]
         ]
         return newArrayList(b)
     }
+    
+    private def Statement createLoop(List<de.cau.cs.kieler.scl.scl.Statement> stms) {
+        return createTrap => [
+            trapDeclList = createTrapDeclList => [
+                trapDecls += createTrapDecl => [
+                    name = (stms.head as EmptyStatement).label + "Exit";
+                    trapExitStack.push(it)
+                ]
+            ]
+            optEnd = "trap"
+            statement = createLoop => [
+                body = createLoopBody => [
+                    if (stms.last.eAllContents.filter(ValuedObjectReference).exists[valuedObject.name == "term"]) { // pause loop
+                        statement = createSequence => [
+                            stms.drop(1).toList.translateAddTo(list)
+                        ]
+                    } else {
+                        statement = createTrap => [
+                            trapDeclList = createTrapDeclList => [
+                                trapDecls += createTrapDecl => [
+                                    name = (stms.head as EmptyStatement).label + "Entry";
+                                    trapEntryStack.push(it)
+                                ]
+                            ]
+                            optEnd = "trap"
+                            statement = createSequence => [
+                                stms.drop(1).toList.translateAddTo(list)
+                                list.add(createExit => [
+                                    trap = trapExitStack.peek
+                                ])
+                            ]
+                        ]
+                    }
+                    
+                ]
+                end1 = createEndLoop => [
+                    endOpt = "loop"
+                ]
+            ]
+        ]
+    }
+    
+    private def List<List<de.cau.cs.kieler.scl.scl.Statement>> loops(List<de.cau.cs.kieler.scl.scl.Statement> stms) {
+        return switch (stms.filter(EmptyStatement).filter[label?.startsWith("loop")].size) {
+            case 0: emptyList
+            case 1: {
+                // TODO this is a very simple loop pattern
+                val loopStart = stms.dropWhile[!(it instanceof EmptyStatement)].head
+                val loopEnd = stms.findFirst[
+                    if (it instanceof Goto) {
+                        return it.targetLabel == (loopStart as EmptyStatement).label
+                    } else {
+                        return it.eAllContents.exists[
+                            if (it instanceof Goto) {
+                                return it.targetLabel == (loopStart as EmptyStatement).label
+                            } else {
+                                false
+                            }
+                        ]
+                    }
+                ]
+                newArrayList(stms.subList(stms.indexOf(loopStart), stms.indexOf(loopEnd)+1))
+            }
+            default: throw new UnsupportedOperationException("Equals test on inputs not yet supported")
+        }
+    }
 
     private dispatch def List<Statement> translate(Goto goto) {
-//        val exit = createExit => [
-//            trap = trapSigMap.get(goto.targetLabel)
-//        ]
-//        return newArrayList(exit)
-            return newArrayList(createNothing)
+        // TODO implement general pattern
+        val exit = createExit => [
+            trap = trapEntryStack.peek // only loopback gotos
+        ]
+        return newArrayList(exit)
     }
 
     private dispatch def List<Statement> translate(Pause pause) {
@@ -1392,7 +1504,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         ]
     }
     
-    def void translateAddTo(EList<de.cau.cs.kieler.scl.scl.Statement> stms, EList<Statement> list) {
+    def void translateAddTo(List<de.cau.cs.kieler.scl.scl.Statement> stms, EList<Statement> list) {
         for (s : stms) {
             val l = s.translate
             for (i : l) {
