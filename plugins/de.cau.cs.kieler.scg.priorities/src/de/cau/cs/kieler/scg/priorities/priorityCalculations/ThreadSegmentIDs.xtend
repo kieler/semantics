@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
@@ -81,6 +82,12 @@ class ThreadSegmentIDs {
         
         assignThreadSegmentIDs(nodes.head, 1)
         
+        val unvisitedNodes = nodes.filter[!visited.get(it)]
+        
+        for(node : unvisitedNodes) {
+            node.visitUnvisitedNode            
+        }
+        
         
         return threadSegmentIDs
     }
@@ -89,7 +96,7 @@ class ThreadSegmentIDs {
      *  Method to calculate the thread segment IDs of the nodes. Executes a depth-first search 
      *  of the nodes. If we reach the end of an execution, the thread is given the ID threadID. 
      * 
-     *  Non-reachable nodes are ignored (currently).
+     *  Non-reachable nodes are ignored here.
      * 
      * @param node
      *              The current node. Calculates the thread segment ID for all his children and then 
@@ -133,6 +140,45 @@ class ThreadSegmentIDs {
         
         return tID
         
+    }
+    
+    
+    /**
+     *  Method to calculate ThreadSegmentIDs for unreachable nodes.
+     * 
+     *  @param unvisitedNode
+     *      The unvisited node whose ThreadSegmentID to calculate.
+     * 
+     *  @returns
+     *      The ThreadSegmentID of the node
+     */
+    private def int visitUnvisitedNode(Node unvisitedNode) {
+
+        var tsID = 0
+        if(!visited.get(unvisitedNode)) {
+            if(unvisitedNode instanceof Exit) {
+                val entry = (unvisitedNode as Exit).entry
+                if(threadSegmentIDs.containsKey(entry)) {
+                    tsID = threadSegmentIDs.get(entry)
+                       
+                }
+    
+            } else {
+                val neighbors = unvisitedNode.allNeighbors
+                for(n : neighbors) {
+                    if(visited.get(n) && threadSegmentIDs.containsKey(n)) {
+                        tsID = threadSegmentIDs.get(n)
+                    } else {
+                        tsID = visitUnvisitedNode(n)
+                    }
+                }
+            }
+            threadSegmentIDs.put(unvisitedNode, tsID)
+            visited.put(unvisitedNode, true)
+            return tsID             
+        } else {
+            return threadSegmentIDs.get(unvisitedNode)
+        }
     }
     
 }
