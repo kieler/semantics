@@ -170,7 +170,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
     protected def void declareVariables(StringBuilder sb, SCGraph scg) {
         
         for(declaration : scg.declarations) {
-            println(declaration)
+//            println(declaration)
             if(declaration.type.toString == "string" || declaration.type.toString == "STRING") {
                 sb.append("char*")
             } else {

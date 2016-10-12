@@ -1460,13 +1460,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                                             as IntAnnotation
                     val tgtPrio = tgtNode.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) 
                                                             as IntAnnotation
-                    if(srcPrio.value > tgtPrio.value) {
-                        var prio = edge.addCenterEdgeLabel("prio(" + tgtPrio.value + ")")
-                        prio.KRendering.foreground = OPT_PRIORITY_COLOR.copy
-                        prio.KRendering.fontItalic = true
-                        prio.KRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
+                    if(srcPrio.value != tgtPrio.value) {
+                        val port = edge.sourcePort => [
+                            it.setPortSize(50, 20)
+                            it.KContainerRendering.setProperty(PRIO_STATEMENTS_PROPERTY, true)
+                            var rec = it.KContainerRendering.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH)
+                            rec.background = "white".color
+                            var txt = rec.addText("prio(" + tgtPrio.value + ")")
+                            txt.fontSize = 7
+                            var x = txt.setAreaPlacementData
+                            x.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                        ]
                     }
-                    
                 }
             }
         ]

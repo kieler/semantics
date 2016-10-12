@@ -15,15 +15,16 @@ package de.cau.cs.kieler.scg.klighd.actions
 import com.google.inject.Guice
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
+import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.klighd.IAction
-import de.cau.cs.kieler.klighd.IAction.ActionContext
-import de.cau.cs.kieler.klighd.IAction.ActionResult
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 /**
  * Action class to display the prio statements in the SCG.
@@ -36,6 +37,8 @@ class PrioStatementsActions implements IAction {
     
     @Inject
     extension KRenderingExtensions
+//    @Inject
+//    extension KPortExtensions
     
     public static final SynthesisOption SHOW_PRIO_STATEMENTS = SynthesisOption::createCheckOption("Priority Statements", 
         true).setUpdateAction(PRIO_STATEMENTS_ID);
@@ -45,16 +48,31 @@ class PrioStatementsActions implements IAction {
     override execute(ActionContext context) {
         val viewContext = context.contextViewer.viewContext
         val rootNode = context.KNode
-        for(edge : rootNode.eAllContentsOfType(KEdge).toIterable) {
-            if(!edge.labels.empty && 
-                    edge.labels.head.KRendering.getProperty(SCGraphDiagramSynthesis.PRIO_STATEMENTS_PROPERTY)) {
-                if(SHOW_PRIO_STATEMENTS.booleanValue(viewContext)) {
-                    edge.labels.head.KRendering.invisible = false
-                    
-                } else {
-                    edge.labels.head.KRendering.invisible = true
-                }                
-            }
+        for(port : rootNode.eAllContentsOfType(KPort).toIterable) {
+            if(port.KContainerRendering != null 
+                && port.KContainerRendering.getProperty(SCGraphDiagramSynthesis.PRIO_STATEMENTS_PROPERTY)) {
+              if(SHOW_PRIO_STATEMENTS.booleanValue(viewContext)) {
+                  port.getData(typeof(KShapeLayout)).setSize(50,20)
+                  for(child : port.KContainerRendering.children) {
+                      if(child instanceof KRoundedRectangle) {
+                          var a = child as KRoundedRectangle
+                          for(x : a.children) {
+                              x.invisible = false
+                          }                          
+                      }
+                  }
+              } else {
+                  port.getData(typeof(KShapeLayout)).setSize(0,0)
+                  for(child : port.KContainerRendering.children) {
+                      if(child instanceof KRoundedRectangle) {
+                          var a = child as KRoundedRectangle
+                          for(x : a.children) {
+                              x.invisible = true
+                          }
+                      }
+                  }
+              }
+            } 
         }
         
         ActionResult.createResult(true)
