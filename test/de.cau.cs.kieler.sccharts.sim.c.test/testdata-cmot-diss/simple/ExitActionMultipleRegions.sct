@@ -1,0 +1,30 @@
+@diagram[KLayLayered] false  
+@VHLayout  
+scchart ExitAction {
+  output bool Ae4;
+  output bool A5;
+
+  initial state S1
+  --> S4;
+
+  state S4 {
+    exit / Ae4  = true;
+
+    region R1:
+
+    initial state S41
+    --> S42;
+
+    final state S42;
+
+    region R2:
+
+    initial state S43
+    --> S44;
+
+    final state S44;
+  }
+  >-> S5 with / A5  = true;
+
+  final state S5;
+}

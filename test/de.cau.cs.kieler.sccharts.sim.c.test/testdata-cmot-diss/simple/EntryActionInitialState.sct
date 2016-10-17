@@ -1,0 +1,12 @@
+@diagram[KLayLayered] false  
+@VHLayout  
+scchart EntryAction {
+  output bool Ae1 = false;
+  
+  initial state S1 {
+    entry / Ae1 = true;
+  }
+  --> S2;
+
+  state S2;
+}

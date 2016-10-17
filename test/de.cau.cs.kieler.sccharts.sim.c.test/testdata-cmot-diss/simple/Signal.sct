@@ -1,0 +1,20 @@
+@diagram[KLayLayered] false  
+scchart Signal {
+  output signal S;
+  output bool A1 = false;
+  output bool A2 = false;
+
+  region R1:
+
+  initial state S1
+  --> S2 with / S; A2 = true;
+
+  state S2;
+
+  region R2:
+
+  initial state S3
+  --> S4 with S / A1 = true;
+
+  state S4;
+}
