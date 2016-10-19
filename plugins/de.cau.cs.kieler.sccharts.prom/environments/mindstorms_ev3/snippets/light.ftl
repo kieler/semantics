@@ -115,8 +115,7 @@
 <#-- Auxiliary macro to initialize a light sensor if it is not yet initialized.
      This macro is not meant to be used in a model file. -->
 <#macro InitLightSensor port>
-        <#if !((initializedLights![])?seq_contains(port))>
-        <#assign initializedLights = (initializedLights![]) + [port]>
+        <@singleton "light_"+port>
         EV3ColorSensor lightSensor${port} = new EV3ColorSensor(SensorPort.${port});
-        </#if>
+        </@>
 </#macro>

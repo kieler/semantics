@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.prom.launchconfig
 
 import com.google.common.io.Files
-import de.cau.cs.kieler.prom.common.FileCompilationData
+import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import freemarker.template.Template
 import java.io.File
@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import java.util.Map
 
 /**
  * This class generates wrapper code for models.
@@ -62,7 +63,7 @@ class WrapperCodeGenerator {
      * that is created during wrapper code generation.
      */
     private static val FILE_NAME_VARIABLE = "file_name"
-
+    
     private static val declarationPhase = new CodeGenerationPhase("declaration", true, [data | true], "decl")
     private static val initializationPhase = new CodeGenerationPhase("initialization", true, [data | true], "init")
     private static val releasePhase = new CodeGenerationPhase("release", true, [data | true], "free")
@@ -79,7 +80,7 @@ class WrapperCodeGenerator {
     /**
      * The launch config, which created this instance. 
      */
-    private LaunchConfiguration launchConfig
+    private KiCoLaunchConfig launchConfig
 
     /**
      * The name of the last processed model
@@ -87,37 +88,43 @@ class WrapperCodeGenerator {
      */
     private String modelName = ""
 
-    private String resolvedWrapperCodeTemplate
-    private String resolvedWrapperCodeSnippetDirectory
-    private String resolvedWrapperCodeTargetLocation
+    private String templatePath
     
-    new(LaunchConfiguration launchConfig) {
+    new(KiCoLaunchConfig launchConfig) {
         this.launchConfig = launchConfig
     }
     
     /**
-     * Generates and saves the wrapper code for a list of files.
+     * Generates wrapper code for a list of annotated model files.
      * 
-     * @param datas The data objects to generate wrapper code for 
+     * @param templatePath The project relative path to the wrapper code template
+     * @param datas The model files to generate wrapper code for
      */
-    def public void generateWrapperCode(FileCompilationData... datas) {
-
-        // Resolve variables
-        val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        resolvedWrapperCodeTemplate = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate)
-        resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
-        resolvedWrapperCodeTargetLocation = launchConfig.computeTargetPath(resolvedWrapperCodeTemplate, false)
-
+    def public String generateWrapperCode(String templatePath, FileData... datas) {
+        generateWrapperCode(templatePath, #{}, datas)
+    }
+    
+    /**
+     * Generates wrapper code for a list of annotated model files.
+     * 
+     * @param templatePath The project relative path to the wrapper code template
+     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
+     * @param datas The model files to generate wrapper code for
+     */
+    def public String generateWrapperCode(String templatePath, Map<String,String> additionalMappings, FileData... datas) {
+        this.templatePath = templatePath
+        
         // Check consistency of path
-        if (!resolvedWrapperCodeTemplate.isNullOrEmpty()) {
+        if (!this.templatePath.isNullOrEmpty()) {
+            val templateWithMacroCalls = getTemplateWithMacroCalls(additionalMappings, datas)
 
-            val templateWithMacroCalls = getTemplateWithMacroCalls(datas)
-
-            // Debug output macro calls
+            // Debug log macro calls
 //            System.err.println(templateWithMacroCalls)
 
-            processTemplateAndSaveOutput(templateWithMacroCalls)
+            val wrapperCode = processTemplateWithSnippetDefinitions(templateWithMacroCalls)
+            return wrapperCode
         }
+        return ""
     }
 
     /**
@@ -128,7 +135,7 @@ class WrapperCodeGenerator {
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(FileCompilationData... datas) {
+    private def String getTemplateWithMacroCalls(Map<String,String> additionalMappings, FileData... datas) {
 
         // Get all annotations of input and output variables from the files.
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
@@ -141,15 +148,18 @@ class WrapperCodeGenerator {
         
         // Add name of model 
         map.put(MODEL_NAME_VARIABLE, modelName)
-        
+       
         // Add name of output file 
-        val fileName = new File(resolvedWrapperCodeTargetLocation).name
+        val fileName = new File(templatePath).name
         val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
         map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
         
+        // Add additional mappings
+        map.putAll(additionalMappings)
+        
         // Inject macro calls in input template
         FreeMarkerPlugin.newConfiguration(launchConfig.project.location.toOSString())
-        val template = FreeMarkerPlugin.configuration.getTemplate(resolvedWrapperCodeTemplate)
+        val template = FreeMarkerPlugin.configuration.getTemplate(templatePath)
 
         val writer = new StringWriter()
         template.process(map, writer)
@@ -163,7 +173,11 @@ class WrapperCodeGenerator {
      * 
      * @param templateWithMacroCalls The template text to be processed 
      */
-    private def void processTemplateAndSaveOutput(String templateWithMacroCalls) {
+    private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls) {
+        
+        // Resolve snippet path
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        val resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeSnippetDirectory)
         
         // Load snippet definitions
         if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
@@ -179,7 +193,7 @@ class WrapperCodeGenerator {
             FreeMarkerPlugin.configuration.addAutoInclude("assignmentMacros")
     
             // Add implicit include of snippet definitions
-            val List<File> snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
+            val snippetFiles = getFilesRecursive(snippetDirectoryLocation, "ftl")
             for(snippetFile : snippetFiles) {
                 // FreeMarker needs paths relative to the template directory.
                 // We calculate this via the URI class.
@@ -191,10 +205,11 @@ class WrapperCodeGenerator {
         // Process template with macro calls and now implicitly loaded snippet definitions.
         val template = new Template("templateWithMacroCalls", templateWithMacroCalls, FreeMarkerPlugin.configuration)
 
-        // Process template and write output directly to target file
-        val writer = new FileWriter(resolvedWrapperCodeTargetLocation)
+        // Process template and write output in string
+        val writer = new StringWriter()
         template.process(newHashMap(), writer)
         writer.close()
+        return writer.toString
     }
 
     /**
@@ -302,15 +317,32 @@ class WrapperCodeGenerator {
      */
     private static def String getMacroCall(WrapperCodeAnnotationData data) {
         var txt = ""
+        // Ignore non existing macro <=> only call if macro exists
         if (data.ignoreNonExistingSnippet)
             txt += '''<#if «data.name»??>'''
 
         txt += '''<@«data.name» '''
-        for (String arg : data.arguments)
-            txt += ''''«arg»' '''
-
+        // Append arguments
+        var boolean isBooleanArgument
+        var boolean isFloatArgument
+        for (String arg : data.arguments) {
+            isBooleanArgument = (arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("false"))
+            try {
+                isFloatArgument = (Float.valueOf(arg) != null)
+            } catch (NumberFormatException e) {
+                isFloatArgument = false
+            }
+            val isNonStringArgument = isBooleanArgument || isFloatArgument
+            // Only string arguments need to be surrounded by single quotation marks
+            if(isNonStringArgument)
+                txt += '''«arg» '''   
+            else 
+                txt += ''''«arg»' '''
+        }
+        // Close macro call
         txt += '''/>''';
- 
+
+        // Close if
         if (data.ignoreNonExistingSnippet)
             txt += '''</#if>'''
         
@@ -330,7 +362,7 @@ class WrapperCodeGenerator {
         // Filter that accepts directories and files with the given extension.
         val filter = new FileFilter() {
             override accept(File file) {
-                return file.isDirectory || Files.getFileExtension(file.name).toLowerCase == fileExtension
+                return file.isDirectory || Files.getFileExtension(file.name).equalsIgnoreCase(fileExtension)
             }
         }
 
@@ -350,14 +382,20 @@ class WrapperCodeGenerator {
      * @param filter A filter that found files must match
      */
     private def void getFilesRecursiveHelper(File folder, List<File> list, FileFilter filter) {
-        // Iterate over files in the folder recursively.
-        // Add every file that is not filtered to the list.
+        // Iterate over files in the folder.
+        // Add found files and remember folders for later.
+        val subFolders = newArrayList()
         for (fileEntry : folder.listFiles(filter)) {
             if (fileEntry.isDirectory()) {
-                getFilesRecursiveHelper(fileEntry, list, filter);
+                subFolders += fileEntry
             } else {
                 list.add(fileEntry)
             }
+        }
+        
+        // Go into next folder level
+        for (subFolder : subFolders) {
+            getFilesRecursiveHelper(subFolder, list, filter);
         }
     }
 
@@ -368,7 +406,7 @@ class WrapperCodeGenerator {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    private def getWrapperCodeAnnotationData(FileCompilationData data,
+    private def getWrapperCodeAnnotationData(FileData data,
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
@@ -547,7 +585,7 @@ class WrapperCodeGenerator {
             <#macro «name»>
                 <#if phase=='«phase.name»'>
                     <#nested />
-                    </#if>
+                </#if>
             </#macro>
         '''
     }

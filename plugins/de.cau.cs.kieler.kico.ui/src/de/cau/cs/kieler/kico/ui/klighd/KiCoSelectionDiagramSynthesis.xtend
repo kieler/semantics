@@ -156,7 +156,6 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -216,6 +215,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         clearCache()
 
         val knode = model.createNode();
+        
+        // Apply spline edge routing on root level
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
         for (elem : model.visibleFeatures) {
             if (elem.visibleContainer(model.visibleFeatures) == null) {
@@ -292,6 +294,10 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
             }
+            
+            // Adjust edge routing of hierarchical node
+            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
