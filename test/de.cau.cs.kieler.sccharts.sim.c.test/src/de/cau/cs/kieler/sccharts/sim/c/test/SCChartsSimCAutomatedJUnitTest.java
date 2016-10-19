@@ -112,6 +112,6 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     @Override
     protected boolean stopOnError() {
-        return true;
+        return false;
     }
 }
