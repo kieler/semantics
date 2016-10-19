@@ -1,4 +1,4 @@
-#include "${model_name}.ino"
+#import "${model_name}.ino"
 
 // Declarations
 ${decls}
