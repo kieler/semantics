@@ -63,6 +63,8 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
         List<IPath> paths = new ArrayList<IPath>();
         // First add tests that have to fail. These are used to test the tests themself.
         paths.add(new Path("/testdata-must-fail/"));
+        // Add basic tests. These test core features like states, transitions and hierarchy as well as variable types and operators.
+//        paths.add(new Path("/testdata-basics/"));
         // Add simple tests
         paths.add(new Path("/testdata-simple/"));
         // Add tests that are based on the cmot's diss (cmot-diss > images > sccharts > features)
