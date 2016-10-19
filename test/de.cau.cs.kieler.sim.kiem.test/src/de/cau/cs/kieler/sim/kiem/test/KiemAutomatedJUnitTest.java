@@ -455,14 +455,14 @@ public abstract class KiemAutomatedJUnitTest {
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
         if (!shouldSkip()) {
-            boolean mustFail = (mustFailName != null) && (currentEsoFile.lastSegment().contains(mustFailName));
+            boolean mustFail = (mustFailName != null) && (currentEsoFile.toOSString().contains(mustFailName));
             if (mustFail) {
                 boolean testFailed = false;
                 try {
                     testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(),
                             getPluginId(), rerunBenchmark());
                 } catch (AssertionError e) {
-                    // This error must fail so that running into this catch block means, everything
+                    // This test must fail so that running into this catch block means, everything
                     // is peachy.
                     testFailed = true;
                     lastErrorMessage = null;
@@ -529,7 +529,6 @@ public abstract class KiemAutomatedJUnitTest {
 
         // Get the corresponding model file
         IPath modelFilePath = modelFile.get(esoFilePath);
-
         do {
             benchmarkError = false;
             
@@ -713,7 +712,7 @@ public abstract class KiemAutomatedJUnitTest {
                     try {
                         logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundle, bundleFileUrl,
                                 temporaryWorkspaceFolderName, false, true);
                         if (!workspaceFile.exists()) {
                             throw new RuntimeException(
@@ -723,18 +722,22 @@ public abstract class KiemAutomatedJUnitTest {
                         IPath filePath = workspaceFile.getFullPath();
                         allFiles.add(filePath);
                     } catch (CoreException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (2) :"
                                         + bundleFileUrl.toString());
                     } catch (MalformedURLException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (3) :"
                                         + bundleFileUrl.toString());
                     } catch (URISyntaxException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (4) :"
                                         + bundleFileUrl.toString());
                     } catch (IOException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (5) :"
                                         + bundleFileUrl.toString());
@@ -809,7 +812,7 @@ public abstract class KiemAutomatedJUnitTest {
                     fileString = "file://" + fileString.replace(" ", "%20");
                     bundleFileUrl = new URI(fileString).toURL();
                     logger.debug("FileUrl:" + bundleFileUrl.toString());
-                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundle, bundleFileUrl,
                             temporaryWorkspaceFolderName, false, true);
                     if (!workspaceFile.exists()) {
                         throw new RuntimeException(
