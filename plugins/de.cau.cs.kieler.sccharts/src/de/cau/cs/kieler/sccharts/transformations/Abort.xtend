@@ -138,7 +138,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 targetState.transformAbortNoWTO_NEW(targetRootState)
             }
 
-        // done = true;
+         //done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -507,11 +507,11 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 
 
 //Optimization: (to help downstream compilation)
-// If initial state has no incoming transition, and there is an outgoing delayed weak abort, 
+// If initial state has no incoming IMMEDIATE (agreed with rvh) transition, and there is an outgoing delayed weak abort, 
 // the aborting transition of the initial state may be delayed too
 def boolean canBeDelayed(State initialState) {
     if (initialState.isInitial) {
-        if (initialState.incomingTransitions.nullOrEmpty) {
+        if (initialState.incomingTransitions.filter[immediate2].nullOrEmpty) {
             return true
         }
     }
