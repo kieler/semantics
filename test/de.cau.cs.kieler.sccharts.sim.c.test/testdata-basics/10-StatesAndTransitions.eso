@@ -1,0 +1,22 @@
+! reset;
+
+% Output: 
+;
+
+% Output: O(1) 
+;
+
+% Output: O(2) 
+;
+
+% Output: O(6) 
+;
+
+% Output: O(7) 
+;
+
+% Output: O(7) 
+;
+
+% Output: O(7) 
+;

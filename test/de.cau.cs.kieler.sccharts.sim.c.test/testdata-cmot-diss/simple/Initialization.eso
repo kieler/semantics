@@ -1,0 +1,16 @@
+! reset;
+
+% Output: V(1) O(1) 
+;
+A 
+% Output: V(1) O(2) 
+;
+
+% Output: V(1) O(2) 
+;
+
+% Output: V(1) O(2) 
+;
+
+% Output: V(1) O(2) 
+;

@@ -1,0 +1,23 @@
+@diagram[KLayLayered] false  
+@VHLayout  
+scchart EntryActionStrongAbort {
+  output bool A1;
+  output bool A2;
+  input bool T1;
+  input bool T2;
+  
+  initial state S1  --> S2;
+
+  state S2 {
+    entry / A1 = true;
+
+    initial state S21
+    --> S22 with T1 / A2 = true;
+
+    final state S22;
+  }
+  o-> S3 immediate with T2
+  >-> S3;
+
+  state S3;
+}

@@ -1,0 +1,25 @@
+! reset;
+
+% Output: b(1) i(1) 
+;
+
+% Output: i(-1) 
+;
+
+% Output: f(-2) i(-2) 
+;
+
+% Output: s(1) f(-2) vs(12) i(-2) 
+;
+
+% Output: f(-2) i(12) 
+;
+
+% Output: f(-2) i(12) 
+;
+
+% Output: f(-2) i(12) 
+;
+
+% Output: f(-2) i(12) 
+;

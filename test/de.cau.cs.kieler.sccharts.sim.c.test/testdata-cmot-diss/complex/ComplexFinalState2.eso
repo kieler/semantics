@@ -1,0 +1,83 @@
+! reset;
+
+% Output: R2S(3) R1S(1) 
+;
+
+% Output: R2S(3) R1S(1) 
+;
+T2 
+% Output: R2S(4) R1S(1) 
+;
+T2 
+% Output: R2S(3) R1S(1) 
+;
+T2 
+% Output: R2S(4) R1S(1) 
+;
+T3 
+% Output: R2S(5) R1S(1) 
+;
+
+% Output: R2S(5) R1S(1) 
+;
+T3 
+% Output: R2S(3) R1S(1) 
+;
+
+% Output: R2S(3) R1S(1) 
+;
+T2 
+% Output: R2S(4) R1S(1) 
+;
+T1 T2 T3 
+% Output: R2S(3) R1S(2) 
+;
+T2 
+% Output: A1(1) R2S(4) R1S(2) 
+;
+T2 
+% Output: A1(1) R2S(4) R1S(2) 
+;
+
+! reset;
+
+% Output: R2S(3) R1S(1) 
+;
+T2 
+% Output: R2S(4) R1S(1) 
+;
+T3 
+% Output: R2S(5) R1S(1) 
+;
+T1 T3 
+% Output: R2S(3) R1S(2) 
+;
+
+% Output: R2S(3) R1S(2) 
+;
+T2 
+% Output: A1(1) R2S(4) R1S(2) 
+;
+
+% Output: A1(1) R2S(4) R1S(2) 
+;
+
+! reset;
+
+% Output: R2S(3) R1S(1) 
+;
+
+% Output: R2S(3) R1S(1) 
+;
+T2 
+% Output: R2S(4) R1S(1) 
+;
+T1 T3 
+% Output: A1(1) R2S(5) R1S(2) 
+;
+
+% Output: A1(1) R2S(5) R1S(2) 
+;
+
+% Output: A1(1) R2S(5) R1S(2) 
+;

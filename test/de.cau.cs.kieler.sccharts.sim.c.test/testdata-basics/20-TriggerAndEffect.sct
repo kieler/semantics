@@ -1,0 +1,10 @@
+scchart TriggerAndEffect {
+
+    input bool I;
+    output bool O = false;
+
+    initial state S1
+    --> S2 with I / O = true;
+    
+    state S2; 
+}

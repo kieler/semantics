@@ -1,0 +1,19 @@
+scchart Regions {
+
+    output bool O1 = false;
+    output bool O2 = false;
+
+    region R1:
+  
+    initial state S1
+    --> S2 with / O1 = true;
+    
+    state S2;
+    
+    region R2:
+    
+    initial state S3
+    --> S4 with / O2 = true;
+    
+    state S4;
+}
