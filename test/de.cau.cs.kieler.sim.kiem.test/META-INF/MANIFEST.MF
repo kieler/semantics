@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.semantics.test.common,
  org.eclipse.ui.ide,
  org.eclipse.swt,
- de.cau.cs.kieler.sim.benchmark
+ de.cau.cs.kieler.sim.benchmark,
+ de.cau.cs.kieler.sccharts.sim.c;bundle-version="0.1.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.part
