@@ -1,0 +1,25 @@
+@diagram[KLayLayered] false  
+scchart Connector {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  output bool A1;
+  output bool A2;
+  output bool A3;
+  output bool A4;
+
+  initial state S1
+  --> _3 with T1 / A1 = true
+  --> S2;
+
+  connector state _3
+  --> S3 immediate with T3 / A3 = true
+  --> S4 immediate with / A4 = true;
+
+  state S3;
+
+  state S4;
+
+  state S2
+  --> _3 immediate with T2 / A2 = true;
+}

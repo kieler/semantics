@@ -1,0 +1,11 @@
+@diagram[KLayLayered] false  
+@VHLayout
+scchart CountDelay {
+  input bool T;
+  output bool A = false;
+
+  initial state S1 
+  --> S2 with 5 T / A = true;
+    
+  state S2; 
+}  

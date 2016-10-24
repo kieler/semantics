@@ -1,0 +1,28 @@
+@diagram[KLayLayered] false  
+scchart History {
+
+  output int leaveState = 1;
+  output int State;
+
+  initial state M {
+ 
+    initial state S0{
+      entry / State = 0
+    }
+    --> S1;
+
+    state S1{
+      entry / State = 1
+    }
+    --> S2;
+
+    state S2{
+      entry / State = 2
+    }
+    --> S0;
+  }
+  --> MHist with State == leaveState / leaveState--; leaveState = (leaveState+3) % 3;
+
+  state MHist
+  --> M shallow history;
+}

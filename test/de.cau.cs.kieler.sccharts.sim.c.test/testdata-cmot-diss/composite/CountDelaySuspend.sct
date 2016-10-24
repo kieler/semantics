@@ -1,0 +1,21 @@
+@diagram[KLayLayered] false  
+@VHLayout
+scchart CountDelaySuspend "CountDelaySuspend" {
+  input bool T;
+  input bool S;
+  output bool A = false;
+  output int O = 0;
+
+  initial state S1 
+  {
+    immediate suspend S
+    
+    initial state S11
+    --> S12 with / O++;
+    state S12
+    --> S11;
+  }
+  --> S2 with 5 T / A = true;
+  
+  state S2;
+}
