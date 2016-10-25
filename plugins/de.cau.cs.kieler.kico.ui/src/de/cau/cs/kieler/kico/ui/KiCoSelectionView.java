@@ -632,7 +632,6 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public void updateViewOnClose(IWorkbenchPartReference ref) {
         if (ref != null) {
-
             IWorkbenchPart part = ref.getPart(true);
 
             if (part instanceof EditorPart) {
@@ -676,8 +675,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // }
 
                 if (clearAll) {
-                    // removeSelectedTransformationVisualization(activeEditorID);
-                    updateView(activeEditorID, new ArrayList<String>(), new ArrayList<String>());
                     notifySelectionChangeEventListener();
                     // Clear cache
                     KiCoSelectionAction.clearCache();
