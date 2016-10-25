@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.circuit.kivi
 
-import static java.lang.Math.toIntExact;
 import com.google.common.collect.HashMultimap
 import com.google.inject.Binder
 import com.google.inject.Guice
@@ -22,39 +21,41 @@ import com.google.inject.Scopes
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.KBackground
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KForeground
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.core.util.Maybe
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KBackground
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KForeground
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
+import de.cau.cs.kieler.sim.kiem.KiemEvent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
 import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
+import java.util.List
 import java.util.Set
+import org.eclipse.elk.core.util.Maybe
+import org.eclipse.elk.core.util.Pair
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
-import java.util.List
-import de.cau.cs.kieler.sim.kiem.IKiemEventListener
-import de.cau.cs.kieler.sim.kiem.KiemEvent
 
+import static java.lang.Math.toIntExact
 
 /**
  * @author fry 
@@ -218,8 +219,8 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	}
 
 	override notifyEvent(KiemEvent event) {
-		if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof de.cau.cs.kieler.core.util.Pair) {
-			val bla = event.getInfo() as de.cau.cs.kieler.core.util.Pair<Long, Long>
+		if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
+			val bla = event.getInfo() as Pair<Long, Long>
 			oldTick = tick
 			tick = bla.getFirst().longValue()
 			if (oldTick < tick) {

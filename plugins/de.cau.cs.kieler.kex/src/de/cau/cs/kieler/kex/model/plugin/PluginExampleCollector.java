@@ -21,8 +21,8 @@ import java.util.Map;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.elk.core.util.WrappedException;
 
-import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.kex.controller.ErrorMessage;
 import de.cau.cs.kieler.kex.model.Category;
 import de.cau.cs.kieler.kex.model.Example;
@@ -81,11 +81,11 @@ public class PluginExampleCollector extends ExampleCollector {
                     this.examplePool.put(exampleId, example);
                 }
             } catch (InvalidRegistryObjectException e) {
-                throw new WrappedException(e, "Error while loading example \""
-                        + element.getAttribute(PluginConstants.Example.ID) + "\".");
+                throw new WrappedException("Error while loading example \""
+                        + element.getAttribute(PluginConstants.Example.ID) + "\".", e);
             } catch (IllegalArgumentException e1) {
-                throw new WrappedException(e1, "Error while loading example \""
-                        + element.getAttribute(PluginConstants.Example.ID) + "\".");
+                throw new WrappedException("Error while loading example \""
+                        + element.getAttribute(PluginConstants.Example.ID) + "\".", e1);
             }
         }
     }
@@ -208,11 +208,11 @@ public class PluginExampleCollector extends ExampleCollector {
                     try {
                         return toExample(element);
                     } catch (InvalidRegistryObjectException e) {
-                        throw new WrappedException(e, ErrorMessage.LOAD_ERROR
-                                + element.getAttribute(PluginConstants.Example.ID) + "\".");
-                    } catch (IllegalArgumentException e1) {
-                        throw new WrappedException(e1, ErrorMessage.LOAD_ERROR
-                                + element.getAttribute(PluginConstants.Example.ID) + "\".");
+                        throw new WrappedException(ErrorMessage.LOAD_ERROR
+                                + element.getAttribute(PluginConstants.Example.ID) + "\".", e);
+                    } catch (IllegalArgumentException e) {
+                        throw new WrappedException(ErrorMessage.LOAD_ERROR
+                                + element.getAttribute(PluginConstants.Example.ID) + "\".", e);
                     }
                 }
             }

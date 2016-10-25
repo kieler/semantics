@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.scl,
  de.cau.cs.kieler.scl,
- de.cau.cs.kieler.esterel.kexpressions
+ de.cau.cs.kieler.esterel.kexpressions,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.esterel.sim.c,

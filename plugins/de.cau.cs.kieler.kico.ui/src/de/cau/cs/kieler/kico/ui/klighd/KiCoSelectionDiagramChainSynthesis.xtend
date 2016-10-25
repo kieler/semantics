@@ -13,25 +13,26 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd
 
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
-import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import java.util.Properties
 import javax.inject.Inject
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -89,14 +90,13 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
 
         val knode = model.createNode();
 
-        knode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
-        knode.setLayoutOption(LayoutOptions::SPACING, 25f);
-        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        knode.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        knode.setLayoutOption(Properties::THOROUGHNESS, 100)
-        knode.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
-        knode.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
-        knode.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+        knode.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
+        knode.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+        knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        knode.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
+        knode.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
+        knode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+        knode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
 
         var Transformation lastNode = null;
 

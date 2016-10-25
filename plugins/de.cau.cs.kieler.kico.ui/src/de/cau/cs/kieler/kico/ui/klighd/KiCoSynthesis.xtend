@@ -13,18 +13,17 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd
 
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
+import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.ArrayList
 import java.util.HashMap
@@ -32,7 +31,7 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
-
+import org.eclipse.elk.graph.KNode
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**

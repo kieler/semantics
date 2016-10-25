@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import org.apache.batik.util.RunnableQueue;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -36,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.svg.SVGDocument;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.Animation;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;

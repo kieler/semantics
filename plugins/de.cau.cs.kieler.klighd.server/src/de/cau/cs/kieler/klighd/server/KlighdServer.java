@@ -21,6 +21,12 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.elk.core.service.ElkServicePlugin;
+import org.eclipse.elk.core.util.ElkUtil;
+import org.eclipse.elk.graph.KGraphData;
+import org.eclipse.elk.graph.KGraphElement;
+import org.eclipse.elk.graph.KNode;
+import org.eclipse.elk.graph.impl.KGraphDataImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,14 +35,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
 
-import de.cau.cs.kieler.core.kgraph.KGraphData;
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kiml.service.KimlServicePlugin;
-import de.cau.cs.kieler.kiml.util.KimlUtil;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -163,7 +163,7 @@ public class KlighdServer extends HttpServer {
                 // write a copy of the view model kgraph to the selected file
                 EObject copy = EcoreUtil.copy(viewContext.getViewModel());
                 // persist layout options and friends
-                KimlUtil.persistDataElements((KNode) copy);
+                ElkUtil.persistDataElements((KNode) copy);
                 // remove transient klighd state
                 @SuppressWarnings("unchecked")
                 Iterator<KGraphElement> kgeIt =
@@ -215,7 +215,7 @@ public class KlighdServer extends HttpServer {
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
                         
-                        KimlServicePlugin.getDefault();
+                        ElkServicePlugin.getInstance();
                         
                         renderingResult =
                                 LightDiagramServices.renderOffScreen(mainModelParam, renderParam,

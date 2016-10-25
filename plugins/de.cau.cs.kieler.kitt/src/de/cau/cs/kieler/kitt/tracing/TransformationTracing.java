@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -28,7 +29,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kitt.KiTTPlugin;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;

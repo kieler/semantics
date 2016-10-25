@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -55,9 +56,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.StringInputStream;
 
-import com.google.common.collect.Lists;
-
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
@@ -69,21 +67,13 @@ import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
 import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
-import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
-import de.cau.cs.kieler.kiml.config.ILayoutConfig;
-import de.cau.cs.kieler.kiml.config.LayoutContext;
-import de.cau.cs.kieler.kiml.config.VolatileLayoutConfig;
-import de.cau.cs.kieler.kiml.options.Direction;
-import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.klighd.IViewer;
-import de.cau.cs.kieler.klighd.KlighdConstants;
-import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
@@ -911,23 +901,6 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     private void updatePinToggleButton() {
         pinToggleAction.setEnabled(selection != null);
         pinToggleAction.setChecked(pinnedTransformations.containsKey(recentEditor));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ILayoutConfig getLayoutConfig() {
-        ViewContext viewContext = getDiagramView().getViewContext();
-        // Assure that model chain is always layouted left to right
-        if (viewContext.getInputModel() instanceof ModelChain) {
-            return new CompoundLayoutConfig(Lists.newArrayList(
-                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
-                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
-                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
-        } else {
-            return super.getLayoutConfig();
-        }
     }
 
     /**

@@ -13,25 +13,23 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd
 
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
 import javax.inject.Inject
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -121,7 +119,7 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            node.setLayoutOption(KlighdProperties.EXPAND, true);
             val cornerRadius = 17; //if(!feature.isGroup) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;

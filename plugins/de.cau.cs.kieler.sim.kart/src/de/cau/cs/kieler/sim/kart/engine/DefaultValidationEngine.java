@@ -16,10 +16,10 @@ package de.cau.cs.kieler.sim.kart.engine;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.elk.core.util.Pair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.Utilities;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;

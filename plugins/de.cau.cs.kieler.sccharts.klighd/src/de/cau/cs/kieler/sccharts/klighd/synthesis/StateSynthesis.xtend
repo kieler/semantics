@@ -14,14 +14,10 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
-import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
@@ -30,10 +26,15 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
+import java.util.Properties
+import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -70,11 +71,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
 
-        node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-        node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-        node.setLayoutOption(LayoutOptions::SPACING, 1f);
-        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
-        node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+        node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.box");
+        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
+        node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
+//        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
+
+        node.initiallyExpand
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR
@@ -96,7 +98,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isInitial) {
             node.setInitialStyle
             if (USE_KLAY.booleanValue) {
-                node.setLayoutOption(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST);
+                node.setLayoutOption(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST);
             }
         }
         if (state.isFinal) {

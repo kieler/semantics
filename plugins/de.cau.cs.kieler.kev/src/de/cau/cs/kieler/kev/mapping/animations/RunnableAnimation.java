@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import org.eclipse.elk.core.util.Pair;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kev.mapping.Animation;
 
 /**

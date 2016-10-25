@@ -18,7 +18,8 @@ Require-Bundle: com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.s.sim.sj,
  de.cau.cs.kieler.sim.signals,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
- de.cau.cs.kieler.kico
+ de.cau.cs.kieler.kico,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.common.collect

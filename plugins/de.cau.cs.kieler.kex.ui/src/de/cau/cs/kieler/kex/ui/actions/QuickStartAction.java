@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorPart;
@@ -51,10 +50,6 @@ import de.cau.cs.kieler.kex.controller.ExampleManager;
 import de.cau.cs.kieler.kex.model.Example;
 import de.cau.cs.kieler.kex.model.SourceType;
 import de.cau.cs.kieler.kex.ui.KEXUIPlugin;
-import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.service.DiagramLayoutEngine;
-import de.cau.cs.kieler.kiml.service.LayoutManagersService;
-import de.cau.cs.kieler.kiml.ui.LayoutHandler;
 
 
 /**
@@ -230,19 +225,6 @@ public class QuickStartAction implements IIntroAction {
                     try {
                         IEditorPart editorPart = page.openEditor(new FileEditorInput(files[0]),
                                 defaultEditor.getId());
-                        if (autoLayout && LayoutManagersService.getInstance()
-                                .getManager(editorPart, null) != null) {
-                            IPreferenceStore preferenceStore = KimlUiPlugin.getDefault()
-                                    .getPreferenceStore();
-                            boolean animation = preferenceStore.getBoolean(
-                                    LayoutHandler.PREF_ANIMATION);
-                            boolean zoomToFit = preferenceStore.getBoolean(
-                                    LayoutHandler.PREF_ZOOM);
-                            boolean progressDialog = preferenceStore.getBoolean(
-                                    LayoutHandler.PREF_PROGRESS);
-                            DiagramLayoutEngine.INSTANCE.layout(editorPart, null, animation,
-                                    progressDialog, false, zoomToFit);
-                        }
                     } catch (PartInitException e) {
                         IStatus status = new Status(IStatus.WARNING,
                                 KEXUIPlugin.PLUGIN_ID,
