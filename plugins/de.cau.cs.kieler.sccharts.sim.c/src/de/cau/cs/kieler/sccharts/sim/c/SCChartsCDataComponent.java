@@ -17,7 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -284,6 +286,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
 
+    public List<String> getOutputNames() {
+        List<String> allOutputs = new ArrayList<String>();
+        allOutputs.addAll(outputSignalList);
+        allOutputs.addAll(outputVariableList);
+    	return allOutputs;
+        
+    }
+    
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the C execution.
      * 
@@ -358,15 +370,15 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         try {
             if (myModel != null && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
                 for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(myModel)) {
+                	String signalName = valuedObject.getName();
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            res.accumulate(signalName, JSONSignalValues.newValue(false));
                         } else {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            res.accumulate(signalName, JSONSignalValues.newValue(false));
                         }
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
-                        String signalName = valuedObject.getName();
                         if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
