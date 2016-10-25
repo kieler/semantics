@@ -483,13 +483,12 @@ public final class ModelUtil {
         
         // Get workspace relative path from absolute path
         String bundleLocation = bundle.getLocation();
-        if(bundleLocation.startsWith("reference:"))
-        	bundleLocation = bundleLocation.substring(10);
-        if(bundleLocation.startsWith("file:"))
-        	bundleLocation = bundleLocation.substring(5);
-        String relativeBundlePathString = absoluteBundlePathString.substring(bundleLocation.length());
+        String bundleName = new Path(bundleLocation).removeTrailingSeparator().lastSegment();
+        int afterBundleNameIndex = absoluteBundlePathString.indexOf(bundleName)+bundleName.length()+1;
+        String relativeBundlePathString = absoluteBundlePathString.substring(afterBundleNameIndex);
         IPath relativeBundlePath = new Path(relativeBundlePathString);
-    	// Get file in the project using the same relative path as in the bundle
+        
+        // Get file in the project using the same relative path as in the bundle
         workspaceLinkFile = project.getFile(relativeBundlePath);
         // delete old file
         if (override && workspaceLinkFile.exists()) {
