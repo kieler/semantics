@@ -45,11 +45,6 @@ public class JSONDataPool {
     /** The most current data pool. */
     private JSONObject dataPool;
 
-    /**
-     * The json merger for merging new data into the pool or for merging several deltas together.
-     */
-    private JSONMerger jsonMerger;
-
     /** The current pool counter up to DATA_DELTA_POOL_HISTORY_MAX. */
     private int poolCounter;
 
@@ -65,7 +60,6 @@ public class JSONDataPool {
         dataDeltaPool = new LinkedList<JSONObject>();
         dataDeltaPool.add(new JSONObject());
         dataPool = new JSONObject();
-        jsonMerger = new JSONMerger();
         poolCounter = 0;
     }
 
@@ -205,7 +199,7 @@ public class JSONDataPool {
             returnObject = new JSONObject();
             for (int c = poolCounterFrom; c <= poolCounterTo; c++) {
                 JSONObject jSONObj = dataDeltaPool.get(c);
-                returnObject = jsonMerger.mergeObjects(returnObject, jSONObj);
+                returnObject = JSONMerger.mergeObjects(returnObject, jSONObj);
             }
         } else {
             // filtered data
@@ -245,7 +239,7 @@ public class JSONDataPool {
             JSONObject baseObject = this.dataDeltaPool.get(0);
             JSONObject objectToRemove = this.dataDeltaPool.get(1);
             this.dataDeltaPool.remove(0);
-            JSONObject merged = jsonMerger.mergeObjects(baseObject, objectToRemove);
+            JSONObject merged = JSONMerger.mergeObjects(baseObject, objectToRemove);
             this.dataDeltaPool.set(0, merged);
             this.poolCounterDiff++;
             this.poolCounter--;
@@ -254,7 +248,7 @@ public class JSONDataPool {
         if (newData != null) {
             // merge new data
             this.dataDeltaPool.add(newData);
-            this.dataPool = jsonMerger.mergeObjects(this.dataPool, newData);
+            this.dataPool = JSONMerger.mergeObjects(this.dataPool, newData);
             this.poolCounter++;
         } else {
             // no change

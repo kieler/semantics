@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.DisplayedActionData
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -78,7 +78,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
 
     // -------------------------------------------------------------------------
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(TracingSynthesisOption.synthesisOption);
+        return TracingSynthesisOptions.synthesisOptions;
     }
     
     override public getDisplayedActions() {

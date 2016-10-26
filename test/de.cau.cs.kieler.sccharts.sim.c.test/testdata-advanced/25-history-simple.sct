@@ -5,7 +5,7 @@ scchart _20_history "20-history" {
   initial state A {
 
     initial state C
-    --> B / O;
+    --> B with / O;
 
     state B;
   }

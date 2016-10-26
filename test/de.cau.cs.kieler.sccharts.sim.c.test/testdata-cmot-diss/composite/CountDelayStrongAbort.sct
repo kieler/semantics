@@ -1,0 +1,18 @@
+@diagram[KLayLayered] false  
+@VHLayout
+scchart CountDelayStrongAbort {
+  input bool T;
+  output bool A = false;
+  output int O = 0;
+  
+  initial state S1 {
+    initial state S11
+    --> S12 immediate with / O++;
+    
+    state S12
+    --> S11;
+  }
+  o-> S2 with 5 T / A = true;
+  
+  state S2;
+} 

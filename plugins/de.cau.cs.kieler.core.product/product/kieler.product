@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.10.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.11.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
@@ -13,7 +13,7 @@ A research project on enhancing the model-based design of complex systems
 For more information, visit our website:
 http://www.informatik.uni-kiel.de/rtsys/kieler/
 
-Copyright 2014 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group
+Copyright 2016 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group
       </text>
    </aboutInfo>
 
@@ -24,23 +24,27 @@ Copyright 2014 by Kiel University, Department of Computer Science, Real-Time and
       <programArgs>--launcher.XXPermSize
 128m
 --launcher.XXMaxPermSize
-256m</programArgs>
+256m
+      </programArgs>
       <programArgsMac>-showsplash
 org.eclipse.platform
 --launcher.defaultAction
-openFile</programArgsMac>
+openFile
+      </programArgsMac>
       <vmArgs>-Xss4m
 -Xms512m
 -Xmn256m
 -Xmx1024m 
 -XX:PermSize=128m
--XX:MaxPermSize=256m</vmArgs>
+-XX:MaxPermSize=256m
+      </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -XstartOnFirstThread
--Xdock:icon=../Resources/kiel.icns</vmArgsMac>
+-Xdock:icon=../Resources/kiel.icns
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.gif" i32="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.gif" i48="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.gif" i64="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.gif" i128="/de.cau.cs.kieler.core.product/icons/foerde-logo-128.gif"/>
@@ -65,6 +69,7 @@ openFile</programArgsMac>
             winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -170,7 +175,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.kiml.graphviz.feature"/>
       <feature id="de.cau.cs.kieler.klighd.feature"/>
       <feature id="de.cau.cs.kieler.dependencies.feature"/>
-     <feature id="de.cau.cs.kieler.esterel.feature"/>
+      <feature id="de.cau.cs.kieler.esterel.feature"/>
       <feature id="de.cau.cs.kieler.sccharts.feature"/>
    </features>
 

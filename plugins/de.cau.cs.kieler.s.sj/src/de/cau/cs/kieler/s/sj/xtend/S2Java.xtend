@@ -51,6 +51,7 @@ import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -126,7 +127,7 @@ class S2Java {
 
     «includeHeader»
     «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
-        «(hostcode as StringAnnotation).values.head»
+        «(hostcode as StringAnnotation).values.head.removeEscapeChars»
     «ENDFOR»
     
     
@@ -324,14 +325,14 @@ class S2Java {
    }   
    
    // -------------------------------------------------------------------------   
-
-   // Host code without "..."
+   // Removes the first and last character from a String if these are matching quotation marks.
    def extractCode(String hostCodeString) {
-        hostCodeString.substring(1, hostCodeString.length-1);
-   }
-
-   def extractCode(TextExpression hostCode) {
-        hostCode.text.extractCode
+        if ((hostCodeString.startsWith("'") && hostCodeString.endsWith("'"))
+            || (hostCodeString.startsWith('"') && hostCodeString.endsWith('"'))) {
+            return hostCodeString.substring(1, hostCodeString.length - 1);
+        } else {
+            return hostCodeString
+        }
    }
    
    // Expand Host code.
@@ -340,7 +341,7 @@ class S2Java {
    }
    // Expand Text Expression
    def dispatch CharSequence expand(TextExpression expression) {
-        '''(«expression.text.extractCode»)'''
+        '''(«expression.text»)'''
    }
 
    // -------------------------------------------------------------------------   

@@ -71,7 +71,6 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
             // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger

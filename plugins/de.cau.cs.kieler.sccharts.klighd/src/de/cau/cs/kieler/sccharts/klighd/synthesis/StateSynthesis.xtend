@@ -122,6 +122,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     default:
                         node.addSimpleStateLabel(state.label).associateWith(state)
                 }
+            } else {
+                node.addEmptyStateLabel
             }
 
             // Add declarations

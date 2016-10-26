@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.circuit.features.CircuitFeatureGroup">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.circuit.features.CircuitFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.circuit.features.SeqSSAFeature">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.circuit.SSA_SCG2CircuitTransformation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.circuit.SeqSCG2SSA_SCGTransformation">
+      </productionTransformationClass>
+
+   </extension>
+
+</plugin>

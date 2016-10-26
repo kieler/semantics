@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.eso;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
@@ -31,12 +33,12 @@ public interface ITraceProvider {
      * load a trace from a file
      * 
      * @param fileName
-     *            name of the trace file
+     *            the trace file
      * @return List of traces
      * @throws KiemInitializationException
      *             thrown for any parse error
      */
-    List<ITrace> loadTrace(String fileName) throws KiemInitializationException, FileNotFoundException;
+    List<ITrace> loadTrace(IPath file) throws KiemInitializationException, FileNotFoundException;
 
     /**
      * 

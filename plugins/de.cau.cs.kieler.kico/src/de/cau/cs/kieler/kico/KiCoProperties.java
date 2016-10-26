@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import org.eclipse.emf.ecore.EObject;
+
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 
@@ -28,4 +30,8 @@ public final class KiCoProperties {
 
     public static final IProperty<CompilationResult> COMPILATION_RESULT =
             new Property<CompilationResult>("de.cau.cs.kieler.kico.klighd.compilation.result", null);
+    public static final IProperty<KielerCompilerContext> COMPILATION_CONTEXT = 
+            new Property<KielerCompilerContext>("de.cau.cs.kieler.kico.klighd.compilation.context", null);
+    public static final IProperty<EObject> RAW_INPUT_MODEL = 
+            new Property<EObject>("de.cau.cs.kieler.kico.klighd.compilation.input", null);
 }

@@ -1,0 +1,17 @@
+scchart hostcode {
+  int x;
+  output bool O; 
+  
+  initial state init {
+    entry / '/* Host Code */'
+  }
+  --> increase;
+  
+  state increase
+  --> done with x > 3
+  --> increase with / x = 'x + 1';
+  
+  state done {
+    entry / O = true;
+  };
+} 

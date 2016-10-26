@@ -268,6 +268,8 @@ public class SimpleCBeautifier {
 
         boolean stringMode = false;
 
+        boolean precompilerMode = false;
+
         int brackets = 0;
 
         boolean spaceBefore = false;
@@ -383,6 +385,20 @@ public class SimpleCBeautifier {
                 continue;
             }
             // String handling end
+
+            //////////////////////// Handle Precompiler
+            if (character == '#' && !precompilerMode) {
+                precompilerMode = true;
+            }
+            if (precompilerMode) {
+                if (character == '\n' && precompilerMode) {
+                    precompilerMode = false;
+                }
+                // in stringMode, just copy the characters
+                modifiedOutput.append(character);
+                continue;
+            }
+            // Precompiler handling end
             
             //////////////////////// Eliminate superfluous space characters
             if (character == ' ') {

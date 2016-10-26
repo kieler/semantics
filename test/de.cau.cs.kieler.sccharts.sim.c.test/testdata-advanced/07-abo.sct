@@ -17,7 +17,7 @@ scchart ABRO2 "ABRO" {
 
     final state dB;
   }
-  >-> done / O;
+  >-> done with / O;
 
   state done;
 }
