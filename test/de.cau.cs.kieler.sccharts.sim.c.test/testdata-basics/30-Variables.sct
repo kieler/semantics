@@ -1,4 +1,6 @@
 // Strings don't work in the simulation yet.
+// Floats don't work in simulation (KISEMA-1113, Always absent).
+// Valued signals don't work with ESO files and the JUnit tests.
 scchart Variables {
 
     output bool b = true;
