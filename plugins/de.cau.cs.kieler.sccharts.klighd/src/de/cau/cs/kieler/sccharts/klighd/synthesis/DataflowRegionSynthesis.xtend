@@ -113,7 +113,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region);
 
-//        node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100);

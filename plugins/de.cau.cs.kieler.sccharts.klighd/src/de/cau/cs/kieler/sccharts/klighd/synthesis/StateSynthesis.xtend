@@ -71,12 +71,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
 
-        node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.box");
+        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
         node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
 //        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
-
-        node.initiallyExpand
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR

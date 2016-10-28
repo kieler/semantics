@@ -38,6 +38,7 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.core.options.CoreOptions
 
 /** 
  * @author fry
@@ -132,6 +133,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
+        actorNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
 		actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
 		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.OUTSIDE);
 		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT, 20.0f)

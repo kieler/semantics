@@ -142,7 +142,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
 
         //knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        knode.setLayoutOption(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        knode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
 
         //knode.setLayoutOption(Properties::THOROUGHNESS, 100)
         knode.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);

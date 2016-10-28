@@ -98,7 +98,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     override KNode transform(ModelChain chainWrapper) {
         val chain = chainWrapper.getModels;
         val rootNode = createNode();
-        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT);
 
         if (!chain.empty) {

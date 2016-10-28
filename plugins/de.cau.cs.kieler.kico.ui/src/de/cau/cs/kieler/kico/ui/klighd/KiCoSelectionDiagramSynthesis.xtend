@@ -290,7 +290,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
             }
             // credits to SSM :-)
             if (feature.alternative) {
-                node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+                node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
                 node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
                 node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
             }

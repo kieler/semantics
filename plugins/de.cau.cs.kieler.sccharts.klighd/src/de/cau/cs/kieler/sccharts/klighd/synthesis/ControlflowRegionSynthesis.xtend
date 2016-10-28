@@ -67,12 +67,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = region.createNode().associateWith(region);
 
         if (USE_KLAY.booleanValue) {
-//            node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
+            node.setLayoutOption(CoreOptions::SPACING_LABEL, 5f);
             node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
         } else {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
@@ -134,11 +135,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
-//            node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
             node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
         } else {
-            node.addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
