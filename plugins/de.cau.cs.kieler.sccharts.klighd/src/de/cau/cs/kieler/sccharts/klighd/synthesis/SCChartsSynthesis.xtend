@@ -93,12 +93,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         return options.toList;
     }
 
-    override getDisplayedLayoutOptions() {
-        return newLinkedList(
-            specifyLayoutOption(CoreOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN]),
-            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
-        );
-    }
+//    override getDisplayedLayoutOptions() {
+//        return newLinkedList(
+//            specifyLayoutOption(CoreOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN]),
+//            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
+//        );
+//    }
            
     // -------------------------------------------------------------------------
     // The main entry transform function   
