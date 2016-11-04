@@ -61,6 +61,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.sccharts.sim.c.SCChartsCDataComponent;
 import de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.KartPlugin;
@@ -134,7 +135,7 @@ public abstract class KiemAutomatedJUnitTest {
      * by KART. This is configurable in the KART data component properties and need to be extracted
      * from the execution file.
      */
-    private static String errorSignalName = KartConstants.DEF_VAL_ERRORSTATE; // "errorState"
+    private static String errorSignalName = KartConstants.DEF_SIGNALVAR; // "errorSignal"
 
     // -------------------------------------------------------------------------
     // Private properties
@@ -156,9 +157,14 @@ public abstract class KiemAutomatedJUnitTest {
      */
     private static boolean firstTestFlag = true;
 
+    /**
+     * If a test file name contains this string, it is assumed to be a test that has to fail.
+     */
+    private static String mustFailName = "must-fail";
+    
     /** The current model file path. */
     private static String modelFilePathString = null;
-
+    
     /** The currently tested ESO file as specified by parameters. */
     private IPath currentEsoFile = null;
 
@@ -234,12 +240,12 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Number of times to rerun failed benchmarking tests. It may be desirable and more robust to
-     * rerun failing benchmarking tests a certain number of times and rerun these tests.
+     * rerun failing benchmarking tests a certain number of times.
      *
      * @return the number of times
      */
-    protected int rerunbenchmark() {
-        return 3;
+    protected int rerunBenchmark() {
+        return 2;
     }
 
     // -------------------------------------------------------------------------
@@ -437,7 +443,6 @@ public abstract class KiemAutomatedJUnitTest {
         // Get the trace property of KART
         DataComponentWrapper kartReplay = getKartReplayComponent();
         KiemProperty traceProperty = getProperty(KartConstants.TRACENUM, kartReplay);
-        int rerunBenchmark = rerunbenchmark();
 
         // -----------------------------------------------------------------------------------------
         // For all ESO files grab the number of executions (separated by
@@ -450,9 +455,31 @@ public abstract class KiemAutomatedJUnitTest {
 
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
-        if (!shouldSkip(null)) {
-            testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId(),
-                    rerunBenchmark);
+        if (!shouldSkip()) {
+            boolean mustFail = (mustFailName != null) && (currentEsoFile.toOSString().contains(mustFailName));
+            if (mustFail) {
+                boolean testFailed = false;
+                try {
+                    testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(),
+                            getPluginId(), rerunBenchmark());
+                } catch (AssertionError e) {
+                    // This test must fail so that running into this catch block means, everything
+                    // is peachy.
+                    testFailed = true;
+                    lastErrorMessage = null;
+                    // Leave a note in the output
+                    System.err.println("This test was intended to fail. This means everything is OK.");
+                }
+                if(!testFailed) {
+                    // If no error is thrown the test did not fail although it should have.
+                    // So we throw an error now.
+                    lastErrorMessage = "A test that must fail finished successfully. Other tests may have no significance.";
+                    fail(lastErrorMessage);
+                }
+            } else {
+                testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId(),
+                        rerunBenchmark());
+            }
         } else {
             // Skip due to previous error
             logger.info("Skipping File: " + currentEsoFile);
@@ -466,23 +493,20 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * Return true if an error has been detected and the stopOnError method suggests to stop on
      * errors (because it returns true). if stopOnError retruns false this method will always return
-     * false as well. If no error was detected yet, this method also will return false. The
-     * possibleErrorMessage is the result of testEsoFile which is null if no error has been
-     * detected. The variable lastErrorMessage must be reset to null in the initialization.
+     * false as well. If no error was detected yet, this method also will return false.
      *
      * @return true, if successful
      */
-    private boolean shouldSkip(String possibleErrorMessage) {
-        if (!stopOnError()) {
+    private boolean shouldSkip() {
+        if (stopOnError()) {
+            // The variable lastErrorMessage must be reset to null in the initialization.
+            if (lastErrorMessage != null) {
+                return true;
+            }
+            return false;
+        } else {
             return false;
         }
-        if (possibleErrorMessage != null) {
-            lastErrorMessage = possibleErrorMessage;
-        }
-        if (lastErrorMessage != null) {
-            return true;
-        }
-        return false;
     }
 
     // -------------------------------------------------------------------------
@@ -495,32 +519,19 @@ public abstract class KiemAutomatedJUnitTest {
      * @param traceProperty
      *            the trace property
      * @return a possible error string or null if no error
+     * @throws JSONException, AssertionError 
      */
-    private static String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
-            final String executionFileName, final String pluginId, final int rerunbenchmark) {
+    private static void testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
+            final String executionFileName, final String pluginId, final int rerunbenchmark)
+                    throws AssertionError {
 
-        boolean errorFlag = false;
         int benchmarkReRunCountdown = rerunbenchmark;
-        boolean benchmarkError = true;
-
-        String errorInformation = null;
+        boolean benchmarkError = false;
 
         // Get the corresponding model file
         IPath modelFilePath = modelFile.get(esoFilePath);
-
-        // Try to open it
-        // if (!KiemUtil.isHeadlessRun()) {
-        // openModelFile(modelFilePath);
-        // try {
-        // Thread.sleep(1000);
-        // } catch (InterruptedException e) {
-        // // ignore
-        // }
-        // }
-
-
-        while (benchmarkError && benchmarkReRunCountdown > 0) {
-            errorFlag = false;
+        do {
+            benchmarkError = false;
             
             // Set modelFile in execution manager
             // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
@@ -528,33 +539,41 @@ public abstract class KiemAutomatedJUnitTest {
             KiemPlugin.setCurrentModelFile(modelFilePath);
             logger.info("Model File: " + modelFilePath);
 
-            // initially set the error to false
-            benchmarkError = false;
-
             int numberOfTraces = KartPlugin.getNumberOfTraces(esoFilePath);
 
             for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
                 logger.info("Trace Number " + traceNumber);
 
                 // Set the current trace number
-                traceProperty.setValue(traceNumber + "");
+                traceProperty.setValue(String.valueOf(traceNumber));
                 BenchmarkTestDataComponent.setTrace(traceNumber);
                 // Now run the execution stepwise until it has stopped
 
                 pause();
+                // Initialize execution
                 if (kiemPlugin.initExecution()) {
                     pause();
+                    // Get execution
                     Execution execution = kiemPlugin.getExecution();
                     if (execution == null) {
                         throw new RuntimeException("KIEM cannot start execution. "
                                 + "Try to do this manually for the following scheduling file:'"
                                 + executionFileName + "'.");
                     }
+                    
+                    // Get names of outputs in the model.
+                    // Only these should be checked for errors.
+                    SCChartsCDataComponent scchartsDataComponent = getSCChartsCDataComponent();
+                    List<String> outputNames = null;
+                    if(scchartsDataComponent != null) {
+                        outputNames = scchartsDataComponent.getOutputNames();
+                    }
+                    
                     pause();
 
                     // At this point we know that the execution is not null
                     int tick = 0;
-                    while (execution.isStarted() && !errorFlag) {
+                    while (execution.isStarted()) {
                         logger.info("Tick " + tick);
 
                         if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
@@ -580,14 +599,13 @@ public abstract class KiemAutomatedJUnitTest {
                         pause();
                         while (!execution.isPaused() && execution.isStarted()) {
                             pause();
-                        }
+                        } 
                         // Now inspect the data pool
                         try {
-                            JSONObject jSONData = execution.getDataPool().getData(null,
-                                    poolCounter);
+                            JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
                             logger.debug(jSONData.toString());
                             if (jSONData != null) {
-
+    
                                 // Evaluate KART-Diff
                                 if (jSONData.has(KartConstants.CONFIGVAR)) {
                                     Object kartConfigContent = jSONData
@@ -614,21 +632,38 @@ public abstract class KiemAutomatedJUnitTest {
                                 if (jSONData.has(errorSignalName)) {
                                     Object errorContent = jSONData.get(errorSignalName);
                                     if (errorContent instanceof String) {
-                                        if (!((String) errorContent).equals("")) {
-                                            // !!! ERRROR DETECTED !!! //
-                                            execution.stopExecutionSync();
-                                            execution.cancel();
-                                            while (kiemPlugin.getExecution() != null) {
-                                                pause();
+                                        String errorContentString = (String) errorContent;
+                                        if (!errorContentString.equals("")) {
+                                            // Get names of outputs that were not correctly
+                                            // and check if these are actually outputs of the original model.
+                                            String[] errorOutputs = errorContentString.split(",");
+                                            List<String> errorOutputsOfModel = new ArrayList<String>();
+                                            for (String error : errorOutputs) {
+                                                if (outputNames == null || outputNames.contains(error)) {
+                                                    errorOutputsOfModel.add(error);
+                                                }
                                             }
-                                            errorFlag = true;
-                                            errorInformation = "Error (" + (String) errorContent
-                                                    + ") in tick " + tick + " of trace "
-                                                    + traceNumber + " of ESO file '"
-                                                    + esoFilePath.toString()
-                                                    + "' during execution '" + executionFileName
-                                                    + "'.";
-                                            break;
+                                            // Only throw an error if the output that was wrong,
+                                            // is actually declared as outputs variable in the original SCChart.
+                                            if (!errorOutputsOfModel.isEmpty()) {
+                                                // !!! ERRROR DETECTED !!! //
+                                                execution.stopExecutionSync();
+                                                execution.cancel();
+                                                while (kiemPlugin.getExecution() != null) {
+                                                    pause();
+                                                }
+                                                lastErrorMessage = "Error (" + String.join(",", errorOutputsOfModel)
+                                                        + ") in tick " + tick + " of trace "
+                                                        + traceNumber + " of ESO file '"
+                                                        + esoFilePath.toString()
+                                                        + "' during execution '" + executionFileName
+                                                        + "'.";
+                                                System.err.println(lastErrorMessage);
+                                                fail(lastErrorMessage);
+                                            } else {
+                                                logger.warn(errorContentString + " is not declared as output in the tested SCChart, "
+                                                        + "but were detected as incorrectly produced.");
+                                            }
                                         }
                                     }
                                 }
@@ -638,64 +673,42 @@ public abstract class KiemAutomatedJUnitTest {
                                             .get(BenchmarkTestDataComponent.ERRORMESSAGE);
                                     if (errorContent instanceof String) {
                                         if (!((String) errorContent).equals("")) {
-                                            // !!! ERRROR DETECTED !!! //
-                                            //execution.stopExecutionSync();
-                                            //execution.cancel();
-//                                            while (kiemPlugin.getExecution() != null) {
-//                                                pause();
-//                                            }
-                                            if (!errorFlag) {
-                                                errorFlag = true;
-                                                errorInformation = "Benchmark Error ("
-                                                        + (String) errorContent + ") in tick " + tick
-                                                        + " of trace " + traceNumber + " of ESO file '"
-                                                        + esoFilePath.toString()
-                                                        + "' during execution '" + executionFileName
-                                                        + "'.";
+                                            benchmarkError = true;
+                                            if(benchmarkReRunCountdown > 0) {
+                                                System.err.println("*** BENCHMARK ERROR *** - COUNT DOWN " + benchmarkReRunCountdown + " for model " + modelFilePath);
+                                                benchmarkReRunCountdown--;
+                                            } else {
+                                                // Claim this a real benchmark error now
+                                                lastErrorMessage = "Benchmark Error ("
+                                                      + (String) errorContent + ") in tick " + tick
+                                                      + " of trace " + traceNumber + " of ESO file '"
+                                                      + esoFilePath.toString()
+                                                      + "' during execution '" + executionFileName
+                                                      + "'.";
+                                                System.err.println("*** BENCHMARK ERROR *** - FAILING ");
+                                                System.err.println(lastErrorMessage);
+                                                fail(lastErrorMessage);
                                             }
-//                                            break;
                                         }
                                     }
                                 }
                             }
                         } catch (JSONException e) {
-                            logger.error(e.getMessage());
+                            e.printStackTrace();
+                            lastErrorMessage = e.getMessage();
+                            logger.error(lastErrorMessage);
                         }
                         tick++;
                     } // while executing
 
-                    // If an error occurred tell!
-                    if (errorFlag) {
-                        benchmarkError = true;
-                    }
-
                 } else {
-                    errorInformation = "KIEM cannot initialize execution. "
+                    lastErrorMessage = "KIEM cannot initialize execution. "
                             + "Try to do this manually for the following scheduling file:'"
                             + executionFileName + "'. Error message: " + KiemPlugin.getLastError();
-                    lastErrorMessage = errorInformation;
-                    throw new RuntimeException(errorInformation);
+                    throw new RuntimeException(lastErrorMessage);
                 }
             } // next trace
-
-            // ssm: deactivated benchmark errors
-            // basically, continuous compilation is broken.
-            // please let us find a better solution here.
-            benchmarkError = false;
-                    
-            if (benchmarkError) {
-                benchmarkReRunCountdown--;
-                System.out.println("*** BENCHMARK ERROR *** - COUNT DOWN " + benchmarkReRunCountdown + " for model " + modelFilePath);
-                if (benchmarkReRunCountdown == 0) {
-                    System.out.println("*** BENCHMARK ERROR *** - FAILING ");
-                    // Claim this a real benchmark error now
-                    fail(errorInformation);
-                }
-            }
-        }
-
-        // return a possible error message or null if no error
-        return errorInformation;
+        } while(benchmarkError);
     }
 
     // -------------------------------------------------------------------------
@@ -720,7 +733,7 @@ public abstract class KiemAutomatedJUnitTest {
         for (IPath bundleTestPath : bundleTestPaths) {
             // Search for all files in the test directory
             Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(),
-                    "*.*", false);
+                    "*.*", true);
             if (allBundleFilesUrl != null) {
                 logger.debug("add testpath:" + bundleTestPath.toString());
                 while (allBundleFilesUrl.hasMoreElements()) {
@@ -728,7 +741,7 @@ public abstract class KiemAutomatedJUnitTest {
                     try {
                         logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
 
-                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                        IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundle, bundleFileUrl,
                                 temporaryWorkspaceFolderName, false, true);
                         if (!workspaceFile.exists()) {
                             throw new RuntimeException(
@@ -738,18 +751,22 @@ public abstract class KiemAutomatedJUnitTest {
                         IPath filePath = workspaceFile.getFullPath();
                         allFiles.add(filePath);
                     } catch (CoreException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (2) :"
                                         + bundleFileUrl.toString());
                     } catch (MalformedURLException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (3) :"
                                         + bundleFileUrl.toString());
                     } catch (URISyntaxException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (4) :"
                                         + bundleFileUrl.toString());
                     } catch (IOException e) {
+                        e.printStackTrace();
                         throw new RuntimeException(
                                 "Cannot create temporary workspace link for the following bundle file (5) :"
                                         + bundleFileUrl.toString());
@@ -824,7 +841,7 @@ public abstract class KiemAutomatedJUnitTest {
                     fileString = "file://" + fileString.replace(" ", "%20");
                     bundleFileUrl = new URI(fileString).toURL();
                     logger.debug("FileUrl:" + bundleFileUrl.toString());
-                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundleFileUrl,
+                    IFile workspaceFile = ModelUtil.createLinkedWorkspaceFile(bundle, bundleFileUrl,
                             temporaryWorkspaceFolderName, false, true);
                     if (!workspaceFile.exists()) {
                         throw new RuntimeException(
@@ -1106,6 +1123,22 @@ public abstract class KiemAutomatedJUnitTest {
                 "KART DataComponent (" + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
                         + ") was not loaded. The KART Plugin must be added to the run configuration "
                         + "together with all dependend plugins.");
+    }
+    
+    /**
+     * Gets the SCChartsCData component.
+     * 
+     * @return the component
+     */
+    private static SCChartsCDataComponent getSCChartsCDataComponent() {
+        List<DataComponentWrapper> dataComponentWrapperList = kiemPlugin
+                .getDataComponentWrapperList();
+        for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
+            if(dataComponentWrapper.getDataComponent() instanceof SCChartsCDataComponent) {
+                return (SCChartsCDataComponent)dataComponentWrapper.getDataComponent();
+            }
+        }
+        return null;
     }
 
     // -------------------------------------------------------------------------

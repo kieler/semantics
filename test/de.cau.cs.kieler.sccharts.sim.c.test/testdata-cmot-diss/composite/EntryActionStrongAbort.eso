@@ -1,0 +1,67 @@
+! reset;
+
+% Output: 
+;
+
+% Output: A1(1) 
+;
+
+% Output: A1(1) 
+;
+
+% Output: A1(1) 
+;
+T1 
+% Output: A1(1) A2(1) 
+;
+
+% Output: A1(1) A2(1) 
+;
+
+! reset;
+T1 
+% Output: 
+;
+T1 
+% Output: A1(1) 
+;
+T1 
+% Output: A1(1) A2(1) 
+;
+T1 
+% Output: A1(1) A2(1) 
+;
+T1 
+% Output: A1(1) A2(1) 
+;
+
+! reset;
+T2 
+% Output: 
+;
+T2 
+% Output: A1(1) 
+;
+T2 
+% Output: A1(1) 
+;
+T2 
+% Output: A1(1) 
+;
+T2 
+% Output: A1(1) 
+;
+
+! reset;
+T1 T2 
+% Output: 
+;
+T1 T2 
+% Output: A1(1) 
+;
+T1 T2 
+% Output: A1(1) 
+;
+T1 T2 
+% Output: A1(1) 
+;

@@ -1,0 +1,16 @@
+@diagram[KLayLayered] false  
+@VHLayout
+scchart DeferredTransition {
+  input bool T1;
+  input bool T2;
+  output bool O = false;
+  
+  initial state S1
+  --> S2 deferred with T1
+  --> S2 with T2 ;
+
+  state S2
+  --> S3 immediate with / O = true;
+  
+  state S3; 
+} 

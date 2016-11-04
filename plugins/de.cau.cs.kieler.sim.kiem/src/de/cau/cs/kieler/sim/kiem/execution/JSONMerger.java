@@ -31,16 +31,7 @@ public class JSONMerger {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new jSON merger.
-     */
-    public JSONMerger() {
-
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Merges two JSON objects together (recursively), with values from "merge" replacing values in
+     * Merges two JSON objects together, with values from "merge" replacing values in
      * "base" to produce a new object.
      * 
      * @param base
@@ -53,36 +44,21 @@ public class JSONMerger {
      * @throws JSONException
      *             if the two objects can't be merged for some reason.
      */
-    public JSONObject mergeObjects(final JSONObject base, final JSONObject merge)
+    public static JSONObject mergeObjects(final JSONObject base, final JSONObject merge)
             throws JSONException {
         // Clone the initial object (JSONObject doesn't support "clone").
-
-        // JSONObject clone = new JSONObject(base, JSONObject.getNames(base));
         JSONObject clone = new JSONObject(base.toString());
-        // Walk parameter list for the merged object and merge recursively.
+        
+        // Walk parameter list for the merged object and add all fields to the base object.
         String[] fields = JSONObject.getNames(merge);
         if (fields != null && fields.length > 0) {
             for (String field : fields) {
-                // opt = get object if exists otherwise set to null
-                Object existing = clone.opt(field);
-                // here the object does exists
+                // Get value of the field.
                 Object update = merge.get(field);
-                if (existing == null || update == null) {
-                    // New custom config, not referenced in the prototype, or
-                    // Removing a pre-configured value.
-                    clone.put(field, update);
-                } else {
-                    // Merge if object type is JSONObject.
-                    if (update instanceof JSONObject && existing instanceof JSONObject) {
-                        clone.put(field, mergeObjects((JSONObject) existing, (JSONObject) update));
-                    } else {
-                        // Otherwise we just overwrite it.
-                        clone.put(field, update);
-                    }
-                }
-            } // next field
-        } // end if there are fields to add
+                // Add the field to the base object or replace a former value
+                clone.put(field, update);
+            }
+        }
         return clone;
     }
-
 }

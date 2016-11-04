@@ -1,0 +1,15 @@
+@diagram[KLayLayered] false  
+scchart DuringAction {
+  input bool T1, T2;
+  output int A1, A2, A3, A4;
+   
+   initial state S1
+   --> S2;
+   
+   state S2 {
+     during / A1 += 1;
+     immediate during / A2 += 1;
+     during T1 / A3 += 1;
+     immediate during T2 / A4 += 1;
+   };
+}
