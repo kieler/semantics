@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.0"?>
+<?eclipse version="3.4"?>
 
 <!--
 -->
 
 <plugin>
+   <extension-point id="de.cau.cs.kieler.kicool.system" name="KIELER Compiler Transformation System" schema="schema/de.cau.cs.kieler.kicool.system.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KiCool -->
@@ -12,6 +13,13 @@
             uri="http://kieler.cs.cau.de/kicool/0.1.0"
             class="de.cau.cs.kieler.kicool.KiCoolPackage"
             genModel="model/KiCool.genmodel"/>
+   </extension>
+   
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.kico">
+      </TransformationSystem>
    </extension>
 
 </plugin>

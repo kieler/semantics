@@ -45,6 +45,8 @@ class ToolbarSystemCombo extends ControlContribution {
     }
 
     public def void update(int defaultIndex) {
+        if (combo == null) return;
+        
         combo.removeAll();
         items.forEach[combo.add(it)]
         combo.setTextLimit(26 + 10);

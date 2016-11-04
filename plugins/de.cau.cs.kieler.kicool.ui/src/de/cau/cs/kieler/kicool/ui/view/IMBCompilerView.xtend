@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.ViewContext
 import org.eclipse.core.runtime.IProgressMonitor
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * @author ssm
@@ -40,10 +41,6 @@ import org.eclipse.core.runtime.IProgressMonitor
 class IMBCompilerView extends DiagramViewPart {
     
     private ToolbarSystemCombo combo
-    
-    def IMBCompilerView() {
-        super
-    }
     
     
     /**
@@ -93,12 +90,17 @@ class IMBCompilerView extends DiagramViewPart {
     }
     
 
-    private def void updateView(int activeEditorID, List<String> visibleFeatureIds, List<String> preferrdTransformationIds) {
+    private def void updateView() {
         val properties = new KlighdSynthesisProperties();
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
             "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
+                
+        combo.items.clear
+        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
+        combo.update(0)
+        
 //        updateDiagram(systemModel, properties);
 //        updateSelectionTransformationVisualization(activeEditorID);
 //        notifySelectionChangeEventListener();
@@ -120,6 +122,7 @@ class IMBCompilerView extends DiagramViewPart {
                 val currentPartName = editorPart.getPartName
                 
 //                updateCompileChainCombo(editorTypeID, currentEditorId);
+                updateView()
             }
         }
     }
