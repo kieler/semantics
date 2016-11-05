@@ -37,6 +37,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -154,14 +156,17 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
+            
+
+
 
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
-                //duringAction.setTrigger(weakSuspend.trigger.copy)
-                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
-                duringAction.addEffect(weakSuspendFlag.assign(weakSuspendFlag.reference.or(weakSuspend.trigger.copy)))
+                // NOT needs to be relative write because it is sequentially AFTER setting to FALSE!
+                // duringAction.addEffect(weakSuspendFlag.assign(weakSuspendFlag.reference.or(weakSuspend.trigger.copy)))
+                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
                 state.localActions.remove(weakSuspend)
             }
 
@@ -192,6 +197,14 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
+                    //val equalsExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+                    //equalsExpression.operator = OperatorType::EQ
+                    //val equalsExpression = createOperatorExpression(OperatorType::LOGICAL_OR);
+                    //val equalsExpression = createEQExpression
+                    //equalsExpression.add(stateBookmark.reference.copy)
+                    //equalsExpression.add(stateBookmark.reference.copy)
+                    //equalsExpression.add(counter.createIntValue.copy)
+                    //equalsExpression.add(counter.createIntValue.copy)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     
@@ -200,8 +213,9 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
         
-                    // Only if not a final state            
-                    if (!subState.final) {
+                    // Only if not a final state OR a  final state on top-level-scope of WeakSuspend
+                    // NEW: || subState.parentRegion.parentState == state            
+                    if (!subState.final || subState.parentRegion.parentState == state) {
                         val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
                         weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
                         weakSuspendTransition.setLowestPriority
@@ -214,6 +228,26 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     }
                 }
             }
+            
+            
+
+            // NEW:            
+            // WS Termination region (IF state can be left by termination!)
+            // should only terminate if no WS trigger holds
+
+            // If the state has outgoing terminations, we need to finalize the during
+            // actions in case we end the states over these transitions
+            val needAuxTermRegion = ((state.outgoingTransitions.filter(e|e.typeTermination).length > 0 || state.isRootState) && state.regionsMayTerminate)
+            if (needAuxTermRegion) {
+                val auxTermRegion = state.createControlflowRegion(GENERATED_PREFIX + "wsAuxTermination");
+                val noTermS = auxTermRegion.createInitialState(GENERATED_PREFIX + "wsNoTerm");
+                val termS = auxTermRegion.createFinalState(GENERATED_PREFIX + "wsTerm");
+                val t1 = noTermS.createImmediateTransitionTo(termS);
+                val t2 = termS.createTransitionTo(noTermS);
+                t1.trigger = not(weakSuspendFlag.reference)
+                t2.trigger = weakSuspendFlag.reference
+            }
+            
         }
     }
 
