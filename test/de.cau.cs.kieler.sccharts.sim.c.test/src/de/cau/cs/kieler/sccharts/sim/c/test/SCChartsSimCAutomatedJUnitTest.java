@@ -51,9 +51,6 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     protected IPath getBundleTestPath() {
         return null;
-//        return new Path("knowntofail");
-//        return new Path("testdata");
-//        return new Path("inprogress");
     }
     
     /**
@@ -68,9 +65,9 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
         // Add simple tests
         paths.add(new Path("/testdata-simple/"));
         // Add tests that are based on cmot's diss (cmot-diss > images > sccharts > features)
-//        paths.add(new Path("/testdata-cmot-diss/simple/"));
-//        paths.add(new Path("/testdata-cmot-diss/complex/"));
-//        paths.add(new Path("/testdata-cmot-diss/composite/"));
+        paths.add(new Path("/testdata-cmot-diss/simple/"));
+        paths.add(new Path("/testdata-cmot-diss/complex/"));
+        paths.add(new Path("/testdata-cmot-diss/composite/"));
         // Add more complex tests
         paths.add(new Path("/testdata-advanced/"));
         return paths;

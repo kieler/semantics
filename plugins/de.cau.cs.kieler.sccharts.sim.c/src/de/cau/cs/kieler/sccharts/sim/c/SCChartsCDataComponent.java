@@ -40,6 +40,7 @@ import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.State;
@@ -502,6 +503,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // reset compile time and accumulate
             compileTime = 0;
 
+            // Check for errors
+            for(KielerCompilerException e : highLeveleCompilationResult.getPostponedErrors()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (high-level synthesis)", true, e);
+            }
+            for(KielerCompilerException e : highLeveleCompilationResult.getPostponedWarnings()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (high-level synthesis)", true, e);
+            }
+            
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
             if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
@@ -529,6 +538,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
 //            System.out.println("13");
 
+            // Check for errors
+            for(KielerCompilerException e : lowLevelCompilationResult.getPostponedErrors()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (low-level synthesis)", true, e);
+            }
+            for(KielerCompilerException e : lowLevelCompilationResult.getPostponedWarnings()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (low-level synthesis)", true, e);
+            }
+            
             String cSCChartCCode = lowLevelCompilationResult.getString();
 //            System.out.println("14 " + cSCChartCCode);
             if (cSCChartCCode == null) {

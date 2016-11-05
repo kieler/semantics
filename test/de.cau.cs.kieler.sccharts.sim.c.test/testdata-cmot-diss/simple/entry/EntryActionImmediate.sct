@@ -5,7 +5,7 @@ scchart EntryAction {
   output bool A1 = false;
   
   initial state S0
-  --> S1;
+  --> S1 immediate;
   
   state S1 {
     entry / Ae1 = true;

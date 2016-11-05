@@ -1,3 +1,4 @@
+// Does not work: Exit actions are activated too early
 @diagram[KLayLayered] false  
 @VHLayout  
 scchart ExitAction {
@@ -9,7 +10,7 @@ scchart ExitAction {
   state S1 {
     exit / Ae1 = true;
   }
-  --> S2 with / A2 = true;
+  --> S2 immediate with / A2 = true;
 
   state S2;
 }

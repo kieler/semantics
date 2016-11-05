@@ -1,3 +1,6 @@
+// behaves wrong (compare with report1311)
+// (does not deferre inner behaviour, only aborts)
+
 @diagram[KLayLayered] false  
 @VHLayout
 scchart DeferredTransition "DeferredTransition-deep" {

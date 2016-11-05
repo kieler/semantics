@@ -1,0 +1,47 @@
+// Does not work: Transition with trigger T3 is never taken
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+scchart ComplexFinalStateHierarchy {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  input bool T4;
+  output bool A1 = false;
+
+  region " ":
+
+  initial state M {
+
+    region "Region 3":
+
+    initial state S5
+    --> S6 with T3;
+
+    final state S6
+    --> S5 with T3
+    --> S7 with T4;
+    
+    final state S7 { initial state S8 -->S9;
+      final state S9 --> S8 immediate with T4;
+    } 
+    >-> S5;
+
+    region "Region 1":
+
+    initial state S1
+    --> S2 with T1;
+
+    final state S2;
+
+    region "Region 2":
+
+    initial state S3
+    --> S4 with T2;
+
+    final state S4;
+  }
+  >-> F with / A1 = true;
+
+  final state F;
+} 

@@ -1,0 +1,23 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN //@HVLayout
+scchart AbortComplexityWeak {
+  input bool R;
+  output int O;
+  output int O2;
+  output bool A;
+
+  region Main " ":
+
+  initial state S {
+
+    initial state I
+    --> S with / O++;
+
+    state S
+    --> I immediate with / O2++;
+  }
+  --> F with R / A = true; O2++;
+
+  state F;
+}

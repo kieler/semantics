@@ -1,0 +1,24 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT //@HVLayout
+scchart AbortMixedDelayedStrongAndTermination {
+  input bool I1;
+  output bool O1;
+  output bool O2;
+  output bool A;
+
+  region Main " ":
+
+  initial state S {
+
+    initial state I
+    --> F immediate with / A = true;
+    final state F;
+  }
+  o-> S1 with I1 / O1 = true
+  >-> S2 immediate with / O2 = true;
+
+  state S1;
+
+  state S2;
+}

@@ -1,0 +1,27 @@
+// Transition from S11 to S12 is never taken
+// even if T1 is true
+@diagram[KLayLayered] false  
+@layout[direction] RIGHT  
+scchart StrongMixedDelayedAndImmediate {
+  input bool T1;
+  input bool T2a;
+  input bool T2b;
+  output bool A = false;
+  output bool O1 = false;
+  output bool O2 = false;
+
+  region Main " ":
+
+  initial state S1 {
+
+      initial state S11
+      --> S12 immediate with T1 / A = true;
+
+     final state S12;
+
+  }
+  o-> S2 immediate with T2a / O2 = true
+  o-> S2 with T2b / O1 = true;
+  
+  final state S2;
+}

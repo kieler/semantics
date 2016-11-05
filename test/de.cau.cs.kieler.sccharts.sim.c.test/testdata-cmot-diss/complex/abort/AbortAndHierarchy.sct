@@ -1,0 +1,32 @@
+scchart Hierarchy {
+    input bool I;
+    output bool O1, O2, O3, O4;
+    output bool A;
+
+    initial state S0 {
+      initial state S1 {
+        initial state S2 {
+          initial state S3
+          --> S4 with / O1 = true;
+          
+          final state S4;
+        }
+        >-> S5;
+        
+        state S5
+        --> S6 with / O2 = true;
+        
+        final state S6;
+      }
+      >-> S7;
+      
+      state S7
+      --> S8 with / O3 = true;
+      
+      final state S8;
+    }
+    o-> S9 immediate with I / A = true
+    >-> S9 with / O4 = true;
+    
+    state S9;
+}

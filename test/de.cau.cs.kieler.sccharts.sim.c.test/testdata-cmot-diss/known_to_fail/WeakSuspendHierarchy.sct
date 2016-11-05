@@ -1,0 +1,38 @@
+// Compilation error
+
+@diagram[KLayLayered] false  
+scchart WeakSuspendHierarchy {
+  input bool WS;
+  @hide
+  input bool I;
+  @hide
+  output signal O; 
+  @hide
+  output signal O2;
+  @hide
+  output signal O3;
+  
+  weak suspend WS;
+
+  initial state S1
+  --> S2;
+
+  state S2 {
+
+    initial state S21
+    --> S22 with / O;
+ 
+    state S22;
+
+  }
+  --> S3 immediate with I / O2;
+  
+  state S3 {
+    initial state S31
+    --> S32 immediate with / O3; 
+
+    state S32;
+
+  };
+}   
+       

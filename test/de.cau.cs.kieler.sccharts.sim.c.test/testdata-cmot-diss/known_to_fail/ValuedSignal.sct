@@ -1,7 +1,9 @@
+// Valued signals don't work in the JUnit test
+// because they don't work in ESO files 
 @diagram[KLayLayered] false  
 scchart ValuedSignal {
-  output signal int x = 1 combine +;
-  output signal int y = 2 combine +; 
+  output signal int x combine +;
+  output signal int y combine +; 
 
   region R1: 
  

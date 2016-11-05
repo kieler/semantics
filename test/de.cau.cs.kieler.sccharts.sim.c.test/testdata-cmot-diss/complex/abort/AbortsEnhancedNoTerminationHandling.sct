@@ -1,0 +1,33 @@
+@diagram[KLayLayered] false  
+@layout[direction] DOWN  
+@diagram[Declarations] false  
+
+scchart AbortsEnhancedNoTerminationHandling {
+  output bool S1toS2;
+  output bool S2toS3;
+  input bool S1trig;
+  output bool S1act;
+  input bool W1trig;
+  output bool W1act;
+  output bool N1act;
+
+  initial state M {
+
+    initial state S1
+    --> S2 with / S1toS2 = true;
+
+    state S2
+    --> S3 with / S2toS3 = true;
+
+    final state S3;
+  }
+  o-> S1 immediate with S1trig / S1act  = true
+  --> W1 immediate with W1trig / W1act  = true
+  >-> N with / N1act  = true;
+ 
+  state S1;
+  
+  state W1;
+
+  state N;
+}
