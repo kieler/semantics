@@ -72,8 +72,8 @@ class KExpressionsComplexCreateExtensions {
             return expressionSecond
         }
         val addExpression = createMultExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
+        addExpression.subExpressions.add(expressionFirst)
+        addExpression.subExpressions.add(expressionSecond)
         addExpression
     }
 
@@ -83,8 +83,8 @@ class KExpressionsComplexCreateExtensions {
             return expressionSecond
         }
         val addExpression = createMaxExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
+        addExpression.subExpressions.add(expressionFirst)
+        addExpression.subExpressions.add(expressionSecond)
         addExpression
     }
 
@@ -94,16 +94,16 @@ class KExpressionsComplexCreateExtensions {
             return expressionSecond
         }
         val addExpression = createMinExpression()
-        addExpression.add(expressionFirst)
-        addExpression.add(expressionSecond)
+        addExpression.subExpressions.add(expressionFirst)
+        addExpression.subExpressions.add(expressionSecond)
         addExpression
     }
     
     // Create an EQ Expression.
     def OperatorExpression eq(Expression first, Expression second) {
         val equalsExpression = createEQExpression
-        equalsExpression.add(first)
-        equalsExpression.add(second)
+        equalsExpression.subExpressions.add(first)
+        equalsExpression.subExpressions.add(second)
         equalsExpression
     }
     
