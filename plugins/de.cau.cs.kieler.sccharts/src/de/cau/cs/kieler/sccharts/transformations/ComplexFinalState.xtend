@@ -167,7 +167,8 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             if (!allFinalStates) {
                 val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
                     uniqueName
-                termVariable.setInitialValue(FALSE)
+                state.createEntryAction.addAssignment(termVariable.assign(FALSE))    
+                //termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
                     termVariable.setInitialValue(TRUE)
                 }
