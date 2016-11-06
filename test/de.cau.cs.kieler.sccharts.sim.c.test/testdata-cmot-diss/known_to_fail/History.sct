@@ -1,4 +1,8 @@
-@diagram[KLayLayered] false  
+// ???
+// Error (leaveState) in tick 3 of trace 0
+// Validation error: The signal(s) leaveState were not recorded, but generated in the simulation
+
+@layout[direction] DOWN  
 scchart History {
 
   output int leaveState = 1;

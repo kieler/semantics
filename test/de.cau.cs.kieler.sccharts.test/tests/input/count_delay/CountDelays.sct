@@ -1,5 +1,3 @@
-// Transformed model is not savable.
-// See KISEMA-1067
 @Transformation COUNTDELAY
 scchart CountDelay {
   

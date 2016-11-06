@@ -1,4 +1,5 @@
 // Edge case from Semantics Meeting 2015-11-24
+// Throws a compilation error.
 @Transformation WEAKSUSPEND
 scchart WeakSuspensionAndHierarchy {
 

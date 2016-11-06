@@ -1,5 +1,5 @@
 // This model is compiled non ASC schedulable.
-// See also tickets KISEMA-987, -1074, -970
+// See also tickets KISEMA-987, 1074, 970
 @Transformation WEAKSUSPEND
 scchart WeakSuspension {
   input bool WS;

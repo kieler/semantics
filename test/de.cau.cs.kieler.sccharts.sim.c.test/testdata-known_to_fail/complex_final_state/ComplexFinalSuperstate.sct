@@ -1,4 +1,4 @@
-// This model is somehow not ASC schedulable
+// Not ASC schedulable
 @Transformation COMPLEXFINALSTATE
 scchart ComplexFinalSuperstate {
   input bool I1;

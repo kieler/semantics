@@ -1,20 +1,16 @@
 
 @Transformation STATIC
 scchart StaticVariableScopes {
+  output int OXA;
+  output int OXB;
   int StaticVariableScopes_null_A___x = 100;
   int StaticVariableScopes_null_B___x = - 100;
 
-  initial state A {
-
-    initial state A0;
-  }
+  initial state A
   --> B with / StaticVariableScopes_null_A___x =
-  StaticVariableScopes_null_A___x + 1;
+  StaticVariableScopes_null_A___x + 1; OXA = StaticVariableScopes_null_A___x;
 
-  state B {
-
-    initial state B0;
-  }
+  state B
   --> A with / StaticVariableScopes_null_B___x =
-  StaticVariableScopes_null_B___x - 1;
+  StaticVariableScopes_null_B___x - 1; OXB = StaticVariableScopes_null_B___x;
 }
