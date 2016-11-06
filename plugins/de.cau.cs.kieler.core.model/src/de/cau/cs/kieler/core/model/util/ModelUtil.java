@@ -482,11 +482,7 @@ public final class ModelUtil {
         IPath absoluteBundlePath = new Path(absoluteBundlePathString);
         
         // Get workspace relative path from absolute path
-        String bundleLocation = bundle.getLocation();
-        String bundleName = bundle.getSymbolicName();//new Path(bundleLocation).removeTrailingSeparator().lastSegment();
-        System.out.println("Bundle Name: "+bundleName);
-        System.out.println("bundle location: "+bundleLocation);
-        System.out.println("absoluteBundlePathString: "+absoluteBundlePathString);
+        String bundleName = bundle.getSymbolicName();
         int afterBundleNameIndex = absoluteBundlePathString.indexOf(bundleName)+bundleName.length()+1;
         String relativeBundlePathString = absoluteBundlePathString.substring(afterBundleNameIndex);
         IPath relativeBundlePath = new Path(relativeBundlePathString);
