@@ -61,9 +61,8 @@ class KiCoolRegistration {
         
         val Bundle bundle = Platform.getBundle(KiCoolActivator.PLUGIN_ID);
         val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
-        val absolutePath = FileLocator.resolve(bundleFileUrl)       
         
-        val uri = URI.createFileURI(absolutePath.toString)
+        val uri = URI.createURI(bundleFileUrl.toString, false)
         val Resource resource = new ResourceSetImpl().createResource(uri);
         resource.load(Collections.EMPTY_MAP);
         if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {

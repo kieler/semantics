@@ -53,6 +53,9 @@ class IMBCompilerView extends DiagramViewPart {
         val toolBarManager = bars.getToolBarManager
         combo = new ToolbarSystemCombo("System Combo")
         toolBarManager.add(combo)
+        combo.items.clear
+        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
+        combo.update(0)
 
         // Create an IPartListener2
         val pl = new IPartListener2() {
@@ -93,13 +96,10 @@ class IMBCompilerView extends DiagramViewPart {
     private def void updateView() {
         val properties = new KlighdSynthesisProperties();
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-            "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
+            "de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis");
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
                 
-        combo.items.clear
-        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
-        combo.update(0)
         
 //        updateDiagram(systemModel, properties);
 //        updateSelectionTransformationVisualization(activeEditorID);

@@ -326,7 +326,7 @@
              point="org.eclipse.ui.views">
           <view
                 class="de.cau.cs.kieler.kicool.ui.view.IMBCompilerView"
-                icon="icons/script_gear.png"
+                icon="icons/IMBC_gear.png"
                 id="de.cau.cs.kieler.kicool.ui.view.IMBCompiler"
                 name="IMB Compiler"
                 restorable="true">
