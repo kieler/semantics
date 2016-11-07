@@ -37,12 +37,12 @@
          
          @Wrapper ResetClock, clockVariable;
          output bool resetClock; -->
-<#macro ResetClock clockVariable autoFalse = 'true'>
+<#macro ResetClock clockVariable autoFalse = true>
     <@output>
         // ResetClock
         if(${varname}){
             ${clockVariable}Counter = millis();
-            <#if autoFalse == 'true'>
+            <#if autoFalse>
             ${varname} = false;
             </#if>
         }

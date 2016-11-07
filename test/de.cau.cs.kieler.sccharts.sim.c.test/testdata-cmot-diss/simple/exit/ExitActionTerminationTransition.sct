@@ -1,0 +1,29 @@
+scchart ExitAction {
+  output bool Ae1;
+  output bool A1;
+
+  initial state init {
+
+    region R1:
+      initial state S1
+      --> S2;
+    
+      final state S2 {
+        exit / Ae1 = true;
+      };
+      
+    region R2:
+    
+      initial state S1
+      --> S2;
+      
+      state S2
+      --> S3;
+      
+      final state S3;
+  }
+  >-> fin with / A1 = true;
+  
+  final state fin;
+  
+}

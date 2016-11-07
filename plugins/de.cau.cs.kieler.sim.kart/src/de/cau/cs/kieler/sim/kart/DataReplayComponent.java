@@ -157,7 +157,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         // Read the file in case of NO training mode (validation) or Automatic training mode
         ITraceProvider tracefile = new EsoFile();
         try {
-            List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
+            List<ITrace> tracelist = tracefile.loadTrace(esoFilePath);
             try {
                 trace = tracelist.get(tracenum);
             } catch (IndexOutOfBoundsException e) {
@@ -367,10 +367,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             // only read inputs in this case
             loadInputs(retval);
         }
-
+        
         loadPreviousInputSignals(obj, retval);
         loadValConfigVars(retval);
-
+        
         // inject signals into simulation
         return retval;
     }
@@ -505,7 +505,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 Entry<String, Object> variable = variables.next();
                 value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
             }
-
+            
             json.accumulate(outputVarName, value);
         } catch (JSONException e) {
             throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);

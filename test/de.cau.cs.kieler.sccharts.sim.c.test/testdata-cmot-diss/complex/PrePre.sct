@@ -1,0 +1,8 @@
+@diagram[KLayLayered] false  
+scchart PrePre {
+  output int x = 0;
+  output int y = 0;
+  
+  initial state S
+  --> S with / x = x + 1; y = pre(pre(x)); 
+}

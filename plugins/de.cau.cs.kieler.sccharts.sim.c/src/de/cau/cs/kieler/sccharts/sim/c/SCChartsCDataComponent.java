@@ -17,7 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -38,6 +40,7 @@ import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.State;
@@ -284,6 +287,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
 
+    public List<String> getOutputNames() {
+        List<String> allOutputs = new ArrayList<String>();
+        allOutputs.addAll(outputSignalList);
+        allOutputs.addAll(outputVariableList);
+    	return allOutputs;
+        
+    }
+    
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the C execution.
      * 
@@ -358,15 +371,15 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         try {
             if (myModel != null && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
                 for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(myModel)) {
+                	String signalName = valuedObject.getName();
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            res.accumulate(signalName, JSONSignalValues.newValue(false));
                         } else {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            res.accumulate(signalName, JSONSignalValues.newValue(false));
                         }
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
-                        String signalName = valuedObject.getName();
                         if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
@@ -490,6 +503,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // reset compile time and accumulate
             compileTime = 0;
 
+            // Check for errors
+            for(KielerCompilerException e : highLeveleCompilationResult.getPostponedErrors()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (high-level synthesis)", true, e);
+            }
+            for(KielerCompilerException e : highLeveleCompilationResult.getPostponedWarnings()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (high-level synthesis)", true, e);
+            }
+            
             // The following should be a state or an SCG
             EObject stateOrSCG = highLeveleCompilationResult.getEObject();
             if (!((stateOrSCG instanceof State) || (stateOrSCG instanceof SCGraph))) {
@@ -517,6 +538,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
 //            System.out.println("13");
 
+            // Check for errors
+            for(KielerCompilerException e : lowLevelCompilationResult.getPostponedErrors()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (low-level synthesis)", true, e);
+            }
+            for(KielerCompilerException e : lowLevelCompilationResult.getPostponedWarnings()) {
+            	throw new KiemInitializationException("Error compiling the SCChart (low-level synthesis)", true, e);
+            }
+            
             String cSCChartCCode = lowLevelCompilationResult.getString();
 //            System.out.println("14 " + cSCChartCCode);
             if (cSCChartCCode == null) {

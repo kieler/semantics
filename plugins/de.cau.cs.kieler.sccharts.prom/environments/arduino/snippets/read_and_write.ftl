@@ -17,20 +17,32 @@
     </@>
 </#macro>
 
-<#-- DigitalRead port -->
-<#-- As input variable, reads the given IO pin.
-     If the IO pin has the value LOW, the variable will be false.
+<#-- DigitalRead ports -->
+<#-- As input variable, reads the given IO pins.
+     If an IO pin has the value LOW, the corresponding variable will be false.
      Otherwise it will be true.
+     
+     This macro is suited for arrays as well as simple variables.
 
      Example for SCCharts:
          @Wrapper DigitalRead, "10"
-         input bool pinState; -->
-<#macro DigitalRead port>
+         input bool pinState;
+         @Wrapper DigitalRead, "11", "12", "13"
+         input bool pinStates[3]; -->
+<#macro DigitalRead ports...>
     <@init>
+        <#list ports as port>
         pinMode(${port}, INPUT);
+        </#list>
     </@>
     <@input>
-        ${varname} = digitalRead(${port}) ? HIGH : LOW;
+        <#if (ports?size > 1)>
+        <#list ports as port>
+        ${varname}[${port?index}] = digitalRead(${port}) ? HIGH : LOW;
+        </#list>
+        <#else>
+        ${varname} = digitalRead(${ports[0]}) ? HIGH : LOW;
+        </#if>
     </@>
 </#macro>
 

@@ -2,6 +2,7 @@
 @Transformation ABORT
 scchart ConditionalTermination {
   input bool I;
+  output bool O;
 
   initial state A {
     bool _termRegion;
@@ -19,7 +20,7 @@ scchart ConditionalTermination {
     initial state _Main2 {
 
       initial state A0
-      --> A1;
+      --> A1 with / O = 1;
 
       final state A1;
     }
@@ -27,7 +28,7 @@ scchart ConditionalTermination {
 
     final state _Term;
   }
-  >-> F immediate;
+  >-> F immediate with / O = 2;
 
   final state F;
 }

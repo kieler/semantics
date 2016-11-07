@@ -293,14 +293,14 @@ class S2C {
    }   
    
    // -------------------------------------------------------------------------   
-
-   // Host code without "..."
+   // Removes the first and last character from a String if these are matching quotation marks.
    def extractCode(String hostCodeString) {
-        hostCodeString.substring(1, hostCodeString.length-1);
-   }
-
-   def extractCode(TextExpression hostCode) {
-        hostCode.text.extractCode
+        if ((hostCodeString.startsWith("'") && hostCodeString.endsWith("'"))
+            || (hostCodeString.startsWith('"') && hostCodeString.endsWith('"'))) {
+            return hostCodeString.substring(1, hostCodeString.length - 1);
+        } else {
+            return hostCodeString
+        }
    }
    
    // Expand Host code.
@@ -309,7 +309,7 @@ class S2C {
    }
    // Expand Text Expression
    def dispatch CharSequence expand(TextExpression expression) {
-        '''(«expression.text.extractCode»)'''
+        '''(«expression.text»)'''
    }
 
    // -------------------------------------------------------------------------   

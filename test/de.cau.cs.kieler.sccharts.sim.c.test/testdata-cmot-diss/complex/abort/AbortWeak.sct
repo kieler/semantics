@@ -1,0 +1,17 @@
+@diagram[KLayLayered] false  
+@VHLayout
+scchart StrongAbort { 
+  input bool R;
+  output int O;
+  output int O2;
+  
+  initial state init {
+     initial state I --> S immediate with / O++;
+     state S --> S2;
+     state S2 --> I immediate with / O2++;
+  }
+  --> fin with R  / O = 0;
+  
+  state fin;
+  
+}

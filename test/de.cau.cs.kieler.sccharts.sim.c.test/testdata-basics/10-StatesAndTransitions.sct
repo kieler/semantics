@@ -1,0 +1,24 @@
+scchart StatesAndTransitions {
+
+    output int O;
+
+    initial state S1
+    --> S2 with / O++;
+    
+    state S2
+    --> S3 with / O++;
+    state S3
+    --> S4 with / O++;
+    
+    state S4
+    --> S5 immediate with / O++;
+    state S5
+    --> S6 immediate with / O++;
+    state S6
+    --> S7 immediate with / O++;
+    
+    state S7
+    --> S8 with / O++;
+    
+    state S8;
+}

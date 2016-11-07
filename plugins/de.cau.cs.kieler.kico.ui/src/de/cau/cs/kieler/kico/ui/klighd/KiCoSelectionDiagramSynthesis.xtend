@@ -218,7 +218,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         val knode = model.createNode();
         
         // Apply spline edge routing on root level
-        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
         for (elem : model.visibleFeatures) {
             if (elem.visibleContainer(model.visibleFeatures) == null) {
@@ -295,6 +295,10 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
             }
+            
+            // Adjust edge routing of hierarchical node
+            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);

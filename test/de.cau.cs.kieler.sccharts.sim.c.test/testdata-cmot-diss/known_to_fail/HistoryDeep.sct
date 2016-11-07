@@ -1,0 +1,54 @@
+// Does not restart behaviour of inner inner state (S1),
+// when entered from inner state (S4-->S1)
+
+@diagram[KLayLayered] false  
+scchart HistoryDeep {
+
+  input bool H, R;
+  output int leaveState = 1;
+  output int State;
+  
+  initial state MHist
+  --> M history;
+
+  state M {
+
+    initial state S1 {
+
+      initial state S11 {
+        entry / State = 11;
+      }
+      --> S12;
+
+      state S12 {
+        entry / State = 12;
+      }
+      --> S13;
+      
+      final state S13 {
+        entry / State = 13;
+      };
+    }
+    >-> S2;
+
+    state S2 {
+      entry / State = 2;
+    }
+    --> S3;
+
+    state S3 {
+      entry / State = 3;
+    }
+    --> S4;
+    
+    state S4 {
+      entry / State = 4;
+    }
+    --> S1;
+  }
+  --> MHist with H
+  --> MReset with R;
+
+  state MReset
+  --> M;
+}

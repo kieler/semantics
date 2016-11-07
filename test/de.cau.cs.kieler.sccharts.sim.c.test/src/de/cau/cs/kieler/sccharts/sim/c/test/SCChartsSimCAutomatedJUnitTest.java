@@ -51,26 +51,27 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     protected IPath getBundleTestPath() {
         return null;
-//        return new Path("knowntofail");
-//        return new Path("testdata");
-//        return new Path("inprogress");
     }
     
     /**
      * {@inheritDoc}
      */
     protected List<IPath> getBundleTestPaths() {
-        List paths = new ArrayList<IPath>();
-        // first test simple tests
+        List<IPath> paths = new ArrayList<IPath>();
+        // First add tests that have to fail. These are used to test the tests themself.
+        paths.add(new Path("/testdata-must-fail/"));
+        // Add basic tests. These test core features like states, transitions and hierarchy as well as variable types and operators.
+        paths.add(new Path("/testdata-basics/"));
+        // Add simple tests
         paths.add(new Path("/testdata-simple/"));
-        // then test advanced tests (if no failure)
+        // Add tests that are based on cmot's diss (cmot-diss > images > sccharts > features)
+        paths.add(new Path("/testdata-cmot-diss/simple/"));
+        paths.add(new Path("/testdata-cmot-diss/complex/"));
+        paths.add(new Path("/testdata-cmot-diss/composite/"));
+        // Add more complex tests
         paths.add(new Path("/testdata-advanced/"));
         return paths;
-//        return new Path("knowntofail");
-//        return new Path("testdata");
-//        return new Path("inprogress");
     }
-    
 
     /**
      * {@inheritDoc}
@@ -107,6 +108,6 @@ public class SCChartsSimCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     @Override
     protected boolean stopOnError() {
-        return true;
+        return false;
     }
 }

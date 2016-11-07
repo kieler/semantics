@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
@@ -166,7 +166,7 @@ class CommandData extends ConfigurationSerializable {
      * @return a list with the loaded command data objects.
      */
     public static def List<CommandData> loadAllFromConfiguration(ILaunchConfiguration configuration) {
-        return ConfigurationSerializable.loadAllFromConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS,
+        return ConfigurationSerializable.loadAllFromConfiguration(configuration, KiCoLaunchConfig.ATTR_COMMANDS,
             CommandData) as List<CommandData>
     }
 
@@ -178,6 +178,6 @@ class CommandData extends ConfigurationSerializable {
      * @param datas A list with the data objects that should be saved
      */
     public static def saveAllToConfiguration(ILaunchConfigurationWorkingCopy configuration, List<CommandData> datas) {
-        ConfigurationSerializable.saveAllToConfiguration(configuration, LaunchConfiguration.ATTR_COMMANDS, datas)
+        ConfigurationSerializable.saveAllToConfiguration(configuration, KiCoLaunchConfig.ATTR_COMMANDS, datas)
     }
 }

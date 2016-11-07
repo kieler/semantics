@@ -25,7 +25,7 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
  * @kieler.rating 2015-08-19 proposed yellow
  */
 class KExpressionsCompareExtensions {
-  
+
     def dispatch boolean equals2(OperatorExpression expression1, OperatorExpression expression2) {
         if (expression1 == null && expression2 == null) {
             return true

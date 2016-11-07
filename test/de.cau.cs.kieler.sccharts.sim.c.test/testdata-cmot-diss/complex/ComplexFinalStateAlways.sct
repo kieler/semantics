@@ -1,0 +1,41 @@
+@diagram[KLayLayered] false
+
+@HVLayout
+//@layout[direction] RIGHT  
+scchart ComplexFinalStateAlways {
+  input bool T1, T2;
+  output bool A1 = false;
+  output int R1S = 0;
+  output int R2S = 0; 
+
+  region " ":
+
+  initial state M {
+
+    region "Region 1":
+
+    initial state S1 {
+      entry / R1S = 1;
+    }
+    --> S2 with T1;
+
+    final state S2 {
+      entry / R1S = 2;
+    };
+    
+    region "Region 2":
+
+    initial final state S3 {
+      entry / R2S = 3;
+    }
+    --> S4 with T2;
+
+    final state S4 {
+      entry / R2S = 4;
+    }
+    --> S3 with T2;
+  }
+  >-> F with / A1 = true;
+
+  final state F;
+} 

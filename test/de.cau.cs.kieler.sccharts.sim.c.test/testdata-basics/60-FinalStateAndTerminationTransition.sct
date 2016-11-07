@@ -1,0 +1,17 @@
+scchart FinalStateAndTermination {
+
+    output bool O1, O2;
+
+    initial state A {
+      initial state A0
+      --> A1;
+      
+      state A1
+      --> A2 with / O1 = true;    
+      
+      final state A2;
+    }
+    >-> B with / O2 = true;
+    
+    state B;
+} 

@@ -158,7 +158,7 @@ public class EsoFile implements ITraceProvider {
      * 
      * @throws KiemInitializationException
      */
-    public List<ITrace> loadTrace(final String fileName) throws KiemInitializationException,
+    public List<ITrace> loadTrace(final IPath file) throws KiemInitializationException,
             FileNotFoundException {
         ISetup setup = new EsoStandaloneSetup();
         Injector injector = setup.createInjectorAndDoEMFRegistration();
@@ -172,10 +172,9 @@ public class EsoFile implements ITraceProvider {
         rs.getResources().add(resource);
 
         InputStream in;
-        if (fileName != null && fileName.length() > 0) {
+        if (file != null && !file.isEmpty()) {
             try {
-                IPath filePath = new Path(fileName);
-                in = KiemUtil.openWorkspaceFile(filePath);
+                in = KiemUtil.openWorkspaceFile(file);
             } catch (FileNotFoundException e) {
                 throw new KiemInitializationException(
                         "EsiComponent cannot load trace file due to malformed URI.", false, null);
@@ -195,7 +194,7 @@ public class EsoFile implements ITraceProvider {
 //                    + parseResult.getSyntaxErrors().iterator().next().getText(), true, null);
 //        }
         traceList = (tracelist) parseResult.getRootASTElement();
-
+        
         LinkedList<ITrace> res = new LinkedList<ITrace>();
         for (trace trace : traceList.getTraces()) {
             res.add(new EsoTrace(trace));

@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -52,6 +53,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.util.StringInputStream;
 import org.osgi.framework.Bundle;
 
 /**
@@ -453,7 +455,7 @@ public final class ModelUtil {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static IFile createLinkedWorkspaceFile(final URL fullBundleUrl,
+    public static IFile createLinkedWorkspaceFile(final Bundle bundle, final URL fullBundleUrl,
             final String workspaceProjectName, final boolean cleanProject, final boolean override)
             throws CoreException, URISyntaxException, IOException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -474,20 +476,66 @@ public final class ModelUtil {
 
         IFile workspaceLinkFile = null;
 
+        // Get absolute file path from bundle url
         URL absoluteBundleUrl = getAbsoluteBundlePath(fullBundleUrl);
         String absoluteBundlePathString = getAbsoluteFilePath(absoluteBundleUrl);
         IPath absoluteBundlePath = new Path(absoluteBundlePathString);
-        workspaceLinkFile = project.getFile(absoluteBundlePath.lastSegment());
+        
+        // Get workspace relative path from absolute path
+        String bundleName = bundle.getSymbolicName();
+        int afterBundleNameIndex = absoluteBundlePathString.indexOf(bundleName)+bundleName.length()+1;
+        String relativeBundlePathString = absoluteBundlePathString.substring(afterBundleNameIndex);
+        IPath relativeBundlePath = new Path(relativeBundlePathString);
+        
+        // Get file in the project using the same relative path as in the bundle
+        workspaceLinkFile = project.getFile(relativeBundlePath);
+        // delete old file
         if (override && workspaceLinkFile.exists()) {
-            // delete old file
             workspaceLinkFile.delete(true, null);
         }
+        // create new file
         if (!workspaceLinkFile.exists()) {
+        	// Create parent resources for the file (e.g. folders)
+        	createResource(workspaceLinkFile.getParent());
+        	// Link the external absolute file path to the new local resource in the project
             workspaceLinkFile.createLink(absoluteBundlePath, IResource.NONE, null);
         }
         return workspaceLinkFile;
     }
 
+    /**
+     * Creates a resource and all needed parent folders in a project.
+     * The created resource is initialized with the inputs of the stream.
+     * 
+     * @param resource The resource handle to be created
+     */
+    protected static void createResource(final IResource resource) throws CoreException {
+        if (resource == null || resource.exists())
+            return;
+
+        if (!resource.getParent().exists())
+            createResource(resource.getParent());
+
+        switch(resource.getType()){
+            case IResource.FILE :
+            		StringInputStream stringStream = new StringInputStream("");
+                    ((IFile) resource).create(stringStream, true, null);
+                    try {
+						stringStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+                break;
+            case IResource.FOLDER :
+                ((IFolder) resource).create(IResource.NONE, true, null);
+                break;
+            case IResource.PROJECT :
+                ((IProject)resource).create(null);
+                ((IProject)resource).open(null);
+                break;
+        }
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
