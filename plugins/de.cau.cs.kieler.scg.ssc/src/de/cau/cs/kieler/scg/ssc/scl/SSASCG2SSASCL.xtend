@@ -15,13 +15,12 @@ package de.cau.cs.kieler.scg.ssc.scl
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Value
+import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
@@ -32,21 +31,16 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
-import de.cau.cs.kieler.scg.ssc.ssa.SSACacheExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.MergeExpressionExtension
 import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import java.util.Map
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.ssc.ssa.MergeExpressionExtension
-import de.cau.cs.kieler.scg.ssc.ssa.IOPreserverExtensions
 
 /**
  * @author als
@@ -78,49 +72,32 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     // -- Injections 
     // -------------------------------------------------------------------------
 
-    @Inject
-    extension SSAbasedSCG2SCL trans
+    @Inject extension RestrictedSCG2SCL transformation
+    @Inject extension SSACoreExtensions
+    @Inject extension IOPreserverExtensions
+    @Inject extension MergeExpressionExtension
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions  
+    @Inject extension KExpressionsValuedObjectExtensions  
     
-    @Inject
-    extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SSACoreExtensions
-
-    @Inject
-    extension IOPreserverExtensions
-    @Inject
-    extension SSACacheExtensions
-    @Inject
-    extension MergeExpressionExtension
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsCreateExtensions  
-        @Inject
-    extension KExpressionsValuedObjectExtensions  
-    
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
     // -------------------------------------------------------------------------
     // -- Transformation 
     // -------------------------------------------------------------------------
     
-    var Declaration intermediateDecl;
-    var idx = 0;
-    
     def transform(SCGraph scg, KielerCompilerContext context) {
-        trans.context = context
+        transformation.context = context
                
         // Remove incompatible ssa annotation in declarations
         scg.declarations.forEach[annotations.clear]
         
-        // Convert to Bolleans
-        val def = context.getDef(scg)
-        val use = context.getUse(scg)
-        // TODO what to do with IO ?
+        // Convert to booleans
+        val def = scg.defs
+        val use = scg.uses
+        if (scg.declarations.exists[(input || output) && type != ValueType.BOOL && type != ValueType.PURE]) {
+            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains non-boolean interface variables!"));
+        }
         for (decl : scg.declarations.filter[type == ValueType.INT]) {
-            // TODO distinguish between ssa decl and normal decl with multiple vars
-            if(decl.valuedObjects.filter[!isRegister].forall[it.isBoolDef(def) && it.isBoolUse(use)]) {
+            if (decl.valuedObjects.forall[it.isBoolDef(def) && it.isBoolUse(use)]) {
                 decl.type = ValueType.BOOL
             }
         }
@@ -128,32 +105,15 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
             iv.replace(createBoolValue(iv.value != 0))
         }
         if (scg.declarations.exists[type != ValueType.BOOL && type != ValueType.PURE]) {
-            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contain boolean incompatible types."));
-            return scg
+            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains boolean incompatible types!"));
         }
         
         // Normalize
         for (e : scg.mergeExpressions.values) {
-            e.replace(e.normalize)
-        }
-        
-        // Decompose
-        idx = 0;
-        intermediateDecl = createDeclaration
-        intermediateDecl.type = ValueType.BOOL
-        for (n: scg.nodes.immutableCopy) {
-            if (n instanceof Assignment) {
-                if (n.assignment.needsDecomposition){
-                    n.decompose
-                }
-            }else if (n instanceof Conditional) {
-                if (n.condition.needsDecomposition){
-                    n.decompose
-                }
+            if (e.eAllContents.filter(StringValue).exists[!(value.equals("AND") || value.equals("OR") || value.equals("NOT"))]) {
+                context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains boolean incompatible combine functions!"))
             }
-        }
-        if (!intermediateDecl.valuedObjects.empty) {
-            scg.declarations.add(intermediateDecl)
+            e.replace(e.normalize)
         }
         
         // Split IO
@@ -163,6 +123,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
                 output = true
                 iodecl.output = false
                 for (vo : iodecl.valuedObjects) {
+                    context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Split up input output variable: " + vo.name));
                     val oldname = vo.name
                     vo.name = oldname + "i"
                     val ovo = createValuedObject => [
@@ -182,11 +143,19 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     }
     
     private def boolean isBoolDef(ValuedObject vo, Map<ValuedObject, Assignment> defs) {
-        val def = defs.get(vo)
-        return def.assignment.isBoolExp
+        if (vo.isRegister) {
+            return true
+        }
+        if (defs.containsKey(vo)) {
+            return defs.get(vo).assignment.isBoolExp
+        }
+        return true
     }
     
     private def boolean isBoolUse(ValuedObject vo, Multimap<ValuedObject, Node> uses) {
+        if (vo.isRegister) {
+            return true
+        }
         val usingExp = uses.get(vo)
         if (usingExp.empty) {
             return true
@@ -201,7 +170,6 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
     }
     
     private def dispatch boolean isBoolExp(ValuedObjectReference exp) {
-        // FIXME some kind of fixpoint iteration if variables depend on each other
         return true
     }
     
@@ -217,76 +185,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
            return exp.operator == OperatorType.EQ ||
                   exp.operator == OperatorType.NE ||
                   exp.operator == OperatorType.LOGICAL_AND ||
-                  exp.operator == OperatorType.LOGICAL_OR
-    }
-
-    private def boolean needsDecomposition(Expression ex){
-       if (ex instanceof ValuedObjectReference || ex instanceof Value) {
-           return false
-       }
-       if (ex instanceof OperatorExpression) {
-//           if (ex.subExpressions.size == 1 && !(ex.subExpressions.head.needsDecomposition)) {
-//               return false
-//           }
-            if (ex.operator == OperatorType.PRE) {
-                return false
-            }
-            if (ex.eAllContents.filter(ValuedObjectReference).map[valuedObject.declaration].exists[type == ValueType.PURE]) {
-                return false
-            }
-       }
-       return true
-    }   
-    
-    private def createNewIntermediateVariable(){
-        // TODO check name clash
-        val v = createValuedObject("temp" + (idx++))
-        intermediateDecl.valuedObjects.add(v)
-        return v
-    }
-    
-    private dispatch def void decompose(Assignment asm){
-        val ex = asm.assignment
-        if (ex instanceof FunctionCall) {
-            for (p : ex.parameters) {
-                if (p.expression.needsDecomposition) {
-                    val v = createNewIntermediateVariable
-                    val a = createAssignment
-                    a.valuedObject = v
-                    a.assignment = p.expression
-                    p.expression = v.reference;
-                    (asm.eContainer as SCGraph).nodes += a
-                    asm.incoming.immutableCopy.forEach[target = a]
-                    a.createControlFlow.target = asm;
-                    a.decompose
-                }
-            }
-        }else if (ex instanceof OperatorExpression) {
-            for(i : 0..ex.subExpressions.size-1) {
-                if (ex.subExpressions.get(i).needsDecomposition) {
-                    val v = createNewIntermediateVariable
-                    val a = createAssignment
-                    a.valuedObject = v
-                    a.assignment = ex.subExpressions.get(i)
-                    ex.subExpressions.add(i, v.reference);
-                    (asm.eContainer as SCGraph).nodes += a
-                    asm.incoming.immutableCopy.forEach[target = a]
-                    a.createControlFlow.target = asm;
-                    a.decompose
-                }
-            }          
-        }
-    }
-    
-    private dispatch def void decompose(Conditional cond){
-            val v = createNewIntermediateVariable
-            val a = createAssignment
-            a.valuedObject = v
-            a.assignment = cond.condition
-            cond.condition = v.reference;
-            (cond.eContainer as SCGraph).nodes += a
-            cond.incoming.immutableCopy.forEach[target = a]
-            a.createControlFlow.target = cond;
-            a.decompose
+                  exp.operator == OperatorType.LOGICAL_OR ||
+                  exp.operator == OperatorType.NOT
     }
 }
