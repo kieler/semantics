@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.s,
  de.cau.cs.kieler.sc,
  de.cau.cs.kieler.sim.benchmark,
- de.cau.cs.kieler.sim.signals,
+ de.cau.cs.kieler.sim.signals, 
  com.google.inject,
  org.eclipse.xtend.lib,
  com.google.guava,
@@ -22,8 +22,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore.xmi,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.esterel,
- de.cau.cs.kieler.esterel.scl,
- de.cau.cs.kieler.scl,
  de.cau.cs.kieler.esterel.kexpressions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

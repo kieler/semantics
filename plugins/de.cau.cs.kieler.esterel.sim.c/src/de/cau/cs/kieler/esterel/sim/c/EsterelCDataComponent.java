@@ -47,7 +47,6 @@ import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.esterel.kexpressions.Output;
 import de.cau.cs.kieler.esterel.kexpressions.Signal;
 import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
-import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -55,7 +54,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 //import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.scl.scl.SCLProgram;
+
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -220,7 +219,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-        if (!(rootEObject instanceof Program) && !(rootEObject instanceof SCLProgram)) {
+//        if (!(rootEObject instanceof Program) && !(rootEObject instanceof SCLProgram)) {
+        if (!(rootEObject instanceof Program)) {
             throw new KiemInitializationException(
                     "Esterel (SCG) Simulator can only be used with an Esterel or SCL editor.\n\n",
                     true, null);
@@ -512,7 +512,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // The following should be a state or an SCG
             EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
-            if (!((esterelProgramOrSCLProgram instanceof Program) || (esterelProgramOrSCLProgram instanceof SCLProgram))) {
+
+            //if (!((esterelProgramOrSCLProgram instanceof Program) || (esterelProgramOrSCLProgram instanceof SCLProgram))) {
+            if (!((esterelProgramOrSCLProgram instanceof Program))) {
                 // compilation failed
                 throw new KiemInitializationException(
                         "Error compiling the Esterel/SCEst (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view.",
@@ -562,14 +564,14 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
                 
                 cSimulation = cSimulationSCChart.transform(fixedTransformedProgram, "10000").toString();
-            } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
-                System.out.println("15");
-                CSimulationSCL cSimulationSCG =
-                        Guice.createInjector().getInstance(CSimulationSCL.class);
-                System.out.println("16");
-                cSimulation =
-                        cSimulationSCG.transform((SCLProgram) esterelProgramOrSCLProgram, "10000")
-                                .toString();
+//            } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
+//                System.out.println("15");
+//                CSimulationSCL cSimulationSCG =
+//                        Guice.createInjector().getInstance(CSimulationSCL.class);
+//                System.out.println("16");
+//                cSimulation =
+//                        cSimulationSCG.transform((SCLProgram) esterelProgramOrSCLProgram, "10000")
+//                                .toString();
             }
 
             if (benchmark) {
@@ -609,8 +611,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             String modelName = "SCG";
             if (myModel instanceof Program) {
                 modelName = ((Program) myModel).getModules().get(0).getName();
-            } else if (myModel instanceof SCLProgram) {
-                modelName = ((SCLProgram) myModel).getName();
+//            } else if (myModel instanceof SCLProgram) {
+//                modelName = ((SCLProgram) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
 
