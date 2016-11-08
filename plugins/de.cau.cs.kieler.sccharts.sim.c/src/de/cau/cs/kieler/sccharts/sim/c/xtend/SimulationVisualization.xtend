@@ -53,7 +53,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+        return Sets.newHashSet(); //SCChartsFeatureGroup::EXTENDED_ID)
     }
 
     override getNotHandlesFeatureIds() {

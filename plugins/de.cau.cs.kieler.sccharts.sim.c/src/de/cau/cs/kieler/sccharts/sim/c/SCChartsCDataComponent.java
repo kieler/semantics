@@ -465,20 +465,37 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String debugTransformations =
                     this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
-            if (debug) {
-                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
-            }
 //            System.out.println("8");
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
 //            System.out.println("9");
 
+            if (debug) {
+                
+                // Do a PRE compilation with the debugTransformations!
+                KielerCompilerContext highLevelContext =
+                        new KielerCompilerContext(debugTransformations, extendedSCChart);
+                // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                highLevelContext.setCreateDummyResource(true);
+
+                highLevelContext.setInplace(false);
+                highLevelContext.setAdvancedSelect(true);
+//                System.out.println("10");
+                CompilationResult highLeveleCompilationResult =
+                        KielerCompiler.compile(highLevelContext);
+                
+                extendedSCChart = highLeveleCompilationResult.getEObject();
+
+//                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
+            }
+            
+            
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
 
             // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
-            highLevelContext.setCreateDummyResource(debug);
+            highLevelContext.setCreateDummyResource(false);
 
             highLevelContext.setInplace(false);
             highLevelContext.setAdvancedSelect(true);
