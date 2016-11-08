@@ -7,7 +7,7 @@ scchart ExitAction {
   initial state S1
   --> S2;
 
-  final state S2 {
+  state S2 {
     exit / Ae1 = true;
   };
 }

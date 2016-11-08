@@ -24,25 +24,25 @@ scchart Cabin {
 
   state S0 {
 
-    region R0:
+    region R0: 
 
     initial state Initial
     --> S0 immediate with / StartTimer;
 
     state S0
-    --> S1 with TimerExpired | DoorClose / CloseDoorMotorOn;
+    --> S1 with TimerExpired || DoorClose / CloseDoorMotorOn;
 
     state S1
     --> S2 with DoorIsClosed / StartOK;
 
     final state S2;
   }
-  o-> I with DoorOpen | DoorSensor / CloseDoorMotorOff
+  o-> I with DoorOpen || DoorSensor / CloseDoorMotorOff
   >-> S1 with / CloseDoorMotorOff;
 
   state S1
   --> S2 with Stop;
-
+  
   state S2
   --> I with CabinStopped;
 }

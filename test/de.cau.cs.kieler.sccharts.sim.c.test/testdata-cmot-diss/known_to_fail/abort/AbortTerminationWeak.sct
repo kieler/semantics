@@ -19,5 +19,5 @@ scchart S "AbortTerminationWeak" {
 
   state Terminated;
 
-  state Aborted;
+  state Aborted; 
 } 

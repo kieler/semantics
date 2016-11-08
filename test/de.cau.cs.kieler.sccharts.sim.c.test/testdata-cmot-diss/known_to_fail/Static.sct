@@ -15,7 +15,7 @@ scchart Static {
     initial state S21
     --> S22 with / x++; y++; OX = x; OY = y;
     
-    final state S22; 
-  }
+    final state S22;    
+  }  
   >-> S1;
-}
+}                
