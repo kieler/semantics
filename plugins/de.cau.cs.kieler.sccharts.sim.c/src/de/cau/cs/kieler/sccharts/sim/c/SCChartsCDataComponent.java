@@ -17,7 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
@@ -812,6 +814,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 return 1;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public List<String> getOutputNames() {
+        List<String> allOutputs = new ArrayList<String>();
+        allOutputs.addAll(outputSignalList);
+        allOutputs.addAll(outputVariableList);
+        return allOutputs;
+        
     }
 
     // -------------------------------------------------------------------------
