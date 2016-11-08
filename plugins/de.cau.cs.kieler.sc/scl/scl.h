@@ -131,7 +131,7 @@ typedef int bool;
 #define fork3(label1, p1, label2, p2, label3, p3)	\
   initPC(p1, label1); enable(p1);	\
   initPC(p2, label2); enable(p2);	\
-  initPC(p3, label3); enable(p3)
+  initPC(p3, label3); enable(p3);
 
 // Join sibling threads
 // Note: when joining siblings, one must cover all sibling prioIDs.

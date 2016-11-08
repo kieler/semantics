@@ -591,12 +591,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
             var s2 = ""
             for(var i = 0; i < n; i++) {
                 s1 = s1.concat("label" + i + ", p" + i)
+                s2 = s2.concat("  fork1(label" + i + ", p" + i + ");")
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
+                    s2 = s2.concat("   \\")
                 }
-                s2 = s2.concat("  fork1(label" + i + ", p" + i + ");\n")
+                s2 = s2.concat("\n")
             }
-            forkJoinSb.append(s1 + ")\n")
+            forkJoinSb.append(s1 + ") \\ \n")
             forkJoinSb.append(s2)
             forkJoinSb.append("\n")
             
@@ -627,12 +629,14 @@ class SCLPTransformation extends AbstractProductionTransformation{
             var s2 = ""
             for(var i = 0; i < n; i++) {
                 s1 = s1.concat("sib" + i)
+                s2 = s2.concat("  join1(sib" + i + "); ")
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
+                    s2 = s2.concat("\\")
                 }
-                s2 = s2.concat("  join1(sib" + i + ");\n")
+                s2 = s2.concat("\n")
             }
-            forkJoinSb.append(s1 + ")\n")
+            forkJoinSb.append(s1 + ") \\ \n")
             forkJoinSb.append(s2)
             forkJoinSb.append("\n")
             

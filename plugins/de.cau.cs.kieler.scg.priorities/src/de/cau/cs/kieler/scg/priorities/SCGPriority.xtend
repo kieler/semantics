@@ -82,15 +82,16 @@ class SCGPriority extends AbstractProductionTransformation{
         val nodes = scg.nodes
         val scc = findSCCs(nodes)
         
+        val sccMap = createNodeToSCCMap(scc)
+        val auxData = new PriorityAuxiliaryData()
+        auxData.stronglyConnectedComponents = scc
+        auxData.sccMap = sccMap
+        
         //If we find a viable schedule, calculate the Priorities of the nodes.
         if(schedulable(scc)) {
             
             //Calculate node priorities with the help of strongly connected components
-            val sccMap = createNodeToSCCMap(scc)
             val nodePrios = calcNodePrios(scc, sccMap, nodes)
-            val auxData = new PriorityAuxiliaryData()
-            auxData.stronglyConnectedComponents = scc
-            auxData.sccMap = sccMap
            
             
             //Calculate Thread Segment IDs
