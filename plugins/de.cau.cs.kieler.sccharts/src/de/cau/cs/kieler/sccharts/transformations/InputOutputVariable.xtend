@@ -43,7 +43,7 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     }
 
     override getExpandsFeatureId() {
-        return SCChartsFeature::INITIALIZATION_ID
+        return SCChartsFeature::INPUTOUTPUT_ID
     }
 
     override getProducesFeatureIds() {
