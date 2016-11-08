@@ -514,7 +514,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
 def boolean canBeDelayed(State initialState) {
     if (initialState.isInitial) {
 //        if (initialState.incomingTransitions.filter[immediate2].nullOrEmpty) {
-        if (initialState.incomingTransitions.filter[].nullOrEmpty) {
+        if (initialState.incomingTransitions.nullOrEmpty) {
             return true
         }
     }
