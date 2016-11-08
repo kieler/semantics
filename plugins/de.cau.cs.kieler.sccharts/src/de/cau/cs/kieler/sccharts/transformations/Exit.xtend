@@ -128,6 +128,14 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             var State firstState
             var State lastState
             val noregions = !state.hasInnerStatesOrControlflowRegions
+            
+            
+            if (noregions && stateOutgoingTransitions == 0) {
+                for (exitAction : state.exitActions.immutableCopy) {
+                    state.localActions.remove(exitAction);
+                }
+                return
+            }            
 
             if (noregions) {
                 state.regions.clear // FIX: need to erase dummy single region
@@ -192,7 +200,8 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 }
                 state.createImmediateTransitionTo(exitOptionState).setTypeTermination
                 firstState = middleState
-            }
+            } 
+
 
             val exitRegion = firstState.parentRegion
             val lastExitAction = state.exitActions.last
