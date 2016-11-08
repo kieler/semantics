@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
@@ -28,9 +28,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  */
 class Initialization extends Feature {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsFeature::INITIALIZATION_ID
     }
@@ -39,7 +39,7 @@ class Initialization extends Feature {
         return SCChartsFeature::INITIALIZATION_NAME
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension KExpressionsValuedObjectExtensions
     @Inject
@@ -47,14 +47,15 @@ class Initialization extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allScopes = model.allScopes.toList
-        for (scope : allScopes) {
-            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
-            if (!valuedObjects.nullOrEmpty) {
-                return true
-            }
-        }
-        return false
+        return true;
+//        val allScopes = model.allScopes.toList
+//        for (scope : allScopes) {
+//            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
+//            if (!valuedObjects.nullOrEmpty) {
+//                return true
+//            }
+//        }
+//        return false
     }
 
 }

@@ -163,7 +163,9 @@ public abstract class Feature implements IFeature {
      */
     public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature,
             boolean ignoreInherited) {
-        return getProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
+        String from = getName();
+        Set<Feature> returnPath = getProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
+        return returnPath;
     }
 
     private final Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature,

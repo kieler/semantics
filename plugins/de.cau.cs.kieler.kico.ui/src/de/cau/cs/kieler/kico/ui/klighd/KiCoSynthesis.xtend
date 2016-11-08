@@ -182,6 +182,10 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
         [it.red = 248; it.green = 248; it.blue = 248];
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 210; it.green = 210; it.blue = 210];
+        
+    public static val KColor RED1 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 200; it.green = 0; it.blue = 0];
+        
 
     // -------------------------------------------------------------------------
     // Remember which super states already are connected (render just a single connection)

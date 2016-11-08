@@ -48,7 +48,7 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::CORE_ID)
     }
 
     override getNotHandlesFeatureIds() {

@@ -35,6 +35,8 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kico.transformation.IExpansionTransformation
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -94,20 +96,30 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
     // Translate a transition from transformation to feature (BELONG)
     def KEdge translateBelongTransition(Transformation source, Feature dest) {
         return createEdge() => [ edge |
-            edge.source = source.node;
-            edge.target = dest.node;
+            if (!source.production) {
+                edge.source = dest.node;
+                edge.target = source.node;
+            } else {
+                edge.source = source.node;
+                edge.target = dest.node;
+            }
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
-                it.setForeground(BLUE3.copy)
+                if (source.production) {
+                    it.setForeground(BLUE3.copy)
+                } else {
+                    it.setForeground(RED1.copy)
+                    
+                }
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 //                if (t.isImmediate2) {
                 it.lineStyle = LineStyle::CUSTOM;
                 it.lineStyle.dashPattern.clear;
                 it.lineStyle.dashPattern += TRANSITION_DOT_PATTERN;
             //                }
-            //it.addArrowDecorator()
+                it.addArrowDecorator()
             ]
         ];
     }
