@@ -61,17 +61,17 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SSATransformation extends AbstractProductionTransformation {
+class SCSSATransformation extends AbstractProductionTransformation {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
     override getId() {
-        return "scg.ssa"
+        return "scg.ssa.scssa"
     }
 
     override getName() {
-        return "SSA"
+        return "SCSSA"
     }
 
     override getProducedFeatureId() {
@@ -79,42 +79,23 @@ class SSATransformation extends AbstractProductionTransformation {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SCGFeatures::BASICBLOCK_ID)
+        return newHashSet(SCGFeatures::BASICBLOCK_ID, SCGFeatures::DEPENDENCY_ID)
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCGCoreExtensions
-
-    @Inject
-    extension SCGControlFlowExtensions
-
-    @Inject
-    extension SCGThreadExtensions
-
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
-
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-
-
-    @Inject
-    extension AnnotationsExtensions
-
-    @Inject
-    extension SSACoreExtensions
-
-    @Inject
-    extension SSACacheExtensions
-
-    @Inject
-    extension IOPreserverExtensions
-    @Inject
-    extension MergeExpressionExtension    
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SSACoreExtensions
+    @Inject extension IOPreserverExtensions
+    @Inject extension MergeExpressionExtension    
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
+        
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
         if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
@@ -125,7 +106,9 @@ class SSATransformation extends AbstractProductionTransformation {
         // map for saving parameter references
         val ssaReferences = HashMultimap.<Assignment, Parameter>create
         
+        // Create new declarations for SSA versions
         val ssaDecl = scg.createSSADeclarations
+        val dt = new DominatorTree(scg)
 
         // ---------------
         // 1. Prepare Update Scheduling
@@ -133,78 +116,79 @@ class SSATransformation extends AbstractProductionTransformation {
         scg.prepareUpdateScheduling
 
         // ---------------
-        // 1. Preserve output behavior
+        // 2. Preserve output behavior
         // ---------------
         scg.preprocessIO(entryNode as Entry, ssaDecl)
 
         // ---------------
-        // 2. Place Phi
+        // 3. Place Merge Expressions
         // ---------------
-        scg.placeMergeExp(context, ssaReferences, ssaDecl)
+        scg.placeMergeExp(dt, ssaReferences, ssaDecl)
         
         // ---------------
-        // 2. Create IO Preserving Assignmnts
+        // 4. Create IO Preserving Assignments
         // ---------------
-        val preserverAsm = scg.createPreservingAssignments(context, ssaReferences, ssaDecl)
+        val preserverAsm = scg.createPreservingAssignments(dt, ssaReferences, ssaDecl)
 
         // ---------------
-        // 3. Renaming
+        // 5. Rename Variables
         // ---------------
-        scg.rename(context, entryBB, ssaDecl, ssaReferences)
+        scg.rename(dt, entryBB, ssaDecl, ssaReferences)
         scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
 
         // ---------------
-        // 2. Optimize concurrent dominant write
+        // 6. Optimize concurrent dominant writes
         // ---------------
-        scg.optimizeConcurrentDominantWrite(context)
+        scg.optimizeConcurrentDominantWrite(dt)
         
         // ---------------
-        // 2. Preserve Delayed Values
+        // 7. Preserve delayed Values
         // ---------------
-        scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm, context)
+        scg.postprocessIO(entryNode as Entry, ssaDecl, preserverAsm)
 
         // ---------------
-        // 3. Compactize SSA merge expression
+        // 8. Compact SSA merge expression
         // ---------------
-        for (e : scg.getMergeExpressions.values) {
+        for (e : scg.mergeExpressions.values) {
             e.replace(e.reduce)
         }
        
         // ---------------
-        // 4. Remove unused ssa versions
+        // 9. Remove unused ssa versions
         // ---------------
-        scg.removeUnusedSSAVersions(context)
+        scg.removeUnusedSSAVersions
 
         // ---------------
-        // 5. Update SSA VO version numbering
+        // 10. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
+
         
+        scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
         return scg
     }
         
-    private def Collection<Node> placeMergeExp(SCGraph scg, KielerCompilerContext context,
+    private def Collection<Node> placeMergeExp(SCGraph scg, DominatorTree dt,
         Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
         val nodes = newLinkedHashSet
         for (node : newArrayList(scg.nodes.filter(instanceOf(Assignment).or(instanceOf(Conditional))))) {
             val expr = node.eContents.filter(Expression).head
-            val refs = if (node instanceof Assignment) {
-                newArrayList(expr.allReferences.filter[valuedObject != node.valuedObject])
+            val refs = if (node instanceof Assignment && !node.isOutputPreserver) {
+                newArrayList(expr.allReferences.filter[valuedObject != (node as Assignment).valuedObject])
             } else {
                 newArrayList(expr.allReferences)
             }
             for (vor : refs) {
                 val concurrentNodes = node.incoming.filter(DataDependency).filter[concurrent].map[eContainer as Node].toList         
-                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, context)
+                val mergeExp = node.createMergeExpression(concurrentNodes, vor.valuedObject, ssaReferences, ssaDecl, dt)
                 vor.replace(mergeExp)
             }
         }
         return nodes
     }
 
-    private def void rename(SCGraph scg, KielerCompilerContext context, BasicBlock start,
+    private def void rename(SCGraph scg, DominatorTree dt, BasicBlock start,
         BiMap<ValuedObject, Declaration> ssaDecl, Multimap<Assignment, Parameter> ssaReferences) {
-        val dt = context.getDominatorTree(scg)
         start.recursiveRename(dt, ssaDecl)
         for (entry : ssaReferences.entries) {
             val ref = entry.value.expression as ValuedObjectReference
@@ -215,7 +199,7 @@ class SSATransformation extends AbstractProductionTransformation {
     private def void recursiveRename(BasicBlock block, DominatorTree dt, BiMap<ValuedObject, Declaration> ssaDecl) {
         for (sb : block.schedulingBlocks) {
             for (s : sb.nodes) {
-                // rename def
+                // rename definitions
                 if (s instanceof Assignment) {
                     if (!s.outputPreserver) {
                         val isUpdate = s.isUpdate
@@ -238,7 +222,7 @@ class SSATransformation extends AbstractProductionTransformation {
                 }
             }
         }
-
+        // Following basic blocks (ordered by dominator tree to create the correct numbering order)
         val bbs = (block.eContainer as SCGraph).basicBlocks
         for (m : dt.children(block).sortBy[bbs.indexOf(it)]) {
             m.recursiveRename(dt, ssaDecl)
@@ -248,57 +232,42 @@ class SSATransformation extends AbstractProductionTransformation {
     /**
      * Removes the parameter of the sequential reaching definition for shared variables if the variable is always written.
      */
-    private def optimizeConcurrentDominantWrite(SCGraph scg, KielerCompilerContext context) {
-        val dt = context.getDominatorTree(scg)
-        val def = context.getDef(scg)
-        val use = context.getUse(scg)
-        // if any assignment in any thread dominates the exit node, the sequential value can never reach the join and can be removed
-        for (d : def.values.filter[!dependencies.filter(DataDependency).filter[concurrent == true && confluent == false].empty]) {
-            val entry = (d.threadEntryNode as Entry)
-            if (dt.isDominator(d.basicBlock, entry.exit.basicBlock) && entry.getIndirectControlFlows(d).forall[instantaneousFlow]){
-                val fork = d.ancestorFork;
-                // This is not loop safe
-                val preceding = newHashSet;               
-                (fork.eContainer as SCGraph).nodes.get(0).getIndirectControlFlows(fork).forEach[forEach[
+    private def optimizeConcurrentDominantWrite(SCGraph scg, DominatorTree dt) {
+        val def = scg.defs
+        val use = scg.uses
+        // If any assignment in any thread dominates its exit node and is always instantaneously executed, the values sequentially before the fork can never reach the join and can be removed
+        for (asm : def.values.filter[!dependencies.filter(DataDependency).filter[concurrent == true && confluent == false].empty]) {
+            val entry = (asm.threadEntryNode as Entry)
+            if (dt.isDominator(asm.basicBlock, entry.exit.basicBlock) && entry.getIndirectControlFlows(asm).forall[instantaneousFlow]){
+                val fork = asm.ancestorFork;
+                // Find definitions dominated by this instantaneous concurrent write
+                // TODO check nested threads
+                val precedingDefs = newHashSet;  
+                (fork.eContainer as SCGraph).nodes.get(0).getIndirectControlFlows(fork).filter[
+                    !it.exists[eContainer == fork || eContainer == fork.join]
+                ].forEach[forEach[
                     val node = it.eContainer as Node;
                     if (node instanceof Assignment) {
-                        if (node.valuedObject.declaration == d.valuedObject.declaration && node != d){
-                            preceding.add(node)
+                        if (node.valuedObject.declaration == asm.valuedObject.declaration && node != asm){
+                            precedingDefs.add(node)
                         }
                     }
                 ]];
+                // Remove merge expression references
                 val rem = HashMultimap.create
-                for(u : use.get(d.valuedObject)) {
+                for(u : use.get(asm.valuedObject)) {
                     for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
                         if (ent.threadNodes.contains(u)) {
-                            for(p:preceding){
+                            for(p:precedingDefs){
                                 u.eContents.filter(Expression).head.allReferences.findFirst[valuedObject == p.valuedObject].eContainer.remove
                                 rem.put(p.valuedObject,u)
                             }
                         }
                     }
                 }
-                for(r:rem.entries){
-                    use.remove(r.key, r.value)
-                }
             }
         }
     }
-
-    /**
-     * Remove unused ssa versions.
-     */
-    private def removeUnusedSSAVersions(SCGraph scg, KielerCompilerContext context) {
-        val use = context.getUse(scg)
-        val def = context.getDef(scg)
-        for (decl : scg.declarations.filter[input == false && output == false]) {
-            decl.valuedObjects.removeIf[!isRegister && !isTerm && use.get(it).empty && !def.containsKey(it)]
-        }
-        scg.removeUnusedSSADeclarations 
-    }
     
-    private def removeUnusedSSADeclarations(SCGraph scg) {
-        scg.declarations.removeIf[input == false && output == false && it.valuedObjects.empty]
-    }
 }
     

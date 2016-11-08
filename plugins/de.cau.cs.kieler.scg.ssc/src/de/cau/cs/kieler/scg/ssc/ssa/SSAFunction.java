@@ -20,10 +20,8 @@ package de.cau.cs.kieler.scg.ssc.ssa;
 public enum SSAFunction {
     
 	PHI("de.cau.cs.kieler.scg.ssc.ssa.phi", "\u03A6"),
-	INIT("de.cau.cs.kieler.scg.ssc.ssa.init", "I"), //"\u03A0"
-	UPDATE("de.cau.cs.kieler.scg.ssc.ssa.update", "U"), //"\u03A8"
-	READ("de.cau.cs.kieler.scg.ssc.ssa.read", "R"), //"\u03A6"
-	JOIN("de.cau.cs.kieler.scg.ssc.ssa.join", "R"), //"\u03A6"
+	PSI("de.cau.cs.kieler.scg.ssc.ssa.phi", "\u03A0"),
+	PI("de.cau.cs.kieler.scg.ssc.ssa.phi", "\u03A8"),
 	SEQ("de.cau.cs.kieler.scg.ssc.ssa.seq", "seq"),
 	CONC("de.cau.cs.kieler.scg.ssc.ssa.conc", "conc"),
 	COMBINE("de.cau.cs.kieler.scg.ssc.ssa.combine", "combine");

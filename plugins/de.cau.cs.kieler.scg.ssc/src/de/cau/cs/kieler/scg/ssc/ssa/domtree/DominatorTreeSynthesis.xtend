@@ -42,6 +42,7 @@ import java.util.Map
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
+    
     @Inject
     extension SCGControlFlowExtensions
     @Inject
@@ -63,12 +64,6 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     @Inject
     extension KContainerRenderingExtensions
-    
-    override getDisplayedLayoutOptions() {
-        return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
-        )
-    }
 
     override transform(SCGraph scg) {
         if (scg.hasAnnotation(SCGFeatures::BASICBLOCK_ID)) {

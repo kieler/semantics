@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.scg.ssc.ssa
 
 import com.google.common.collect.HashBiMap
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory
@@ -26,11 +27,16 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
 
@@ -43,18 +49,15 @@ class SSACoreExtensions {
 
     // -------------------------------------------------------------------------
     
-    public static val SSA = "de.cau.cs.kieler.scg.ssc.ssa"
+    public static val SSA = "de.cau.cs.kieler.scg.ssa"
     
     // -------------------------------------------------------------------------
-
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsCreateExtensions   
-    @Inject
-    extension IOPreserverExtensions      
-    @Inject
-    extension AnnotationsExtensions
+    
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions   
+    @Inject extension IOPreserverExtensions      
+    @Inject extension AnnotationsExtensions
     extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
     
     // -------------------------------------------------------------------------
@@ -172,5 +175,53 @@ class SSACoreExtensions {
     def isUpdate(Assignment asm) {
         return asm.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
     }
+    
+        /**
+     * Remove unused ssa versions.
+     */
+    def removeUnusedSSAVersions(SCGraph scg) {
+        val use = scg.uses
+        val def = scg.defs
+        for (decl : scg.declarations.filter[input == false && output == false]) {
+            decl.valuedObjects.removeIf[!isRegister && !isTerm && use.get(it).empty && !def.containsKey(it)]
+        }
+        scg.removeUnusedSSADeclarations 
+    }
+    
+    def removeUnusedSSADeclarations(SCGraph scg) {
+        scg.declarations.removeIf[input == false && output == false && it.valuedObjects.empty]
+    }
    
+   
+    def getDefs(SCGraph scg) {
+        if (!scg.hasAnnotation(SSAFeature.ID)) {
+            throw new IllegalArgumentException("Given SCG is not in SSA form")
+        }
+        val def = <ValuedObject, Assignment>newHashMap
+        // Analyse graph for defs
+        for (node : scg.nodes.filter(Assignment)) {
+            def.put(node.valuedObject, node)
+        }
+        return def;
+    }
+    
+    def getUses(SCGraph scg) {
+        if (!scg.hasAnnotation(SSAFeature.ID)) {
+            throw new IllegalArgumentException("Given SCG is not in SSA form")
+        }
+        val use = HashMultimap.<ValuedObject, Node>create
+        // Analyse graph for uses
+        for (node : scg.nodes) {
+            if (node instanceof Assignment) {
+                node.assignment.allReferences.map[valuedObject].forEach [
+                    use.put(it, node)
+                ]
+            } else if (node instanceof Conditional) {
+                node.condition.allReferences.map[valuedObject].forEach [
+                    use.put(it, node)
+                ]
+            }
+        }
+        return use
+    }
 }

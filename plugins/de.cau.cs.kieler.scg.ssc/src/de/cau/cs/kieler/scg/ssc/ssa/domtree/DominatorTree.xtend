@@ -33,21 +33,20 @@ import de.cau.cs.kieler.scg.Surface
 /**
  * This class computes dominator information using the Lengauer-Tarjan method.
  * 
- * See A Fast Algorithm for Finding Dominators in a Flowgraph T. Lengauer & R. Tarjan, ACM TOPLAS July 1979, pgs 121-141.
+ * See: A Fast Algorithm for Finding Dominators in a Flowgraph T. Lengauer & R. Tarjan, ACM TOPLAS July 1979, pgs 121-141.
  * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
 class DominatorTree {
-    
-    extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
-    
+        
     // The SCG
     @Accessors
     val SCGraph scg
     // These fields represent the structure of the SCG
     val Multimap<BasicBlock, BasicBlock> successors = LinkedHashMultimap.create
+    val Multimap<BasicBlock, BasicBlock> predecessors = LinkedHashMultimap.create
     // These fields represent the structure of the SCG in depth first form
     val BiMap<Integer, BasicBlock> dfNum = HashBiMap.create
     val Map<BasicBlock, BasicBlock> dfParent = newHashMap
@@ -74,42 +73,41 @@ class DominatorTree {
         val entryBB = scg.basicBlocks.head
         
         // Add additional predecessors for tick borders
-        val depthPredecessors = newHashMap
+        val depthes = newHashMap
         val surfaces = newHashMap
-        // Calculate BB successors
+        // Calculate BB successors and predecessors
         for (bb : scg.basicBlocks) {
             for (preBB : bb.predecessors.map[basicBlock]) {
+                predecessors.put(bb, preBB)
                 successors.put(preBB, bb)
             }
             for (sb : bb.schedulingBlocks) {
                 for (node : sb.nodes) {
                     if (node instanceof Depth) {
-                        val pred = createPredecessor
-                        depthPredecessors.put(node, pred)
-                        bb.predecessors.add(pred)
-                        successors.put(pred.basicBlock, bb)
-                    }else if (node instanceof Surface) {
+                        depthes.put(node, bb)
+                    } else if (node instanceof Surface) {
                         surfaces.put(node, bb)
                     }
                 }
             }
         }
-        for (depthPredPair : depthPredecessors.entrySet) {
-            val depth = depthPredPair.key
-            val pred = depthPredPair.value
-            val surfaceBB = surfaces.get(depth.surface)
-            pred.basicBlock = surfaceBB
-            successors.put(surfaceBB, pred.eContainer as BasicBlock)
+        // Fix predecessor relations based on tick borders
+        for (surface : surfaces.keySet) {
+            val sbb = surfaces.get(surface)
+            val dbb = depthes.get(surface.depth)
+            predecessors.put(dbb, sbb)
+            successors.put(sbb, dbb)
         }
  
         // Start with DFS
         entryBB.dfs(null)
+        
         // Calculate Semidominators
         for (var i = dfNum.size-1; i > 0; i--) {
             val bb = i.dfvertex
             val parent = bb.dfparent
             var semiCandidate = parent
-            for (predecessor : bb.predecessors.map[basicBlock]) {
+            for (predecessor : predecessors(bb)) {
                 val newSemiCandidate = if (predecessor.dfnum <= bb.dfnum) {
                     predecessor
                 }else{
@@ -172,7 +170,6 @@ class DominatorTree {
         best.put(bb, bb)
     }
     
-    
     private def void calculateDominanceFrontiers(BasicBlock bb) {
         for (successor : bb.successors) {
             if (successor.idom != bb) {
@@ -233,6 +230,10 @@ class DominatorTree {
 
     def successors(BasicBlock bb) {
         return successors.get(bb)
+    }
+    
+    def predecessors(BasicBlock bb) {
+        return predecessors.get(bb)
     }
     
     private def dfnum(BasicBlock bb) {

@@ -25,7 +25,6 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
@@ -34,7 +33,9 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 import javax.inject.Inject
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /**
  * The SSA transformation for SCGs
@@ -46,39 +47,30 @@ import javax.inject.Inject
 class IOPreserverExtensions {
 
     // -------------------------------------------------------------------------
-    @Inject
-    extension SCGCoreExtensions
-    @Inject
-    extension SCGControlFlowExtensions
+    
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGControlFlowExtensions
     extension ScgFactory = ScgPackage.eINSTANCE.scgFactory
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension SSACacheExtensions
-    @Inject
-    extension AnnotationsExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions
     extension AnnotationsFactory = AnnotationsFactory::eINSTANCE
-    
-    @Inject
-    extension SSACoreExtensions
-        @Inject
-    extension MergeExpressionExtension
-    
-        @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsCreateExtensions   
+    @Inject extension SSACoreExtensions
+    @Inject extension MergeExpressionExtension
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions   
 
     // -------------------------------------------------------------------------
+    
     public static val OUTPUT_PRESERVER = "scg.ssa.output.preserver"
     public static val REGISTER = "scg.ssa.delay.register"
     public static val TERM = "scg.ssa.delay.term"
+    
     // -------------------------------------------------------------------------
+    
     def preprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, Declaration> ssaDecl) {
         if (scg.isDelayed) {
             // Create Registers
-            for (entry : ssaDecl.entrySet) {
+            for (entry : ssaDecl.entrySet.filter[!value.input]) {
                 entry.value.valuedObjects += createValuedObject(entry.key.name + "reg") => [
                     markRegister
                 ]
@@ -88,66 +80,10 @@ class IOPreserverExtensions {
         }
     }
 
-    private def preserveOutput(Node node, SCGraph scg) {
-        if(!node.basicBlock.deadBlock) {
-            for (decl : scg.declarations.reverseView.filter[output]) {
-                for (vo : decl.valuedObjects.reverseView) {
-                    // Create self assignment which will not be renamed
-                    val asm = createAssignment => [
-                        valuedObject = vo
-                        assignment = vo.reference
-                        markOutputPreserver
-                    ]
-                    val sb = node.schedulingBlock
-                    sb.nodes.add(sb.nodes.indexOf(node), asm)
-                    scg.nodes.add(scg.nodes.indexOf(node), asm)
-                    // Insert before
-                    node.allPrevious.toList.forEach[target = asm]
-                    asm.createControlFlow.target = node
-                }
-            }
-        }
-    }
-    
-    def createPreservingAssignments(SCGraph scg, KielerCompilerContext context, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
-        val map = LinkedHashMultimap.create
-        if (scg.isDelayed) {
-            for (entry : ssaDecl.entrySet.filter[value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
-                val vo = entry.key
-                val nodes = scg.nodes.filter(Assignment).filter[valuedObject == vo].map[it as Node].toList
-                if (!nodes.empty) {
-                    map.put(vo, createAssignment => [
-                        valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        assignment = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, context)
-                    ])
-                }
-            }
-            for (iovo : ssaDecl.entrySet.filter[key.declaration.input && key.declaration.output].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)].map[key]) {
-                map.put(iovo, createAssignment => [
-                    valuedObject = iovo
-                    val nodes = scg.nodes.filter(Assignment).filter[valuedObject == iovo].map[it as Node].toList
-                    if (nodes.empty) {
-                        assignment = iovo.reference
-                    } else {
-                        assignment = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, context)
-                    }
-                ])
-            }
-            for (entry : ssaDecl.entrySet.filter[!key.declaration.input && key.declaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
-                map.put(entry.key, createAssignment => [
-                    valuedObject = entry.key
-                    assignment = entry.value.valuedObjects.findFirst[isRegister].reference
-                ])
-            }
-        }
-        return map
-    }
-    
-    
-    def postprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, Declaration> ssaDecl, Multimap<ValuedObject, Assignment> preserveAsm, KielerCompilerContext context) {
+    def postprocessIO(SCGraph scg, Entry entryNode, BiMap<ValuedObject, Declaration> ssaDecl, Multimap<ValuedObject, Assignment> preserveAsm) {
         if (scg.isDelayed) {
             // Delete unused Registers
-            val use = context.getUse(scg)
+            val use = scg.uses
             for (decl : ssaDecl.entrySet.filter[it.key.declaration.output == false].map[value]) {
                 decl.valuedObjects.removeIf[isRegister && use.get(it).empty]
                 preserveAsm.values.removeIf[valuedObject.eContainer == null]
@@ -230,9 +166,73 @@ class IOPreserverExtensions {
             }
         }
     }
-
-    def isOutputPreserver(Assignment asm) {
-        return asm.hasAnnotation(OUTPUT_PRESERVER)
+    
+    def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
+        val map = LinkedHashMultimap.create
+        if (scg.isDelayed) {
+            for (entry : ssaDecl.entrySet.filter[value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
+                val vo = entry.key
+                val nodes = scg.nodes.filter(Assignment).filter[valuedObject == vo].map[it as Node].toList
+                if (!nodes.empty) {
+                    map.put(vo, createAssignment => [
+                        valuedObject = entry.value.valuedObjects.findFirst[isRegister]
+                        assignment = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
+                    ])
+                } else {
+                    map.put(vo, createAssignment => [
+                        val reg = entry.value.valuedObjects.findFirst[isRegister]
+                        valuedObject = reg
+                        assignment = createOperatorExpression => [
+                            operator = OperatorType.PRE
+                            subExpressions.add(reg.reference)
+                        ]
+                    ])
+                }
+            }
+            for (iovo : ssaDecl.entrySet.filter[key.declaration.input && key.declaration.output].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)].map[key]) {
+                map.put(iovo, createAssignment => [
+                    valuedObject = iovo
+                    val nodes = scg.nodes.filter(Assignment).filter[valuedObject == iovo].map[it as Node].toList
+                    if (nodes.empty) {
+                        assignment = iovo.reference
+                    } else {
+                        assignment = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt)
+                    }
+                ])
+            }
+            for (entry : ssaDecl.entrySet.filter[!key.declaration.input && key.declaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
+                map.put(entry.key, createAssignment => [
+                    valuedObject = entry.key
+                    assignment = entry.value.valuedObjects.findFirst[isRegister].reference
+                ])
+            }
+        }
+        return map
+    }
+    
+    def isOutputPreserver(Node node) {
+        return node.hasAnnotation(OUTPUT_PRESERVER)
+    }
+    
+    private def preserveOutput(Node node, SCGraph scg) {
+        if(!node.basicBlock.deadBlock) {
+            for (decl : scg.declarations.reverseView.filter[output]) {
+                for (vo : decl.valuedObjects.reverseView) {
+                    // Create self assignment which will not be renamed
+                    val asm = createAssignment => [
+                        valuedObject = vo
+                        assignment = vo.reference
+                        markOutputPreserver
+                    ]
+                    val sb = node.schedulingBlock
+                    sb.nodes.add(sb.nodes.indexOf(node), asm)
+                    scg.nodes.add(scg.nodes.indexOf(node), asm)
+                    // Insert before
+                    node.allPrevious.toList.forEach[target = asm]
+                    asm.createControlFlow.target = node
+                }
+            }
+        }
     }
     
     private def markOutputPreserver(Assignment asm) {
