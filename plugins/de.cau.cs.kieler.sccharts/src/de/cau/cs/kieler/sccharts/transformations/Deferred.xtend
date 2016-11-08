@@ -103,8 +103,8 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformDeferredState(State state) {
-        val incomingDeferredTransitions = state.incomingTransitions.filter[deferred];
-        val incomingNonDeferredTransitions = state.incomingTransitions.filter[!deferred];
+        val incomingDeferredTransitions = state.incomingTransitions.filter[deferred].toList;
+        val incomingNonDeferredTransitions = state.incomingTransitions.filter[!deferred].toList;
 
         // If there are any such transitions 
         if (!incomingDeferredTransitions.nullOrEmpty) {
