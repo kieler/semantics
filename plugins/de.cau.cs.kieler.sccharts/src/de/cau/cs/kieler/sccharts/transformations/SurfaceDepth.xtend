@@ -109,6 +109,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
+        state.setDefaultTrace
         val numTransition = state.outgoingTransitions.size
         // root or final state
         if (state.rootState || (numTransition == 0 && state.final)) {
@@ -165,19 +166,17 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 }
             }
         }
- 
-    ///////////////////////////////////////////
-    //     O L D     C O N D I T I O N      ///
-    ///////////////////////////////////////////
-    // FIXME: REMOVE THIS AFTER SYNCHRON MEETING 22. AUG 2016
-    //
+
+        // /////////////////////////////////////////
+        // O L D     C O N D I T I O N      ///
+        // /////////////////////////////////////////
+        // FIXME: REMOVE THIS AFTER SYNCHRON MEETING 22. AUG 2016
+        //
 //        if (!(state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
 //            !state.outgoingTransitions.get(0).typeTermination &&
 //            (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate))) {
 //            return
 //        }
-        
-        
         val parentRegion = state.parentRegion;
 
         // Duplicate immediate transitions
@@ -202,6 +201,8 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         var State previousState = surfaceState
         var State currentState = surfaceState
+        
+        var i = 0;
 
         surfaceState.setDefaultTrace // All following states etc. will be traced to surfaceState if not traced to transition
         for (transition : orderedTransitionList) {
@@ -249,7 +250,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             // System.out.println("Set previousState := " + currentState.id)
             previousState = currentState
             currentState = null
+            
+            
+//            i++;
+//            if (i == 2) {
+//                return;
+//
+//            }
         }
+
 
         // Connect back depth with surface state
         var T2tmp = previousState.createImmediateTransitionTo(depthState).trace(previousState)
@@ -274,7 +283,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
         var stateAfterDepth = depthState
 
         // System.out.println("stateAfterDepth:" + stateAfterDepth.id);
-        var doDTO = true    ;
+        var doDTO = false;
 
         if (doDTO) {
             var done = false

@@ -15,25 +15,23 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import java.util.ArrayList
 
 /**
  * SCCharts Termination Transformation.
@@ -81,11 +79,6 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsComplexCreateExtensions
 
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-    // @Inject
-    // extension KExpressionsValuedObjectExtensions   
     @Inject
     extension SCChartsTransformationExtension
 
@@ -139,7 +132,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         // (belonging to the region).
         // Explicitly negate triggers of other outgoing transitions (see test147)
         // This is the special case where we must taken care of a normal termination 
-//        val terminationTransition = state.getTerminationTransitions;
+        //  val terminationTransition = state.getTerminationTransitions;
         val terminationTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION);
 
         if (terminationTransitions.size == 0) {
@@ -147,31 +140,22 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
         // terminationTransition.setDefaultTrace
-        // TODO: Fixtracing
         var Expression triggerExpression
 
         // Walk thru all regions that must terminate and create one termination valuedObject per
         // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
         for (region : state.regions.filter(ControlflowRegion)) {
+            region.setDefaultTrace
             // Setup the auxiliary termination valuedObject indicating that a normal termination
             // should be taken.
             val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
                 setTypeBool.uniqueName;
+                
             val resetFinished = state.createEntryAction
             resetFinished.effects.add(finishedValuedObject.assign(FALSE))
 
             val finalStates = region.states.filter(e|e.isFinal == true);
             
-
-//            var State Final;
-//            if (finalStates.size > 0) {
-//                Final = region.retrieveFinalState(GENERATED_PREFIX + "Final")
-//                //Final = region.createState(GENERATED_PREFIX + "Final")
-//                // TODO: check if optimization is correct in all cases!
-//                Final.createStringAnnotation(ANNOTATION_FINALSTATE, "")
-//            }
-
-
             // Optimization (see below)
             var termTriggerDelayed = true;
 
@@ -212,12 +196,11 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             }
             
 
-            // Optimiztion: see above            
+            // Optimization: see above            
             if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
                  finishedValuedObject.name = finishedValuedObject.name + "D"
             }
             
-
             if (triggerExpression == null) {
                 triggerExpression = finishedValuedObject.reference;
             } else {
@@ -226,6 +209,8 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
         for (terminationTransition : terminationTransitions) {
+            terminationTransition.setDefaultTrace
+            
             terminationTransition.setType(TransitionType::WEAKABORT);
             // TODO: check if optimization is correct in all cases!
             terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")

@@ -74,10 +74,6 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
         targetRootState.allStates.forEach [ targetTransition |
             targetTransition.transformConnector(targetRootState);
         ]
-
-        //        for (targetTransition : targetRootState.allStates) {
-        //            targetTransition.transformConnector(targetRootState);
-        //        }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

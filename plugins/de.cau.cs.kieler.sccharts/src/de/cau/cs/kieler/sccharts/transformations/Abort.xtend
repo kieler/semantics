@@ -172,7 +172,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         // (a) more than one transitions outgoing OR
         // (b) ONE outgoing transition AND
         // + not a termination transition without any trigger
-// ???  // + not a termination self loop?
+        // + not a termination self loop?
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) ||
             ((state.outgoingTransitions.size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter [
                 trigger == null
@@ -296,34 +296,11 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     }
                 }
 
-//!!!CHANGED : not needed any more, terminations should be handled already
-//                var Expression terminationTrigger;
-
                 state.outgoingTransitions.setDefaultTrace;
                 // For each region encapsulate it into a _Main state and add a _Term variable
                 // also to the terminationTrigger
                 for (region : regions) {
 
-//!!!CHANGED
-//                    if (terminationHandlingNeeded) {
-//                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").
-//                            uniqueNameCached(nameCache)
-//                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").
-//                            uniqueNameCached(nameCache)
-//                        mainState.regions.add(region)
-//                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").
-//                            uniqueNameCached(nameCache)
-//                        //!!!NEW: parentRegion.parentState    
-//                        termVariable = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.
-//                            uniqueNameCached(nameCache)
-//                        mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
-//                        if (terminationTrigger != null) {
-//                            terminationTrigger = terminationTrigger.and(termVariable.reference)
-//                        } else {
-//                            terminationTrigger = termVariable.reference
-//                        }
-//                        state.createEntryAction.addEffect(termVariable.assign(FALSE))
-//                    }
                     // Inside every region create an _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
@@ -360,8 +337,6 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                                      trigger = trigger.or(weakAbortImmediateTrigger.copy)
                                 }
                                 if (trigger != null) {
-//                                if (innerState.hasAnnotation(Termination.ANNOTATION_FINALSTATE) ||
-//                                    !weakAbortImmediateTriggerTermination) {
                                     val weakAbort = innerState.createTransitionTo(abortedState)
                                     weakAbort.setTrigger(trigger.copy)
                                     weakAbort.setLowestPriority;
@@ -381,11 +356,6 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                         }
                     }
                 }
-
-//!!!CHANGED : not needed any more, terminations should be handled already
-//                if (terminationTrigger == null) {
-//                    terminationTrigger = TRUE;
-//                }
 
                 // Only consider termination transitions here, in the WTO version
                 // we do not need a ctrlRegion iff there are no conditional terminations or
@@ -409,29 +379,14 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                             }
                         }
 
-//!!!CHANGED : not needed any more, terminations should be handled already
-//                        if (transition.typeTermination) {
-//                            if (transition.trigger != null) {
-//                                ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
-//                            } else {
-//                                ctrlTransition.setTrigger(terminationTrigger.copy)
-//                            }
-//                        } else {
                             // this is the fallback were we copy in a NO WTO fashion the triggers
                             ctrlTransition.setTrigger(transition.trigger.copy)
 
-//                            if (transition.typeWeakAbort && !transition.immediate2) {
-                            // in this case we have to take care of getting the auxiliary variable for the
-                            // original delayed weak abort trigger
-                            // Get the _transitionTrigger that was created earlier
-                            //
                             // Do the following also in case of mixed delayed/immediate STRONG aborts!
                             val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
                             if (transitionTriggerVariable != null) {
                                 ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
                             }
-//                            }
-//                        }
 
                     }
                 }
@@ -504,9 +459,6 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
     }
 
 
-
-
-
 //Optimization: (to help downstream compilation)
 // If initial state has no incoming IMMEDIATE (agreed with rvh) transition, and there is an outgoing delayed weak abort, 
 // the aborting transition of the initial state may be delayed too
@@ -533,297 +485,6 @@ def boolean containsDelayedTerm(Expression trigger) {
     val list2 = list1.filter[valuedObject.name.contains("_termD")].toList
     return !(list2.nullOrEmpty)
 }
-
-
-
-
-
-
-
- ////////////////////////////////////////////////////////////////////////////
- ////                O   L   D
- ///////////////////////////////////////////////////////////////////////////
-
-    // Traverse all states 
-    def void transformAbortNoWTO(State state, State targetRootState) {
-
-        // (a) more than one transitions outgoing OR
-        // (b) ONE outgoing transition AND
-        // + not a termination transition without any trigger
-        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) ||
-            ((state.outgoingTransitions.size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter [
-                trigger == null
-            ].size == 1))))
-
-        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
-
-        // if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        // Code before: Entry & Exit actions should be handled correctly afterwards, during actions should be handled before!
-        // if ((state.hasInnerStatesOrControlflowRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
-        if ((state.hasInnerStatesOrControlflowRegions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
-            state.outgoingTransitions.setDefaultTrace;
-            val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
-
-            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
-            val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.controlflowRegions2.immutableCopy
-
-            // Only create a control region in the WTO case if there is at least one conditional termination
-            // or a delayed termination
-            val notCoreTerminations = outgoingTransitions.filter [e|
-                (e.typeTermination && (!(e.immediate2) || (e.trigger != null)))
-            ]
-            val delayedWeakAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
-            val mixedDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0 &&
-                outgoingTransitions.filter[e|!e.typeStrongAbort && e.immediate2].size > 0
-            val finalStates = state.regions.filter(ControlflowRegion).filter[e|e.states.filter[ee|ee.final].size > 0].
-                size > 0
-            val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
-
-            val terminationHandlingNeeded = (notCoreTerminations.size > 0)
-            val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedDelayedStrongAborts
-            val anyFinalStatesButNoTermination = finalStates && !termination && !state.isRootState
-            val needCtrlRegion = terminationHandlingNeeded || delayedAbortHandlingNeeded ||
-                anyFinalStatesButNoTermination
-
-            // .. || stateHasUntransformedTransitions : for conditional terminations!
-            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-
-                // Only create a control region in the WTO case if there is at least one conditional termination
-                // or a delayed termination
-                var State doneState
-                var State runState
-                if (needCtrlRegion) {
-                    // Put information for smarter scheduling 
-                    // TODO: check, may be superfluous in the future when depth-join is implemented
-                    //                    for (region : state.regions) {
-                    //                          region.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
-                    //                     }
-                    val ctrlRegion = state.createControlflowRegion(GENERATED_PREFIX + "Ctrl").
-                        uniqueNameCached(nameCache)
-                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
-                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
-                }
-
-                // Build up weak and strong abort triggers
-                var Expression strongAbortTrigger = null;
-                var Expression strongAbortImmediateTrigger = null;
-                // var strongImmediateTrigger = false;
-                var Expression weakAbortImmediateTrigger = null;
-                for (transition : outgoingTransitions) {
-                    transition.setDefaultTrace;
-                    if (transition.typeStrongAbort) {
-                        if (transition.immediate2) {
-                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or(transition.trigger.copy).trace(
-                                transition)
-                        } else {
-                            if (mixedDelayedStrongAborts) {
-                                // strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
-                                val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                    GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
-                                state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
-                                transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                                strongAbortTrigger = strongAbortTrigger.or(transitionTriggerVariable.reference).trace(
-                                    transition)
-                            } else {
-                                strongAbortTrigger = strongAbortTrigger.or(transition.trigger.copy).trace(transition)
-                            }
-                        }
-                    } else if (transition.typeWeakAbort) {
-                        if (transition.immediate2) {
-                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(transition.trigger.copy).trace(
-                                transition)
-                        } else {
-                            // In case of a delayed weak abort, we need to take care of the delay in
-                            // the watcher region and create an auxiliarv variable
-                            // Create a new _transitionTrigger valuedObject
-                            val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                                GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
-                            state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
-                            transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
-                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or(
-                                transitionTriggerVariable.reference).trace(transition)
-                        }
-                    }
-                }
-
-                var Expression terminationTrigger;
-
-                state.outgoingTransitions.setDefaultTrace;
-                // For each region encapsulate it into a _Main state and add a _Term variable
-                // also to the terminationTrigger
-                for (region : regions) {
-                    if (terminationHandlingNeeded) {
-                        val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").
-                            uniqueNameCached(nameCache)
-                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").
-                            uniqueNameCached(nameCache)
-                        mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").
-                            uniqueNameCached(nameCache)
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.
-                            uniqueNameCached(nameCache)
-                        mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
-                        if (terminationTrigger != null) {
-                            terminationTrigger = terminationTrigger.and(termVariable.reference)
-                        } else {
-                            terminationTrigger = termVariable.reference
-                        }
-                        state.createEntryAction.addEffect(termVariable.assign(FALSE))
-                    }
-
-                    // Inside every region create an _Aborted
-                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
-                        uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final && type != StateType::CONNECTOR]) {
-                        if (innerState != abortedState) {
-                            if (strongAbortTrigger != null) {
-                                val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
-                                    strongAbort.setTypeStrongAbort
-                                }
-                                strongAbort.setPriority(0)
-                                strongAbort.setTrigger(strongAbortTrigger.copy)
-                                strongAbort.setImmediate(false)
-                            }
-                            if (strongAbortImmediateTrigger != null) {
-                                val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hasInnerStatesOrControlflowRegions || innerState.hasInnerActions) {
-                                    strongAbort.setTypeStrongAbort
-                                }
-                                strongAbort.setPriority(0)
-                                strongAbort.setTrigger(strongAbortImmediateTrigger.copy)
-                                strongAbort.setImmediate(true)
-                            }
-                            if (weakAbortImmediateTrigger != null) {
-                                val weakAbort = innerState.createTransitionTo(abortedState)
-                                weakAbort.setTrigger(weakAbortImmediateTrigger.copy)
-                                weakAbort.setLowestPriority;
-                                // ALL weak aborts MUST be immediate, otherwise they might be overruled
-                                // by other transitions and would NEVER be executed. This way it is made
-                                // sure that a weak abort is taken if control would rest otherwise
-                                weakAbort.setImmediate(true)
-                            }
-                        }
-                    }
-                }
-
-                if (terminationTrigger == null) {
-                    terminationTrigger = TRUE;
-                }
-
-                // Only consider termination transitions here, in the WTO version
-                // we do not need a ctrlRegion iff there are no conditional terminations or
-                // delayed terminations
-                for (transition : outgoingTransitions) {
-                    transition.setDefaultTrace;
-                    if (needCtrlRegion) {
-                        // (transition.typeTermination && (!(transition.immediate2) || (transition.trigger != null)))
-                        // ||
-                        // (transition.typeWeakAbort && !transition.immediate2)) {
-                        // Create a ctrlTransition in the ctrlRegion
-                        val ctrlTransition = runState.createTransitionTo(doneState)
-                        ctrlTransition.setLowestPriority
-                        if (transition.immediate2) {
-                            // if the transition was immediate then set the ctrl transition to be immediate
-                            ctrlTransition.setImmediate(true)
-                        }
-
-                        if (transition.typeTermination) {
-                            if (transition.trigger != null) {
-                                ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
-                            } else {
-                                ctrlTransition.setTrigger(terminationTrigger.copy)
-                            }
-                        } else {
-                            // this is the fallback were we copy in a NO WTO fashion the triggers
-                            ctrlTransition.setTrigger(transition.trigger.copy)
-
-//                            if (transition.typeWeakAbort && !transition.immediate2) {
-                            // in this case we have to take care of getting the auxiliary variable for the
-                            // original delayed weak abort trigger
-                            // Get the _transitionTrigger that was created earlier
-                            //
-                            // Do the following also in case of mixed delayed/immediate STRONG aborts!
-                            val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                            if (transitionTriggerVariable != null) {
-                                ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
-                            }
-//                            }
-                        }
-
-                    }
-                }
-
-            }
-
-            state.outgoingTransitions.setDefaultTrace;
-            // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").
-                uniqueNameCached(nameCache).setTypeConnector
-            state.createTransitionTo(outgoingConnectorState).setTypeTermination
-
-            // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must
-            // be the DEFAULT transition that has NO trigger ***
-            val defaultTransition = outgoingTransitions.last
-
-            for (transition : outgoingTransitions) {
-                transition.setDefaultTrace;
-
-                // Modify the outgoing transition
-                transition.setSourceState(outgoingConnectorState)
-
-                if (transition != defaultTransition) {
-
-                    // Get the _transitionTrigger that was created earlier
-                    // if (transition.typeWeakAbort && !transition.immediate2) {
-                    val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                    if (transitionTriggerVariable != null) {
-                        // This case for delayed termination transitions only
-                        transition.setTrigger2(transitionTriggerVariable.reference)
-                    } else {
-                        // Fall back to this case when we did not create a trigger variable
-                        // Take the original trigger here (before for the actual ABORT in the main region take a copy, also for the watcher take a copy
-                        transition.setTrigger2(transition.trigger)
-                    }
-                }
-
-                transition.setTypeWeakAbort
-            }
-
-            // OPTIMIZATION
-            // if the connector has to just one outgoing transition, erase it
-            if (outgoingConnectorState.outgoingTransitions.size == 1) {
-                val transition = outgoingConnectorState.outgoingTransitions.get(0)
-                transition.setImmediate(true)
-                transition.setTypeTermination
-                transition.setTrigger(null)
-                val transitionToDelete = outgoingConnectorState.incomingTransitions.get(0)
-                transitionToDelete.trace(transition)
-                state.outgoingTransitions.remove(transitionToDelete)
-                state.outgoingTransitions.add(transition)
-                outgoingConnectorState.trace(transition)
-                state.parentRegion.states.remove(outgoingConnectorState)
-            }
-
-        } else {
-            // Because we do not have (abortable) internal controlflow, change all strong aborts to be "weak" aborts
-            // This can only happen for entry or exit actions inside a state with no further internal behavior
-            // because entry and exit actions (at this point) cannot be aborted (TODO: think about additional before and after actions!)
-            for (transition : state.outgoingTransitions) {
-                if (transition.isTypeStrongAbort) {
-                    transition.setTypeWeakAbort
-                }
-            }
-        }
-
-    }
-
-
-
-
-
-
 
 
 

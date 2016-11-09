@@ -18,9 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
@@ -34,7 +31,6 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Transition
 
@@ -73,17 +69,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
 
     @Inject
-    extension KExpressionsCreateExtensions
-
-    @Inject
     extension KExpressionsComplexCreateExtensions
     
-    @Inject
-    extension KExpressionsDeclarationExtensions    
-    
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions   
-
     @Inject
     extension SCChartsExtension
 
@@ -118,6 +105,7 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
     def void transformPre(State state, State targetRootState) {
+        state.setDefaultTrace
         
         // If the state has outgoing terminations, we need to finalize the during
         // actions in case we end the states over these transitions
@@ -142,6 +130,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         
 		for (preValuedObject : allPreValuedObjects.immutableCopy) {
 		    if (preRegion == null || preInit == null || preWait == null) {
+		        allPreValuedObjects.setDefaultTrace
+		        
 		        preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
 		        preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
                 preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)

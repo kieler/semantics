@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts For Transformation.
@@ -91,6 +92,7 @@ class For extends AbstractExpansionTransformation {
     }
 
     def void transformFor(ControlflowRegion region, State targetRootState) {
+        region.setDefaultTrace
         val forData = region.parseFor
         if (forData != null) {
             val firstInstance = region.createState(GENERATED_PREFIX + "For")

@@ -20,6 +20,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Map Transformation.
@@ -75,6 +76,7 @@ class Map extends AbstractExpansionTransformation {
     }
 
     def void transformMap(State state, State targetRootState) {
+        state.setDefaultTrace
         //TODO
     }
 

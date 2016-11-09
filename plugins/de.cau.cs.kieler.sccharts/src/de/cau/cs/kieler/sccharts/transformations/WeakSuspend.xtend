@@ -15,30 +15,18 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-//import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import java.util.ArrayList
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.HistoryType
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -49,12 +37,6 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
  */
 class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
-    // HOTFIX DUE TO MODIFICATIONS IN SCCHARTSEXTENSION. THE FOLLOWING CODE SHOULD BE MOVED
-    // BACK TO SCCHARTSEXTENSION
-
-    //@Inject
-    //extension KExpressionsExtensionOLD
-    
     @Inject
     extension SCChartsTransformationExtension
     
@@ -64,33 +46,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsComplexCreateExtensions
     
-    
-    
-//    def getValuedObjects(Scope scope) {
-//        <ValuedObject>newLinkedList => [ ll |
-//            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
-//        ]
-//    }
-    
-//    // Creates a new ValuedObject in a scope.
-//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-//        val valuedObject = createValuedObject(valuedObjectName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//    
-//    //===========  VARIABLES  ===========
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createVariable(Scope scope, String variableName) {
-//        scope.createValuedObject(variableName)
-//    }
-//
-//    //============  SIGNALS  ============
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createSignal(Scope scope, String variableName) {
-//        scope.createValuedObject(variableName).setIsSignal
-//    }
-
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
@@ -116,15 +71,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-
-//    @Inject
-//    extension KExpressionsComplexCreateExtensions
-//    
-//    @Inject
-//    extension KExpressionsDeclarationExtensions    
-//    
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions   
 
     @Inject
     extension SCChartsExtension
@@ -156,10 +102,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
-            
-
-
-
+ 
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
@@ -197,14 +140,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    //val equalsExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-                    //equalsExpression.operator = OperatorType::EQ
-                    //val equalsExpression = createOperatorExpression(OperatorType::LOGICAL_OR);
-                    //val equalsExpression = createEQExpression
-                    //equalsExpression.add(stateBookmark.reference.copy)
-                    //equalsExpression.add(stateBookmark.reference.copy)
-                    //equalsExpression.add(counter.createIntValue.copy)
-                    //equalsExpression.add(counter.createIntValue.copy)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
                     
@@ -229,8 +164,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 }
             }
             
-            
-
             // NEW:            
             // WS Termination region (IF state can be left by termination!)
             // should only terminate if no WS trigger holds
@@ -248,49 +181,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 t2.trigger = weakSuspendFlag.reference
             }
             
-        }
-    }
-
-
-
-    def void transformWeakSuspendOld(State state, State targetRootState) {
-
-        val weakSuspends = state.suspendActions.filter[weak].toList
-        weakSuspends.setDefaultTrace
-        
-        if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
-            weakSuspendFlag.setInitialValue(FALSE)
-
-            for (weakSuspend : weakSuspends.immutableCopy) {
-                weakSuspend.setDefaultTrace
-                val duringAction = state.createDuringAction
-                duringAction.setImmediate(weakSuspend.immediate)
-                //duringAction.setTrigger(weakSuspend.trigger.copy)
-                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
-                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
-                state.localActions.remove(weakSuspend)
-            }
-
-            weakSuspends.setDefaultTrace
-            for (region : state.allContainedControlflowRegions.immutableCopy) {
-                val subStates = region.states.immutableCopy
-                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).setTypeInt.uniqueName
-                var counter = 0 
-
-                for (subState : subStates) {
-                    val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
-                    reEnterTransition.setDeferred(true)
-                    val entryAction = subState.createEntryAction
-                    entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
-                    entryAction.setTrigger(not(weakSuspendFlag.reference))
-                    counter = counter + 1
-                    val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
-                    weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
-                }
-            }
         }
     }
 

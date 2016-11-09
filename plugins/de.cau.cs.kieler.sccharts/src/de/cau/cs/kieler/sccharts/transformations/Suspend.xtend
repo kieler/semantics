@@ -107,7 +107,7 @@ class Suspend extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformSuspend(State state, State targetRootState) {
-
+        state.setDefaultTrace
         val suspendList = state.suspendActions.filter[!weak].toList.immutableCopy
 
         if (suspendList.size == 0) {
