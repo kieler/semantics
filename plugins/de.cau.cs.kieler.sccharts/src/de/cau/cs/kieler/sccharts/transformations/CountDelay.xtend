@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateEx
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts CountDelay Transformation.
@@ -112,6 +113,17 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             //Add entry action
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.assign(0.createIntValue))
+            
+            if (!transition.isImmediate2) {
+                // Meeting 2016-11-09 Semantics Meetings (ssm)
+                // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
+                
+                // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick", i.e., the tick
+                // when the state is entered 
+                val entryAction2 = sourceState.createEntryAction
+                entryAction2.addEffect(counter.assign((-1).createIntValue))
+                entryAction2.setTrigger(transition.trigger.copy)
+            }
 
             // The during action MUST be added to the PARENT state NOT the SOURCE state because
             // otherwise (for a strong abort) taking the strong abort transition would not be
@@ -119,7 +131,7 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             // Add during action
             val duringAction = parentState.createImmediateDuringAction
             duringAction.setTrigger(transition.trigger)
-            duringAction.addEffect(counter.assign((1.createIntValue).add(counter.reference)))
+            duringAction.addEffect(counter.assign(counter.reference.add((1.createIntValue))))
 
             // Modify original trigger
             // trigger := (counter == delay)
