@@ -147,6 +147,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
         
         // If the parent state is the root state then make an explicit termination transition
         if (parentState.rootState) {
+            rootState.setDefaultTrace
             val r = parentState.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
             val i = r.createInitialState(GENERATED_PREFIX + "I").uniqueName
             val f = r.createFinalState(GENERATED_PREFIX + "F").uniqueName
@@ -159,12 +160,13 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
          
         // For every region in such a parent state, we need to track if it finishes
         for (region : state.regions.filter(ControlflowRegion)) {
-            val allFinalStates = region.states.size == region.states.filter[isFinal].size
+            val allStatesFinal = region.states.size == region.states.filter[isFinal].size
 
             // Use this new term variable to track final states of this region
             val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+            finalStates.setDefaultTrace
 
-            if (!allFinalStates) {
+            if (!allStatesFinal) {
                 val termVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
                     uniqueName
                 state.createEntryAction.addAssignment(termVariable.assign(FALSE))    
@@ -199,72 +201,6 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
                 termination.setTrigger(termination.trigger.and(termVariable.reference))
             }
         }
-    }
-
-    // ----
-    // FIRST ALTERNATIVE
-    def void transformComplexFinalStateAlternative(State parentState, State rootState) {
-        parentState.setDefaultTrace
-        var ArrayList<ValuedObject> termVariables = new ArrayList
-
-        // Every such parent state gets an special abort flag that is used to trigger
-        // the abortion of the old complex final states to new auxiliary real (not complex) final states!
-        var abortFlag = parentState.createValuedObject(GENERATED_PREFIX + "abort", createBoolDeclaration).uniqueName
-        abortFlag.setInitialValue(FALSE)
-
-        // For every region in such a parent state, we need to track if it finishes
-        for (region : parentState.regions.filter(ControlflowRegion)) {
-            val termVariable = parentState.createValuedObject(GENERATED_PREFIX + "term", createBoolDeclaration).
-                uniqueName
-            termVariable.setInitialValue(FALSE)
-            if (region.initialState.final) {
-                termVariable.setInitialValue(TRUE)
-            }
-            termVariables.add(termVariable)
-
-            // Use this new term variable to track final states of this region
-            val finalStates = region.states.filter[final && incomingTransitions.size > 0]
-
-            for (finalState : finalStates) {
-                for (transition : finalState.incomingTransitions.filter[!sourceState.complexFinalState]) {
-                    transition.addEffect(termVariable.assign(TRUE))
-                }
-                for (transition : finalState.outgoingTransitions.filter[!targetState.complexFinalState]) {
-                    transition.addEffect(termVariable.assign(FALSE))
-                }
-            }
-        }
-
-        // Add Watcher Region
-        val watcherRegion = parentState.createControlflowRegion(GENERATED_PREFIX + "Watch").uniqueName
-        val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch").
-            createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
-        watcherTransition.addEffect(abortFlag.assign(TRUE))
-        for (termVariable : termVariables) {
-            watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))
-        }
-
-        // Now traverse all the complex final states and eliminate them by
-        // 1. unsetting their final flag
-        // 2. creating a new (real) final state that is entered if the abort for the other regions was triggered
-        for (region : parentState.regions.filter(ControlflowRegion)) {
-            if (region.containsComplexFinalState) {
-
-                // Create a unique real final state in here
-                val auxiliaryFinalState = region.createFinalState(GENERATED_PREFIX + "Final").uniqueName
-
-                for (state : region.states.filter[isComplexFinalState]) {
-
-                    state.final = false;
-                    val abortTransition = state.createImmediateTransitionTo(auxiliaryFinalState);
-                    abortTransition.setLowestPriority.setTrigger(abortFlag.reference)
-
-                    auxiliaryFinalState.trace(state)
-                    abortTransition.trace(state)
-                }
-            }
-        }
-
     }
 
 }

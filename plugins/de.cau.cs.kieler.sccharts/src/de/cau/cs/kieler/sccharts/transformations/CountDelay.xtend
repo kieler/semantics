@@ -77,9 +77,6 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
     extension KExpressionsValuedObjectExtensions
     
     @Inject
-    extension KExpressionsCompareExtensions
-
-    @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -106,8 +103,6 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             transition.setDefaultTrace
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState
-
-			
             val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
 
             //Add entry action

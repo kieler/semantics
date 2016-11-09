@@ -114,6 +114,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
     def void transformSignal(State state, State targetRootState) {
         val allSignals = state.signals
+        allSignals.setDefaultTrace
 
         // !!!CHANGED
         if (allSignals.nullOrEmpty) {
