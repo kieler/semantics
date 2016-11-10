@@ -129,9 +129,15 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     e.typeTermination && e.isImmediate2 && e.trigger == null
                 ].size == 1 && targetState.outgoingTransitions.filter[e|e.typeTermination].size == 1
                 val noWeakAborts = targetState.outgoingTransitions.filter[e|e.typeWeakAbort].size == 0
+                
+                // TEST: TerminationImmediateAndAbort
+                val delayedStrongAbortButImmediateTermination =
+                (targetState.outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0) 
+                && (targetState.canImmediateTerminate)
+                
                 // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
                 // noStrongMixedAborts
-                if ((!(singleTermination && noWeakAborts))) { // }||(singleTermination && strongAborts)) {
+                if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
                 // optimization: If this termination is the only outgoing then do not transform terminations first
                     targetState.transformTermination(targetRootState)
                 }
@@ -179,13 +185,14 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
             val delayedWeakAborts = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
             
             var mixedDelayedStrongAborts = outgoingTransitions.filter[e|e.typeStrongAbort && !e.immediate2].size > 0 &&
-                 (outgoingTransitions.filter[e|!e.typeStrongAbort && e.immediate2].size > 0)
+                //!state.canImmediateAborted
+                (outgoingTransitions.filter[e|e.immediate2].size > 0)
 
             // ABRO (-like) OPTIMIZATION                
             // For ABRO a mixed delayed termination is not a problem if the state cannot terminate
             // immediately, because the immediate transition cannot fire this time, hence
             // priority inversion cannot occur.
-            if (!state.canImmediateTerminate) {
+            if (!(state.canImmediateTerminate || state.canImmediateAborted)) {
                 mixedDelayedStrongAborts = false
             }
                 

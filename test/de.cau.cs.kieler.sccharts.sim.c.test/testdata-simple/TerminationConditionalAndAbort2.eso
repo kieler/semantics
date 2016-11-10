@@ -1,0 +1,77 @@
+! reset;
+I I2 I3 
+% Output: 
+;
+I I2 I3 
+% Output: O2(1) 
+;
+! reset;
+I 
+% Output: 
+;
+I I3 
+% Output: O1(1) O3(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: O1(1) 
+;
+
+% Output: O1(1) 
+;
+
+% Output: O1(1) 
+;
+I2 I3 
+% Output: O1(1) O2(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: O1(1) 
+;
+
+% Output: O1(1) 
+;
+
+% Output: O1(1) 
+;
+I3 
+% Output: O1(1) O3(1) 
+;
+
+% Output: O1(1) O3(1) 
+;
+
+% Output: O1(1) O3(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I I3 
+% Output: O1(1) O3(1) 
+;
+
+% Output: O1(1) O3(1) 
+;

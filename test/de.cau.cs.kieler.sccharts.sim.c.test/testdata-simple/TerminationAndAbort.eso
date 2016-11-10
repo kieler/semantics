@@ -1,0 +1,30 @@
+! reset;
+I 
+% Output: 
+;
+
+% Output: O1(1) O3(1) 
+;
+
+% Output: O1(1) O3(1) 
+;
+! reset;
+I 
+% Output: 
+;
+I 
+% Output: O2(1) 
+;
+I 
+% Output: O2(1) 
+;
+! reset;
+
+% Output: 
+;
+I 
+% Output: O2(1) 
+;
+
+% Output: O2(1) 
+;

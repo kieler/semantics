@@ -50,6 +50,13 @@ class SCChartsTransformationExtension {
     // -------------------------------------------------------------------------
     // --             H I G H E R      L E V E L     T E S T S                --
     // -------------------------------------------------------------------------
+    
+    // Test if a state can be immediately aborted
+    def boolean canImmediateAborted(State state) {
+        ((state.outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0)
+        ||
+        (state.outgoingTransitions.filter[e|e.typeWeakAbort && e.immediate2].size > 0))
+    }
 
     // Test if for a state ALL regions may possibly terminate immediate
     def boolean canImmediateTerminate(State state) {
