@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -438,8 +439,17 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
-                        "Cannot simulate active editor using the SCCharts Simulator", true, null);
+                        "\nCannot simulate active editor using the SCCharts Simulator.", true, null);
             }
+            
+            
+            Resource eResource = model.eResource();
+            boolean modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+            if (modelHasErrorMarkers) {
+                throw new KiemInitializationException(
+                        "\nThe source model contains error markers.", true, null);
+            }
+
 //            System.out.println("4");
 
             // if (this.getModelRootElement().eResource() == null) {
@@ -534,14 +544,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (errors != null && errors.length() > 0) {
                 if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
                 throw new KiemInitializationException(
-                        errors,
+                        "\n" + errors,
                         true, null);
             }
             String warnings = highLeveleCompilationResult.getAllWarnings();
             if (warnings != null && warnings.length() > 0) {
                 if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
                 throw new KiemInitializationException(
-                        warnings,
+                        "\n" + warnings,
                         false, null);
             }  
             
@@ -568,13 +578,13 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (errors != null && errors.length() > 0) {
                 if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
                 throw new KiemInitializationException(
-                        errors,
+                        "\n" + errors,
                         true, null);
             }
             else if (warnings != null && warnings.length() > 0) {
                 if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
                 throw new KiemInitializationException(
-                        warnings,
+                        "\n" + warnings,
                         false, null);
             }            
 
@@ -859,6 +869,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     }
 
     // -------------------------------------------------------------------------
+
 
     public List<String> getOutputNames() {
         List<String> allOutputs = new ArrayList<String>();

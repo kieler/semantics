@@ -59,6 +59,9 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
+    /** How many characters maximum for the error message. */
+    protected static final int ERROR_MESSAGE_MAX_CHARACTERS = 200;
+
     /** The properties added by this super-component shift all sub components properties by one. */
     protected static final int KIEM_PROPERTY_DIFF = 1;
 
@@ -580,7 +583,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
-                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e), true, e);
+                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e, ERROR_MESSAGE_MAX_CHARACTERS), true, e);
         }
     }
 
@@ -648,6 +651,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {
                 throw (KiemInitializationException) exception;
+//                throw (new KiemInitializationException(exception.getMessage(), true, null));
 //                exception.printStackTrace();
             } else {
                 exception.printStackTrace();

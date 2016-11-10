@@ -679,4 +679,23 @@ public final class KiemUtil {
     }
 
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the stack trace of an exception as a string.
+     * 
+     * @param t
+     *            the t
+     * @return the error stack trace
+     */
+    public static String getStackTraceString(Throwable t, int maxCharacters) {
+        String msg = getStackTraceString(t);
+        if (msg.length() > maxCharacters) {
+            msg = msg.substring(0, maxCharacters-1);
+        }
+        return msg;
+    }
+
+    // -------------------------------------------------------------------------
+
 }
