@@ -234,28 +234,30 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        if (isDirtyOnError) {
-            return true;
-        }
-        // Calculate a dirty indicator from ALL model elements and their textual representation's
-        // hash code.
-        int newDirtyIndicator = 0;
-        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
-        while (treeIterator.hasNext()) {
-            Object obj = treeIterator.next();
-            newDirtyIndicator += obj.toString().hashCode();
-        }
-        // Also consider KIEM properties (may have changes and require new code generation)
-        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
-            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
-        }
-        if (newDirtyIndicator != dirtyIndicator) {
-            dirtyIndicator = newDirtyIndicator;
-            return true;
-        }
-        // We conclude at this point that we are not dirty on the level of
-        // changes to the diagram
-        return false || (cExecution == null);
+        // For the release, always re-compile!
+        return true;
+//        if (isDirtyOnError) {
+//            return true;
+//        }
+//        // Calculate a dirty indicator from ALL model elements and their textual representation's
+//        // hash code.
+//        int newDirtyIndicator = 0;
+//        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
+//        while (treeIterator.hasNext()) {
+//            Object obj = treeIterator.next();
+//            newDirtyIndicator += obj.toString().hashCode();
+//        }
+//        // Also consider KIEM properties (may have changes and require new code generation)
+//        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
+//            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
+//        }
+//        if (newDirtyIndicator != dirtyIndicator) {
+//            dirtyIndicator = newDirtyIndicator;
+//            return true;
+//        }
+//        // We conclude at this point that we are not dirty on the level of
+//        // changes to the diagram
+//        return false || (cExecution == null);
     }
 
     
@@ -867,6 +869,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
         }
     }
+
+    // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
 
