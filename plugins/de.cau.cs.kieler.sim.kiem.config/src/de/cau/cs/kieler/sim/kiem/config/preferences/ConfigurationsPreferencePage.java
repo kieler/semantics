@@ -149,7 +149,7 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
 
         // checkbox for the execution summary message
         summaryMessageCheck = new Button(propertiesGroup, SWT.CHECK);
-        summaryMessageCheck.setText("Disable execution summary message");
+        summaryMessageCheck.setText("Enable execution summary message");
         summaryMessageCheck.addListener(SWT.Selection, listener);
 
         // checkbox for the recent schedules
@@ -180,14 +180,14 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
      */
     private void checkButtonStatus() {
         summaryMessageCheck.setSelection(ContributionManager.getInstance()
-                .isSummaryMessageDisabled());
+                .isSummaryMessageEnabled());
         recentCheck.setSelection(ContributionManager.getInstance().isComponentEnabled(
                 ContributionManager.RECENT_COMBO));
         matchingCheck.setSelection(ContributionManager.getInstance().isComponentEnabled(
                 ContributionManager.MATCHING_COMBO));
         advancedCheck.setSelection(ContributionManager.getInstance().isInAdvancedMode());
         summaryMessageCheck.setSelection(ContributionManager.getInstance()
-                .isSummaryMessageDisabled());
+                .isSummaryMessageEnabled());
     }
 
     /**
@@ -289,7 +289,7 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
         public final void handleEvent(final Event event) {
             try {
                 if (event.widget == summaryMessageCheck) {
-                    ContributionManager.getInstance().setSummaryMessageDisabled(
+                    ContributionManager.getInstance().setSummaryMessageEnabled(
                             summaryMessageCheck.getSelection());
                 }
                 if (event.widget == matchingCheck) {
