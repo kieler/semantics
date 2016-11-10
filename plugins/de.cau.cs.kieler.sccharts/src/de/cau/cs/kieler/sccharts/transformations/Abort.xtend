@@ -138,7 +138,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
                 // noStrongMixedAborts
                 if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
-                // optimization: If this termination is the only outgoing then do not transform terminations first
+                    // optimization: If this termination is the only outgoing then do not transform terminations first
                     targetState.transformTermination(targetRootState)
                 }
 
