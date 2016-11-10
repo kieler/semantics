@@ -215,15 +215,20 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         for (terminationTransition : terminationTransitions) {
             terminationTransition.setDefaultTrace
             
+            val isConditionalTermination = terminationTransition.trigger != null
+            
             terminationTransition.setType(TransitionType::WEAKABORT);
             // TODO: check if optimization is correct in all cases!
             // We should NOT do this for conditional terminations!
-            if (!hasConditionalTerminations) {
+            if (!isConditionalTermination) {
                 terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
+                terminationTransition.setImmediate(true);
             }
 
             // A normal termination should immediately be trigger-able! (test 145) 
-            terminationTransition.setImmediate(true);
+            // if not a delayed-conditional termination!
+            terminationTransition.setImmediate(terminationTransition.isImmediate2);
+
 
             // if there is just one valuedObject, we do not need an AND!
             if (triggerExpression != null) {
