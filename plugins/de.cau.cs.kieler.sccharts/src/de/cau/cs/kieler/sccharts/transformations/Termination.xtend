@@ -134,6 +134,8 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         // This is the special case where we must taken care of a normal termination 
         //  val terminationTransition = state.getTerminationTransitions;
         val terminationTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION);
+        
+        val hasConditionalTerminations = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION && e.trigger != null).size > 0
 
         if (terminationTransitions.size == 0) {
             return
@@ -192,7 +194,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
                 //val T2 = finalState.createImmediateTransitionTo(Final)
                 // Set the final state flag to false
                 //finalState.setFinal(false);
-                finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
+                if (!hasConditionalTerminations) {
+                    finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
+                }
             }
             
 
@@ -213,7 +217,10 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
             
             terminationTransition.setType(TransitionType::WEAKABORT);
             // TODO: check if optimization is correct in all cases!
-            terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
+            // We should NOT do this for conditional terminations!
+            if (!hasConditionalTerminations) {
+                terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
+            }
 
             // A normal termination should immediately be trigger-able! (test 145) 
             terminationTransition.setImmediate(true);
