@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -223,11 +224,16 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     }
 
     // -------------------------------------------------------------------------
+    
+    boolean isDirtyOnError = false;
 
     /**
      * {@inheritDoc}
      */
     public boolean isDirty() {
+        if (isDirtyOnError) {
+            return true;
+        }
         // Calculate a dirty indicator from ALL model elements and their textual representation's
         // hash code.
         int newDirtyIndicator = 0;
@@ -249,6 +255,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         return false || (cExecution == null);
     }
 
+    
+    public void setDirty(boolean isDirty) {
+        isDirtyOnError = isDirty;
+    }
+    
     // -------------------------------------------------------------------------
 
     public String getDataComponentId() {
@@ -504,6 +515,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     KielerCompiler.compile(highLevelContext);
 //            System.out.println("11");
             
+            
             // reset compile time and accumulate
             compileTime = 0;
 
@@ -515,6 +527,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + highLeveleCompilationResult.getAllErrors(),
                         true, null);
             }
+            
+            String errors = highLeveleCompilationResult.getAllErrors();
+            if (errors != null && errors.length() > 0) {
+                if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        errors,
+                        true, null);
+            }
+            String warnings = highLeveleCompilationResult.getAllWarnings();
+            if (warnings != null && warnings.length() > 0) {
+                if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        warnings,
+                        false, null);
+            }  
             
             // accumulate compile time
             for (TransformationIntermediateResult intermediateResult : highLeveleCompilationResult.getTransformationIntermediateResults()) {
@@ -533,6 +560,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
 //            System.out.println("13");
+            
+            errors = lowLevelCompilationResult.getAllErrors();
+            warnings = lowLevelCompilationResult.getAllWarnings();
+            if (errors != null && errors.length() > 0) {
+                if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        errors,
+                        true, null);
+            }
+            else if (warnings != null && warnings.length() > 0) {
+                if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        warnings,
+                        false, null);
+            }            
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
 //            System.out.println("14 " + cSCChartCCode);
