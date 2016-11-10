@@ -252,11 +252,11 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             currentState = null
             
             
-//            i++;
-//            if (i == 2) {
-//                return;
-//
-//            }
+            //i++;
+            //if (i == 2) {
+            //    return;
+            // }
+            
         }
 
 

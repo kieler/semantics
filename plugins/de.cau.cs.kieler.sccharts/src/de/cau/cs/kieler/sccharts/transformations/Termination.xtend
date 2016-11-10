@@ -231,24 +231,7 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
     }
     
     
-    
-    
-    
-    // Test if a final state is reachable immediately from an initial state
-    def boolean isImmediatelyReachable(State finalState) {
-        return finalState.isImmediatelyReachableHelper(finalState)
-    }
-    def boolean isImmediatelyReachableHelper(State finalState, State previousState) {
-        if (previousState.initial) {
-            return true
-        }
-        for (transition : previousState.incomingTransitions.filter[immediate]) {
-           if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
-               return true
-           }
-        }
-        return false
-    }
+
     
 
 }

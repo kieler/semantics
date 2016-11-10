@@ -1,0 +1,45 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+iSA 
+% Output: O1(1) dSA 
+;
+
+% Output: O1(1) 
+;
+! reset;
+iSA 
+% Output: dSA O2(1) 
+;
+
+% Output: O2(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+iSA 
+% Output: O2(1) 
+;
