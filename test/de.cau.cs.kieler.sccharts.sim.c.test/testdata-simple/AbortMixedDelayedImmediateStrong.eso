@@ -5,15 +5,15 @@
 
 % Output: 
 ;
-iSA 
-% Output: O1(1) dSA 
+iSA dSA
+% Output: O1(1)  
 ;
 
 % Output: O1(1) 
 ;
 ! reset;
-iSA 
-% Output: dSA O2(1) 
+iSA dSA
+% Output: O2(1) 
 ;
 
 % Output: O2(1) 
