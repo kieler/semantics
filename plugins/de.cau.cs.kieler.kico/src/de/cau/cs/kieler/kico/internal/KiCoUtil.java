@@ -99,6 +99,11 @@ public class KiCoUtil {
      */
     public static String serialize(EObject model, KielerCompilerContext context,
             boolean updateMainResource) {
+        return serialize(model, context,
+                updateMainResource, false);
+    }
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, boolean raiseError) {
         String num = (model.hashCode() + "").replace("-", "");
 
         String returnText = "";
@@ -123,9 +128,9 @@ public class KiCoUtil {
         ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getName());
         if (specificExtension != null) {
             extensionKeyList.clear();
-            if (!specificExtension.isXMI()) {
+            //if (!specificExtension.isXMI()) {
                 extensionKeyList.add(0, specificExtension.getExtension());
-            }
+            //}
         }
 
         try {
@@ -165,7 +170,7 @@ public class KiCoUtil {
                         context.setMainResource(res);
                     }
                 } catch (Exception e) {
-                    // e.printStackTrace();
+                     e.printStackTrace();
                 }
 
                 if (done) {
@@ -186,12 +191,16 @@ public class KiCoUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            String text2 = "";
-            if (model != null) {
-                text2 = model.getClass().getName();
+            if (raiseError) {
+                throw e;
+            } else {
+                String text2 = "";
+                if (model != null) {
+                    text2 = model.getClass().getName();
+                }
+                KiCoPlugin.getInstance().showError("Could not serialize model '" + text2 + "'",
+                        KiCoPlugin.PLUGIN_ID, e, true);
             }
-            KiCoPlugin.getInstance().showError("Could not serialize model '" + text2 + "'",
-                    KiCoPlugin.PLUGIN_ID, e, true);
         }
 
         return returnText;
