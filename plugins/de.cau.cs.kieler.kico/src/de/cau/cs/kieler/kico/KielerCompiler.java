@@ -301,8 +301,8 @@ public class KielerCompiler {
         String seconds = (((float) (end - start)) / 1000) + "";
         System.out.println("KIELER Compiler compiled in " + seconds + " seconds.");
 
-        context.getCompilationResult().processPostponedWarnings();
-        context.getCompilationResult().processPostponedErrors();
+        context.getCompilationResult().processPostponedWarnings(false);
+        context.getCompilationResult().processPostponedErrors(false);
         return context.getCompilationResult();
     }
 

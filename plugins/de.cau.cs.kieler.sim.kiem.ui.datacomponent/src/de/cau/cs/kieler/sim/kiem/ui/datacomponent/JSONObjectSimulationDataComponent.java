@@ -101,6 +101,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         return true;
     }
     
+    public void setDirty(boolean isDirty) {
+        //
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -304,13 +308,18 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                 doModel2ModelTransform(monitor);
             }
         } catch (Exception e) {
+            setDirty(true);
             monitor.done();
             exception = e;
+            String message = exception.getMessage();
             transformationCompleted = true;
             transformationError = true;
             return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
-                    "Model transformation failed.", e);
+                    "Model transformation failed.\n" , null);
+//            return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
+//                    "Model transformation failed.", e);
         }
+        setDirty(false);
         monitor.done();
         transformationCompleted = true;
         transformationError = false;
@@ -639,6 +648,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {
                 throw (KiemInitializationException) exception;
+//                exception.printStackTrace();
             } else {
                 exception.printStackTrace();
             }
