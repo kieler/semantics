@@ -219,7 +219,7 @@ function compileText() {
 
 	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
 	var resultUrl =  document.getElementById("KiCoURL").value;
-	var data =  "model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	var data =  "ext="+encodeURIComponent(ext.value) + "&model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
     document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -393,7 +393,7 @@ function updateImage() {
 
 <div align="center">
   <p><img src="http://www.sccharts.com/sccharts.png" width="512" height="150" /></p>
-  <p><span class="Stil3">Sequentially Constructive Charts &mdash; SCCharts</span><span class="Stil1"><br />
+  <p><span class="Stil3">Sequentially Constructive Statecharts &mdash; SCCharts</span><span class="Stil1"><br />
       <span class="Stil4">ONLINE COMPILER</span></span><br>
       <span class="Stil15">If after a while there is still no compilation result, please select another server or local host <a href="#server">below</a>.</span> </p>
     <table width="300" border="0" cellspacing="0">
@@ -404,7 +404,14 @@ function updateImage() {
               <th valign="top" scope="row"><div align="right" class="Stil8">
                 <p>1. Textual SCChart (SCT)<br>
                 <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">here</a>) </span></p>
-                </div></th>
+                </div>
+                <p><span class="Stil8 Stil10">
+                  <select name="ext" id="ext" onchange="compile();">
+                    <option selected="selected" value="sct">SCCharts</option>
+                    <option value="scg">SCGraph</option>
+                    <option value="kgt">KGT</option>
+                  </select>
+                </span></p></th>
               <td valign="top"><label>
                 <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
 @HVLayout
