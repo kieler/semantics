@@ -25,9 +25,11 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -221,6 +223,18 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)) {
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
+        }
+        Diagnostic diagnostic = Diagnostician.INSTANCE.validate(rootEObject);
+        if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+              throw new KiemInitializationException(
+                      "The source model contains error markers.\n\n", true, null);
+        }         
+        Resource r = rootEObject.eResource();
+        if (r != null) {
+            if (r.getErrors().size() > 0) {
+                throw new KiemInitializationException(
+                       "The source model contains error markers.\n\n", true, null);
+            }
         }
 
         return true;
@@ -875,6 +889,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
 
+    // -------------------------------------------------------------------------
+
+
     public List<String> getOutputNames() {
         List<String> allOutputs = new ArrayList<String>();
         allOutputs.addAll(outputSignalList);
@@ -882,8 +899,5 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         return allOutputs;
         
     }
-
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
 
 }

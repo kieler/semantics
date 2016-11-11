@@ -28,9 +28,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.elk.core.util.Pair;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -718,6 +720,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 if (sourceModel != null && sourceModel.eResource() != null) {
                     Resource eResource = sourceModel.eResource();
                     sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                    
+                    // added my cmot
+                    // Check for model specific errors (e.g. Xtext validator rules) 
+                    Diagnostic diagnostic = Diagnostician.INSTANCE.validate(sourceModel);
+                    if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                        sourceModelHasErrorMarkers = true;
+                    }         
+
                     IFile underlyingFile = ResourceUtil.getUnderlyingFile(eResource);
                     try {
                         if (underlyingFile != null) {

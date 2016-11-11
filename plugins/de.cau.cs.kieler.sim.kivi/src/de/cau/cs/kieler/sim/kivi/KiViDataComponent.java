@@ -193,11 +193,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * 
      */
     public void wrapup() throws KiemInitializationException {
+        hightLightStates(new ArrayList<EObject>());
+        hightLightTransitions(new ArrayList<EObject>());
+        expanded.clear();
+        eObjectMap.clear();
         if (diagramEditor == null) {
             return;
         }
-        hightLightStates(new ArrayList<EObject>());
-        hightLightTransitions(new ArrayList<EObject>());
         // Necessary to remove scaling!
         LightDiagramServices.layoutDiagram(viewContext);
         wrapupDone = true;
@@ -273,7 +275,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
-        System.out.println("HUHU");
         if (diagramEditor == null) {
             return null;
         }
