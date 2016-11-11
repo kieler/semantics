@@ -219,7 +219,7 @@ function compileText() {
 
 	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
 	var resultUrl =  document.getElementById("KiCoURL").value;
-	var data =  "ext="+encodeURIComponent(ext.value) + "&model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	var data = "synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(ext.value) + "&model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
     document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -351,9 +351,14 @@ function updateImage() {
 				render = "svg";
 				imageFormat = "svg+xml";
 		}
-
+		
+		var tempExt = ext.value;
+		if (transformations.value.trim() != "") {
+			tempExt = synth.value;
+		}
 		var imageUrl = document.getElementById("KLighDURL").value
-		var data = "encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new Date().getTime();
+		var data = "layout="+encodeURIComponent(layout.value) + "&synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(tempExt) + "&encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new 
+		
 		document.getElementById("lastRenderCall").value = imageUrl;
 
 		var xmlhttp = new XMLHttpRequest();
@@ -407,8 +412,12 @@ function updateImage() {
                 </div>
                 <p><span class="Stil8 Stil10">
                   <select name="ext" id="ext" onchange="compile();">
-                    <option selected="selected" value="sct">SCCharts</option>
-                    <option value="scg">SCGraph</option>
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
                     <option value="kgt">KGT</option>
                   </select>
                 </span></p></th>
@@ -480,7 +489,7 @@ scchart ABRO {
                   <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
                   <label> <br>
                   <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG) <span class="Stil12">(compile and render)</span><BR>
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG) <span class="Stil12">(compile and render)</span><br />
                   <BR>
   &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
                   <label></label>
@@ -503,11 +512,30 @@ scchart ABRO {
     <option value="4">25%</option>
     <option value="10">10%</option>
   </select>
-                  </span><br>
+                  </span></p>
+                <p><span class="Stil8 Stil10">
+                  <label>&nbsp; 	&nbsp; 	 	&nbsp; Layout: </label>
+                  <label></label>
+                  <label></label>
+                  <label> </label>
+                  <select name="layout" id="layout" onchange="compile();">
+                    <option selected="selected" value="dot">Graphviz</option>
+                    <option value="klay">KIELER</option>
+                  </select>
+                  , Output: 
+                  <select name="synth" id="synth" onchange="compile();">
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
+                    <option value="kgt">KGT</option>
+                  </select>
+                </span><br>
                   <br>
                   <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-
-		<div id="advancedOptions" style="font:24px bold; display: none">
+                <div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
                   <tr>
@@ -534,7 +562,7 @@ scchart ABRO {
                   </tr>
                 </table>
 		</span></div>
-					  </td>
+			  </td>
             </tr>
             <tr>
               <th valign="top" scope="row"><p align="right" class="Stil8">4. Server <BR><span class="Stil15 Stil13 Stil13">(compile/render)</span></p></th>
