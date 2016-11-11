@@ -36,10 +36,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.util.WrappedException;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.kex.KEXPlugin;
 import de.cau.cs.kieler.kex.controller.ErrorMessage;
 import de.cau.cs.kieler.kex.model.Example;
@@ -217,11 +217,11 @@ public final class ExampleImport {
                     break;
                 }
             } catch (FileNotFoundException e) {
-                throw new WrappedException(e, ErrorMessage.NO_IMPORT);
+                throw new WrappedException(ErrorMessage.NO_IMPORT, e);
             } catch (IOException e1) {
-                throw new WrappedException(e1, ErrorMessage.NO_IMPORT);
+                throw new WrappedException(ErrorMessage.NO_IMPORT, e1);
             } catch (CoreException e2) {
-                throw new WrappedException(e2, ErrorMessage.NO_IMPORT);
+                throw new WrappedException(ErrorMessage.NO_IMPORT, e2);
             }
         }
     }

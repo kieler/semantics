@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.kivi;
 
+import org.eclipse.elk.core.util.Maybe;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
@@ -20,9 +21,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
-import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
 
 /**
@@ -70,6 +72,14 @@ public class SCChartsDataComponent extends KiViDataComponent {
             return XtextModelingUtil.getModelFromXtextEditor((XtextEditor)editor, true);
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
+        return jSONObject;
     }
 
 

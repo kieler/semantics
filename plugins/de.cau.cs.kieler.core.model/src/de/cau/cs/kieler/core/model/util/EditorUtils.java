@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.core.model.util;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.elk.core.util.Maybe;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -23,7 +24,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Static utility class for working with editors.

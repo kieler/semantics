@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views.log;bundle-version="1.0.0",
  org.eclipse.emf.ecore,
  org.json;visibility:=reexport,
- de.cau.cs.kieler.core,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

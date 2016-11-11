@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
-import de.cau.cs.kieler.core.properties.IProperty
 import java.util.List
+import org.eclipse.elk.graph.properties.IProperty
 
 /**
  * Common property holder interface for SCT Generator classes

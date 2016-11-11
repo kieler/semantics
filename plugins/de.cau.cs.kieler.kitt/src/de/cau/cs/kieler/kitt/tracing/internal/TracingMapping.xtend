@@ -15,9 +15,9 @@ package de.cau.cs.kieler.kitt.tracing.internal
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import de.cau.cs.kieler.core.util.Pair
 import java.util.Collection
 import java.util.List
+import org.eclipse.elk.core.util.Pair
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 

@@ -14,20 +14,22 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.graph.KEdge
+
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -58,11 +60,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
 
-        edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 3.0f);
+            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
         } else {
-            edge.setLayoutOption(LayoutOptions::LABEL_SPACING, 2.0f);
+            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f);
         }
         
         // Connect with states

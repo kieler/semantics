@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.klighd;
 
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
+
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter;
 
 /**

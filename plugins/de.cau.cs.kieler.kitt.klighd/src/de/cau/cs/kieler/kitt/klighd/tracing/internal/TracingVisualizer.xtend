@@ -15,20 +15,9 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal
 
 import com.google.common.base.Predicates
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KGraphElement
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KiCoProperties
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
@@ -36,21 +25,30 @@ import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KSpline
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.Collection
 import java.util.HashSet
 import java.util.Iterator
 import java.util.List
 import java.util.Map
+import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KGraphElement
+import org.eclipse.elk.graph.KNode
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.elk.core.util.Pair
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.core.krendering.KSpline
-
 /**
  * Adds tracing edges from mappings to a diagram.
  * 
@@ -447,7 +445,7 @@ class TracingVisualizer {
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
         if (source != null && target != null && origin != null && attachNode != null) {
             val edge = createEdge;
-            edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
+            edge.getData(KLayoutData).setProperty(CoreOptions.NO_LAYOUT, true);
             edge.getData(KLayoutData).setProperty(InternalTracingProperties.TRACING_EDGE, origin);
             edge.initiallyHide;
             edge.data += createKCustomRendering => [

@@ -8,7 +8,8 @@ Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.eclipse.ui;resolution:=optional,
- de.cau.cs.kieler.core,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.core,
  de.cau.cs.kieler.core.annotations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
@@ -16,6 +17,3 @@ Export-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.features,
  de.cau.cs.kieler.kico.internal,
  de.cau.cs.kieler.kico.transformation
-Import-Package: org.eclipse.jface.dialogs,
- org.eclipse.swt.widgets,
- org.eclipse.ui.statushandlers

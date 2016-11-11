@@ -9,8 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kico,
  org.eclipse.xtext,
  org.eclipse.osgi,
- de.cau.cs.kieler.server,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.server
 Bundle-Activator: de.cau.cs.kieler.kico.server.KiCoServerPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.server

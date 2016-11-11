@@ -36,8 +36,6 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Effect
 import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -69,6 +67,8 @@ import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 

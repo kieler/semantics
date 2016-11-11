@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.kico.ui;
 
 import org.eclipse.core.commands.common.EventManager;
+import org.eclipse.elk.core.util.Pair;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 
 /**

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.emf.ecore.EObject
-import com.google.inject.Singleton
+
 import static de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator.*
 
 /**

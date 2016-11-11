@@ -13,13 +13,9 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -30,8 +26,11 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 import java.util.List
 import java.util.logging.Logger
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.graph.properties.IProperty
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
+import org.eclipse.elk.core.options.CoreOptions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -94,12 +93,12 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         return options.toList;
     }
 
-    override getDisplayedLayoutOptions() {
-        return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN])
-            ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
-        );
-    }
+//    override getDisplayedLayoutOptions() {
+//        return newLinkedList(
+//            specifyLayoutOption(CoreOptions::DIRECTION, #[Direction::UNDEFINED, Direction::RIGHT, Direction::DOWN]),
+//            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
+//        );
+//    }
            
     // -------------------------------------------------------------------------
     // The main entry transform function   

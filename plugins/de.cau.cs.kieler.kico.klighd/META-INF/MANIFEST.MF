@@ -8,15 +8,17 @@ Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.xtext.ui,
  org.eclipse.xtend.lib,
+ org.eclipse.elk.graph,
+ org.eclipse.elk.core,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.ui.view,
- de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.ui,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.kitt.klighd,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.klighd.krendering.extensions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.klighd

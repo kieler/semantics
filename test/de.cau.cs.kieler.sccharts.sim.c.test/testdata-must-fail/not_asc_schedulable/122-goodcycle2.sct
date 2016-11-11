@@ -14,4 +14,4 @@ scchart S0 "good_cycle" {
   --> S1 with !I & B / A;
 
   state S1 "s4";
-}
+} 
