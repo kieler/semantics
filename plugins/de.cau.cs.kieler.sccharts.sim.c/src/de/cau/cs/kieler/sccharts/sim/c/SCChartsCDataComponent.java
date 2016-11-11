@@ -444,9 +444,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "\nCannot simulate active editor using the SCCharts Simulator.", true, null);
             }
             
-            
             Resource eResource = model.eResource();
-            boolean modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+            boolean modelHasErrorMarkers = false;
+            if (eResource != null) {
+                modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+            }
             if (modelHasErrorMarkers) {
                 throw new KiemInitializationException(
                         "\nThe source model contains error markers.", true, null);
@@ -872,8 +874,6 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
-
 
     public List<String> getOutputNames() {
         List<String> allOutputs = new ArrayList<String>();
@@ -883,6 +883,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         
     }
 
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
 }
