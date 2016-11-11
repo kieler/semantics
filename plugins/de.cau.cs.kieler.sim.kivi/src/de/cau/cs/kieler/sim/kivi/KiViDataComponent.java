@@ -273,6 +273,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        System.out.println("HUHU");
         if (diagramEditor == null) {
             return null;
         }

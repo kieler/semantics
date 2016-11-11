@@ -74,24 +74,5 @@ public class SCChartsDataComponent extends KiViDataComponent {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
-        return jSONObject;
-    }
 
-
-//    /**
-//     * {@inheritDoc}
-//     *
-//     */
-//    public void wrapup() throws KiemInitializationException {
-//        super.wrapup();
-//        if (SCChartsCombination.getInstance() != null) {
-//            SCChartsCombination.getInstance().setActive(false);
-//            SCChartsCombination.getInstance().setActive(true);
-//        }
-//    }
 }
