@@ -110,19 +110,30 @@ public class KlighdServer extends HttpServer {
             } catch (Exception e) {
             }
 
-            String render2 = query.getValue("render");
-            if (render2.equals("svg")) {
+            String synth = query.getValue("synth");
+            if (synth == null) {
+                synth = query.getValue("render");
+            }
+            if (synth.equals("svg")) {
                 // if this is a valid value (other than the default png) then change it
-                render = render2;
+                render = synth;
             }
             String extString = query.getValue("ext");
             if (extString.trim().length() > 0) {
                 ext = extString.toLowerCase().trim();
             }
-
+            
             // Read all models in "model" and "include1", "include2", ...
             ArrayList<String> models = new ArrayList<String>();
             String mainModelString = query.getValue("model");
+            String layout = query.getValue("layout");
+            if (layout != null) {
+                if (layout.equals("dot")) {
+                    if (!mainModelString.startsWith("<?xml ")) {
+                        mainModelString = "@diagram[KLayLayered] false\n" + mainModelString;
+                    }
+                }
+            }
             models.add(mainModelString);
             int index = 1;
             boolean found = true;
@@ -152,7 +163,7 @@ public class KlighdServer extends HttpServer {
 
             ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
             // ========= KGX ========
-            if (render2.equals("kgx")) {
+            if (synth.equals("kgx")) {
                 // build up a corresponding view context
                 final ViewContext viewContext =
                         LightDiagramServices.translateModel2(mainModel, null);
@@ -261,7 +272,7 @@ public class KlighdServer extends HttpServer {
 
             byte[] serializedRenderedModel = null;
             String errors = "";
-            if ((renderingResult != null && renderingResult.getCode() == IStatus.OK) || render2.equals("kgx")) {
+            if ((renderingResult != null && renderingResult.getCode() == IStatus.OK) || synth.equals("kgx")) {
                 // everything ok, return output stream
                 serializedRenderedModel = outputStream.toByteArray();
                 // String bla = new String(serializedRenderedModel);

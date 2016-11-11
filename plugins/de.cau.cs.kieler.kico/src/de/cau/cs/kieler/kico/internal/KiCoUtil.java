@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -62,6 +63,10 @@ import de.cau.cs.kieler.kico.transformation.Processor;
  */
 public class KiCoUtil {
 
+    // default list of extensions for serialization and parsing
+    static String[] defaultPreferredExtensions = {"sct","scg","s","circuit","kgx","kgt"};
+    
+
     /** The reg is necessary to find serializer or parser for Xtext models. */
     @Inject
     IResourceServiceProvider.Registry regXtext;
@@ -87,7 +92,7 @@ public class KiCoUtil {
     // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
      * implemented by finding the first suitable XtextResourceProvider that is able to serialize the
@@ -100,10 +105,32 @@ public class KiCoUtil {
     public static String serialize(EObject model, KielerCompilerContext context,
             boolean updateMainResource) {
         return serialize(model, context,
-                updateMainResource, false);
+                updateMainResource, defaultPreferredExtensions);
     }
     public static String serialize(EObject model, KielerCompilerContext context,
-            boolean updateMainResource, boolean raiseError) {
+            boolean updateMainResource, boolean raiseError){
+        return serialize(model, context,
+                updateMainResource, defaultPreferredExtensions, false);
+    }    
+
+    /**
+     * Serialize the EObject (if the compilation result is not plain text (String)). This is
+     * implemented by finding the first suitable XtextResourceProvider that is able to serialize the
+     * model.
+     * 
+     * @param model
+     *            the model
+     * @param preferredExtensions
+     *            a list of extensions to test
+     * @return the string
+     */
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, String[] preferredExtensions) {
+        return serialize(model, context,
+                updateMainResource, preferredExtensions, false);
+    }
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, String[] preferredExtensions, boolean raiseError) {
         String num = (model.hashCode() + "").replace("-", "");
 
         String returnText = "";
@@ -133,9 +160,28 @@ public class KiCoUtil {
             //}
         }
 
+        
         try {
-
+            
+            // build a list respecting the preferred extension list
+            ArrayList<String> extensionList = new ArrayList<String>();
+            for (String ext : preferredExtensions) {
+                extensionList.add(ext);
+            }
             for (String ext : extensionKeyList) {
+                boolean exists = false;
+                for (String otherExt : extensionList) {
+                    if (otherExt.equals(ext)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    extensionList.add(ext);
+                }
+            }            
+
+            for (String ext : extensionList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 
                 ResourceSet resourceSet = null;
@@ -222,7 +268,7 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Parse the model provided as a serialized String. This is implemented by finding the first
      * suitable XtextResourceProvider that is able to parse the model to an EObject.
@@ -239,6 +285,28 @@ public class KiCoUtil {
      */
     public static EObject parse(String text, KielerCompilerContext context, boolean mainModel,
             String extension) {
+        return parse( text, context , mainModel,
+                 extension, defaultPreferredExtensions); 
+    }
+    
+    /**
+     * Parse the model provided as a serialized String. This is implemented by finding the first
+     * suitable XtextResourceProvider that is able to parse the model to an EObject.
+     * 
+     * @param text
+     *            the text
+     * @param context
+     *            the context may be null, otherwise the resource is added to the context
+     * @param mainModel
+     *            the main model
+     * @param extension
+     *            the extension may be null if unknown
+     * @param extensionPreferences
+     *            the order in which extensions (if existing) are tested
+     * @return the e object
+     */
+    public static EObject parse(String text, KielerCompilerContext context, boolean mainModel,
+            String extension, String[] preferredExtensions) {
         EObject returnEObject = null;
 
         boolean done = false;
@@ -257,7 +325,25 @@ public class KiCoUtil {
         if (!done) {
             try {
 
+                // build a list respecting the preferred extension list
+                ArrayList<String> extensionList = new ArrayList<String>();
+                for (String ext : preferredExtensions) {
+                    extensionList.add(ext);
+                }
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+                    boolean exists = false;
+                    for (String otherExt : extensionList) {
+                        if (otherExt.equals(ext)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        extensionList.add(ext);
+                    }
+                }
+                
+                for (String ext : extensionList) {
                     System.out.println("Testing extension ''" + ext + "''");
                     if (extension != null && !extension.equals(ext)) {
                         // if an extension is given, then continue if this is not the right
