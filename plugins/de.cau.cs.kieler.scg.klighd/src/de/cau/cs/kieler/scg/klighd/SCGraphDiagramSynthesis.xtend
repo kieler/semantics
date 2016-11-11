@@ -295,6 +295,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             specifyLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::values)
         );
     }
+    
 
     // -------------------------------------------------------------------------
     // -- Constants
@@ -443,11 +444,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             
-            //Suasage folding on/off
+            // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH);
                 node.addLayoutParam(LayeredOptions::SAUSAGE_FOLDING, true);
             }
+    
+            // Added as suggested by uru (mail to cmot, 11.11.2016)            
+            node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
+            
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
@@ -675,8 +680,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 7, 12.5f, 0, PortSide::WEST)
-                else
+                else {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
+                }
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5f)
@@ -687,13 +693,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 0, 0, PortSide::NORTH)
-                else
+                else {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
+//                    // Added as suggested by uru (mail to cmot, 11.11.2016)            
+//                    port.addLayoutParam(LayeredOptions::PRIORITY, -10);
+//                    for (edge : port.allEdges) {
+//                        edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+//                    }
+                }
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f)
             }
-            port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
+            // Removed as suggested by uru (mail to cmot, 11.11.2016)            
+            //            port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
+           
+            // Added as suggested by uru (mail to cmot, 11.11.2016)            
+            port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
+
         ]
     }
 
@@ -1005,6 +1022,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.source = sourceNode
             edge.target = targetNode
             edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
             // If the source is a fork node, create a new port for this control flow and attach it.
             // Otherwise, use the outgoing port identified by the given parameter.
@@ -1021,6 +1039,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             } else {
                 edge.sourcePort = sourceNode.getPort(outgoingPortId)
+                if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
+                    // Added as suggested by uru (mail to cmot, 11.11.2016)            
+                    edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+                }
             }
             // If the target is a join node, create a new port for this control flow and attach it.
             // Otherwise, use the default incoming port.
@@ -1037,6 +1059,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             } else {
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+                if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
+                    // Added as suggested by uru (mail to cmot, 11.11.2016)            
+                    edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+                }
             }
             // Finally, draw the solid edge and add a decorator.
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
