@@ -95,7 +95,7 @@ var windowContent = " <body onBlur='self.focus();'>\
     <area shape='rect' coords='1597,240,1729,273' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit\"'/>\
     <area shape='rect' coords='1399,153,1477,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.scheduling\"'/>\
     <area shape='rect' coords='1481,153,1571,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.sequentialize\"'/>\
-    <area shape='rect' coords='1597,64,1760,95' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CODEGENERATION\"' />\
+    <area shape='rect' coords='1597,64,1760,95' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"codegeneration\"' />\
     <area shape='rect' coords='1667,136,1725,168' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.c\"' />\
     <area shape='rect' coords='38,176,211,196' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
   </map>\
@@ -466,7 +466,8 @@ scchart ABRO {
 			  <div class="input-w"  style="width: auto">
                 <p>
                   <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
-                  <span class="Stil15">Examples: ABORT, INITIALIZATION, ENTRY, SCG, SCGRAPH, CODEGENERATION</span><input type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" />
+                  <span class="Stil15">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
+                  <input type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" />
                 </p>
                 </div>
               </label></td>
