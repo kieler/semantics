@@ -111,8 +111,9 @@ public class KlighdServer extends HttpServer {
             }
 
             String synth = query.getValue("synth");
-            if (synth == null) {
-                synth = query.getValue("render");
+            String renderTemp = query.getValue("render");
+            if (renderTemp != null && renderTemp.length() > 0) {
+                render = renderTemp;
             }
             if (synth.equals("svg")) {
                 // if this is a valid value (other than the default png) then change it

@@ -357,7 +357,7 @@ function updateImage() {
 			tempExt = synth.value;
 		}
 		var imageUrl = document.getElementById("KLighDURL").value
-		var data = "layout="+encodeURIComponent(layout.value) + "&synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(tempExt) + "&encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new
+		var data = "layout="+encodeURIComponent(layout.value) + "&synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(tempExt) + "&encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new
 
 		document.getElementById("lastRenderCall").value = imageUrl;
 
