@@ -661,6 +661,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             addWarningComposite(getDiagramView().getViewer(), warnings.toString());
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void refresh() {
+        update(ChangeEvent.SAVED);
+    }
 
     // -- Model Update
     // -------------------------------------------------------------------------
