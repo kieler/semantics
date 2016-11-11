@@ -1041,7 +1041,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.sourcePort = sourceNode.getPort(outgoingPortId)
                 if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
                     // Added as suggested by uru (mail to cmot, 11.11.2016)            
-                    edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+                    edge.addLayoutParam(LayeredOptions::PRIORITY, 10);
                 }
             }
             // If the target is a join node, create a new port for this control flow and attach it.
@@ -1061,7 +1061,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
                 if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
                     // Added as suggested by uru (mail to cmot, 11.11.2016)            
-                    edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+                    edge.addLayoutParam(LayeredOptions::PRIORITY, 10);
                 }
             }
             // Finally, draw the solid edge and add a decorator.
