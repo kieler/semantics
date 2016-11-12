@@ -24,7 +24,7 @@ scchart Countdown_WeakAbort_Wrong {
   }
   --> Done with zero / trigger
   o-> Counting with restart;
-  
+   
   state Done
   --> Counting with restart;
  }

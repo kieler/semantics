@@ -468,6 +468,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "\nThe source model contains error markers.", true, null);
             }
 
+            Diagnostic diagnostic = Diagnostician.INSTANCE.validate(model);
+            if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                  throw new KiemInitializationException(
+                          "The source model contains error markers.\n\n", true, null);
+            }         
+
 //            System.out.println("4");
 
             // if (this.getModelRootElement().eResource() == null) {
