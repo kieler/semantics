@@ -160,7 +160,7 @@ public class KiCoServer extends HttpServer {
                 }
             }
 
-            System.out.println(mainModel.eClass().getName().toString());
+            //System.out.println(mainModel.eClass().getName().toString());
             
             if (ext != null) {
                 if (ext.equals(SCCHARTS_EXT)) {

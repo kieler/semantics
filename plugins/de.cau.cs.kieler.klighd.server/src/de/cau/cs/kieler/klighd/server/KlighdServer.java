@@ -207,8 +207,8 @@ public class KlighdServer extends HttpServer {
                 }
             } else {
                 // build up a corresponding view context
-                final ViewContext viewContext =
-                        LightDiagramServices.translateModel2(mainModel, null);
+//                final ViewContext viewContext =
+//                        LightDiagramServices.translateModel2(mainModel, null);
                 //KimlServicePlugin.getDefault(); 
                 //LightDiagramServices.layoutDiagram(viewContext);
                 
