@@ -423,40 +423,31 @@ function updateImage() {
                 </span></p></th>
               <td valign="top"><label>
                 <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
-@HVLayout
-scchart ABRO {
+scchart ALDO "ALDO" {
   input bool A;
-  input bool B;
-  input bool R;
+  bool L = false;
+  output signal D;
   output bool O = false;
 
-  region Main:
+  @layout[direction] DOWN  
+  region Thread1: 
 
-  initial state ABO {
+  initial state WaitA
+  --> DoneA with A / L = true;
 
-    initial state WaitAB {
+  final state DoneA;
+ 
+  @layout[direction] DOWN  
+  region Thread2: 
 
-      region HandleA:
-
-      initial state WA
-      --> DA with A;
-
-      final state DA;
-
-      region HandleB:
-
-      initial state WB
-      --> DB with B;
-
-      final state DB;
-    }
-    >-> Done with / O = true;
-
-    state Done;
+  initial state WaitL {
+    during / D
   }
-  o-> ABO with R;
+  o-> DoneL immediate with L / O = true;
+
+  state DoneL;
 }
-            </textarea>
+</textarea>
               </label></td>
             </tr>
             <tr>
@@ -588,7 +579,7 @@ scchart ABRO {
                           <label>
                           <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
                           <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
                       <label></label>
                         </span><span class="Stil8">
