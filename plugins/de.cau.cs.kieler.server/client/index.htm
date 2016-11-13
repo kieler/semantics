@@ -411,7 +411,7 @@ function progressImage() {
         new_image.id = "resultImage";
 		var imageUrl = "http://www.sccharts.com/progress.gif";
         new_image.src = imageUrl;
-		new_image.style.width = '100%';
+		new_image.style.width = '70%';
 		//new_image.width =  550; //252;
 		//new_image.height = 550;
         image.parentNode.insertBefore(new_image, image);
@@ -567,10 +567,10 @@ scchart AO {
              <br>
            </div>
 		   
-<div id="serverdownDiv" style="font:24px bold; display: none">
-        <center><img id="serverdownImg" src="http://www.sccharts.com/serverdown.png"/></center></div>
+<center><div id="serverdownDiv" style="font:24px bold; display: none">
+        <img id="serverdownImg" src="http://www.sccharts.com/serverdown.png"/></div>
 		         <div id="resultImageDiv" style="font:24px bold; display: none;min-width: 100%;max-width: 100%">
-        <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100%"/></a></div>
+        <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100%"/></a></div></center>
          <br>
 <div id="resultTextDiv">	     <textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:10px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
 	   </div>
