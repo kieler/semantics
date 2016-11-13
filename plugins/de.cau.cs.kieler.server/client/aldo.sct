@@ -1,0 +1,24 @@
+scchart ALDO "ALDO" {
+  input bool A;
+  bool L = false;
+  output signal D;
+  output bool O = false;
+
+  @layout[direction] DOWN  
+  region Thread1: 
+
+  initial state WaitA
+  --> DoneA with A / L = true;
+
+  final state DoneA;
+ 
+  @layout[direction] DOWN  
+  region Thread2: 
+
+  initial state WaitL {
+    during / D
+  }
+  o-> DoneL immediate with L / O = true;
+
+  state DoneL;
+}

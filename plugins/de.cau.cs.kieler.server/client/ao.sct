@@ -1,0 +1,10 @@
+@HVLayout 
+scchart AO { 
+  input bool A;
+  output bool O = false;     
+    
+  initial state wA   
+  --> dA with A / O = true; 
+     
+  state dA;          
+}                   
