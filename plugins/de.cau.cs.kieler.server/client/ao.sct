@@ -1,4 +1,5 @@
 @HVLayout 
+//@layout[direction] DOWN
 scchart AO { 
   input bool A;
   output bool O = false;     
@@ -7,4 +8,4 @@ scchart AO {
   --> dA with A / O = true; 
      
   state dA;          
-}                   
+}    

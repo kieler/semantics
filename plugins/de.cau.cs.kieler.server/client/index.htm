@@ -56,6 +56,7 @@
 -->
 </style>
 </head>
+<body style="background-color: #F7FAFE ;">
 
 	   <style type="text/css">
 <!--
@@ -492,21 +493,22 @@ function updateImage() {
 
 </script>
 
+
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="wrap">
 	
-	  <div class="container-fluid">
 	  
-<div align="center">
-  <p><img src="http://www.sccharts.com/sccharts.png" width="320" height="81" />
+<div align="center" style="background-color: #E9F2FE;min-width: 100%;max-width: 100%">
+  <p><img src="http://www.sccharts.com/sccharts.png" style="margin-top:20px" width="320" height="81" />
      <span class="Stil1"><span class="Stil3"><br>
-     SCCharts</span></span><span class="Stil3"><span class="style15"> ONLINE COMPILER</span></span><br>
+     SCCharts</span></span><span class="Stil3"><span class="style15"> ONLINE COMPILER</span></span><br><br>
   </p>
 
 
  </div>
+	  <div class="container-fluid" >
 	  
  <div name="inputmodelDiv" id="inputmodelDiv" class="col-sm-6" style="margin-top:20px">
 
@@ -531,31 +533,18 @@ function updateImage() {
                 <span style="margin-top:20px">
 				
                 <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="20" id="model" onchange="compile();">
-scchart ALDO "ALDO" {
+@HVLayout 
+//@layout[direction] DOWN
+scchart AO { 
   input bool A;
-  bool L = false;
-  output signal D;
-  output bool O = false;
-
-  @layout[direction] DOWN  
-  region Thread1: 
-
-  initial state WaitA
-  --> DoneA with A / L = true;
-
-  final state DoneA;
- 
-  @layout[direction] DOWN  
-  region Thread2: 
-
-  initial state WaitL {
-    during / D
-  }
-  o-> DoneL immediate with L / O = true;
-
-  state DoneL;
-}				
-                </textarea>
+  output bool O = false;     
+    
+  initial state wA   
+  --> dA with A / O = true; 
+     
+  state dA;          
+}         
+</textarea>
 	   <select class="form-control" style="margin-top:5px"  name="example" id="example" onchange="loadExample();">
          <option selected="selected" value="">Load example...</option>
          <option value="aldo.sct">ALDO</option>
@@ -596,7 +585,7 @@ scchart ALDO "ALDO" {
  <div class="col-sm-4" style="margin-top:20px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
 			    <div class="input-w"  style="width: auto">
                 <p>
-                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();" onchange="scheduleCompile();" id="transformations" size="94" value="ABORT" style="width: 100%"/>
+                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
        
                   <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
 				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
@@ -755,7 +744,7 @@ scchart ALDO "ALDO" {
         height: 60px;
       }
       #footer {
-        background-color: #E2EEFF;
+        background-color: #E9F2FE;
       }
 
       /* Lastly, apply responsive CSS fixes as necessary */
@@ -771,10 +760,10 @@ scchart ALDO "ALDO" {
 
     </style>
 		  
-<div id="footer"  style="margin-top:20px">
+<div id="footer"  style="margin-top:10px">
  <br>
  <div class="container">
-   <div align="center"><span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a>
+   <div align="center"><span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a><br>
      
    </div>
  </div>
@@ -923,9 +912,17 @@ setResultImage('png');
 				while ((ch = stream.next()) != null)
                 if (ch == "\n") break;
 	        return "scchartscomment";
-		} else if (stream.match("@layout")) {
+		} else if (stream.match("@layout")) {  
 				while ((ch = stream.next()) != null)
                 if (ch == " " && stream.next() == " ") break;
+	        return "layout";
+		} else if (stream.match("@Layout")) {  
+				while ((ch = stream.next()) != null)
+                if (ch == " " && stream.next() == " ") break;
+	        return "layout";
+		} else if (stream.match("@VHLayout")) {   
+	        return "layout";
+		} else if (stream.match("@HVLayout")) {   
 	        return "layout";
 		} else {
 			for (var i in keywordsSCCharts) {
@@ -960,3 +957,4 @@ setResultImage('png');
   //   false
   //);
 </script>
+</body>
