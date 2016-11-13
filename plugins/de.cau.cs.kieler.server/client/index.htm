@@ -271,6 +271,7 @@ function replaceAll(inputStr, findStr, replaceStr) {
 }
 
 function compileText() {
+
 	//var data = new FormData();
 	//data.append('model', model.value);
 	//data.append('transformations', transformations.value);
@@ -282,8 +283,12 @@ function compileText() {
 
 	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
 	var resultUrl =  document.getElementById("KiCoURL").value;
+
+	
 	var data = "synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(ext.value) + "&model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
-    document.getElementById("lastCompilerCall").value = resultUrl;
+	//alert("synthVal" + synthVal);
+    //document.getElementById("lastCompilerCall").value = resultUrl;
+
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
@@ -460,7 +465,7 @@ function updateImage() {
 		var imageUrl = document.getElementById("KLighDURL").value
 		var data = "layout="+encodeURIComponent(layout.value) + "&synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(tempExt) + "&encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new
 
-		document.getElementById("lastRenderCall").value = imageUrl;
+		//document.getElementById("lastRenderCall").value = imageUrl;
 
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange=function() {
