@@ -19,6 +19,9 @@
 .cm-scchartscomment{
     color:#3F7F5F;
 }	
+.cm-scchartsstring{
+    color:#4E00FF;
+}	
 .cm-unmarked{
     color:#000000;
 }	
@@ -920,6 +923,10 @@ setResultImage('png');
 				while ((ch = stream.next()) != null)
                 if (ch == " " && stream.next() == " ") break;
 	        return "layout";
+		} else if (stream.match("\"")) {  
+				while ((ch = stream.next()) != null)
+                if (ch == "\"") break;
+	        return "scchartsstring";
 		} else if (stream.match("@VHLayout")) {   
 	        return "layout";
 		} else if (stream.match("@HVLayout")) {   
