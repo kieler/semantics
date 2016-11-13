@@ -2,12 +2,26 @@
        "http://www.w3.org/TR/html4/loose.dtd"><head>
 <title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>
 <meta http-equiv="expires" content="0">
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
 <style type="text/css">
 <!--
 .Stil8 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: small;
 }
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: small; font-weight: bold; }
 -->
 </style>
 </head>
@@ -27,6 +41,15 @@
 .Stil15 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
 .Stil18 {font-size: xx-small; font-weight: bold; }
 .Stil20 {color: #999999}
+.style7 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-small; }
+.style10 {
+	color: #0066FF;
+	font-weight: bold;
+	font-size: medium;
+}
+.style13 {color: #0066FF; font-size: medium; }
+.style14 {font-size: medium}
+.style15 {color: #0066FF}
 -->
        </style>
 
@@ -331,8 +354,8 @@ function progressImage() {
         new_image.id = "resultImage";
 		var imageUrl = "http://www.sccharts.com/progress.gif";
         new_image.src = imageUrl;
-		new_image.width = 252;
-		new_image.height = 252;
+		new_image.width =  550; //252;
+		new_image.height = 550;
         image.parentNode.insertBefore(new_image, image);
         image.parentNode.removeChild(image);
     }
@@ -396,22 +419,31 @@ function updateImage() {
 
 </script>
 
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="wrap">
+	
+	  <div class="container-fluid">
+	  
 <div align="center">
-  <p><img src="http://www.sccharts.com/sccharts.png" width="512" height="150" /></p>
-  <p><span class="Stil3">Sequentially Constructive Statecharts &mdash; SCCharts</span><span class="Stil1"><br />
-      <span class="Stil4">ONLINE COMPILER</span></span><br>
-      <span class="Stil15">If after a while there is still no compilation result, please select another server or local host <a href="#server">below</a>.</span> </p>
-    <table width="300" border="0" cellspacing="0">
-      <tr>
-        <td colspan="2" valign="top" scope="row"><label></label>
-          <table width="300" border="0" cellspacing="10">
-            <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">
-                <p>1. Textual SCChart (SCT)<br>
-                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">here</a>) </span></p>
-                </div>
-                <p><span class="Stil8 Stil10">
-                  <select name="ext" id="ext" onchange="compile();">
+  <p><img src="http://www.sccharts.com/sccharts.png" width="320" height="81" />
+     <span class="Stil1"><span class="Stil3"><br>
+     SCCharts</span></span><span class="Stil3"><span class="style15"> ONLINE COMPILER</span></span><br>
+  </p>
+
+
+ </div>
+	  
+ <div class="col-sm-6" style="margin-top:20px">
+
+				<label>
+                </label><label>
+                </label>
+                <span class="style13"><strong>Textual SCChart (SCT)&nbsp;&nbsp;</strong></span>
+                <span class="Stil12"> <span class="Stil8"><a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">Language Reference</a>&nbsp;&nbsp;</span></span>
+                <span class="Stil8 Stil10">
+                  <select  name="ext" id="ext" onchange="compile();">
                     <option selected="selected" value="">auto detect</option>
                     <option value="sct">SCChart</option>
                     <option value="scg">SCG</option>
@@ -420,9 +452,12 @@ function updateImage() {
                     <option value="kgx">KGX</option>
                     <option value="kgt">KGT</option>
                   </select>
-                </span></p></th>
-              <td valign="top"><label>
-                <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
+    </span>
+                
+                <label></label>
+                <span style="margin-top:20px">
+				
+                <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="25" id="model" onChange="compile();">
 scchart ALDO "ALDO" {
   input bool A;
   bool L = false;
@@ -447,47 +482,71 @@ scchart ALDO "ALDO" {
 
   state DoneL;
 }
-</textarea>
-              </label></td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations<br />
-                <span class="Stil15 Stil13 Stil13">(comma separated)</span></div></th>
-              <td><label>
-			  <div class="input-w"  style="width: auto">
+                </textarea>
+        </span></div>
+	  
+	  
+	  
+	  
+	   <div class="col-sm-6" style="margin-top:20px">
+		<div id="resultErrorDiv" style="font:24px bold; display: none">
+           <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
+           <br>
+         </div>
+           <div id="resultWarningDiv" style="font:24px bold; display: none">
+             <textarea name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88"></textarea>
+             <br>
+           </div>
+		   
+<div id="serverdownDiv" style="font:24px bold; display: none">
+        <img src="http://www.sccharts.com/serverdown.png"/></div>
+		         <div id="resultImageDiv" style="font:24px bold; display: none">
+        <img src="xxx" name="resultImage" id="resultImage"/></div>
+         <br>
+<div id="resultTextDiv">	     <textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:10px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
+	   </div>
+	  
+	  
+	  
+	  
+	  
+	  
+ <div class="col-sm-4" style="margin-top:20px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
+			    <div class="input-w"  style="width: auto">
                 <p>
-                  <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
-                  <span class="Stil15">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
-                  <input type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" />
+                  <input class="form-control input-sm" name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
+       
+                  <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
+				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
                 </p>
                 </div>
-              </label></td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><div align="right"><span class="Stil8">3. Other Options</span></div></th>
-              <td align="left"><p>
+              </label>
+ </div>
+	  
+ <div class="col-sm-4" style="margin-top:20px">
+
+			<p>
+				<span class="style5"><span class="style13">Other Options</span><br>
+			  </span>
                 <label><span class="Stil8">
-                  <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-                  Strict</span></label>
+                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+              Strict</span></label>
                 <span class="Stil8 Stil10">(only apply the listed transformations)
                   <label></label>
-              </span></p>
+    </span></p>
                 <p> <span class="Stil8 Stil10">
-                  <label>
+    <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
-                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label>
-                  <label> <br>
+    <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label>
+    <label> 
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
-                  <label> <br>
+    <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
+                <label> 
                   <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG) <span class="Stil12">(compile and render)</span><br />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> <strong>Graphical output (PNG) <span class="Stil12">(compile and render)</span><br />
                   <BR>
-  &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
-                  <label></label>
-                  <label></label>
-                  </span> <span class="Stil8 Stil10">
-                  <label> </label>
+  Image Quality:
+                  <span class="Stil8 Stil10">
                   <select name="scale" id="scale" disabled="disabled" onchange="compile();">
                     <option>1</option>
                     <option>2</option>
@@ -504,12 +563,9 @@ scchart ALDO "ALDO" {
     <option value="4">25%</option>
     <option value="10">10%</option>
   </select>
-                  </span></p>
+                  </span>
                 <p><span class="Stil8 Stil10">
-                  <label>&nbsp; 	&nbsp; 	 	&nbsp; Layout: </label>
-                  <label></label>
-                  <label></label>
-                  <label> </label>
+                  Layout: 
                   <select name="layout" id="layout" onchange="compile();">
                     <option selected="selected" value="dot">Graphviz</option>
                     <option value="klay">KIELER</option>
@@ -526,7 +582,7 @@ scchart ALDO "ALDO" {
                   </select>
                 </span><br>
                   <br>
-                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span>
                 <div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -553,80 +609,92 @@ scchart ALDO "ALDO" {
                     <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
                   </tr>
                 </table>
-		</span></div>
-			  </td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server <BR><span class="Stil15 Stil13 Stil13">(compile/render)</span></p></th>
-              <td align="left"><p>
-                <label></label>
-              </p>
-                <table width="327" border="0" cellspacing="5">
-                      <tr>
-                        <td width="315" valign="top" scope="row"><span class="Stil8">
-                        <label>
-                          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
-                          <br>
-                          <label>
-                        <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
-                          <span class="Stil12">(faster)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
-                          <span class="Stil12">(slower)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
-                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering" target="_blank">here</a>)</span></label>
-</span><span class="Stil8">
-                      <label></label>
-                        </span><span class="Stil8">
-                          <label></label>
-                        </span></td>
-                      </tr>
-                </table>
-					</td>
-            </tr>
-            <tr>
-              <th scope="row"><label></label></th>
-              <th scope="row"><div align="left">
-                  <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
-              </div></th>
-            </tr>
-          </table>
-          <p><br />
-          </p></td>
-        <td  valign="top">
+		</span></div>			  
+ </div>
+	  
+ <div class="col-sm-4" style="margin-top:20px">
+   <table width="100%" border="0" cellspacing="5">
+     <tr>
+       <td width="315" valign="top" scope="row"><span class="Stil8">
+         <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>Server </strong></span><span class="Stil10 Stil3 Stil10 style14"><span class="Stil15 Stil13 Stil13">(compile / render)</span></span><br>
+         <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
+         <br>
+         <label>
+         <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server 1</label>
+         <span class="Stil12">(faster)</span><br>
+         <label>
+         <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
+         <span class="Stil12">(slower)</span><br>
+         <label>
+         <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering" target="_blank">here</a>)</span></label>
+         </span><span class="Stil8">
+         <label></label>
+         </span><span class="Stil8">
+         <label></label>
+       </span></td>
+     </tr>
+   </table>
+ </div>
+    </div>
 
-          <table width="300" border="0" cellspacing="10">
-            <tr><td>
+	  
+	  
+	  
+	  
+<style type="text/css">
 
-		<div id="resultErrorDiv" style="font:24px bold; display: none">
-          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
-		  <br>
-		 </div>
-        <div id="resultWarningDiv" style="font:24px bold; display: none">
-          <textarea name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88"></textarea>
-          <br>
-         </div>
-		<div id="resultImageDiv" style="font:24px bold; display: none">
-        <img src="xxx" name="resultImage" id="resultImage"/></div>
-		<div id="resultTextDiv" style="font:24px bold; display: block">
-          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC"></textarea>
-		  </div>
-		  </td>
-      </tr>
-    </table>
+      /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #E2EEFF;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
 
 
-	    </td>
-      </tr>
-    </table>
-  <p><span class="Stil15">copyright (c) 2014 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a><br />
-  </p>
-</div>
+    </style>
+		  
+<div id="footer"  style="margin-top:20px">
+ <br>
+ <div class="container">
+  <span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a>
+
+      </div>
+    </div>
 
 <script>
 
@@ -642,8 +710,38 @@ function toggleAdvanced() {
 }
 
 
+function showServerOffline() {
+	document.getElementById('resultTextDiv').style.display='none';
+	document.getElementById('resultImageDiv').style.display='none';
+	document.getElementById('serverdownDiv').style.display='block';
+}
+function showServerOnline() {
+	document.getElementById('serverdownDiv').style.display='none';
+    var outputText = document.getElementById("outputText");
+    if(outputText.checked) {
+		document.getElementById('resultTextDiv').style.display='block';
+		document.getElementById('resultImageDiv').style.display='none';
+	} else {
+		document.getElementById('resultImageDiv').style.display='block';
+		document.getElementById('resultTextDiv').style.display='none';
+	}
+}
 
-
+function checkServerOnline() {
+	var online = false;
+    var serverOrder = new Array(3,0,1,2);
+    for (var c = 0; c < 4; c++) {
+        if (isOnline[compileServerName[serverOrder[c]]] == true && isOnline[renderServerName[serverOrder[c]]] == true) {
+			online = true;
+		}
+	}
+	if (!online) {
+		showServerOffline();
+	} else {
+		showServerOnline();
+	}
+}
+setTimeout(function() { checkServerOnline(); }, 5000);
 
 var compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
 
