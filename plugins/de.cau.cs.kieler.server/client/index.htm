@@ -520,17 +520,7 @@ function updateImage() {
                 </label>
                 <span class="style13"><strong>Textual SCCharts Model &nbsp;&nbsp;</strong></span>
                 <span class="Stil12"> <span class="Stil8"><a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">SCT-Language</a>&nbsp;&nbsp;</span></span>
-                <span class="Stil8 Stil10">
-                  <select  name="ext" id="ext" onchange="compile();">
-                    <option selected="selected" value="">auto detect</option>
-                    <option value="sct">SCChart</option>
-                    <option value="scg">SCG</option>
-                    <option value="s">S</option>
-                    <option value="circuit">Circuit</option>
-                    <option value="kgx">KGX</option>
-                    <option value="kgt">KGT</option>
-                  </select>
-    </span>
+    
                 
                 <label></label>
                 <span style="margin-top:20px">
@@ -645,16 +635,8 @@ scchart AO {
                     <option selected="selected" value="dot">Graphviz</option>
                     <option value="klay">KIELER</option>
                   </select>
-                  , Output:
-                  <select name="synth" id="synth" onchange="compile();">
-                    <option selected="selected" value="">auto detect</option>
-                    <option value="sct">SCChart</option>
-                    <option value="scg">SCG</option>
-                    <option value="s">S</option>
-                    <option value="circuit">Circuit</option>
-                    <option value="kgx">KGX</option>
-                    <option value="kgt">KGT</option>
-                  </select>
+                  
+
                 </span><br>
                   <br>
                   <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span>
@@ -662,13 +644,13 @@ scchart AO {
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
                   <tr>
-                    <th width="200" scope="row"><div align="right">KielerCompiler URL: </div></th>
+                    <th width="200" scope="row"><div align="right">KiCo URL: </div></th>
                     <td width="200"><label>
                       <input name="KiCoURL" type="text" id="KiCoURL" size="30" value="http://www.sccharts.com:5556">
                     </label></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">KLighD Render URL: </div></th>
+                    <th scope="row"><div align="right">KLighD URL: </div></th>
                     <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
                   </tr>
                   <tr>
@@ -676,12 +658,28 @@ scchart AO {
                     <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">Last Compiler Call:</div></th>
-                    <td><input name="lastCompilerCall" type="text" id="lastCompilerCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                    <th scope="row"><div align="right">Input:</div></th>
+                    <td><select  name="ext" id="ext" onchange="compile();">
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
+                    <option value="kgt">KGT</option>
+                  </select></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">Last Render Call:</div></th>
-                    <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                    <th scope="row"><div align="right">Output:</div></th>
+                    <td><select name="synth" id="synth" onchange="compile();">
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
+                    <option value="kgt">KGT</option>
+                  </select></td>
                   </tr>
                 </table>
 		</span></div>			  
