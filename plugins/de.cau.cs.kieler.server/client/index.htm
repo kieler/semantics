@@ -2,6 +2,7 @@
        "http://www.w3.org/TR/html4/loose.dtd"><head>
 <title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>
 <meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -489,12 +490,12 @@ scchart ALDO "ALDO" {
 	  
 	  
 	   <div class="col-sm-6" style="margin-top:20px">
-		<div id="resultErrorDiv" style="font:24px bold; display: none">
-           <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
+		<div id="resultErrorDiv" style="display: none">
+           <textarea class="form-control"  name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888;margin-top:5px;font-family:monospace;min-width: 100%;max-width: 100%"></textarea>
            <br>
          </div>
-           <div id="resultWarningDiv" style="font:24px bold; display: none">
-             <textarea name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88"></textarea>
+           <div id="resultWarningDiv" style="display: none">
+             <textarea class="form-control" name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88;margin-top:5px;font-family:monospace;min-width: 100%;max-width: 100%"></textarea>
              <br>
            </div>
 		   
@@ -691,9 +692,10 @@ scchart ALDO "ALDO" {
 <div id="footer"  style="margin-top:20px">
  <br>
  <div class="container">
-  <span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a>
-
-      </div>
+   <div align="center"><span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a>
+     
+   </div>
+ </div>
     </div>
 
 <script>
