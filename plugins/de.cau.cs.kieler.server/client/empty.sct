@@ -1,3 +1,8 @@
+// This is just a starting example stub. You can play around
+// with the SCT language and the KIELER SCCharts Online Compiler.
+// If something breaks, please use a local running copy of the
+// KIELER SCCharts tooling.
+
 scchart MySCChart {
 	initial state S;
 }
