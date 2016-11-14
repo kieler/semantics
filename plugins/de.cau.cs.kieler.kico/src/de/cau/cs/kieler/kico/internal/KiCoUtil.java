@@ -150,38 +150,21 @@ public class KiCoUtil {
         HashMap<String, ResourceExtension> resourceExtensionMap =
                 KiCoPlugin.getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
-            System.out.println("MODEL eCLASS: " + model.eClass().getName());
+            System.out.println("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
         }
-        ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getName());
+        ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getEPackage().getName());
         if (specificExtension != null) {
             extensionKeyList.clear();
-            //if (!specificExtension.isXMI()) {
-                extensionKeyList.add(0, specificExtension.getExtension());
-            //}
+            extensionKeyList.add(0, specificExtension.getExtension());
+        } else {
+            for (int i = preferredExtensions.length -1; i >= 0; i--) {
+                extensionKeyList.add(0, preferredExtensions[i]);
+            }
         }
 
         
         try {
-            
-            // build a list respecting the preferred extension list
-            ArrayList<String> extensionList = new ArrayList<String>();
-            for (String ext : preferredExtensions) {
-                extensionList.add(ext);
-            }
             for (String ext : extensionKeyList) {
-                boolean exists = false;
-                for (String otherExt : extensionList) {
-                    if (otherExt.equals(ext)) {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists) {
-                    extensionList.add(ext);
-                }
-            }            
-
-            for (String ext : extensionList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 
                 ResourceSet resourceSet = null;

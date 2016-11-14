@@ -56,7 +56,7 @@ This extension point allows the contribution of a resource extension for seriali
 
    <element name="ExtensionInformation">
       <complexType>
-         <attribute name="className" type="string" use="required">
+         <attribute name="ePackageName" type="string" use="required">
             <annotation>
                <documentation>
                   

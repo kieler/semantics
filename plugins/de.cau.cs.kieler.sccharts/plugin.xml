@@ -27,7 +27,7 @@
      <extension
            point="de.cau.cs.kieler.kico.extension">
         <ExtensionInformation
-              className="State"
+              ePackageName="sccharts"
               editor_id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
               extensionName="sct"
               isXMI="true">

@@ -16,7 +16,7 @@
    <extension
          point="de.cau.cs.kieler.kico.extension">
       <ExtensionInformation
-            className="Program"
+            ePackageName="s"
             editor_id="de.cau.cs.kieler.s.S"
             extensionName="s"
             isXMI="false">
