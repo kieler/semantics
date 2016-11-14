@@ -1,11 +1,11 @@
-// The traffic example defines a Normal and an Error state. Each have two concurrent
-// threads, one for the Pedestrian and another one for the Car. In the Normal state,
-// the Car thread circles between Cgreen, Cred, and two Cyellow states. It sends a 
-// Pstop signal to the Pedestrian thread when transitioning to Cgreen. It sends a 
-// Pgo signal to the Pedestrian thread when transitioning to Cred. The Pedestrian 
-// thread circles between two states Pred and Pgreen depending on the Car threads 
-// signals. In the Error mode, the Pedestrian light is permanently set to red and 
-// the Car light blinks yellow. 
+// The TRAFFIC LIGHT example defines a Normal and an Error state. Each have two 
+// concurrent threads, one for the Pedestrian and another one for the Car. In the 
+// Normal state, the Car thread circles between Cgreen, Cred, and two Cyellow 
+// states. It sends a Pstop signal to the Pedestrian thread when transitioning to 
+// Cgreen. It sends a Pgo signal to the Pedestrian thread when transitioning to
+// Cred. The Pedestrian thread circles between two states Pred and Pgreen depending
+// on the Car threads signals. In the Error mode, the Pedestrian light is perma-
+// nently set to red and the Car light blinks yellow. 
 //
 // The example is taken from the following publication:
 // Reinhard von Hanxleden, Edward A. Lee, Christian Motika, and Hauke Fuhrmann. 
