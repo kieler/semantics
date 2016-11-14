@@ -247,6 +247,7 @@ var doUpdateImage = false;
 function compile() {
 	window.clearInterval(compileTimer);
 	resultText.value = "Compiling, please wait...";
+	resultTextEditor.setValue("Compiling, please wait...");
 	clearErrors();
     var outputText = document.getElementById("outputText");
     if(outputText.checked) {
@@ -295,6 +296,7 @@ function compileText() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 	      var resultText = document.getElementById("resultText");
    		  resultText.value = xmlhttp.responseText;
+   	  	  resultTextEditor.setValue(xmlhttp.responseText);
 
 		  var errorMsg = xmlhttp.getResponseHeader("compile-error");
 		  if (errorMsg != null) {
@@ -578,11 +580,11 @@ scchart AO {
 		   
 <center>
 <br>
-<div id="serverdownDiv" style="font:24px bold; display: none">
+<div id="serverdownDiv" style="font:24px bold; display: none;margin-bottom:40px">
         <img id="serverdownImg" src="http://www.sccharts.com/serverdown.png"/></div>
 		         <div id="resultImageDiv" style="font:24px bold; display: none;min-width: 100%;max-width: 100%">
-        <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100%"/></a></div></center>
-<div id="resultTextDiv">	     <textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
+        <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100;"/></a></div></center>
+<div id="resultTextDiv" style="margin-bottom:40px"><textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
 	   </div>
 	  
 	  
@@ -590,7 +592,7 @@ scchart AO {
 	  
 	  
 	  
- <div class="col-sm-4" style="margin-top:20px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
+ <div class="col-sm-4" style="margin-top:40px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
 			    <div class="input-w"  style="width: auto">
                 <p>
                   <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
@@ -719,7 +721,7 @@ scchart AO {
          <label>
          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
-           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering" target="_blank">here</a>)</span></label>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler#KIELERCommandLineCompiler-EnabletheKielerCompilerHTTPServer" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering#KIELERCommandLineRendering-EnabletheKLighDHTTPServer" target="_blank">here</a>)</span></label>
          </span><span class="Stil8">
          <label></label>
          </span><span class="Stil8">
@@ -969,6 +971,14 @@ setResultImage('png');
     var modelElem = document.getElementById("model");
 	modelElem.value =  modelEditor.getValue();
 	scheduleCompile();
+  });
+  
+  
+  var resultTextElem = document.getElementById("resultText");
+  var resultTextEditor = CodeMirror.fromTextArea(resultTextElem, {
+   mode: "scchartsmode",
+   lineNumbers: true,
+   readOnly: true
   });
   
   //modelEditor.addEventListener(
