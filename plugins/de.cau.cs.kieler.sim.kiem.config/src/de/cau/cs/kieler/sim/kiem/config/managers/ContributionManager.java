@@ -49,7 +49,7 @@ public final class ContributionManager extends AbstractManager {
     private boolean isInAdvancedMode = false;
 
     /** true if the plugin will not display the execution summary message. */
-    private boolean isSummaryMessageDisabled = false;
+    private boolean isSummaryMessageEnabled = false;
 
     /** true if the recent combo should be visible, false if not. */
     private boolean isRecentVisible = false;
@@ -182,9 +182,9 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @return the isSummaryMessageDisabled flag
      */
-    public boolean isSummaryMessageDisabled() {
+    public boolean isSummaryMessageEnabled() {
         load();
-        return this.isSummaryMessageDisabled;
+        return this.isSummaryMessageEnabled;
     }
 
     /**
@@ -193,8 +193,8 @@ public final class ContributionManager extends AbstractManager {
      * @param isSummaryMessageDisabledParam
      *            the isInAdvancedMode to set
      */
-    public void setSummaryMessageDisabled(final boolean isSummaryMessageDisabledParam) {
-        this.isSummaryMessageDisabled = isSummaryMessageDisabledParam;
+    public void setSummaryMessageEnabled(final boolean isSummaryMessageDisabledParam) {
+        this.isSummaryMessageEnabled = isSummaryMessageDisabledParam;
 
         // update visibility of the config data component in the KIEM view
         KiemPlugin.getDefault().updateViewAsync();
@@ -254,7 +254,7 @@ public final class ContributionManager extends AbstractManager {
                     isInAdvancedMode = isAdvancedString.equals("true");
                 }
                 if (isSummaryMessageString != null) {
-                    isSummaryMessageDisabled = isSummaryMessageString.equals("true");
+                    isSummaryMessageEnabled = isSummaryMessageString.equals("true");
                 }
             }
 
@@ -268,7 +268,7 @@ public final class ContributionManager extends AbstractManager {
     @Override
     public void save() {
         String isSummaryMessageString = Tools.putValue(Tools.IS_SUMMARYMESSAGE_NAME,
-                isSummaryMessageDisabled + "");
+                isSummaryMessageEnabled + "");
         String isRecentString = Tools.putValue(Tools.IS_RECENT_VISIBLE_NAME, isRecentVisible + "");
         String isMatchingString = Tools.putValue(Tools.IS_MATCHING_VISIBLE_NAME, isMatchingVisible
                 + "");

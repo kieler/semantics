@@ -1,0 +1,32 @@
+// ???
+// Error (leaveState) in tick 3 of trace 0
+// Validation error: The signal(s) leaveState were not recorded, but generated in the simulation
+
+@layout[direction] DOWN  
+scchart History {
+
+  output int leaveState = 1;
+  output int State;
+
+  initial state M {
+ 
+    initial state S0{
+      entry / State = 0
+    }
+    --> S1;
+
+    state S1{
+      entry / State = 1
+    }
+    --> S2;
+
+    state S2{
+      entry / State = 2
+    }
+    --> S0;
+  }
+  --> MHist with State == leaveState / leaveState--; leaveState = (leaveState+3) % 3;
+
+  state MHist
+  --> M shallow history;
+}

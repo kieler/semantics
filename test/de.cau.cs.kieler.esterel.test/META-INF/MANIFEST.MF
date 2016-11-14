@@ -6,9 +6,9 @@ Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.test.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
- de.cau.cs.kieler.core;bundle-version="0.7.0",
  de.cau.cs.kieler.esterel;bundle-version="0.2.0",
- org.junit;bundle-version="4.8.2"
+ org.junit;bundle-version="4.8.2",
+ org.eclipse.elk.core;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.junit;version="4.8.2",

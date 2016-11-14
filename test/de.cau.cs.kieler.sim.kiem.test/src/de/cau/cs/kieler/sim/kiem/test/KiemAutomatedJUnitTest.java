@@ -705,7 +705,7 @@ public abstract class KiemAutomatedJUnitTest {
                     lastErrorMessage = "KIEM cannot initialize execution. "
                             + "Try to do this manually for the following scheduling file:'"
                             + executionFileName + "'. Error message: " + KiemPlugin.getLastError();
-                    throw new RuntimeException(lastErrorMessage);
+                    fail(lastErrorMessage);
                 }
             } // next trace
         } while(benchmarkError);

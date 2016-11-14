@@ -100,6 +100,8 @@ class History extends AbstractExpansionTransformation implements Traceable {
     // Traverse all states and transform macro states that have connecting
     // (incoming) history transitions.    
     def void transformHistory(State state, State targetRootState) {
+        state.setDefaultTrace        
+        
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
         historyTransitions.setDefaultTrace

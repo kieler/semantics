@@ -1,0 +1,32 @@
+! reset;
+
+% Output: 
+;
+
+% Output: A1(1) O(1) 
+;
+
+% Output: A1(1) O(1) 
+;
+
+% Output: A1(1) O(1) 
+;
+
+! reset;
+I 
+% Output: A2(1) 
+;
+I 
+% Output: A2(1) 
+;
+
+! reset;
+
+% Output: 
+;
+I 
+% Output: A1(1) O(1) 
+;
+
+% Output: A1(1) O(1) 
+;

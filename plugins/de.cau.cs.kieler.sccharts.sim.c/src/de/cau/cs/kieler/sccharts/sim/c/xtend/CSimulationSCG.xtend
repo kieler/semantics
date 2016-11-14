@@ -16,6 +16,10 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * Transformation from SCG to wrapper code for the simulation.
@@ -113,8 +117,18 @@ void readInputs() {
    
    // -------------------------------------------------------------------------
    
+    val preCache = <ValuedObject> newArrayList     
+   
+   def boolean usesPre(SCGraph program, ValuedObject valuedObject) {
+        preCache.contains(valuedObject)
+   }
+      
    // Write outputs.
    def writeOutputs(SCGraph scg) {
+        scg.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
+            it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]    
+        ]    
+     return       
    	'''
 void writeOutputs() {
     cJSON* value;;
@@ -123,6 +137,14 @@ void writeOutputs() {
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
 	cJSON_AddItemToObject(output, "«output.name»", value);
+	
+	// Add pre outputs
+	«IF scg.usesPre(output)»
+        «System.out.println("=====> PRE_" + output.name)»
+        value = cJSON_CreateObject();
+        cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(PRE_«output.name»));
+        cJSON_AddItemToObject(output, "PRE_«output.name»", value);
+	«ENDIF»
     «ENDFOR»
 }'''
    }

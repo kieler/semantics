@@ -103,7 +103,8 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformDeferredState(State state) {
-        val incomingDeferredTransitions = state.incomingTransitions.filter[deferred];
+        val incomingDeferredTransitions = state.incomingTransitions.filter[deferred].toList;
+        val incomingNonDeferredTransitions = state.incomingTransitions.filter[!deferred].toList;
 
         // If there are any such transitions 
         if (!incomingDeferredTransitions.nullOrEmpty) {
@@ -127,21 +128,11 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
                 transition.setDeferred(false)
                 transition.addEffect(deferVariable.assign(TRUE)).trace(state, transition)
             }
+            // Set all others to false explicitly (just to make sure in case the superstate was strongly immediate aborted)
+            for (transition : incomingNonDeferredTransitions) {
+                transition.addEffect(deferVariable.assign(FALSE)).trace(state, transition)
+            }
 
-            // Prevent any immediate internal behavior of the state and any immediate outgoing
-            // transition in case deferVariable is set to TRUE, i.e., the state was entered
-            // by a deferred transition
-            //            val allInternalImmediateActions = state.allContainedActions.filter(
-            //                  e|e.immediate || e instanceof EntryAction).toList
-            //            for (action : allInternalImmediateActions) {
-            //                val deferTest = not(deferVariable.reference)
-            //                if (action.trigger != null) {
-            //                    action.setTrigger(deferTest.and(action.trigger))
-            //                } else {
-            //                    action.setTrigger(deferTest)
-            //                 }
-            //            }
-            
             // Only do this for outgoing immediate transitions!
             for (transition : state.outgoingTransitions) {
                 if (transition.immediate) {
@@ -157,23 +148,4 @@ class Deferred extends AbstractExpansionTransformation implements Traceable {
         }
     }
 
-//       
-// -- FORMER IMPLEMENTATION --
-// 
-// For all deferred transitions T from S1 to S2, create a new State _S
-// create a new transition _T from _S to S2 and change T's target to _S.
-// Remove the deferred flag from T.
-//
-//     def void transformDeferred(Transition transition) {
-//         if (transition.deferred) {
-//             // Create a new state _S
-//             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
-//             // Create a new transition _T
-//             _S.createTransitionTo(transition.targetState)
-//             // Re-target transition T
-//             transition.setTargetState(_S)
-//             // Remove deferred flag
-//             transition.setDeferred(false)
-//         }
-//     }
 }

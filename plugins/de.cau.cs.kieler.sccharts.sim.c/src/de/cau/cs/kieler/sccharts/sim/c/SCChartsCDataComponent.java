@@ -25,8 +25,11 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +53,7 @@ import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -220,37 +224,61 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
         }
+        Diagnostic diagnostic = Diagnostician.INSTANCE.validate(rootEObject);
+        if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+              throw new KiemInitializationException(
+                      "The source model contains error markers.\n\n", true, null);
+        }         
+        Resource r = rootEObject.eResource();
+        if (r != null) {
+            if (r.getErrors().size() > 0) {
+                throw new KiemInitializationException(
+                       "The source model contains error markers.\n\n", true, null);
+            }
+        }
 
         return true;
     }
 
     // -------------------------------------------------------------------------
+    
+    boolean isDirtyOnError = false;
 
     /**
      * {@inheritDoc}
      */
     public boolean isDirty() {
-        // Calculate a dirty indicator from ALL model elements and their textual representation's
-        // hash code.
-        int newDirtyIndicator = 0;
-        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
-        while (treeIterator.hasNext()) {
-            Object obj = treeIterator.next();
-            newDirtyIndicator += obj.toString().hashCode();
-        }
-        // Also consider KIEM properties (may have changes and require new code generation)
-        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
-            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
-        }
-        if (newDirtyIndicator != dirtyIndicator) {
-            dirtyIndicator = newDirtyIndicator;
-            return true;
-        }
-        // We conclude at this point that we are not dirty on the level of
-        // changes to the diagram
-        return false || (cExecution == null);
+        // For the release, always re-compile!
+        return true;
+//        if (isDirtyOnError) {
+//            return true;
+//        }
+//        // Calculate a dirty indicator from ALL model elements and their textual representation's
+//        // hash code.
+//        int newDirtyIndicator = 0;
+//        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
+//        while (treeIterator.hasNext()) {
+//            Object obj = treeIterator.next();
+//            newDirtyIndicator += obj.toString().hashCode();
+//        }
+//        // Also consider KIEM properties (may have changes and require new code generation)
+//        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
+//            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
+//        }
+//        if (newDirtyIndicator != dirtyIndicator) {
+//            dirtyIndicator = newDirtyIndicator;
+//            return true;
+//        }
+//        // We conclude at this point that we are not dirty on the level of
+//        // changes to the diagram
+//        return false || (cExecution == null);
     }
 
+    
+    public void setDirty(boolean isDirty) {
+        isDirtyOnError = isDirty;
+    }
+    
     // -------------------------------------------------------------------------
 
     public String getDataComponentId() {
@@ -284,16 +312,6 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         return true;
     }
 
-    // -------------------------------------------------------------------------
-
-    public List<String> getOutputNames() {
-        List<String> allOutputs = new ArrayList<String>();
-        allOutputs.addAll(outputSignalList);
-        allOutputs.addAll(outputVariableList);
-    	return allOutputs;
-        
-    }
-    
     // -------------------------------------------------------------------------
 
     /**
@@ -370,15 +388,15 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         try {
             if (myModel != null && kExpressionValuedObjectExtensions.getValuedObjects(myModel) != null) {
                 for (ValuedObject valuedObject : kExpressionValuedObjectExtensions.getValuedObjects(myModel)) {
-                	String signalName = valuedObject.getName();
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
-                            res.accumulate(signalName, JSONSignalValues.newValue(false));
+                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                         } else {
-                            res.accumulate(signalName, JSONSignalValues.newValue(false));
+                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                         }
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
+                        String signalName = valuedObject.getName();
                         if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
@@ -437,8 +455,25 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
-                        "Cannot simulate active editor using the SCCharts Simulator", true, null);
+                        "\nCannot simulate active editor using the SCCharts Simulator.", true, null);
             }
+            
+            Resource eResource = model.eResource();
+            boolean modelHasErrorMarkers = false;
+            if (eResource != null) {
+                modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+            }
+            if (modelHasErrorMarkers) {
+                throw new KiemInitializationException(
+                        "\nThe source model contains error markers.", true, null);
+            }
+
+            Diagnostic diagnostic = Diagnostician.INSTANCE.validate(model);
+            if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                  throw new KiemInitializationException(
+                          "The source model contains error markers.\n\n", true, null);
+            }         
+
 //            System.out.println("4");
 
             // if (this.getModelRootElement().eResource() == null) {
@@ -477,20 +512,37 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String debugTransformations =
                     this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
-            if (debug) {
-                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
-            }
 //            System.out.println("8");
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
 //            System.out.println("9");
 
+            if (debug) {
+                
+                // Do a PRE compilation with the debugTransformations!
+                KielerCompilerContext highLevelContext =
+                        new KielerCompilerContext(debugTransformations, extendedSCChart);
+                // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                highLevelContext.setCreateDummyResource(true);
+
+                highLevelContext.setInplace(false);
+                highLevelContext.setAdvancedSelect(true);
+//                System.out.println("10");
+                CompilationResult highLeveleCompilationResult =
+                        KielerCompiler.compile(highLevelContext);
+                
+                extendedSCChart = highLeveleCompilationResult.getEObject();
+
+//                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
+            }
+            
+            
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
 
             // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
-            highLevelContext.setCreateDummyResource(debug);
+            highLevelContext.setCreateDummyResource(false);
 
             highLevelContext.setInplace(false);
             highLevelContext.setAdvancedSelect(true);
@@ -498,6 +550,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
 //            System.out.println("11");
+            
             
             // reset compile time and accumulate
             compileTime = 0;
@@ -510,6 +563,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "Error compiling the SCChart (high-level synthesis). Try compiling it manually step-by-step using the KiCo compiler selection view:" + highLeveleCompilationResult.getAllErrors(),
                         true, null);
             }
+            
+            String errors = highLeveleCompilationResult.getAllErrors();
+            if (errors != null && errors.length() > 0) {
+                if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        "\n" + errors,
+                        true, null);
+            }
+            String warnings = highLeveleCompilationResult.getAllWarnings();
+            if (warnings != null && warnings.length() > 0) {
+                if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        "\n" + warnings,
+                        false, null);
+            }  
             
             // accumulate compile time
             for (TransformationIntermediateResult intermediateResult : highLeveleCompilationResult.getTransformationIntermediateResults()) {
@@ -528,6 +596,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
 //            System.out.println("13");
+            
+            errors = lowLevelCompilationResult.getAllErrors();
+            warnings = lowLevelCompilationResult.getAllWarnings();
+            if (errors != null && errors.length() > 0) {
+                if (errors.length() > 200) {errors = errors.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        "\n" + errors,
+                        true, null);
+            }
+            else if (warnings != null && warnings.length() > 0) {
+                if (warnings.length() > 200) {warnings = warnings.substring(0, 199) + "...";};
+                throw new KiemInitializationException(
+                        "\n" + warnings,
+                        false, null);
+            }            
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
 //            System.out.println("14 " + cSCChartCCode);
@@ -810,5 +893,17 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     }
 
     // -------------------------------------------------------------------------
+
+
+    // -------------------------------------------------------------------------
+
+
+    public List<String> getOutputNames() {
+        List<String> allOutputs = new ArrayList<String>();
+        allOutputs.addAll(outputSignalList);
+        allOutputs.addAll(outputVariableList);
+        return allOutputs;
+        
+    }
 
 }

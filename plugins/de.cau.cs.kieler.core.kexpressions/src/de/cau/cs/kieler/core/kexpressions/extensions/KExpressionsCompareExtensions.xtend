@@ -27,6 +27,15 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 class KExpressionsCompareExtensions {
 
     def dispatch boolean equals2(OperatorExpression expression1, OperatorExpression expression2) {
+        if (expression1 == null && expression2 == null) {
+            return true
+        }
+        else if (expression1 != null && expression2 == null) {
+            return false
+        }
+        else if (expression1 == null && expression2 != null) {
+            return false
+        }
         var c = 0
         for (Expression subExpression1 : expression1.subExpressions) {
             val subExpression2 = expression2.subExpressions.get(c)
@@ -64,6 +73,13 @@ class KExpressionsCompareExtensions {
     }
 
     def dispatch equals2(BoolValue boolValue1, BoolValue boolValue2) {
+        if (boolValue1 == null && boolValue2 == null) {
+            return true
+        } else if (boolValue1 != null && boolValue2 == null) {
+            return false
+        } else if (boolValue1 == null && boolValue2 != null) {
+            return false
+        }
         return (boolValue1.value == boolValue2.value)
     }
     
@@ -73,6 +89,6 @@ class KExpressionsCompareExtensions {
         }
         return false
     }
-
+    
     
 }

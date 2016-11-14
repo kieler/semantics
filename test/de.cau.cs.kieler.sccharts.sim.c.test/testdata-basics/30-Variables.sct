@@ -1,16 +1,18 @@
 // Strings don't work in the simulation yet.
+// Floats don't work in simulation (KISEMA-1113, Always absent).
+// Valued signals don't work with ESO files and the JUnit tests.
 scchart Variables {
 
     output bool b = true;
     output int i = 1;
     output float f = 2.5;
-    //output string s = "Hello world";
+    //output string txt = "Hello world";
     
     output signal s;
     output signal int vs combine +;
 
     initial state S0
-    --> S1 with / b = false; i = -1; f = -2.1234; //s = "Bye!";
+    --> S1 with / b = false; i = -1; f = -2.1234; //txt = "Bye!";
     
     state S1
     --> S2 with / i = f; f = i;

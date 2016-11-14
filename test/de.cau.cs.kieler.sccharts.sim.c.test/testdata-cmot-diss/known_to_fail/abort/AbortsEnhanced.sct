@@ -1,0 +1,51 @@
+// Not ASC schedulable
+
+@diagram[KLayLayered] false  
+@layout[direction] DOWN  
+@diagram[Declarations] false  
+
+scchart AbortsEnhanced {
+  input bool S1toS2;
+  input bool S2toS3;
+  input bool S1trig;
+  output bool S1act;
+  input bool S2trig;
+  output bool S2act;
+  input bool W1trig;
+  output bool W1act;
+  input bool W2trig;
+  output bool W2act;
+  input bool N1trig;
+  output bool N1act;
+  input bool N2trig;
+  output bool N2act;
+
+  initial state M {
+
+    initial state S1
+    --> S2 with S1toS2; 
+
+    state S2
+    --> S3 with S2toS3;
+ 
+    final state S3;
+  }
+  o-> S1 with S1trig / S1act = true
+  o-> S2 immediate with S2trig / S2act  = true
+  --> W1 with W1trig / W1act  = true
+  --> W2 immediate with W2trig / W2act  = true
+  >-> N1 with N1trig/ N1act  = true 
+  >-> N2 immediate with N2trig/ N2act  = true;
+    
+  state S1;   
+  
+  state S2;
+
+  state W1;
+
+  state N1;
+
+  state N2;
+
+  state W2;
+}

@@ -53,7 +53,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+        return Sets.newHashSet(); //SCChartsFeatureGroup::EXTENDED_ID)
     }
 
     override getNotHandlesFeatureIds() {
@@ -155,10 +155,24 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             transition.addAssignment(active.assignRelative(TRUE));
             
             // Add during action - FALSE otherwise
-            val immediate = true
-            val duringAction2 = targetRootState.retrieveDuringAction(immediate)
-            //duringAction2.setTrigger(TRUE)
+            val duringAction2 = targetRootState.createDuringAction()
+            duringAction2.immediate = true
             duringAction2.addAssignment(active.assign(FALSE));
+
+
+
+//            val region = targetRootState.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
+//            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+//            var Transition duringTransition = null
+//            val secondState = region.createState(GENERATED_PREFIX + "S");
+//             duringTransition = initialState.createTransitionTo(secondState)
+//            // because we have a second state, we need another transition
+//            secondState.createTransitionTo(initialState)
+//            secondState.setFinal
+//            duringTransition.setImmediate(true);
+//            duringTransition.addAssignment(active.assign(FALSE));
+
+
     }
 
     // TEMPORARY DISABLED //

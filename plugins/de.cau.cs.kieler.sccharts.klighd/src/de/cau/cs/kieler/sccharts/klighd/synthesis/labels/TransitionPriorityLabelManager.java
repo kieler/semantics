@@ -16,7 +16,8 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.cau.cs.kieler.core.kgraph.KLabel;
+import org.eclipse.elk.graph.KLabel;
+
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**

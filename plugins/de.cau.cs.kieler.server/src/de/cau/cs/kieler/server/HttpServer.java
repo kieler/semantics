@@ -284,7 +284,7 @@ public abstract class HttpServer extends Job {
                 if (socket == null) {
                     debug("No socket. Creating socket.");
                     try {
-                        socket = new ServerSocket(this.listenPort, 10);
+                        socket = new ServerSocket(this.listenPort, 0);
                         debug("Server listen socket established");
                         errorCnt = 0;
                     } catch (IOException e1) {

@@ -75,8 +75,8 @@ public class Transformation implements ITransformation {
 
     /** The transformation this class handles */
     private final ITransformation delegate;
-
-    /** This flag indicates a transformation producing a freatue instead of expanding it. */
+    
+    /** This flag indicates a transformation producing a feature instead of expanding it. */
     private boolean production = false;
 
     // -------------------------------------------------------------------------

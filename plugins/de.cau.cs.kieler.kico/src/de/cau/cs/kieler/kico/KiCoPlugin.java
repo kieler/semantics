@@ -430,14 +430,14 @@ public class KiCoPlugin extends Plugin {
         resourceExtensionsCached = new HashMap<String, ResourceExtension>();
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
-                String className = resourceExtensions[i].getAttribute("className");
+                String className = resourceExtensions[i].getAttribute("ePackageName");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
                 String editorID = resourceExtensions[i].getAttribute("editor_id");
                 resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
                         isXMI.toLowerCase().equals("true"), editorID));
 
-                logInfo("KiCo register resource extension: " + extension + " for class "
+                logInfo("KiCo register resource extension: " + extension + " for package "
                         + className);
             } finally {
                 // do nothing

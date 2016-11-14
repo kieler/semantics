@@ -15,8 +15,6 @@ package de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
@@ -26,9 +24,11 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ChanceMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
+import org.eclipse.core.resources.IProject
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.*
-import org.eclipse.core.resources.IProject
 
 /**
  * @author ssm

@@ -92,7 +92,7 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
 
         // Prepare all states so that each reagion has at most one final state
         targetRootState.getAllStates.toList.forEach [ targetState |
-            targetState.prepareExit(targetRootState);
+            //targetState.prepareExit(targetRootState);
         ]
 
         // Traverse all states
@@ -127,8 +127,17 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState
             var State lastState
+            val noregions = !state.hasInnerStatesOrControlflowRegions
+            
+            
+            if (noregions && stateOutgoingTransitions == 0) {
+                for (exitAction : state.exitActions.immutableCopy) {
+                    state.localActions.remove(exitAction);
+                }
+                return
+            }            
 
-            if (!state.hasInnerStatesOrControlflowRegions) {
+            if (noregions) {
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
@@ -137,8 +146,16 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 val region = state.regions.filter(ControlflowRegion).get(0)
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
 
-                firstState = region.finalStates.get(0) //every region MUST have an initial state
+                firstState = region.retrieveFinalState(GENERATED_PREFIX + "PriorFinal") //every region MUST have an initial state
+                //firstState = region.finalStates.get(0) //every region MUST have a final state
                 firstState.setNotFinal
+                for (otherFinalState : region.finalStates) {
+                    if (otherFinalState != lastState) {
+                        otherFinalState.createImmediateTransitionTo(firstState)
+                        otherFinalState.setNotFinal
+                    }
+                }
+                
             } else { // state has several regions (or one region without any final state!)
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry").uniqueName
                 firstState = region.createInitialState(GENERATED_PREFIX + "Main")
@@ -149,8 +166,8 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
             }
 
             // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
-            // Do not create superflous exitOptionStates
-            if (stateOutgoingTransitions > 0 && state.outgoingTransitions.filter[trigger != null].size > 0) {
+            // Do not create superfluous exitOptionStates
+            if (noregions && stateOutgoingTransitions > 0) { // && state.outgoingTransitions.filter[trigger != null].size > 0) {
 
                 // Memorize outgoing transition
                 val region = firstState.parentRegion
@@ -183,14 +200,15 @@ class Exit extends AbstractExpansionTransformation implements Traceable {
                 }
                 state.createImmediateTransitionTo(exitOptionState).setTypeTermination
                 firstState = middleState
-            }
+            } 
 
-            val entryRegion = firstState.parentRegion
+
+            val exitRegion = firstState.parentRegion
             val lastExitAction = state.exitActions.last
             for (exitAction : state.exitActions.immutableCopy) {
                 var connector = lastState
                 if (exitAction != lastExitAction) {
-                    connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+                    connector = exitRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 

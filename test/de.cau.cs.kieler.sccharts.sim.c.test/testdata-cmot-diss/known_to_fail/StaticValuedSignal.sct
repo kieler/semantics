@@ -1,0 +1,19 @@
+@diagram[KLayLayered] false  
+scchart StaticValuedSignal {
+  output int OX;
+  output int OY;
+
+  initial state S1
+  --> S2;
+
+  state S2 {
+    static signal int x = 0 combine +;
+    signal int y combine +;
+    
+    initial state S21
+    --> S22 with / x(pre(x)+1); y(pre(y)+1); OX = val(x); OY = val(y);
+    
+    final state S22; 
+  }
+  >-> S1;
+}

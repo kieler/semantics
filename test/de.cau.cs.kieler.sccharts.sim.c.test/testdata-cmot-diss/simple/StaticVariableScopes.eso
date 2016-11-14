@@ -1,0 +1,22 @@
+! reset;
+
+% Output: 
+;
+
+% Output: OXA(101) 
+;
+
+% Output: OXB(199) OXA(101) 
+;
+
+% Output: OXB(199) OXA(102) 
+;
+
+% Output: OXB(198) OXA(102) 
+;
+
+% Output: OXB(198) OXA(103) 
+;
+
+% Output: OXB(197) OXA(103) 
+;

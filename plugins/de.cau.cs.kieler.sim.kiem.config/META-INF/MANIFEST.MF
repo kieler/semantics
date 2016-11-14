@@ -8,7 +8,8 @@ Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.xtext.ui,
  de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.core.model
+ de.cau.cs.kieler.core.model,
+ org.eclipse.elk.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem.config,

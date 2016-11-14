@@ -48,7 +48,7 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeatureGroup::CORE_ID)
     }
 
     override getNotHandlesFeatureIds() {
@@ -74,10 +74,6 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
         targetRootState.allStates.forEach [ targetTransition |
             targetTransition.transformConnector(targetRootState);
         ]
-
-        //        for (targetTransition : targetRootState.allStates) {
-        //            targetTransition.transformConnector(targetRootState);
-        //        }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

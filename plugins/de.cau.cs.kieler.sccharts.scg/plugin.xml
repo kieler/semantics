@@ -78,7 +78,7 @@
    <extension
          point="de.cau.cs.kieler.kico.extension">
       <ExtensionInformation
-            className="SCGraph"
+            ePackageName="scg"
             editor_id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
             extensionName="scg"
             isXMI="true">

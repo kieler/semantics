@@ -284,7 +284,7 @@ public class CompilationResult {
      * warning String.
      * 
      */
-    public void processPostponedWarnings() {
+    public void processPostponedWarnings(boolean silent) {
         for (KielerCompilerException exception : postponedWarnings) {
             String transformationID = exception.getTransformationId();
 
@@ -295,9 +295,11 @@ public class CompilationResult {
             }
             allWarnings += exception.getStackTraceString();
 
-            KiCoPlugin.getInstance().showWarning(
-                    "A warning occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+            if (!silent) {
+                KiCoPlugin.getInstance().showWarning(
+                        "A warning occurred while calling transformation with the ID '"
+                                + transformationID + "'." + "\n\n" + allWarnings , KiCoPlugin.PLUGIN_ID, exception, true);
+            }
         }
     }
 
@@ -308,7 +310,7 @@ public class CompilationResult {
      * String.
      * 
      */
-    public void processPostponedErrors() {
+    public void processPostponedErrors(boolean silent) {
         for (KielerCompilerException exception : postponedErrors) {
             String transformationID = exception.getTransformationId();
 
@@ -319,9 +321,11 @@ public class CompilationResult {
             }
             allErrors += exception.getStackTraceString();
 
-            KiCoPlugin.getInstance().showError(
-                    "An error occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+            if (!silent) {
+                KiCoPlugin.getInstance().showError(
+                        "An error occurred while calling transformation with the ID '"
+                                + transformationID + "'." + "\n\n" + allErrors, KiCoPlugin.PLUGIN_ID, exception, true);
+            }
         }
     }
 

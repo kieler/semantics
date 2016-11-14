@@ -17,14 +17,14 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
 

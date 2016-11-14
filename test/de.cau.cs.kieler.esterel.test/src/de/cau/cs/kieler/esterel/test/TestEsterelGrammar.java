@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
+import org.eclipse.elk.core.util.Maybe;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -42,7 +43,6 @@ import org.junit.rules.ExpectedException;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 
 /**

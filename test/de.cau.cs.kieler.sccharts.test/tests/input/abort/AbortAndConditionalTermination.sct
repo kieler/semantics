@@ -1,6 +1,7 @@
 @Transformation ABORT
 scchart AbortAndConditionalTermination {
-  input int I;
+  input int I1;
+  input int I2;
   output int O;
   
   initial state A {
@@ -10,8 +11,8 @@ scchart AbortAndConditionalTermination {
     
     final state A1;
   }
-  --> F1 with I == 0 / O = 0
-  >-> F2 immediate with I == 1 / O = 1;
+  --> F1 with I1 / O = 0
+  >-> F2 immediate with I2 / O = 1;
   
   final state F1;
   final state F2;

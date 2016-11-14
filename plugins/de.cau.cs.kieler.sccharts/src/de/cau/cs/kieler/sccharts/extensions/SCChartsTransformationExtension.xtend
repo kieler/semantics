@@ -27,6 +27,9 @@ import de.cau.cs.kieler.core.kexpressions.StringValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.State
+import java.util.List
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -43,6 +46,56 @@ class SCChartsTransformationExtension {
 
     // This prefix is used for namings of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+
+    // -------------------------------------------------------------------------
+    // --             H I G H E R      L E V E L     T E S T S                --
+    // -------------------------------------------------------------------------
+    
+    // Test if a state can be immediately aborted
+    def boolean canImmediateAborted(State state) {
+        ((state.outgoingTransitions.filter[e|e.typeStrongAbort && e.immediate2].size > 0)
+        ||
+        (state.outgoingTransitions.filter[e|e.typeWeakAbort && e.immediate2].size > 0))
+    }
+
+    // Test if for a state ALL regions may possibly terminate immediate
+    def boolean canImmediateTerminate(State state) {
+        val regions = state.getControlflowRegions
+        for (region : regions) {
+            if (region instanceof ControlflowRegion) {
+                if (!region.canImmediateTerminate) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // Test if a region can possibly terminate immediate 
+    def boolean canImmediateTerminate(ControlflowRegion region) {
+        for (finalState : region.states.filter[isFinal]) {
+            if (finalState.isImmediatelyReachable) {
+                return true
+            }
+        }
+    }
+    
+    // Test if a final state is reachable immediately from an initial state
+    def boolean isImmediatelyReachable(State finalState) {
+        return finalState.isImmediatelyReachableHelper(finalState)
+    }
+    def boolean isImmediatelyReachableHelper(State finalState, State previousState) {
+        if (previousState.initial) {
+            return true
+        }
+        for (transition : previousState.incomingTransitions.filter[immediate]) {
+           if (finalState.isImmediatelyReachableHelper(transition.sourceState)) {
+               return true
+           }
+        }
+        return false
+    }
+
 
     // -------------------------------------------------------------------------
     // --          V A L U E D     O B J E C T S    W R A P P E R             --

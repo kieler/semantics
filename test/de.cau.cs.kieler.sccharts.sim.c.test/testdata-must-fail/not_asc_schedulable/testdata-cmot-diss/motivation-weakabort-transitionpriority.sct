@@ -1,0 +1,30 @@
+// This model must fail
+// because there is a strong abort
+// with lower priority than a non-strong-abort transition
+@diagram[KLayLayered] false  
+scchart Countdown_WeakAbort_Wrong {
+  input signal count;
+  input signal restart;
+  output signal trigger;
+  signal zero;
+
+  @direction RIGHT
+  region:
+
+  initial state Counting {
+	  region Main " ":
+    
+    initial state Cnt3
+    --> Cnt2 with count;
+    state Cnt2 
+    --> Cnt1 with count;
+    state Cnt1
+    --> Cnt0 with count / zero;
+    state Cnt0;
+  }
+  --> Done with zero / trigger
+  o-> Counting with restart;
+   
+  state Done
+  --> Counting with restart;
+ }

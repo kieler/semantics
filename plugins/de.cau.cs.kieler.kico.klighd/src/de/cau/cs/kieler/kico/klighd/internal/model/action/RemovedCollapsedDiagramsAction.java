@@ -13,19 +13,20 @@
  */
 package de.cau.cs.kieler.kico.klighd.internal.model.action;
 
+import org.eclipse.elk.core.klayoutdata.KLayoutDataFactory;
+import org.eclipse.elk.graph.KEdge;
+import org.eclipse.elk.graph.KGraphFactory;
+import org.eclipse.elk.graph.KNode;
+
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kgraph.KEdge;
-import de.cau.cs.kieler.core.kgraph.KGraphFactory;
-import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.krendering.KContainerRendering;
-import de.cau.cs.kieler.core.krendering.KPolyline;
-import de.cau.cs.kieler.core.krendering.KRendering;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutDataFactory;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering;
+import de.cau.cs.kieler.klighd.krendering.KPolyline;
+import de.cau.cs.kieler.klighd.krendering.KRendering;
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 
 /**
  * Removes all collapsed model from the model chain and hide surrounding boxes.

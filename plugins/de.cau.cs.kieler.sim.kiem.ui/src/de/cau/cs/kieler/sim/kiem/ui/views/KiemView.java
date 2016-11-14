@@ -657,14 +657,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void showMessage(final String title, final String message) {
         ContributionManager cm = ContributionManager.getInstance();
-        if ((cm != null) && !cm.isSummaryMessageDisabled()) {
+        if ((cm != null) && cm.isSummaryMessageEnabled()) {
             String[] buttons = new String[] { "Disable this Message", "Ok" };
             MessageDialog messageDialog = new MessageDialog(viewer.getControl().getShell(),
                     Messages.mViewTitle, null, message, MessageDialog.INFORMATION, buttons, 1);
             if (messageDialog.open() == 0) {
                 // if the user selects to disable the message, then save this in the configuration
                 // manager
-                cm.setSummaryMessageDisabled(true);
+                cm.setSummaryMessageEnabled(false);
             }
         }
     }

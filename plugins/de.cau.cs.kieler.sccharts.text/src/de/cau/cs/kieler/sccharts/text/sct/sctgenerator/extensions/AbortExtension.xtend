@@ -12,21 +12,22 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions
 
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.Declaration
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.TransitionType
 import com.google.inject.Singleton
-import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.isSuperstate
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ISCTGeneratorExtension
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
+import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import org.eclipse.core.resources.IProject
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+
+import static extension de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ModelGenerator.isSuperstate
 
 /**
  * Abort extension for the SCT Generator

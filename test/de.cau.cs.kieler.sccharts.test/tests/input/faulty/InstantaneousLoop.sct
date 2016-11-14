@@ -14,5 +14,5 @@ scchart Chart {
     --> C1 immediate;
     
     final state C1;
-  }--> A immediate;
+  }>-> A immediate;
 }

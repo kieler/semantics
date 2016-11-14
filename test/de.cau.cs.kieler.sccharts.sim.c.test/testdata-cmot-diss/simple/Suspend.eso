@@ -64,3 +64,23 @@ T2
 
 % Output: A2(1) A3(1) 
 ;
+
+! reset;
+S T3 
+% Output: A3(1) 
+;
+S T3 
+% Output: A3(1) 
+;
+T4 S 
+% Output: A3(1) 
+;
+T4 S 
+% Output: A3(1) 
+;
+T4 
+% Output: A3(1) A4(1) 
+;
+T4 
+% Output: A3(1) A4(1) 
+;

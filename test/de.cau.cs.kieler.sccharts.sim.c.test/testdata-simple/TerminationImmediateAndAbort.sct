@@ -1,0 +1,21 @@
+scchart Cabin {
+  input bool I;
+  input bool I2;
+  output bool O1 = false;
+  output bool O2 = false;
+  output bool O3 = false;
+
+  initial state S1 {
+
+    initial state S1
+    --> S2 immediate with I / O1 = true;
+
+    final state S2;
+  }
+  o-> S2 with I2 / O2 = true
+  >-> S3 with / O3 = true;
+
+  state S2;
+  
+  state S3;
+}  

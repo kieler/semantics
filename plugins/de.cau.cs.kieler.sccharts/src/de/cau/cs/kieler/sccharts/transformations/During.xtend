@@ -64,20 +64,9 @@ class During extends AbstractExpansionTransformation implements Traceable {
     }
 
     //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsCreateExtensions
 
-    @Inject
-    extension KExpressionsDeclarationExtensions
-
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions
-    
     @Inject
     extension SCChartsExtension
-
-    @Inject
-    extension SCChartsTransformationExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -99,80 +88,20 @@ class During extends AbstractExpansionTransformation implements Traceable {
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, State targetRootState) {
 
-        // DURING ACTIONS : 
-        // For each action create a separate region in the state. 
-        // Put the action into an transition within the macro state.
-        // Add a loop back to the initial state of the added region.
-        // In case the during action is immediate, the looping transition is non-immediate.
-        // In case the during action is non-immediate, the looping transition is immediate.
-        // MODIFICATION 26.07.2014: Do during BEFORE abort transformation,
-        // benefit: do not need to handle terminations of concurrent regions any more!
-        // Modification 27.07.2014: We NEED to reaction to terminations, outgoing of the
-        // current state (if present). In this case we add an auxiliary final state, and
-        // a flag that is made absent when entering the state (entry) and made present 
-        // when exiting it
-        // calling transformDuringEx()
-        // Modification 21.05.2015: Decision in Meeting: Root-State has an implicit
-        // termination transition!
-        // For the root state we want the complex final state transition 
-        if (state.duringActions != null && state.duringActions.size > 0) {
-            val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
-            val hasOutgoingTerminations = outgoingTerminations.length > 0
 
-            // If the state has outgoing terminations, we need to finalize the during
-            // actions in case we end the states over these transitions
-            if ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate) {
-                state.transformDuringComplexFinalStates(targetRootState)
-            } else {
-                state.transformDuringSimple(targetRootState)
-            }
-
-        }
-    }
-    
-
-    // Traverse all simple states or super states w/o outgoing terminations that have actions to 
-    // transform
-    def void transformDuringSimple(State state, State targetRootRegion) {
-
-        // Create the body of the dummy state - containing the during action
-        // For every during action: Create a region
-        for (duringAction : state.duringActions.immutableCopy) {
-            duringAction.setDefaultTrace;
-            val immediateDuringAction = duringAction.isImmediate
-            val region = state.createControlflowRegion (GENERATED_PREFIX + "During").uniqueName
-            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-            var Transition duringTransition = null
-            if (immediateDuringAction) {
-                val secondState = region.createState(GENERATED_PREFIX + "S");
-                duringTransition = initialState.createTransitionTo(secondState)
-
-                // because we have a second state, we need another transition
-                secondState.createTransitionTo(initialState)
-            } else {
-
-                // Self loop in the non-immediate case
-                duringTransition = initialState.createTransitionTo(initialState)
-            }
-            duringTransition.setDelay(duringAction.delay);
-            duringTransition.setImmediate(immediateDuringAction);
-            duringTransition.setTrigger(duringAction.trigger.copy);
-            for (action : duringAction.effects) {
-                duringTransition.addEffect(action.copy);
-            }
-
-            // After transforming during actions, erase them
-            state.localActions.remove(duringAction)
-        }
-    }
 
 
     // Traverse all super states with outgoing terminations that have actions to transform. 
     // This default implementation will create / use a complex final state
-    def void transformDuringComplexFinalStates(State state, State targetRootRegion) {
+    def void transformDuring(State state, State targetRootRegion) {
+
+         val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
+         val hasOutgoingTerminations = outgoingTerminations.length > 0
+
+        // If the state has outgoing terminations, we need to finalize the during
+        // actions in case we end the states over these transitions
+        val complexDuring = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)
 
         // Create the body of the dummy state - containing the during action
         // For every during action: Create a region
@@ -190,20 +119,19 @@ class During extends AbstractExpansionTransformation implements Traceable {
 
                 // because we have a second state, we need another transition
                 secondState.createTransitionTo(initialState)
-                if (duringAction.trigger != null) {
-
-                    // if the during action has a trigger we need a second immediate 
-                    // default path to the final state!
-                    val transition1b = initialState.createTransitionTo(secondState);
-                    transition1b.setImmediate(true);
+                if (complexDuring) {
+                    secondState.setFinal
                 }
-                secondState.setFinal
             } else {
 
                 // Self loop in the non-immediate case
                 duringTransition = initialState.createTransitionTo(initialState)
-                initialState.setFinal
             }
+    
+            if (complexDuring) {
+                 initialState.setFinal
+            }
+
             duringTransition.setDelay(duringAction.delay);
             duringTransition.setImmediate(immediateDuringAction);
             duringTransition.setTrigger(duringAction.trigger.copy);
@@ -214,67 +142,9 @@ class During extends AbstractExpansionTransformation implements Traceable {
             // After transforming during actions, erase them
             state.localActions.remove(duringAction)
         }
+
     }
     
-
-    // Traverse all super states with outgoing terminations that have actions to transform. 
-    // This alternative implementation will create a main region to detect termination
-    def void transformDuringEx(State state, State targetRootRegion) {
-
-        // DURING ACTIONS : 
-        // For each action create a separate region in the state. 
-        // Put the action into an transition within the macro state.
-        // Add a loop back to the initial state of the added region.
-        // In case the during action is immediate, the looping transition is non-immediate.
-        // In case the during action is non-immediate, the looping transition is immediate.
-        if (state.duringActions != null && state.duringActions.size > 0) {
-            val term = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
-            term.setInitialValue(FALSE)
-
-            val mainRegion = state.createControlflowRegion(GENERATED_PREFIX + "Main").uniqueName
-            val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
-            for (region : state.regions.filter(e|e != mainRegion).toList.immutableCopy) {
-                mainState.regions.add(region)
-            }
-            val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term").setFinal)
-            termTransition.setTypeTermination
-            termTransition.addEffect(term.assign(TRUE))
-
-            // Create the body of the dummy state - containing the during action
-            // For every during action: Create a region
-            for (duringAction : state.duringActions.immutableCopy) {
-                val immediateDuringAction = duringAction.isImmediate
-                val region = state.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
-                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-                val middleState = region.createState(GENERATED_PREFIX + "S")
-                if (!immediateDuringAction) {
-                    middleState.setTypeConnector
-                }
-                val finalState = region.createFinalState(GENERATED_PREFIX + "F")
-                val transition1 = initialState.createTransitionTo(middleState)
-                transition1.setDelay(duringAction.delay);
-                transition1.setImmediate(duringAction.isImmediate);
-                transition1.setTrigger(duringAction.trigger.copy);
-                for (action : duringAction.effects) {
-                    transition1.addEffect(action.copy);
-                }
-                val transition2 = middleState.createTransitionTo(initialState)
-                transition2.setImmediate(!duringAction.isImmediate);
-                var Transition transition3
-                if (duringAction.immediate) {
-                    transition3 = middleState.createImmediateTransitionTo(finalState).setLowestPriority
-                } else {
-                    transition3 = initialState.createImmediateTransitionTo(finalState).setLowestPriority
-                }
-                transition3.setTrigger(term.reference)
-                transition3.setHighestPriority
-
-                // After transforming during actions, erase them
-                state.localActions.remove(duringAction)
-            }
-        }
-    }
-
     // ------------------------------------------------------------------------
     
 }

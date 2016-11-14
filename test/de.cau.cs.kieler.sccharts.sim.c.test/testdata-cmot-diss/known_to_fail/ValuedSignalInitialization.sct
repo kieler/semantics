@@ -1,0 +1,12 @@
+// Does initialization of a valued signal makes any sense?
+// (Does not work because reset in immediate during is wrong)
+@diagram[KLayLayered] false  
+scchart Initialization {
+  input bool A;
+  output signal int O = 42 combine +;
+  
+  initial state WA
+  --> DA with A / O(2);
+
+  final state DA;
+}

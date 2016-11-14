@@ -13,11 +13,8 @@
  */
 package de.cau.cs.kieler.scg.klighd.analyzer
 
-import de.cau.cs.kieler.scg.klighd.analyzer.IAnalysisVisualization
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * @author ssm

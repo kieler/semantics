@@ -42,11 +42,16 @@ class For extends Feature {
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension de.cau.cs.kieler.sccharts.transformations.For
+
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.allStates.toList
-        for (state : allStates) {
-            // TODO: Check for this feature
+        val allRegions = model.allContainedControlflowRegions.toList
+            for (region : allRegions) {
+                if (region.parseFor != null) {
+                   return true
+                }
         }
         return false
     }

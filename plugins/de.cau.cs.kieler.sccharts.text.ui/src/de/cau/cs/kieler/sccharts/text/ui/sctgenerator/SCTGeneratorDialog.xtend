@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.text.ui.sctgenerator
 
-import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.ChanceMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.MinMax
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import java.util.List
+import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.jface.dialogs.IMessageProvider
 import org.eclipse.jface.dialogs.TitleAreaDialog
 import org.eclipse.swt.SWT

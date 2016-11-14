@@ -14,8 +14,9 @@
 package de.cau.cs.kieler.sim.kart.engine;
 
 import java.util.Map;
+
+import org.eclipse.elk.core.util.Pair;
 import org.json.JSONObject;
-import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * Interface to define an API for validation engines that can check the validity of a simulation

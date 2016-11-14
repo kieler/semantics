@@ -1,7 +1,8 @@
 
 @Transformation ABORT
 scchart AbortAndConditionalTermination {
-  input int I;
+  input int I1;
+  input int I2;
   output int O;
   bool _trig;
 
@@ -13,8 +14,8 @@ scchart AbortAndConditionalTermination {
     region _Ctrl:
 
     initial state _Run
-    --> _Done with I == 0 / _trig = true
-    --> _Done immediate with _termRegion && I == 1;
+    --> _Done with I1 / _trig = true
+    --> _Done immediate with _termRegion && I2;
 
     final state _Done;
 
@@ -39,6 +40,6 @@ scchart AbortAndConditionalTermination {
   final state F2;
 
   connector state _C
-  --> F1 with I == 0 / O = 0
-  --> F2 immediate with / O = 1;
+  --> F1 with I1 / O = 0
+  --> F2 immediate with I2 / O = 1;
 }

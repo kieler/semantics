@@ -15,28 +15,18 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-//import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import java.util.ArrayList
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.HistoryType
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionOLD
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -47,12 +37,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
  */
 class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
-    // HOTFIX DUE TO MODIFICATIONS IN SCCHARTSEXTENSION. THE FOLLOWING CODE SHOULD BE MOVED
-    // BACK TO SCCHARTSEXTENSION
-
-    //@Inject
-    //extension KExpressionsExtensionOLD
-    
     @Inject
     extension SCChartsTransformationExtension
     
@@ -62,33 +46,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension KExpressionsComplexCreateExtensions
     
-    
-    
-//    def getValuedObjects(Scope scope) {
-//        <ValuedObject>newLinkedList => [ ll |
-//            scope.declarations.forEach[d|d.valuedObjects.forEach[ll += it]]
-//        ]
-//    }
-    
-//    // Creates a new ValuedObject in a scope.
-//    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-//        val valuedObject = createValuedObject(valuedObjectName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//    
-//    //===========  VARIABLES  ===========
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createVariable(Scope scope, String variableName) {
-//        scope.createValuedObject(variableName)
-//    }
-//
-//    //============  SIGNALS  ============
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createSignal(Scope scope, String variableName) {
-//        scope.createValuedObject(variableName).setIsSignal
-//    }
-
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
@@ -115,15 +72,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
 
     //-------------------------------------------------------------------------
 
-//    @Inject
-//    extension KExpressionsComplexCreateExtensions
-//    
-//    @Inject
-//    extension KExpressionsDeclarationExtensions    
-//    
-//    @Inject
-//    extension KExpressionsValuedObjectExtensions   
-
     @Inject
     extension SCChartsExtension
 
@@ -138,7 +86,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all transitions
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformWeakSuspend(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
@@ -149,16 +97,18 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         val weakSuspends = state.suspendActions.filter[weak].toList
         weakSuspends.setDefaultTrace
         
+        System.out.println("WEAKSUSPEND >>> " + weakSuspends.size)
+        
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
-
+ 
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
-                //duringAction.setTrigger(weakSuspend.trigger.copy)
-                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
+                // NOT needs to be relative write because it is sequentially AFTER setting to FALSE!
+                // duringAction.addEffect(weakSuspendFlag.assign(weakSuspendFlag.reference.or(weakSuspend.trigger.copy)))
                 duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
                 state.localActions.remove(weakSuspend)
             }
@@ -198,8 +148,9 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
         
-                    // Only if not a final state            
-                    if (!subState.final) {
+                    // Only if not a final state OR a  final state on top-level-scope of WeakSuspend
+                    // NEW: || subState.parentRegion.parentState == state            
+                    if (!subState.final || subState.parentRegion.parentState == state) {
                         val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
                         weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
                         weakSuspendTransition.setLowestPriority
@@ -212,49 +163,24 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                     }
                 }
             }
-        }
-    }
+            
+            // NEW:            
+            // WS Termination region (IF state can be left by termination!)
+            // should only terminate if no WS trigger holds
 
-
-
-    def void transformWeakSuspendOld(State state, State targetRootState) {
-
-        val weakSuspends = state.suspendActions.filter[weak].toList
-        weakSuspends.setDefaultTrace
-        
-        if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "weakSuspend").setTypeBool.uniqueName
-            weakSuspendFlag.setInitialValue(FALSE)
-
-            for (weakSuspend : weakSuspends.immutableCopy) {
-                weakSuspend.setDefaultTrace
-                val duringAction = state.createDuringAction
-                duringAction.setImmediate(weakSuspend.immediate)
-                //duringAction.setTrigger(weakSuspend.trigger.copy)
-                //duringAction.addEffect(weakSuspendFlag.assign(TRUE))
-                duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
-                state.localActions.remove(weakSuspend)
+            // If the state has outgoing terminations, we need to finalize the during
+            // actions in case we end the states over these transitions
+            val needAuxTermRegion = ((state.outgoingTransitions.filter(e|e.typeTermination).length > 0 || state.isRootState) && state.regionsMayTerminate)
+            if (needAuxTermRegion) {
+                val auxTermRegion = state.createControlflowRegion(GENERATED_PREFIX + "wsAuxTermination");
+                val noTermS = auxTermRegion.createInitialState(GENERATED_PREFIX + "wsNoTerm");
+                val termS = auxTermRegion.createFinalState(GENERATED_PREFIX + "wsTerm");
+                val t1 = noTermS.createImmediateTransitionTo(termS);
+                val t2 = termS.createTransitionTo(noTermS);
+                t1.trigger = not(weakSuspendFlag.reference)
+                t2.trigger = weakSuspendFlag.reference
             }
-
-            weakSuspends.setDefaultTrace
-            for (region : state.allContainedControlflowRegions.immutableCopy) {
-                val subStates = region.states.immutableCopy
-                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateBookmark = state.createVariable(GENERATED_PREFIX  + state.id).setTypeInt.uniqueName
-                var counter = 0 
-
-                for (subState : subStates) {
-                    val reEnterTransition = wsState.createImmediateTransitionTo(subState)
-                    reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
-                    reEnterTransition.setDeferred(true)
-                    val entryAction = subState.createEntryAction
-                    entryAction.addEffect(stateBookmark.assign(counter.createIntValue))
-                    entryAction.setTrigger(not(weakSuspendFlag.reference))
-                    counter = counter + 1
-                    val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
-                    weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
-                }
-            }
+            
         }
     }
 

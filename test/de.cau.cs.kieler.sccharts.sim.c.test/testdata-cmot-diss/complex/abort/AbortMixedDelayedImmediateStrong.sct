@@ -1,0 +1,22 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT //@HVLayout
+scchart AbortMixedDelayedImmediateStrong {
+  input bool I1;
+  input bool I2;
+  output bool O1;
+  output bool O2;
+
+  region Main " ":
+
+  initial state S1 {
+
+    initial state S11;
+  }
+  o-> S2 with I1 / O1 = true
+  o-> S3 immediate with I2 / O2 = true;
+
+  state S2;
+
+  state S3;
+}

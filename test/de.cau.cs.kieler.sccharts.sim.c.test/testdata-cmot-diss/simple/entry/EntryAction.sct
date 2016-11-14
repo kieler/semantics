@@ -2,6 +2,7 @@
 @VHLayout  
 scchart EntryAction {
   output bool Ae1 = false;
+  output bool A1 = false;
   
   initial state S0
   --> S1;
@@ -9,7 +10,7 @@ scchart EntryAction {
   state S1 {
     entry / Ae1 = true;
   }
-  --> S2;
+  --> S2 with / A1 = true;
 
   state S2;
 }

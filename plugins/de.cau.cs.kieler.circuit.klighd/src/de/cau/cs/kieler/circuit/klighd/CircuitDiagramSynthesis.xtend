@@ -16,30 +16,29 @@
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.LineCap
-import de.cau.cs.kieler.core.krendering.LineJoin
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.HierarchyHandling
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kiml.options.PortConstraints
-import de.cau.cs.kieler.kiml.options.PortLabelPlacement
-import de.cau.cs.kieler.kiml.options.PortSide
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.LineCap
+import de.cau.cs.kieler.klighd.krendering.LineJoin
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
-
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.HierarchyHandling
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortLabelPlacement
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.core.options.CoreOptions
 
 /** 
  * @author fry
@@ -107,13 +106,13 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 
 		if (SHOW_ALL_REGIONS.booleanValue) {
 			val root = createNode().associateWith(model);
-			root.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+			root.setLayoutOption(LayeredOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			model.transformActor(root);
 			return root;
 		} else {
 			val logic = model.eAllContents.filter(Actor).filter[name == "Program Logic"].head
 			val rootLogic = createNode().associateWith(logic)
-			rootLogic.setLayoutOption(LayoutOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
+			rootLogic.setLayoutOption(LayeredOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 			logic.transformActor(rootLogic);
 			return rootLogic;
 			}
@@ -134,16 +133,17 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val Boolean atomicActor = actor.innerActors.empty
 
 		// rendering for edges and ports of actor
-		actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
-		actorNode.setLayoutOption(LayoutOptions.PORT_LABEL_PLACEMENT, PortLabelPlacement.OUTSIDE);
-		actorNode.setLayoutOption(LayoutOptions.PORT_SPACING, 20.0f)
-		actorNode.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
-		actorNode.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT);
+        actorNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+		actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
+		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.OUTSIDE);
+		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT, 20.0f)
+		actorNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
+		actorNode.setLayoutOption(LayeredOptions.DIRECTION, Direction.RIGHT);
 				
-		if(LAYOUT.objectValue == "Brandes Koepf"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.BRANDES_KOEPF);}
-		if(LAYOUT.objectValue == "Linear Segments"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.LINEAR_SEGMENTS);}
-		if(LAYOUT.objectValue == "Network Simplex"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.NETWORK_SIMPLEX);}
-		if(LAYOUT.objectValue == "Simple"){ actorNode.addLayoutParam(Properties.NODE_PLACER, NodePlacementStrategy.SIMPLE);}
+		if(LAYOUT.objectValue == "Brandes Koepf"){ actorNode.addLayoutParam(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.BRANDES_KOEPF);}
+		if(LAYOUT.objectValue == "Linear Segments"){ actorNode.addLayoutParam(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.LINEAR_SEGMENTS);}
+		if(LAYOUT.objectValue == "Network Simplex"){ actorNode.addLayoutParam(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);}
+		if(LAYOUT.objectValue == "Simple"){ actorNode.addLayoutParam(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE);}
 		
 		
 		// ------------------------------------------------------------------------
@@ -170,7 +170,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					// ports for the tick function are marked with triangle 
 					if (port.name == "Tick") { // /TODO: still not working ... place Tick ports at fixed position
 						it.setPortSize(0, 0)
-						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+						it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 						it.addPolygon => [
 							it.lineWidth = 1
 							it.lineCap = LineCap.CAP_ROUND;
@@ -185,18 +185,18 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					// all other input ports have no special design
 					else {
 						it.setPortSize(5, 2);
-						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+						it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+						it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f)
 					}
 					
 					// "In_1" and "In_0" are MUX input ports. They have a specified order to ensure the flap in simulation working correctly.
 					if (port.type == "In_1") {
-						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-						it.setLayoutOption(LayoutOptions.PORT_INDEX, 1)
+						actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
+						it.setLayoutOption(LayeredOptions.PORT_INDEX, 1)
 					} else if (port.type == "In_0") {
-						actorNode.setLayoutOption(LayoutOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
-						it.setLayoutOption(LayoutOptions.PORT_INDEX, 0)
+						actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_ORDER);
+						it.setLayoutOption(LayeredOptions.PORT_INDEX, 0)
 					}
 
 				} 
@@ -204,8 +204,8 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// --  Output ports: are placed on the right side of actors    --
 				// --------------------------------------------------------------
 				else if (port.type.startsWith("Out")) {
-					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.EAST)
-					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f) 
+					it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.EAST)
+					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f) 
 					if (port.outgoingLinks.length == 0) {// mark unnecessary nodes in circuit...
 						it.addEllipse.setBackground("red".color).lineWidth = 0; 
 						it.setPortSize(6, 6);
@@ -220,22 +220,22 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// --------------------------------------------------------------	
 				else if (port.type.startsWith("Sel")) {
 					it.setPortSize(2, 5);
-					it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.SOUTH)
+					it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.SOUTH)
 					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-					it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f)
 
 				} 
 				
 //				else if (port.type.startsWith("Not")) {
 //					if (actor.type == "NOT") {
 //						it.setPortSize(5, 2);
-//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+//						it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 //						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-//						it.setLayoutOption(LayoutOptions.OFFSET, if(atomicActor) 0f else -3f)
+//						it.setLayoutOption(LayeredOptions.OFFSET, if(atomicActor) 0f else -3f)
 //					} else {
-//						it.setLayoutOption(LayoutOptions.OFFSET, 0f);
+//						it.setLayoutOption(LayeredOptions.OFFSET, 0f);
 //						it.setPortSize(6, 6);
-//						it.setLayoutOption(LayoutOptions.PORT_SIDE, PortSide.WEST)
+//						it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 //						it.addEllipse.setBackground("white".color).lineWidth = 1;
 //					}
 //
@@ -299,7 +299,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 			// this is necessary because otherwise ports are not placed correctly
 			// e.g. A in ABO.. 
 			if (it.sourcePort.node == it.targetPort.node) {
-				it.addLayoutParam(LayoutOptions.SELF_LOOP_INSIDE, true);
+				it.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
 			}
 			
 			]

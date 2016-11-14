@@ -1,0 +1,16 @@
+@diagram[KLayLayered] false  
+@layout[direction] DOWN  
+
+@HVLayout
+scchart WeakAbortDuring { 
+  input bool I;
+  output int O;
+  output bool A;
+
+  initial state S0 {
+    immediate during / O++;
+  }
+  --> S1 with I / A = true;
+   
+  final state S1;
+}

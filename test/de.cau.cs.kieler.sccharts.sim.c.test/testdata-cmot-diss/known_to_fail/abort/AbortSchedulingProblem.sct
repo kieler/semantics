@@ -1,0 +1,21 @@
+// Not ASC schedulable
+@diagram[KLayLayered] false  
+@layout[direction] RIGHT  
+
+@HVLayout
+scchart S "AbortSchedulingProblem" {
+  output bool O = false;
+  input bool I;
+
+  initial state Inner {
+
+    initial state A
+    --> B with / O = true;
+
+    final state B;
+  }
+  >-> Inner immediate
+  --> Aborted immediate with I;
+
+  state Aborted;
+}

@@ -15,9 +15,10 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
 import java.util.Set;
 
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.core.util.Pair;
+import org.eclipse.elk.core.util.Pair;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
+
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions.TracingMode;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 

@@ -14,19 +14,18 @@
 package de.cau.cs.kieler.kitt.klighd.update;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.klayoutdata.KLayoutData;
+import org.eclipse.elk.graph.KGraphElement;
+import org.eclipse.elk.graph.KLabel;
+import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.ui.progress.UIJob;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -35,15 +34,9 @@ import com.google.inject.Guice;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
 
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.kgraph.KLabel;
-import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
@@ -52,7 +45,9 @@ import de.cau.cs.kieler.klighd.IViewChangeListener;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewChangeType;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.viewers.ContextViewer;
 
 /**

@@ -1,0 +1,12 @@
+// This is just a starting example stub. You can play around
+// with the SCT language and the KIELER SCCharts Online Compiler.
+// If you break our compiler or render server then please consider 
+// using your own locally running copy of the KIELER SCCharts 
+// tooling (see below). 
+//
+// Any feedback is helpful and welcome :-)
+// Send us an email: kieler@rtsys.informatik.uni-kiel.de
+
+scchart MySCChart {
+	initial state S;
+}

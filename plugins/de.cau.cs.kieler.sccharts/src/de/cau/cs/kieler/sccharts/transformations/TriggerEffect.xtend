@@ -50,12 +50,13 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet()
+        return Sets.newHashSet(SCChartsFeature::SURFACEDEPTH_ID)
     }
 
     // THIS IS NOW DONE INDIRECTLY BY DECLARING META DEPENDENCIES ON FEATURE GROUPS
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+//        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+        return Sets.newHashSet()
     }
     
 //    override getNotHandlesFeatureIds() {
