@@ -544,7 +544,16 @@ function updateImage() {
                 <label></label>
                 <span style="margin-top:20px">
 				
-                <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="20" id="model" onchange="compile();">
+            
+	   <select class="form-control" style="margin-top:5px"  name="example" id="example" onchange="loadExample();">
+         <option selected="selected" value="">Load example...</option>
+         <option value="ao.sct">AO</option>
+         <option value="aldo.sct">ALDO</option>
+         <option value="abro.sct">ABRO</option>
+         <option value="dvdplayer.sct">DVD Player</option>
+         <option value="trafficlight.sct">Traffic Light</option>
+         <option value="empty.sct">Empty SCChart</option>
+       </select> <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="20" id="model" onchange="compile();">
 // The AO example is one of the simpler SCCharts models. It has a boolean input
 // A and a boolean output O. O is initially set to false, which is an extended
 // SCCharts feature.
@@ -565,16 +574,7 @@ scchart AO {
      
   state dA;          
 } 
-</textarea>
-	   <select class="form-control" style="margin-top:5px"  name="example" id="example" onchange="loadExample();">
-         <option selected="selected" value="">Load example...</option>
-         <option value="ao.sct">AO</option>
-         <option value="aldo.sct">ALDO</option>
-         <option value="abro.sct">ABRO</option>
-         <option value="dvdplayer.sct">DVD Player</option>
-         <option value="trafficlight.sct">Traffic Light</option>
-         <option value="empty.sct">Empty SCChart</option>
-       </select>				
+		   </textarea>		
         </span></div>
 	  
 	  
