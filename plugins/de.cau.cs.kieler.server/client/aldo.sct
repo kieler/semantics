@@ -1,3 +1,21 @@
+// The ALDO example has a boolean input A and a boolean output O. Additionally
+// it has an output signal D. Concurrently, ALDO checks for A becoming true. If
+// A becomes true it transitions from state WaitA to DoneA and sets a local 
+// variable L to true. The concurrent thread Thread2 waits for L becoming true
+// and, while waiting, it emits the signal D as a during action of state WaitL.
+// If L becomes true, this thread transitions to state DoneL and sets the output
+// O to true. Note that DoneL is not a final state. Hence ALDO never terminates
+// but will not react to further inputs when reaching DoneL.
+// Further note that ALDO does not respond to A being true in the initial tick
+// because the transition from WaitA to DoneA is not an immediate transition.
+// The transition from WaitL to DoneL is preemptive (strong abort). Hence, the
+// during action is preempted in the tick when the abort transition is taken.
+//
+// The example is taken from the following publication:
+// Christian Motika and Steven Smyth. Updates on SCCharts. Presentation at the 
+// 22th International Open Workshop on Synchronous Programming (SYNCHRON'15), 
+// Kiel, Germany, December 2015.
+
 scchart ALDO "ALDO" {
   input bool A;
   bool L = false;

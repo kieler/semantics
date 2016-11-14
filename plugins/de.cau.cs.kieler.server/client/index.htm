@@ -531,6 +531,15 @@ function updateImage() {
                 <span style="margin-top:20px">
 				
                 <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="20" id="model" onchange="compile();">
+// The AO example is one of the simpler SCCharts models. It has a boolean input
+// A and a boolean output O. O is initially set to false, which is an extended
+// SCCharts feature.
+// AO waits for A becoming true inside state wA. If A becomes true, in any
+// tick other than the initial one, and AO is still inside state wA, then the
+// transition from wA to dA is taken. This also sets the output O to true.
+// Note that AO is not responsive in state dA. However, as dA is not a final 
+// state, AO does not terminate.
+
 @HVLayout 
 //@layout[direction] DOWN
 scchart AO { 
@@ -541,7 +550,7 @@ scchart AO {
   --> dA with A / O = true; 
      
   state dA;          
-}         
+} 
 </textarea>
 	   <select class="form-control" style="margin-top:5px"  name="example" id="example" onchange="loadExample();">
          <option selected="selected" value="">Load example...</option>

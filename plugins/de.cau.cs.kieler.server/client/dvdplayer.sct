@@ -1,3 +1,19 @@
+// The DVD player is an example using signals, concurrency and preemption.
+// The model is first in state Off. If the signal POWER is present then it tran-
+// sitions to the On state. If, in the On state, the POWER signal is present again
+// then the model will transition to state Off again, preempting any internal
+// behavior of the On state.
+// In the On state the tray can be opened (initially) or closed. The user can
+// toggle between states OpenedTray and ClosedTray using the EJECT input signal.
+// The ClosedTray state has two concurrent threads. The first allows to toggle
+// between states Pause, Play, and Stop using the PLAY and the STOP input signals.
+// The other thread allows to toggle between three languages using the
+// AUDIO input signal.
+//
+// The example was adapted from the following publication:
+// Hauke Fuhrmann. On the Pragmatics of Graphical Modeling. Dissertation, Kiel 
+// University, Faculty of Engineering, Kiel, 2011.
+
 scchart DVDPlayer {
   input signal POWER;
   input signal EJECT;
