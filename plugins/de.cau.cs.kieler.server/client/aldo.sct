@@ -12,9 +12,8 @@
 // during action is preempted in the tick when the abort transition is taken.
 //
 // The example is taken from the following publication:
-// Christian Motika and Steven Smyth. Updates on SCCharts. Presentation at the 
-// 22th International Open Workshop on Synchronous Programming (SYNCHRON'15), 
-// Kiel, Germany, December 2015.
+// Christian Motika. SCCharts --- Language and Interactive Incremental Compilation. 
+// Dissertation, Kiel University, Faculty of Engineering, Kiel, 2016.
 
 scchart ALDO "ALDO" {
   input bool A;
