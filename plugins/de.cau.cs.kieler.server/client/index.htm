@@ -578,7 +578,21 @@ scchart AO {
         </span></div>
 	  
 	  
-	  
+	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
+			    <div class="input-w"  style="width: auto">
+                <p>
+                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
+       
+                  <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
+				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
+                </p>
+                </div>
+              </label>
+ </div>
+ 
+ 
+ 
+ 
 	  
 	   <div class="col-sm-6" style="margin-top:20px">
 		<div id="resultErrorDiv" style="display: none">
@@ -608,19 +622,9 @@ scchart AO {
 <textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
 	   </div>
 
-	   <div class="col-sm-4" style="margin-top:40px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
-			    <div class="input-w"  style="width: auto">
-                <p>
-                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
-       
-                  <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
-				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
-                </p>
-                </div>
-              </label>
- </div>
+
 	  
- <div class="col-sm-4" style="margin-top:20px">
+ <div class="col-sm-6" style="margin-top:40px">
 
 			<p>
 				<span class="style5"><span class="style13">Other Options</span><br>
@@ -634,10 +638,10 @@ scchart AO {
                 <p> <span class="Stil8 Stil10">
     <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text"  />
-    <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label>
+    <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label><br>
     <label> 
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
-    <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
+    <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label><br>
                 <label> 
                   <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" checked />
                   <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> <strong>Graphical output (PNG) <span class="Stil12">(compile and render)</span><br />
@@ -718,7 +722,7 @@ scchart AO {
 		</span></div>			  
  </div>
 	  
- <div class="col-sm-4" style="margin-top:20px">
+ <div class="col-sm-6" style="margin-top:40px">
    <table width="100%" border="0" cellspacing="5">
      <tr>
        <td width="315" valign="top" scope="row"><span class="Stil8">
