@@ -35,7 +35,7 @@
 	        font-family: monospace;
 	        padding-top: .4em;
 	      }
-</style>
+    </style>
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -56,6 +56,7 @@
 	font-size: small;
 }
 .style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: small; font-weight: bold; }
+.style7 {font-size: medium}
 -->
 </style>
 </head>
@@ -82,9 +83,16 @@
 	font-weight: bold;
 	font-size: medium;
 }
-.style13 {color: #0066FF; font-size: medium; }
+.style13 {font-family: Verdana, Arial, Helvetica, sans-serif; color: #0066FF; font-size: medium; }
+.style13b {font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF; font-size: medium; }
 .style14 {font-size: medium}
 .style15 {color: #0066FF}
+.boxed {
+   width: 600px;
+height: 400px;
+background-color: 0066FF;
+border: solid 2px blue;
+} 
 -->
        </style>
 
@@ -246,8 +254,9 @@ var doUpdateImage = false;
 
 function compile() {
 	window.clearInterval(compileTimer);
-	resultText.value = "Compiling, please wait...";
-	resultTextEditor.setValue("Compiling, please wait...");
+	resultText.value = "Loading...";
+	resultTextEditor.setValue("Loading...");
+	document.getElementById("compiling").style.display="block";
 	clearErrors();
     var outputText = document.getElementById("outputText");
     if(outputText.checked) {
@@ -297,6 +306,7 @@ function compileText() {
 	      var resultText = document.getElementById("resultText");
    		  resultText.value = xmlhttp.responseText;
    	  	  resultTextEditor.setValue(xmlhttp.responseText);
+		  document.getElementById("compiling").style.display="none";
 
 		  var errorMsg = xmlhttp.getResponseHeader("compile-error");
 		  if (errorMsg != null) {
@@ -414,6 +424,7 @@ function progressImage() {
 		var imageUrl = "http://www.sccharts.com/progress.gif";
         new_image.src = imageUrl;
 		new_image.style.width = '70%';
+ 	    document.getElementById("compiling").style.display="block";
 		//new_image.width =  550; //252;
 		//new_image.height = 550;
         image.parentNode.insertBefore(new_image, image);
@@ -449,6 +460,7 @@ function resizeImage() {
 function updateImage() {
     var image = document.getElementById("resultImage");
     if(image.complete) {
+ 	    document.getElementById("compiling").style.display="none";
 	    var model = document.getElementById("model")
 	    var transformations = document.getElementById("transformations")
 	    var scale = document.getElementById("scale")
@@ -579,20 +591,24 @@ scchart AO {
            </div>
 		   
 <center>
+<div id="compiling" style="font:24px bold; display: none;margin-bottom:40px;">
 <br>
-<div id="serverdownDiv" style="font:24px bold; display: none;margin-bottom:40px">
+<div style="font:24px bold; background-color:#0066FF">
+	   <span class="style13b" style="font:48px;background-color:#0066FF;"><br><b>Compiling or rendering, please wait...</b> <BR>
+	   <BR>
+	   If, for a while, there is no result displayed, try again by refreshing or reloading the page.       <br><br></span>
+</div>
+</div>
+<div id="serverdownDiv" style="font:24px bold; display: none;margin-bottom:0px">
         <img id="serverdownImg" src="http://www.sccharts.com/serverdown.png"/></div>
 		         <div id="resultImageDiv" style="font:24px bold; display: none;min-width: 100%;max-width: 100%">
         <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100;"/></a></div></center>
-<div id="resultTextDiv" style="margin-bottom:40px"><textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
+<div id="resultTextDiv" style="margin-bottom:0px">
+<span class="style13"><strong>Transformed Output &nbsp;&nbsp;</strong></span>
+<textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
 	   </div>
-	  
-	  
-	  
-	  
-	  
-	  
- <div class="col-sm-4" style="margin-top:40px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
+
+	   <div class="col-sm-4" style="margin-top:40px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
 			    <div class="input-w"  style="width: auto">
                 <p>
                   <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
@@ -807,6 +823,7 @@ function showServerOffline() {
 	document.getElementById('serverdownDiv').style.display='block';
 	document.getElementById('serverdownImg').style.width = '70%';
 	document.getElementById('serverdownImg').style.height = '70%';
+	document.getElementById("compiling").style.display="none";
 }
 function showServerOnline() {
 	document.getElementById('serverdownDiv').style.display='none';
