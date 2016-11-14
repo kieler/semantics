@@ -139,6 +139,8 @@ class SCSSATransformation extends AbstractProductionTransformation {
         // ---------------
         // 6. Optimize concurrent dominant writes
         // ---------------
+        
+        scg.updateSSAVersions
         scg.optimizeConcurrentDominantWrite(dt)
         
         // ---------------
@@ -254,13 +256,11 @@ class SCSSATransformation extends AbstractProductionTransformation {
                     }
                 ]];
                 // Remove merge expression references
-                val rem = HashMultimap.create
                 for(u : use.get(asm.valuedObject)) {
                     for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
                         if (ent.threadNodes.contains(u)) {
-                            for(p:precedingDefs){
-                                u.eContents.filter(Expression).head.allReferences.findFirst[valuedObject == p.valuedObject].eContainer.remove
-                                rem.put(p.valuedObject,u)
+                            for(p : precedingDefs) {
+                                u.eContents.filter(Expression).head.allReferences.filter[valuedObject == p.valuedObject].toList.forEach[eContainer.remove]
                             }
                         }
                     }
