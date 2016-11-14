@@ -41,6 +41,8 @@ import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import java.util.Map
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.Value
 
 /**
  * @author als
@@ -101,9 +103,6 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
                 decl.type = ValueType.BOOL
             }
         }
-        for (iv : scg.eAllContents.filter(IntValue).toList) {
-            iv.replace(createBoolValue(iv.value != 0))
-        }
         if (scg.declarations.exists[type != ValueType.BOOL && type != ValueType.PURE]) {
             context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, "Program contains boolean incompatible types!"));
         }
@@ -116,6 +115,17 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
             e.replace(e.normalize)
         }
         
+        try {
+            for (n : scg.nodes) {
+                if (n instanceof Assignment) {
+                    n.assignment.replace(n.assignment.convertToBoolean)
+                } else if (n instanceof Conditional) {
+                    n.condition.replace(n.condition.convertToBoolean)
+                }
+            }
+        } catch (IllegalArgumentException iae) {
+            context.compilationResult.addPostponedWarning(new KielerCompilerException(id, id, iae.message));
+        }
         // Split IO
         for (iodecl : scg.declarations.filter[input && output].toList) {
             scg.declarations.add(scg.declarations.indexOf(iodecl), createDeclaration => [
@@ -188,4 +198,117 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
                   exp.operator == OperatorType.LOGICAL_OR ||
                   exp.operator == OperatorType.NOT
     }
+    
+    private def dispatch Expression convertToBoolean(OperatorExpression oexp) {
+        // Reduce variaty of operators
+        if (oexp.operator == OperatorType.BITWISE_AND) {
+            oexp.operator = OperatorType.LOGICAL_AND
+        }
+        if (oexp.operator == OperatorType.BITWISE_OR) {
+            oexp.operator = OperatorType.LOGICAL_OR
+        }
+        // Convert subexpressions
+        val constants = newHashMap
+        for (subexp : oexp.subExpressions) {
+            val converted = subexp.convertToBoolean
+            subexp.replace(converted)
+            if (converted instanceof BoolValue) {
+                constants.put(converted, converted.value)
+            }
+        }
+        // Transform and partially evaluate expression
+        // TODO further transform
+        switch (oexp.operator) {
+            case EQ: {
+                val exp = createOperatorExpression(OperatorType.LOGICAL_OR) => [
+                    subExpressions += createOperatorExpression(OperatorType.LOGICAL_AND) => [
+                        subExpressions += oexp.subExpressions.get(0).copy
+                        subExpressions += oexp.subExpressions.get(1).copy
+                    ]
+                    subExpressions += createOperatorExpression(OperatorType.LOGICAL_AND) => [
+                        subExpressions += createOperatorExpression(OperatorType.NOT) => [
+                            subExpressions += oexp.subExpressions.get(0).copy
+                        ]
+                        subExpressions += createOperatorExpression(OperatorType.NOT) => [
+                            subExpressions += oexp.subExpressions.get(1).copy
+                        ]                        
+                    ]
+                ]
+                return exp.convertToBoolean // convert again for partial evaluation
+            }
+            case NE: {
+                val exp = createOperatorExpression(OperatorType.LOGICAL_OR) => [
+                    subExpressions += createOperatorExpression(OperatorType.LOGICAL_AND) => [
+                        subExpressions += createOperatorExpression(OperatorType.NOT) => [
+                            subExpressions += oexp.subExpressions.get(0).copy
+                        ]
+                        subExpressions += oexp.subExpressions.get(1).copy
+                    ]
+                    subExpressions += createOperatorExpression(OperatorType.LOGICAL_AND) => [
+                        subExpressions += oexp.subExpressions.get(0).copy
+                        subExpressions += createOperatorExpression(OperatorType.NOT) => [
+                            subExpressions += oexp.subExpressions.get(1).copy
+                        ]                        
+                    ]
+                ]
+                return exp.convertToBoolean // convert again for partial evaluation
+            }
+            case LOGICAL_AND: {
+                if (constants.containsValue(false)) {
+                    return createBoolValue(false)
+                } else if (oexp.subExpressions.forall[constants.containsKey(it)]) {
+                    return createBoolValue(true)
+                } else {
+                    oexp.subExpressions.removeIf[constants.containsKey(it)]
+                    if (oexp.subExpressions.size == 1) {
+                        return oexp.subExpressions.head
+                    } else {
+                        return oexp
+                    }
+                }
+            }
+            case LOGICAL_OR: {
+                if (constants.containsValue(true)) {
+                    return createBoolValue(true)
+                } else if (oexp.subExpressions.forall[constants.containsKey(it)]) {
+                    return createBoolValue(false)
+                } else {
+                    oexp.subExpressions.removeIf[constants.containsKey(it)]
+                    if (oexp.subExpressions.size == 1) {
+                        return oexp.subExpressions.head
+                    } else {
+                        return oexp
+                    }
+                }                
+            }
+            case NOT: {
+                if (constants.empty) {
+                    return oexp
+                } else {
+                    return createBoolValue(!constants.get(oexp.subExpressions.head))
+                }
+            }
+            case PRE: return oexp
+            default: throw new IllegalArgumentException("Program contains boolean-incompatible operator expression with operator: " + oexp.operator)
+        }
+    }
+    
+    private def dispatch Expression convertToBoolean(ValuedObjectReference vor) {
+        return vor
+    }
+    
+    private def dispatch Expression convertToBoolean(FunctionCall fc) {
+        return fc
+    }
+    
+    private def dispatch Expression convertToBoolean(Value value) {
+        if (value instanceof BoolValue) {
+            return value
+        } else if (value instanceof IntValue) {
+            return createBoolValue(value.value != 0)
+        } else {
+            throw new IllegalArgumentException("Program contains boolean-incompatible value: " + value)
+        }
+    }
+
 }
