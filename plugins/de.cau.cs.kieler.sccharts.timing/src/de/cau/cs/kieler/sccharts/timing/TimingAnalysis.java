@@ -427,21 +427,33 @@ public class TimingAnalysis extends Job {
 					}
 					// If the region belongs to the WCET path, highlight, if
 					// requested by user
-					if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
-						// determine how much percent of the overall WCET is
-						// attributed to this region
-						BigInteger percentage = new BigInteger("0");
-						int percentageInt = 0;
-						if (timingResultChart != null) {
-							StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
-							BigInteger timingvalue = new BigInteger(resultTokenizer.nextToken());
-							BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
-							percentage = timingvalue.divide(onePercent);
-							percentageInt = percentage.intValue();
-						}
-						timingHighlighter.highlightRegion(region, percentageInt, timingLabels.get(region), 
-								regionRectangles, renderingExtensions);
-					}
+                    if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
+                        // determine how much percent of the overall WCET is
+                        // attributed to this region
+                        int percentageInt = 0;
+                        StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
+                        // stop calculating with BigIntegers, when overall time value is small
+                        // enough to fit a double
+                        double overallWCETDouble = overallWCET.doubleValue();
+                        if ((overallWCETDouble != Double.NEGATIVE_INFINITY)
+                                && (overallWCETDouble != Double.POSITIVE_INFINITY)) {
+                            double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
+                            double onePercent = overallWCETDouble / 100.0;
+                            double percentage = timingvalue / onePercent;
+                            percentageInt = (int)percentage;
+                        } else {
+                            BigInteger percentage = new BigInteger("0");
+                            if (timingResultChart != null) {
+                                BigInteger timingvalue =
+                                        new BigInteger(resultTokenizer.nextToken());
+                                BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
+                                percentage = timingvalue.divide(onePercent);
+                                percentageInt = percentage.intValue();
+                            }
+                        }
+                        timingHighlighter.highlightRegion(region, percentageInt,
+                                timingLabels.get(region), regionRectangles, renderingExtensions);
+                    }
 				}
 				return Status.OK_STATUS;
 			}
