@@ -319,7 +319,7 @@ public class KlighdServer extends HttpServer {
             response.setBody(serializedRenderedModel, false);
 
             System.out.println(responseHeader.toString());
-            System.out.println(new String(serializedRenderedModel));
+            System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
 
             // String responeBody = "Huhu";
             // HttpHeader responseHeader = new HttpHeader();
