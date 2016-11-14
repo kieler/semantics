@@ -1,4 +1,4 @@
-// The DVD player is an example using signals, concurrency and preemption.
+// The DVD PLAYER is an example that uses signals, concurrency, and preemption.
 // The model is first in state Off. If the signal POWER is present then it tran-
 // sitions to the On state. If, in the On state, the POWER signal is present again
 // then the model will transition to state Off again, preempting any internal
