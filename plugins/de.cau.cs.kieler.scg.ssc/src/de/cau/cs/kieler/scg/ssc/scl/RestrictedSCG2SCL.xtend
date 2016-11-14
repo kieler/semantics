@@ -38,6 +38,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
 
 /**
  * @author als
@@ -52,6 +53,7 @@ class RestrictedSCG2SCL {
     extension SclFactory = SclFactory::eINSTANCE
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCLExtensions
 
     val labels = <Node, EmptyStatement>newLinkedHashMap
     val gotos = <Goto, Node>newLinkedHashMap
@@ -82,14 +84,12 @@ class RestrictedSCG2SCL {
         
         scg.transform(scl)
         
-//        scl.removeSuperfluousGotos
-//        scl.optimizeLabels
-        
-//        var idx = 0
-//        for (entry : gotos.entrySet) {
-//            entry.key.targetLabel = "loop" + idx
-//            entry.value.label = "loop" + idx++
-//        }
+        for (goto : gotos.keySet) {
+            goto.targetLabel = labels.get(gotos.get(goto)).label
+        }
+
+        scl.optimizeAll
+
         return scl
     }
 
@@ -131,15 +131,18 @@ class RestrictedSCG2SCL {
     def dispatch StatementSequence transform(Depth depth, StatementSequence sSeq) {
         if (depth.visited) return sSeq
         depth.markVisted
-        depth.next.target.transform(sSeq)
         val next = depth.next?.target
-        if (next != null && next.visited) {
-            if (labels.containsKey(next)) {
-                sSeq.statements += createInstructionStatement => [
-                    instruction = createGoto => [
-                        gotos.put(it, next)
+        if (next != null) {
+            if (next != null && next.visited) {
+                if (labels.containsKey(next)) {
+                    sSeq.statements += createInstructionStatement => [
+                        instruction = createGoto => [
+                            gotos.put(it, next)
+                        ]
                     ]
-                ]
+                }
+            } else {
+                next.transform(sSeq)
             }
         }
         return sSeq
@@ -169,14 +172,17 @@ class RestrictedSCG2SCL {
         if (join.visited) return sSeq
         join.markVisted
         val next = join.next?.target
-        next.transform(sSeq)
-        if (next != null && next.visited) {
-            if (labels.containsKey(next)){
-                sSeq.statements += createInstructionStatement => [
-                    instruction = createGoto => [
-                        gotos.put(it, next)
+        if (next != null) {
+            if (next != null && next.visited) {
+                if (labels.containsKey(next)){
+                    sSeq.statements += createInstructionStatement => [
+                        instruction = createGoto => [
+                            gotos.put(it, next)
+                        ]
                     ]
-                ]
+                }
+            } else {
+                next.transform(sSeq)
             }
         }
         return sSeq
@@ -196,14 +202,17 @@ class RestrictedSCG2SCL {
             ]
         ]
         sSeq.statements.add(statement)
-        assignment.next?.target.transform(sSeq)
-        if (next != null && next.visited) {
-            if (labels.containsKey(next)){
-                sSeq.statements += createInstructionStatement => [
-                    instruction = createGoto => [
-                        gotos.put(it, next)
+        if (next != null) {
+            if (next.visited) {
+                if (labels.containsKey(next)) {
+                    sSeq.statements += createInstructionStatement => [
+                        instruction = createGoto => [
+                            gotos.put(it, next)
+                        ]
                     ]
-                ]
+                }
+            } else {
+                next.transform(sSeq)
             }
         }
         return sSeq

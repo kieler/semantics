@@ -18,7 +18,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.kexpressions,
  de.cau.cs.kieler.scl,
- de.cau.cs.kieler.esterel.scl,
  de.cau.cs.kieler.kitt,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.core.krendering.extensions
