@@ -1,0 +1,107 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% BACKHOE %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+module BACKHOE :
+
+input   BOOM_OUT, BOOM_IN,
+    STICK_OUT, STICK_IN,
+    BUCKET_OUT, BUCKET_IN,
+    LEGS_OUT, LEGS_IN;
+
+relation BOOM_OUT # BOOM_IN;
+relation STICK_OUT # STICK_IN;
+relation BUCKET_OUT # BUCKET_IN;
+relation LEGS_OUT # LEGS_IN;
+
+input   STOP_BUTTON, EXTEND_BUTTON, RETRACT_BUTTON;
+ 
+input   SECOND;
+
+output  ALARM_LAMP : boolean,
+    DONE_LAMP : boolean,
+    CANCEL_LAMP : boolean;
+
+output  BOOM_PUSH, BOOM_PULL, BOOM_DRIVE;
+output  STICK_PUSH, STICK_PULL, STICK_DRIVE; 
+output  BUCKET_PUSH, BUCKET_PULL, BUCKET_DRIVE;
+output  LEGS_RAISE, LEGS_LOWER, LEGS_STOP;
+ 
+% Backhoe controller implementation:
+[
+    % extend stick sement to out
+    % run MOVE_CONTROL [signal STICK_DRIVE/DRIVE, STICK_PULL/DIRECTION, STICK_OUT/CONDITION];
+	% Move something fully in one direction
+	abort
+  	loop
+	    emit STICK_DRIVE;
+	    emit STICK_PUSH;
+	    pause;
+  	end loop
+	when STICK_OUT;    
+    
+    
+    % extend bucket segment to out
+    % run MOVE_CONTROL [signal BUCKET_DRIVE/DRIVE, BUCKET_PULL/DIRECTION, BUCKET_OUT/CONDITION];
+    abort
+  	loop
+	    emit BUCKET_DRIVE;
+	    emit BUCKET_PUSH;
+	    pause;
+  	end loop
+	when BUCKET_OUT;    
+    
+    % retract stick and bucket simultaneously when button pushed
+    await RETRACT_BUTTON;
+    [
+	    abort
+  		loop
+	    	emit STICK_DRIVE;
+	    	emit STICK_PULL;
+	    	pause;
+  		end loop
+		when STICK_IN;    
+        ||
+	    abort
+  		loop
+	    	emit BUCKET_DRIVE;
+	    	emit BUCKET_PULL;
+	    	pause;
+  		end loop
+		when BUCKET_IN;    
+    ] 
+    ||
+	loop
+    	present [BOOM_DRIVE or  BUCKET_DRIVE or STICK_DRIVE] 
+    	then
+        	emit DONE_LAMP(false); 
+	    else
+    	    emit DONE_LAMP(true);
+    	end present;
+    	pause;
+	end loop
+    
+    ||
+    % run MOVE_BLINKING [signal ALARM_LAMP/LAMP];
+	[
+    	% lamp is off by default
+    	loop
+	        emit ALARM_LAMP(false);
+	        pause;
+    		abort 
+    		    halt;
+    		when [(BOOM_DRIVE or BUCKET_DRIVE or STICK_DRIVE)];
+	    	% lamp is blinking when bachhoe is moving
+    		abort 
+		        every 1 SECOND do
+    		        emit ALARM_LAMP(true);
+	    	        pause;
+    	    	    emit ALARM_LAMP(false);
+        		end every;
+        	when [not (BOOM_DRIVE or BUCKET_DRIVE or STICK_DRIVE)];
+        end
+	]
+    
+]
+
+end module
+
