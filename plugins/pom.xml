@@ -77,6 +77,7 @@
     <module>de.cau.cs.kieler.sccharts</module>
     <module>de.cau.cs.kieler.sccharts.edit</module>
     <module>de.cau.cs.kieler.sccharts.editor</module>
+    <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.kivi</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>
     <module>de.cau.cs.kieler.sccharts.prom</module>
