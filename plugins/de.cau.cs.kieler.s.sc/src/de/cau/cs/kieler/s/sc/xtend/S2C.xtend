@@ -130,6 +130,7 @@ class S2C {
     
    «/* Variables */»
     «sVariables(program)»    
+    int _PRE_GO;
     
     ''' 
    }
@@ -240,6 +241,7 @@ class S2C {
    def sResetFunction(Program program) {
        '''    void reset(){
        _GO = 1;
+       _PRE_GO = 0;
        «program.resetVariables»
        return;
     }
@@ -251,7 +253,6 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    void tick(){
-       static int _PRE_GO = 0;
        if (_PRE_GO == 1) {
             _GO = 0;
        }
