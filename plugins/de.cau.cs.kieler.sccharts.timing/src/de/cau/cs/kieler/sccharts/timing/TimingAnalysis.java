@@ -501,7 +501,7 @@ public class TimingAnalysis extends Job {
 		StringTokenizer codeTokenizer = new StringTokenizer(code);
 		while (codeTokenizer.hasMoreTokens()) {
 			String currentToken = codeTokenizer.nextToken();
-			if (currentToken.startsWith("PRE")) {
+			if ((currentToken.startsWith("PRE")) || (currentToken.startsWith("_PRE"))) {
 				currentToken = currentToken.replace(";", "");
 				stringBuilder.append("\nState " + currentToken);
 			}
