@@ -53,6 +53,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.StringInputStream;
 import org.osgi.framework.Bundle;
 
@@ -964,4 +968,72 @@ public final class ModelUtil {
         return fragment;
     }
 
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the input model.
+     * 
+     * @param editorPart
+     *            the editor part
+     * @return the input model
+     */
+    public static IPath getInputModelPath(final IEditorPart editorPart) {
+        EObject model = getInputModelEObject(editorPart);
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        IPath fullPath = null;
+        if (model != null) {
+            if (model.eResource() != null) {
+                // EMF model case
+                org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
+                if (uri != null) {
+                    String platformURI = uri.toPlatformString(false);
+                    if (platformURI != null) {
+                        IPath path = new Path(platformURI);
+                        IFile file = myWorkspaceRoot.getFile(path);
+                        fullPath = file.getFullPath();
+                    }
+                }
+            } 
+            if (fullPath == null && editorPart.getEditorInput() instanceof FileEditorInput){
+                FileEditorInput input = (FileEditorInput) editorPart.getEditorInput();
+                fullPath = input.getFile().getFullPath();
+            }
+        } else {
+            // Other editors
+            if (editorPart != null) {
+                IEditorInput editorInput = editorPart.getEditorInput();
+                if (editorInput instanceof FileEditorInput) {
+                    FileEditorInput fileEditorInput = (FileEditorInput) editorInput;
+                    IFile file = fileEditorInput.getFile();
+                    fullPath = file.getFullPath();
+                }
+            }
+        }
+        return fullPath;
+    }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the input model EObject.
+     * 
+     * @param editorPart
+     *            the editor part
+     * @return the input model e object
+     */
+    public static EObject getInputModelEObject(final IEditorPart editorPart) {
+        EObject model = null;
+        // removed gmf dependency, 24.07., ssm
+//        if (editorPart instanceof DiagramEditor) {
+//            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
+//        } else 
+        if (editorPart instanceof XtextEditor) {
+            boolean ignoreDirtyEditor = true;
+            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart,
+                    ignoreDirtyEditor);
+        }
+        return model;
+    }
 }

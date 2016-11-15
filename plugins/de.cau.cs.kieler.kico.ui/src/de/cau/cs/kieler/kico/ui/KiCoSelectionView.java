@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.elk.core.util.Pair;
 import org.eclipse.elk.graph.KNode;
@@ -34,6 +36,7 @@ import org.eclipse.ui.progress.UIJob;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
@@ -57,6 +60,7 @@ import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLay
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The Class KiCoSelectionView.
@@ -440,6 +444,17 @@ public class KiCoSelectionView extends DiagramViewPart {
                 feature = resolveFeature("T_" + selected);
             }
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
+        }
+        
+        // Restore if nothing is selected
+        if (selection.getSelectedFeatureAndTransformationIds().size() == 0) {
+            // Restore old KIEM value
+            IEditorPart editorPart = KiemPlugin.getOpenedModelEditors()
+                    .get(new Path("de.cau.cs.kieler.kico.klighd.sourceModel"));
+            if (editorPart != null) {
+                IPath inputModelPath = ModelUtil.getInputModelPath(editorPart);
+                KiemPlugin.setCurrentModelFile(inputModelPath);
+            }
         }
 
     }
