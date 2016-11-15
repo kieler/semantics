@@ -130,10 +130,10 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
                 ScheduleManager scheduleManager = ScheduleManager.getInstance();
                 List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(
                         editorId, editorName);
+                lastValidEditorId = editorId.getString();
 
                 // if at least one matching schedule, take the first one
                 if (scheduleDataList.size() > 0) {
-                    lastValidEditorId = editorId.getString();
                     ScheduleData scheduleData = scheduleDataList.get(0);
                     // open execution file
                     try {

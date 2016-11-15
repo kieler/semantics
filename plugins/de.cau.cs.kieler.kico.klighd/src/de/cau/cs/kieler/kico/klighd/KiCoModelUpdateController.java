@@ -932,7 +932,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (!pinToggleAction.isChecked() && getDiagramView().getEditor().getSite().getPage().getActiveEditor() == getDiagramView().getEditor()) {
+        IEditorPart activeEditor = getDiagramView().getEditor().getSite().getPage().getActiveEditor();
+        if (!pinToggleAction.isChecked() &&  activeEditor == getDiagramView().getEditor()) {
             boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
                     || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;
@@ -941,11 +942,13 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 if (model != null && !is_placeholder && !is_chain) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
                     KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
+                    KiemPlugin.getOpenedModelEditors().put(sourceModelViewPath, activeEditor);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 } else if (!is_placeholder) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
                     KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
+                    KiemPlugin.getOpenedModelEditors().put(sourceModelViewPath, activeEditor);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 }
