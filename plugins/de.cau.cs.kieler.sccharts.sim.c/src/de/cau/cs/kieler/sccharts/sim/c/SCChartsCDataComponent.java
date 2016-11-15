@@ -37,6 +37,9 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.circuit.Actor;
+import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
+
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
@@ -517,6 +520,38 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
 //            System.out.println("9");
+
+
+            if (this.myModel instanceof Actor) {
+                // In case we want to simulate a circuit, first re-compile the model
+                // but just up to SSA-SCG.
+                HashMap<IPath, EObject> map = KiemPlugin.getOpenedModelRootObjects();
+                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
+                    EObject sourceModel = (EObject)map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                    
+                    // Compile to SSA_SCG
+                    
+                    // Do a PRE compilation with the debugTransformations!
+                    KielerCompilerContext highLevelContext =
+                            new KielerCompilerContext("scg.seqssa", sourceModel);
+                    // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                    highLevelContext.setCreateDummyResource(true);
+
+                    highLevelContext.setInplace(false);
+                    highLevelContext.setAdvancedSelect(true);
+//                    System.out.println("10");
+                    CompilationResult highLeveleCompilationResult =
+                            KielerCompiler.compile(highLevelContext);
+                    
+                    
+                    //extendedSCChart = sourceModel;
+                    myModel = sourceModel;
+                    extendedSCChart = highLeveleCompilationResult.getEObject();
+                }
+            }
+
+
+
 
             if (debug) {
                 
