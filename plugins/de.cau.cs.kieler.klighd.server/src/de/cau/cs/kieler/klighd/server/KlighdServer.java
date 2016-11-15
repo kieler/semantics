@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kiml.service.KimlServicePlugin;
 import de.cau.cs.kieler.kiml.util.KimlUtil;
@@ -317,8 +318,11 @@ public class KlighdServer extends HttpServer {
             responseHeader.setContentLength(serializedRenderedModel.length);
             response.setBody(serializedRenderedModel, false);
 
-            System.out.println(responseHeader.toString());
-            System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
+            if (KiCoPlugin.DEBUG) {
+                System.out.println(responseHeader.toString());
+                System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
+            }
+
             //System.out.println(new String(serializedRenderedModel));
 
             // String responeBody = "Huhu";
