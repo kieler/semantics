@@ -14,13 +14,19 @@
 package de.cau.cs.kieler.klighd.server;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.elk.core.service.ElkServicePlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -29,7 +35,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
-
+import org.osgi.framework.Bundle;
 import org.eclipse.elk.core.service.ElkServicePlugin;
 import org.eclipse.elk.core.util.ElkUtil;
 import org.eclipse.elk.graph.KGraphData;
@@ -69,6 +75,36 @@ public class KlighdServer extends HttpServer {
 
     IStatus renderingResult = null;
 
+    public static byte[] errorImage = null;
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the error image. If the image was not loaded before, do also this.
+     *
+     * @return the error image
+     */
+    private byte[] getErrorImage() {
+        if (errorImage == null) {
+            Bundle bundle = Platform.getBundle(KlighdServerPlugin.PLUGIN_ID);
+            URL fileURL = bundle.getEntry("icons/failed.png");
+            try {
+                File file = new File(FileLocator.resolve(fileURL).toURI());
+                if (file.exists()) {
+                    int fileSize = (int) file.length();
+                    
+                    errorImage = new byte[fileSize];
+                    DataInputStream dataIs = new DataInputStream(new FileInputStream(file));
+                    dataIs.readFully(errorImage);
+                    
+                    dataIs.close();
+                }
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+        return errorImage;
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -81,11 +117,16 @@ public class KlighdServer extends HttpServer {
 
     // -------------------------------------------------------------------------
 
+    String errors = "";
+    
     /**
      * {@inheritDoc}
      */
     @Override
     protected HttpResponse handleRequest(HttpRequest request) {
+
+        // prepare possible error image
+        getErrorImage();
 
         String render = "png";
         String scale = "1";
@@ -226,55 +267,39 @@ public class KlighdServer extends HttpServer {
                                 .setProperty(SVGOffscreenRenderer.GENERATOR,
                                         "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
                                 .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
+                try {
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
                         
+                        try {
                         ElkServicePlugin.getInstance();
                         
                         renderingResult =
                                 LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
                                         outputStreamParam, properties);
+                        } catch (Exception e) {
+                            errors = "Diagram synthesis failed.";
+                            // e.printStackTrace();
+                        }
                     }
                 });
+                } catch (Exception e) {
+                    errors = "Diagram synthesis failed.";
+                    // e.printStackTrace();
+                }
                 try {
                     outputStreamParam.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    errors = "Diagram synthesis failed.";
+                    // e.printStackTrace();
                 }
                 
-                
-                
-//                final ByteArrayOutputStream outputStreamParam = outputStream;
-//                // // Render model
-//                // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                // final ByteArrayOutputStream outputStreamParam = outputStream;
-//                final EObject mainModelParam = mainModel;
-//                final String renderParam = render;
-//                final KlighdSynthesisProperties properties =
-//                        KlighdSynthesisProperties
-//                                .create()
-//                                .setProperty(SVGOffscreenRenderer.GENERATOR,
-//                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
-//                                .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
-//                Display.getDefault().syncExec(new Runnable() {
-//                    public void run() {
-//                        renderingResult =
-//                                LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
-//                                        outputStreamParam, properties);
-//                    }
-//                });
-//                try {
-//                    outputStreamParam.flush();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
             }
 
             debug("Model rendered");
 
 
             byte[] serializedRenderedModel = null;
-            String errors = "";
             if ((renderingResult != null && renderingResult.getCode() == IStatus.OK) || synth.equals("kgx")) {
                 // everything ok, return output stream
                 serializedRenderedModel = outputStream.toByteArray();
@@ -290,7 +315,10 @@ public class KlighdServer extends HttpServer {
                 errors = serializedRenderedModelString;
             }
             debug("Model serialized");
-            errors = "";
+
+            if (errors.length() > 0) {
+                serializedRenderedModel = getErrorImage();
+            }
 
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
@@ -302,9 +330,9 @@ public class KlighdServer extends HttpServer {
             }
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
-            if (errors.length() > 0) {
-                responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
-            }
+            // if (errors.length() > 0) {
+            // responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
+            // }
 
             responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
             responseHeader.setHeaderField("Access-Control-Expose-Headers",
