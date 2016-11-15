@@ -11,7 +11,7 @@
             author="KIELER Workgroup"
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
-            description="ABRO The hello world of synchronous languages"
+            description="ABRO The hello world of synchronous programming"
             generation_date="de.cau.cs.kieler.esterel.example.example1"
             id="de.cau.cs.kieler.esterel.abro"
             root_directory="examples/"
@@ -87,7 +87,7 @@
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
             description="The Harel Wristwatch example"
-            generation_date="de.cau.cs.kieler.esterel.example.example3"
+            generation_date="de.cau.cs.kieler.esterel.example.example6"
             id="de.cau.cs.kieler.esterel.ww"
             root_directory="examples/"
             title="Wristwatch">
@@ -102,7 +102,7 @@
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
             description="The Harel Wristwatch example in an expanded form"
-            generation_date="de.cau.cs.kieler.esterel.example.example4"
+            generation_date="de.cau.cs.kieler.esterel.example.example7"
             id="de.cau.cs.kieler.esterel.ww_expanded"
             root_directory="examples/"
             title="Wristwatch Expanded">

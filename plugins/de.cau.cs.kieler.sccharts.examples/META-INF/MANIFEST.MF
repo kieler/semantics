@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER SCCharts Examples
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.examples;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.kex,
+ de.cau.cs.kieler.kex.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
