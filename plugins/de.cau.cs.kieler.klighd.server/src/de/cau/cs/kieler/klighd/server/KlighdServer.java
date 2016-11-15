@@ -37,6 +37,7 @@ import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.elk.graph.KNode;
 import org.eclipse.elk.graph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
+import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -318,8 +319,10 @@ public class KlighdServer extends HttpServer {
             responseHeader.setContentLength(serializedRenderedModel.length);
             response.setBody(serializedRenderedModel, false);
 
-            System.out.println(responseHeader.toString());
-            System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
+            if (KiCoPlugin.DEBUG) {
+                System.out.println(responseHeader.toString());
+                System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
+            }
 
             // String responeBody = "Huhu";
             // HttpHeader responseHeader = new HttpHeader();

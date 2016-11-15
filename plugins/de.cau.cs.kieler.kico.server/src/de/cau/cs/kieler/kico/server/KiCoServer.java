@@ -24,6 +24,7 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
+import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -82,7 +83,9 @@ public class KiCoServer extends HttpServer {
         // String body = request.bodyAsText();
 
         String bodyAsString = request.bodyAsText();
-        System.out.println(bodyAsString);
+        if (KiCoPlugin.DEBUG) {
+            System.out.println(bodyAsString);
+        }
 
         HttpQuery query = header.getQuery();
         if (request.header().isMethodPOST()) {
@@ -160,7 +163,9 @@ public class KiCoServer extends HttpServer {
                 }
             }
 
-            //System.out.println(mainModel.eClass().getName().toString());
+            if (KiCoPlugin.DEBUG) {
+                System.out.println(mainModel.eClass().getName().toString());
+            }
             
             if (ext != null) {
                 if (ext.equals(SCCHARTS_EXT)) {

@@ -166,7 +166,11 @@ public class KiCoUtil {
         try {
             for (String ext : extensionKeyList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
-
+                
+                if (KiCoPlugin.DEBUG) {
+                    System.out.print("Trying to serialize as extension '" + ext + "' ... ");
+                }
+                
                 ResourceSet resourceSet = null;
                 if (context != null) {
                     resourceSet = context.getModelResourceSet();
@@ -195,11 +199,17 @@ public class KiCoUtil {
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (KiCoPlugin.DEBUG) {
+                        System.out.println("success.");
+                    }
                     if (updateMainResource) {
                         context.setMainResource(res);
                     }
                 } catch (Exception e) {
-                     e.printStackTrace();
+                    if (KiCoPlugin.DEBUG) {
+                        System.out.println("failed.");
+                    }
+                    //e.printStackTrace();
                 }
 
                 if (done) {
