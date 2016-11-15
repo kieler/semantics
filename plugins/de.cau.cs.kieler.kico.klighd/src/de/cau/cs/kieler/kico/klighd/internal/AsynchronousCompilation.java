@@ -34,11 +34,12 @@ import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 
 /**
- * This Job start an asynchronous Compilation.
+ * This Job start an asynchronous compilation for the KiCo selection view. This
+ * also updates the input model for KIEM.
  * 
- * @author als
- * @kieler.design 2014-07-30 proposed
- * @kieler.rating 2014-07-30 proposed yellow
+ * @author als, cmot
+ * @kieler.design 2016-11-15 proposed
+ * @kieler.rating 2016-11-15 proposed yellow
  * 
  */
 public class AsynchronousCompilation extends Job {
