@@ -23,9 +23,11 @@ import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
- * @author ssm
+ * @author ssm, cmot
  *
  */
 class SctValidator extends SctJavaValidator {
@@ -190,9 +192,31 @@ class SctValidator extends SctJavaValidator {
     }
     
     
+    /**
+     * Checks scope of valued objects of transition triggers are correct.
+     */
+    @Check
+    public def void checkScopeOfOutgoingTransitionVarRefs(de.cau.cs.kieler.core.kexpressions.ValuedObject testValuedObject) {
+        val stateOrRegion = testValuedObject.eContainer.eContainer
+        var de.cau.cs.kieler.sccharts.State state
+        if (stateOrRegion instanceof de.cau.cs.kieler.sccharts.State) {
+            state = (stateOrRegion as de.cau.cs.kieler.sccharts.State)
+        } else {
+            val region = (stateOrRegion as Region)
+            state = region.parentState
+        }
+        
+        for (transition : state.outgoingTransitions) {
+            val valuedObjectRefs = transition.eAllContents.filter(typeof(ValuedObjectReference))
+            if (valuedObjectRefs.filter[valuedObject == testValuedObject].size > 0) {
+                error(VALUEDOBJECT_TRANSITION_SCOPE_WRONG, testValuedObject, null, -1);
+            }
+        }
+    }  
+
     
     /**
-     * Checks binding for reference states.
+     * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
      */
     @Check
     public def void checkNoInputOutput(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
