@@ -1,0 +1,70 @@
+module flipflop:
+  
+input SET;
+input RESET;
+input CLOCK;  
+output Q;
+output NQ;
+
+  run RSFLIPFLOP[ signal SET/S, RESET/R, Q/Q, NQ/notQ]
+.
+
+module RSFLIPFLOP:
+
+input S;
+input R;
+output Q;
+output notQ;
+
+  signal notS, notR, tNotQ, tQ in
+  var myNotQ : boolean, myQ : boolean in
+    myNotQ := true;
+    myQ := false;
+
+	loop
+		run NOT[ signal S/v2, notS/out2 ];
+		run NOT[ signal R/v2, notR/out2 ];
+		if myQ = true then emit tQ end;
+		if myNotQ = true then emit tNotQ end;
+		[
+			run NAND[ signal notS/a3, tNotQ/b3, Q/out3]
+			||
+			run NAND[ signal notR/a3, tQ/b3, notQ/out3]
+		];
+		present Q then myQ := true else myQ := false; end;
+		present notQ then myNotQ := true else myNotQ := false; end;
+		pause
+	end 
+		        
+  end
+   end  
+. 
+
+module AND:
+input a;
+input b; 
+output out;
+	present a then 
+		present b then
+			emit out
+		end
+	end
+.
+
+module NOT:
+input v2;
+output out2;
+	present v2 else 
+		emit out2
+	end	
+.
+
+module NAND:
+input a3;
+input b3; 
+output out3;
+  signal o3 in
+    run AND[ signal a3/a, b3/b, o3/out];
+    run NOT[ signal o3/v2, out3/out2]
+  end
+.

@@ -1,0 +1,39 @@
+// The ABRO example is considered to be the 'Hello World' of synchronous programming. 
+// This is the SCCharts version of ABRO. It concurrently awaits a boolean input 
+// A and a boolean input B. Once both have become true, it sets O to true and re-
+// sides in state done. ABRO can be reset by setting the input R to true. Note that 
+// this self-loop is a strong abort. This means when R is true then no output will 
+// occur. ABRO will not react in the initial tick because both awaiting transitions
+// from wA to dA and from wB to dB are non-initial.
+//
+// The example was adapted from the following publication:
+// Charles Andre. Semantics of SyncCharts. Technical Report ISRN I3S/RR-2003-24-FR,
+// I3S Laboratory, Sophia-Antipolis, France, April 2003.
+
+@HVLayout
+scchart ABRO {
+  input bool A, B, R;
+  output bool O; 
+  region Main:
+
+  initial state ABO "ABthenO" {
+    entry / O = false;
+
+    initial state WaitAandB {
+
+      region HandleA:   
+      initial state wA 
+      --> dA with A;
+      final state dA;      
+
+      region HandleB: 
+      initial state wB
+      --> dB with B;
+      final state dB;
+    }
+    >-> done with / O = true;
+ 
+    state done;
+  }
+  o-> ABO with R;
+}
