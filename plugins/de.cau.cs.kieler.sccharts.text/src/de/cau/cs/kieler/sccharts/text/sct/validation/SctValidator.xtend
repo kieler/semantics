@@ -187,5 +187,17 @@ class SctValidator extends SctJavaValidator {
     			}
     		}
     	}
-    } 
+    }
+    
+    
+    
+    /**
+     * Checks binding for reference states.
+     */
+    @Check
+    public def void checkNoInputOutput(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+        if(valuedObject.isInput && valuedObject.isOutput) {
+                warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
+       }
+    }  
 }
