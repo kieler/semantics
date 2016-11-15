@@ -106,6 +106,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** Path to notify Simulation component. */
     private static final IPath modelViewPath = new Path(DiagramView.ID);
+    
+    /** Path to notify Simulation component for the source model. */
+    private static final IPath sourceModelViewPath = new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID);
+    
 
     /**
      * Indicates how long this view should wait before starting REAL asynchronous compilation. This
@@ -936,10 +940,12 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (compilationResult != null) {
                 if (model != null && !is_placeholder && !is_chain) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
+                    KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 } else if (!is_placeholder) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
+                    KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 }
