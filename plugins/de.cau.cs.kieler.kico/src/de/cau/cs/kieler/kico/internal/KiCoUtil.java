@@ -229,7 +229,10 @@ public class KiCoUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (KiCoPlugin.DEBUG) {
+                System.out.println("failed.");
+            }
+            //e.printStackTrace();
             if (raiseError) {
                 throw e;
             } else {
