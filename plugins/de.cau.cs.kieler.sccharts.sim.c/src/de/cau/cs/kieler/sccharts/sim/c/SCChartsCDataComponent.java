@@ -17,8 +17,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -28,6 +32,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.ui.IEditorSite;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +40,7 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.circuit.Actor;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
@@ -42,6 +48,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
+import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
@@ -506,12 +513,42 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                             .getValue();
 //            System.out.println("8");
 
+            
+            //EObject alternativeEObject = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+            
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
 //            System.out.println("9");
+            
+            if (this.myModel instanceof Actor) {
+                // In case we want to simulate a circuit, first re-compile the model
+                // but just up to SSA-SCG.
+                HashMap<IPath, EObject> map = KiemPlugin.getOpenedModelRootObjects();
+                if (map.containsKey(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID))) {
+                    EObject sourceModel = (EObject)map.get(new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID));
+                    
+                    // Compile to SSA_SCG
+                    
+                    // Do a PRE compilation with the debugTransformations!
+                    KielerCompilerContext highLevelContext =
+                            new KielerCompilerContext("scg.seqssa", sourceModel);
+                    // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                    highLevelContext.setCreateDummyResource(true);
+
+                    highLevelContext.setInplace(false);
+                    highLevelContext.setAdvancedSelect(true);
+//                    System.out.println("10");
+                    CompilationResult highLeveleCompilationResult =
+                            KielerCompiler.compile(highLevelContext);
+                    
+                    
+                    //extendedSCChart = sourceModel;
+                    myModel = sourceModel;
+                    extendedSCChart = highLeveleCompilationResult.getEObject();
+                }
+            }
 
             if (debug) {
-                
                 // Do a PRE compilation with the debugTransformations!
                 KielerCompilerContext highLevelContext =
                         new KielerCompilerContext(debugTransformations, extendedSCChart);
