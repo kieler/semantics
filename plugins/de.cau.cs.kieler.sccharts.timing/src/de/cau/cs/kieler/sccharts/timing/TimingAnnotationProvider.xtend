@@ -135,8 +135,6 @@ class TimingAnnotationProvider {
                 stringBuilder.append(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Assumptions file could not be found.");
-            e.printStackTrace();
             return false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,11 +184,9 @@ class TimingAnnotationProvider {
                 stringBuilder.append("");
             }
         } catch (FileNotFoundException e) {
-            System.out.println("No timing assumptions file found - no function stubs generated.");
-            e.printStackTrace();
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+             e.printStackTrace();
         } finally {
             if (br != null) {
                 try {

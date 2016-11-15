@@ -537,14 +537,12 @@ public class TimingAnalysis extends Job {
 			System.out.println("An associated assumption file for this model was not found. No timing "
 					+ "assumptions for called functions available.");
 		}
-		System.out.println(stringBuilder.toString());
 		// write timing requests appended to the assumptionString
 		LinkedList<TimingRequestResult> resultList = assumptionTimingAnnotationProvider
 				.writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
 		// .ta file string complete, write it to file
 		String requestFile = uriString.replace(".sct", ".ta");
 		String requestFilePath = requestFile.replace("file:", "");
-		System.out.println(stringBuilder.toString());
 		assumptionFileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 		return resultList;
 	}
