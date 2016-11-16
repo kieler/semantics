@@ -90,8 +90,8 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-
     // -------------------------------------------------------------------------
+
     
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
