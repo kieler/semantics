@@ -67,7 +67,7 @@ public class KiemEventListener implements IKiemEventListener {
                         // KiemView.getInstance().buildLocalToolBar();
                     } else if (event.isEvent(KiemEvent.LOAD)) {
                         if (KiemPlugin.DEBUG) {
-                            System.out.println("LOAD EVENT");
+                            KiemUIPlugin.log("LOAD EVENT");
                         }
                         // KiemView.getInstance().createPartControl();
                         KiemPlugin.getDefault().setDirty(false);

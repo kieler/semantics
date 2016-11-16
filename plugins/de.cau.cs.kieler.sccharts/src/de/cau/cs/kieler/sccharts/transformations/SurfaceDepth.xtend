@@ -316,7 +316,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                                 (TK2.trigger != null && TK1.trigger != null && (TK1.trigger.equals2(TK2.trigger))))) {
                                 stateAfterDepth = K1
 
-                                System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+                                //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
                                 for (transition : K2.outgoingTransitions) {

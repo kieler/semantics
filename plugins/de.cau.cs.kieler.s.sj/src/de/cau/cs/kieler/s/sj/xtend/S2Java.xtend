@@ -52,6 +52,7 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
+import de.cau.cs.kieler.s.sj.S2SJPlugin
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -102,7 +103,7 @@ class S2Java {
        }
        '''
         val time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
+        S2SJPlugin.log("C code generation finished (time used: "+(time / 1000)+"s).")    
        code
    }     
 

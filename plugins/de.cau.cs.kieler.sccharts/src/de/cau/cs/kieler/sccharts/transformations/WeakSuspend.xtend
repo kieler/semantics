@@ -97,7 +97,7 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
         val weakSuspends = state.suspendActions.filter[weak].toList
         weakSuspends.setDefaultTrace
         
-        System.out.println("WEAKSUSPEND >>> " + weakSuspends.size)
+        //System.out.println("WEAKSUSPEND >>> " + weakSuspends.size)
         
         if (!weakSuspends.nullOrEmpty) {
             val weakSuspendFlag = state.createVariable(GENERATED_PREFIX + "wsFlag").setTypeBool.uniqueName

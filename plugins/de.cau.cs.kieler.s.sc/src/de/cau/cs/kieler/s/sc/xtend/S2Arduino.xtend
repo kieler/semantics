@@ -47,6 +47,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.s.sc.S2SCPlugin
 
 /**
  * Transformation of S code into Arduino "C" code for be executed
@@ -102,7 +103,7 @@ class S2Arduino {
        «program.generateTickFunction»
        '''
         val time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
+        S2SCPlugin.log("C code generation finished (time used: "+(time / 1000)+"s).")    
        code
    }     
 

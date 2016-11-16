@@ -16,13 +16,15 @@ package de.cau.cs.kieler.sim.kivi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
  * @author mmu, cmot
  * @kieler.ignore (excluded from review process)
  */
-public class Activator extends AbstractUIPlugin {
+public class SimKiViPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kivi"; //$NON-NLS-1$
@@ -30,14 +32,14 @@ public class Activator extends AbstractUIPlugin {
     // --------------------------------------------------------------------------
 
     /** The plugin. */
-    private static Activator plugin;
+    private static SimKiViPlugin plugin;
 
     // --------------------------------------------------------------------------
 
     /**
      * The constructor.
      */
-    public Activator() {
+    public SimKiViPlugin() {
     }
 
     // --------------------------------------------------------------------------
@@ -77,7 +79,7 @@ public class Activator extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static SimKiViPlugin getDefault() {
         return plugin;
     }
 

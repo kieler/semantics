@@ -134,7 +134,7 @@ class For extends AbstractExpansionTransformation {
             return null
         }
         val data0 = region.label.trim
-        System.out.println("FOR label '" + data0 + "' ")
+        //System.out.println("FOR label '" + data0 + "' ")
         
         if (!data0.startsWith("for")) {
             return null
@@ -170,11 +170,11 @@ class For extends AbstractExpansionTransformation {
     }
 
     def public ValuedObject findValuedObject(Region region, String valuedObjectName) {
-        System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
+        //System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
         if (region.parentState != null) {
             val list = region.parentState.valuedObjects.filter[e|e.name.equals(valuedObjectName)].toList
             if (!list.nullOrEmpty) {
-                System.out.println("FOR findValuedObject" + list.size)
+                //System.out.println("FOR findValuedObject" + list.size)
                 return list.get(0)
             }
             if (region.parentState.parentRegion != null) {

@@ -1075,7 +1075,7 @@ public class Execution extends Job {
 
         // get the current input data according to the current step
         oldData = getInputData(dataComponentWrapper);
-        // System.out.println(dataComponentWrapper.getName() + ":" +
+        // KiemPlugin.log(dataComponentWrapper.getName() + ":" +
         // oldData.toString());
 
         // decide to make a step depending on the type of component
@@ -1173,7 +1173,7 @@ public class Execution extends Job {
 
                     // test if we have to make a step (1) or if we are
                     // in running mode (-1)
-                    // System.out.println("steps = "+steps);
+                    // KiemPlugin.log("steps = "+steps);
                     if ((steps == INFINITY_STEPS) || (steps != NO_STEPS)) {
 
                         // make a step forward or backward according to steps
@@ -1213,7 +1213,7 @@ public class Execution extends Job {
                         // KiemPlugin.getDefault().updateStepsAsync();
                         // is now done by listening to the STEP_INFO event
 
-                        // System.out.println("-- execution step -------------------------------");
+                        // KiemPlugin.log("-- execution step -------------------------------");
 
                         // ===========================================//
                         // == P U R E P R O D U C E R (CALL) ==//
@@ -1228,7 +1228,7 @@ public class Execution extends Job {
                                         dataComponentWrapper, this);
                                 if (dataComponentWrapper.isEnabled()
                                         && dataComponentWrapper.isProducerOnly()) {
-                                    // System.out.println(c + ") " +
+                                    // KiemPlugin.log(c + ") " +
                                     // dataComponentWrapper.getName() +
                                     // " (Pure Producer) call");
                                     // make a step (within producerExecution's
@@ -1288,7 +1288,7 @@ public class Execution extends Job {
                             timeout.timeout(getTimeout(), "isProducer, isObserver",
                                     dataComponentWrapper, this);
                             if (dataComponentWrapper.isProducerObserver()) {
-                                // System.out.println(c + ") "
+                                // KiemPlugin.log(c + ") "
                                 // +dataComponentWrapper.getName() +
                                 // " (Norm Producer) call");
                                 // Observer AND Producer => blocking
@@ -1312,14 +1312,14 @@ public class Execution extends Job {
                                                 KiemPlugin.PLUGIN_ID, e, false);
                                     }
                                 }
-                                // System.out.println(dataComponentWrapper.getName()
+                                // KiemPlugin.log(dataComponentWrapper.getName()
                                 // +
                                 // " (Norm Producer) return");
                             } else if (dataComponentWrapper.isObserverOnly()) {
                                 // ===========================================//
                                 // == P U R E C O N S U M E R ==//
                                 // ===========================================//
-                                // System.out.println(c + ") "
+                                // KiemPlugin.log(c + ") "
                                 // +dataComponentWrapper.getName() +
                                 // " (Pure Observer) call");
                                 // pure Observer
@@ -1329,7 +1329,7 @@ public class Execution extends Job {
                                     // the
                                     // current step
                                     JSONObject oldData = getInputData(dataComponentWrapper);
-                                    // System.out.println(dataComponentWrapper.getName()
+                                    // KiemPlugin.log(dataComponentWrapper.getName()
                                     // + ": " +
                                     // oldData.toString());
                                     // set the oldData
@@ -1370,7 +1370,7 @@ public class Execution extends Job {
                                 timeout.timeout(getTimeout(), "step (reap)", dataComponentWrapper,
                                         this);
                                 try {
-                                    // System.out.println(c + ") "
+                                    // KiemPlugin.log(c + ") "
                                     // +dataComponentWrapper.getName() +
                                     // " (Pure Producer) wait");
                                     // pure Producer
@@ -1397,7 +1397,7 @@ public class Execution extends Job {
                                     return Status.CANCEL_STATUS;
                                 }
 
-                                // System.out.println(c + ") "
+                                // KiemPlugin.log(c + ") "
                                 // +dataComponentWrapper.getName() +
                                 // " (Pure Producer) done");
                                 try {
@@ -1526,7 +1526,7 @@ public class Execution extends Job {
                 // delay while paused
                 while (steps == NO_STEPS) {
                     starttime = System.currentTimeMillis();
-                    // System.out.println(">>PAUSED<<");
+                    // KiemPlugin.log(">>PAUSED<<");
                     try {
                         Thread.sleep(PAUSE_DEYLAY);
                     } catch (Exception e) {

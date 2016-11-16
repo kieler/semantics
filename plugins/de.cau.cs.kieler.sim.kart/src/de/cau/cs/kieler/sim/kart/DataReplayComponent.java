@@ -450,7 +450,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                         prevSignals.accumulate(field, obj);
                     }
                 } catch (JSONException e) {
-                    System.out.println(e.getMessage());
+                    KartPlugin.logError(e.getMessage());
                     e.printStackTrace();
                 }
             }

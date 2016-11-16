@@ -197,11 +197,11 @@ class SCCharts2STransformation {
         
         target.declarations += rootState.copyToSDeclarations
 
-//        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+//        SCChartsSPlugin.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
 
         // Create all states and a mapping
         for (dependencyState : sortedDependencyStates) {
-//            System.out.println("XXX " + dependencyState.state.hierarchicalName + " > d" + dependencyState.priority + ", o" + dependencyState.order); 
+//            SCChartsSPlugin.log("XXX " + dependencyState.state.hierarchicalName + " > d" + dependencyState.priority + ", o" + dependencyState.order); 
             if (!dependencyState.getIsJoin) {
                 target.createSState(dependencyState.getState.getHierarchicalName("")).map(dependencyState.getState)
             }

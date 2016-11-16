@@ -53,6 +53,7 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kexpressions.StringValue
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
+import de.cau.cs.kieler.s.sc.S2SCPlugin
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -100,7 +101,7 @@ class S2C {
        «sTickFunction(program)»
        '''
         val time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
+        S2SCPlugin.log("C code generation finished (time used: "+(time / 1000)+"s).")    
        code
    }     
 

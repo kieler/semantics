@@ -245,7 +245,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // }
     def SCGraph transform(State rootState, KielerCompilerContext context) {
 
-        System.out.print("Beginning preparation of the SCG generation phase...");
+        SCChartsSCGPlugin.log("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
 
         val scopeList = rootState.eAllContents.filter(Scope).toList
@@ -253,17 +253,17 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // fixTerminationWithEffects() and fixPossibleHaltStates() should be and is (now) handled by trigger/effect and surface/depth transformation!                
 //        // Fix termination transitions that have effects
-//        System.out.print(" ... ")
+//        SCChartsSCGPlugin.log(" ... ")
 //        var state = rootState.fixTerminationWithEffects(stateList.fold(newLinkedList)[first, second |
 //            first += second.outgoingTransitions first])
 //        // Fix possible halt states
 //        state = state.fixPossibleHaltStates(stateList)
-//        System.out.print(" ... ")
+//        SCChartsSCGPlugin.log(" ... ")
 
 
         // Expose local variables
         scopeList.transformLocalValuedObjectCached(rootState, uniqueNameCache)
-        System.out.print(" ... ")
+        SCChartsSCGPlugin.log(" ... ")
 
         // Clear mappings
         resetMapping

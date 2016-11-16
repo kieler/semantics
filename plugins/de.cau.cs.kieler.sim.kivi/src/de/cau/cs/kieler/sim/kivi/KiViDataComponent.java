@@ -695,7 +695,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            System.out.println(baseObjID + ":" + baseObj);
+            SimKiViPlugin.log(baseObjID + ":" + baseObj);
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();

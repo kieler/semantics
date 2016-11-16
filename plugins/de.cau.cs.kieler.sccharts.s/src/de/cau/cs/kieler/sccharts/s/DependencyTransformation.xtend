@@ -60,7 +60,7 @@ class DependencyTransformation {
 
             //if (state != rootState.getRootState) {
             if (!states2DependencyNodes.containsKey(state)) {
-//                System.out.println("XXX " + state.id);
+//                SCChartsSPlugin.log("XXX " + state.id);
 
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
@@ -76,7 +76,7 @@ class DependencyTransformation {
         //}
         }
 
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+        SCChartsSPlugin.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
 
         // Go thru all regions and states recursively and build up dependencies
         rootState.transformDependencies(dependencies);
@@ -87,16 +87,16 @@ class DependencyTransformation {
 
 
         for (dependency : dependencies) {
-           System.out.println("XXXX dependency " + dependency.stateDepending.state.id + " -> " +  dependency.stateToDependOn.state.id);
+           SCChartsSPlugin.log("XXXX dependency " + dependency.stateDepending.state.id + " -> " +  dependency.stateToDependOn.state.id);
         }
 
 
         // Topological Sort
         dependencyNodes.topologicalSort(dependencies)
 
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+        SCChartsSPlugin.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
         for (dependencyNode : dependencyNodes) {
-            System.out.println("XXXX dependencyNode for " + dependencyNode.state.id + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
+            SCChartsSPlugin.log("XXXX dependencyNode for " + dependencyNode.state.id + " : p=" + dependencyNode.priority + ", o=" + dependencyNode.order + ", join=" + dependencyNode.isJoin);
         }
 
         dependencyGraph
@@ -234,28 +234,28 @@ class DependencyTransformation {
             // It is important to consider only those states, that are in a different thread
             for (stateToDependOn : transition.statesToDependOn.filter(e|e.isDifferentThread(state))) {
                 val newDataDependency = new DataDependency(state.dependencyNode, stateToDependOn.dependencyNode)
-//                System.out.println("newDataDependency " + newDataDependency.stateDepending.state.id + "->" + newDataDependency.stateToDependOn.state.id); 
+//                SCChartsSPlugin.log("newDataDependency " + newDataDependency.stateDepending.state.id + "->" + newDataDependency.stateToDependOn.state.id); 
                 dependencies.add(newDataDependency)
             }
         }
 
-//        System.out.println("Consider incoming transitions of state: " + state.id + " (" + state.incomingTransitions.size + ")")  ;
+//        SCChartsSPlugin.log("Consider incoming transitions of state: " + state.id + " (" + state.incomingTransitions.size + ")")  ;
 
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
-//            System.out.println("State: " + state.id + " <- " + transition.sourceState.id);
+//            SCChartsSPlugin.log("State: " + state.id + " <- " + transition.sourceState.id);
             if (state.hasInnerStatesOrControlflowRegions) {
                 for (region : state.regions.filter(ControlflowRegion)) {
                     for (initialState : region.states.filter[isInitial]) {
                         val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode,
                             state.dependencyNode)
-//                        System.out.println("newControlFlowDependency1 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
+//                        SCChartsSPlugin.log("newControlFlowDependency1 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                         dependencies.add(newControlFlowDependency)
                     }
                     for (finalState : region.states.filter[isFinal]) {
                         val newControlFlowDependency = new ControlflowDependency(state.joinDependencyState,
                             finalState.dependencyNode)
-//                        System.out.println("newControlFlowDependency2 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
+//                        SCChartsSPlugin.log("newControlFlowDependency2 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                         dependencies.add(newControlFlowDependency)
                     }
                 }
@@ -264,13 +264,13 @@ class DependencyTransformation {
                 val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                     transition.sourceState.joinDependencyState)
                 dependencies.add(newControlFlowDependency)
-//                System.out.println("newControlFlowDependency3 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
+//                SCChartsSPlugin.log("newControlFlowDependency3 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
             } else {
                 if (transition.isImmediate) {
                     val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                         transition.sourceState.dependencyNode)
                     dependencies.add(newControlFlowDependency)
-//                System.out.println("newControlFlowDependency4 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
+//                SCChartsSPlugin.log("newControlFlowDependency4 " + newControlFlowDependency.stateDepending.state.id + "->" + newControlFlowDependency.stateToDependOn.state.id); 
                 }
             }
 

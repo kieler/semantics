@@ -225,7 +225,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             scExecution.getInterfaceToExecution().flush();
             while (scExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(scExecution.getInterfaceError().read());
+                SSimSCPlugin.logError("ERROR: " + scExecution.getInterfaceError().read() + "");
             }
 
             String receivedMessage = scExecution.getInterfaceFromExecution().readLine();
