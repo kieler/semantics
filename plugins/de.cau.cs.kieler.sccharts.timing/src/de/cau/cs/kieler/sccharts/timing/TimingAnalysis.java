@@ -196,7 +196,8 @@ public class TimingAnalysis extends Job {
 
 		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
 				.getPostponedErrors().size() > 0) {
-			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed in the "
+			        + "interactive timing analysis.");
 		}
 
 		SCGraph scg = (SCGraph) compilationResult.getEObject();
@@ -213,7 +214,8 @@ public class TimingAnalysis extends Job {
 			tppRegionMap = tppInformation.getTPPRegionMapping();
 		} else {
 			return new Status(IStatus.ERROR, pluginId,
-					"Error in the TPP placement phase. No auxiliary data was produced (ITA).");
+					"Error in the TPP placement phase of the interactive timing analysis. "
+					+ "No auxiliary data was produced.");
 		}
 		
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -224,7 +226,8 @@ public class TimingAnalysis extends Job {
 		compilationResult = KielerCompiler.compile(context);
 
 		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
-			return new Status(IStatus.ERROR, pluginId, "The code generation failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "The code generation failed in the context "
+			        + "of the interactive timing analysis.");
 		}
 
 		String code = compilationResult.getString();
