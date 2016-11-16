@@ -428,28 +428,28 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
         benchmark = benchmarkParam;
 
-        System.out.println("1");
+        EsterelCSimulationPlugin.log("1");
         this.myModel = model;
         monitor.begin("Esterel (SCG) Simulation", 1);
-        System.out.println("2");
+        EsterelCSimulationPlugin.log("2");
 
         String compile = "";
         try {
 
-            System.out.println("3");
+            EsterelCSimulationPlugin.log("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the Esterel (SCG) Simulator", true,
                         null);
             }
-            System.out.println("4");
+            EsterelCSimulationPlugin.log("4");
 
             // if (this.getModelRootElement().eResource() == null) {
             // throw new KiemInitializationException(
             // "The active editor has must be saved in order to simulate the SCChart."
             // + " Volatile resources cannot be simulated.", true, null);
             // }
-            System.out.println("5");
+            EsterelCSimulationPlugin.log("5");
 
             // Make a copy of the S program in case it was from
             // an active Editor
@@ -461,7 +461,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Calculate output path for possible S-m2m
             String inputPathString = this.getModelFilePath().toString();
-            System.out.println("6 " + inputPathString);
+            EsterelCSimulationPlugin.log("6 " + inputPathString);
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
@@ -471,7 +471,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             String lowLevelTransformations =
                     this.getProperties()[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
-            System.out.println("7");
+            EsterelCSimulationPlugin.log("7");
 
             // If 'Full Debug Mode' is turned on then the user also wants to have
             // states and transitions visualized.
@@ -483,18 +483,18 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             if (debug) {
                 highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
             }
-            System.out.println("8");
+            EsterelCSimulationPlugin.log("8");
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
 
-            System.out.println("8b");
+            EsterelCSimulationPlugin.log("8b");
             
             // Enforce the complete model to be loaded. Otherwise references to objects (signals)
             // might not be resolvable resulting in nasty error messages.
             EcoreUtil.resolveAll(myModel);
             
-            System.out.println("9");
+            EsterelCSimulationPlugin.log("9");
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
@@ -505,10 +505,10 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             highLevelContext.setInplace(false);
             // TODO: check
             // highLevelContext.setPrerequirements(true);
-            System.out.println("10");
+            EsterelCSimulationPlugin.log("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
-            System.out.println("11");
+            EsterelCSimulationPlugin.log("11");
 
             // The following should be a state or an SCG
             EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
@@ -523,7 +523,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             // writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
-            // System.out.println(coreSSChartText);
+            // EsterelCSimulationPlugin.log(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
                     new KielerCompilerContext(lowLevelTransformations, esterelProgramOrSCLProgram);
@@ -531,9 +531,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             lowLevelContext.setInplace(false);
             // TODO: check
             lowLevelContext.setAdvancedSelect(true);
-            System.out.println("12");
+            EsterelCSimulationPlugin.log("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
-            System.out.println("13");
+            EsterelCSimulationPlugin.log("13");
 
             String cModelCCode = lowLevelCompilationResult.getString();
             if (cModelCCode == null) {
@@ -543,15 +543,15 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                         true, null);
             }
 
-            System.out.println("14 " + cModelCCode);
+            EsterelCSimulationPlugin.log("14 " + cModelCCode);
 
             // Generate Simulation wrapper C code
             String cSimulation = "";
             if (esterelProgramOrSCLProgram instanceof Program) {
-                System.out.println("15");
+                EsterelCSimulationPlugin.log("15");
                 CSimulationEsterel cSimulationSCChart =
                         Guice.createInjector().getInstance(CSimulationEsterel.class);
-                System.out.println("16");
+                EsterelCSimulationPlugin.log("16");
                 Program program = (Program) esterelProgramOrSCLProgram;
 
                 // Cannot be done before because otherwise the new model cannot be serialized
@@ -565,10 +565,10 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 
                 cSimulation = cSimulationSCChart.transform(fixedTransformedProgram, "10000").toString();
 //            } else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
-//                System.out.println("15");
+//                EsterelCSimulationPlugin.log("15");
 //                CSimulationSCL cSimulationSCG =
 //                        Guice.createInjector().getInstance(CSimulationSCL.class);
-//                System.out.println("16");
+//                EsterelCSimulationPlugin.log("16");
 //                cSimulation =
 //                        cSimulationSCG.transform((SCLProgram) esterelProgramOrSCLProgram, "10000")
 //                                .toString();
@@ -580,28 +580,28 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Possibly add #include for a header file
             cSimulation = copyPossibleHeaderFile(input, cSimulation);
-            System.out.println("M2M 10");
+            EsterelCSimulationPlugin.log("M2M 10");
 
-            System.out.println("17 " + cSimulation);
+            EsterelCSimulationPlugin.log("17 " + cSimulation);
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
-            System.out.println("18 " + outputFolder);
+            EsterelCSimulationPlugin.log("18 " + outputFolder);
 
             String fileNameSCChart = "model.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
-            System.out.println("19 " + outputFileSCChart);
-            System.out.println("19,5 " + cModelCCode.getBytes());
+            EsterelCSimulationPlugin.log("19 " + outputFileSCChart);
+            EsterelCSimulationPlugin.log("19,5 " + cModelCCode.getBytes());
             writeOutputModel(outputFileSCChart, cModelCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
-            System.out.println("20 " + outputFileSimulation);
+            EsterelCSimulationPlugin.log("20 " + outputFileSimulation);
             writeOutputModel(outputFileSimulation, cSimulation.getBytes());
 
             String includePath = getBundlePath("templates");
-            System.out.println("21 " + includePath);
-            System.out.println(includePath);
+            EsterelCSimulationPlugin.log("21 " + includePath);
+            EsterelCSimulationPlugin.log(includePath);
             // Compile
             cExecution = new CExecution(outputFolder, benchmark);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
@@ -676,7 +676,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
         try {
             String out = jSONObject.toString();
-            System.out.println("> " + out);
+            EsterelCSimulationPlugin.log("> " + out);
             cExecution.getInterfaceToExecution().write(out + "\n");
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
@@ -686,7 +686,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
 
-            System.out.println("< " + receivedMessage);
+            EsterelCSimulationPlugin.log("< " + receivedMessage);
             // if (debugConsole) {
             // printConsole("==============| TICK " + computedTick++ + " |==============");
             // while (!receivedMessage.startsWith("{\"")) {
@@ -870,15 +870,15 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        System.out.println("convertEMFtoJavaURI 1");
+        EsterelCSimulationPlugin.log("convertEMFtoJavaURI 1");
 
         IPath path = new Path(uri.toPlatformString(false));
-        System.out.println("convertEMFtoJavaURI 2" + path);
+        EsterelCSimulationPlugin.log("convertEMFtoJavaURI 2" + path);
         IFile file = myWorkspaceRoot.getFile(path);
-        System.out.println("convertEMFtoJavaURI 3" + file.toString());
+        EsterelCSimulationPlugin.log("convertEMFtoJavaURI 3" + file.toString());
 
         IPath fullPath = file.getLocation();
-        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString());
+        EsterelCSimulationPlugin.log("convertEMFtoJavaURI 4" + fullPath.toString());
 
         return new java.net.URI(fullPath.toString());
     }

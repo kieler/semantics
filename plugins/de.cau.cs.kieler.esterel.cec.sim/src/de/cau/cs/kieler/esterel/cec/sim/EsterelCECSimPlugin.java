@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.esterel.cec.sim;
 
-import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.core.model.PluginLog;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -23,7 +24,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-05-31 yellow KI-7
  */
-public class EsterelCECSimPlugin extends Plugin {
+public class EsterelCECSimPlugin extends PluginLog {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec.sim";

@@ -32,6 +32,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.core.model.PluginLog;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
@@ -48,7 +49,7 @@ import de.cau.cs.kieler.kico.transformation.Processor;
  * @kieler.design 2015-03-11 proposed
  * @kieler.rating 2015-03-11 proposed yellow
  */
-public class KiCoPlugin extends Plugin {
+public class KiCoPlugin extends PluginLog {
 
     /** The logger. */
     @Inject

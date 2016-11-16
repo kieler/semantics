@@ -33,6 +33,7 @@ import org.eclipse.elk.graph.KNode
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -108,7 +109,7 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
 
         for (transformation : model.context.getTransformationChain(false)) {
 
-            System.out.println("TRANSFORM " + transformation.id);
+            KiCoUIPlugin.log("TRANSFORM " + transformation.id);
 
             val kNode = transformation.translate;
             knode.children.add(kNode);

@@ -111,7 +111,7 @@ public class KiCoUIUtil {
                 xmiResource.save(outputStream, getSaveOptions());
                 
                 for (String ext : regXMI.getExtensionToFactoryMap().keySet()) {
-                    System.out.println(ext);
+                    KiCoUIPlugin.log(ext);
                     if (ext.equals("*") || ext.equals("xmi")) {
                         continue;
                     }
@@ -122,7 +122,7 @@ public class KiCoUIUtil {
                     if (res instanceof XMIResourceImpl) {
                         XMIResourceImpl resXMI = (XMIResourceImpl) res;
                         
-                        System.out.println(resXMI.toString() + " contains " + modelClass + "?");
+                        KiCoUIPlugin.log(resXMI.toString() + " contains " + modelClass + "?");
                         
                         if (resXMI.toString().contains(modelClass)) {
                             returnText = ext;

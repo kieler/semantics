@@ -84,7 +84,7 @@ public class KiCoServer extends HttpServer {
 
         String bodyAsString = request.bodyAsText();
         if (KiCoPlugin.DEBUG) {
-            System.out.println(bodyAsString);
+            KiCoServerPlugin.log(bodyAsString);
         }
 
         HttpQuery query = header.getQuery();
@@ -164,7 +164,7 @@ public class KiCoServer extends HttpServer {
             }
 
             if (KiCoPlugin.DEBUG) {
-                System.out.println(mainModel.eClass().getName().toString());
+                KiCoServerPlugin.log(mainModel.eClass().getName().toString());
             }
             
             if (ext != null) {

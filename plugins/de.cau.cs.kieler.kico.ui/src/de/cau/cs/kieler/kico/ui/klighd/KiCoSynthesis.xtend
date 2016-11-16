@@ -33,6 +33,7 @@ import java.util.Set
 import javax.inject.Inject
 import org.eclipse.elk.graph.KNode
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * Common parts for KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -87,9 +88,9 @@ abstract class KiCoSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagr
     def static void debug(String debugText, boolean lineBreak) {
         if (DEBUG) {
             if (lineBreak) {
-                System.out.println(debugText);
+                KiCoUIPlugin.log(debugText);
             } else {
-                System.out.print(debugText);
+                KiCoUIPlugin.log(debugText);
             }
         }
     }

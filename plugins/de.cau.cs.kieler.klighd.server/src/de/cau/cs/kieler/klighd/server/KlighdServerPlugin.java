@@ -20,6 +20,8 @@ import org.osgi.service.prefs.BackingStoreException;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.model.PluginLog;
+
 /**
  * The KlighdServerPlugin is the non-UI part of offering a TCP based interface for KLighD rendering.
  * The TCP Message must conform to the protocol: 1. line are the comma separated transformation IDs
@@ -33,7 +35,7 @@ import com.google.inject.Guice;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KlighdServerPlugin extends Plugin {
+public class KlighdServerPlugin extends PluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.klighd.server"; //$NON-NLS-1$

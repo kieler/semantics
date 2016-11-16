@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui;resolution:=optional,
  org.eclipse.elk.graph,
  org.eclipse.elk.core,
- de.cau.cs.kieler.core.annotations
+ de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.model;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico,

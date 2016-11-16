@@ -348,8 +348,8 @@ public class KlighdServer extends HttpServer {
             response.setBody(serializedRenderedModel, false);
 
             if (KiCoPlugin.DEBUG) {
-                System.out.println(responseHeader.toString());
-                System.out.println("Sending " + serializedRenderedModel.length + " bytes.");
+                KlighdServerPlugin.log(responseHeader.toString());
+                KlighdServerPlugin.log("Sending " + serializedRenderedModel.length + " bytes.");
             }
 
             // String responeBody = "Huhu";
