@@ -75,8 +75,16 @@ public class TimingAnalysis extends Job {
 
 	public static final boolean DEBUG = false;
 	public static final boolean DEBUG_VERBOSE = false;
-	public static final boolean RUNTIME_OUTPUT_CONSOLE = false;
-	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_CONSOLE = false;
+	
+	/**
+	 * Log the time needed for interactive timing analysis execution.
+	 */
+	public static final boolean RUNTIME_OUTPUT_LOG = false;
+	
+	/**
+	 * Log the timing analysis tool output.
+	 */
+	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_LOG = false;
 
 	/**
 	 * Switch on/of highlighting.
@@ -165,7 +173,7 @@ public class TimingAnalysis extends Job {
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 	    long startTime = 0;
-	    if (RUNTIME_OUTPUT_CONSOLE) {
+	    if (RUNTIME_OUTPUT_LOG) {
 		startTime = System.currentTimeMillis();
 	    }
 	    
@@ -309,8 +317,8 @@ public class TimingAnalysis extends Job {
 			while ((s = stdError.readLine()) != null) {
 			    toolOutputStringBuilder.append(s + "\n");
 			}
-			if (TIMING_ANALYSIS_TOOL_OUTPUT_CONSOLE){
-			    System.out.println(toolOutputStringBuilder.toString());
+			if (TIMING_ANALYSIS_TOOL_OUTPUT_LOG){
+			    Activator.log(toolOutputStringBuilder.toString() + "\n");
 			}
 			// wait for the timing analysis tool to complete its job
 			p.waitFor();
@@ -453,12 +461,12 @@ public class TimingAnalysis extends Job {
 				return Status.OK_STATUS;
 			}
 		}.schedule();
-		if (RUNTIME_OUTPUT_CONSOLE){
+		if (RUNTIME_OUTPUT_LOG){
 		long stopTime = System.currentTimeMillis();
 		long elapsedTime = stopTime - startTime;
 		// delete temporary files if not needed for debugging
-		System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
-				+ " ms).");
+        Activator.log("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
+                + " ms).");
 		}
 		return Status.OK_STATUS;
 	}
