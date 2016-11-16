@@ -75,6 +75,8 @@ public class TimingAnalysis extends Job {
 
 	public static final boolean DEBUG = false;
 	public static final boolean DEBUG_VERBOSE = false;
+	public static final boolean RUNTIME_OUTPUT_CONSOLE = false;
+	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_CONSOLE = false;
 
 	/**
 	 * Switch on/of highlighting.
@@ -162,8 +164,11 @@ public class TimingAnalysis extends Job {
 	 */
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-		long startTime = System.currentTimeMillis();
-		
+	    long startTime = 0;
+	    if (RUNTIME_OUTPUT_CONSOLE) {
+		startTime = System.currentTimeMillis();
+	    }
+	    
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 1: Compile SCChart to sequentialized SCG with Timing Program 
 		// Points (TPP), uses the TPPTransformation at the end of the chain
@@ -183,17 +188,6 @@ public class TimingAnalysis extends Job {
 
 		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
 				.getPostponedErrors().size() > 0) {
-			if (!(compilationResult.getEObject() instanceof SCGraph)) {
-				System.out.println("The scg sequentialization did not return an scg.");
-			} else {
-				System.out.println("The sequentialization yielded postponed Errors:\n");
-				Iterator<KielerCompilerException> errorIterator = compilationResult
-						.getPostponedErrors().iterator();
-				while (errorIterator.hasNext()) {
-					KielerCompilerException currentError = errorIterator.next();
-					System.out.println(currentError.getMessage() + "\n");
-				}
-			}
 			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed. (ITA)");
 		}
 
@@ -222,17 +216,6 @@ public class TimingAnalysis extends Job {
 		compilationResult = KielerCompiler.compile(context);
 
 		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
-			if (compilationResult.getString() == null) {
-				System.out.println("The code generation yielded no code string.");
-			} else {
-				System.out.println("The code generation yielded postponed Errors:\n");
-				Iterator<KielerCompilerException> errorIterator = compilationResult.getPostponedErrors()
-						.iterator();
-				while (errorIterator.hasNext()) {
-					KielerCompilerException currentError = errorIterator.next();
-					System.out.println(currentError.getMessage() + "\n");
-				}
-			}
 			return new Status(IStatus.ERROR, pluginId, "The code generation failed. (ITA)");
 		}
 
@@ -269,8 +252,7 @@ public class TimingAnalysis extends Job {
 			Files.deleteIfExists(Paths.get(taFileLocationString, ""));
 			Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
 		} catch (IOException e1) {
-			System.out.println("IOException when deleting outdated timing files: \n");
-			e1.printStackTrace();
+		    return new Status(IStatus.ERROR, pluginId, "Delete of outdated timing files failed.");
 		}
 		try {
 			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -309,22 +291,26 @@ public class TimingAnalysis extends Job {
 		// As the kta tool calls the mipsel-mcb32-elf-gcc compiler, we have to make sure it is on the 
 		// PATH for the kta tool, so it can find it
 		env.put("PATH", compilerLocation + ":$PATH");
+		StringBuilder toolOutputStringBuilder = new StringBuilder();
 		try {
 			Process p = pb.start();
 			// get the timing analysis tool's console output
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			// read the output of the analysis tool
-			System.out.println("Output from the timing analysis tool:");
+			toolOutputStringBuilder.append("Output from the timing analysis tool:\n");
 			String s = null;
 			while ((s = stdInput.readLine()) != null) {
-				System.out.println(s);
+			    toolOutputStringBuilder.append(s + "\n");
 			}
 			// read error messages of the anaylsis tool
-			System.out.println("Error output from the timing analysis tool:");
-			System.out.println("-----end of timing analysis tool output-------\n");
+			toolOutputStringBuilder.append("Error output from the timing analysis tool:\n");
+			toolOutputStringBuilder.append("-----end of timing analysis tool output-------\n");
 			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+			    toolOutputStringBuilder.append(s + "\n");
+			}
+			if (TIMING_ANALYSIS_TOOL_OUTPUT_CONSOLE){
+			    System.out.println(toolOutputStringBuilder.toString());
 			}
 			// wait for the timing analysis tool to complete its job
 			p.waitFor();
@@ -362,7 +348,16 @@ public class TimingAnalysis extends Job {
 		int timingInformationFetch = timingAnnotationProvider.getTimingInformation(resultList, taPath,
 				rep);
 		if (timingInformationFetch == 1) {
-			return new Status(IStatus.ERROR, pluginId, "The timing information file was not found");
+		    Throwable detailException = new Throwable("Suggestions: Check, whether there is an .asu"
+                    + " file (with the same name as the model .sct file) with FunctionWCET "
+                    + "assumptions for each hostcode function that is called. Check, whether"
+                    + " you have given the correct path for the compiler used by the analysis tool "
+                    + "in the preferences page for the interactive timing analysis.\n\n"
+                    + toolOutputStringBuilder.toString());
+            return new Status(IStatus.ERROR, pluginId,
+                    "The timing information file was not found. This means that the timing analysis"
+                    + " tool could not work correctly.",
+                    detailException);
 		} else if (timingInformationFetch == 2) {
 			return new Status(IStatus.ERROR, pluginId,
 					"An IO error occurred while timing information was retrieved from file.");
@@ -458,11 +453,13 @@ public class TimingAnalysis extends Job {
 				return Status.OK_STATUS;
 			}
 		}.schedule();
+		if (RUNTIME_OUTPUT_CONSOLE){
 		long stopTime = System.currentTimeMillis();
 		long elapsedTime = stopTime - startTime;
 		// delete temporary files if not needed for debugging
 		System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
 				+ " ms).");
+		}
 		return Status.OK_STATUS;
 	}
 
@@ -530,16 +527,11 @@ public class TimingAnalysis extends Job {
 		// read (optional) additional assumptions and timing assumptions for called functions into
 		// the assumptions file
 		String assumptionFile = uriString.replace(".sct", ".asu");
-		String assumptionFilePath = assumptionFile.replace("file:", "");
-		boolean assumptionFilePresent = assumptionTimingAnnotationProvider
-				.getAssumptions(assumptionFilePath, stringBuilder);
-		if (!assumptionFilePresent) {
-			System.out.println("An associated assumption file for this model was not found. No timing "
-					+ "assumptions for called functions available.");
-		}
-		// write timing requests appended to the assumptionString
-		LinkedList<TimingRequestResult> resultList = assumptionTimingAnnotationProvider
-				.writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
+        String assumptionFilePath = assumptionFile.replace("file:", "");
+        assumptionTimingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        // write timing requests appended to the assumptionString
+        LinkedList<TimingRequestResult> resultList = assumptionTimingAnnotationProvider
+                .writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
 		// .ta file string complete, write it to file
 		String requestFile = uriString.replace(".sct", ".ta");
 		String requestFilePath = requestFile.replace("file:", "");
