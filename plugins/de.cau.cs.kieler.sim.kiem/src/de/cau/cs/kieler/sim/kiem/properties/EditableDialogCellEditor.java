@@ -382,7 +382,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
     protected void focusLost() {
         if (isActivated() && !openingDialog) {
             if (KiemPlugin.DEBUG) {
-                System.out.println("fireApplyEditorValue()");
+                KiemPlugin.log("fireApplyEditorValue()");
             }
             if (text == null) {
                 fireApplyEditorValue();

@@ -16,21 +16,23 @@ package de.cau.cs.kieler.scg.circuit;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class SCGCircuitPlugin extends AbstractUIPluginLog {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.scg.circuit"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
+	private static SCGCircuitPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SCGCircuitPlugin() {
 	}
 
 	/*
@@ -56,7 +58,7 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SCGCircuitPlugin getDefault() {
 		return plugin;
 	}
 

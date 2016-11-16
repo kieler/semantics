@@ -16,10 +16,12 @@ package de.cau.cs.kieler.scg.s;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.PluginLog;
+
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator implements BundleActivator {
+public class SCG2SPlugin extends PluginLog implements BundleActivator {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.scg.s"; //$NON-NLS-1$
@@ -35,7 +37,7 @@ static BundleContext getContext() {
  * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
  */
 public void start(BundleContext bundleContext) throws Exception {
-	Activator.context = bundleContext;
+	SCG2SPlugin.context = bundleContext;
 }
 
 /*
@@ -43,7 +45,7 @@ public void start(BundleContext bundleContext) throws Exception {
  * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
  */
 public void stop(BundleContext bundleContext) throws Exception {
-	Activator.context = null;
+	SCG2SPlugin.context = null;
 }
 
 }

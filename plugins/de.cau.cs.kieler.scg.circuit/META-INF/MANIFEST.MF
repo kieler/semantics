@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCG to Circuit Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.scg.circuit;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.scg.circuit.Activator
+Bundle-Activator: de.cau.cs.kieler.scg.circuit.SCGCircuitPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  com.google.inject;bundle-version="3.0.0",

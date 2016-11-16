@@ -780,7 +780,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(cExecution.getInterfaceError().read());
+                SCChartsSimCPlugin.logError("ERROR: "  + cExecution.getInterfaceError().read());
             }
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();

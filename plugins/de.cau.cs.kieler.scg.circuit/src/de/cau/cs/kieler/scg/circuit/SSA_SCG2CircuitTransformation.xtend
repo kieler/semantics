@@ -302,7 +302,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 					addRegisterPorts(actor, "Reset_pre")
 				}
 				default: {
-					System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
+					SCGCircuitPlugin.log("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
 				}
 			}
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
@@ -416,7 +416,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 						addRegisterPorts(actor, "Reset_pre")
 					}
 					default: {
-						System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
+				        SCGCircuitPlugin.log("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
 					}
 				}
 

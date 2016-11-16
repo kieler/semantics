@@ -41,6 +41,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.scg.s.SCG2SPlugin
 
 /**
  * Transform SCG to S
@@ -142,7 +143,7 @@ class SCG2S extends AbstractProductionTransformation {
         }
 
         var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for S transformation finished (time used: " + (time / 1000) + "s).")
+        SCG2SPlugin.log("Preparation for S transformation finished (time used: " + (time / 1000) + "s).")
 
         val tickState = SFactory::eINSTANCE.createState => [
             name = "Tick"
@@ -165,7 +166,7 @@ class SCG2S extends AbstractProductionTransformation {
 //            (node as Conditional).el            
 //            (node as Assignment).n
 //            if (node instanceof Assignment) {
-//              System.out.println("SCG: " + (node as Assignment).toString)
+//              SCG2SPlugin.log("SCG: " + (node as Assignment).toString)
 //                
 //            }
             node.translate(instructionList)
@@ -175,7 +176,7 @@ class SCG2S extends AbstractProductionTransformation {
         tickState.instructions += instructionCache
 
         time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("S transformation finished (time used overall: " + (time / 1000) + "s).")
+        SCG2SPlugin.log("S transformation finished (time used overall: " + (time / 1000) + "s).")
         sProgram
     }
 
