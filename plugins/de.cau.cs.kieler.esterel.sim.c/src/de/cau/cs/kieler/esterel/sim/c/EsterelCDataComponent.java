@@ -681,7 +681,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             cExecution.getInterfaceToExecution().flush();
             while (cExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(cExecution.getInterfaceError().read());
+                EsterelCSimulationPlugin.logError("ERROR: " + cExecution.getInterfaceError().read());
             }
 
             String receivedMessage = cExecution.getInterfaceFromExecution().readLine();

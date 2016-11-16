@@ -150,7 +150,7 @@ public class KiCoUtil {
         HashMap<String, ResourceExtension> resourceExtensionMap =
                 KiCoPlugin.getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
-            System.out.println("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
+            KiCoPlugin.log("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
         }
         ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getEPackage().getName());
         if (specificExtension != null) {
@@ -168,7 +168,7 @@ public class KiCoUtil {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
                 
                 if (KiCoPlugin.DEBUG) {
-                    System.out.print("Trying to serialize as extension '" + ext + "' ... ");
+                    KiCoPlugin.log("Trying to serialize as extension '" + ext + "' ... ");
                 }
                 
                 ResourceSet resourceSet = null;
@@ -200,14 +200,14 @@ public class KiCoUtil {
                     returnText = outputStream.toString();
                     done = true;
                     if (KiCoPlugin.DEBUG) {
-                        System.out.println("success.");
+                        KiCoPlugin.log("success.");
                     }
                     if (updateMainResource) {
                         context.setMainResource(res);
                     }
                 } catch (Exception e) {
                     if (KiCoPlugin.DEBUG) {
-                        System.out.println("failed.");
+                        KiCoPlugin.log("failed.");
                     }
                     //e.printStackTrace();
                 }
@@ -230,7 +230,7 @@ public class KiCoUtil {
             }
         } catch (Exception e) {
             if (KiCoPlugin.DEBUG) {
-                System.out.println("failed.");
+                KiCoPlugin.log("failed.");
             }
             //e.printStackTrace();
             if (raiseError) {
@@ -340,7 +340,7 @@ public class KiCoUtil {
                 }
                 
                 for (String ext : extensionList) {
-                    System.out.println("Testing extension ''" + ext + "''");
+                    KiCoPlugin.log("Testing extension ''" + ext + "''");
                     if (extension != null && !extension.equals(ext)) {
                         // if an extension is given, then continue if this is not the right
                         // extension!
@@ -611,11 +611,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -661,11 +661,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -712,11 +712,11 @@ public class KiCoUtil {
                         Class<?> parameter = parameters[0];
                         String compareName = parameter.getName();
                         if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
