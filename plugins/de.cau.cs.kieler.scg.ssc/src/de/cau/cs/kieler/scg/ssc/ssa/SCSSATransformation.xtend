@@ -22,8 +22,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -34,8 +32,6 @@ import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.ScgPackage
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
@@ -43,8 +39,6 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SSAOptimizer
-import de.cau.cs.kieler.scg.ssc.ssa.processors.SeqConcTransformer
 import java.util.Collection
 import javax.inject.Inject
 

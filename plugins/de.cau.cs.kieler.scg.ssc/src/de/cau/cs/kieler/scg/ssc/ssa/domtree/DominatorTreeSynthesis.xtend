@@ -15,19 +15,14 @@ package de.cau.cs.kieler.scg.ssc.ssa.domtree
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.scg.BasicBlock
@@ -36,10 +31,13 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import java.util.List
 import java.util.Map
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.alg.mrtree.MrTree
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
@@ -114,8 +112,8 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         nodes.entrySet.forEach[nodes.createDTEdge(value, key, dt)]
 
         val dtDiagram = createNode
-        dtDiagram.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.tree")
-        dtDiagram.addLayoutParam(LayoutOptions::DIRECTION, Direction.DOWN)
+        dtDiagram.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.mrtree")
+        dtDiagram.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
         dtDiagram.children += nodes.values
 
         return dtDiagram
@@ -166,8 +164,8 @@ class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         }
                         node.children += nNode
                     }
-                    node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-                    node.addLayoutParam(LayoutOptions::DIRECTION, Direction.DOWN)
+                    node.addLayoutParam(CoreOptions::ALGORITHM, "org.elk.klay.layered")
+                    node.addLayoutParam(CoreOptions::DIRECTION, Direction.DOWN)
                 }
             }
         }
