@@ -15,12 +15,12 @@ package de.cau.cs.kieler.circuit.kivi;
 
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.AbstractUIPluginEx;
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class CircuitKiviPlugin extends AbstractUIPluginEx {
+public class CircuitKiviPlugin extends AbstractUIPluginLog {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.circuit.kivi"; //$NON-NLS-1$
