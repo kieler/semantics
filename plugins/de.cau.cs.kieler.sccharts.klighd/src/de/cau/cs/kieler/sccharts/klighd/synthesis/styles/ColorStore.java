@@ -16,10 +16,10 @@ import java.util.HashMap;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import de.cau.cs.kieler.core.krendering.Colors;
-import de.cau.cs.kieler.core.krendering.KColor;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.klighd.krendering.Colors;
+import de.cau.cs.kieler.klighd.krendering.KColor;
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 
 /**
  * The SCCharts colors.

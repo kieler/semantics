@@ -8,13 +8,13 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.transaction,
+ org.eclipse.elk.graph,
  de.cau.cs.kieler.sccharts;visibility:=reexport,
  de.cau.cs.kieler.core.model;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
  org.eclipse.xtext.xbase,
  org.eclipse.xtext.builder,
- de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport,
- de.cau.cs.kieler.core
+ de.cau.cs.kieler.core.kexpressions.text;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.text.actions,
  de.cau.cs.kieler.sccharts.text.actions.formatting,

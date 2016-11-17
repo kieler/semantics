@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.scg.klighd.analyzer
 
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * This class implements the specific visualization modification for potential instantaneous loop problems.

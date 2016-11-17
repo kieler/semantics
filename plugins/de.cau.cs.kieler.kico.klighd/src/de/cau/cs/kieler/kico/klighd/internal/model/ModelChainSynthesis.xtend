@@ -13,27 +13,22 @@
  */
 package de.cau.cs.kieler.kico.klighd.internal.model
 
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.klighd.internal.model.action.RemovedCollapsedDiagramsAction
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.DisplayedActionData
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
@@ -41,10 +36,12 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
 import javax.inject.Inject
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.emf.ecore.EObject
-
+import org.eclipse.elk.core.options.CoreOptions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * Diagram synthesis for a ModelChain.
  * 
@@ -87,9 +84,8 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
 
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION,
-                newImmutableList(Direction::DOWN, Direction::RIGHT)),
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
+            specifyLayoutOption(CoreOptions::DIRECTION, newImmutableList(Direction::DOWN, Direction::RIGHT)),
+            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
         );
     }
 
@@ -102,8 +98,8 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     override KNode transform(ModelChain chainWrapper) {
         val chain = chainWrapper.getModels;
         val rootNode = createNode();
-        rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction.RIGHT);
+        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction.RIGHT);
 
         if (!chain.empty) {
 

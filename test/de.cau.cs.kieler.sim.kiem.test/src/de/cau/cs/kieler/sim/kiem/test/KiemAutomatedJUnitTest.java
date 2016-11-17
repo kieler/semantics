@@ -61,6 +61,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.sccharts.sim.c.SCChartsCDataComponent;
 import de.cau.cs.kieler.sim.benchmark.BenchmarkTestDataComponent;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.KartPlugin;
@@ -544,19 +545,30 @@ public abstract class KiemAutomatedJUnitTest {
                 logger.info("Trace Number " + traceNumber);
 
                 // Set the current trace number
-                traceProperty.setValue(traceNumber + "");
+                traceProperty.setValue(String.valueOf(traceNumber));
                 BenchmarkTestDataComponent.setTrace(traceNumber);
                 // Now run the execution stepwise until it has stopped
 
                 pause();
+                // Initialize execution
                 if (kiemPlugin.initExecution()) {
                     pause();
+                    // Get execution
                     Execution execution = kiemPlugin.getExecution();
                     if (execution == null) {
                         throw new RuntimeException("KIEM cannot start execution. "
                                 + "Try to do this manually for the following scheduling file:'"
                                 + executionFileName + "'.");
                     }
+                    
+                    // Get names of outputs in the model.
+                    // Only these should be checked for errors.
+                    SCChartsCDataComponent scchartsDataComponent = getSCChartsCDataComponent();
+                    List<String> outputNames = null;
+                    if(scchartsDataComponent != null) {
+                        outputNames = scchartsDataComponent.getOutputNames();
+                    }
+                    
                     pause();
 
                     // At this point we know that the execution is not null
@@ -620,21 +632,38 @@ public abstract class KiemAutomatedJUnitTest {
                                 if (jSONData.has(errorSignalName)) {
                                     Object errorContent = jSONData.get(errorSignalName);
                                     if (errorContent instanceof String) {
-                                        if (!((String) errorContent).equals("")) {
-                                            // !!! ERRROR DETECTED !!! //
-                                            execution.stopExecutionSync();
-                                            execution.cancel();
-                                            while (kiemPlugin.getExecution() != null) {
-                                                pause();
+                                        String errorContentString = (String) errorContent;
+                                        if (!errorContentString.equals("")) {
+                                            // Get names of outputs that were not correctly
+                                            // and check if these are actually outputs of the original model.
+                                            String[] errorOutputs = errorContentString.split(",");
+                                            List<String> errorOutputsOfModel = new ArrayList<String>();
+                                            for (String error : errorOutputs) {
+                                                if (outputNames == null || outputNames.contains(error)) {
+                                                    errorOutputsOfModel.add(error);
+                                                }
                                             }
-                                            lastErrorMessage = "Error (" + (String) errorContent
-                                                    + ") in tick " + tick + " of trace "
-                                                    + traceNumber + " of ESO file '"
-                                                    + esoFilePath.toString()
-                                                    + "' during execution '" + executionFileName
-                                                    + "'.";
-                                            System.err.println(lastErrorMessage);
-                                            fail(lastErrorMessage);
+                                            // Only throw an error if the output that was wrong,
+                                            // is actually declared as outputs variable in the original SCChart.
+                                            if (!errorOutputsOfModel.isEmpty()) {
+                                                // !!! ERRROR DETECTED !!! //
+                                                execution.stopExecutionSync();
+                                                execution.cancel();
+                                                while (kiemPlugin.getExecution() != null) {
+                                                    pause();
+                                                }
+                                                lastErrorMessage = "Error (" + String.join(",", errorOutputsOfModel)
+                                                        + ") in tick " + tick + " of trace "
+                                                        + traceNumber + " of ESO file '"
+                                                        + esoFilePath.toString()
+                                                        + "' during execution '" + executionFileName
+                                                        + "'.";
+                                                System.err.println(lastErrorMessage);
+                                                fail(lastErrorMessage);
+                                            } else {
+                                                logger.warn(errorContentString + " is not declared as output in the tested SCChart, "
+                                                        + "but were detected as incorrectly produced.");
+                                            }
                                         }
                                     }
                                 }
@@ -1094,6 +1123,22 @@ public abstract class KiemAutomatedJUnitTest {
                 "KART DataComponent (" + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
                         + ") was not loaded. The KART Plugin must be added to the run configuration "
                         + "together with all dependend plugins.");
+    }
+    
+    /**
+     * Gets the SCChartsCData component.
+     * 
+     * @return the component
+     */
+    private static SCChartsCDataComponent getSCChartsCDataComponent() {
+        List<DataComponentWrapper> dataComponentWrapperList = kiemPlugin
+                .getDataComponentWrapperList();
+        for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
+            if(dataComponentWrapper.getDataComponent() instanceof SCChartsCDataComponent) {
+                return (SCChartsCDataComponent)dataComponentWrapper.getDataComponent();
+            }
+        }
+        return null;
     }
 
     // -------------------------------------------------------------------------

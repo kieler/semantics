@@ -13,14 +13,13 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
+import org.eclipse.elk.core.klayoutdata.KLayoutData;
+import org.eclipse.elk.graph.KGraphElement;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Predicate;
-
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 
 /**
  * Contains Properties for marking elements in tracing diagrams or related ViewContext.

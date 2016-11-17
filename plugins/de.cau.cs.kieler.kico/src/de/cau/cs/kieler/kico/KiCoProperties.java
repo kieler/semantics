@@ -13,10 +13,9 @@
  */
 package de.cau.cs.kieler.kico;
 
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
-
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
 
 /**
  * @author als

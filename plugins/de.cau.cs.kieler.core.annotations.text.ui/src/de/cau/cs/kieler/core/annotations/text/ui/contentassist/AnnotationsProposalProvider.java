@@ -18,6 +18,11 @@ import java.util.Iterator;
 
 import javax.inject.Inject;
 
+import org.eclipse.elk.core.data.LayoutAlgorithmData;
+import org.eclipse.elk.core.data.LayoutMetaDataService;
+import org.eclipse.elk.core.data.LayoutOptionData;
+import org.eclipse.elk.core.data.LayoutOptionData.Type;
+import org.eclipse.elk.core.options.CoreOptions;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
@@ -29,12 +34,6 @@ import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.util.Strings;
-
-import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
-import de.cau.cs.kieler.kiml.LayoutMetaDataService;
-import de.cau.cs.kieler.kiml.LayoutOptionData;
-import de.cau.cs.kieler.kiml.LayoutOptionData.Type;
-import de.cau.cs.kieler.kiml.options.LayoutOptions;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
@@ -150,7 +149,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
             /* create and register the completion proposal for every element in the list */
             for (Iterator<LayoutOptionData> i = optionDataList.iterator(); i.hasNext();) {
                 optionData = i.next();
-                theStyle = (optionData.isAdvanced()) ? StyledString.COUNTER_STYLER : null;
+                theStyle = null; //(optionData.isAdvanced()) ? StyledString.COUNTER_STYLER : null;
                 displayString = new StyledString(optionData.toString(), theStyle);
                 displayString.append(" - " + optionData.getType().toString(),
                         StyledString.QUALIFIER_STYLER);
@@ -206,7 +205,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                     //  corresponding default value
                      
                     case STRING:
-                        if (annotationName.equals(LayoutOptions.ALGORITHM.getId())) {
+                        if (annotationName.equals(CoreOptions.ALGORITHM.getId())) {
                             String displayString = null;
                             for (LayoutAlgorithmData data : layoutServices.getAlgorithmData()) {
                                 proposal = '"' + data.getId() + '"';

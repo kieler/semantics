@@ -16,6 +16,8 @@ package de.cau.cs.kieler.kitt.tracing;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -23,8 +25,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Multimap;
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;

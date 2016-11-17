@@ -13,16 +13,16 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
-import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import javax.inject.Inject
+import org.eclipse.elk.core.klayoutdata.KShapeLayout
+import org.eclipse.elk.core.util.ElkUtil
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 
 /**
  * KRendering Utility class for KLighD visualization.
@@ -193,7 +193,7 @@ class SCGraphShapes {
     }   
 
 	
-	def KEdge create node: KimlUtil::createInitializedEdge getEdge(Object o) {
+	def KEdge create node: ElkUtil::createInitializedEdge getEdge(Object o) {
 	}
 	
 	def KEdge createPolyLineEdge(Object o) {

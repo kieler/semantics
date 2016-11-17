@@ -14,12 +14,12 @@ package de.cau.cs.kieler.scg.klighd.actions
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 

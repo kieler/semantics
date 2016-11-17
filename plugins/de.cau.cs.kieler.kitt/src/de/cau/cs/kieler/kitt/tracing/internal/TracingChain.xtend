@@ -23,8 +23,7 @@ import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.util.Pair;
-
+import org.eclipse.elk.core.util.Pair
 import static com.google.common.base.Preconditions.*
 
 import static extension com.google.common.collect.Multimaps.*

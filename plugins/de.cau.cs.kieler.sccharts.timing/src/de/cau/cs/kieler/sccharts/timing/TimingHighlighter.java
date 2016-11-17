@@ -13,20 +13,19 @@
 package de.cau.cs.kieler.sccharts.timing;
 
 import java.lang.ref.WeakReference;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 import com.google.common.collect.HashMultimap;
 
-import de.cau.cs.kieler.core.krendering.Colors;
-import de.cau.cs.kieler.core.krendering.KBackground;
-import de.cau.cs.kieler.core.krendering.KLineWidth;
-import de.cau.cs.kieler.core.krendering.KRectangle;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.klighd.krendering.Colors;
+import de.cau.cs.kieler.klighd.krendering.KBackground;
+import de.cau.cs.kieler.klighd.krendering.KLineWidth;
+import de.cau.cs.kieler.klighd.krendering.KRectangle;
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
+import de.cau.cs.kieler.klighd.krendering.KText;
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.timing.TimingAnalysis.TimingValueRepresentation;
 

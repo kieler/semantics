@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.osgi.service.log.LogEntry;
 
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;

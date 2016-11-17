@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.eso;bundle-version="0.2.0",
  de.cau.cs.kieler.sim.signals;bundle-version="0.1.0",
  de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.3.0",
- de.cau.cs.kieler.sim.kiem.config;bundle-version="0.4.0"
+ de.cau.cs.kieler.sim.kiem.config;bundle-version="0.4.0",
+ org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Kiel University

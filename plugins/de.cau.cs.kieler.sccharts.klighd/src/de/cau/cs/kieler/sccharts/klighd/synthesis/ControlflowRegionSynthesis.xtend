@@ -14,24 +14,25 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
-import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
-import de.cau.cs.kieler.klay.layered.properties.FixedAlignment
-import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
+import java.util.Properties
+import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
@@ -67,16 +68,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = region.createNode().associateWith(region);
 
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(LayoutOptions::SPACING, 3f);
-            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
-            node.setLayoutOption(Properties::FIXED_ALIGNMENT, FixedAlignment::BALANCED);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
+            node.setLayoutOption(CoreOptions::SPACING_LABEL, 5f);
+            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+            node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
         } else {
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-            node.setLayoutOption(LayoutOptions::SPACING, 40f);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
         }
-        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.addLayoutParam(Properties::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
+        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         // Direction is set by the {@link LayoutHook}
         
         node.setLayoutOption(KlighdProperties::EXPAND, true);
@@ -134,15 +136,15 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     def KNode createReferenceRegion(State state) {
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(LayoutOptions::SPACING, 3f);
-            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
+            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
         } else {
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-            node.setLayoutOption(LayoutOptions::SPACING, 40f);
+            node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
         }
-        node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.setLayoutOption(LayoutOptions::SPACING, 40f);
+        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
