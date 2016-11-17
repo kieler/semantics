@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="de.cau.cs.kieler.sccharts.preferences.KielerSCChartsPreferencePage"
+            id="de.cau.cs.kieler.sim"
+            name="KIELER SCCharts">
+      </page>
+   </extension>
+
+</plugin>
