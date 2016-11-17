@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: C based SCCharts Simulation
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.sim.java;singleton:=true
+Bundle-Version: 0.1.1.qualifier
+Bundle-Activator: de.cau.cs.kieler.sccharts.sim.java.SCChartsSimCPlugin
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.sim.kiem.config,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.s,
+ de.cau.cs.kieler.sc,
+ de.cau.cs.kieler.sim.benchmark,
+ de.cau.cs.kieler.sim.signals,
+ com.google.inject,
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore.xmi,
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.circuit,
+ de.cau.cs.kieler.kico.klighd
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+
