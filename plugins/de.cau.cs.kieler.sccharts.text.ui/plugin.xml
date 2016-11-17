@@ -80,9 +80,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.sccharts.text.sct.ui.SctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            name="Sct">
+              category="de.cau.cs.kieler.sccharts"
+              class="de.cau.cs.kieler.sccharts.text.sct.ui.SctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+              name="Sct">
             <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
         <page
