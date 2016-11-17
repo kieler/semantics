@@ -5,7 +5,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             class="de.cau.cs.kieler.sccharts.preferences.KielerSCChartsPreferencePage"
-            id="de.cau.cs.kieler.sim"
+            id="de.cau.cs.kieler.sccharts"
             name="KIELER SCCharts">
       </page>
    </extension>

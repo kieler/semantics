@@ -62,15 +62,10 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="de.cau.cs.kieler.prom.kielerPage"
+            category="de.cau.cs.kieler.sccharts"
             class="de.cau.cs.kieler.prom.environments.ui.EnvironmentsPage"
             id="de.cau.cs.kieler.prom.environmentsPreferencePage"
-            name="Environments">
-      </page>
-      <page
-            class="de.cau.cs.kieler.prom.environments.ui.KielerPage"
-            id="de.cau.cs.kieler.prom.kielerPage"
-            name="KIELER">
+            name="PROM Execution Environments">
       </page>
    </extension>
    <extension
