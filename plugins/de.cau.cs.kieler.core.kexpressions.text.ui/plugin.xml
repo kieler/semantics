@@ -78,29 +78,6 @@
         </definition>
     </extension>
     <extension
-            point="org.eclipse.ui.preferencePages">
-        <page
-            class="de.cau.cs.kieler.core.kexpressions.text.ui.KEXTExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.text.KEXT"
-            name="KEXT">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.text.ui.keyword_KEXT"/>
-        </page>
-        <page
-            category="de.cau.cs.kieler.core.kexpressions.text.KEXT"
-            class="de.cau.cs.kieler.core.kexpressions.text.ui.KEXTExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.text.KEXT.coloring"
-            name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.text.ui.keyword_KEXT"/>
-        </page>
-        <page
-            category="de.cau.cs.kieler.core.kexpressions.text.KEXT"
-            class="de.cau.cs.kieler.core.kexpressions.text.ui.KEXTExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.text.KEXT.templates"
-            name="Templates">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.text.ui.keyword_KEXT"/>
-        </page>
-    </extension>
-    <extension
             point="org.eclipse.ui.propertyPages">
         <page
             class="de.cau.cs.kieler.core.kexpressions.text.ui.KEXTExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"

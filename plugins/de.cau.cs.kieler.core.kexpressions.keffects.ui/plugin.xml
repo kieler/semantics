@@ -78,29 +78,6 @@
         </definition>
     </extension>
     <extension
-            point="org.eclipse.ui.preferencePages">
-        <page
-            class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.keffects.KEffects"
-            name="KEffects">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.keffects.ui.keyword_KEffects"/>
-        </page>
-        <page
-            category="de.cau.cs.kieler.core.kexpressions.keffects.KEffects"
-            class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.keffects.KEffects.coloring"
-            name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.keffects.ui.keyword_KEffects"/>
-        </page>
-        <page
-            category="de.cau.cs.kieler.core.kexpressions.keffects.KEffects"
-            class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.keffects.KEffects.templates"
-            name="Templates">
-            <keywordReference id="de.cau.cs.kieler.core.kexpressions.keffects.ui.keyword_KEffects"/>
-        </page>
-    </extension>
-    <extension
             point="org.eclipse.ui.propertyPages">
         <page
             class="de.cau.cs.kieler.core.kexpressions.keffects.ui.KEffectsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"

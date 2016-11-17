@@ -52,7 +52,7 @@
         <page
               class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.esterel.Esterel"
-              name="Esterel">
+              name="KIELER Esterel">
             <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
         <page
