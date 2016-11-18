@@ -43,13 +43,12 @@
             </goals>
             <configuration>
               <associateSites>
-			    <associateSite>http://download.eclipse.org/releases/mars</associateSite>
+                <associateSite>http://download.eclipse.org/releases/neon</associateSite>
                 <associateSite>http://guava-osgi.googlecode.com/svn/trunk/repository/</associateSite>
                 <associateSite>http://download.eclipse.org/graphiti/updates/0.8.1</associateSite>
                 <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</associateSite>
-                <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-02/</associateSite>
+                <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/</associateSite>
                 <associateSite>http://build.eclipse.org/modeling/elk/updates/nightly</associateSite>
-               <!--<associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</associateSite>-->
               </associateSites>
               <siteTemplateFolder>siteTemplate</siteTemplateFolder>
               <symbols>
