@@ -1,3 +1,4 @@
+<<<<<<< Upstream, based on branch 'master' of ssh://git@git.rtsys.informatik.uni-kiel.de:7999/kieler/semantics.git
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
@@ -104,3 +105,117 @@
    </extension>
 
 </plugin>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sccharts.sim.java.SCChartsCDataComponent"
+            id="de.cau.cs.kieler.sccharts.sim.java"
+            name="SCCharts / SCG Simulator (Java)">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/sccharts_java.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/sccharts_java_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="99">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="101">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="101">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/sccharts_java.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/scg_java.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/circuit_java.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <expansionTransformationClass
+            class="de.cau.cs.kieler.sccharts.sim.java.xtend.SimulationVisualization">
+      </expansionTransformationClass>
+   </extension>
+
+</plugin>
+>>>>>>> f83b596 Java based Simulator component
