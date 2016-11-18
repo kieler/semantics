@@ -57,6 +57,7 @@
 }
 .style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: small; font-weight: bold; }
 .style7 {font-size: medium}
+.style9 {font-size: xx-small; font-weight: normal}
 -->
 </style>
 </head>
@@ -219,7 +220,15 @@ function updateTransformations() {
 var transformationsTimer;
 
 
+function setResultTextAndCompile() {
+	setResultText();
+	compile();
+}
+
 function setResultText() {
+
+    var scale = document.getElementById("scale");
+
     var scale = document.getElementById("scale");
 	scale.disabled = true;
     var size = document.getElementById("size");
@@ -228,7 +237,6 @@ function setResultText() {
     var text = document.getElementById("resultTextDiv");
 	text.style.display="block";
 	image.style.display="none";
-	compile();
 //	alert("setResultText" + image + text);
 }
 
@@ -250,6 +258,22 @@ function setResultImage(type) {
 	compile();
 }
 
+
+function isTextTransformationSelected() {
+	    // hack: if transformations contain obvious text/code-output transformations
+		// such as s.c s.java s.target s codegeneration then switch to text output!
+		var selectedTransormations = document.getElementById("transformations").value;
+		var allTransformations = selectedTransormations.split(',');
+		var index;
+		for (index in allTransformations) {
+			var transformation = allTransformations[index].trim();
+			if ((transformation == "s")||(transformation == "T_s.c")||(transformation == "T_s.java")||(transformation == "T_s.arduino")||(transformation == "s.target")||(transformation == "codegeneration")) {
+					return true;
+			}
+		}
+		return false;
+}
+
 var doUpdateImage = false;
 
 function compile() {
@@ -264,10 +288,20 @@ function compile() {
 		compileText();
 	}
 	else {
-		// first disable current compile image
-		progressImage();
-		doUpdateImage = true;
-		compileText();
+		var foundCodeTransformation = isTextTransformationSelected();
+		if (foundCodeTransformation) {
+			setResultText();
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			doUpdateImage = false;
+			compileText();
+		} else {
+			// first disable current compile image
+			progressImage();
+			doUpdateImage = true;
+			compileText();
+		}
 	}
 }
 
@@ -631,9 +665,9 @@ scchart AO {
                 <span class="Stil8 Stil10">(only apply the listed transformations)
                   <label></label>
     </span></p>
-                <p> <span class="Stil8 Stil10">
+                <p> <span class="Stil8 Stil10"> 
     <label>
-                  <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text"  />
+                  <input name="output" type="radio" id="outputText" onclick="setResultTextAndCompile();" value="text"  />
     <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label><br>
     <label> 
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
@@ -724,7 +758,7 @@ scchart AO {
        <td width="315" valign="top" scope="row"><span class="Stil8">
          <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>Server </strong></span><span class="Stil10 Stil3 Stil10 style14"><span class="Stil15 Stil13 Stil13">(compile / render)</span></span><br>
          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server* <span class="Stil12">(fastest)</span></label>
          <br>
          <label>
          <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
@@ -742,7 +776,9 @@ scchart AO {
          <label></label>
          </span><span class="Stil8">
          <label></label>
-       </span></td>
+         <br>
+         <br>
+         <span class="style9">(* Due to technically issues with headless offline rendering using a VNC server the main server is currently not able to render large diagrams and may die in such scenarios because of VNC server crashes. A locally running KIELER SCCharts should not suffer from this problem. <br><b>Please do not render such large diagrams with our main server which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span></span></td>
      </tr>
    </table>
  </div>
@@ -828,7 +864,7 @@ function showServerOffline() {
 function showServerOnline() {
 	document.getElementById('serverdownDiv').style.display='none';
     var outputText = document.getElementById("outputText");
-    if(outputText.checked) {
+    if(outputText.checked || isTextTransformationSelected()) {
 		document.getElementById('resultTextDiv').style.display='block';
 		document.getElementById('resultImageDiv').style.display='none';
 	} else {
