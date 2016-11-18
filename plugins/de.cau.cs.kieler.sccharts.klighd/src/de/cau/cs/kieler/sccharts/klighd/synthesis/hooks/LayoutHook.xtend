@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -26,15 +27,18 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
+import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import org.eclipse.elk.core.data.LayoutMetaDataService
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
  * 
@@ -44,11 +48,21 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * 
  */
 @ViewSynthesisShared
-class LayoutHook extends SynthesisHook {
-
+class LayoutHook extends SynthesisActionHook {
+    
+    /** Action ID */
+    public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LayoutHook";
+    /** The related synthesis option */
+    public static final SynthesisOption LAYOUT_DIRECTION = SynthesisOption.createChoiceOption("Direction", #["HV", "VH", "Down", "Right"], "HV").
+        setCategory(GeneralSynthesisOptions::LAYOUT).setUpdateAction(LayoutHook.ID); // Register this action as updater
+       
     /** This property is set if any element should override HV or VH layout annotation effects */
     private static final IProperty<Boolean> BLOCK_ALTERNATIN_LAYOUT = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.override", false)
+        
+    /** This property is set if the sidebar direction is set on the element */
+    private static final IProperty<Boolean> DEFAULT_DIRECTION = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.direction.default", false)
 
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -72,6 +86,10 @@ class LayoutHook extends SynthesisHook {
     /** The depth of map of the sccharts scopes in the model */
     private val depthMap = <Scope, Integer>newHashMap
     private var Direction golbalDirection = null;
+
+    override getDisplayedSynthesisOptions() {
+        return newLinkedList(LAYOUT_DIRECTION);
+    }
 
     override start(Scope scope, KNode node) {
         depthMap.put(scope, if(scope instanceof State) 0 else -1)
@@ -104,20 +122,33 @@ class LayoutHook extends SynthesisHook {
         if (region instanceof ControlflowRegion) {
             if (golbalDirection != null) {
                 node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
-            } else { // Alternating
-                node.setDepthDirection(region, true, 0)
             }
         }
         // HV/VH Layout via annotation
         node.processAlternatingLayoutAnnotation(region)
         // Layout options
         node.processLayoutOptionAnnotations(region)
+        // Set sidebar layout direction
+        if (!node.hasDirection) {
+            node.setSidebarDirection(region)
+        }
+    }
+    
+    def void setSidebarDirection(KNode node, Scope scope) {
+        switch (LAYOUT_DIRECTION.objectValue) {
+            case "HV": node.setDepthDirection(scope, true, 0)
+            case "VH": node.setDepthDirection(scope, false, 0)
+            case "Down": node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
+            case "Right": node.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
+            default: return
+        }
+        node.setProperty(DEFAULT_DIRECTION, true)        
     }
 
     override processTransition(Transition transition, KEdge edge) {
         edge.processLayoutOptionAnnotations(transition)
     }
-
+    
     private def processLayoutOptionAnnotations(KGraphElement element, Annotatable annotatable) {
         for (annotation : annotatable.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
@@ -166,6 +197,10 @@ class LayoutHook extends SynthesisHook {
         }
     }
 
+    private def hasDirection(KNode node) {
+        return node.allProperties.containsKey(CoreOptions.DIRECTION);
+    }
+    
     private def isBlockingAlternatingLayout(KNode node) {
         return node.getProperty(BLOCK_ALTERNATIN_LAYOUT);
     }
@@ -180,4 +215,18 @@ class LayoutHook extends SynthesisHook {
             }
         }
     }
+    
+    // Change Layout on runtime diagram
+    override executeAction(KNode rootNode) {
+        rootNode.eAllContentsOfType(KNode).filter[
+            it.getProperty(DEFAULT_DIRECTION)
+        ].forEach[
+            val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
+            if (source instanceof Region) {
+                it.setSidebarDirection(source)
+            }
+        ]
+        return ActionResult.createResult(true);
+    }
+    
 }
