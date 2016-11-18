@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
+import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
@@ -401,10 +402,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
                         String signalName = valuedObject.getName();
-                        if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                        if (signalName.startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
-                                .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             outputTransitionList.add(signalName);
                         } else {
                             if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
@@ -817,26 +818,26 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                             }
 
                             if (outputName
-                                    .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                                 if (present) {
                                     if (activeStatesBuf.length() > 0) {
                                         activeStatesBuf.append(",");
                                     }
                                     String activeStateName =
                                             outputName
-                                                    .substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE
+                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE
                                                             .length());
                                     activeStatesBuf.append(activeStateName);
                                 }
                             } else if (outputName
-                                    .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                                 if (present) {
                                     if (activeTransitionsBuf.length() > 0) {
                                         activeTransitionsBuf.append(",");
                                     }
                                     String activeTransitionName =
                                             outputName
-                                                    .substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
+                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
                                                             .length());
                                     activeTransitionsBuf.append(activeTransitionName);
                                 }
@@ -927,7 +928,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 return 0;
             } else {
                 return 1;
-            }
+            } 
         }
     }
 

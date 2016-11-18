@@ -30,16 +30,6 @@ public class SCChartsSimCPlugin extends AbstractUIPluginLog {
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.sim.c"; //$NON-NLS-1$
 
-    /**
-     * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
-     */
-    public static final String AUXILIARY_VARIABLE_TAG_TRANSITION = "_T";
-
-    /**
-     * The Constant AUXILIARY_VARIABLE_TAG for a State.
-     */
-//    public static final String AUXILIARY_VARIABLE_TAG_STATE = "oSCCHARTSoAUXSTATEo";
-    public static final String AUXILIARY_VARIABLE_TAG_STATE = "_S";
 
     /** The shared instance. */
     private static SCChartsSimCPlugin plugin;
