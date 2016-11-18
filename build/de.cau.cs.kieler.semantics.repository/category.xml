@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site associateSitesURL="associateSites.xml">
    
-   <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
-      Update site for the KIELER Semantics project nightly builds.
+   <description name="KIELER Semantics Release 0.12" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/">
+      Update site for the KIELER Semantics project release builds.
    </description>
    
    <!-- CATEGORY DEFINITIONS -->
 
    <category-def name="kieler-sem" label="KIELER Semantics">
       <description>
-         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components, Nightly Build
+         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components
       </description>
    </category-def>
    <category-def name="kieler-sources" label="KIELER Sources">
