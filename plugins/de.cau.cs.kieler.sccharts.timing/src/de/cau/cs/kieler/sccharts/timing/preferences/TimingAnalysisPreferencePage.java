@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sccharts.timing.preferences;
 
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -36,26 +37,29 @@ public class TimingAnalysisPreferencePage extends FieldEditorPreferencePage impl
 	    /**
 	     * Creates an interactive timing analysis preference page.
 	     */
-	    public TimingAnalysisPreferencePage() {
-	        super(GRID);
-	        setDescription(
-	                  "Sets the locations of the timing analysis tool and "
-	                  + "the compiler used by the timing analysis tool.\n"
-	                  + "In each case insert the absolute path of the folder that contains the tool.");
-	    }
+    public TimingAnalysisPreferencePage() {
+        super(GRID);
+        setDescription("Activates the interactive timing analysis user options in the sidebar.\n"
+                + "Sets the locations of the timing analysis tool and "
+                + "the compiler used by the timing analysis tool.\n"
+                + "In each case insert the absolute path of the folder that contains the tool.\n");
+    }
 
 	    /**
 	     * {@inheritDoc}
 	     */
 	    @Override
-	    public void createFieldEditors() {
+    public void createFieldEditors() {
+        addField(new BooleanFieldEditor("interactiveTimingAnalysisSidebar",
+                "Display user options in sidebar", getFieldEditorParent()));
+        addField(new StringFieldEditor("ktaPath", "Path to kta tool executable:",
+                getFieldEditorParent()));
+        addField(new StringFieldEditor("mipsel-mcb32-elf-gccPath",
+                "Path to mipsel-mcb32-elf-gcc \ncompiler executable:", getFieldEditorParent()));
 
-	    	addField(new StringFieldEditor("ktaPath", "Path to kta tool executable:",
-	    	        getFieldEditorParent()));
-	    	addField(new StringFieldEditor("mipsel-mcb32-elf-gccPath", 
-	    			"Path to mipsel-mcb32-elf-gcc \ncompiler executable:",
-	    	        getFieldEditorParent()));
-	    }
+    }
+	    
+	    
 
 	    /**
 	     * {@inheritDoc}
