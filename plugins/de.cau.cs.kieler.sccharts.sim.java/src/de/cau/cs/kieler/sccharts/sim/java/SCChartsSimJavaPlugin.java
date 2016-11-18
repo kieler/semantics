@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.sim.c;
+package de.cau.cs.kieler.sccharts.sim.java;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -20,23 +20,34 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot
- * @kieler.design 2014-07-17 proposed cmot
- * @kieler.rating 2014-07-17 proposed yellow
+ * @kieler.design 2016-11-17 proposed cmot
+ * @kieler.rating 2016-1-17 proposed yellow
  */
-public class SCChartsSimCPlugin extends AbstractUIPlugin {
+public class SCChartsSimJavaPlugin extends AbstractUIPlugin {
 
     /** The Constant PLUGIN_ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.sim.c"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.sim.java"; //$NON-NLS-1$
+
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
+     */
+    public static final String AUXILIARY_VARIABLE_TAG_TRANSITION = "_T";
+
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG for a State.
+     */
+//    public static final String AUXILIARY_VARIABLE_TAG_STATE = "oSCCHARTSoAUXSTATEo";
+    public static final String AUXILIARY_VARIABLE_TAG_STATE = "_S";
 
     /** The shared instance. */
-    private static SCChartsSimCPlugin plugin;
+    private static SCChartsSimJavaPlugin plugin;
 
     // ---------------------------------------------------------------------
 
     /**
      * The constructor
      */
-    public SCChartsSimCPlugin() {
+    public SCChartsSimJavaPlugin() {
     }
 
     // ---------------------------------------------------------------------
@@ -66,7 +77,7 @@ public class SCChartsSimCPlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static SCChartsSimCPlugin getDefault() {
+    public static SCChartsSimJavaPlugin getDefault() {
         return plugin;
     }
 

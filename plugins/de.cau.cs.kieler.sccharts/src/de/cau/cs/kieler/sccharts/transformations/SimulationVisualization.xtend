@@ -11,12 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.sim.c.xtend
+package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
+//import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.transformations.SCChartsTransformation
@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.sccharts.SCChartsPlugin
 
 /**
  * This class handles the<BR>
@@ -106,8 +107,8 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     // there must be a mapping that keeps track which signal (name) belongs to
     // which original S statement.
     // General method to create the enriched SyncCharts simulation models.
-    var AUXILIARY_VARIABLE_TAG_STATE = SCChartsSimCPlugin::AUXILIARY_VARIABLE_TAG_STATE
-    var AUXILIARY_VARIABLE_TAG_TRANSITION = SCChartsSimCPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
+    var AUXILIARY_VARIABLE_TAG_STATE = SCChartsPlugin::AUXILIARY_VARIABLE_TAG_STATE
+    var AUXILIARY_VARIABLE_TAG_TRANSITION = SCChartsPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
     
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"

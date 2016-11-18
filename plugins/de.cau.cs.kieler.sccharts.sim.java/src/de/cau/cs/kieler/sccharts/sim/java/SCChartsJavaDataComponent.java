@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.sim.c;
+package de.cau.cs.kieler.sccharts.sim.java;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,11 +49,9 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
-import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
-import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
+import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCChart;
+import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCG;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -73,7 +71,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * @kieler.design 2014-07-17 proposed cmot
  * @kieler.rating 2014-07-17 proposed yellow
  */
-public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent implements
+public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
     /** A separate tick counter that is computed for the SC debug console as a reference. */
 //    private long computedTick = 1;
@@ -118,7 +116,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
     private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS =
-            "SCCHARTS_SIMULATION_VISUALIZATION";
+            "T_SIMULATIONVISUALIZATION";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 6;
@@ -126,7 +124,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
             "High Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
+    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE, T_ABORT";
 
     /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 7;
@@ -134,7 +132,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "codegeneration, T_sccharts.scg, T_s.java";
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -149,7 +147,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private long compileTime = 0;
     
     /** The C execution object for concurrent execution. */
-    private CExecution cExecution = null;
+    private JavaExecution javaExecution = null;
 
     /** The list of output signals. */
     private LinkedList<String> outputSignalList = null;
@@ -172,7 +170,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
 
-    public SCChartsCDataComponent() {
+    public SCChartsJavaDataComponent() {
     }
 
     // -------------------------------------------------------------------------
@@ -288,7 +286,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     public String getDataComponentId() {
-        return "de.cau.cs.kieler.sccharts.sim.c";
+        return "de.cau.cs.kieler.sccharts.sim.java";
     }
 
     // -------------------------------------------------------------------------
@@ -300,9 +298,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     public void wrapup() throws KiemInitializationException {
-        if (cExecution != null) {
+        if (javaExecution != null) {
             // Do not delete the executable, maybe it can be used again
-            cExecution.stopExecution(false);
+            javaExecution.stopExecution(false);
         }
     }
 
@@ -321,12 +319,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the C execution.
+     * Gets the Java execution.
      * 
-     * @return the C execution
+     * @return the Java execution
      */
-    public CExecution getCExecution() {
-        return cExecution;
+    public JavaExecution getCExecution() {
+        return javaExecution;
     }
 
     // -------------------------------------------------------------------------
@@ -339,7 +337,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
      * @return the bundle path
      */
     private String getBundlePath(String subDirectory) {
-        Bundle bundle = Platform.getBundle(SCChartsSimCPlugin.PLUGIN_ID);
+        Bundle bundle = Platform.getBundle(SCChartsSimJavaPlugin.PLUGIN_ID);
 
         URL url = null;
         String bundleLocation = null;
@@ -369,9 +367,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // start execution of compiled program
-        if (cExecution.isCompiled()) {
+        if (javaExecution.isCompiled()) {
             try {
-                cExecution.startExecution();
+                javaExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
                         "SCCharts could not be started sucessfully.\n\n", true, e);
@@ -381,7 +379,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     true, null);
         }
 
-        if (!cExecution.isStarted()) {
+        if (!javaExecution.isStarted()) {
             throw new KiemInitializationException(
                     "Error running SCCharts. Compiled simulation does not exist.\n", true, null);
         }
@@ -403,10 +401,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
                         String signalName = valuedObject.getName();
-                        if (signalName.startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                        if (signalName.startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
-                                .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                .startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             outputTransitionList.add(signalName);
                         } else {
                             if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
@@ -656,26 +654,26 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 compileTime += intermediateResult.getDuration();
             }
             
-            // Generate Simulation wrapper C code
-            String cSimulation = "";
-            if (stateOrSCG instanceof State) {
-//                System.out.println("15");
-                CSimulationSCChart cSimulationSCChart =
-                        Guice.createInjector().getInstance(CSimulationSCChart.class);
-//                System.out.println("16");
-                cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
-            } else if (stateOrSCG instanceof SCGraph) {
-//                System.out.println("15");
-                CSimulationSCG cSimulationSCG =
-                        Guice.createInjector().getInstance(CSimulationSCG.class);
-//                System.out.println("16");
-                cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
-            }
-//            System.out.println("17 " + cSimulation);
+//            // Generate Simulation wrapper C code
+//            String cSimulation = "";
+//            if (stateOrSCG instanceof State) {
+////                System.out.println("15");
+//                CSimulationSCChart cSimulationSCChart =
+//                        Guice.createInjector().getInstance(CSimulationSCChart.class);
+////                System.out.println("16");
+//                cSimulation = cSimulationSCChart.transform((State) stateOrSCG, "10000").toString();
+//            } else if (stateOrSCG instanceof SCGraph) {
+////                System.out.println("15");
+//                CSimulationSCG cSimulationSCG =
+//                        Guice.createInjector().getInstance(CSimulationSCG.class);
+////                System.out.println("16");
+//                cSimulation = cSimulationSCG.transform((SCGraph) stateOrSCG, "10000").toString();
+//            }
+////            System.out.println("17 " + cSimulation);
             
-            if (benchmark) {
-                cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
-            }
+//            if (benchmark) {
+//                cSimulation = Benchmark.addTimingCode(cSimulation, "tick");
+//            }
 
             // Set a random output folder for the compiled files
             @SuppressWarnings("deprecation")
@@ -687,32 +685,29 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //            System.out.println("19 " + outputFileSCChart);
             writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
 
-            String fileNameSimulation = "simulation.c";
-            String outputFileSimulation = outputFolder + fileNameSimulation;
-//            System.out.println("20 " + outputFileSimulation);
-            writeOutputModel(outputFileSimulation, cSimulation.getBytes());
+//            String fileNameSimulation = "simulation.c";
+//            String outputFileSimulation = outputFolder + fileNameSimulation;
+////            System.out.println("20 " + outputFileSimulation);
+//            writeOutputModel(outputFileSimulation, cSimulation.getBytes());
 
-            String includePath = getBundlePath("templates");
-//            System.out.println("21 " + includePath);
-//            System.out.println(includePath);
-            // Compile
-            cExecution = new CExecution(outputFolder, benchmark);
-            LinkedList<String> generatedSCFiles = new LinkedList<String>();
-            generatedSCFiles.add(outputFileSimulation);
-            // generatedSCFiles.add(outputFileSCChart);
-            generatedSCFiles.add("-I " + includePath);
-            String modelName = "SCG";
-            if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
-            }
-            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
+//            String includePath = getBundlePath("templates");
+////            System.out.println("21 " + includePath);
+////            System.out.println(includePath);
+//            // Compile
+//            cExecution = new CExecution(outputFolder, benchmark);
+//            LinkedList<String> generatedSCFiles = new LinkedList<String>();
+//            generatedSCFiles.add(outputFileSimulation);
+//            // generatedSCFiles.add(outputFileSCChart);
+//            generatedSCFiles.add("-I " + includePath);
+//            String modelName = "SCG";
+//            if (myModel instanceof State) {
+//                modelName = ((State) myModel).getId();
+//            }
+//            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (IOException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
-                    + e.getMessage() + "\n\n" + compile, true, e);
-        } catch (InterruptedException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }
@@ -755,132 +750,132 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         StringBuffer activeTransitionsBuf = new StringBuffer();
         // List<DebugData> activeStatesList = new LinkedList<DebugData>();
 
-        if (cExecution == null || !cExecution.isStarted()) {
+        if (javaExecution == null || !javaExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         
         if (benchmark) {
-            sourceFileSize = cExecution.getSourceFileSize();
-            executabeFileSize = cExecution.getExecutableFileSize();
+            sourceFileSize = javaExecution.getSourceFileSize();
+            executabeFileSize = javaExecution.getExecutableFileSize();
         }
 
-        try {
-            String out = jSONObject.toString();
-//            System.out.println("> " + out);
-            cExecution.getInterfaceToExecution().write(out + "\n");
-            cExecution.getInterfaceToExecution().flush();
-            while (cExecution.getInterfaceError().ready()) {
-                // Error output, if any
-                System.out.print(cExecution.getInterfaceError().read());
-            }
-
-            String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
-
-//            System.out.println("< " + receivedMessage);
-            // if (debugConsole) {
-            // printConsole("==============| TICK " + computedTick++ + " |==============");
-            // while (!receivedMessage.startsWith("{\"")) {
-            // printConsole(receivedMessage);
-            // receivedMessage = scExecution.getInterfaceFromExecution().readLine();
-            // }
-            // printConsole("\n");
-            // }
-
-            if (receivedMessage != null) {
-                JSONObject output = new JSONObject(receivedMessage);
-                JSONArray outputArray = output.names();
-
-                if (outputArray != null) {
-                    // First add auxiliary signals
-                    for (int i = 0; i < outputArray.length(); i++) {
-                        String outputName = outputArray.getString(i);
-
-                        if (output.get(outputName) instanceof JSONObject) {
-
-                            JSONObject valuedObject = output.getJSONObject(outputName);
-                            Object value = ((JSONObject) valuedObject).get("value");
-
-                            boolean present = false;
-                            if (value instanceof Boolean) {
-                                present = (Boolean) value;
-                            } else if (value instanceof Integer) {
-                                present = ((Integer) value) != 0;
-                            }
-
-                            if (outputName
-                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
-                                if (present) {
-                                    if (activeStatesBuf.length() > 0) {
-                                        activeStatesBuf.append(",");
-                                    }
-                                    String activeStateName =
-                                            outputName
-                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE
-                                                            .length());
-                                    activeStatesBuf.append(activeStateName);
-                                }
-                            } else if (outputName
-                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
-                                if (present) {
-                                    if (activeTransitionsBuf.length() > 0) {
-                                        activeTransitionsBuf.append(",");
-                                    }
-                                    String activeTransitionName =
-                                            outputName
-                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
-                                                            .length());
-                                    activeTransitionsBuf.append(activeTransitionName);
-                                }
-                            } else {
-                                returnObj.accumulate(outputName,
-                                        JSONSignalValues.newValue(value, present));
-                            }
-                            
-
-                            
-                        }
-
-                    }
-                    
-                    // Add benchmark information
-                    if (this.benchmark) {
-                        if (output.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
-                            Object bench = output.get(Benchmark.BENCHMARK_SIGNAL_TIME);
-                            returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
-                        }
-                    }                    
-                }
-            }
-
-            // Add benchmark information
-            if (this.benchmark) {
-                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
-                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
-                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_COMPILETIME, compileTime);
-            }
-            
-            // Finally accumulate all active Statements (activeStatements)
-            // under the statementName
-            String activeStates = "";
-            String activeTransitions = "";
-            activeStates = activeStatesBuf.toString();
-            activeTransitions = activeTransitionsBuf.toString();
-
-            String activeStatesName =
-                    this.getProperties()[KIEM_PROPERTY_STATENAME + KIEM_PROPERTY_DIFF].getValue();
-            String activeTransitionsName =
-                    this.getProperties()[KIEM_PROPERTY_TRANSITIONNAME + KIEM_PROPERTY_DIFF]
-                            .getValue();
-            returnObj.accumulate(activeStatesName, activeStates);
-            returnObj.accumulate(activeTransitionsName, activeTransitions);
-
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            cExecution.stopExecution(false);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            cExecution.stopExecution(false);
-        }
+//        try {
+//            String out = jSONObject.toString();
+////            System.out.println("> " + out);
+//            javaExecution.get getInterfaceToExecution().write(out + "\n");
+//            javaExecution.getInterfaceToExecution().flush();
+//            while (javaExecution.getInterfaceError().ready()) {
+//                // Error output, if any
+//                System.out.print(javaExecution.getInterfaceError().read());
+//            }
+//
+//            String receivedMessage = javaExecution.getInterfaceFromExecution().readLine();
+//
+////            System.out.println("< " + receivedMessage);
+//            // if (debugConsole) {
+//            // printConsole("==============| TICK " + computedTick++ + " |==============");
+//            // while (!receivedMessage.startsWith("{\"")) {
+//            // printConsole(receivedMessage);
+//            // receivedMessage = scExecution.getInterfaceFromExecution().readLine();
+//            // }
+//            // printConsole("\n");
+//            // }
+//
+//            if (receivedMessage != null) {
+//                JSONObject output = new JSONObject(receivedMessage);
+//                JSONArray outputArray = output.names();
+//
+//                if (outputArray != null) {
+//                    // First add auxiliary signals
+//                    for (int i = 0; i < outputArray.length(); i++) {
+//                        String outputName = outputArray.getString(i);
+//
+//                        if (output.get(outputName) instanceof JSONObject) {
+//
+//                            JSONObject valuedObject = output.getJSONObject(outputName);
+//                            Object value = ((JSONObject) valuedObject).get("value");
+//
+//                            boolean present = false;
+//                            if (value instanceof Boolean) {
+//                                present = (Boolean) value;
+//                            } else if (value instanceof Integer) {
+//                                present = ((Integer) value) != 0;
+//                            }
+//
+//                            if (outputName
+//                                    .startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+//                                if (present) {
+//                                    if (activeStatesBuf.length() > 0) {
+//                                        activeStatesBuf.append(",");
+//                                    }
+//                                    String activeStateName =
+//                                            outputName
+//                                                    .substring(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE
+//                                                            .length());
+//                                    activeStatesBuf.append(activeStateName);
+//                                }
+//                            } else if (outputName
+//                                    .startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+//                                if (present) {
+//                                    if (activeTransitionsBuf.length() > 0) {
+//                                        activeTransitionsBuf.append(",");
+//                                    }
+//                                    String activeTransitionName =
+//                                            outputName
+//                                                    .substring(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
+//                                                            .length());
+//                                    activeTransitionsBuf.append(activeTransitionName);
+//                                }
+//                            } else {
+//                                returnObj.accumulate(outputName,
+//                                        JSONSignalValues.newValue(value, present));
+//                            }
+//                            
+//
+//                            
+//                        }
+//
+//                    }
+//                    
+//                    // Add benchmark information
+//                    if (this.benchmark) {
+//                        if (output.has(Benchmark.BENCHMARK_SIGNAL_TIME)) {
+//                            Object bench = output.get(Benchmark.BENCHMARK_SIGNAL_TIME);
+//                            returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
+//                        }
+//                    }                    
+//                }
+//            }
+//
+//            // Add benchmark information
+//            if (this.benchmark) {
+//                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE, sourceFileSize);
+//                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_EXECUTABLE, executabeFileSize);
+//                returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_COMPILETIME, compileTime);
+//            }
+//            
+//            // Finally accumulate all active Statements (activeStatements)
+//            // under the statementName
+//            String activeStates = "";
+//            String activeTransitions = "";
+//            activeStates = activeStatesBuf.toString();
+//            activeTransitions = activeTransitionsBuf.toString();
+//
+//            String activeStatesName =
+//                    this.getProperties()[KIEM_PROPERTY_STATENAME + KIEM_PROPERTY_DIFF].getValue();
+//            String activeTransitionsName =
+//                    this.getProperties()[KIEM_PROPERTY_TRANSITIONNAME + KIEM_PROPERTY_DIFF]
+//                            .getValue();
+//            returnObj.accumulate(activeStatesName, activeStates);
+//            returnObj.accumulate(activeTransitionsName, activeTransitions);
+//
+//        } catch (IOException e) {
+//            System.err.println(e.getMessage());
+//            cExecution.stopExecution(false);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            cExecution.stopExecution(false);
+//        }
 
         return returnObj;
     }

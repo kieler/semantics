@@ -102,11 +102,5 @@
          </editor>
       </executionFile>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <expansionTransformationClass
-            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization">
-      </expansionTransformationClass>
-   </extension>
 
 </plugin>
