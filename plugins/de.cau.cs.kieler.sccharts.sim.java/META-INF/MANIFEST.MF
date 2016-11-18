@@ -1,4 +1,4 @@
-Manifest-Version: 1.0
+Manifest-Version: 1.0 
 Bundle-ManifestVersion: 2
 Bundle-Name: Java based SCCharts Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.sim.java;singleton:=true

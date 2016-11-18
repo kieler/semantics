@@ -226,9 +226,6 @@ function setResultTextAndCompile() {
 }
 
 function setResultText() {
-
-    var scale = document.getElementById("scale");
-
     var scale = document.getElementById("scale");
 	scale.disabled = true;
     var size = document.getElementById("size");
@@ -778,7 +775,8 @@ scchart AO {
          <label></label>
          <br>
          <br>
-         <span class="style9">(* Due to technically issues with headless offline rendering using a VNC server the main server is currently not able to render large diagrams and may die in such scenarios because of VNC server crashes. A locally running KIELER SCCharts should not suffer from this problem. <br><b>Please do not render such large diagrams with our main server which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span></span></td>
+         <span class="style9">(* Due to technical issues with headless offline rendering using a VNC server, the Main Server is currently not able to render large diagrams and may die in such scenarios because of VNC server crashes. A locally running KIELER SCCharts should not suffer from this problem. <br>
+         <b>Please do not render such large diagrams with our Main Server, which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span></span></td>
      </tr>
    </table>
  </div>
