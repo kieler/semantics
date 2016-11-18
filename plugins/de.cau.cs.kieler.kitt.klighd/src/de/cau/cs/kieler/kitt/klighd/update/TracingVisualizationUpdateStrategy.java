@@ -42,6 +42,7 @@ import de.cau.cs.kieler.klighd.IViewChangeListener;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewChangeType;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.incremental.UpdateStrategy;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
@@ -126,7 +127,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     };
 
     /** Delegate update strategy to perform normal behavior. */
-    private SimpleUpdateStrategy simpleDelegate = new SimpleUpdateStrategy();
+    private IUpdateStrategy simpleDelegate = new UpdateStrategy();
 
     /** The last input model of the ViewContext */
     private final WeakHashMap<ViewContext, Object> lastInputModel =
