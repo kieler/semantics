@@ -53,6 +53,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="de.cau.cs.kieler.sccharts"
             class="de.cau.cs.kieler.sccharts.timing.preferences.TimingAnalysisPreferencePage"
             id="de.cau.cs.kieler.sccharts.tsccharts.preferences"
             name="Interactive Timing Analysis">
