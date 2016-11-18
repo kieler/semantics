@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.labels.KlighdLabelProperties
@@ -30,7 +31,6 @@ import java.lang.ref.WeakReference
 import java.util.HashSet
 import java.util.Set
 import org.eclipse.elk.core.klayoutdata.KLayoutData
-import org.eclipse.elk.graph.KLabel
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
@@ -73,7 +73,7 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
             for (WeakReference<KLabel> labelRef : viewContext.getProperty(FOCUSED_LABELS)) {
                 val label = labelRef.get()
                 if (label != null) {
-                    label.getData(KLayoutData).setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, false)
+                    label.setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, false)
                     focusRemoved = true
                 }
             }
@@ -82,7 +82,7 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
             // Focus all selected labels
             selection.diagramElementsIterator.filter(KText).filter[eContainer() instanceof KLabel].forEach [
                 val label = it.eContainer as KLabel
-                label.getData(KLayoutData).setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, true)
+                label.setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, true)
                 focusedLabels.add(new WeakReference(label))
             ]
 
@@ -100,7 +100,7 @@ class LabelFocusSelectionListener implements ISelectionChangedListener {
                             focusedVOs.contains(it)
                         ]) {
                             viewContext.getTargetElements(it).filter(KLabel).forEach [
-                                it.getData(KLayoutData).setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, true)
+                                it.setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, true)
                                 focusedLabels.add(new WeakReference(it))
                             ]
                         }

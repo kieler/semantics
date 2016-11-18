@@ -14,12 +14,13 @@
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
 import org.eclipse.elk.core.klayoutdata.KLayoutData;
-import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Predicate;
+
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 
 /**
  * Contains Properties for marking elements in tracing diagrams or related ViewContext.
@@ -51,8 +52,7 @@ public final class TracingVisualizationProperties {
                         public boolean apply(EObject eObject) {
                             // visualize all KGraphElements but not TRACED_MODEL_ROOT_NODEs
                             if (eObject instanceof KGraphElement) {
-                                return !((KGraphElement) eObject).getData(KLayoutData.class)
-                                        .getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE);
+                                return !((KGraphElement) eObject).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE);
                             }
                             return false;
                         }

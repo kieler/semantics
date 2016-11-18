@@ -16,6 +16,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -26,15 +29,12 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KGraphElement
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.CoreOptions
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
  * 
@@ -167,11 +167,7 @@ class LayoutHook extends SynthesisHook {
     }
 
     private def isBlockingAlternatingLayout(KNode node) {
-        val data = node.getData(KLayoutData)
-        if (data != null) {
-            return data.getProperty(BLOCK_ALTERNATIN_LAYOUT);
-        }
-        return BLOCK_ALTERNATIN_LAYOUT.^default;
+        return node.getProperty(BLOCK_ALTERNATIN_LAYOUT);
     }
 
     private def setDepthDirection(KNode node, Scope scope, boolean isHV, int depthOffset) {

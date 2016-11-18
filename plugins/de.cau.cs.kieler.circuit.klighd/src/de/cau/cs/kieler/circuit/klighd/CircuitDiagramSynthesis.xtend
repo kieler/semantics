@@ -18,6 +18,7 @@ import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.LineCap
 import de.cau.cs.kieler.klighd.krendering.LineJoin
@@ -32,13 +33,12 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import javax.inject.Inject
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.HierarchyHandling
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.core.options.CoreOptions
 
 /** 
  * @author fry

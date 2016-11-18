@@ -25,6 +25,9 @@ import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KCustomRendering
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
@@ -59,9 +62,6 @@ import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KLabel
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
@@ -399,7 +399,7 @@ class SCGDependencyHook extends SynthesisActionHook {
 			// Create edge
 			edge = createEdge(source, target);
 			edges.put(sourceTargetPair, edge);
-			edge.getData(KLayoutData).setProperty(CoreOptions.NO_LAYOUT, true);
+			edge.setProperty(CoreOptions.NO_LAYOUT, true);
 			edge.data += createKCustomRendering => [
 				val edgeNode = new TracingEdgeNode(source, target, attachNode);
 				edgeNode.setIgnoreFirstCollapsibleParent(ignoreFirstCollapsibleParent, ignoreFirstCollapsibleParent)

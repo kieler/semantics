@@ -20,9 +20,6 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.elk.core.klayoutdata.KLayoutData;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KLabel;
-import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -45,6 +42,9 @@ import de.cau.cs.kieler.klighd.IViewChangeListener;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewChangeType;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KLabel;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KText;
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
@@ -106,8 +106,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
 
         public void viewChanged(ViewChange change) {
             KGraphElement affectedElement = change.getAffectedElement();
-            if (affectedElement instanceof KNode && affectedElement.getData(KLayoutData.class)
-                    .getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
+            if (affectedElement instanceof KNode && affectedElement.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
                 ViewContext viewContext = change.getViewContext();
                 Set<Object> tracedModels =
                         viewContext.getProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS);

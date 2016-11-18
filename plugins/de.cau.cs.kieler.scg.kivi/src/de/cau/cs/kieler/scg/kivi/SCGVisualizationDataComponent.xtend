@@ -20,6 +20,8 @@ import com.google.inject.Module
 import com.google.inject.Scopes
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -47,8 +49,6 @@ import java.util.Set
 import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.util.Maybe
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.IEditorPart
@@ -253,7 +253,7 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
         val VOName = assignment.getStringAnnotationValue(ANNOTATION_CONDITIONALASSIGNMENT)
         val VO = scg.findValuedObjectByName(VOName)
         val kNode = assignment.createNode(VO) => [ node |
-            node.getData(typeof(KLayoutData)).setProperty(CoreOptions.COMMENT_BOX, true)
+            node.setProperty(CoreOptions.COMMENT_BOX, true)
 //            node.setNodeSize(75.0f, 20.0f)
         ]
 //            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 

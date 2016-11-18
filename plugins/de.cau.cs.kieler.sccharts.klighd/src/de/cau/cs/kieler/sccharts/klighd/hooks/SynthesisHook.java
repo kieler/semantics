@@ -17,9 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.elk.core.klayoutdata.KLayoutData;
-import org.eclipse.elk.graph.KEdge;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
@@ -27,6 +24,9 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
+import de.cau.cs.kieler.klighd.kgraph.KEdge;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -139,10 +139,7 @@ public abstract class SynthesisHook {
      */
     public boolean isAssociatedWith(final KGraphElement element, final Object object) {
         if (element != null) {
-            KLayoutData layoutData = element.getData(KLayoutData.class);
-            if (layoutData != null) {
-                return layoutData.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == object;
-            }
+            return element.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == object;
         }
         return false;
     }

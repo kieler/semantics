@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -25,7 +26,6 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import java.io.IOException
 import org.eclipse.core.resources.IProject
 import org.eclipse.elk.core.klayoutdata.KLayoutData
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI

@@ -20,6 +20,9 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
@@ -66,7 +69,6 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import java.util.Properties
 import java.util.Set
 import javax.inject.Inject
 import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
@@ -79,9 +81,6 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.KPort
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
