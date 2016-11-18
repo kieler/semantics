@@ -89,10 +89,10 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/expandall.gif");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui", "icons/full/elcl16/expandall.png");
 
     public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/collapseall.gif");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui", "icons/full/elcl16/collapseall.png");
 
     public static final ImageDescriptor ICON_SELECTALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
