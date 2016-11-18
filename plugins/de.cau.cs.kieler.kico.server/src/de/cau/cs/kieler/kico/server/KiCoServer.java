@@ -165,7 +165,7 @@ public class KiCoServer extends HttpServer {
                     mainModel = eObject;
                 }
             }
-
+ 
             
             String validationOrSerializationError = null;
             
