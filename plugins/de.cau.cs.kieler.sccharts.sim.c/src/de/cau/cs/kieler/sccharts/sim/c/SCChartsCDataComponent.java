@@ -369,21 +369,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // start execution of compiled program
-        if (cExecution.isCompiled()) {
+        if (cExecution != null && cExecution.isCompiled()) {
             try {
                 cExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
-                        "SCCharts could not be started sucessfully.\n\n", true, e);
+                        "SCChart could not be started sucessfully.\n\n", true, e);
             }
         } else {
-            throw new KiemInitializationException("SCCharts was not compiled sucessfully.\n\n",
+            throw new KiemInitializationException("SCChart was not compiled sucessfully.\n\n",
                     true, null);
         }
 
         if (!cExecution.isStarted()) {
             throw new KiemInitializationException(
-                    "Error running SCCharts. Compiled simulation does not exist.\n", true, null);
+                    "Error running SCChart. Compiled simulation does not exist.\n", true, null);
         }
 
         // Build the list of interface output signals

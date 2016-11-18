@@ -207,32 +207,32 @@ public class JavaExecution extends AbstractExecution {
         }
 
         String className1 = "test." + modelName;
-        String className2 = "test." + modelName + "$State";
+        //String className2 = "test." + modelName + "$State";
 
         // Register classes to be loaded specifically by the dynamic class loader
         dynamicClassLoader.addClassFileByName(className1);
-        dynamicClassLoader.addClassFileByName(className2);
+        //dynamicClassLoader.addClassFileByName(className2);
 
         // Build array of compiled files as return value (for possibly measuring file size)
         File[] returnFiles = new File[2];
         String classFileName1 = className1;
-        String classFileName2 = className2;
+        //String classFileName2 = className2;
         if (className1.lastIndexOf(".") > 0) {
             classFileName1 = className1.substring(className1.lastIndexOf(".") + 1);
         }
-        if (className2.lastIndexOf(".") > 0) {
-            classFileName2 = className2.substring(className2.lastIndexOf(".") + 1);
-        }
+        //if (className2.lastIndexOf(".") > 0) {
+        //    classFileName2 = className2.substring(className2.lastIndexOf(".") + 1);
+        //}
         classFileName1 += ".class";
-        classFileName2 += ".class";
+        //classFileName2 += ".class";
         URL classFileURL1 = dynamicClassLoader.getResource(classFileName1);
-        URL classFileURL2 = dynamicClassLoader.getResource(classFileName2);
+        //URL classFileURL2 = dynamicClassLoader.getResource(classFileName2);
         if (classFileURL1 != null) {
             returnFiles[0] = new File(classFileURL1.getFile());
         }
-        if (classFileURL2 != null) {
-            returnFiles[1] = new File(classFileURL2.getFile());
-        }
+        //if (classFileURL2 != null) {
+        //    returnFiles[1] = new File(classFileURL2.getFile());
+        //}
 
         // Instantiate new class as SJProgramWithSignals
         Class<?> cls;

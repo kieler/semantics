@@ -17,16 +17,27 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 
+import javax.naming.OperationNotSupportedException;
+
 /**
- * The SCChartsJavaProgram class is meant to be implemented for a simulation interface that
- * eases the access to variable and the tick function.
+ * The SCChartsJavaProgram class is meant to be implemented for a simulation interface that eases
+ * the access to variable and the tick function.
  * 
  * @author cmot
  * @kieler.design 2016-11-18 proposed cmot
  * @kieler.rating 2016-11-18 proposed
  * 
  */
-public abstract class SCChartsJavaProgram  implements Cloneable {
+public abstract class SCChartsJavaProgram implements Cloneable {
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new SCChartsJavaProgram.
+     * 
+     */
+    public SCChartsJavaProgram() {
+    }
 
     // -------------------------------------------------------------------------
 
@@ -219,31 +230,6 @@ public abstract class SCChartsJavaProgram  implements Cloneable {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new SCChartsJavaProgram.
-     * 
-     */
-    public SCChartsJavaProgram() {
-        super();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * This method should be implemented (overwritten) and should reset all output variables only. It
-     * is called before the computation of the reaction starts in the doTick() method.
-     */
-    abstract public void resetOutputVariables();
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * This method should be implemented (overwritten) and should reset all local variables only.
-     */
-    abstract public void resetLocalVariables();
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Sets the input of type int.
      * 
      * @param key
@@ -361,11 +347,12 @@ public abstract class SCChartsJavaProgram  implements Cloneable {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Checks by name whether a variable exists in the Java program.
      *
-     * @param key the key
+     * @param key
+     *            the key
      * @return true, if successful
      */
     public boolean hasVariable(String key) {
@@ -377,9 +364,8 @@ public abstract class SCChartsJavaProgram  implements Cloneable {
         }
         return false;
     }
-    
-    // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
 
     /**
      * Gets all variable names declared.
