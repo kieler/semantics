@@ -9,4 +9,12 @@
             name="SCCharts Visualization">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sccharts.kivi.SCChartsActiveStatesDataComponent"
+            id="de.cau.cs.kieler.sccharts.kivi.activestatesdatacomponent"
+            name="SCCharts Active States Approximator">
+      </content>
+   </extension>
 </plugin>
