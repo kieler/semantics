@@ -68,8 +68,8 @@
       <executionFile
             file="execution/scg_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
+               id="de.cau.cs.kieler.scg.impl.SCGraphImpl"
+               name="SCG Model"
                priority="100">
          </editor>
          <editor
@@ -86,8 +86,8 @@
       <executionFile
             file="execution/circuit_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
+               id="de.cau.cs.kieler.circuit.impl.ActorImpl"
+               name="Circuit Model"
                priority="100">
          </editor>
          <editor

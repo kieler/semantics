@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.kiem.config.ui;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -221,7 +223,18 @@ public class ScheduleSelector extends ControlContribution
                 editorId = EditorManager.getInstance().getDefaultEditorId();
                 editorName = EditorManager.getInstance().getDefaultEditorName();
             }
-
+            if (editorId == null) {
+                // The KLighD case
+                IPath modelFilePath = KiemPlugin.getCurrentModelFile();
+                if (modelFilePath != null) {
+                    EObject sourceModel = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+                    if (sourceModel != null) {
+                        String modelID = sourceModel.getClass().getCanonicalName();
+                        editorId = new EditorIdWrapper(modelID);
+                        editorName = null;
+                    }
+                }
+            }
             if (editorId
                     .equals("de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID")) {
                 // TODO: Handle this exception in another, more clean way in the future
