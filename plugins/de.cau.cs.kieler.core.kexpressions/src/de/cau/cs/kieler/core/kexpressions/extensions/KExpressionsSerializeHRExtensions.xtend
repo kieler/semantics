@@ -50,11 +50,15 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 
 
     def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject.name
-        for (index : valuedObjectReference.indices) {
-            vo = vo + "[" + index.serializeHR + "]"
+        try {
+            var vo = valuedObjectReference.valuedObject.name
+            for (index : valuedObjectReference.indices) {
+                vo = vo + "[" + index.serializeHR + "]"
+            }
+            vo
+        } catch(Exception e) {
+            throw new CouldNotSerializeException("Could not serialize valued object reference " + valuedObjectReference + ".")
         }
-        vo
     }
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
