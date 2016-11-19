@@ -22,6 +22,7 @@ import org.eclipse.elk.graph.KLabel;
 import org.eclipse.elk.graph.KNode;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -456,15 +457,35 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
-                        for (KText t : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
-                                KText.class))) {
-                            try {
-                                Iterables.removeIf(t.getStyles(), redFilter);
-                            } catch (Exception e) {
-                                // TODO: why ??!
-                                e.printStackTrace();
+//                        KText[] array = Iterables.toArray(Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
+//                                KText.class)),  KText.class);
+                        ArrayList<Object> objList =  Lists.newArrayList(ren.eAllContents());
+                        for (Object obj : objList) {
+                            if (obj instanceof KText) {
+                                KText t = (KText)obj;
+//                                if (t.getText().startsWith("during")) {
+//                                    System.out.println("ALERT");
+//                                }
+                                try {
+                                    Iterables.removeIf(t.getStyles(), redFilter);
+                                } catch (Exception e) {
+                                    // TODO: why ??!
+//                                    System.out.println(t.getText());
+                                    e.printStackTrace();
+                                }
                             }
                         }
+                        
+//                        KText[] array = Iterables.toArray(Iterables2.filter(),  KText.class);
+//                        for (KText t : array) {
+//                            try {
+//                                Iterables.removeIf(t.getStyles(), redFilter);
+//                            } catch (Exception e) {
+//                                // TODO: why ??!
+//                                System.out.println(t.getText());
+//                                e.printStackTrace();
+//                            }
+//                        }
                     }
                     if (expanded.contains(k)) {
                         viewContext.getViewer().collapse(k);
