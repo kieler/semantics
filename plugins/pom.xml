@@ -85,6 +85,7 @@
     <module>de.cau.cs.kieler.sccharts.s</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.sim.c</module>
+    <module>de.cau.cs.kieler.sccharts.sim.java</module>
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
 	<module>de.cau.cs.kieler.sccharts.timing</module>
