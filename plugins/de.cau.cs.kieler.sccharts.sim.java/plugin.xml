@@ -16,7 +16,7 @@
          <editor
                id="de.cau.cs.kieler.sccharts.text.sct.Sct"
                name="Textual SCCharts (SCT) Editor"
-               priority="100">
+               priority="102">
          </editor>
          <editor
                id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
@@ -34,7 +34,7 @@
          <editor
                id="de.cau.cs.kieler.sccharts.text.sct.Sct"
                name="Textual SCCharts (SCT) Editor"
-               priority="99">
+               priority="101">
          </editor>
          <editor
                id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
@@ -52,7 +52,7 @@
          <editor
                id="de.cau.cs.kieler.scg.impl.SCGraphImpl"
                name="SCG Model"
-               priority="100">
+               priority="101">
          </editor>
          <editor
                id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
@@ -70,7 +70,7 @@
          <editor
                id="de.cau.cs.kieler.circuit.impl.ActorImpl"
                name="Circuit Model"
-               priority="100">
+               priority="101">
          </editor>
       </executionFile>
    </extension>
