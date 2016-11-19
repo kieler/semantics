@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.kiem.config.ui;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -212,6 +214,18 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
                 // get the attributes from the editor
                 editorId = new EditorIdWrapper(editor.getId());
                 editorName = editor.getRegisteredName();
+            }
+            if (editorId == null) {
+                // The KLighD case
+                IPath modelFilePath = KiemPlugin.getCurrentModelFile();
+                if (modelFilePath != null) {
+                    EObject sourceModel = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+                    if (sourceModel != null) {
+                        String modelID = sourceModel.getClass().getCanonicalName();
+                        editorId = new EditorIdWrapper(modelID);
+                        editorName = null;
+                    }
+                }
             }
             if (editorId == null) {
                 editorId = EditorManager.getInstance().getDefaultEditorId();

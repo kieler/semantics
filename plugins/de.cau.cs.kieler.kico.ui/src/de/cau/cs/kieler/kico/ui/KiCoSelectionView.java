@@ -57,6 +57,7 @@ import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLay
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling;
+import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 
 /**
  * The Class KiCoSelectionView.

@@ -13,8 +13,12 @@
  */
 package de.cau.cs.kieler.sim.kiem.config.kivi;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPart;
@@ -44,6 +48,9 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  */
 public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
 
+    /** KIEM ID for source model. */
+    public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";
+
     private static String lastValidEditorId = null;
 
     /**
@@ -52,21 +59,21 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
     public KIEMExecutionAutoloadCombination() {
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Sets the last valid editor id. This method is intended only for internal
-     * use when the KIEMModelSeletionCombination tells this combination which
-     * editor is the currently selected one. This prevents the autoload to 
-     * proceed if the valid current editor has not changed.
+     * Sets the last valid editor id. This method is intended only for internal use when the
+     * KIEMModelSeletionCombination tells this combination which editor is the currently selected
+     * one. This prevents the autoload to proceed if the valid current editor has not changed.
      *
-     * @param newEditorPart the new last valid editor id
+     * @param newEditorPart
+     *            the new last valid editor id
      */
     public static void setLastValidEditorId(final String newEditorPart) {
         lastValidEditorId = newEditorPart;
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the last valid editor id.
@@ -76,13 +83,14 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
     public static String getLastValidEditorId() {
         return lastValidEditorId;
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * Execute.
      *
-     * @param partState the part state
+     * @param partState
+     *            the part state
      */
     public void execute(final IWorkbenchPartReference partRef) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
@@ -101,15 +109,15 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
             }
 
             // if no execution is running or is about to run
-            if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
-                    .getExecution() != null)) {
+            if (!(KiemPlugin.getDefault().isInitializingExecution()
+                    || KiemPlugin.getDefault().getExecution() != null)) {
                 autoloadExecutionSchedule();
             }
         }
 
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     public static void autoloadExecutionSchedule() {
         EditorIdWrapper editorId = null;
@@ -117,19 +125,20 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
 
         // get the currently opened editor
         // this may throw a NullPointerException if no editor is open
-        IEditorSite editor = KiemUtil.getActiveEditor(); 
+        IEditorSite editor = KiemUtil.getActiveEditor();
 
         // if an editor is opened
         if (editor != null) {
             // get the attributes from the editor
             editorId = new EditorIdWrapper(editor.getId());
             editorName = editor.getRegisteredName();
-            
-            // only if editor has been changed to a valid one (OR schedules are still empty because of first selection)
+
+            // only if editor has been changed to a valid one (OR schedules are still empty because
+            // of first selection)
             if (editorId == null || (!editorId.equals(lastValidEditorId))) {
                 ScheduleManager scheduleManager = ScheduleManager.getInstance();
-                List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(
-                        editorId, editorName);
+                List<ScheduleData> scheduleDataList =
+                        scheduleManager.getMatchingSchedules(editorId, editorName);
 
                 // if at least one matching schedule, take the first one
                 if (scheduleDataList.size() > 0) {
@@ -143,31 +152,63 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
                     }
                 }
             }
+        } else {
+            String modelID = null;
+            // The interactive selection case!
+            // Inspect the model type
+            IPath modelFilePath = KiemPlugin.getCurrentModelFile();
+            if (modelFilePath != null) {
+                EObject sourceModel = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+                if (sourceModel != null) {
+                    modelID = sourceModel.getClass().getCanonicalName();
+                }
+            }
 
+            // only if editor has been changed to a valid one (OR schedules are still empty because
+            // of first selection)
+            if (modelID == null || (!modelID.equals(lastValidEditorId))) {
+                ScheduleManager scheduleManager = ScheduleManager.getInstance();
+                EditorIdWrapper dummyEditorId = new EditorIdWrapper(modelID);
+                List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(dummyEditorId, null);
+
+                // if at least one matching schedule, take the first one
+                if (scheduleDataList.size() > 0) {
+                    lastValidEditorId = modelID;
+                    ScheduleData scheduleData = scheduleDataList.get(0);
+                    // open execution file
+                    try {
+                        scheduleManager.openSchedule(scheduleData);
+                    } catch (ScheduleFileMissingException e) {
+                        // fail silently if this does not work
+                    }
+                }
+                // }
+
+            }
         }
 
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
     public void notifyEvent(final KiemEvent event) {
-      if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
-          // In case of erroneous or intended execution stops
-          // trigger to re-auto select an appropriate schedule
-          autoloadExecutionSchedule();
-      }
+        if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
+            // In case of erroneous or intended execution stops
+            // trigger to re-auto select an appropriate schedule
+            autoloadExecutionSchedule();
+        }
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
     public KiemEvent provideEventOfInterest() {
-        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP};
+        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP };
         return new KiemEvent(events);
     }
 

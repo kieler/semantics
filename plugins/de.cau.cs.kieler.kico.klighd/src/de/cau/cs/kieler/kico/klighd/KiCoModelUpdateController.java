@@ -851,6 +851,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (currentCompilationResult != null) {
                 publishCurrentModelInformation(model, currentCompilationResult);
                 properties.setProperty(KiCoProperties.COMPILATION_RESULT, currentCompilationResult);
+            } else {
+                // just update the autoload schedules accordingly
+                KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(recentEditor);
+                KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
 
             // composite model in given display mode
