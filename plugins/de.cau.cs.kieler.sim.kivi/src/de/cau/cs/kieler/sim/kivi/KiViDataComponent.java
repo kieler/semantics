@@ -458,7 +458,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         Iterables.removeIf(ren.getStyles(), filter);
                         for (KText t : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
                                 KText.class))) {
-                            Iterables.removeIf(t.getStyles(), redFilter);
+                            try {
+                                Iterables.removeIf(t.getStyles(), redFilter);
+                            } catch (Exception e) {
+                                // TODO: why ??!
+                                e.printStackTrace();
+                            }
                         }
                     }
                     if (expanded.contains(k)) {
