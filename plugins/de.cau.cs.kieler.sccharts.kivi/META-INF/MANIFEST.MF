@@ -19,8 +19,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui;bundle-version="2.4.2",
  org.eclipse.xtend;bundle-version="1.4.0",
  de.cau.cs.kieler.core.kgraph,
- de.cau.cs.kieler.kico.klighd
+ de.cau.cs.kieler.kico.klighd,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.ui.view
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.kivi
 Bundle-Vendor: Kiel University
+
