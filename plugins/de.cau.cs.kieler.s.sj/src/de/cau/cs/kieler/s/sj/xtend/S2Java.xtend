@@ -135,7 +135,8 @@ class S2Java {
 
    «/* Variables */»
     «sVariables(program)»    
-    
+    «program.tickVariables»
+    boolean _PRE_GO = false;
     ''' 
    }
    
@@ -174,7 +175,7 @@ class S2Java {
        if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
            return '''public'''
        }
-       return '''private'''
+       return '''public'''
    }
 
    // Generate variables.
@@ -207,7 +208,7 @@ class S2Java {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF declaration.volatile»
-              «'''  '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «''' public '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray
 //TODO: initial values für arrays
 »
@@ -275,6 +276,7 @@ class S2Java {
    def sResetFunction(Program program) {
        '''  public void reset(){
        _GO = true;
+       _PRE_GO = false;
        «program.resetVariables»
        return;
     }
@@ -286,12 +288,14 @@ class S2Java {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''  public void tick(){
-       	«program.tickVariables»
+       if (_PRE_GO) {
+            _GO = false;
+       }
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
        «program.setPreVariables»
-       _GO = false;
+       _PRE_GO = _GO;
        return;
     }
     '''

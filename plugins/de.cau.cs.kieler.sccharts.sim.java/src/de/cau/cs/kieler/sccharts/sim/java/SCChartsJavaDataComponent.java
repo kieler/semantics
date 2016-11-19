@@ -79,24 +79,15 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 8;
+    private static final int KIEM_PROPERTY_MAX = 7;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
     private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
     private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
 
-    /** The Constant KIEM_PROPERTY_CCOMPILER. */
-    private static final int KIEM_PROPERTY_CCOMPILER = 2;
-
-    /** The Constant KIEM_PROPERTY_DEFAULT_CCOMPILER. */
-    private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
-
-    /** The Constant KIEM_PROPERTY_NAME_CCOMPILER. */
-    private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
-
     /** The Constant KIEM_PROPERTY_FULLDEBUGMODE. */
-    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 4;
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
 
     /** The Constant KIEM_PROPERTY_NAME_FULLDEBUGMODE. */
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
@@ -105,13 +96,13 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     private static final String KIEM_PROPERTY_NAME_BENCHMARK = "Benchmark Mode";
 
     /** The Constant KIEM_PROPERTY_BENCHMARK. */
-    private static final int KIEM_PROPERTY_BENCHMARK = 3;
+    private static final int KIEM_PROPERTY_BENCHMARK = 2;
 
     /** The Constant KIEM_PROPERTY_DEFAULT_BENCHMARK. */
     private static final boolean KIEM_PROPERTY_DEFAULT_BENCHMARK = false;
 
     /** The Constant KIEM_PROPERTY_DEBUGTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_DEBUGTRANSFORMATIONS = 5;
+    private static final int KIEM_PROPERTY_DEBUGTRANSFORMATIONS = 4;
     /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
@@ -119,7 +110,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
             "T_SIMULATIONVISUALIZATION";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 6;
+    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 5;
     /** The Constant KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
             "High Level Transformations";
@@ -127,7 +118,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE, T_ABORT";
 
     /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 7;
+    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 6;
     /** The Constant KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
             "Low Level Transformations";
@@ -165,6 +156,10 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     /** The SSCharts State / SCG is the considered model to simulate. */
     private EObject myModel = null;
 
+    /** The SSCharts State / SCG is the considered model to simulate. */
+    private EObject simulatedModel = null;
+
+
     /** The single s / kexpression extension. */
     // private static SExtension sExtension = new SExtension();
     private static KExpressionsValuedObjectExtensions kExpressionValuedObjectExtensions =
@@ -189,8 +184,6 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 new KiemProperty(KIEM_PROPERTY_NAME_STATENAME, "state");
         properties[KIEM_PROPERTY_TRANSITIONNAME] =
                 new KiemProperty(KIEM_PROPERTY_NAME_TRANSITIONNAME, "transition");
-        properties[KIEM_PROPERTY_CCOMPILER] = new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER,
-                compilerFile, KIEM_PROPERTY_DEFAULT_CCOMPILER);
         properties[KIEM_PROPERTY_BENCHMARK] =
                 new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, KIEM_PROPERTY_DEFAULT_BENCHMARK);
         properties[KIEM_PROPERTY_FULLDEBUGMODE] =
@@ -453,6 +446,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
         // System.out.println("1");
         this.myModel = model;
+        simulatedModel = model;
         monitor.begin("SCCharts Simulation", 1);
         // System.out.println("2");
 
@@ -523,6 +517,8 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
             EObject extendedSCChart = this.myModel;
             // System.out.println("9");
 
+            String className = this.myModel.getClass().getCanonicalName();
+            
             if (this.myModel instanceof Actor) {
                 // In case we want to simulate a circuit, first re-compile the model
                 // but just up to SSA-SCG.
@@ -654,6 +650,9 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
             String modelName = "SCG";
             if (myModel instanceof State) {
                 modelName = ((State) myModel).getId();
+            }
+            if (myModel instanceof SCGraph) {
+                modelName = ((SCGraph) myModel).getLabel();
             }
 
             String constructor = "";// "\npublic SCChart() {};\n";
@@ -871,6 +870,11 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 e.printStackTrace();
             }
         }
+        
+        
+        boolean fullDebugMode = this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                .getValueAsBoolean();
+        
 
         for (String output : program.getVariableNames()) {
             Object object;
@@ -880,6 +884,24 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 if (object instanceof Boolean) {
                     present = (Boolean) object;
                 }
+                
+                if ((!(simulatedModel instanceof State)) && fullDebugMode) {
+                    if (output.startsWith("g") || output.equals("_GO")) {
+                        Object value;
+                        try {
+                            if (present) {
+                                value = JSONSignalValues.newValue(1, present);
+                            } else {
+                                value = JSONSignalValues.newValue(0, present);
+                            }
+                            returnObj.accumulate(output, value);
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
 
                 if (output.startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                     if (present) {
