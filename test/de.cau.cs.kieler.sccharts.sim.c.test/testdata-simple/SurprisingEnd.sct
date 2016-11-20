@@ -1,0 +1,20 @@
+// This SCChart is surprisingly correct
+// although one might expect O to be
+// set to be set to false again.
+// The correct behavior is that
+// in this final state there is no 
+// further behavior because the
+// the SCChart terminates.
+scchart AOSurprisingEnd {
+  input bool A;
+  output bool O = false;
+ 
+  initial state wA
+  --> da with A / O = true;  
+ 
+  final state da {
+    initial state A
+    --> B with / O = false;
+    state B;
+  };  
+}   
