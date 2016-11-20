@@ -94,6 +94,7 @@
     <module>de.cau.cs.kieler.scg.edit</module>
     <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
+    <module>de.cau.cs.kieler.scg.kivi</module>
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.scl.ui</module>
