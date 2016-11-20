@@ -7,12 +7,14 @@
 // the SCChart terminates.
 scchart AOSurprisingEnd {
   input bool A;
-  output bool O = false;
+  output bool O = true;
  
-  initial state wA
-  --> da with A / O = true;  
+  initial state wA {
+    entry / O = false;
+  }
+  --> dA with A / O = true;  
  
-  final state da {
+  final state dA {
     initial state A
     --> B with / O = false;
     state B;

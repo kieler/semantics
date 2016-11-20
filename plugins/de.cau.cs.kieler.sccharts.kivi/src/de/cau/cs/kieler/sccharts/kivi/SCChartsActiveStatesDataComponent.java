@@ -216,11 +216,11 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             State enterState = transition.getTargetState();
             activeStates.enterState(enterState);
             //activeStates.leaveState(leaveState);
-            System.out.println(leaveState.getId() + " ----> " + enterState.getId());
+            //SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
         }
         
         for (State activeState : activeStates.getAllActiveStates()) {
-            System.out.println("ACTIVE: " + activeState.getId());
+            SCChartsKiViPlugin.log("ACTIVE: " + activeState.getId());
         }
        
        // Build list for visualization
@@ -334,7 +334,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            System.out.println(baseObjID + ":" + baseObj);
+            SCChartsKiViPlugin.log(baseObjID + ":" + baseObj);
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();

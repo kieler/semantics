@@ -501,9 +501,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
         style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
         style1.setPropagateToChildren(true);
+  
         final KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
+        style2.setPropagateToChildren(true);
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        style3.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
 
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
@@ -516,8 +519,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     public void run() {
                         for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
                                 ren.eAllContents(), KText.class))) {
-                            viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
-
                         }
                         ren.getStyles().add(EcoreUtil.copy(style2));
                         ren.getStyles().add(EcoreUtil.copy(style1));

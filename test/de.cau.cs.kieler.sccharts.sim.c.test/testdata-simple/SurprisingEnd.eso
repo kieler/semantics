@@ -15,20 +15,17 @@
 % Output: 
 ;
 A 
-% Output: O(true) 
+% Output: O(1) 
 ;
 
-% Output: O(true) 
+% Output: O(1) 
 ;
 
-% Output: O(true) 
+% Output: O(1) 
 ;
 
-% Output: O(true) 
+% Output: O(1) 
 ;
 
-% Output: O(true) 
-;
-
-% Output: O(true) 
+% Output: O(1) 
 ;
