@@ -1012,6 +1012,10 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private def String checkWarnings(){
         val env = currentData
+        // Nothing to check
+        if (env == null)
+            return null
+        
         // Check project wizard is installed.
         var projectWizardFound = false
         if (associatedProjectWizard.input != null) {
