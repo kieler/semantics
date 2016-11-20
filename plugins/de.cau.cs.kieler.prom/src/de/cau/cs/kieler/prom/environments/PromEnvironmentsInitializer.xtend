@@ -42,9 +42,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * when the preferences page is opened for the first time in this run.
      */
     override void initializeDefaultPreferences() {
-        if(EnvironmentData.isPreferenceStoreEmpty(store)){
-            initializeDefaultEnvironments()
-        }
+        initializeDefaultEnvironments()
     }
 
     /** 
@@ -52,7 +50,9 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Any other environment data in the store will be lost. 
      */
     public static def void initializeDefaultEnvironments(){
-        EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
+        if(EnvironmentData.isPreferenceStoreEmpty(store)){
+            EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
+        }
     }
 
     /**

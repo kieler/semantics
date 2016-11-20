@@ -60,35 +60,6 @@
             </enablement>
          </contextualLaunch>
       </shortcut>
-      <shortcut
-            class="de.cau.cs.kieler.prom.simulation.ui.SimulationLaunchShortcut"
-            icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.sccharts.prom.simulationLaunchShortcut"
-            label="KiCo Simulation"
-            modes="run, debug"
-            path="/kieler">
-         <contextualLaunch>
-            <enablement>
-               <with
-                     variable="selection">
-                  <iterate>
-                     <or>
-                        <test
-                              forcePluginActivation="false"
-                              property="org.eclipse.debug.ui.matchesPattern"
-                              value="*.sct">
-                        </test>
-                        <test
-                              forcePluginActivation="false"
-                              property="org.eclipse.debug.ui.matchesPattern"
-                              value="*.eso">
-                        </test>
-                     </or>
-                  </iterate>
-               </with>
-            </enablement>
-         </contextualLaunch>
-      </shortcut>
    </extension>
    <extension
          point="de.cau.cs.kieler.prom.environmentInitializer">

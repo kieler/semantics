@@ -57,6 +57,8 @@ import org.eclipse.swt.widgets.TableItem
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
+import org.eclipse.core.runtime.Plugin
+import org.eclipse.core.runtime.Status
 
 /**
  * Implementation of the preferences page for environments.
@@ -148,12 +150,12 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private var ComboViewer launchShortcuts
     
-    
     /**
      * The combobox with the associated project wizard class name of the environment.
      * The combobox is filled with the extensions of 'org.eclipse.ui.newWizards' that create projects.
      */
     private var ComboViewer associatedProjectWizard
+    
     /**
      * The input field for the default model file of the environment.
      */
@@ -803,7 +805,8 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      * @param data The environment to be displayed in the controls
      */
     private def void updateControls(EnvironmentData data) {
-        if(data != null){
+        var String warning = null;
+        if(data != null) {
             // Update name
             name.text = data.name
             
@@ -860,18 +863,20 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             viewer.input = data.launchData.commands
             
             // Select associated launch shortcut in combo viewer
-            var selectionFound=false
+            var launchShortcutFound = false
             for(o : launchShortcuts.input as ArrayList<Object>){
                 if(o instanceof IConfigurationElement){
                     if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == data.launchData.associatedLaunchShortcut) {
                         launchShortcuts.selection = new StructuredSelection(o)
-                        selectionFound= true
+                        launchShortcutFound= true
                     }
                 }
             }
-            if(!selectionFound)
+            if(!launchShortcutFound && data.launchData.associatedLaunchShortcut.isNullOrEmpty) {
                 launchShortcuts.selection = new StructuredSelection(StructuredSelection.EMPTY)
+            }
         }
+        setMessage(warning, WARNING);
     }
     
     /**
@@ -968,6 +973,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
      */
     private def boolean checkConsistency(){
         errorMessage = checkErrors()
+        setMessage(checkWarnings(), WARNING)
         return errorMessage == null
     }
 
@@ -994,6 +1000,44 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             // Check for no comma in names
             if(env.name.contains(","))
                 return "Environment names must not contain a comma."
+        }
+        
+        return null
+    }
+    
+    /**
+     * Checks the input for consistency and returns an appropriate warning message.
+     * 
+     * @return A string with a warning message or null if the input is valid.
+     */
+    private def String checkWarnings(){
+        val env = currentData
+        // Check project wizard is installed.
+        var projectWizardFound = false
+        if (associatedProjectWizard.input != null) {
+            for (obj : associatedProjectWizard.input as ArrayList<IConfigurationElement>) {
+                if (obj.getAttribute("class") == env.associatedProjectWizardClass) {
+                    projectWizardFound = true
+                }
+            }
+        }
+        if (!projectWizardFound) {
+            return "The project wizard "+env.associatedProjectWizardClass +" could not be found."
+        }
+        
+        // Check launch shortcut is installed.
+        if(!env.launchData.associatedLaunchShortcut.isNullOrEmpty) {
+            var launchShortcutFound = false
+            for(o : launchShortcuts.input as ArrayList<Object>){
+                if(o instanceof IConfigurationElement){
+                    if(o.getAttribute(ExtensionLookupUtil.CLASS_ATTRIBUTE_NAME) == env.launchData.associatedLaunchShortcut) {
+                        launchShortcutFound= true
+                    }
+                }
+            }
+            if (!launchShortcutFound) {
+                return "The launch shortcut "+env.launchData.associatedLaunchShortcut +" could not be found."
+            }    
         }
         
         return null
