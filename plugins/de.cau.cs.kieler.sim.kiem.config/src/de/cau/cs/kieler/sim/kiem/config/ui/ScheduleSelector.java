@@ -220,10 +220,6 @@ public class ScheduleSelector extends ControlContribution
                 editorName = editor.getRegisteredName();
             }
             if (editorId == null) {
-                editorId = EditorManager.getInstance().getDefaultEditorId();
-                editorName = EditorManager.getInstance().getDefaultEditorName();
-            }
-            if (editorId == null) {
                 // The KLighD case
                 IPath modelFilePath = KiemPlugin.getCurrentModelFile();
                 if (modelFilePath != null) {
@@ -235,6 +231,11 @@ public class ScheduleSelector extends ControlContribution
                     }
                 }
             }
+            if (editorId == null) {
+                editorId = EditorManager.getInstance().getDefaultEditorId();
+                editorName = EditorManager.getInstance().getDefaultEditorName();
+            }
+
             if (editorId
                     .equals("de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID")) {
                 // TODO: Handle this exception in another, more clean way in the future
