@@ -43,7 +43,7 @@ public class JavaExecution extends AbstractExecution {
     private static final String COMPILER_DEFAULT = "java";
 
     /** The Constant SJL_PATH to the SJLProgram.class for compilation. */
-    private static final String SJL_PATH_BIN = "bin/";
+    private static final String SJL_PATH_BIN = "bin";
 //    private static final String SJL_PATH_BIN = ".";
 
     /** The model name used when compile() was called. */
@@ -138,6 +138,15 @@ public class JavaExecution extends AbstractExecution {
 
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SCChartsSimJavaPlugin.PLUGIN_ID);
+
+        URL urlB = null;
+        try {
+            urlB = FileLocator.toFileURL(FileLocator.find(bundle, new Path("."), null));
+        } catch (Exception e2) {
+            e2.printStackTrace();
+        }
+        String bundleLocationB = urlB.getFile();
+        System.out.println("bundleLocationB:" + bundleLocationB);
 
         URL url = null;
         try {
