@@ -129,6 +129,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private static KBackground STYLE1 = KRenderingFactory.eINSTANCE.createKBackground()
             .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
 
+    private static KBackground STYLETRANSPARENT = KRenderingFactory.eINSTANCE.createKBackground()
+            .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
+
+    private static KColor SCCHARTSWHITE = KRenderingFactory.eINSTANCE.createKColor().setColor(255,
+            255, 255);
+
+    
     private ArrayList<KNode> expanded = new ArrayList<KNode>();
 
     // --------------------------------------------------------------------------
@@ -508,6 +515,11 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style3.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
 
+        
+//        KBackground styletransparent = KRenderingFactory.eINSTANCE.createKBackground()
+//        .setColors(SCCHARTSWHITE,SCCHARTSWHITE).setGradientAngle2(90);
+//        styletransparent.setAlpha(100);
+        
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
             final boolean flagged = Iterables.any(ren.getStyles(), filter);
@@ -519,6 +531,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     public void run() {
                         for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
                                 ren.eAllContents(), KText.class))) {
+                             //viewElementStateLabel.getStyles().add(EcoreUtil.copy(styletransparent));
                         }
                         ren.getStyles().add(EcoreUtil.copy(style2));
                         ren.getStyles().add(EcoreUtil.copy(style1));

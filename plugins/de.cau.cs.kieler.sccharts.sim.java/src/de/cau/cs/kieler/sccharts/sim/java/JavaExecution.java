@@ -141,7 +141,7 @@ public class JavaExecution extends AbstractExecution {
         URL url = null;
         try {
             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
-        } catch (IOException e2) {
+        } catch (Exception e2) {
             e2.printStackTrace();
         }
         String bundleLocation = url.getFile();
