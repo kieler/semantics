@@ -152,6 +152,7 @@ public class JavaExecution extends AbstractExecution {
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
+        System.out.println("bundleLocation:" + bundleLocation);
         for (String filePath : filePaths) {
             filePath = filePath.replaceAll("[/\\\\]+", "\\" + File.separator);
             if (filePath.startsWith("\\")) {
