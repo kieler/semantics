@@ -23,6 +23,7 @@ import org.eclipse.elk.graph.KNode;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -481,14 +482,24 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
                                     e.printStackTrace();
                                 }
                             } else if (obj instanceof KContainerRendering) {
-//                                try {
-//                                    KContainerRendering k2 = (KContainerRendering) obj;
-//                                    Iterables.removeIf(k2.getStyles(), redFilter);
-//                                } catch (Exception e) {
-//                                    // TODO: why ??!
-//                                    // System.out.println(t.getText());
-//                                    e.printStackTrace();
-//                                }
+                                // for final states
+                                if (ren.eContents().size() > 0) {
+                                    for (EObject ren2 : ren.eContents()) {
+                                        if (ren2 instanceof KRendering) {
+                                            try {
+                                                KRendering k2 = (KRendering) ren2;
+                                                EList<KStyle> styles = k2.getStyles();
+                                                Iterables.removeIf(styles, filter);
+                                            } catch (Exception e) {
+                                                // TODO: why ??!
+                                                // System.out.println(t.getText());
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
                             }
 
                         }

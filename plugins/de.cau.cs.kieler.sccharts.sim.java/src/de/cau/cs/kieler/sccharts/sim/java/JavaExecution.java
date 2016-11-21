@@ -43,8 +43,8 @@ public class JavaExecution extends AbstractExecution {
     private static final String COMPILER_DEFAULT = "java";
 
     /** The Constant SJL_PATH to the SJLProgram.class for compilation. */
-//    private static final String SJL_PATH_BIN = "bin/";
-    private static final String SJL_PATH_BIN = ".";
+    private static final String SJL_PATH_BIN = "bin/";
+//    private static final String SJL_PATH_BIN = ".";
 
     /** The model name used when compile() was called. */
     private String modelName;

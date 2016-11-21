@@ -17,8 +17,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -48,6 +54,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCChart;
@@ -158,7 +165,6 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
 
     /** The SSCharts State / SCG is the considered model to simulate. */
     private EObject simulatedModel = null;
-
 
     /** The single s / kexpression extension. */
     // private static SExtension sExtension = new SExtension();
@@ -518,7 +524,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
             // System.out.println("9");
 
             String className = this.myModel.getClass().getCanonicalName();
-            
+
             if (this.myModel instanceof Actor) {
                 // In case we want to simulate a circuit, first re-compile the model
                 // but just up to SSA-SCG.
@@ -566,6 +572,9 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 // highLevelTransformations = debugTransformations + ", " +
                 // highLevelTransformations;
             }
+
+            String[] prefExt = { "sct" };
+            String bla = KiCoUtil.serialize((EObject) extendedSCChart, null, false, prefExt, true);
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
@@ -870,21 +879,26 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 e.printStackTrace();
             }
         }
-        
-        
-        boolean fullDebugMode = this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                .getValueAsBoolean();
-        
+
+        boolean fullDebugMode =
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean();
+
+        HashMap<String, Integer> activeTransitionsHashMap = new HashMap<String, Integer>();
 
         for (String output : program.getVariableNames()) {
             Object object;
             try {
                 object = program.getOutput(output);
+                int order = 0;
                 boolean present = true;
                 if (object instanceof Boolean) {
                     present = (Boolean) object;
+                } else if (object instanceof Integer) {
+                    order = (Integer) object;
+                    present = (order) > 0;
                 }
-                
+
                 if ((!(simulatedModel instanceof State)) && fullDebugMode) {
                     if (output.startsWith("g") || output.equals("_GO")) {
                         Object value;
@@ -902,7 +916,6 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                     }
                 }
 
-
                 if (output.startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                     if (present) {
                         if (activeStatesBuf.length() > 0) {
@@ -915,12 +928,9 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 } else if (output
                         .startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                     if (present) {
-                        if (activeTransitionsBuf.length() > 0) {
-                            activeTransitionsBuf.append(",");
-                        }
                         String activeTransitionName = output.substring(
                                 SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION.length());
-                        activeTransitionsBuf.append(activeTransitionName);
+                        activeTransitionsHashMap.put(activeTransitionName, order);
                     }
                 }
             } catch (NoSuchFieldException e) {
@@ -936,6 +946,14 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+
+        List<String> sorted = sortByValue(activeTransitionsHashMap);
+        for (String activeTransitionName : sorted) {
+            if (activeTransitionsBuf.length() > 0) {
+                activeTransitionsBuf.append(",");
+            }
+            activeTransitionsBuf.append(activeTransitionName);
         }
 
         // // Finally accumulate all active Statements (activeStatements)
@@ -998,6 +1016,25 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 return 1;
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    // Taken from: http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java
+    public static <K, V extends Comparable<? super V>> List<K> sortByValue(Map<K, V> map) {
+
+        List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
+            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        List<K> result = new ArrayList<K>();
+        for (Map.Entry<K, V> entry : list) {
+            result.add(entry.getKey());
+        }
+        return result;
     }
 
     // -------------------------------------------------------------------------

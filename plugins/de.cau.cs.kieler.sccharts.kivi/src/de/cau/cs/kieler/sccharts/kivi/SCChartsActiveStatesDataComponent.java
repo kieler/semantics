@@ -208,18 +208,29 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             }
         }
             
+//        // Calculate left and then entered states
+//        for (Transition transition : takenTransitions) {
+//            State leaveState = transition.getSourceState();
+//            activeStates.leaveState(leaveState);
+//        }
+//        for (Transition transition : takenTransitions) {
+//            State leaveState = transition.getSourceState();
+//            State enterState = transition.getTargetState();
+//            activeStates.enterState(enterState);
+//            //activeStates.leaveState(leaveState);
+//            //SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+//        }
+
         // Calculate left and then entered states
         for (Transition transition : takenTransitions) {
             State leaveState = transition.getSourceState();
-            activeStates.leaveState(leaveState);
-        }
-        for (Transition transition : takenTransitions) {
-            State leaveState = transition.getSourceState();
             State enterState = transition.getTargetState();
+            activeStates.leaveState(leaveState);
             activeStates.enterState(enterState);
             //activeStates.leaveState(leaveState);
-            //SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+            SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
         }
+        
         
         for (State activeState : activeStates.getAllActiveStates()) {
             SCChartsKiViPlugin.log("ACTIVE: " + activeState.getId());

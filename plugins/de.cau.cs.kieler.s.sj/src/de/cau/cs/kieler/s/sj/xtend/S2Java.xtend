@@ -331,8 +331,14 @@ class S2Java {
    // -------------------------------------------------------------------------   
 
    // Host code without "..."
+   // Removes the first and last character from a String if these are matching quotation marks.
    def extractCode(String hostCodeString) {
-        hostCodeString.substring(1, hostCodeString.length-1);
+        if ((hostCodeString.startsWith("'") && hostCodeString.endsWith("'"))
+            || (hostCodeString.startsWith('"') && hostCodeString.endsWith('"'))) {
+            return hostCodeString.substring(1, hostCodeString.length - 1);
+        } else {
+            return hostCodeString
+        }
    }
 
    def extractCode(TextExpression hostCode) {

@@ -26,6 +26,10 @@ import com.google.common.collect.Sets
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * This class handles the<BR>
@@ -65,6 +69,9 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
     @Inject
     extension KExpressionsCreateExtensions
+    
+    @Inject
+    extension KEffectsExtensions;
 
     @Inject
     extension SCChartsExtension
@@ -119,6 +126,12 @@ class SimulationVisualization extends AbstractExpansionTransformation {
         var targetRootState = rootState.fixAllPriorities
 
 
+        var microtick = targetRootState.createVariable("_microtick").setTypeInt.setIsOutput.uniqueName
+        targetRootState.createEntryAction.effects.add("_microtick = 0;".asHostcode);
+//        microtick.combineOperator = CombineOperator::ADD;
+//        microtick.initialValue = 0.createIntValue;
+            
+
         // Traverse all transitions
         var i = 0;
         val originalTransitionsList = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList
@@ -128,6 +141,8 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             val originalTransitionURIFragment = res.getURIFragment(originalTransition);
             val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION +
                 originalTransitionURIFragment.hashCode.toString().replace("-", "M");
+                
+                
             targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
         }
 
@@ -148,33 +163,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     }
 
 
-    // Transform a transition as described in 1.
-    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
-            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
-            
-            // Add action - TRUE iff this transition is taken
-            transition.addAssignment(active.assignRelative(TRUE));
-            
-            // Add during action - FALSE otherwise
-            val duringAction2 = targetRootState.createDuringAction()
-            duringAction2.immediate = true
-            duringAction2.addAssignment(active.assign(FALSE));
 
-
-
-//            val region = targetRootState.createControlflowRegion(GENERATED_PREFIX + "During").uniqueName
-//            val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-//            var Transition duringTransition = null
-//            val secondState = region.createState(GENERATED_PREFIX + "S");
-//             duringTransition = initialState.createTransitionTo(secondState)
-//            // because we have a second state, we need another transition
-//            secondState.createTransitionTo(initialState)
-//            secondState.setFinal
-//            duringTransition.setImmediate(true);
-//            duringTransition.addAssignment(active.assign(FALSE));
-
-
-    }
 
     // TEMPORARY DISABLED //
     //   remove "&& !state.hasInnerStatesOrRegions" in the future, problematic is this for self loop aborts
@@ -182,31 +171,115 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     //   NOT terminate instantaneously. But currently this (pontentially instant. loops) cannot be handled
     //   by the SCG scheduler. So we disable these constructs for now.  
 
+//    // New visualization of active states with immediate during actions
+//    def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
+//        if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
+//            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
+//            
+//            if (!state.final) {
+//                // Add during action - TRUE iff this state is active
+//                val duringAction = state.createDuringAction
+//                duringAction.setImmediate(true)
+//                //duringAction.setTrigger(TRUE)
+//                duringAction.addEffect(active.assignRelative(TRUE));     
+//            } else {
+//                // Add entry action - TRUE iff this final state is entered
+//                val entryAction = state.createEntryAction
+//                //duringAction.setTrigger(TRUE)
+//                entryAction.addEffect(active.assignRelative(TRUE));     
+//            }
+//            
+//            // Add during action - FALSE otherwise
+//            val duringAction2 = targetRootState.createDuringAction
+//            duringAction2.setImmediate(true)
+//            //duringAction2.setTrigger(TRUE)
+//            duringAction2.addAssignment(active.assign(FALSE));
+//        }
+//    }
+
+
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
         if (!state.isRootState && !state.hasInnerStatesOrControlflowRegions) {
-            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
+            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+            active.combineOperator = CombineOperator::ADD;
+            val microtick = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+            microtick.initialValue = 0.createIntValue;
             
             if (!state.final) {
                 // Add during action - TRUE iff this state is active
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(true)
                 //duringAction.setTrigger(TRUE)
-                duringAction.addEffect(active.assignRelative(TRUE));     
+                duringAction.addEffect(active.assingCombined(microtick.reference));     
             } else {
                 // Add entry action - TRUE iff this final state is entered
                 val entryAction = state.createEntryAction
                 //duringAction.setTrigger(TRUE)
-                entryAction.addEffect(active.assignRelative(TRUE));     
+                entryAction.addEffect(active.assingCombined(microtick.reference));     
             }
             
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction
             duringAction2.setImmediate(true)
             //duringAction2.setTrigger(TRUE)
-            duringAction2.addAssignment(active.assign(FALSE));
+            duringAction2.addAssignment(active.assign(0.createIntValue));
         }
     }
 
+
+
+//    // Transform a transition as described in 1.
+//    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
+//            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
+//            
+//            // Add action - TRUE iff this transition is taken
+//            transition.addAssignment(active.assignRelative(TRUE));
+//            
+//            // Add during action - FALSE otherwise
+//            val duringAction2 = targetRootState.createDuringAction()
+//            duringAction2.immediate = true
+//            duringAction2.addAssignment(active.assign(FALSE));
+//    }
+
+
+    
+        // Transform a transition as described in 1.
+    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
+            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+            active.combineOperator = CombineOperator::ADD;
+
+            // Add action - TRUE iff this transition is taken
+            transition.effects.add("_microtick = _microtick + 1".asHostcode);
+            transition.effects.add(active.assingCombined("_microtick".asHostcode));
+
+            //transition.effects.add(active.assingCombined("_microtick".asHostcode));
+            //transition.addAssignment(active.assingCombined(microtick.reference));
+            
+            // Add during action - FALSE otherwise
+            val duringAction2 = targetRootState.createDuringAction()
+            //duringAction2.immediate = true
+            duringAction2.addAssignment(active.assign("0".asHostcode));
+
+    }
+
+
+//    // Transform a transition as described in 1.
+//    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID, ValuedObject microtick) {
+//            val active = targetRootState.createVariable(UID).setTypeInt.setIsOutput.uniqueName
+//            active.combineOperator = CombineOperator::ADD;
+//
+//            // Add action - TRUE iff this transition is taken
+//            transition.effects.add(microtick.assingCombined(1.createIntValue));
+//            transition.effects.add(active.assingCombined(microtick.reference));
+//            //transition.addAssignment(active.assingCombined(microtick.reference));
+//            
+//            // Add during action - FALSE otherwise
+//            val duringAction2 = targetRootState.createDuringAction()
+//            duringAction2.immediate = true
+//            duringAction2.addAssignment(active.assign(0.createIntValue));
+//
+//    }
+    
 
 }
