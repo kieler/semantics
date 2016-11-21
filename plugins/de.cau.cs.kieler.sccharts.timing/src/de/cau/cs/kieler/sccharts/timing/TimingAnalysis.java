@@ -513,8 +513,10 @@ public class TimingAnalysis extends Job {
 				currentToken = currentToken.replace(";", "");
 				stringBuilder.append("\nState " + currentToken);
 			}
-			if (currentToken.startsWith("reset")) {
+			if (currentToken.startsWith("reset()")) {
+			    if (!currentToken.startsWith("reset(){dummy")) {
 				break;
+			    }
 			}
 		}
 		// Get the inputs for which we want to have globalvar assumptions
