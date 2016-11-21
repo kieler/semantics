@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
@@ -139,14 +140,27 @@ public class JavaExecution extends AbstractExecution {
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SCChartsSimJavaPlugin.PLUGIN_ID);
 
-        URL urlB = null;
-        try {
-            urlB = FileLocator.toFileURL(FileLocator.find(bundle, new Path("."), null));
-        } catch (Exception e2) {
-            e2.printStackTrace();
+        IPath path = null;
+        if (bundle != null) {
+                File bundleFile = null;
+                try {
+                    bundleFile = FileLocator.getBundleFile(bundle);
+                    URL binFolderURL = FileLocator.find(bundle, new Path("bin"), null);
+                    
+                    
+                    if (binFolderURL != null) {
+                        path = new Path(FileLocator.toFileURL(binFolderURL).getPath());
+                    } else {
+                        path = new Path(bundleFile.getAbsolutePath());
+                    }
+                    if (!path.isAbsolute()) {
+                        path = path.makeAbsolute();
+                    }
+                } catch (IOException e) {
+                }
         }
-        String bundleLocationB = urlB.getFile();
-        System.out.println("bundleLocationB:" + bundleLocationB);
+        
+//        System.out.println("bundleLocationB:" + path.g);
 
         URL url = null;
         try {
