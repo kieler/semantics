@@ -108,6 +108,7 @@
     <module>de.cau.cs.kieler.sim.kiem</module>
     <module>de.cau.cs.kieler.sim.kiem.config</module>
     <module>de.cau.cs.kieler.sim.kiem.ui</module>
+    <module>de.cau.cs.kieler.sim.kiem.toolbar</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.datacomponent</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.launching</module>
     <module>de.cau.cs.kieler.sim.kivi</module>
