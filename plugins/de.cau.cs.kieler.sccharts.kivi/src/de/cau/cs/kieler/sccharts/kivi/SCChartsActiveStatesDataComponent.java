@@ -189,9 +189,11 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
                 e.printStackTrace();
             }
         }
+        
+        System.out.println("#TICK: " + tick);
 
         // TODO: in the initial step, enter the SCCharts itself!
-        if (tick == 1) {
+        if (tick <= 1) {
             if (modelRoot instanceof State) {
                 State state = (State) modelRoot;
                 for (Region region : state.getRegions()) {
