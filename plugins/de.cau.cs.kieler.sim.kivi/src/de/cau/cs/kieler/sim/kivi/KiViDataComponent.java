@@ -129,11 +129,11 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private static KBackground STYLE1 = KRenderingFactory.eINSTANCE.createKBackground()
             .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
 
-    private static KBackground STYLETRANSPARENT = KRenderingFactory.eINSTANCE.createKBackground()
-            .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
+//    private static KBackground STYLETRANSPARENT = KRenderingFactory.eINSTANCE.createKBackground()
+//            .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
 
-    private static KColor SCCHARTSWHITE = KRenderingFactory.eINSTANCE.createKColor().setColor(255,
-            255, 255);
+//    private static KColor SCCHARTSWHITE = KRenderingFactory.eINSTANCE.createKColor().setColor(255,
+//            255, 255);
 
     
     private ArrayList<KNode> expanded = new ArrayList<KNode>();
