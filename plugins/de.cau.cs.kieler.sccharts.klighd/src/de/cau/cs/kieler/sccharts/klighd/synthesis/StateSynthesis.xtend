@@ -33,6 +33,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -74,6 +75,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
         node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
 //        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
+
+        if (!state.label.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [identifier |
+                identifier.id = state.label
+            ]
+        }
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR
@@ -150,8 +157,17 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform all outgoing transitions
+        val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
         for (transition : state.outgoingTransitions) {
-            transition.transform;
+            transition.transform => [ edge |
+                val target = transition.targetState;
+                if (!target.label.nullOrEmpty) {
+                    val counter = groupedTransitions.get(target).indexOf(transition)
+                    edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [ identifier |
+                        identifier.id = target.label + counter
+                    ]
+                }
+            ];
         }
 
         // Transform regions

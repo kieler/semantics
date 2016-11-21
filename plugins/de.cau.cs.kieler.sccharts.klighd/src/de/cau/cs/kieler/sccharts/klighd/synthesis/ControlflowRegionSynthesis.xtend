@@ -36,6 +36,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -79,6 +80,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         // Direction is set by the {@link LayoutHook}
+        
+        if (!region.label.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [identifier |
+                identifier.id = region.label
+            ]
+        }
         
         node.initiallyExpand
 
