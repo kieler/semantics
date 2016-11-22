@@ -37,7 +37,6 @@ class SCChartsActiveStates {
         activeStates = new HashSet<State>
     }
     
-    // Set the initial state, hierarchically
     def void enterState(State state) {
         activeStates.add(state)
         if (state.regions.nullOrEmpty) {
@@ -46,7 +45,6 @@ class SCChartsActiveStates {
         for (region : state.regions) {
             if (region instanceof ControlflowRegion) {
                 for (initialState : region.states.filter[isInitial]) {
-                    activeStates.add(initialState)
                     initialState.enterState
                 }
             }
@@ -62,14 +60,11 @@ class SCChartsActiveStates {
         for (region : state.regions) {
             if (region instanceof ControlflowRegion) {
                 for (innerState : region.states) {
-                    activeStates.remove(innerState)
                     innerState.leaveState
                 }
             }
         }
     }
-    
-    
     
     def public List<State> getAllActiveStates() {
         val returnList = new ArrayList<State>
