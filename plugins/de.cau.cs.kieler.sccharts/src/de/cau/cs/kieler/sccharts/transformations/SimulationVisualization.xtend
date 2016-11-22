@@ -126,10 +126,10 @@ class SimulationVisualization extends AbstractExpansionTransformation {
         var targetRootState = rootState.fixAllPriorities
 
 
+        // Necessary for ordering
         var microtick = targetRootState.createVariable("_microtick").setTypeInt.setIsOutput.uniqueName
         targetRootState.createEntryAction.effects.add("_microtick = 0;".asHostcodeEffect);
-//        microtick.combineOperator = CombineOperator::ADD;
-//        microtick.initialValue = 0.createIntValue;
+
             
 
         // Traverse all transitions
@@ -159,7 +159,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 //            targetTransition.transformSimulationVisualizationState(targetRootState, stateUID);
 //        }
 
-        targetRootState;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
 
@@ -229,20 +229,6 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
 
 
-//    // Transform a transition as described in 1.
-//    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
-//            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
-//            
-//            // Add action - TRUE iff this transition is taken
-//            transition.addAssignment(active.assignRelative(TRUE));
-//            
-//            // Add during action - FALSE otherwise
-//            val duringAction2 = targetRootState.createDuringAction()
-//            duringAction2.immediate = true
-//            duringAction2.addAssignment(active.assign(FALSE));
-//    }
-
-
     
         // Transform a transition as described in 1.
     def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
@@ -259,6 +245,27 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             duringAction2.addAssignment(active.assign("0".asTextExpression));
 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+
+//    // Transform a transition as described in 1.
+//    def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
+//            val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
+//            
+//            // Add action - TRUE iff this transition is taken
+//            transition.addAssignment(active.assignRelative(TRUE));
+//            
+//            // Add during action - FALSE otherwise
+//            val duringAction2 = targetRootState.createDuringAction()
+//            duringAction2.immediate = true
+//            duringAction2.addAssignment(active.assign(FALSE));
+//    }
 
 
 //    // Transform a transition as described in 1.
