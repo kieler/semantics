@@ -76,6 +76,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  */
 public abstract class KiViDataComponent extends JSONObjectDataComponent
         implements IJSONObjectDataComponent {
+    
+    private static final boolean DEBUG = false;
 
     private static final int DEFAULT_STEPS = 0; // changed by cmot upon rvh's request
 
@@ -763,7 +765,9 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            SimKiViPlugin.log(baseObjID + ":" + baseObj);
+            if (DEBUG) {
+                SimKiViPlugin.log(baseObjID + ":" + baseObj);
+            }
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();
