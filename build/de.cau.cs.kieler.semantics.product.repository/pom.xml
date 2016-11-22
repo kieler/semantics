@@ -36,6 +36,10 @@
           </execution>
         </executions>
         <configuration>
+          <formats>
+          	<macos>tar.gz</macos>
+          	<linux>tar.gz</linux>
+          </formats>
           <products>
             <product>
               <id>de.cau.cs.kieler.product</id>
