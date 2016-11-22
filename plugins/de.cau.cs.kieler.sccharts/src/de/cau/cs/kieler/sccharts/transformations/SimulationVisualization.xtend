@@ -127,7 +127,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
 
 
         var microtick = targetRootState.createVariable("_microtick").setTypeInt.setIsOutput.uniqueName
-        targetRootState.createEntryAction.effects.add("_microtick = 0;".asHostcode);
+        targetRootState.createEntryAction.effects.add("_microtick = 0;".asHostcodeEffect);
 //        microtick.combineOperator = CombineOperator::ADD;
 //        microtick.initialValue = 0.createIntValue;
             
@@ -250,16 +250,13 @@ class SimulationVisualization extends AbstractExpansionTransformation {
             active.combineOperator = CombineOperator::ADD;
 
             // Add action - TRUE iff this transition is taken
-            transition.effects.add("_microtick = _microtick + 1".asHostcode);
-            transition.effects.add(active.assingCombined("_microtick".asHostcode));
+            transition.effects.add("_microtick = _microtick + 1".asHostcodeEffect);
+            transition.effects.add(active.assingCombined("_microtick".asTextExpression));
 
-            //transition.effects.add(active.assingCombined("_microtick".asHostcode));
-            //transition.addAssignment(active.assingCombined(microtick.reference));
-            
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction()
-            //duringAction2.immediate = true
-            duringAction2.addAssignment(active.assign("0".asHostcode));
+            duringAction2.immediate = true
+            duringAction2.addAssignment(active.assign("0".asTextExpression));
 
     }
 

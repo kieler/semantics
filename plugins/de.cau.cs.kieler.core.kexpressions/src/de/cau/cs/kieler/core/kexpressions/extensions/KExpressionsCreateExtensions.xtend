@@ -269,6 +269,13 @@ class KExpressionsCreateExtensions {
             setText("'" + text + "'")
         ]
     }
+ 
+     // Convert a String into a text/host code effect
+    def Expression asTextExpression(String hostCode) {
+        val effect = KExpressionsFactory::eINSTANCE.createTextExpression
+        effect.text = hostCode;
+        effect        
+    }
     
 
 }
