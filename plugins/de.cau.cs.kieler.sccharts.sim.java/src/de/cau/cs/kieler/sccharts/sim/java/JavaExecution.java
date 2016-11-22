@@ -160,6 +160,16 @@ public class JavaExecution extends AbstractExecution {
                 bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
             } catch (Exception ee) {
                 ee.printStackTrace();
+                try {
+                    // third try
+                    String relativeFilePath = "/";
+                    // final Bundle bundle = Platform.getBundle(pluginID);
+                    URL bundleFileUrl = bundle.getEntry(relativeFilePath);
+                    URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
+                    bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+                } catch (Exception eee) {
+                    eee.printStackTrace();
+                }
             }
         }
 
