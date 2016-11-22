@@ -37,8 +37,9 @@
         </executions>
         <configuration>
           <formats>
-          	<macos>tar.gz</macos>
+          	<mac>tar.gz</mac>
           	<linux>tar.gz</linux>
+          	<macos>tar.gz</macos>
           </formats>
           <products>
             <product>
