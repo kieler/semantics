@@ -141,12 +141,25 @@ public class JavaExecution extends AbstractExecution {
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SCChartsSimJavaPlugin.PLUGIN_ID);
 
-        String relativeFilePath = "bin";
+        String bundleLocation = ".";
+        
+        try {
+        String relativeFilePath = "/bin";
         //final Bundle bundle = Platform.getBundle(pluginID);
         URL bundleFileUrl = bundle.getEntry(relativeFilePath);
         URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
-        String bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
-
+        bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // second try
+            String relativeFilePath = "/classes";
+            //final Bundle bundle = Platform.getBundle(pluginID);
+            URL bundleFileUrl = bundle.getEntry(relativeFilePath);
+            URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
+            bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+        }
+        
+        
         
 //        java.net.URL path = null;
 //        if (bundle != null) {
