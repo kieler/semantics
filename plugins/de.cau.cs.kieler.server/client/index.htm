@@ -124,7 +124,7 @@ var renderServerURL   = new Array("http://render.sccharts.com", "http://www.scch
 
 
 var windowContent = " <body onBlur='self.focus();'>\
-<div align='left'><img src='http://www.sccharts.com/transformations.jpg' width='1759' height='351' alt='s' border='0' usemap='#Map' />\
+<div align='left'><img src='http://www.sccharts.com/transformations.jpg' width='1759' height='341' alt='s' border='0' usemap='#Map' />\
   <map name='Map' id='Map'>\
     <area shape='rect' coords='1639,117,1733,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.arduino\"'/>\
     <area shape='rect' coords='1651,155,1726,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.java\"'/>\
@@ -168,9 +168,7 @@ var windowContent = " <body onBlur='self.focus();'>\
     <area shape='rect' coords='28,170,208,196' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
   </map>\
   <input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
-  <br />\
-    <span style='font-family: Verdana, Arial, Helvetica, sans-serif;\
-	font-size: x-small'>Click on the transformation that you like to add to the list of applied compile transformations.</span> </div>\
+  </div>\
 </body>";
 
 var mywindow;
@@ -183,7 +181,7 @@ function openSelectWindow() {
 	}catch(e) {
   }
   transformationsTimer=setInterval(function(){updateTransformations()},500);
-  mywindow = window.open("", "selectWindow", "width=1110,height=395, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
+  mywindow = window.open("", "selectWindow", "width=1110,height=467, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
 
   mywindow.focus();
