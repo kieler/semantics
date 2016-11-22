@@ -54,6 +54,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         implements IJSONObjectDataComponent {
 
+    private static final boolean DEBUG = false;
+
     private static final String DEFAULT_STATE_KEY = "state";
 
     private static final String DEFAULT_TRANSITION_KEY = "transition";
@@ -65,9 +67,9 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
     static final int KIEM_PROPERTY_MAX = 2;
 
     static long tick = 0;
-    
+
     SCChartsActiveStates activeStates = null;
-    
+
     private IEditorPart diagramEditor;
 
     /** Remember when wrapup() was executed. */
@@ -103,15 +105,15 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         if (!(editorInput instanceof FileEditorInput)) {
             return;
         }
-        
+
         List<DiagramView> diagramViews = DiagramView.getDiagramViews(diagramEditor);
         if (diagramViews.isEmpty()) {
             throw new KiemInitializationException(
                     "Model visualization not shown, cannot visualize simulation.", true, null);
         }
         DiagramView viewPart = diagramViews.get(0);
-        ViewContext viewContext= viewPart.getViewer().getViewContext();
-        
+        ViewContext viewContext = viewPart.getViewer().getViewContext();
+
         Object potentionEObject = viewContext.getInputModel();
         if (potentionEObject instanceof EObject) {
             modelRoot = (EObject) potentionEObject;
@@ -179,7 +181,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
                         }
                         if (active != null) {
                             if (active instanceof Transition) {
-                                takenTransitions.add((Transition)active);
+                                takenTransitions.add((Transition) active);
                             }
                         }
                     }
@@ -189,8 +191,10 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
                 e.printStackTrace();
             }
         }
-        
-        System.out.println("#TICK: " + tick);
+
+        if (DEBUG) {
+            System.out.println("#TICK: " + tick);
+        }
 
         // TODO: in the initial step, enter the SCCharts itself!
         if (tick <= 1) {
@@ -198,28 +202,28 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
                 State state = (State) modelRoot;
                 for (Region region : state.getRegions()) {
                     if (region instanceof ControlflowRegion) {
-                        for (State innerState : ((ControlflowRegion)region).getStates()) {
+                        for (State innerState : ((ControlflowRegion) region).getStates()) {
                             if (innerState.isInitial()) {
                                 activeStates.enterState(innerState);
                             }
-                    }
+                        }
                     }
                 }
             }
         }
-            
-//        // Calculate left and then entered states
-//        for (Transition transition : takenTransitions) {
-//            State leaveState = transition.getSourceState();
-//            activeStates.leaveState(leaveState);
-//        }
-//        for (Transition transition : takenTransitions) {
-//            State leaveState = transition.getSourceState();
-//            State enterState = transition.getTargetState();
-//            activeStates.enterState(enterState);
-//            //activeStates.leaveState(leaveState);
-//            //SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
-//        }
+
+        // // Calculate left and then entered states
+        // for (Transition transition : takenTransitions) {
+        // State leaveState = transition.getSourceState();
+        // activeStates.leaveState(leaveState);
+        // }
+        // for (Transition transition : takenTransitions) {
+        // State leaveState = transition.getSourceState();
+        // State enterState = transition.getTargetState();
+        // activeStates.enterState(enterState);
+        // //activeStates.leaveState(leaveState);
+        // //SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+        // }
 
         // Calculate left and then entered states
         for (Transition transition : takenTransitions) {
@@ -227,16 +231,19 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             State enterState = transition.getTargetState();
             activeStates.leaveState(leaveState);
             activeStates.enterState(enterState);
-            //activeStates.leaveState(leaveState);
-            SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+            // activeStates.leaveState(leaveState);
+            if (DEBUG) {
+                SCChartsKiViPlugin.log(leaveState.getId() + " ----> " + enterState.getId());
+            }
         }
-        
-        
+
         for (State activeState : activeStates.getAllActiveStates()) {
-            SCChartsKiViPlugin.log("ACTIVE: " + activeState.getId());
+            if (DEBUG) {
+                SCChartsKiViPlugin.log("ACTIVE: " + activeState.getId());
+            }
         }
-       
-       // Build list for visualization
+
+        // Build list for visualization
         StringBuffer activeStatesBuf = new StringBuffer();
 
         for (State activeState : activeStates.getAllActiveStates()) {
@@ -246,11 +253,10 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             String activeStateName = getEncodedEObjectId(activeState);
             activeStatesBuf.append(activeStateName);
         }
-        
+
         String activeStates = "";
         activeStates = activeStatesBuf.toString();
-        String activeStatesName =
-                this.getProperties()[KIEM_PROPERTY_STATENAME].getValue();
+        String activeStatesName = this.getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         // The return object to construct
         JSONObject returnObj = new JSONObject();
         try {
@@ -275,8 +281,6 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         return properties;
     }
 
-    
-
     /**
      * Sets the step number according to the button the user pressed. This is needed to correctly
      * handle history steps or jumps.
@@ -291,7 +295,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             tick = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
         }
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -347,7 +351,9 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            SCChartsKiViPlugin.log(baseObjID + ":" + baseObj);
+            if (DEBUG) {
+                SCChartsKiViPlugin.log(baseObjID + ":" + baseObj);
+            }
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();
