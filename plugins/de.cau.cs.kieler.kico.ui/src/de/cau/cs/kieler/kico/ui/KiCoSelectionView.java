@@ -753,6 +753,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis");
         }
 
+       // NO incremental update possible due to the fact that KiCo.UI currently
+       // has its own mapping to concrete instances.
+       // TODO: do not use such a mapping and better use rendering annotations instead in
+       // the future
+       properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
+              "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
+
+        
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
