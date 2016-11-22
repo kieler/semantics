@@ -12,6 +12,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.s.transformations.SCG2S">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.s.transformations.S2Arduino">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">
