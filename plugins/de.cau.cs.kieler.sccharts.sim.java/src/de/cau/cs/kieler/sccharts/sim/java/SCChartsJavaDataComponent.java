@@ -573,8 +573,8 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 // highLevelTransformations;
             }
 
-            String[] prefExt = { "sct" };
-            String bla = KiCoUtil.serialize((EObject) extendedSCChart, null, false, prefExt, true);
+//            String[] prefExt = { "sct" };
+//            String bla = KiCoUtil.serialize((EObject) extendedSCChart, null, false, prefExt, true);
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
