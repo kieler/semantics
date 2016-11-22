@@ -30,6 +30,7 @@ import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.benchmark.AbstractExecution;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * This class is intended to compile and execute SJ code.
@@ -140,35 +141,43 @@ public class JavaExecution extends AbstractExecution {
         // Building path to bundle
         Bundle bundle = Platform.getBundle(SCChartsSimJavaPlugin.PLUGIN_ID);
 
-        IPath path = null;
-        if (bundle != null) {
-                File bundleFile = null;
-                try {
-                    bundleFile = FileLocator.getBundleFile(bundle);
-                    URL binFolderURL = FileLocator.find(bundle, new Path("bin"), null);
-                    
-                    
-                    if (binFolderURL != null) {
-                        path = new Path(FileLocator.toFileURL(binFolderURL).getPath());
-                    } else {
-                        path = new Path(bundleFile.getAbsolutePath());
-                    }
-                    if (!path.isAbsolute()) {
-                        path = path.makeAbsolute();
-                    }
-                } catch (IOException e) {
-                }
-        }
-        
-//        System.out.println("bundleLocationB:" + path.g);
+        String relativeFilePath = "bin";
+        //final Bundle bundle = Platform.getBundle(pluginID);
+        URL bundleFileUrl = bundle.getEntry(relativeFilePath);
+        URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
+        String bundleLocation = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
 
-        URL url = null;
-        try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
-        } catch (Exception e2) {
-            e2.printStackTrace();
-        }
-        String bundleLocation = url.getFile();
+        
+//        java.net.URL path = null;
+//        if (bundle != null) {
+//                File bundleFile = null;
+//                try {
+//                    bundleFile = FileLocator.getBundleFile(bundle);
+//                    //FileLocator.toFileURL()
+//                    //URL binFolderURL = FileLocator.resolve(bundle, new Path("bin"), null);
+//                    
+//                    
+//                    if (binFolderURL != null) {
+//                        path = FileLocator.toFileURL(binFolderURL);
+//                    } else {
+//                        path = new Path(bundleFile.getAbsolutePath());
+//                    }
+//                    if (!path.isAbsolute()) {
+//                        path = path.makeAbsolute();
+//                    }
+//                } catch (IOException e) {
+//                }
+//        }
+        
+       System.out.println("bundleLocationB:" + bundleLocation);
+
+//        URL url = null;
+//        try {
+//            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SJL_PATH_BIN), null));
+//        } catch (Exception e2) {
+//            e2.printStackTrace();
+//        }
+//        String bundleLocation = url.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
@@ -196,6 +205,9 @@ public class JavaExecution extends AbstractExecution {
             if (filePath.lastIndexOf("\\") > 0) {
                 filePathRoot = filePath.substring(0, filePath.lastIndexOf("\\"));
             }
+            
+            
+            
             
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             
