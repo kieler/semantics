@@ -117,7 +117,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
     private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS =
-            "SCCHARTS_SIMULATION_VISUALIZATION";
+            "T_SIMULATIONVISUALIZATION";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 6;
