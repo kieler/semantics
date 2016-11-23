@@ -37,7 +37,18 @@ class SCChartsActiveStates {
         activeStates = new HashSet<State>
     }
     
+    
+    def void deactivatePossibleOtherStatesInRegion(State state) {
+        var parentRegion = state.parentRegion;
+        for (otherState : parentRegion.states.filter[ m | m != state]) {
+            activeStates.contains(otherState) {
+                otherState.leaveState
+            }
+        }
+    }
+    
     def void enterState(State state) {
+        state.deactivatePossibleOtherStatesInRegion
         activeStates.add(state)
         if (state.regions.nullOrEmpty) {
             return;
