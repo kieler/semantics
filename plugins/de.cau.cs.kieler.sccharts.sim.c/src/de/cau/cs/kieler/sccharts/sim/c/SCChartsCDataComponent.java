@@ -606,6 +606,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
             
             
+            if (isExposeAllVars()) {
+                highLevelTransformations += ", scg.sequentialize";
+            }
+            
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
 
