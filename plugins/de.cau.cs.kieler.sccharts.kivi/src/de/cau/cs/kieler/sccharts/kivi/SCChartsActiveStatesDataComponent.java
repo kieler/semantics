@@ -54,7 +54,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         implements IJSONObjectDataComponent {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final String DEFAULT_STATE_KEY = "state";
 
@@ -193,7 +193,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         }
 
         if (DEBUG) {
-            System.out.println("#TICK: " + tick);
+            SCChartsKiViPlugin.log("#TICK: " + tick);
         }
 
         // TODO: in the initial step, enter the SCCharts itself!
