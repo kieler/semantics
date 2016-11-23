@@ -58,7 +58,7 @@ public class ScheduleSelector extends ControlContribution
         implements SelectionListener, FocusListener, IKiemConfigEventListener {
 
     /** string display for the matching schedules entry. */
-    private static final String MATCHING_HEADER = "Matching schedules";
+    private static final String MATCHING_HEADER = "Select Execution...";
     /** The tooltip for the matching combo. */
     private static final String MATCHING_TOOLTIP =
             "Displays all schedules matching" + " the currently active editor.";
