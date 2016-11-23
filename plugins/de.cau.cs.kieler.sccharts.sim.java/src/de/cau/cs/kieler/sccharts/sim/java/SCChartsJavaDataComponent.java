@@ -577,6 +577,29 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 }
             }
 
+            
+            if (isExposeAllVars()) {
+                // Do a PRE compilation with the debugTransformations!
+                KielerCompilerContext highLevelContext =
+                        new KielerCompilerContext("EXPOSELOCALVALUEDOBJECT", extendedSCChart);
+                // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                highLevelContext.setCreateDummyResource(true);
+
+                highLevelContext.setInplace(false);
+                highLevelContext.setAdvancedSelect(true);
+                // System.out.println("10");
+                CompilationResult highLeveleCompilationResult =
+                        KielerCompiler.compile(highLevelContext);
+
+                extendedSCChart = highLeveleCompilationResult.getEObject();
+
+                // re-link myModel such that the additional outputs are shown
+                this.myModel = extendedSCChart;
+
+                // highLevelTransformations = debugTransformations + ", " +
+                // highLevelTransformations;
+            }            
+            
             if (debug) {
                 // Do a PRE compilation with the debugTransformations!
                 KielerCompilerContext highLevelContext =

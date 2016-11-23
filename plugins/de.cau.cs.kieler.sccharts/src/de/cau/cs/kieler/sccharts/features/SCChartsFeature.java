@@ -87,7 +87,7 @@ public class SCChartsFeature {
     public final static String SURFACEDEPTH_NAME = "Surface/Depth";
 
     public final static String EXPOSELOCALVALUEDOBJECT_ID = "EXPOSELOCALVALUEDOBJECT";
-    public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expore Local ValuedObject";
+    public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expose Local ValuedObject";
 
     public final static String INPUTOUTPUT_ID = "INPUTOUTPUT";
     public final static String INPUTOUTPUT_NAME = "Input and Output";
