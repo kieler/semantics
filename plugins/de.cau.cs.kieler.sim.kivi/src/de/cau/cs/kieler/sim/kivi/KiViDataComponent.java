@@ -276,7 +276,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
             String discard = KiCoUtil.serialize(modelRoot, context, true);
             resource = context.getMainResource();
         }
-        refreshEObjectMap();
         return resource;
     }
 
