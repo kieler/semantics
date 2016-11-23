@@ -14,14 +14,14 @@
  package de.cau.cs.kieler.scg.circuit
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -201,9 +201,9 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 					val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					expression.setOperator(OperatorType::PRE)
 					expression.subExpressions.add(storeVO.reference)
-					newNode.assignment = expression
+					newNode.expression = expression
 				} else {
-					newNode.assignment = storeVO.reference
+					newNode.expression = storeVO.reference
 				}
 				scg.nodes += newNode
 
@@ -245,7 +245,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 		if (ssaMap.containsKey(name)) {
 
-			transformExpressions(n.assignment)
+			transformExpressions(n.expression)
 			val m = ssaMap.get(name)
 			ssaMap.replace(name, m, m + 1)
 
@@ -277,8 +277,8 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				valuedObjectList.replace(name, vo)
 			}
 		} else {
-			val expr = n.assignment
-			n.assignment = transformExpressions(expr)
+			val expr = n.expression
+			n.expression = transformExpressions(expr)
 		}
 
 	}

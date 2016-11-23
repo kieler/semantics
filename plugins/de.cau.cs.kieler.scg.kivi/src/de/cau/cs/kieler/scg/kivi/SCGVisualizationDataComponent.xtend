@@ -18,7 +18,7 @@ import com.google.inject.Binder
 import com.google.inject.Guice
 import com.google.inject.Module
 import com.google.inject.Scopes
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KBackground
@@ -38,8 +38,6 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
@@ -58,6 +56,8 @@ import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
 
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author ssm als cmot
@@ -123,15 +123,16 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
                         }
                     }
                 }
-                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
-                    for (guard : scg.guards) {
-                        val schedulingBlock = guard.schedulingBlockLink
-                        if (schedulingBlock != null) {
-                            guardMapping.putAll(guard.valuedObject.name,
-                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
-                        }
-                    }
-                }
+// FIXME
+//                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
+//                    for (guard : scg.guards) {
+//                        val schedulingBlock = guard.schedulingBlockLink
+//                        if (schedulingBlock != null) {
+//                            guardMapping.putAll(guard.valuedObject.name,
+//                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
+//                        }
+//                    }
+//                }
                 LightDiagramServices.layoutDiagram(context)
             }
         ] 

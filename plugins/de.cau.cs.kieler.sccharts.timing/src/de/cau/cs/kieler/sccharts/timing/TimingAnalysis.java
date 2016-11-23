@@ -44,8 +44,17 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
 
+<<<<<<< HEAD
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
+=======
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.core.krendering.KRectangle;
+import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+>>>>>>> ssm/scg
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;

@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -35,12 +34,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getNode <em>Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

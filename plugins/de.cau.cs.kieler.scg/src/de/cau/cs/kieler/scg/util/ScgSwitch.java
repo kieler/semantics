@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.scg.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -121,6 +122,8 @@ public class ScgSwitch<T> extends Switch<T> {
                 Assignment assignment = (Assignment)theEObject;
                 T result = caseAssignment(assignment);
                 if (result == null) result = caseNode(assignment);
+                if (result == null) result = caseKEffects_Assignment(assignment);
+                if (result == null) result = caseEffect(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -141,13 +144,6 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ScgPackage.LINK: {
-                Link link = (Link)theEObject;
-                T result = caseLink(link);
-                if (result == null) result = caseAnnotatable(link);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case ScgPackage.ENTRY: {
                 Entry entry = (Entry)theEObject;
                 T result = caseEntry(entry);
@@ -161,6 +157,41 @@ public class ScgSwitch<T> extends Switch<T> {
                 T result = caseExit(exit);
                 if (result == null) result = caseNode(exit);
                 if (result == null) result = caseAnnotatable(exit);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.BASIC_BLOCK: {
+                BasicBlock basicBlock = (BasicBlock)theEObject;
+                T result = caseBasicBlock(basicBlock);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.SCHEDULING_BLOCK: {
+                SchedulingBlock schedulingBlock = (SchedulingBlock)theEObject;
+                T result = caseSchedulingBlock(schedulingBlock);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.PREDECESSOR: {
+                Predecessor predecessor = (Predecessor)theEObject;
+                T result = casePredecessor(predecessor);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.GUARD: {
+                Guard guard = (Guard)theEObject;
+                T result = caseGuard(guard);
+                if (result == null) result = caseNode(guard);
+                if (result == null) result = caseKEffects_Assignment(guard);
+                if (result == null) result = caseEffect(guard);
+                if (result == null) result = caseAnnotatable(guard);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.LINK: {
+                Link link = (Link)theEObject;
+                T result = caseLink(link);
+                if (result == null) result = caseAnnotatable(link);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -198,79 +229,30 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ScgPackage.ABSOLUTE_WRITE_READ: {
-                AbsoluteWrite_Read absoluteWrite_Read = (AbsoluteWrite_Read)theEObject;
-                T result = caseAbsoluteWrite_Read(absoluteWrite_Read);
-                if (result == null) result = caseDataDependency(absoluteWrite_Read);
-                if (result == null) result = caseDependency(absoluteWrite_Read);
-                if (result == null) result = caseLink(absoluteWrite_Read);
-                if (result == null) result = caseAnnotatable(absoluteWrite_Read);
+            case ScgPackage.EXPRESSION_DEPENDENCY: {
+                ExpressionDependency expressionDependency = (ExpressionDependency)theEObject;
+                T result = caseExpressionDependency(expressionDependency);
+                if (result == null) result = caseDependency(expressionDependency);
+                if (result == null) result = caseLink(expressionDependency);
+                if (result == null) result = caseAnnotatable(expressionDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ScgPackage.RELATIVE_WRITE_READ: {
-                RelativeWrite_Read relativeWrite_Read = (RelativeWrite_Read)theEObject;
-                T result = caseRelativeWrite_Read(relativeWrite_Read);
-                if (result == null) result = caseDataDependency(relativeWrite_Read);
-                if (result == null) result = caseDependency(relativeWrite_Read);
-                if (result == null) result = caseLink(relativeWrite_Read);
-                if (result == null) result = caseAnnotatable(relativeWrite_Read);
+            case ScgPackage.GUARD_DEPENDENCY: {
+                GuardDependency guardDependency = (GuardDependency)theEObject;
+                T result = caseGuardDependency(guardDependency);
+                if (result == null) result = caseDependency(guardDependency);
+                if (result == null) result = caseLink(guardDependency);
+                if (result == null) result = caseAnnotatable(guardDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ScgPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: {
-                AbsoluteWrite_RelativeWrite absoluteWrite_RelativeWrite = (AbsoluteWrite_RelativeWrite)theEObject;
-                T result = caseAbsoluteWrite_RelativeWrite(absoluteWrite_RelativeWrite);
-                if (result == null) result = caseDataDependency(absoluteWrite_RelativeWrite);
-                if (result == null) result = caseDependency(absoluteWrite_RelativeWrite);
-                if (result == null) result = caseLink(absoluteWrite_RelativeWrite);
-                if (result == null) result = caseAnnotatable(absoluteWrite_RelativeWrite);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.WRITE_WRITE: {
-                Write_Write write_Write = (Write_Write)theEObject;
-                T result = caseWrite_Write(write_Write);
-                if (result == null) result = caseDataDependency(write_Write);
-                if (result == null) result = caseDependency(write_Write);
-                if (result == null) result = caseLink(write_Write);
-                if (result == null) result = caseAnnotatable(write_Write);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.BASIC_BLOCK: {
-                BasicBlock basicBlock = (BasicBlock)theEObject;
-                T result = caseBasicBlock(basicBlock);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.SCHEDULING_BLOCK: {
-                SchedulingBlock schedulingBlock = (SchedulingBlock)theEObject;
-                T result = caseSchedulingBlock(schedulingBlock);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.PREDECESSOR: {
-                Predecessor predecessor = (Predecessor)theEObject;
-                T result = casePredecessor(predecessor);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.SCHEDULE_BLOCK: {
-                ScheduleBlock scheduleBlock = (ScheduleBlock)theEObject;
-                T result = caseScheduleBlock(scheduleBlock);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.SCHEDULE: {
-                Schedule schedule = (Schedule)theEObject;
-                T result = caseSchedule(schedule);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgPackage.GUARD: {
-                Guard guard = (Guard)theEObject;
-                T result = caseGuard(guard);
+            case ScgPackage.SCHEDULE_DEPENDENCY: {
+                ScheduleDependency scheduleDependency = (ScheduleDependency)theEObject;
+                T result = caseScheduleDependency(scheduleDependency);
+                if (result == null) result = caseDependency(scheduleDependency);
+                if (result == null) result = caseLink(scheduleDependency);
+                if (result == null) result = caseAnnotatable(scheduleDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -504,66 +486,6 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Absolute Write Read</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Absolute Write Read</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Relative Write Read</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Relative Write Read</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseRelativeWrite_Read(RelativeWrite_Read object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Absolute Write Relative Write</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Absolute Write Relative Write</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Write Write</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Write Write</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseWrite_Write(Write_Write object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Basic Block</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -609,36 +531,51 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Expression Dependency</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Expression Dependency</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseScheduleBlock(ScheduleBlock object) {
+	public T caseExpressionDependency(ExpressionDependency object) {
         return null;
     }
 
 				/**
-     * Returns the result of interpreting the object as an instance of '<em>Schedule</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Guard Dependency</em>'.
      * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Schedule</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Guard Dependency</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSchedule(Schedule object) {
+	public T caseGuardDependency(GuardDependency object) {
         return null;
     }
 
-    /**
+				/**
+     * Returns the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
+     * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Schedule Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+	public T caseScheduleDependency(ScheduleDependency object) {
+        return null;
+    }
+
+				/**
      * Returns the result of interpreting the object as an instance of '<em>Guard</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -669,6 +606,36 @@ public class ScgSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+	public T caseEffect(Effect object) {
+        return null;
+    }
+
+																/**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+	public T caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
+        return null;
+    }
+
+				/**
      * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;

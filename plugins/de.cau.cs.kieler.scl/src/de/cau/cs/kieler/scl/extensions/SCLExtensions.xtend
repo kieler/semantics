@@ -24,10 +24,10 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Conditional
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import java.util.LinkedList
 import de.cau.cs.kieler.scl.scl.StatementScope
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Parallel
 

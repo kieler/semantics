@@ -35,14 +35,6 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
             id="de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis">
       </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.ComparisonSynthesis"
-            id="de.cau.cs.kieler.sccharts.klighd.ComparisonSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.klighd.deprecated.SCChartsDiagramSynthesis"
-            id="de.cau.cs.kieler.sccharts.klighd.DeprecatedSCChartsSynthesis">
-      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">

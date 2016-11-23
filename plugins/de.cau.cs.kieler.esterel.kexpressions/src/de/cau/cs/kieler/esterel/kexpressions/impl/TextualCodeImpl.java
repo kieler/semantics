@@ -22,11 +22,11 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.TextualCodeImpl#getCode <em>Code</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.TextualCodeImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

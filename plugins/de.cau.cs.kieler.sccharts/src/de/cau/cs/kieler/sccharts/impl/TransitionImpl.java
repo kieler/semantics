@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getType <em>Type</em>}</li>
@@ -43,7 +44,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -16,12 +16,12 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
@@ -33,7 +33,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
-import de.cau.cs.kieler.circuit.Port
 
 /**
  * @author fry
@@ -221,30 +220,30 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				// --           handle input of true port: source is then-branch           --
 				// create constant 0 and 1 or take the whole expression as input for the true case of the condition
 				// if an expression is assigned: call transformExpression to create all necessary gates
-				if (thenNode.assignment.serialize.toString == "true") {
+				if (thenNode.expression.serialize.toString == "true") {
 					truePort.name = "const1_" + newMUX.name
 					circuitInitialization.createConstantOne(logic, truePort.name)
-				} else if (thenNode.assignment.serialize.toString == "false") {
+				} else if (thenNode.expression.serialize.toString == "false") {
 					truePort.name = "const0_" + newMUX.name
 					circuitInitialization.createConstantZero(logic, truePort.name)
 				} else {
-					val exp = thenNode.assignment
+					val exp = thenNode.expression
 					if (exp instanceof ValuedObjectReference) {
 						voExpressions.put(thenNode.valuedObject.name, exp.valuedObject)
 
 					} else {
-						checkForVOassignments(thenNode.assignment)
-						truePort.name = thenNode.assignment.serialize.toString
-						transformExpressions(thenNode.assignment, logic)
+						checkForVOassignments(thenNode.expression)
+						truePort.name = thenNode.expression.serialize.toString
+						transformExpressions(thenNode.expression, logic)
 					}
 				}
 
 				// --           handle input of false port: source is else-branch           --
-				falsePort.name = elseNode.assignment.serialize.toString
+				falsePort.name = elseNode.expression.serialize.toString
 
 				// e.g. O_1 = pre(O)
-				if (!(elseNode.assignment instanceof ValuedObjectReference)) {
-					transformExpressions(elseNode.assignment, logic)
+				if (!(elseNode.expression instanceof ValuedObjectReference)) {
+					transformExpressions(elseNode.expression, logic)
 				}
 				
 				// call this method again if the target of then- and else-branch is not the same
@@ -272,7 +271,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	def transformAssignment(Assignment assignment, Actor logic) {
 
 		// Get the right side of assignment. 
-		val expr = assignment.assignment
+		val expr = assignment.expression
 
 		// specify which type of logical gate the actor should be
 		if (expr instanceof OperatorExpression) {

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccharts" nsURI="http://kieler.cs.cau.de/sccharts/0.1.0" nsPrefix="sccharts">
-  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Action represents some effect that is executed under some&#xA;certain condition. The condition or sometimes called guard is&#xA;the trigger which simply is any boolean {@link Expression} over&#xA;{@link Signal}s or {@link Variable}s. Note that Actions may also be used&#xA;in contexts, where no trigger or resp. effects are allowed. E.g.&#xA;a suspensionTrigger has no effect.&#xA;&lt;p>&#xA;The effects of an Action are either {@link Assignment}, {@link Emission} or escaping&#xA;to an {@link TextEffect}.&#xA;&lt;p>&#xA;An Action has a String label that represents the trigger and the effects&#xA;list in a textual representation. The user of the &#xA;model is required to synchronize the label with the actual&#xA;trigger and effects objects. For the sccharts graphical editor&#xA;this is done by using an Xtext grammar/parser."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions.keffects/model/keffects.ecore#//Effect"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="1"/>
@@ -52,7 +52,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
         eType="#//Equation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
@@ -62,42 +62,42 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReferenceNode" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedScope" eType="#//Scope"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallNode" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="callReference" lowerBound="1"
         eType="#//DefineNode"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefineNode" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Equation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Binding" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="formal" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actual" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Binding" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formal" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actual" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="StateType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -157,7 +157,7 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" abstract="true" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Scope" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Scope is the abstract superclass for State and Region. &#xA;&lt;p>&#xA;The fields label and id are there to identify such object, where the label&#xA;may be an arbitrary String and the id may be used as identifier in programming languages. Therefore the&#xA;id should be unique within its containing scope, should start with a word character (letter, underscore) and should not&#xA;contain whitespace.&#xA;&lt;p>&#xA;The interfaceDeclaration is a String text field containing the interface declaration in a textual representation. &#xA;The user of a model instance needs to take care that this textual representation gets parsed correctly and &#xA;translated into proper Interface objects (e.g. Signals and Variables). For example the sccharts editor uses&#xA;an Xtext grammar/parser to do this.&#xA;&lt;p>&#xA;A Scope may carry lists of entry-, inner- or exit {@link Action}s that are executed on either Scope entry, staying a tick&#xA;in the Scope or exiting the Scope. A suspensionTrigger Action guards the suspension of a Scope. When this trigger&#xA;is evaluated to true, then the contents of the Scope is no longer evaluated until the guard gets false again."/>
     </eAnnotations>
@@ -169,7 +169,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bindings" upperBound="-1"
         eType="#//Binding" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Parsable" instanceClassName="java.lang.String">

@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.esterel.kexpressions;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,19 +23,19 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObject#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObject#getHostType <em>Host Type</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValuedObject()
  * @model
  * @generated
  */
-public interface ValuedObject extends Annotatable {
+public interface ValuedObject extends de.cau.cs.kieler.annotations.Annotatable {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->

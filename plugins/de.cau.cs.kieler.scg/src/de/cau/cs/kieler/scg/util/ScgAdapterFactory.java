@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.scg.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.scg.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -113,16 +114,32 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createJoinAdapter();
             }
             @Override
-            public Adapter caseLink(Link object) {
-                return createLinkAdapter();
-            }
-            @Override
             public Adapter caseEntry(Entry object) {
                 return createEntryAdapter();
             }
             @Override
             public Adapter caseExit(Exit object) {
                 return createExitAdapter();
+            }
+            @Override
+            public Adapter caseBasicBlock(BasicBlock object) {
+                return createBasicBlockAdapter();
+            }
+            @Override
+            public Adapter caseSchedulingBlock(SchedulingBlock object) {
+                return createSchedulingBlockAdapter();
+            }
+            @Override
+            public Adapter casePredecessor(Predecessor object) {
+                return createPredecessorAdapter();
+            }
+            @Override
+            public Adapter caseGuard(Guard object) {
+                return createGuardAdapter();
+            }
+            @Override
+            public Adapter caseLink(Link object) {
+                return createLinkAdapter();
             }
             @Override
             public Adapter caseControlFlow(ControlFlow object) {
@@ -141,48 +158,28 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createControlDependencyAdapter();
             }
             @Override
-            public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
-                return createAbsoluteWrite_ReadAdapter();
+            public Adapter caseExpressionDependency(ExpressionDependency object) {
+                return createExpressionDependencyAdapter();
             }
             @Override
-            public Adapter caseRelativeWrite_Read(RelativeWrite_Read object) {
-                return createRelativeWrite_ReadAdapter();
+            public Adapter caseGuardDependency(GuardDependency object) {
+                return createGuardDependencyAdapter();
             }
             @Override
-            public Adapter caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
-                return createAbsoluteWrite_RelativeWriteAdapter();
-            }
-            @Override
-            public Adapter caseWrite_Write(Write_Write object) {
-                return createWrite_WriteAdapter();
-            }
-            @Override
-            public Adapter caseBasicBlock(BasicBlock object) {
-                return createBasicBlockAdapter();
-            }
-            @Override
-            public Adapter caseSchedulingBlock(SchedulingBlock object) {
-                return createSchedulingBlockAdapter();
-            }
-            @Override
-            public Adapter casePredecessor(Predecessor object) {
-                return createPredecessorAdapter();
-            }
-            @Override
-            public Adapter caseScheduleBlock(ScheduleBlock object) {
-                return createScheduleBlockAdapter();
-            }
-            @Override
-            public Adapter caseSchedule(Schedule object) {
-                return createScheduleAdapter();
-            }
-            @Override
-            public Adapter caseGuard(Guard object) {
-                return createGuardAdapter();
+            public Adapter caseScheduleDependency(ScheduleDependency object) {
+                return createScheduleDependencyAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseEffect(Effect object) {
+                return createEffectAdapter();
+            }
+            @Override
+            public Adapter caseKEffects_Assignment(de.cau.cs.kieler.kexpressions.keffects.Assignment object) {
+                return createKEffects_AssignmentAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -415,62 +412,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
-     * @generated
-     */
-    public Adapter createAbsoluteWrite_ReadAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.RelativeWrite_Read
-     * @generated
-     */
-    public Adapter createRelativeWrite_ReadAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
-     * @generated
-     */
-    public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Write_Write
-     * @generated
-     */
-    public Adapter createWrite_WriteAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -513,34 +454,48 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ExpressionDependency <em>Expression Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.ScheduleBlock
+     * @see de.cau.cs.kieler.scg.ExpressionDependency
      * @generated
      */
-	public Adapter createScheduleBlockAdapter() {
+	public Adapter createExpressionDependencyAdapter() {
         return null;
     }
 
 				/**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.GuardDependency <em>Guard Dependency</em>}'.
      * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Schedule
+     * @see de.cau.cs.kieler.scg.GuardDependency
      * @generated
      */
-    public Adapter createScheduleAdapter() {
+	public Adapter createGuardDependencyAdapter() {
         return null;
     }
 
-    /**
+				/**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleDependency <em>Schedule Dependency</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.ScheduleDependency
+     * @generated
+     */
+	public Adapter createScheduleDependencyAdapter() {
+        return null;
+    }
+
+				/**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -555,13 +510,13 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
                 /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.annotations.Annotatable
+     * @see de.cau.cs.kieler.annotations.Annotatable
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
@@ -569,6 +524,34 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Effect
+     * @generated
+     */
+	public Adapter createEffectAdapter() {
+        return null;
+    }
+
+																/**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Assignment <em>Assignment</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Assignment
+     * @generated
+     */
+	public Adapter createKEffects_AssignmentAdapter() {
+        return null;
+    }
+
+				/**
      * Creates a new adapter for the default case.
      * <!-- begin-user-doc -->
      * This default implementation returns null.

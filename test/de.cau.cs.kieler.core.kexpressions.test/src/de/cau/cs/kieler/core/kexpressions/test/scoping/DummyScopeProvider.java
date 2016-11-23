@@ -23,7 +23,7 @@ import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.util.SimpleAttributeResolver;
 
-import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValueType;
 
 /**
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy

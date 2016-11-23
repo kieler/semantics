@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.s.s.Abort;
 import de.cau.cs.kieler.s.s.Assignment;
