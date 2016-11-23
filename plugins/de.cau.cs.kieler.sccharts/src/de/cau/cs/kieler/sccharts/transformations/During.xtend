@@ -60,7 +60,7 @@ class During extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeature::HISTORY_ID, SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     //-------------------------------------------------------------------------

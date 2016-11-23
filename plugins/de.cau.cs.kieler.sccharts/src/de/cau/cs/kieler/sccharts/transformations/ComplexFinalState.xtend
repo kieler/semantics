@@ -61,7 +61,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeature::HISTORY_ID, SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     // -------------------------------------------------------------------------
