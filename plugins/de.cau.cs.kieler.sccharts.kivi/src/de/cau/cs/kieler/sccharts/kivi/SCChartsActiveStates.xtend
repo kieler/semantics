@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2016 by
@@ -27,26 +27,28 @@ import java.util.ArrayList
  * simulator components that do not provide active state information.
  * 
  * @author cmot
- *
+ * 
  */
 class SCChartsActiveStates {
-    
+
     HashSet<State> activeStates = new HashSet<State>
-    
+
     def void resetAll() {
         activeStates = new HashSet<State>
     }
-    
-    
+
     def void deactivatePossibleOtherStatesInRegion(State state) {
         var parentRegion = state.parentRegion;
-        for (otherState : parentRegion.states.filter[ m | m != state]) {
-            activeStates.contains(otherState) {
-                otherState.leaveState
+        if (parentRegion != null) {
+            for (otherState : parentRegion.states.filter[m|m != state]) {
+                activeStates.contains(otherState)
+                {
+                    otherState.leaveState
+                }
             }
         }
     }
-    
+
     def void enterState(State state) {
         state.deactivatePossibleOtherStatesInRegion
         activeStates.add(state)
@@ -61,8 +63,7 @@ class SCChartsActiveStates {
             }
         }
     }
-    
-    
+
     def void leaveState(State state) {
         activeStates.remove(state)
         if (state.regions.nullOrEmpty) {
@@ -76,16 +77,15 @@ class SCChartsActiveStates {
             }
         }
     }
-    
+
     def public List<State> getAllActiveStates() {
         val returnList = new ArrayList<State>
-        for(state : activeStates) {
+        for (state : activeStates) {
             if (state instanceof State) {
-               returnList.add(state)
+                returnList.add(state)
             }
         }
         return returnList
     }
-    
-    
+
 }
