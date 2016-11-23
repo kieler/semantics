@@ -54,7 +54,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         implements IJSONObjectDataComponent {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String DEFAULT_STATE_KEY = "state";
 
@@ -329,6 +329,10 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
     private EObject modelRoot;
 
     Resource getModelResource(boolean force) {
+        return getModelResource(force, false);
+    }
+
+    Resource getModelResource(boolean force, boolean norefresh) {
         if (resource != null && !force) {
             return resource;
         }
@@ -341,6 +345,9 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             KielerCompilerContext context = new KielerCompilerContext("", null);
             String discard = KiCoUtil.serialize(modelRoot, context, true);
             resource = context.getMainResource();
+        }
+        if (!norefresh) {
+            refreshEObjectMap();
         }
         return resource;
     }
@@ -356,7 +363,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
     private void refreshEObjectMap(final EObject baseObj) {
         // Add this item
         if (baseObj.eResource() == null) {
-            resource = getModelResource(true);
+            resource = getModelResource(true, true);
         }
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
