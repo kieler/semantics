@@ -489,14 +489,22 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                         null);
             }
 
-            Resource eResource = model.eResource();
-            boolean modelHasErrorMarkers = false;
-            if (eResource != null) {
-                modelHasErrorMarkers = !eResource.getErrors().isEmpty();
-            }
-            if (modelHasErrorMarkers) {
-                throw new KiemInitializationException("\nThe source model contains error markers.",
-                        true, null);
+            // skip for circuit or SCG models which we handle as a special case anyway...
+            if ((myModel instanceof State)) {
+                Resource eResource = model.eResource();
+                boolean modelHasErrorMarkers = false;
+                if (eResource != null) {
+                    modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                }
+                if (modelHasErrorMarkers) {
+                    throw new KiemInitializationException(
+                            "\nThe source model contains error markers.", true, null);
+                }
+                Diagnostic diagnostic = Diagnostician.INSTANCE.validate(model);
+                if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                      throw new KiemInitializationException(
+                              "The source model contains error markers.\n\n", true, null);
+                }         
             }
 
             // System.out.println("4");
