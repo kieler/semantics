@@ -25,7 +25,8 @@ import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.ArrayList
 
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -60,7 +61,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeature::HISTORY_ID, SCChartsFeatureGroup::EXPANSION_ID)
     }
 
     // -------------------------------------------------------------------------

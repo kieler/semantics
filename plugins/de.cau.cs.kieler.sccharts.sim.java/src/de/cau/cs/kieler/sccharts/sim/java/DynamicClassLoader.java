@@ -126,7 +126,7 @@ public class DynamicClassLoader extends ClassLoader {
      *            the class file url
      */
     public void addClassFileByURL(String className, URL classFileURL) {
-        System.out.println("CLASS PUT " + className + " >>> " + classFileURL.toExternalForm());
+        //System.out.println("CLASS PUT " + className + " >>> " + classFileURL.toExternalForm());
         className2URL.put(className, classFileURL);
     }
 
@@ -191,7 +191,7 @@ public class DynamicClassLoader extends ClassLoader {
 
         try {
             URLConnection connection = className2URL.get(classNameToLoad).openConnection();
-            System.out.println("CLASS TO LOAD " + classNameToLoad + " >>> " + connection.getURL().toExternalForm());
+            //System.out.println("CLASS TO LOAD " + classNameToLoad + " >>> " + connection.getURL().toExternalForm());
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int data = input.read();
