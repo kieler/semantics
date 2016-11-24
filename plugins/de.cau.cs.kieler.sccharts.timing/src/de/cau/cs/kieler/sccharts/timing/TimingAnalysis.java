@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -500,43 +501,66 @@ public class TimingAnalysis extends Job {
 		FileWriter assumptionFileWriter = new FileWriter();
 		TimingAnnotationProvider assumptionTimingAnnotationProvider = new TimingAnnotationProvider();
 		StringBuilder stringBuilder = new StringBuilder();
+		
+		// In any case we will ask for the analysis of the tick function and statevariable _GO is 
+		// generated for any scchart
+        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+        
+        // Get the inputs for which we want to have globalvar assumptions
+        // Note that at the moment we will generate globalvar assumptions
+        // automatically only from boolean inputs, as the kta tool treats all GlobalVar assumptions
+        // as Input
+        EList<Declaration> declarationList = scchart.getDeclarations();
+        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        HashSet<String> inputOutputNameSet = new HashSet<String>();
+        while (declarationListIterator.hasNext()) {
+            Declaration currentDeclaration = declarationListIterator.next();
+            String name = currentDeclaration.getValuedObjects().get(0)
+                    .getName();
+            if (currentDeclaration.isInput()) {
+                ValueType type = currentDeclaration.getType();
+                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                    stringBuilder
+                            .append("\nGlobalVar " + name + " 0..1");
+                    inputOutputNameSet.add(name);
+                }
+            } else {
+                if (currentDeclaration.isOutput()) {
+                    inputOutputNameSet.add(name);
+                }
+            }
+        }
 
-		// In any case we will ask for the analysis of the tick function
-		stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+		
 		// Declare the state variables (corresponding to the registers, this is
-		// about execution
-		// states)
-		StringTokenizer codeTokenizer = new StringTokenizer(code);
-		while (codeTokenizer.hasMoreTokens()) {
-			String currentToken = codeTokenizer.nextToken();
-			if ((currentToken.startsWith("PRE")) || (currentToken.startsWith("_PRE"))) {
-				currentToken = currentToken.replace(";", "");
-				stringBuilder.append("\nState " + currentToken);
-			}
+		// about execution states)
+        StringTokenizer codeTokenizer = new StringTokenizer(code);
+        while (codeTokenizer.hasMoreTokens()) {
+            String currentToken = codeTokenizer.nextToken();
+            if (currentToken.startsWith("int")) {
+                String variableNameToken = codeTokenizer.nextToken();
+                String name = variableNameToken.replace(";", "");
+                // rule out a helper variable that has been inserted for kta tool
+                if (!variableNameToken.startsWith("dummy")) {
+                    // at the moment, we do not write GlobalVar assumptions for anything but inputs
+                    // as the kta tool treats all variables with GlobalVar assumptions as inputs.
+                    //boolean test = name.matches("g\\d.*");
+                    if (!(name.matches("g\\d(.)*")
+                            || name.matches("_condg\\d(.)*"))) {
+                        // neither inputs nor outputs are state variables
+                        if (!inputOutputNameSet.contains(name)) {
+                            stringBuilder.append("\nState " + name);
+                        }
+                    }
+                }
+            }		
 			if (currentToken.startsWith("reset()")) {
 			    if (!currentToken.startsWith("reset(){dummy")) {
 				break;
 			    }
 			}
 		}
-		// Get the inputs for which we want to have globalvar assumptions
-		// Note that at the moment we will generate globalvar assumptions
-		// automatically only form boolean inputs, others have to be specified in the .asu file
-		// First, add an assumption line for _GO, which will always be there,we treat it
-		// analogously to environment inputs (as opposed to states)
-		EList<Declaration> declarationList = scchart.getDeclarations();
-		Iterator<Declaration> declarationListIterator = declarationList.iterator();
-		while (declarationListIterator.hasNext()) {
-			Declaration currentDeclaration = declarationListIterator.next();
-			if (currentDeclaration.isInput()) {
-				ValueType type = currentDeclaration.getType();
-				if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-					stringBuilder
-							.append("\nGlobalVar " + currentDeclaration.getValuedObjects().get(0)
-									.getName() + " 0..1");
-				}
-			}
-		}
+		
 		// read (optional) additional assumptions and timing assumptions for called functions into
 		// the assumptions file
 		String assumptionFile = uriString.replace(".sct", ".asu");
