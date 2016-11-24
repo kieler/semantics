@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -33,7 +34,6 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -70,17 +70,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
 
+        // Set KIdentifier for use with incremental update
+        if (!state.id.nullOrEmpty) {
+            node.data.add(KGraphFactory::eINSTANCE.createKIdentifier => [it.id = state.id])
+        }
+
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
         node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
 //        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
-
-        if (!state.label.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [identifier |
-                identifier.id = state.label
-            ]
-        }
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR
@@ -157,15 +156,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform all outgoing transitions
+        // Also set KIdentifier for use with incremental update
         val groupedTransitions = state.outgoingTransitions.groupBy[it.targetState]
         for (transition : state.outgoingTransitions) {
             transition.transform => [ edge |
                 val target = transition.targetState;
-                if (!target.label.nullOrEmpty) {
+                if (!target.id.nullOrEmpty) {
                     val counter = groupedTransitions.get(target).indexOf(transition)
-                    edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [ identifier |
-                        identifier.id = target.label + counter
-                    ]
+                    edge.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.id + counter]
                 }
             ];
         }

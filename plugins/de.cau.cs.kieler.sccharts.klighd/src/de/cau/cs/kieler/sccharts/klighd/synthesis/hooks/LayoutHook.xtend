@@ -38,6 +38,7 @@ import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import java.util.WeakHashMap
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -63,6 +64,10 @@ class LayoutHook extends SynthesisActionHook {
     /** This property is set if the sidebar direction is set on the element */
     private static final IProperty<Boolean> DEFAULT_DIRECTION = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.direction.default", false)
+        
+    /** This property indicates the depth of the associated state */
+    private static final IProperty<Integer> HV_DEPTH = new Property<Integer>(
+        "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.layout.hv.depth", null)
 
     /** Service class for accessing layout options by name */
     private static final LayoutMetaDataService LAYOUT_OPTIONS_SERVICE = LayoutMetaDataService.getInstance();
@@ -76,30 +81,24 @@ class LayoutHook extends SynthesisActionHook {
 
     /** The name of the annotation that must be present to activate the specified layout. */
     public static final String VH_ANNOTATION = "VHLayout";
-
+    
     @Inject
     extension AnnotationsExtensions
 
-    @Inject
-    extension SCChartsExtension
-
-    /** The depth of map of the sccharts scopes in the model */
-    private val depthMap = <Scope, Integer>newHashMap
     private var Direction golbalDirection = null;
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(LAYOUT_DIRECTION);
     }
 
-    override start(Scope scope, KNode node) {
-        depthMap.put(scope, if(scope instanceof State) 0 else -1)
-        // Calculated depths
-        scope.allScopes.filter[it != scope].forEach [
-            val parentDepth = depthMap.get(it.eContainer) ?: 0
-            // Increase depth only after regions because state have no layouted children
-            val depth = if(it instanceof State) parentDepth + 1 else parentDepth
-            depthMap.put(it, depth)
-        ]
+    override finish(Scope scope, KNode rootNode) {
+        // Depth of root node
+        if (scope instanceof State) {
+            rootNode.setProperty(HV_DEPTH, 1)
+        } else {
+            rootNode.setProperty(HV_DEPTH, 0)
+        }
+        
         // Find global direction annotation
         for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
@@ -107,37 +106,47 @@ class LayoutHook extends SynthesisActionHook {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
             }
         }
-    }
-
-    override processState(State state, KNode node) {
-        // No default layout direction for states because of the box layout
-        // HV/VH Layout via annotation
-        node.processAlternatingLayoutAnnotation(state)
-        // Layout options
-        node.processLayoutOptionAnnotations(state)
-    }
-
-    override processRegion(Region region, KNode node) {
-        // Default layout direction for controlflow region
-        if (region instanceof ControlflowRegion) {
-            if (golbalDirection != null) {
-                node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
+        
+        // Process hierarchy
+        for (node : rootNode.eAllContentsOfType(KNode).toList) {
+            val source = node.getProperty(KlighdInternalProperties.MODEL_ELEMEMT);
+            if (source != null) {
+                val baseDepth = (node.parent ?: rootNode).getProperty(HV_DEPTH) ?: 0
+                if (source instanceof State) {
+                    // Increase depth only after regions because states have no layouted children
+                    node.setProperty(HV_DEPTH, baseDepth + 1)
+                    // HV/VH Layout via annotation
+                    node.processAlternatingLayoutAnnotation(source)
+                    // Layout options
+                    node.processLayoutOptionAnnotations(source)
+                    // No default layout direction for states because of the box layout
+                } else if (source instanceof Region) {
+                    node.setProperty(HV_DEPTH, baseDepth)
+                    // Default layout direction for controlflow region
+                    if (source instanceof ControlflowRegion) {
+                        if (golbalDirection != null) {
+                            node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
+                        }
+                    }
+                    // HV/VH Layout via annotation
+                    node.processAlternatingLayoutAnnotation(source)
+                    // Layout options
+                    node.processLayoutOptionAnnotations(source)
+                    // Set sidebar layout direction
+                    if (!node.hasDirection) {
+                        node.setSidebarDirection
+                    }
+                }
+                    
             }
         }
-        // HV/VH Layout via annotation
-        node.processAlternatingLayoutAnnotation(region)
-        // Layout options
-        node.processLayoutOptionAnnotations(region)
-        // Set sidebar layout direction
-        if (!node.hasDirection) {
-            node.setSidebarDirection(region)
-        }
     }
+
     
-    def void setSidebarDirection(KNode node, Scope scope) {
+    def void setSidebarDirection(KNode node) {
         switch (LAYOUT_DIRECTION.objectValue) {
-            case "HV": node.setDepthDirection(scope, true, 0)
-            case "VH": node.setDepthDirection(scope, false, 0)
+            case "HV": node.setDepthDirection(true, 0)
+            case "VH": node.setDepthDirection(false, 0)
             case "Down": node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             case "Right": node.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
             default: return
@@ -168,14 +177,14 @@ class LayoutHook extends SynthesisActionHook {
         val annotation = scope.annotations.findLast[isAlternatingLayoutAnnotation]
         if (annotation != null) {
             val isHV = annotation.name.equalsIgnoreCase(HV_ANNOTATION)
-            val offset = depthMap.get(scope)
+            val offset = node.getProperty(HV_DEPTH) ?: 0
             val workingset = newLinkedHashMap(new Pair(scope, node))
             while (!workingset.empty) {
                 val subScope = workingset.keySet.head
                 val subNode = workingset.remove(subScope)
 
                 if (subScope instanceof ControlflowRegion) {
-                    subNode.setDepthDirection(subScope, isHV, offset)
+                    subNode.setDepthDirection(isHV, offset)
                 }
 
                 // Add child elements to processing queue
@@ -205,9 +214,9 @@ class LayoutHook extends SynthesisActionHook {
         return node.getProperty(BLOCK_ALTERNATIN_LAYOUT);
     }
 
-    private def setDepthDirection(KNode node, Scope scope, boolean isHV, int depthOffset) {
+    private def setDepthDirection(KNode node, boolean isHV, int depthOffset) {
         if (!node.isBlockingAlternatingLayout) {
-            val depth = (depthMap.get(scope) ?: 0) - depthOffset
+            val depth = (node.getProperty(HV_DEPTH) ?: 0) - depthOffset
             if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
                 node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             } else {
@@ -221,10 +230,7 @@ class LayoutHook extends SynthesisActionHook {
         rootNode.eAllContentsOfType(KNode).filter[
             it.getProperty(DEFAULT_DIRECTION)
         ].forEach[
-            val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT)
-            if (source instanceof Region) {
-                it.setSidebarDirection(source)
-            }
+            it.setSidebarDirection
         ]
         return ActionResult.createResult(true);
     }

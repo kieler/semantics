@@ -67,6 +67,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
 
+        // Set KIdentifier for use with incremental update
+        if (!region.id.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.id]
+        }
+        
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
@@ -80,12 +85,6 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
         // Direction is set by the {@link LayoutHook}
-        
-        if (!region.label.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [identifier |
-                identifier.id = region.label
-            ]
-        }
         
         node.initiallyExpand
 

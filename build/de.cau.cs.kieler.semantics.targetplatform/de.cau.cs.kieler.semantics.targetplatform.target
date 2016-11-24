@@ -32,7 +32,7 @@
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.elk.ui.feature.feature.group" version="0.0.0"/>
-      <repository location="http://build.eclipse.org/modeling/elk/updates/nightly"/>
+      <repository location="http://download.eclipse.org/elk/updates/releases/0.1.0/"/>
     </location>
   </locations>
 </target>
