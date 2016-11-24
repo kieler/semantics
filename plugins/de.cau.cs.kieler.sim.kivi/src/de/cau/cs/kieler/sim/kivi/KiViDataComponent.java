@@ -486,7 +486,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent
                                 } catch (Exception e) {
                                     // TODO: why ??!
                                     // System.out.println(t.getText());
-                                    e.printStackTrace();
+                                    //e.printStackTrace();
                                 }
                             } else if (obj instanceof KContainerRendering) {
                                 // for final states
