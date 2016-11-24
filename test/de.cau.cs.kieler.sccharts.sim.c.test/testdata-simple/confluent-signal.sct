@@ -1,0 +1,17 @@
+scchart confluent_signal {
+  output signal pure O;
+  input bool R1;
+  input bool R2;
+
+  state M;
+
+  initial state L
+  --> M immediate with R2 / O;
+
+  region:
+
+  state F;
+
+  initial state E
+  --> F immediate with R1 / O;
+}
