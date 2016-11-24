@@ -193,7 +193,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
         }
 
         if (DEBUG) {
-            System.out.println("#TICK: " + tick);
+            SCChartsKiViPlugin.log("#TICK: " + tick);
         }
 
         // TODO: in the initial step, enter the SCCharts itself!
@@ -329,6 +329,10 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
     private EObject modelRoot;
 
     Resource getModelResource(boolean force) {
+        return getModelResource(force, false);
+    }
+
+    Resource getModelResource(boolean force, boolean norefresh) {
         if (resource != null && !force) {
             return resource;
         }
@@ -342,7 +346,9 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
             String discard = KiCoUtil.serialize(modelRoot, context, true);
             resource = context.getMainResource();
         }
-        refreshEObjectMap();
+        if (!norefresh) {
+            refreshEObjectMap();
+        }
         return resource;
     }
 
@@ -357,7 +363,7 @@ public class SCChartsActiveStatesDataComponent extends JSONObjectDataComponent
     private void refreshEObjectMap(final EObject baseObj) {
         // Add this item
         if (baseObj.eResource() == null) {
-            resource = getModelResource(true);
+            resource = getModelResource(true, true);
         }
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {

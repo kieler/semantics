@@ -2,8 +2,6 @@ package de.cau.cs.kieler.kiem.toolbar;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 

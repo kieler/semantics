@@ -604,14 +604,34 @@ scchart AO {
         </span></div>
 	  
 	  
-	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
-			    <div class="input-w"  style="width: auto">
+	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations / Output</span> </span>
+			    <span class="Stil8 Stil12">&nbsp;&nbsp;<a href="#" onclick="toggleAdvancedTransformations();">Show/Hide Advanced Mode</a></span>
+			      <div class="input-w"  style="width: auto">
+				  
+	   <select class="form-control" style="margin-top:5px"  name="simpleTransformationSelection" id="simpleTransformationSelection" onchange="applySimpleTransformationSelection();">
+         <option selected="selected" value="">Modeled SCChart Diagram (default)</option>
+         <option value="EXTENDED">Core SCChart Diagram</option>
+         <option value="TEXTENDED">Core SCChart (SCT)</option>
+         <option value="CORE">Normalized SCChart Diagram</option>
+         <option value="TCORE">Normalized SCChart (SCT)</option>
+         <option value="scg.basic">SCG Diagram</option>
+         <option value="scg.sequentialize">Sequentialized SCG Diagram</option>
+         <option value="scg.seqssa">Sequentialized SSA SCG Diagram</option>
+         <option value="circuit.basic">HW Circuit Diagram</option>
+         <option value="T_s.c">C Code</option>
+         <option value="T_s.java">Java Code</option>
+         <option value="T_s.arduino">Arduino Code</option>
+       </select>				  
+				  
+                <div id="advancedTransformationsOptions" style="display: none">
                 <p>
-                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
+                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="" style="width: 100%"/>
+				<span class="Stil15 Stil13 Stil13">(Comma separated list of transformations to apply)</span><br>
        
                   <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
 				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
                 </p>
+				</div>
                 </div>
               </label>
  </div>
@@ -652,15 +672,8 @@ scchart AO {
 	  
  <div class="col-sm-6" style="margin-top:40px">
 
-			<p>
-				<span class="style5"><span class="style13">Other Options</span><br>
+				<span class="style5"><span class="style13">Other Options</span>
 			  </span>
-                <label><span class="Stil8">
-                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-              Strict</span></label>
-                <span class="Stil8 Stil10">(only apply the listed transformations)
-                  <label></label>
-    </span></p>
                 <p> <span class="Stil8 Stil10"> 
     <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultTextAndCompile();" value="text"  />
@@ -702,8 +715,13 @@ scchart AO {
 
                 </span><br>
                   <br>
-                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span>
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Show/Hide Advanced Options</a></span>
                 <div id="advancedOptions" style="font:24px bold; display: none">
+                <label><span class="Stil8">
+                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+              Strict Mode</span></label>
+                <span class="Stil8 Stil10">(only apply the listed transformations)</span>
+				
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
                   <tr>
@@ -754,17 +772,17 @@ scchart AO {
        <td width="315" valign="top" scope="row"><span class="Stil8">
          <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>Server </strong></span><span class="Stil10 Stil3 Stil10 style14"><span class="Stil15 Stil13 Stil13">(compile / render)</span></span><br>
          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server* <span class="Stil12">(fastest)</span></label>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server* <span class="Stil12">(fast)</span></label>
          <br>
          <label>
          <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
-         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server 1</label>
-         <span class="Stil12">(faster)</span><br>
-         <label>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server</label>
+         <span class="Stil12">(slow)</span><br>
+<!--         <label>
          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
-         <span class="Stil12">(slower)</span><br>
-         <label>
+         <span class="Stil12">(slower)</span><br> 
+         <label> -->
          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler#KIELERCommandLineCompiler-EnabletheKielerCompilerHTTPServer" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering#KIELERCommandLineRendering-EnabletheKLighDHTTPServer" target="_blank">here</a>)</span></label>
@@ -774,8 +792,11 @@ scchart AO {
          <label></label>
          <br>
          <br>
-         <span class="style9">(* Due to technical issues with headless offline rendering using a VNC server, the Main Server is currently not able to render large diagrams and may die in such scenarios because of VNC server crashes. A locally running KIELER SCCharts should not suffer from this problem. <br>
-         <b>Please do not render such large diagrams with our Main Server, which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span></span></td>
+<!--         <span class="style9">(* Due to technical issues with headless offline rendering using a VNC server, the Main Server may in some circumstances be effected by VNC server crashes but will
+		 auto recover within the next minutes. A locally running KIELER SCCharts will not suffer from this problem. <br>
+         <b>Please do not render such large diagrams with our Main Server, which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span>
+		 -->
+		 </span></td>
      </tr>
    </table>
  </div>
@@ -791,15 +812,15 @@ scchart AO {
 	  <div class="col-sm-12" style="margin-top:40px">
 	  <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>References </strong></span>
 	  <span class="style9">
-<br><br>
+<br>
 
-[1] Reinhard von Hanxleden, Björn Duderstadt, Christian Motika, Steven Smyth, Michael Mendler, Joaquín Aguado, Stephen Mercer, and Owen O’Brien. SCCharts: Sequentially Constructive Statecharts for Safety-Critical Applications. In Proc. ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2014), Edinburgh, UK, June 2014.<BR>
+[1] Reinhard von Hanxleden, Björn Duderstadt, Christian Motika, Steven Smyth, Michael Mendler, Joaquín Aguado, Stephen Mercer, and Owen O’Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/pldi14.pdf" target="_blank">SCCharts: Sequentially Constructive Statecharts for Safety-Critical Applications</a>. In Proc. ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2014), Edinburgh, UK, June 2014.<BR>
 
-[2] Christian Motika, Steven Smyth, and Reinhard von Hanxleden. Compiling SCCharts — A case-study on interactive model-based compilation. In Proceedings of the 6th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2014), volume 8802 of LNCS, pages 443–462, Corfu, Greece, October 2014.<BR>
+[2] Christian Motika, Steven Smyth, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola14.pdf" target="_blank">Compiling SCCharts — A case-study on interactive model-based compilation</a>. In Proceedings of the 6th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2014), volume 8802 of LNCS, pages 443–462, Corfu, Greece, October 2014.<BR>
 
-[3] Francesca Rybicki, Steven Smyth, Christian Motika, Alexander Schulz-Rosengarten, and Reinhard von Hanxleden. Interactive model-based compilation continued — interactive incremental hardware synthesis for SCCharts. In Proceedings of the 7th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2016), LNCS, October 2016.<BR>
+[3] Francesca Rybicki, Steven Smyth, Christian Motika, Alexander Schulz-Rosengarten, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola16.pdf" target="_blank">Interactive model-based compilation continued — interactive incremental hardware synthesis for SCCharts</a>. In Proceedings of the 7th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2016), LNCS, October 2016.<BR>
 
-[4] Reinhard von Hanxleden, Michael Mendler, Joaquín Aguado, Björn Duderstadt, Insa Fuhrmann, Christian Motika, Stepjen Mercer, and Owen O'Brien. Sequentially Constructive Concurrency - A conservative extension of the synchronous model of computation, In Proc. Design, Automation and Test in Europe Conference (DATE 2013), Grenoble, France, March 2013.<BR>
+[4] Reinhard von Hanxleden, Michael Mendler, Joaquín Aguado, Björn Duderstadt, Insa Fuhrmann, Christian Motika, Stepjen Mercer, and Owen O'Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/date13.pdf" target="_blank">Sequentially Constructive Concurrency - A conservative extension of the synchronous model of computation</a>. In Proc. Design, Automation and Test in Europe Conference (DATE 2013), Grenoble, France, March 2013.<BR>
 
 
 [5] Charles André. Semantics of SyncCharts, Technical Report ISRN I3S/RR-2003-24-FR, I3S Laboratory, Sophia-Antipolis, France, April 2003.<BR>
@@ -882,6 +903,17 @@ function toggleAdvanced() {
   }
 }
 
+var advancedTransformationsShown = false;
+function toggleAdvancedTransformations() {
+  advancedTransformationsShown = !advancedTransformationsShown;
+  if (advancedTransformationsShown) {
+	document.getElementById('advancedTransformationsOptions').style.display='block';
+  }
+  else {
+	document.getElementById('advancedTransformationsOptions').style.display='none';
+  }
+}
+
 
 function showServerOffline() {
 	document.getElementById('resultTextDiv').style.display='none';
@@ -953,6 +985,41 @@ if (area.addEventListener) {
 }
 
 
+
+function applySimpleTransformationSelection() {
+	var exampleElem = document.getElementById("simpleTransformationSelection");
+	var sel = exampleElem.value;
+	
+	var switchToText = false; 
+	
+	if ((sel == "TEXTENDED")||(sel == "TCORE")) {
+		switchToText = true;
+		if (sel == "TEXTENDED") {
+			sel = "EXTENDED";
+		}
+		if (sel == "TCORE") {
+			sel = "CORE";
+		}
+	}
+
+
+	var transformationsElem = document.getElementById("transformations");
+	transformationsElem.value = sel;
+	if (switchToText) {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			setResultTextAndCompile();
+	}
+	else {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = true;
+			document.getElementById("outputText").checked = false;
+			setResultImage('png');
+	}
+	
+	compile();
+}
 
 
 function loadExample() {

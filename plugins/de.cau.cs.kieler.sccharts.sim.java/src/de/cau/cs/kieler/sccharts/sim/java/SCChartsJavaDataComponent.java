@@ -86,7 +86,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 7;
+    private static final int KIEM_PROPERTY_MAX = 8;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
@@ -132,6 +132,11 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS =
             "codegeneration, T_sccharts.scg, T_s.java";
+    
+    private static final int KIEM_PROPERTY_ALLVARS = 7;
+    private static final String KIEM_PROPERTY_NAME_ALLVARS = "Expose ALL Variables";
+    private static final boolean KIEM_PROPERTY_DEFAULT_ALLVARS = false;
+    
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -203,6 +208,11 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
         properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
                         KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_ALLVARS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_ALLVARS, KIEM_PROPERTY_DEFAULT_ALLVARS);
+        
+                
+        
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -214,6 +224,19 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
         // properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME,
         // new KiemPropertyTypeChoice(items), items[0]);
         return properties;
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks if is expose all vars flag is turned on.
+     *
+     * @return true, if is expose all vars
+     */
+    public boolean isExposeAllVars() {
+        return this.getProperties()[KIEM_PROPERTY_ALLVARS
+                             + KIEM_PROPERTY_DIFF].getValueAsBoolean();
     }
 
     // -------------------------------------------------------------------------
@@ -466,14 +489,22 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                         null);
             }
 
-            Resource eResource = model.eResource();
-            boolean modelHasErrorMarkers = false;
-            if (eResource != null) {
-                modelHasErrorMarkers = !eResource.getErrors().isEmpty();
-            }
-            if (modelHasErrorMarkers) {
-                throw new KiemInitializationException("\nThe source model contains error markers.",
-                        true, null);
+            // skip for circuit or SCG models which we handle as a special case anyway...
+            if ((myModel instanceof State)) {
+                Resource eResource = model.eResource();
+                boolean modelHasErrorMarkers = false;
+                if (eResource != null) {
+                    modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                }
+                if (modelHasErrorMarkers) {
+                    throw new KiemInitializationException(
+                            "\nThe source model contains error markers.", true, null);
+                }
+                Diagnostic diagnostic = Diagnostician.INSTANCE.validate(model);
+                if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                      throw new KiemInitializationException(
+                              "The source model contains error markers.\n\n", true, null);
+                }         
             }
 
             // System.out.println("4");
@@ -554,6 +585,29 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 }
             }
 
+            
+            if (isExposeAllVars()) {
+                // Do a PRE compilation with the debugTransformations!
+                KielerCompilerContext highLevelContext =
+                        new KielerCompilerContext("EXPOSELOCALVALUEDOBJECT", extendedSCChart);
+                // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                highLevelContext.setCreateDummyResource(true);
+
+                highLevelContext.setInplace(false);
+                highLevelContext.setAdvancedSelect(true);
+                // System.out.println("10");
+                CompilationResult highLeveleCompilationResult =
+                        KielerCompiler.compile(highLevelContext);
+
+                extendedSCChart = highLeveleCompilationResult.getEObject();
+
+                // re-link myModel such that the additional outputs are shown
+                this.myModel = extendedSCChart;
+
+                // highLevelTransformations = debugTransformations + ", " +
+                // highLevelTransformations;
+            }            
+            
             if (debug) {
                 // Do a PRE compilation with the debugTransformations!
                 KielerCompilerContext highLevelContext =
@@ -899,7 +953,7 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                     present = (order) > 0;
                 }
 
-                if ((!(simulatedModel instanceof State)) && fullDebugMode) {
+                if (isExposeAllVars() || ((!(simulatedModel instanceof State)) && fullDebugMode)) {
                     if (output.startsWith("g") || output.equals("_GO")) {
                         Object value;
                         try {

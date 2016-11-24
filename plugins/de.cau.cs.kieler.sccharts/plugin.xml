@@ -93,6 +93,9 @@
               class="de.cau.cs.kieler.sccharts.transformations.SimulationVisualization">
         </expansionTransformationClass>
         <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.ExposeLocalValuedObject">
+        </expansionTransformationClass>
+        <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.NoSimulationVisualization">
         </expansionTransformationClass>
         <expansionTransformationClass
@@ -166,6 +169,9 @@
         </featureClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.SimulationVisualization">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.ExposeLocalValuedObject">
         </featureClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.Static">

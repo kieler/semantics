@@ -1134,8 +1134,18 @@ class SCChartsExtension {
     def String getHierarchicalName(Scope scope, String decendingName) {
         if (scope == null)
             return decendingName
-        else
-            return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
+        else {
+            var scopeId = "";
+            if (scope.id != null) {
+                scopeId = scope.id
+            } else {
+                val parent = (scope.eContainer as Scope);
+                if (parent instanceof State) {
+                    scopeId = "region" + parent.regions.indexOf(scope)
+                }
+            }
+            return (scope.eContainer as Scope).getHierarchicalName(scopeId + "_" + decendingName)
+        }
     }
 
 
@@ -1240,15 +1250,18 @@ class SCChartsExtension {
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
         if (state == targetRootState) {
+            for(valuedObject : state.valuedObjects.filter[!isInput && !isOutput].toList.immutableCopy) {
+                valuedObject.declaration.output = true
+            }
             return;
         }
         
         val declarations = state.declarations.toList
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-        for(declaration : declarations) {
+        for(declaration : declarations.immutableCopy) {
             targetRootState.declarations += declaration
             if (expose) declaration.output = true
-            for(valuedObject : declaration.valuedObjects) {
+            for(valuedObject : declaration.valuedObjects.immutableCopy) {
                 if (expose) {
                     valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
                 } else {
