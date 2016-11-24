@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.ControlDependency
+import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 /** 
  * @author ssm
@@ -82,6 +83,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension SCGDependencyExtensions
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -136,6 +140,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
             }
             
+            // Add a new schedule dependency to cover the last guarded assignments.
+            scheduleDependencies += scheduleDependencies.last.target.createScheduleDependency(null) 
+            
             // Connect assignments
             for(schedule : scheduleDependencies) {
                 val originalAssignment = schedule.eContainer as Assignment
@@ -174,10 +181,14 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                             nextAssignment = next
                         }
                     }
-                    AAMap.get(nextAssignment).createControlFlow.target = targetAssignment 
-                    guardConditional.createControlFlow.target = targetAssignment         	    
+                    if (targetAssignment != null) {
+                        AAMap.get(nextAssignment).createControlFlow.target = targetAssignment 
+                        guardConditional.createControlFlow.target = targetAssignment
+                    }         	    
             	} else {
-                	sourceAssignment.createControlFlow.target = targetAssignment
+                    if (targetAssignment != null) {
+                    	sourceAssignment.createControlFlow.target = targetAssignment
+                   	}
                	} 
             }
         }
