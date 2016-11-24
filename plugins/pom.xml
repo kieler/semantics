@@ -67,12 +67,7 @@
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sccharts</module>
-<<<<<<< HEAD
-    <module>de.cau.cs.kieler.sccharts.edit</module>
-    <module>de.cau.cs.kieler.sccharts.editor</module>
     <module>de.cau.cs.kieler.sccharts.examples</module>
-=======
->>>>>>> ssm/scg
     <module>de.cau.cs.kieler.sccharts.kivi</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>
     <module>de.cau.cs.kieler.sccharts.preferences</module>
