@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExt
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KPolygon
@@ -111,6 +112,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
      
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region);
+
+        // Set KIdentifier for use with incremental update
+        if (!region.id.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.id]
+        }
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
