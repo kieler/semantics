@@ -532,6 +532,14 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sim.kiem.toolbar"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+
+   <plugin
          id="de.cau.cs.kieler.sim.instructions"
          download-size="0"
          install-size="0"
@@ -656,6 +664,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sccharts.sim.java"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.sccharts.scg"
          download-size="0"
          install-size="0"
@@ -706,6 +721,13 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.scg.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.scg.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -829,6 +851,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+  <plugin
+         id="de.cau.cs.kieler.esterel.sim.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>          
 
    <plugin
          id="de.cau.cs.kieler.sim.signals"

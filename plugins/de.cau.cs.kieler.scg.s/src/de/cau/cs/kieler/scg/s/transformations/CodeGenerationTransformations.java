@@ -31,4 +31,8 @@ public class CodeGenerationTransformations {
     
     public final static String S2JAVA_ID = "s.java";
     public final static String S2JAVA_NAME = "Java Code";
+
+    public final static String S2ARDUINO_ID = "s.arduino";
+    public final static String S2ARDUINO_NAME = "Arduino Code";
+
 }

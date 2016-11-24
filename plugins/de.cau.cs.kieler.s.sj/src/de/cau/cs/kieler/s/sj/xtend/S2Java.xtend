@@ -52,7 +52,6 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
-import de.cau.cs.kieler.s.sj.S2SJPlugin
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -103,7 +102,7 @@ class S2Java {
        }
        '''
         val time = (System.currentTimeMillis - timestamp) as float
-        S2SJPlugin.log("C code generation finished (time used: "+(time / 1000)+"s).")    
+        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
        code
    }     
 
@@ -136,7 +135,8 @@ class S2Java {
 
    «/* Variables */»
     «sVariables(program)»    
-    
+    «program.tickVariables»
+    boolean _PRE_GO = false;
     ''' 
    }
    
@@ -175,7 +175,7 @@ class S2Java {
        if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
            return '''public'''
        }
-       return '''private'''
+       return '''public'''
    }
 
    // Generate variables.
@@ -208,7 +208,7 @@ class S2Java {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF declaration.volatile»
-              «'''  '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «''' public '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray
 //TODO: initial values für arrays
 »
@@ -276,6 +276,7 @@ class S2Java {
    def sResetFunction(Program program) {
        '''  public void reset(){
        _GO = true;
+       _PRE_GO = false;
        «program.resetVariables»
        return;
     }
@@ -287,12 +288,14 @@ class S2Java {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''  public void tick(){
-       	«program.tickVariables»
+       if (_PRE_GO) {
+            _GO = false;
+       }
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
        «program.setPreVariables»
-       _GO = false;
+       _PRE_GO = _GO;
        return;
     }
     '''
@@ -326,6 +329,8 @@ class S2Java {
    }   
    
    // -------------------------------------------------------------------------   
+
+   // Host code without "..."
    // Removes the first and last character from a String if these are matching quotation marks.
    def extractCode(String hostCodeString) {
         if ((hostCodeString.startsWith("'") && hostCodeString.endsWith("'"))
@@ -335,6 +340,10 @@ class S2Java {
             return hostCodeString
         }
    }
+
+   def extractCode(TextExpression hostCode) {
+        hostCode.text.extractCode
+   }
    
    // Expand Host code.
    def dispatch CharSequence expand(HostCodeInstruction hostCodeInstruction) {
@@ -342,7 +351,7 @@ class S2Java {
    }
    // Expand Text Expression
    def dispatch CharSequence expand(TextExpression expression) {
-        '''(«expression.text»)'''
+        '''(«expression.text.extractCode»)'''
    }
 
    // -------------------------------------------------------------------------   

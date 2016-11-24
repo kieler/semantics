@@ -21,10 +21,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
 
 /**

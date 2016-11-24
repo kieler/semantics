@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sccharts.timing;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,24 +33,35 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 public class TimingAnalysisHook extends SynthesisHook {
-	private static SynthesisOption TIMING_CATEGORY = SynthesisOption.createCategory("Timing Analysis", false);
+    
+    private static SynthesisOption TIMING_CATEGORY =
+            SynthesisOption.createCategory("Timing Analysis", false);
 
-	private static SynthesisOption SHOW_TIMING = SynthesisOption.createCheckOption("Perform Timing Analysis", false)
-			.setCategory(TIMING_CATEGORY);
+    private static SynthesisOption SHOW_TIMING = SynthesisOption
+            .createCheckOption("Perform Timing Analysis", false).setCategory(TIMING_CATEGORY);
 
-	private static SynthesisOption SHOW_TIMING_HIGHLIGHTING = SynthesisOption
-			.createCheckOption("Show Hotspot Highlighting", false).setCategory(TIMING_CATEGORY);
+    private static SynthesisOption SHOW_TIMING_HIGHLIGHTING = SynthesisOption
+            .createCheckOption("Show Hotspot Highlighting", false).setCategory(TIMING_CATEGORY);
 
-	private static SynthesisOption TIMING_REP = SynthesisOption.createChoiceOption("Timing Representation",
-			Arrays.asList(TimingAnalysis.TimingValueRepresentation.values()),
-			TimingAnalysis.TimingValueRepresentation.CYCLES).setCategory(TIMING_CATEGORY);
+    private static SynthesisOption TIMING_REP =
+            SynthesisOption
+                    .createChoiceOption("Timing Representation",
+                            Arrays.asList(TimingAnalysis.TimingValueRepresentation.values()),
+                            TimingAnalysis.TimingValueRepresentation.CYCLES)
+                    .setCategory(TIMING_CATEGORY);
 
 	private static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
 
 	@Override
-	public List<SynthesisOption> getDisplayedSynthesisOptions() {
-		return Lists.newArrayList(TIMING_CATEGORY, SHOW_TIMING, SHOW_TIMING_HIGHLIGHTING, TIMING_REP);
-	}
+    public List<SynthesisOption> getDisplayedSynthesisOptions() {
+        if (!Activator.getDefault().getPreferenceStore()
+                .getBoolean("interactiveTimingAnalysisSidebar")) {
+            return Collections.emptyList();
+        } else {
+            return Lists.newArrayList(TIMING_CATEGORY, SHOW_TIMING, SHOW_TIMING_HIGHLIGHTING,
+                    TIMING_REP);
+        }
+    }
 
 	@Override
 	public void finish(Scope scope, KNode node) {
@@ -68,7 +80,8 @@ public class TimingAnalysisHook extends SynthesisHook {
 			scchartDummyRegion.setId("SCChartDummyRegion");
 
 			Resource resource = null;
-			KielerCompilerContext context = getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
+            KielerCompilerContext context =
+                    getUsedContext().getProperty(KiCoProperties.COMPILATION_CONTEXT);
 			if (context != null) {
 				resource = context.getMainResource();
 			} else {
@@ -83,8 +96,10 @@ public class TimingAnalysisHook extends SynthesisHook {
 			// timing analysis is running
 
 			HashMultimap<Region, WeakReference<KText>> timingLabels = HashMultimap.create();
-			HashMultimap<Region, WeakReference<KRectangle>> regionRectangles = HashMultimap.create();
-			Iterator<EObject> graphIter = ModelingUtil.eAllContentsOfType2(node, KNode.class, KContainerRendering.class,
+            HashMultimap<Region, WeakReference<KRectangle>> regionRectangles =
+                    HashMultimap.create();
+            Iterator<EObject> graphIter = ModelingUtil.eAllContentsOfType2(node, KNode.class,
+                    KContainerRendering.class,
 					KRectangle.class);
 			while (graphIter.hasNext()) {
 				EObject eObj = graphIter.next();
@@ -98,16 +113,18 @@ public class TimingAnalysisHook extends SynthesisHook {
 						}
 						renderingExtensions.setFontSize(text, 10);
 						renderingExtensions.setForegroundColor(text, 255, 0, 0);
-						renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
-								renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5, 5,
-								0, 0);
+                        renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT,
+                                5, 0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
+                                VerticalAlignment.TOP, 5, 5, 0, 0);
 						rect.getChildren().add(text);
 						timingLabels.put((Region) sourceElem, new WeakReference<KText>(text));
-						regionRectangles.put((Region) sourceElem, new WeakReference<KRectangle>(rect));
+                        regionRectangles.put((Region) sourceElem,
+                                new WeakReference<KRectangle>(rect));
 					}
 				}
 			}
-			KRoundedRectangle rectangle = (KRoundedRectangle) node.getChildren().get(0).getData(KRoundedRectangle.class);
+            KRoundedRectangle rectangle =
+                    (KRoundedRectangle) node.getChildren().get(0).getData(KRoundedRectangle.class);
 			KRectangle innerRect = KRenderingFactory.eINSTANCE.createKRectangle();
 			renderingExtensions.setInvisible(innerRect, true);
 			innerRect.getChildren().add(rectangle.getChildren().get(0));
@@ -116,14 +133,17 @@ public class TimingAnalysisHook extends SynthesisHook {
 			text.setText("???");
 			renderingExtensions.setFontSize(text, 14);
 			renderingExtensions.setForegroundColor(text, 255, 0, 0);
-			renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0, renderingExtensions.TOP, 1,
+            renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
+                    renderingExtensions.TOP, 1,
 					0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5, 5, 0, 0);
 			innerRect.getChildren().add(text);
 			timingLabels.put(null, new WeakReference<KText>(text));
 			// start analysis job
-			new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource, regionRectangles,
+            new TimingAnalysis(rootState, timingLabels, scchartDummyRegion, resource,
+                    regionRectangles,
 					getBooleanValue(SHOW_TIMING_HIGHLIGHTING),
-					(TimingAnalysis.TimingValueRepresentation) getObjectValue(TIMING_REP)).schedule();
+                    (TimingAnalysis.TimingValueRepresentation) getObjectValue(TIMING_REP))
+                            .schedule();
 		}
 	}
 }

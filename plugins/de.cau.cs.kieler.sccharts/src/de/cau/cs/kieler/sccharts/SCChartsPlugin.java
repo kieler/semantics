@@ -29,19 +29,31 @@ public class SCChartsPlugin implements BundleActivator {
         
         public static String TEXT_EDITOR_ID = "de.cau.cs.kieler.sccharts.text.sct.Sct";
         
+//        /**
+//         * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
+//         */
+//        public static final String AUXILIARY_VARIABLE_TAG_TRANSITION 
+//                               = "oSCCHARTSoAUXTRANSo";
+//
+//        /**
+//         * The Constant AUXILIARY_VARIABLE_TAG for a State.
+//         */
+//        public static final String AUXILIARY_VARIABLE_TAG_STATE 
+//                               = "oSCCCHARTSoAUXSTATEo";
+        
+    
         /**
          * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
          */
-        public static final String AUXILIARY_VARIABLE_TAG_TRANSITION 
-                               = "oSCCHARTSoAUXTRANSo";
+        public static final String AUXILIARY_VARIABLE_TAG_TRANSITION = "_T";
 
         /**
          * The Constant AUXILIARY_VARIABLE_TAG for a State.
          */
-        public static final String AUXILIARY_VARIABLE_TAG_STATE 
-                               = "oSCCCHARTSoAUXSTATEo";
+//        public static final String AUXILIARY_VARIABLE_TAG_STATE = "oSCCHARTSoAUXSTATEo";
+        public static final String AUXILIARY_VARIABLE_TAG_STATE = "_S";
         
-    
+        
 	private static BundleContext context;
 
 	static BundleContext getContext() {

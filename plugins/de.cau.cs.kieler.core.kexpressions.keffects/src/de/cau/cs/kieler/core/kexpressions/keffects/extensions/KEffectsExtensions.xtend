@@ -18,6 +18,8 @@ import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /**
  * @author ssm
@@ -45,5 +47,15 @@ class KEffectsExtensions {
             it.expression = expression
         ]
     }
+    
+    // Convert a String into a host code effect
+    def HostcodeEffect asHostcodeEffect(String hostCode) {
+        val effect = KEffectsFactory::eINSTANCE.createHostcodeEffect()
+        effect.text = hostCode;
+        effect        
+    }
+
+    
+    
 
 }

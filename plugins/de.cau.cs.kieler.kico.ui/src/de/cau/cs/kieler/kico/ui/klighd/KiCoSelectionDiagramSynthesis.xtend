@@ -16,7 +16,6 @@ package de.cau.cs.kieler.kico.ui.klighd
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
-import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -353,8 +352,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
             val cornerRadius = if(!feature.isGroupOrAlternative) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
-            //            figure.setProperty(KlighdProperties::, true);
-            figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+            //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+            //figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+            figure.addDoubleClickAction(KiCoSelectionAction::ID);
             figure.addSingleClickAction(KiCoSelectionAction::ID);
             figure.lineWidth = lineWidth;
             figure.foreground = "gray".color;
@@ -385,7 +385,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                             it.addText("   " + feature.label + " ").putToLookUpWith(feature) => [
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-                                it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                                //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+                                //it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                                it.addDoubleClickAction(KiCoSelectionAction::ID);
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
                                 it.setForeground(BLACK.copy);
                                 it.setSelectionBackground(BLUE3.copy)
@@ -401,7 +403,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                     // For simple states we want a larger area 
                     it.addText(" " + feature.label).putToLookUpWith(feature) => [
                         // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-                        it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                        //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+                        //it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                        it.addDoubleClickAction(KiCoSelectionAction::ID);
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
                         it.setForeground(BLACK.copy)

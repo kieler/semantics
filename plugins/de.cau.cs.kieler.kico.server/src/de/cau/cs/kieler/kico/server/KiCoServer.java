@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 
 import com.google.inject.Inject;
 
@@ -48,10 +51,10 @@ import de.cau.cs.kieler.server.HttpUtils;
  */
 public class KiCoServer extends HttpServer {
     
-    public static String SCCHARTS_PREFERRED = "ABORT,INITIALIZATION,scg.basicblock.sc,s.c,sccharts.scg,s.c,NOSIMULATIONVISUALIZATION";
+    public static String SCCHARTS_PREFERRED = "ABORT,INITIALIZATION,scg.basicblock.sc,s.c,sccharts.scg,s.c,scg.guards, scg.scheduling,NOSIMULATIONVISUALIZATION";
     public static String SCCHARTS_EXT = "sct";
 
-    public static String SCG_PREFERRED = "scg.basicblock.sc,s.c";
+    public static String SCG_PREFERRED = "scg.basicblock.sc,s.c,scg.guards, scg.scheduling";
     public static String SCG_EXT = "scg";    
 
     // -------------------------------------------------------------------------
@@ -162,7 +165,25 @@ public class KiCoServer extends HttpServer {
                     mainModel = eObject;
                 }
             }
+ 
+            
+            String validationOrSerializationError = null;
+            
 
+            // validate model
+            if (mainModel != null) {
+                Diagnostic diagnostic = Diagnostician.INSTANCE.validate(mainModel);
+                if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                    validationOrSerializationError = "The source model contains errors.";
+                }         
+                Resource r = mainModel.eResource();
+                if (r != null) {
+                    if (r.getErrors().size() > 0) {
+                        validationOrSerializationError = "The source model contains errors.";
+                    }
+                }
+            }
+                        
             if (KiCoPlugin.DEBUG) {
                 KiCoServerPlugin.log(mainModel.eClass().getName().toString());
             }
@@ -180,8 +201,6 @@ public class KiCoServer extends HttpServer {
             
             // Validate the selection
             context.validateSelection();
-            
-            String serializationError = null;
             
             // answer with compiled & serialized model
             String lastError = "";
@@ -241,7 +260,7 @@ public class KiCoServer extends HttpServer {
                                             KiCoUtil.serialize((EObject) compiledModel, context, false, true);
                                 }
                             } catch(Exception e) {
-                                serializationError = "Could not serialize model.";
+                                validationOrSerializationError = "Could not serialize model.";
                             }
                         }
                         debug("Model serialized");
@@ -252,8 +271,8 @@ public class KiCoServer extends HttpServer {
                 lastWarning = compilationResult.getAllWarnings();
             }
             
-            if (serializationError != null) {
-                lastError = serializationError;
+            if (validationOrSerializationError != null) {
+                lastError = validationOrSerializationError;
             }
 
 

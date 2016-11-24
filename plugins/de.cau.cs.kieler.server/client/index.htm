@@ -57,6 +57,7 @@
 }
 .style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: small; font-weight: bold; }
 .style7 {font-size: medium}
+.style9 {font-size: xx-small; font-weight: normal}
 -->
 </style>
 </head>
@@ -123,52 +124,51 @@ var renderServerURL   = new Array("http://render.sccharts.com", "http://www.scch
 
 
 var windowContent = " <body onBlur='self.focus();'>\
-<div align='left'><img src='http://www.sccharts.com/transformations.jpg' alt='s' border='0' usemap='#Map' />\
+<div align='left'><img src='http://www.sccharts.com/transformations.jpg' width='1759' height='341' alt='s' border='0' usemap='#Map' />\
   <map name='Map' id='Map'>\
-    <area shape='rect' coords='1663,173,1731,205' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.java\"'/>\
-    <area shape='rect' coords='4,5,879,35' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/>\
-    <area shape='rect' coords='230,100,866,127' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/>\
-    <area shape='rect' coords='19,42,215,72' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/>\
-    <area shape='rect' coords='1647,101,1745,131' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s.target\"'/>\
-    <area shape='rect' coords='1606,276,1650,307' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.seqssa\"'/>\
-    <area shape='rect' coords='1654,276,1713,307' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit.basic\"' />\
-    <area shape='rect' coords='111,209,145,240' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"' />\
-    <area shape='rect' coords='48,207,100,239' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"' />\
-    <area shape='rect' coords='47,251,112,284' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/>\
-    <area shape='rect' coords='118,250,200,284' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/>\
-    <area shape='rect' coords='27,114,122,146' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/>\
-    <area shape='rect' coords='130,119,202,151' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/>\
-    <area shape='rect' coords='68,78,120,109' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/>\
-    <area shape='rect' coords='137,81,185,114' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/>\
-    <area shape='rect' coords='340,195,458,229' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"' />\
-    <area shape='rect' coords='472,150,568,180' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/>\
-    <area shape='rect' coords='483,184,555,220' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORT\"'/>\
-    <area shape='rect' coords='482,222,557,255' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORTWTO\"'/>\
-    <area shape='rect' coords='239,196,330,231' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/>\
-    <area shape='rect' coords='1608,141,1642,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s\"'/>\
-    <area shape='rect' coords='587,149,656,182' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/>\
-    <area shape='rect' coords='576,256,667,290' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/>\
-    <area shape='rect' coords='673,203,757,236' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/>\
-    <area shape='rect' coords='775,133,854,168' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/>\
-    <area shape='rect' coords='886,118,1096,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/>\
-    <area shape='rect' coords='900,153,988,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/>\
-    <area shape='rect' coords='989,152,1083,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/>\
-    <area shape='rect' coords='1104,118,1585,147' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg\"'/>\
-    <area shape='rect' coords='1117,151,1164,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basic\"'/>\
-    <area shape='rect' coords='1167,151,1251,188' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.dependency\"'/>\
-    <area shape='rect' coords='1339,150,1395,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.guard\"'/>\
-    <area shape='rect' coords='1253,150,1335,188' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basicblock\"' />\
-    <area shape='rect' coords='1597,240,1729,273' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit\"'/>\
-    <area shape='rect' coords='1399,153,1477,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.scheduling\"'/>\
-    <area shape='rect' coords='1481,153,1571,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.sequentialize\"'/>\
-    <area shape='rect' coords='1597,64,1760,95' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"codegeneration\"' />\
-    <area shape='rect' coords='1667,136,1725,168' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.c\"' />\
-    <area shape='rect' coords='38,176,211,196' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
+    <area shape='rect' coords='1639,117,1733,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.arduino\"'/>\
+    <area shape='rect' coords='1651,155,1726,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.java\"'/>\
+    <area shape='rect' coords='4,5,838,35' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/>\
+    <area shape='rect' coords='220,106,822,135' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/>\
+    <area shape='rect' coords='13,37,209,67' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/>\
+    <area shape='rect' coords='1638,80,1736,110' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s.target\"'/>\
+    <area shape='rect' coords='1587,293,1637,325' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.seqssa\"'/>\
+    <area shape='rect' coords='1637,294,1705,324' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit.basic\"'/>\
+    <area shape='rect' coords='100,205,139,235' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"'/>\
+    <area shape='rect' coords='40,205,92,237' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"'/>\
+    <area shape='rect' coords='40,252,105,285' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/>\
+    <area shape='rect' coords='112,253,194,287' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/>\
+    <area shape='rect' coords='27,80,122,112' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/>\
+    <area shape='rect' coords='124,77,196,109' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/>\
+    <area shape='rect' coords='63,117,122,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/>\
+    <area shape='rect' coords='130,118,182,150' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/>\
+    <area shape='rect' coords='326,207,444,241' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"'/>\
+    <area shape='rect' coords='455,167,551,197' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/>\
+    <area shape='rect' coords='466,200,538,236' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORT\"'/>\
+    <area shape='rect' coords='462,240,537,273' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORTWTO\"'/>\
+    <area shape='rect' coords='229,200,320,235' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/>\
+    <area shape='rect' coords='1587,134,1628,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s\"'/>\
+    <area shape='rect' coords='566,243,635,276' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/>\
+    <area shape='rect' coords='556,146,647,180' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/>\
+    <area shape='rect' coords='647,195,731,228' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/>\
+    <area shape='rect' coords='733,218,812,253' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/>\
+    <area shape='rect' coords='850,118,1060,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/>\
+    <area shape='rect' coords='859,151,947,185' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/>\
+    <area shape='rect' coords='954,151,1048,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/>\
+    <area shape='rect' coords='1078,119,1559,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg\"'/>\
+    <area shape='rect' coords='1084,152,1131,188' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basic\"'/>\
+    <area shape='rect' coords='1137,149,1221,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.dependency\"'/>\
+    <area shape='rect' coords='1308,148,1364,185' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.guard\"'/>\
+    <area shape='rect' coords='1225,148,1307,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basicblock\"'/>\
+    <area shape='rect' coords='1580,257,1708,287' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit\"'/>\
+    <area shape='rect' coords='1370,152,1448,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.scheduling\"'/>\
+    <area shape='rect' coords='1456,152,1546,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.sequentialize\"'/>\
+    <area shape='rect' coords='1579,42,1751,74' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"codegeneration\"'/>\
+    <area shape='rect' coords='1651,190,1720,221' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.c\"'/>\
+    <area shape='rect' coords='28,170,208,196' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
   </map>\
   <input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
-  <br />\
-    <span style='font-family: Verdana, Arial, Helvetica, sans-serif;\
-	font-size: x-small'>Click on the transformation that you like to add to the list of applied compile transformations.</span> </div>\
+  </div>\
 </body>";
 
 var mywindow;
@@ -181,7 +181,7 @@ function openSelectWindow() {
 	}catch(e) {
   }
   transformationsTimer=setInterval(function(){updateTransformations()},500);
-  mywindow = window.open("", "selectWindow", "width=1110,height=390, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
+  mywindow = window.open("", "selectWindow", "width=1110,height=417, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
 
   mywindow.focus();
@@ -219,6 +219,11 @@ function updateTransformations() {
 var transformationsTimer;
 
 
+function setResultTextAndCompile() {
+	setResultText();
+	compile();
+}
+
 function setResultText() {
     var scale = document.getElementById("scale");
 	scale.disabled = true;
@@ -228,7 +233,6 @@ function setResultText() {
     var text = document.getElementById("resultTextDiv");
 	text.style.display="block";
 	image.style.display="none";
-	compile();
 //	alert("setResultText" + image + text);
 }
 
@@ -250,6 +254,22 @@ function setResultImage(type) {
 	compile();
 }
 
+
+function isTextTransformationSelected() {
+	    // hack: if transformations contain obvious text/code-output transformations
+		// such as s.c s.java s.target s codegeneration then switch to text output!
+		var selectedTransormations = document.getElementById("transformations").value;
+		var allTransformations = selectedTransormations.split(',');
+		var index;
+		for (index in allTransformations) {
+			var transformation = allTransformations[index].trim();
+			if ((transformation == "s")||(transformation == "T_s.c")||(transformation == "T_s.java")||(transformation == "T_s.arduino")||(transformation == "s.target")||(transformation == "codegeneration")) {
+					return true;
+			}
+		}
+		return false;
+}
+
 var doUpdateImage = false;
 
 function compile() {
@@ -264,10 +284,20 @@ function compile() {
 		compileText();
 	}
 	else {
-		// first disable current compile image
-		progressImage();
-		doUpdateImage = true;
-		compileText();
+		var foundCodeTransformation = isTextTransformationSelected();
+		if (foundCodeTransformation) {
+			setResultText();
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			doUpdateImage = false;
+			compileText();
+		} else {
+			// first disable current compile image
+			progressImage();
+			doUpdateImage = true;
+			compileText();
+		}
 	}
 }
 
@@ -574,14 +604,34 @@ scchart AO {
         </span></div>
 	  
 	  
-	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations</span> <span class="Stil15 Stil13 Stil13">(comma separated)</span></span>
-			    <div class="input-w"  style="width: auto">
+	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations / Output</span> </span>
+			    <span class="Stil8 Stil12">&nbsp;&nbsp;<a href="#" onclick="toggleAdvancedTransformations();">Show/Hide Advanced Mode</a></span>
+			      <div class="input-w"  style="width: auto">
+				  
+	   <select class="form-control" style="margin-top:5px"  name="simpleTransformationSelection" id="simpleTransformationSelection" onchange="applySimpleTransformationSelection();">
+         <option selected="selected" value="">Modeled SCChart Diagram (default)</option>
+         <option value="EXTENDED">Core SCChart Diagram</option>
+         <option value="TEXTENDED">Core SCChart (SCT)</option>
+         <option value="CORE">Normalized SCChart Diagram</option>
+         <option value="TCORE">Normalized SCChart (SCT)</option>
+         <option value="scg.basic">SCG Diagram</option>
+         <option value="scg.sequentialize">Sequentialized SCG Diagram</option>
+         <option value="scg.seqssa">Sequentialized SSA SCG Diagram</option>
+         <option value="circuit.basic">HW Circuit Diagram</option>
+         <option value="T_s.c">C Code</option>
+         <option value="T_s.java">Java Code</option>
+         <option value="T_s.arduino">Arduino Code</option>
+       </select>				  
+				  
+                <div id="advancedTransformationsOptions" style="display: none">
                 <p>
-                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="INITIALIZATION" style="width: 100%"/>
+                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="" style="width: 100%"/>
+				<span class="Stil15 Stil13 Stil13">(Comma separated list of transformations to apply)</span><br>
        
                   <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
 				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
                 </p>
+				</div>
                 </div>
               </label>
  </div>
@@ -622,18 +672,11 @@ scchart AO {
 	  
  <div class="col-sm-6" style="margin-top:40px">
 
-			<p>
-				<span class="style5"><span class="style13">Other Options</span><br>
+				<span class="style5"><span class="style13">Other Options</span>
 			  </span>
-                <label><span class="Stil8">
-                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-              Strict</span></label>
-                <span class="Stil8 Stil10">(only apply the listed transformations)
-                  <label></label>
-    </span></p>
-                <p> <span class="Stil8 Stil10">
+                <p> <span class="Stil8 Stil10"> 
     <label>
-                  <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text"  />
+                  <input name="output" type="radio" id="outputText" onclick="setResultTextAndCompile();" value="text"  />
     <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label><br>
     <label> 
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
@@ -672,8 +715,13 @@ scchart AO {
 
                 </span><br>
                   <br>
-                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span>
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Show/Hide Advanced Options</a></span>
                 <div id="advancedOptions" style="font:24px bold; display: none">
+                <label><span class="Stil8">
+                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+              Strict Mode</span></label>
+                <span class="Stil8 Stil10">(only apply the listed transformations)</span>
+				
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
                   <tr>
@@ -724,17 +772,17 @@ scchart AO {
        <td width="315" valign="top" scope="row"><span class="Stil8">
          <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>Server </strong></span><span class="Stil10 Stil3 Stil10 style14"><span class="Stil15 Stil13 Stil13">(compile / render)</span></span><br>
          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server* <span class="Stil12">(fast)</span></label>
          <br>
          <label>
          <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
-         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server 1</label>
-         <span class="Stil12">(faster)</span><br>
-         <label>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server</label>
+         <span class="Stil12">(slow)</span><br>
+<!--         <label>
          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
-         <span class="Stil12">(slower)</span><br>
-         <label>
+         <span class="Stil12">(slower)</span><br> 
+         <label> -->
          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler#KIELERCommandLineCompiler-EnabletheKielerCompilerHTTPServer" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering#KIELERCommandLineRendering-EnabletheKLighDHTTPServer" target="_blank">here</a>)</span></label>
@@ -742,14 +790,53 @@ scchart AO {
          <label></label>
          </span><span class="Stil8">
          <label></label>
-       </span></td>
+         <br>
+         <br>
+<!--         <span class="style9">(* Due to technical issues with headless offline rendering using a VNC server, the Main Server may in some circumstances be effected by VNC server crashes but will
+		 auto recover within the next minutes. A locally running KIELER SCCharts will not suffer from this problem. <br>
+         <b>Please do not render such large diagrams with our Main Server, which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span>
+		 -->
+		 </span></td>
      </tr>
    </table>
  </div>
+
+
+
+
+
+
+
+
+
+	  <div class="col-sm-12" style="margin-top:40px">
+	  <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>References </strong></span>
+	  <span class="style9">
+<br>
+
+[1] Reinhard von Hanxleden, Björn Duderstadt, Christian Motika, Steven Smyth, Michael Mendler, Joaquín Aguado, Stephen Mercer, and Owen O’Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/pldi14.pdf" target="_blank">SCCharts: Sequentially Constructive Statecharts for Safety-Critical Applications</a>. In Proc. ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2014), Edinburgh, UK, June 2014.<BR>
+
+[2] Christian Motika, Steven Smyth, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola14.pdf" target="_blank">Compiling SCCharts — A case-study on interactive model-based compilation</a>. In Proceedings of the 6th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2014), volume 8802 of LNCS, pages 443–462, Corfu, Greece, October 2014.<BR>
+
+[3] Francesca Rybicki, Steven Smyth, Christian Motika, Alexander Schulz-Rosengarten, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola16.pdf" target="_blank">Interactive model-based compilation continued — interactive incremental hardware synthesis for SCCharts</a>. In Proceedings of the 7th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2016), LNCS, October 2016.<BR>
+
+[4] Reinhard von Hanxleden, Michael Mendler, Joaquín Aguado, Björn Duderstadt, Insa Fuhrmann, Christian Motika, Stepjen Mercer, and Owen O'Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/date13.pdf" target="_blank">Sequentially Constructive Concurrency - A conservative extension of the synchronous model of computation</a>. In Proc. Design, Automation and Test in Europe Conference (DATE 2013), Grenoble, France, March 2013.<BR>
+
+
+[5] Charles André. Semantics of SyncCharts, Technical Report ISRN I3S/RR-2003-24-FR, I3S Laboratory, Sophia-Antipolis, France, April 2003.<BR>
+
+[6] Gerad Berry. The foundations of Esterel, In G. Plotkin, C. Stirling, and M. Tofte, editors, Proof, Language, and Interaction: Essays in Honour of Robin Milner, pages 425-454, Cambridge, MA, USA, 2000.<BR>
+
+[7] David Harel. Statecharts: A visual formalism for complex systems, Science of Computer Programming, 8(3):231-274, June 1987.<BR>
+	 </span>
+	   </div>
+
     </div>
 
 	  
 	  
+	  
+
 	  
 	  
 <style type="text/css">
@@ -816,6 +903,17 @@ function toggleAdvanced() {
   }
 }
 
+var advancedTransformationsShown = false;
+function toggleAdvancedTransformations() {
+  advancedTransformationsShown = !advancedTransformationsShown;
+  if (advancedTransformationsShown) {
+	document.getElementById('advancedTransformationsOptions').style.display='block';
+  }
+  else {
+	document.getElementById('advancedTransformationsOptions').style.display='none';
+  }
+}
+
 
 function showServerOffline() {
 	document.getElementById('resultTextDiv').style.display='none';
@@ -828,7 +926,7 @@ function showServerOffline() {
 function showServerOnline() {
 	document.getElementById('serverdownDiv').style.display='none';
     var outputText = document.getElementById("outputText");
-    if(outputText.checked) {
+    if(outputText.checked || isTextTransformationSelected()) {
 		document.getElementById('resultTextDiv').style.display='block';
 		document.getElementById('resultImageDiv').style.display='none';
 	} else {
@@ -887,6 +985,41 @@ if (area.addEventListener) {
 }
 
 
+
+function applySimpleTransformationSelection() {
+	var exampleElem = document.getElementById("simpleTransformationSelection");
+	var sel = exampleElem.value;
+	
+	var switchToText = false; 
+	
+	if ((sel == "TEXTENDED")||(sel == "TCORE")) {
+		switchToText = true;
+		if (sel == "TEXTENDED") {
+			sel = "EXTENDED";
+		}
+		if (sel == "TCORE") {
+			sel = "CORE";
+		}
+	}
+
+
+	var transformationsElem = document.getElementById("transformations");
+	transformationsElem.value = sel;
+	if (switchToText) {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			setResultTextAndCompile();
+	}
+	else {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = true;
+			document.getElementById("outputText").checked = false;
+			setResultImage('png');
+	}
+	
+	compile();
+}
 
 
 function loadExample() {

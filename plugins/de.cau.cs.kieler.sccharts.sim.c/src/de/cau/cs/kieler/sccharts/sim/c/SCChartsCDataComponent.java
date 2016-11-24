@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationIntermediateResult;
 import de.cau.cs.kieler.sc.CExecution;
+import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
@@ -79,7 +80,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 8;
+    private static final int KIEM_PROPERTY_MAX = 9;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
@@ -116,7 +117,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
     private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS =
-            "SCCHARTS_SIMULATION_VISUALIZATION";
+            "T_SIMULATIONVISUALIZATION";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 6;
@@ -124,7 +125,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
             "High Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
+    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE, T_ABORT";
 
     /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 7;
@@ -132,7 +133,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "codegeneration, T_sccharts.scg, T_s.c";
+    
+    private static final int KIEM_PROPERTY_ALLVARS = 8;
+    private static final String KIEM_PROPERTY_NAME_ALLVARS = "Expose ALL Variables";
+    private static final boolean KIEM_PROPERTY_DEFAULT_ALLVARS = false;    
 
     /** The benchmark flag for generating cycle and file size signals. */
     private boolean benchmark = false;
@@ -203,6 +208,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
                         KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_ALLVARS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_ALLVARS, KIEM_PROPERTY_DEFAULT_ALLVARS);
+        
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -367,21 +375,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // start execution of compiled program
-        if (cExecution.isCompiled()) {
-            try {
+		if (cExecution != null && cExecution.isCompiled()) {
+                    try {
                 cExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
-                        "SCCharts could not be started sucessfully.\n\n", true, e);
+                        "SCChart could not be started sucessfully.\n\n", true, e);
             }
         } else {
-            throw new KiemInitializationException("SCCharts was not compiled sucessfully.\n\n",
+            throw new KiemInitializationException("SCChart was not compiled sucessfully.\n\n",
                     true, null);
         }
 
         if (!cExecution.isStarted()) {
             throw new KiemInitializationException(
-                    "Error running SCCharts. Compiled simulation does not exist.\n", true, null);
+                    "Error running SCChart. Compiled simulation does not exist.\n", true, null);
         }
 
         // Build the list of interface output signals
@@ -401,10 +409,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
                         String signalName = valuedObject.getName();
-                        if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                        if (signalName.startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
                         } else if (signalName
-                                .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             outputTransitionList.add(signalName);
                         } else {
                             if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
@@ -462,18 +470,18 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         "\nCannot simulate active editor using the SCCharts Simulator.", true, null);
             }
             
-            Resource eResource = model.eResource();
-            boolean modelHasErrorMarkers = false;
-            if (eResource != null) {
-                modelHasErrorMarkers = !eResource.getErrors().isEmpty();
-            }
-            if (modelHasErrorMarkers) {
-                throw new KiemInitializationException(
-                        "\nThe source model contains error markers.", true, null);
-            }
 
-            // skip for circuit models which we handle as a special case anyway...
-            if (!(myModel instanceof Actor)) {
+            // skip for circuit or SCG models which we handle as a special case anyway...
+            if ((myModel instanceof State)) {
+                Resource eResource = model.eResource();
+                boolean modelHasErrorMarkers = false;
+                if (eResource != null) {
+                    modelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                }
+                if (modelHasErrorMarkers) {
+                    throw new KiemInitializationException(
+                            "\nThe source model contains error markers.", true, null);
+                }
                 Diagnostic diagnostic = Diagnostician.INSTANCE.validate(model);
                 if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
                       throw new KiemInitializationException(
@@ -555,6 +563,27 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
 
 
+            if (isExposeAllVars()) {
+                // Do a PRE compilation with the debugTransformations!
+                KielerCompilerContext highLevelContext =
+                        new KielerCompilerContext("EXPOSELOCALVALUEDOBJECT", extendedSCChart);
+                // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+                highLevelContext.setCreateDummyResource(true);
+
+                highLevelContext.setInplace(false);
+                highLevelContext.setAdvancedSelect(true);
+                // System.out.println("10");
+                CompilationResult highLeveleCompilationResult =
+                        KielerCompiler.compile(highLevelContext);
+
+                extendedSCChart = highLeveleCompilationResult.getEObject();
+
+                // re-link myModel such that the additional outputs are shown
+                this.myModel = extendedSCChart;
+
+                // highLevelTransformations = debugTransformations + ", " +
+                // highLevelTransformations;
+            }            
 
 
             if (debug) {
@@ -576,6 +605,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 //                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
             }
             
+            
+            if (isExposeAllVars()) {
+                highLevelTransformations += ", scg.sequentialize";
+            }
             
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
@@ -817,26 +850,26 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                             }
 
                             if (outputName
-                                    .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                                 if (present) {
                                     if (activeStatesBuf.length() > 0) {
                                         activeStatesBuf.append(",");
                                     }
                                     String activeStateName =
                                             outputName
-                                                    .substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE
+                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_STATE
                                                             .length());
                                     activeStatesBuf.append(activeStateName);
                                 }
                             } else if (outputName
-                                    .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                    .startsWith(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                                 if (present) {
                                     if (activeTransitionsBuf.length() > 0) {
                                         activeTransitionsBuf.append(",");
                                     }
                                     String activeTransitionName =
                                             outputName
-                                                    .substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
+                                                    .substring(SCChartsPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
                                                             .length());
                                     activeTransitionsBuf.append(activeTransitionName);
                                 }
@@ -927,7 +960,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                 return 0;
             } else {
                 return 1;
-            }
+            } 
         }
     }
 
@@ -944,5 +977,20 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         return allOutputs;
         
     }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is expose all vars flag is turned on.
+     *
+     * @return true, if is expose all vars
+     */
+    public boolean isExposeAllVars() {
+        return this.getProperties()[KIEM_PROPERTY_ALLVARS
+                             + KIEM_PROPERTY_DIFF].getValueAsBoolean();
+    }
+
+    // -------------------------------------------------------------------------
 
 }

@@ -16,13 +16,15 @@ package de.cau.cs.kieler.sccharts.kivi;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  *
  * @author mmu
  * @kieler.ignore (excluded from review process)
  */
-public class SCChartsKiViPlugin extends AbstractUIPlugin {
+public class SCChartsKiViPlugin extends AbstractUIPluginLog {
 
     /**
      * The plug-in ID.

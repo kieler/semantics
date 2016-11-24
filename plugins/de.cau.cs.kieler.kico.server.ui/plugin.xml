@@ -25,7 +25,7 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="de.cau.cs.kieler.kico.server.ui.toolbars.enableToolbar">
+               id="de.cau.cs.kieler.kico.server.ui.toolbars.KIELER Compiler Server">
             <command
                   commandId="de.cau.cs.kieler.kico.server.ui.commands.enableCommand"
                   icon="icons/KiCoViewIcon.png"

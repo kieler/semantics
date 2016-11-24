@@ -204,10 +204,24 @@ public final class CEC {
             if (resolvedFileName != null) {
                 resolvedFileName = KiemUtil.getAbsoluteBundlePath(resolvedFileName);
             }
+            
+            if (resolvedFileName != null) {
+                File execFile = new File(resolvedFileName.getFile());
+                if (!execFile.canExecute()) {
+                    boolean success = execFile.setExecutable(true);
+                    if (!success) {
+                        throw new RuntimeException("Failed to set executable permission for "
+                                + execFile.getPath());
+                    }
+                }
+
+            }
+
             if (resolvedFileName != null) {
                 String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
                 return resolvedModuleExecutable;
             }
+            
             // } catch (URISyntaxException e) {
             // throw new RuntimeException("Cannot resolve executable of CEC module '" + module +
             // "'",

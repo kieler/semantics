@@ -488,6 +488,12 @@ class SCChartsTransformationExtension {
             val newDeclaration = createDeclaration(declaration)
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
+            val parent = declaration.eContainer
+            if (parent instanceof State) {
+                    parent.declarations.add(newDeclaration)                
+            } else if (parent instanceof ControlflowRegion) {
+                    parent.declarations.add(newDeclaration)                
+            }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }

@@ -51,6 +51,7 @@
     <module>de.cau.cs.kieler.esterel.prom</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
+    <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.scl</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex.ui</module>
@@ -85,6 +86,7 @@
     <module>de.cau.cs.kieler.sccharts.s</module>
     <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.sim.c</module>
+    <module>de.cau.cs.kieler.sccharts.sim.java</module>
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
 	<module>de.cau.cs.kieler.sccharts.timing</module>
@@ -93,6 +95,7 @@
     <module>de.cau.cs.kieler.scg.edit</module>
     <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
+    <module>de.cau.cs.kieler.scg.kivi</module>
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.scl.ui</module>
@@ -106,6 +109,7 @@
     <module>de.cau.cs.kieler.sim.kiem</module>
     <module>de.cau.cs.kieler.sim.kiem.config</module>
     <module>de.cau.cs.kieler.sim.kiem.ui</module>
+    <module>de.cau.cs.kieler.sim.kiem.toolbar</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.datacomponent</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.launching</module>
     <module>de.cau.cs.kieler.sim.kivi</module>

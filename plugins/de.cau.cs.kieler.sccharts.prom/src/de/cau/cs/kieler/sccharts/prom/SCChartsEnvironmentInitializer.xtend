@@ -36,7 +36,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         // Arduino
         datas += getArduinoDefaultEnvironment()
         // C Code Simulation
-        datas += getCSimulationEnvironment()
+//        Uncommented for the next release.
+//        datas += getCSimulationEnvironment()
         return datas
     }
     

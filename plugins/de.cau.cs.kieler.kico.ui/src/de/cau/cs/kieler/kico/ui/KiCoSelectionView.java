@@ -445,17 +445,17 @@ public class KiCoSelectionView extends DiagramViewPart {
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
         }
         
-        // Restore if nothing is selected
-        if (selection.getSelectedFeatureAndTransformationIds().size() == 0) {
-            // Restore old KIEM value
-            IEditorPart editorPart = KiemPlugin.getOpenedModelEditors()
-                    .get(new Path("de.cau.cs.kieler.kico.klighd.sourceModel"));
-            if (editorPart != null) {
-                IPath inputModelPath = ModelUtil.getInputModelPath(editorPart);
-                KiemPlugin.setCurrentModelFile(inputModelPath);
-            }
-        }
-
+//        // Restore if nothing is selected
+//        if (selection.getSelectedFeatureAndTransformationIds().size() == 0) {
+//            // Restore old KIEM value
+//            IEditorPart editorPart = KiemPlugin.getOpenedModelEditors()
+//                    .get(new Path("de.cau.cs.kieler.kico.klighd.sourceModel"));
+//            if (editorPart != null) {
+//                IPath inputModelPath = ModelUtil.getInputModelPath(editorPart);
+//                KiemPlugin.setCurrentModelFile(inputModelPath);
+//            }
+//        }
+ 
     }
 
     // -------------------------------------------------------------------------
