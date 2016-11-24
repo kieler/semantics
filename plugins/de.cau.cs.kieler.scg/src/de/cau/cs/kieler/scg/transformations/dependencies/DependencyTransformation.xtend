@@ -190,6 +190,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     	}
     	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
+    		dependency.checkAndSetConfluence
     		dependency.checkAndSetConcurrency(nodeMapping)
     	}	
     }

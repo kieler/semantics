@@ -28,6 +28,12 @@ import java.util.List
 import de.cau.cs.kieler.scg.Entry
 import java.util.Map
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import java.lang.management.OperatingSystemMXBean
+import javax.management.OperationsException
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Value
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -102,18 +108,48 @@ class SCGDependencyExtensions {
     }
     
     def DataDependency checkAndSetConfluence(DataDependency dependency) {
-    	val sourceNode = dependency.eContainer as Node
-    	val targetNode = dependency.target
-    	dependency.confluent = false
-    	if (sourceNode instanceof Assignment && targetNode instanceof Assignment) {
-    		val sourceExpression = sourceNode.asAssignment.expression
-    		val targetExpression = targetNode.asAssignment.expression
-    		if (sourceExpression.isSameValue(targetExpression)) {
-    			dependency.confluent = true
-    		}
-    	}
-    	dependency
+        val sourceNode = dependency.eContainer as Node
+        val targetNode = dependency.target
+        dependency.confluent = false
+        if (sourceNode instanceof Assignment) {
+            if (targetNode instanceof Assignment) {
+                val sourceExpression = sourceNode.expression
+                val targetExpression = targetNode.expression
+                if (sourceExpression.isSameValue(targetExpression)) {
+                    dependency.confluent = true
+                } else {
+                    // To be downward-compatible, check for or operator expression with same value.
+                    if (areOldConfluentSetter(sourceNode, targetNode)) {
+                        dependency.confluent = true
+                    }
+                }
+            }
+        }
+        dependency
     }
+    
+    private def boolean areOldConfluentSetter(Assignment sourceAssignment, Assignment targetAssignment) {
+        val sourceExpression = sourceAssignment.expression
+        val targetExpression = targetAssignment.expression
+        if (sourceExpression instanceof OperatorExpression) {
+            if (targetExpression instanceof OperatorExpression) {
+                if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
+                    // Assume there is only one VO and one literal per OE.
+                    val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
+                    val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
+                    if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
+                        targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
+                        val sourceValue = sourceExpression.subExpressions.filter(Value).head
+                        val targetValue = targetExpression.subExpressions.filter(Value).head
+                        if (sourceValue.isSameValue(targetValue)) {
+                           return true
+                        }                        
+                    }
+                }
+            }
+        }
+        return false
+    } 
     
     def DataDependency checkAndSetConcurrency(DataDependency dependency, Map<Node, List<Entry>> nodeMapping) {
     	val sourceNode = dependency.eContainer as Node
