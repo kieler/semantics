@@ -51,10 +51,10 @@ import de.cau.cs.kieler.server.HttpUtils;
  */
 public class KiCoServer extends HttpServer {
     
-    public static String SCCHARTS_PREFERRED = "ABORT,INITIALIZATION,scg.basicblock.sc,s.c,sccharts.scg,s.c,NOSIMULATIONVISUALIZATION";
+    public static String SCCHARTS_PREFERRED = "ABORT,INITIALIZATION,scg.basicblock.sc,s.c,sccharts.scg,s.c,scg.guards, scg.scheduling,NOSIMULATIONVISUALIZATION";
     public static String SCCHARTS_EXT = "sct";
 
-    public static String SCG_PREFERRED = "scg.basicblock.sc,s.c";
+    public static String SCG_PREFERRED = "scg.basicblock.sc,s.c,scg.guards, scg.scheduling";
     public static String SCG_EXT = "scg";    
 
     // -------------------------------------------------------------------------

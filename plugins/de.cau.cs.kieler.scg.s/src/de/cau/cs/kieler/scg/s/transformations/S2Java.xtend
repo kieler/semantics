@@ -56,8 +56,8 @@ class S2Java extends AbstractProductionTransformation {
      * @return the object
      */
     def public Object transform(Program program) {
-        val className = program.name.replace("_", "").replace("!", "").replace("#", "").replace("-", "").replace("=", "").
-            replace("=", "")
+        val className = "P"+program.name.replace("_", "").replace("!", "").replace("#", "").replace("-", "").replace("=", "").
+            replace("=", "").replace(" ", "")
 
         val de.cau.cs.kieler.s.sj.xtend.S2Java transform2 = Guice.createInjector().getInstance(
             typeof(de.cau.cs.kieler.s.sj.xtend.S2Java));
