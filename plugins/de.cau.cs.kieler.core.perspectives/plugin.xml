@@ -12,7 +12,7 @@
       </perspective>
       <perspective
             class="de.cau.cs.kieler.core.perspectives.SimulationPerspective"
-            icon="icons/foerde-logo-16.gif"
+            icon="icons/foerde-logo-kiem-16.gif"
             id="de.cau.cs.kieler.simulation"
             name="SCCharts Simulation">
       </perspective>
