@@ -63,18 +63,21 @@
     </@>
 </#macro>
 
-<#-- TickDuration -->
-<#-- As input variable, waits until the tick loop duration is at least the target duration in milliseconds.
-     Furthermore the variable of the model is set to the actual duration,
-     which may be longer than the target duration.
+<#-- TickLoopDuration -->
+<#-- Sets the input variable to the duration that the last complete tick loop needed (in milliseconds).
+     This means for the very first tick, the input variable is not set.
+     
+     Furthermore there can be a target duration specified (in milliseconds).
+     If the tick loop takes less time than the target duration,
+     the program will wait until the target duration has been reached.
      
      The input variable that uses this macro should be the first in the model,
-     so that waiting for the target duration is the last action in the tick loop. 
+     so that waiting for the target duration is the last action in the tick loop.
      
      Example for SCCharts:
-         @Wrapper TickDuration, "50"
+         @Wrapper TickLoopDuration, "50" // Tick function should be called every 50 milliseconds.
          output int tickDuration; -->
-<#macro TickDuration targetMillis=0>
+<#macro TickLoopDuration targetMillis=0>
     <@init>
         long tickDurationCounter = System.currentTimeMillis();
         boolean isFirstTick = true;
@@ -99,6 +102,38 @@
             // Remember tick duration
             tickDurationCounter = System.currentTimeMillis();
         }
+    </@>
+</#macro>
+
+<#-- TickWakeUp -->
+<#-- Using this macro, the model can set the time when it will be executed next.
+
+     As input variable, will contain the system time when the tick function was called.
+     The model can then add an amount to this variable.
+     The next tick function is delayed until this new wake up time has been reached. 
+     
+     The input variable that uses this macro should be the last in the model,
+     so that waiting for the wake up is the last action before the tick function call.
+     
+     The time is always in milliseconds.
+     
+     Example for SCCharts:
+         @Wrapper TickWakeUp
+         input output int wakeUpTime = 0;  -->
+<#macro TickWakeUp>
+    <@input>
+        // Wait until wake up time has been reached.
+        long wakeUpTime = scchart.${varname};
+        if ( wakeUpTime > System.currentTimeMillis() ) {
+            try {
+                Thread.sleep(wakeUpTime - System.currentTimeMillis());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        // Set input of model to new system time. This should be the old wake up time.
+        scchart.${varname} = new Long(System.currentTimeMillis()).intValue();
+        // The tick function should come next...
     </@>
 </#macro>
 
