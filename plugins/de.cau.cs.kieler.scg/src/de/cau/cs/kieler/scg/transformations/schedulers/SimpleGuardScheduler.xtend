@@ -32,7 +32,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.SCGPlugin
-import de.cau.cs.kieler.core.model.LogLevel
+import java.util.logging.Level
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -123,7 +123,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     		for(s : schedule) {
     			sl += (s as Assignment).valuedObject.name + " "
     		}
-    		SCGPlugin.log(sl, LogLevel.HIGH)
+    		SCGPlugin.log(sl, Level.FINE)
     	}
     	
     	scg
@@ -156,7 +156,7 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
 				SCGPlugin.logError("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
-					" to " + dependency.target.asAssignment.valuedObject.name, LogLevel.HIGH)
+					" to " + dependency.target.asAssignment.valuedObject.name, Level.FINE)
 				return
 			}
 		}

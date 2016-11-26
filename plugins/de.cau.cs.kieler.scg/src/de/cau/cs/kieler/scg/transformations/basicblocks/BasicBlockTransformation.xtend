@@ -46,7 +46,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGPlugin
-import de.cau.cs.kieler.core.model.LogLevel
+import java.util.logging.Level
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -183,7 +183,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         	guardCache.forEach[ guard | declaration.valuedObjects += guard.valuedObject ]
         ]
         val time2 = (System.currentTimeMillis - timestamp2) as float
-        SCGPlugin.log("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).", LogLevel.HIGH)            
+        SCGPlugin.log("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).", Level.FINE)            
         
         //KITT
         if (isTracingActive()) {
@@ -202,7 +202,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).", LogLevel.HIGH)    
+        SCGPlugin.log("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).", Level.FINE)    
         
         // Return the SCG with basic block data.
         scg
@@ -283,7 +283,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         }
 
         if (basicBlockCache.size % 10000 == 0) {
-            SCGPlugin.log("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes", LogLevel.HIGH)
+            SCGPlugin.log("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes", Level.FINE)
         }
         
         // Create a new ValuedObject for the guards of the upcoming basic block.

@@ -31,6 +31,7 @@ import org.eclipse.elk.graph.properties.IProperty
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.core.model.PluginLog
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -66,7 +67,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     // -------------------------------------------------------------------------
     // Fields
-    val logger = Logger.getLogger(this.class.name)
     public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
        
     // -------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         hooks.invokeFinish(root, rootNode);
 
         // Log elapsed time
-        logger.info(
+        PluginLog.log(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
                 ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
 		

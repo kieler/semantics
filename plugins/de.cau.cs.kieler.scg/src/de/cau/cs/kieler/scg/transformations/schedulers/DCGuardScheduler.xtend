@@ -13,7 +13,7 @@ import de.cau.cs.kieler.scg.Node
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.SCGPlugin
-import de.cau.cs.kieler.core.model.LogLevel
+import java.util.logging.Level
 
 /** 
  * @author ssm
@@ -74,7 +74,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	// As long as there are nodes to schedule, call the topological sort method.
     	while(!nodesToSchedule.empty) {
   	    	val schedule = new LinkedHashSet<Node>
-  	    	SCGPlugin.log("*** NEW SCHEDULE ***", LogLevel.HIGH)
+  	    	SCGPlugin.log("*** NEW SCHEDULE ***", Level.FINE)
   	    	var startingNode = nodesToSchedule.filter[ incoming.filter(GuardDependency).empty ].head
     		var Boolean newSchedule 
   	    	do {
@@ -95,12 +95,12 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	
     	// Create schedule dependencies for the generated schedule
     	for(schedule : schedules) {
-    		SCGPlugin.log("*** NEW SCHEDULE ***", LogLevel.HIGH)
+    		SCGPlugin.log("*** NEW SCHEDULE ***", Level.FINE)
 	    	for(var i = 0; i < schedule.size-1; i++) {
     			schedule.get(i).createScheduleDependency(schedule.get(i+1))
     			SCGPlugin.log("Scheduling dependency from " + 
     				schedule.get(i).asAssignment.valuedObject.name + " to " + 
-    				schedule.get(i+1).asAssignment.valuedObject.name, LogLevel.HIGH
+    				schedule.get(i+1).asAssignment.valuedObject.name, Level.FINE
     			)
     		}
     	}

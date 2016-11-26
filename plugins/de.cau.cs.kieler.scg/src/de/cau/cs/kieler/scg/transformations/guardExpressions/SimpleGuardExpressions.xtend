@@ -50,7 +50,7 @@ import static de.cau.cs.kieler.scg.SCGAnnotations.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.SCGPlugin
-import de.cau.cs.kieler.core.model.LogLevel
+import java.util.logging.Level
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -202,7 +202,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         }
 
         var time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Preparation for guard creation: caches finished (time elapsed: " + (time / 1000) + "s).", LogLevel.HIGH)
+        SCGPlugin.log("Preparation for guard creation: caches finished (time elapsed: " + (time / 1000) + "s).", Level.FINE)
 
         // Create the predecessor caches for each predecessor.
         predecessorList.forEach [ p |
@@ -228,7 +228,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
                 conditionalDeclaration.valuedObjects += newVO
                 SCGPlugin.log(
                     "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
-                        newGuard.expression.serialize + ", " + newGuard.valuedObject, LogLevel.HIGH)
+                        newGuard.expression.serialize + ", " + newGuard.valuedObject, Level.FINE)
                         
                 ScgFactory::eINSTANCE.createControlDependency => [
 	                conditional.dependencies += it
@@ -238,7 +238,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
         ]
 
         time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Preparation for guard creation finished (time elapsed: " + (time / 1000) + "s).", LogLevel.HIGH)
+        SCGPlugin.log("Preparation for guard creation finished (time elapsed: " + (time / 1000) + "s).", Level.FINE)
 
         for (schedulingBlock : schedulingBlocks) {
             schedulingBlock.guards.head.createGuardEquation(schedulingBlock, scg)
@@ -357,7 +357,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
     		}
     	}*/
         SCGPlugin.log("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize, 
-            LogLevel.HIGH)       
+            Level.FINE)       
     }
 
     //    } // schizo entry
@@ -484,7 +484,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             sync.annotate(join)
         }
         val synchronizer = join.getSynchronizer
-        SCGPlugin.log("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id, LogLevel.HIGH)
+        SCGPlugin.log("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id, Level.FINE)
 
         //        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
         //            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
@@ -589,7 +589,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
-            SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, LogLevel.HIGH)
+            SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, Level.FINE)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
@@ -611,7 +611,7 @@ class SimpleGuardExpressions extends AbstractGuardExpressions implements Traceab
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
-			SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, LogLevel.HIGH)
+			SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, Level.FINE)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
