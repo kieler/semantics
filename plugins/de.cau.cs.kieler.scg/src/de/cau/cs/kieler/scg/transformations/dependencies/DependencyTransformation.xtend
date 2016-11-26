@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.List
 import java.util.Map
 import java.util.Set
+import de.cau.cs.kieler.scg.SCGPlugin
+import org.eclipse.core.runtime.Plugin
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -129,17 +131,13 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 		val reader = HashMultimap.create
 
 		nodeMapping.createNodeCaches(assignments, conditionals, writer, relativeWriter, reader)
+
+       		
+		SCGPlugin.log("Assignments: " + assignments.size)
+		SCGPlugin.log("Valued Objects: " + writer.keySet.size)
 		
-		System.out.println("Assignments: " + assignments.size)
-		System.out.println("Valued Objects: " + writer.keySet.size)
-		
-		var i = 0
 		for(assignment : assignments) {
 			assignment.createDependencies(writer, relativeWriter, reader, nodeMapping)
-			i++
-			if (i % 250 == 0) {
-				System.out.print(".")
-			}
 		}
 		
         // Return the SCG with dependency data.

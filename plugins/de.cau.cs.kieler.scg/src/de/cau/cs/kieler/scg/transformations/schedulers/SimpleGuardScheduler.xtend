@@ -31,6 +31,8 @@ import java.util.LinkedHashSet
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.SCGPlugin
+import de.cau.cs.kieler.core.model.LogLevel
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -114,13 +116,14 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
-    		System.err.println("The SCG is NOT asc-schedulable!")
+    		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
     	} else {
-    		System.out.println("The SCG is asc-schedulable.")
+    		SCGPlugin.log("The SCG is asc-schedulable.")
+    		var sl = "";
     		for(s : schedule) {
-    			System.out.print((s as Assignment).valuedObject.name + " ")
+    			sl += (s as Assignment).valuedObject.name + " "
     		}
-    		System.out.println
+    		SCGPlugin.log(sl, LogLevel.HIGH)
     	}
     	
     	scg
@@ -152,15 +155,13 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
 		// Check if all required nodes were scheduled. If not, abort.
 		for(dependency : dependencies) {
 			if (!schedule.contains(dependency.eContainer as Node)) {
-				System.out.println("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
-					" to " + dependency.target.asAssignment.valuedObject.name
-				)
+				SCGPlugin.logError("Cant schedule node " + dependency.eContainer.asNode.asAssignment.valuedObject.name + 
+					" to " + dependency.target.asAssignment.valuedObject.name, LogLevel.HIGH)
 				return
 			}
 		}
 		
 		// Add this node to the schedule.
-		System.out.println(node.asAssignment.valuedObject.name)
 		schedule += node
 	}
 	

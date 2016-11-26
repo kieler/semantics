@@ -174,7 +174,6 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		}
        
         // Create expression dependencies
-        System.out.println("Creating expression dependencies...")
         for(guard : GAMap.keySet) {
 			val assignment = GAMap.get(guard)
 			val VORs = assignment.expression.getAllReferences.filter[ 

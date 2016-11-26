@@ -3,7 +3,9 @@ package de.cau.cs.kieler.scg;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class SCGPlugin implements BundleActivator {
+import de.cau.cs.kieler.core.model.PluginLog;
+
+public class SCGPlugin extends PluginLog implements BundleActivator {
 
         public static String EDITOR_ID = "de.cau.cs.kieler.scg.presentation.SCGEditorID";
 
@@ -12,7 +14,7 @@ public class SCGPlugin implements BundleActivator {
 	static BundleContext getContext() {
 		return context;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)

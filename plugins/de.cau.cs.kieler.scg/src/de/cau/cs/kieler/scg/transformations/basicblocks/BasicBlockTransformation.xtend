@@ -45,6 +45,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGPlugin
+import de.cau.cs.kieler.core.model.LogLevel
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -141,7 +143,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         guardCache.clear
         
         // Timestamp for performance information. Should be moved to the KiCo interface globally.
-        System.out.println("Nodes: " + scg.nodes.size)  
+        SCGPlugin.log("Nodes: " + scg.nodes.size)  
         val timestamp = System.currentTimeMillis  
 
         // Create the basic blocks beginning with the first node in the node list.
@@ -160,7 +162,6 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
          * Remove the dead block flag if the block is a go block or if it has at least one predecessor
          *  that is not dead. In the case of join blocks, all predecessors have to be active.
          */
-        System.out.println("Processing dead blocks...");  
         val timestamp2 = System.currentTimeMillis  
         for(bb : basicBlockCache) {
             if (bb.goBlock) {
@@ -182,7 +183,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         	guardCache.forEach[ guard | declaration.valuedObjects += guard.valuedObject ]
         ]
         val time2 = (System.currentTimeMillis - timestamp2) as float
-        System.out.println("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).")            
+        SCGPlugin.log("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).", LogLevel.HIGH)            
         
         //KITT
         if (isTracingActive()) {
@@ -201,7 +202,7 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
         
         val time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
+        SCGPlugin.log("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).", LogLevel.HIGH)    
         
         // Return the SCG with basic block data.
         scg
@@ -280,9 +281,9 @@ class BasicBlockTransformation extends AbstractProductionTransformation implemen
             }
             return newIndex;
         }
-        
+
         if (basicBlockCache.size % 10000 == 0) {
-            System.out.println("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes")
+            SCGPlugin.log("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes", LogLevel.HIGH)
         }
         
         // Create a new ValuedObject for the guards of the upcoming basic block.
