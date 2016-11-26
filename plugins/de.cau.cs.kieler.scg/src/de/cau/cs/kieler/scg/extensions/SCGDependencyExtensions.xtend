@@ -34,6 +34,7 @@ import java.lang.management.OperatingSystemMXBean
 import javax.management.OperationsException
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -133,17 +134,22 @@ class SCGDependencyExtensions {
         val targetExpression = targetAssignment.expression
         if (sourceExpression instanceof OperatorExpression) {
             if (targetExpression instanceof OperatorExpression) {
-                if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
-                    // Assume there is only one VO and one literal per OE.
-                    val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
-                    val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
-                    if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
-                        targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
-                        val sourceValue = sourceExpression.subExpressions.filter(Value).head
-                        val targetValue = targetExpression.subExpressions.filter(Value).head
-                        if (sourceValue.isSameValue(targetValue)) {
-                           return true
-                        }                        
+                if (sourceExpression.operator == OperatorType.LOGICAL_OR &&
+                    targetExpression.operator == OperatorType.LOGICAL_OR) {
+                    if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
+                        // Assume there is only one VO and one literal per OE.
+                        val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
+                        val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
+                        if (sourceRelativeVOR != null && targetRelativeVOR != null) {
+                            if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
+                                targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
+                                val sourceValue = sourceExpression.subExpressions.filter(Value).head
+                                val targetValue = targetExpression.subExpressions.filter(Value).head
+                                if (sourceValue.isSameValue(targetValue)) {
+                                    return true
+                                }
+                            }
+                        }
                     }
                 }
             }
