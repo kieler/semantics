@@ -26,18 +26,18 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public abstract class AbstractUIPluginLog extends AbstractUIPlugin {
 
     public static void log(final String msg) {
-        PluginLog.log(msg);
+        Log.log(msg);
     }
     
     public static void log(final String msg, Level logLevel) {
-        PluginLog.log(msg, logLevel);
+        Log.log(msg, logLevel);
     }
     
     public static void logError(final String msg) {
-        PluginLog.logError(msg);        
+        Log.logError(msg);        
     }
     
     public static void logError(final String msg, Level logLevel) {
-        PluginLog.logError(msg, logLevel);
+        Log.logError(msg, logLevel);
     }
 }
