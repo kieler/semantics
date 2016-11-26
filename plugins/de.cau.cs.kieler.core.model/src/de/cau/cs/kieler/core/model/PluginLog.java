@@ -31,6 +31,9 @@ public class PluginLog extends Plugin {
 
     public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
             .getInputArguments().toString().contains("-agentlib:jdwp");
+    
+    private static LogLevel activeLogLevel = java.lang.management.ManagementFactory.getRuntimeMXBean()
+            .getInputArguments().toString().contains("-verboseLog") ? LogLevel.HIGH : LogLevel.NORMAL;
 
     /** The logger. */
     @Inject
@@ -88,6 +91,40 @@ public class PluginLog extends Plugin {
             logger.info(className + msg);
         }
     }
+    
+    /**
+     * Log an info.
+     * 
+     * @param msg
+     *            the msg
+     */
+    public static void log(final String msg, LogLevel logLevel) {
+        if (!activeLogLevel.reached(logLevel)) {
+            return;
+        }
+        
+        // start the logger if not yet started
+        startLogger(false);
+        
+        StackTraceElement[] elems = Thread.currentThread().getStackTrace();
+        
+        String className = "";
+        if(elems != null && elems.length > 1) {
+            String smallName = elems[2].getClassName();
+            int i = smallName.lastIndexOf(".");
+            if (i > -1) {
+                if (smallName.length() > i + 1) {
+                    smallName = smallName.substring(i+1);
+                }
+            }
+            className = smallName + ": ";
+        }
+
+        if (logger != null) {
+            logger.info(className + msg);
+        }
+    }
+    
 
     // -------------------------------------------------------------------------
 
@@ -106,6 +143,25 @@ public class PluginLog extends Plugin {
             logger.severe(className + ": " + msg);
         }
     }
+    
+    /**
+     * Log an error.
+     * 
+     * @param msg
+     *            the msg
+     */
+    public static void logError(final String msg, LogLevel logLevel) {
+        if (!activeLogLevel.reached(logLevel)) {
+            return;
+        }
+
+        StackTraceElement[] elems = Thread.currentThread().getStackTrace();
+        String className = elems[0].getClassName();
+
+        if (logger != null) {
+            logger.severe(className + ": " + msg);
+        }
+    }    
 
     // -------------------------------------------------------------------------
 
