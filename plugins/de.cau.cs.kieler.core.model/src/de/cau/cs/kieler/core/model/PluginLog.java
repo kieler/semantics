@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.core.model;
 
+import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
@@ -32,8 +34,8 @@ public class PluginLog extends Plugin {
     public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
             .getInputArguments().toString().contains("-agentlib:jdwp");
     
-    private static LogLevel activeLogLevel = java.lang.management.ManagementFactory.getRuntimeMXBean()
-            .getInputArguments().toString().contains("-verboseLog") ? LogLevel.HIGH : LogLevel.NORMAL;
+    private static Level activeLogLevel = java.lang.management.ManagementFactory.getRuntimeMXBean()
+            .getInputArguments().toString().contains("-verboseLog") ? Level.FINE : Level.INFO;
 
     /** The logger. */
     @Inject
@@ -47,21 +49,29 @@ public class PluginLog extends Plugin {
     /**
      * Start the logger logger.
      */
-    public static void startLogger(final boolean enforce) {
+    private static void startLogger(final boolean enforce) {
         if ((!loggerStarted && DEBUG) || enforce) {
             loggerStarted = true;
             SimpleFormatter formatter = new SimpleFormatter();
-            StreamHandler handler = new StreamHandler(System.out, formatter); 
+            StreamHandler handler = new StreamHandler(System.out, formatter);
+            handler.setLevel(activeLogLevel); 
             
             if (logger == null) {
                 logger = Logger.getGlobal();
             }
             
             logger.addHandler(handler);
+            logger.setUseParentHandlers(false);
         }
     }
 
     // -------------------------------------------------------------------------
+    
+    private static void flushAll() {
+        for(Handler handler : logger.getHandlers()) {
+            handler.flush();
+        }
+    }
 
     /**
      * Log an info.
@@ -89,6 +99,7 @@ public class PluginLog extends Plugin {
 
         if (logger != null) {
             logger.info(className + msg);
+            flushAll();
         }
     }
     
@@ -98,8 +109,8 @@ public class PluginLog extends Plugin {
      * @param msg
      *            the msg
      */
-    public static void log(final String msg, LogLevel logLevel) {
-        if (!activeLogLevel.reached(logLevel)) {
+    public static void log(final String msg, Level logLevel) {
+        if (activeLogLevel.intValue() < logLevel.intValue()) {
             return;
         }
         
@@ -122,6 +133,7 @@ public class PluginLog extends Plugin {
 
         if (logger != null) {
             logger.info(className + msg);
+            flushAll();
         }
     }
     
@@ -141,6 +153,7 @@ public class PluginLog extends Plugin {
 
         if (logger != null) {
             logger.severe(className + ": " + msg);
+            flushAll();
         }
     }
     
@@ -150,8 +163,8 @@ public class PluginLog extends Plugin {
      * @param msg
      *            the msg
      */
-    public static void logError(final String msg, LogLevel logLevel) {
-        if (!activeLogLevel.reached(logLevel)) {
+    public static void logError(final String msg, Level logLevel) {
+        if (activeLogLevel.intValue() < logLevel.intValue()) {
             return;
         }
 
@@ -160,6 +173,7 @@ public class PluginLog extends Plugin {
 
         if (logger != null) {
             logger.severe(className + ": " + msg);
+            flushAll();
         }
     }    
 
