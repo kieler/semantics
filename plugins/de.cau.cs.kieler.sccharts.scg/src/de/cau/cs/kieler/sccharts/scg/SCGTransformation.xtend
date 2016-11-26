@@ -266,7 +266,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
-            label = if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
+            // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
+            label = rootState.id; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
         ]
 
         creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
