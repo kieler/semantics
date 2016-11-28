@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.scg.ControlFlow
 
 /**
  * @author fry
@@ -108,12 +109,17 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 		// Assuming only one entry node exists in a sequentialized SCG; 
 		// Make it the starting point of the SSA transformation
 		val entry = scg.nodes.filter(Entry).head
+		
+		// If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
+		val firstAssignment = if (entry == null)  
+		  scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+		  else (entry.next.target as Assignment)
 
 		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
 		filterRelevantAssignments(scg.nodes.filter(Assignment).toList)
 		
 		// Create the SSA SCG. Start with entry node.
-		createSSAs(entry.next.target, scg)
+        createSSAs(firstAssignment, scg)
 		
 		// Store input output variables for link creation
 		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
@@ -136,12 +142,13 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	 *     remember the target of the "else"-branch (conditionalEndNodes) and call createSSAs with this node.
 	 */
 	def void createSSAs(Node n, SCGraph scg) {
-
+        if (n == null) return;
+        
 		if (!(n instanceof Exit)) {
 
 			if (n instanceof Assignment) {
 				transformAssignmentNodes(n, scg)
-				createSSAs(n.next.target, scg)
+				createSSAs(n.next?.target, scg)
 			} else if (n instanceof Conditional) {
 				val target = n.^else.target
 				transformConditionalNodes(n, n, n, n.^else.target, scg)

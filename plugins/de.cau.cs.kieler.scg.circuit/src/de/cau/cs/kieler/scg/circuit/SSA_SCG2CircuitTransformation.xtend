@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.circuit.features.CircuitFeatures
 import java.util.HashMap
 import java.util.LinkedList
+import de.cau.cs.kieler.scg.ControlFlow
 
 /**
  * @author fry
@@ -135,8 +136,14 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		// -------------------------------------------------------
 		
 		// create actors of the circuit. chose entry node of SCG as starting point.
-		val entry = scg.eAllContents.filter(Entry).head
-		transformNodesToActors(entry.next.target, logicRegion)
+		val entry = scg.nodes.filter(Entry).head
+
+        // If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
+        val firstAssignment = if (entry == null)  
+          scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+          else (entry.next.target as Assignment)
+		
+		transformNodesToActors(firstAssignment, logicRegion)
 		
 		// -------------------------------------------------------
 		// --              Create Links                         --
@@ -160,10 +167,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 	 *   transformNodesToActors if the control flow is unique again
 	 */
 	def void transformNodesToActors(Node n, Actor logic) {
+	    if (n == null) return;
+	    
 		if (!(n instanceof Exit)) {
 			if (n instanceof Assignment) {
 				transformAssignment(n, logic)
-				transformNodesToActors(n.next.target, logic)
+				transformNodesToActors(n.next?.target, logic)
 			} else if (n instanceof Conditional) {
 				transformNodesToActors(transformConditionalNodes(n, n.then.target, n.^else.target, logic), logic)
 			}
