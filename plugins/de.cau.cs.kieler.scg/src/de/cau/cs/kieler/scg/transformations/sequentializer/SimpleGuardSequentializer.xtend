@@ -136,6 +136,8 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             	assignment.copySCGAssignment(valuedObjectMap) => [
             		newSCG.nodes += it
             		AAMap.put(assignment, it)
+            		
+            		it.trace(assignment)
             	]
             	scheduleDependencies += assignment.dependencies.filter(ScheduleDependency)
             }
@@ -156,12 +158,16 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
                     newSCG.nodes += guardConditional
                     guardConditional.condition = sourceAssignment.valuedObject.reference  
                     sourceAssignment.createControlFlow.target = guardConditional
+                    
+                    guardConditional.trace(originalAssignment)
   
                     var Assignment nextAssignment = null
                     for(gd : guardDependencies) {
                         (gd.target as Assignment).copySCGAssignment(valuedObjectMap) => [
                             newSCG.nodes += it
                             AAMap.put(gd.target as Assignment, it)
+                            
+                            it.trace(gd.target.asAssignment)
                         ]                    
                         if (gd.target.asAssignment.incoming.filter(ControlDependency).empty) {
                             nextAssignment = gd.target as Assignment

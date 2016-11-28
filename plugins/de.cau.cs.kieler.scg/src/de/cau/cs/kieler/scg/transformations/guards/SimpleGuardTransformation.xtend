@@ -40,6 +40,8 @@ import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.ControlDependency
 
 /** 
  * @author ssm
@@ -122,11 +124,15 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
         val deadGuards = <Guard> newHashSet
+        val guardSchedulingBlockMap = <Guard, SchedulingBlock> newHashMap
 
-        for(bb : scg.basicBlocks) {
-            if (bb.deadBlock) {
-                for(sb : bb.schedulingBlocks) {
+        for (bb : scg.basicBlocks) {
+            for (sb : bb.schedulingBlocks) {
+                if (bb.deadBlock) {
                     deadGuards += sb.guards
+                }
+                for (g : sb.guards) {
+                    guardSchedulingBlockMap.put(g, sb)
                 }
             }
         }
@@ -138,6 +144,11 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         		newSCG.nodes += it
         		GAMap.put(guard, it)
         		VAMap.put(it.valuedObject, it)
+        		
+        		val sb = guardSchedulingBlockMap.get(guard)
+        		if (sb != null) {
+        		    it.trace(sb)
+       		    }
         	]
         }
         
@@ -169,6 +180,10 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 						sourceAssignment.dependencies += it
 						it.target = targetAssignment
 					]
+					
+					if (dependency instanceof ControlDependency) {
+					    targetAssignment.trace(sourceAssignment)
+					}
 				}
 			}
 		}
@@ -183,7 +198,8 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 			for(reference : VORs) {
 				val sourceAssignment = VAMap.get(reference.valuedObject)
 				if (sourceAssignment != null) {
-					sourceAssignment.createExpressionDependency(assignment)
+					val expressionDependency = sourceAssignment.createExpressionDependency(assignment) 
+				    expressionDependency.trace(reference)
 				}
 			}
         }
@@ -195,8 +211,11 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 				val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
 				val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
 				newSCG.nodes += newAssignment
-				guardAssignment.createGuardDependency(newAssignment)
+				val guardDependency = guardAssignment.createGuardDependency(newAssignment)
 				AAMap.put(assignment, newAssignment)
+				
+                newAssignment.trace(assignment)
+                guardDependency.trace(guardAssignment)                				
 			}		
 		}
 		
@@ -204,7 +223,9 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
 		for (assignment : AAMap.keySet) {
 			if ((assignment.next.target instanceof Assignment) &&
 			(schedulingBlockCache.get(assignment) == schedulingBlockCache.get(assignment.next.target))) {
-				AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
+				val controlDependency = AAMap.get(assignment).createControlDependency(AAMap.get(assignment.next.target as Assignment))
+				
+				controlDependency.trace(assignment)
 			} 
 		}
 

@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
@@ -37,8 +38,7 @@ import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.List
 import java.util.Map
 import java.util.Set
-import de.cau.cs.kieler.scg.SCGPlugin
-import org.eclipse.core.runtime.Plugin
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -184,12 +184,16 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
         		)
         		dependency.checkAndSetConfluence
         		dependency.checkAndSetConcurrency(nodeMapping)
+        		
+        		dependency.trace(assignment)
         	}	
     	}
     	for(VOReader : reader.get(assignment.valuedObject).filter[ !it.equals(assignment) ]) {
     		val dependency = assignment.createDataDependency(VOReader, DataDependencyType.WRITE_READ)
     		dependency.checkAndSetConfluence
     		dependency.checkAndSetConcurrency(nodeMapping)
+    		
+    		dependency.trace(assignment)
     	}	
     }
     
