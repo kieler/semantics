@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
@@ -75,7 +76,7 @@ public class StringAnnotationImpl extends AnnotationImpl implements StringAnnota
      */
     public EList<String> getValues() {
         if (values == null) {
-            values = new EDataTypeUniqueEList<String>(String.class, this, AnnotationsPackage.STRING_ANNOTATION__VALUES);
+            values = new EDataTypeEList<String>(String.class, this, AnnotationsPackage.STRING_ANNOTATION__VALUES);
         }
         return values;
     }

@@ -48,7 +48,7 @@ public interface StringAnnotation extends Annotation {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Values</em>' attribute list.
      * @see de.cau.cs.kieler.annotations.AnnotationsPackage#getStringAnnotation_Values()
-     * @model
+     * @model unique="false"
      * @generated
      */
     EList<String> getValues();
