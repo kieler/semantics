@@ -13,7 +13,7 @@
   <extension
         point="de.cau.cs.kieler.kico.extension">
      <ExtensionInformation
-           className="Program"
+           ePackageName="esterel"
            editor_id="de.cau.cs.kieler.esterel.Esterel"
            extensionName="strl"
            isXMI="false">

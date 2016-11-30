@@ -1,0 +1,12 @@
+@HVLayout
+scchart VVIP {
+      output signal VRP_start, VRP_ex;
+	
+    initial state top{
+      
+      region VRP_timer:
+      initial state idle --> timer with VRP_start;
+      state timer "timer"--> idle with VRP_ex;
+      
+    };
+}

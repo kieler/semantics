@@ -13,30 +13,29 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd
 
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
-import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
 import java.util.HashSet
 import java.util.Set
 import javax.inject.Inject
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.util.Pair
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -156,7 +155,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -216,6 +215,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         clearCache()
 
         val knode = model.createNode();
+        
+        // Apply spline edge routing on root level
+        knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
         for (elem : model.visibleFeatures) {
             if (elem.visibleContainer(model.visibleFeatures) == null) {
@@ -260,7 +262,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
             if (feature.isGroupOrAlternative) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
             }
-            //node.setLayoutOption(LayoutOptions::SPACING, 0f);
+            //node.setLayoutOption(CoreOptions::SPACING, 0f);
             if (feature.alternative) {
 
                 for (transformation : feature.expandingTransformations) {
@@ -288,10 +290,14 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
             }
             // credits to SSM :-)
             if (feature.alternative) {
-                node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-                node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
-                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
+                node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+                node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
+                node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT);
             }
+            
+            // Adjust edge routing of hierarchical node
+            node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
@@ -342,12 +348,13 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
             val cornerRadius = if(!feature.isGroupOrAlternative) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
-            //            figure.setProperty(KlighdProperties::, true);
-            figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+            //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+            //figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+            figure.addDoubleClickAction(KiCoSelectionAction::ID);
             figure.addSingleClickAction(KiCoSelectionAction::ID);
             figure.lineWidth = lineWidth;
             figure.foreground = "gray".color;
@@ -378,7 +385,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                             it.addText("   " + feature.label + " ").putToLookUpWith(feature) => [
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-                                it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                                //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+                                //it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                                it.addDoubleClickAction(KiCoSelectionAction::ID);
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
                                 it.setForeground(BLACK.copy);
                                 it.setSelectionBackground(BLUE3.copy)
@@ -394,7 +403,9 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis {
                     // For simple states we want a larger area 
                     it.addText(" " + feature.label).putToLookUpWith(feature) => [
                         // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-                        it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                        //DISABLED ACCORDING TO SYNCHRON MEETING 23.11.16
+                        //it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                        it.addDoubleClickAction(KiCoSelectionAction::ID);
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
                         it.setForeground(BLACK.copy)

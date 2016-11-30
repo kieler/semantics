@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2015 by
@@ -14,10 +14,9 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtensionimport de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Initialization Action Feature.
@@ -28,9 +27,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  */
 class Initialization extends Feature {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsFeature::INITIALIZATION_ID
     }
@@ -39,22 +38,19 @@ class Initialization extends Feature {
         return SCChartsFeature::INITIALIZATION_NAME
     }
 
-    //-------------------------------------------------------------------------
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    @Inject
-    extension SCChartsExtension
+    // -------------------------------------------------------------------------
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allScopes = model.allScopes.toList
-        for (scope : allScopes) {
-            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
-            if (!valuedObjects.nullOrEmpty) {
-                return true
-            }
-        }
-        return false
+        return true;
+//        val allScopes = model.allScopes.toList
+//        for (scope : allScopes) {
+//            val valuedObjects = scope.valuedObjects.filter[initialValue != null]
+//            if (!valuedObjects.nullOrEmpty) {
+//                return true
+//            }
+//        }
+//        return false
     }
 
 }

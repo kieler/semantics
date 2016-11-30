@@ -17,6 +17,8 @@ package de.cau.cs.kieler.sim.kiem.ui.launching;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -25,7 +27,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
-public class KiemUILaunchPlugin extends AbstractUIPlugin {
+public class KiemUILaunchPlugin extends AbstractUIPluginLog {
 
     /** The constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.ui.run"; //$NON-NLS-1$

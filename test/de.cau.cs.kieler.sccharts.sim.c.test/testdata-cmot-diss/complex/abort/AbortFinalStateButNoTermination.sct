@@ -1,0 +1,19 @@
+@diagram[KLayLayered] false  
+@layout[direction] RIGHT  
+
+//@HVLayout
+scchart AbortFinalStateNoTermination { 
+  input bool R;
+  output bool O;
+  output bool A;
+  
+  region Main " ":
+  
+  initial state S {
+     initial state I --> F with / O = true;
+     final state F;
+  }
+  o-> F with R  / A = true;
+  
+  state F;
+}

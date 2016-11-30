@@ -7,8 +7,9 @@ Bundle-Activator: de.cau.cs.kieler.sc.SCPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem;bundle-version="0.5.1",
- de.cau.cs.kieler.sim.benchmark;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.benchmark,
+ de.cau.cs.kieler.core.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sc

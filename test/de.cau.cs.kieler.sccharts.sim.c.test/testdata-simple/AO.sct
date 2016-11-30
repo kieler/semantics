@@ -1,11 +1,13 @@
 scchart AO {
   input bool A;
   output bool O = false;
-  output bool O2 = false;
  
   initial state wA
-  --> da with A / O = 1;  
+  --> da with A / O = true;  
  
-  final state da;  
+  final state da {
+    initial state A
+    --> B;
+    state B;
+  };  
 }   
-                             

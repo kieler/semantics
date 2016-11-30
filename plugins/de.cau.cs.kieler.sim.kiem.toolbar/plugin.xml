@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.kiem.toolbar.KIELER Execution Manager">
+            <separator
+                  name="de.cau.cs.kieler.sim.kiem.toolbar.separator1" visible="true">
+            </separator>
+            <command
+                  commandId="de.cau.cs.kieler.kiem.toolbar.commandStepBack"
+                  icon="icons/stepBackIcon.png"
+                  id="de.cau.cs.kieler.kiem.toolbar.commandStepBack"
+                  tooltip="Step Back Execution">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.kiem.toolbar.commandStep"
+                  icon="icons/stepIcon.png"
+                  id="de.cau.cs.kieler.kiem.toolbar.commandStep"
+                  tooltip="Step Execution">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.kiem.toolbar.commandRun"
+                  icon="icons/runIcon.png"
+                  id="de.cau.cs.kieler.kiem.toolbar.commandRun"
+                  tooltip="Rim Execution">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.kiem.toolbar.commandPause"
+                  icon="icons/pauseIcon.png"
+                  id="de.cau.cs.kieler.kiem.toolbar.commandPause"
+                  tooltip="Pause Execution">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.kiem.toolbar.commandStop"
+                  icon="icons/stopIcon.png"
+                  id="de.cau.cs.kieler.kiem.toolbar.commandStop"
+                  tooltip="Stop Execution">
+            </command>
+            <separator
+                  name="de.cau.cs.kieler.sim.kiem.toolbar.separator2" visible="true">
+            </separator>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.kiem.toolbar.category"
+            name="KIELER Execution Manager">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.kiem.toolbar.category"
+            defaultHandler="de.cau.cs.kieler.kiem.toolbar.KiemButtonHandler"
+            id="de.cau.cs.kieler.kiem.toolbar.commandStepBack"
+            name="Step Back Execution">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.kiem.toolbar.category"
+            defaultHandler="de.cau.cs.kieler.kiem.toolbar.KiemButtonHandler"
+            id="de.cau.cs.kieler.kiem.toolbar.commandStep"
+            name="Step Execution">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.kiem.toolbar.category"
+            defaultHandler="de.cau.cs.kieler.kiem.toolbar.KiemButtonHandler"
+            id="de.cau.cs.kieler.kiem.toolbar.commandRun"
+            name="Run Execution">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.kiem.toolbar.category"
+            defaultHandler="de.cau.cs.kieler.kiem.toolbar.KiemButtonHandler"
+            id="de.cau.cs.kieler.kiem.toolbar.commandPause"
+            name="Pause Execution">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.kiem.toolbar.category"
+            defaultHandler="de.cau.cs.kieler.kiem.toolbar.KiemButtonHandler"
+            id="de.cau.cs.kieler.kiem.toolbar.commandStop"
+            name="Stop Execution">
+      </command>
+   </extension>
+
+</plugin>

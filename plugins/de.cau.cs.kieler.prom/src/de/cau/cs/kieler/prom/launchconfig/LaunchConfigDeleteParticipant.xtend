@@ -57,7 +57,7 @@ class LaunchConfigDeleteParticipant extends DeleteParticipant {
     override createChange(IProgressMonitor pm) throws CoreException, OperationCanceledException {
         // Iterate over launch configs
         val manager = DebugPlugin.getDefault().getLaunchManager()
-        val type = manager.getLaunchConfigurationType(LaunchConfiguration.LAUNCH_CONFIGURATION_TYPE_ID)
+        val type = manager.getLaunchConfigurationType(KiCoLaunchConfig.LAUNCH_CONFIGURATION_TYPE_ID)
         val configs = manager.getLaunchConfigurations(type)
         for(config : configs) {
             // Get mutable instance

@@ -27,9 +27,12 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.util.Pair;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -55,9 +58,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.StringInputStream;
 
-import com.google.common.collect.Lists;
-
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoProperties;
@@ -69,21 +69,13 @@ import de.cau.cs.kieler.kico.klighd.internal.CompilerSelectionStore;
 import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
-import de.cau.cs.kieler.kiml.config.CompoundLayoutConfig;
-import de.cau.cs.kieler.kiml.config.ILayoutConfig;
-import de.cau.cs.kieler.kiml.config.LayoutContext;
-import de.cau.cs.kieler.kiml.config.VolatileLayoutConfig;
-import de.cau.cs.kieler.kiml.options.Direction;
-import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.klighd.IViewer;
-import de.cau.cs.kieler.klighd.KlighdConstants;
-import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
@@ -114,6 +106,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
     /** Path to notify Simulation component. */
     private static final IPath modelViewPath = new Path(DiagramView.ID);
+    
+    /** Path to notify Simulation component for the source model. */
+    private static final IPath sourceModelViewPath = new Path(KiCoKlighdPlugin.SOURCE_MODEL_ID);
+    
 
     /**
      * Indicates how long this view should wait before starting REAL asynchronous compilation. This
@@ -186,6 +182,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling chain display mode. */
     private Action tracingChainToggleAction;
     private static final boolean TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE = false;
+    
+    /** The action for toggling the debug mode. */
+    private Action debugModeToggleAction;
+    private static final boolean DEBUG_MODE_TOGGLE_ACTION_DEFAULT_STATE = false;
 
     // -- Model --
 
@@ -328,6 +328,19 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 "Enable tranformation chain view in displaySideBySide display mode");
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
         tracingChainToggleAction.setChecked(TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE);
+        
+        // Debug mode
+        debugModeToggleAction = new Action("Debug Mode", IAction.AS_CHECK_BOX) {
+            @Override
+            public void run() {
+                update(ChangeEvent.COMPILE);
+            }
+        };
+        debugModeToggleAction.setId("debugModeToggleAction");
+        debugModeToggleAction.setText("Debug Mode");
+        debugModeToggleAction.setToolTipText("In enabled Debug Mode KiCo generates object serialization information " +
+                "that allow real-time visualization and debugging of models.");
+        debugModeToggleAction.setChecked(DEBUG_MODE_TOGGLE_ACTION_DEFAULT_STATE);
     }
 
     /**
@@ -414,6 +427,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         memento.putBoolean("tracingToggleAction", tracingToggleAction.isChecked());
         
         memento.putBoolean("tracingChainToggleAction", tracingChainToggleAction.isChecked());
+        
+        memento.putBoolean("debugModeToggleAction", debugModeToggleAction.isChecked());
     }
 
     /**
@@ -462,6 +477,13 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 tracingChainToggleAction.setChecked(tracingChainToggleActionValue);
             }
         }
+        
+        Boolean debugModeToggleActionValue = memento.getBoolean("debugModeToggleAction");
+        if (debugModeToggleActionValue != null) {
+            if (debugModeToggleAction != null) {
+                debugModeToggleAction.setChecked(debugModeToggleActionValue);
+            }
+        }
     }
 
     // -- View
@@ -482,6 +504,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(diagramPlaceholderToggleAction);
         menu.add(tracingChainToggleAction);
         menu.add(tracingToggleAction);
+        menu.add(debugModeToggleAction);
     }
 
     // -- Save model
@@ -644,6 +667,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             addWarningComposite(getDiagramView().getViewer(), warnings.toString());
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void refresh() {
+        update(ChangeEvent.SAVED);
+    }
 
     // -- Model Update
     // -------------------------------------------------------------------------
@@ -693,6 +724,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 if (sourceModel != null && sourceModel.eResource() != null) {
                     Resource eResource = sourceModel.eResource();
                     sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty();
+                    
+                    // added my cmot
+                    // Check for model specific errors (e.g. Xtext validator rules) 
+                    Diagnostic diagnostic = Diagnostician.INSTANCE.validate(sourceModel);
+                    if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                        sourceModelHasErrorMarkers = true;
+                    }         
+
                     IFile underlyingFile = ResourceUtil.getUnderlyingFile(eResource);
                     try {
                         if (underlyingFile != null) {
@@ -784,7 +823,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
                     // create compilation job
                     currentCompilation = new AsynchronousCompilation(this, (EObject) sourceModel,
-                            recentEditor.getTitle(), selection, tracingToggleAction.isChecked());
+                            recentEditor.getTitle(), selection, tracingToggleAction.isChecked(),
+                            debugModeToggleAction.isChecked());
                     currentCompilationResult = null;
                     model = currentCompilation.getModel();
                     // start
@@ -836,6 +876,10 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (currentCompilationResult != null) {
                 publishCurrentModelInformation(model, currentCompilationResult);
                 properties.setProperty(KiCoProperties.COMPILATION_RESULT, currentCompilationResult);
+            } else {
+                // just update the autoload schedules accordingly
+                KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(recentEditor);
+                KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
 
             // composite model in given display mode
@@ -886,30 +930,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ILayoutConfig getLayoutConfig() {
-        ViewContext viewContext = getDiagramView().getViewContext();
-        // Assure that model chain is always layouted left to right
-        if (viewContext.getInputModel() instanceof ModelChain) {
-            return new CompoundLayoutConfig(Lists.newArrayList(
-                    new VolatileLayoutConfig(KlighdConstants.SIDE_BAR_LAYOUT_CONFIG_PRIORITY + 1)
-                            .setValue(LayoutOptions.DIRECTION, viewContext.getViewModel(),
-                                    LayoutContext.DIAGRAM_PART, Direction.RIGHT)));
-        } else {
-            return super.getLayoutConfig();
-        }
-    }
-
-    /**
      * Publishes information about the currently displayed model.
      * 
      * @param model
      */
     private void publishCurrentModelInformation(final Object model,
             final CompilationResult compilationResult) {
-        if (!pinToggleAction.isChecked() && getDiagramView().getEditor().getSite().getPage().getActiveEditor() == getDiagramView().getEditor()) {
+        IEditorPart activeEditor = getDiagramView().getEditor().getSite().getPage().getActiveEditor();
+        if (!pinToggleAction.isChecked() &&  activeEditor == getDiagramView().getEditor()) {
             boolean is_placeholder = model instanceof ErrorModel || model instanceof MessageModel
                     || model instanceof CodePlaceHolder;
             boolean is_chain = model instanceof ModelChain;
@@ -917,10 +945,14 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             if (compilationResult != null) {
                 if (model != null && !is_placeholder && !is_chain) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
+                    KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
+                    KiemPlugin.getOpenedModelEditors().put(sourceModelViewPath, activeEditor);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 } else if (!is_placeholder) {
                     KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
+                    KiemPlugin.getOpenedModelRootObjects().put(sourceModelViewPath, (EObject) sourceModel);
+                    KiemPlugin.getOpenedModelEditors().put(sourceModelViewPath, activeEditor);
                     KiemPlugin.setCurrentModelFile(modelViewPath);
                     KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
                 }

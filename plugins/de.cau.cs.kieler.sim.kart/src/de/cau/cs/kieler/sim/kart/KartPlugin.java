@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IPath;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.PluginLog;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -33,7 +34,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * @kieler.rating 2012-02-23 yellow cmot
  * 
  */
-public class KartPlugin implements BundleActivator {
+public class KartPlugin extends PluginLog implements BundleActivator {
 
     /**
      * The id used to separate traces within ESO files is used to count the number of available

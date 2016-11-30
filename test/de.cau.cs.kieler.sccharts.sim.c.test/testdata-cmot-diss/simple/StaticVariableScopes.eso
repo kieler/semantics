@@ -1,0 +1,67 @@
+! reset;
+
+% Output: 
+;
+
+% Output: OXA(101) 
+;
+
+% Output: OXB(199) OXA(101) 
+;
+
+% Output: OXB(199) OXA(102) 
+;
+
+% Output: OXB(198) OXA(102) 
+;
+
+% Output: OXB(198) OXA(103) 
+;
+
+% Output: OXB(197) OXA(103) 
+;
+
+% Output: OXB(197) OXA(104) 
+;
+
+% Output: OXB(196) OXA(104) 
+;
+
+% Output: OXB(196) OXA(105) 
+;
+
+% Output: OXB(195) OXA(105) 
+;
+
+% Output: OXB(195) OXA(106) 
+;
+
+% Output: OXB(194) OXA(106) 
+;
+
+% Output: OXB(194) OXA(107) 
+;
+
+% Output: OXB(193) OXA(107) 
+;
+
+% Output: OXB(193) OXA(108) 
+;
+
+% Output: OXB(192) OXA(108) 
+;
+
+% Output: OXB(192) OXA(109) 
+;
+
+% Output: OXB(191) OXA(109) 
+;
+
+% Output: OXB(191) OXA(110) 
+;
+
+% Output: OXB(190) OXA(110) 
+;
+
+% Output: OXB(190) OXA(111) 
+;

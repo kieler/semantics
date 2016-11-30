@@ -14,18 +14,14 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.labels
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kgraph.KLabel
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.labels.KlighdLabelProperties
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -33,6 +29,10 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook
 import java.lang.ref.WeakReference
 import java.util.HashSet
 import java.util.Set
+import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.graph.KLabel
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.ui.PlatformUI

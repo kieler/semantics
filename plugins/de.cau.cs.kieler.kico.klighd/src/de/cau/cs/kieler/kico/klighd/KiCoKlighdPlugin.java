@@ -13,6 +13,9 @@ public class KiCoKlighdPlugin extends AbstractUIPlugin {
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.klighd"; //$NON-NLS-1$
 
+    /** KIEM ID for source model. */
+    public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";
+
     // The shared instance
     private static KiCoKlighdPlugin plugin;
 

@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
+import org.eclipse.elk.graph.KLabel;
 import org.eclipse.swt.graphics.FontData;
 
-import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.klighd.labels.LabelManagementUtil;
 import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager;

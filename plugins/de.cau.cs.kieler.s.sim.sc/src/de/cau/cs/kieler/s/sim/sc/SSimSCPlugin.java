@@ -16,6 +16,8 @@ package de.cau.cs.kieler.s.sim.sc;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -23,7 +25,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class SSimSCPlugin extends AbstractUIPlugin {
+public class SSimSCPlugin extends AbstractUIPluginLog {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.sc"; //$NON-NLS-1$

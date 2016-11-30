@@ -49,18 +49,18 @@ public class DataComponent extends EsterelSimulatorDataComponent {
     protected java.net.URI compileEsterelToC(final URI strlFile, final File outFile,
             final EsterelSimulationProgressMonitor monitor) throws IOException, URISyntaxException {
         monitor.subTask("Reading Esterel file");
-        System.out.println("Compile 1" + strlFile.toString() + " , " + outFile.toString());
+        EsterelCECSimPlugin.log("Compile 1" + strlFile.toString() + " , " + outFile.toString());
         java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
 
-        System.out.println("Compile 2" + inputURI.toString());
+        EsterelCECSimPlugin.log("Compile 2" + inputURI.toString());
         InputStream strl = CEC.runSTRL(inputURI);
-        System.out.println("Compile 3");
+        EsterelCECSimPlugin.log("Compile 3");
         monitor.worked(1);
         if (monitor.isCanceled()) {
             strl.close();
             return null;
         }
-        System.out.println("Compile 4");
+        EsterelCECSimPlugin.log("Compile 4");
         monitor.subTask("Parsing Esterel file");
         InputStream strlxml = CEC.runSTRLXML(strl);
         monitor.worked(1);
@@ -68,7 +68,7 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 5");
+        EsterelCECSimPlugin.log("Compile 5");
         monitor.subTask("Expanding Esterel file");
         // InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
@@ -77,7 +77,7 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 6");
+        EsterelCECSimPlugin.log("Compile 6");
         monitor.subTask("Dismantle Esterel file");
         InputStream dismantle = CEC.runDISMANTLE(expandmodule);
         monitor.worked(1);
@@ -85,7 +85,7 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 7");
+        EsterelCECSimPlugin.log("Compile 7");
         monitor.subTask("ASTGRC");
         InputStream astgrc = CEC.runASTGRC(dismantle);
         monitor.worked(1);
@@ -93,7 +93,7 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 8");
+        EsterelCECSimPlugin.log("Compile 8");
         monitor.subTask("GRCOPT");
         InputStream grcopt = CEC.runGRCOPT(astgrc);
         monitor.worked(1);
@@ -115,7 +115,7 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 9");
+        EsterelCECSimPlugin.log("Compile 9");
         monitor.subTask("EEC");
         InputStream eec = CEC.runEEC(pdgccfg);
         monitor.worked(1);
@@ -130,10 +130,10 @@ public class DataComponent extends EsterelSimulatorDataComponent {
             strl.close();
             return null;
         }
-        System.out.println("Compile 10");
+        EsterelCECSimPlugin.log("Compile 10");
         monitor.subTask("Generating C code");
         java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
-        System.out.println("Compile 11" + uri);
+        EsterelCECSimPlugin.log("Compile 11" + uri);
 
         if (benchmark) {
             File currentFile = new File(uri.getPath());

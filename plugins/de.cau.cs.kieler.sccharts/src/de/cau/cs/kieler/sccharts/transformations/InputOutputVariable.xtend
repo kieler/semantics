@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts InputOutputVariable Transformation.
@@ -43,17 +44,15 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     }
 
     override getExpandsFeatureId() {
-        return SCChartsFeature::INITIALIZATION_ID
+        return SCChartsFeature::INPUTOUTPUT_ID
     }
 
     override getProducesFeatureIds() {
-
         // TODO: Check
         return Sets.newHashSet()
     }
 
     override getNotHandlesFeatureIds() {
-
         // TODO: Check
         return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
     }
@@ -77,6 +76,7 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     }
 
     def void transformInputOutputVariable(State state, State targetRootState) {
+        state.setDefaultTrace
         //TODO: Implement this transformation
     }
 

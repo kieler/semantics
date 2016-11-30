@@ -13,28 +13,32 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd
 
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
+
+//import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
+//import de.cau.cs.kieler.kico.transformation.IExpansionTransformation
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -44,7 +48,6 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2015-03-19 proposed yellow
  */
 class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
-
     public static boolean IGNORE_INHERITED_DEPENDENCIES = false;
 
     // -------------------------------------------------------------------------
@@ -73,7 +76,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
@@ -94,20 +97,30 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
     // Translate a transition from transformation to feature (BELONG)
     def KEdge translateBelongTransition(Transformation source, Feature dest) {
         return createEdge() => [ edge |
-            edge.source = source.node;
-            edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            if (!source.production) {
+                edge.source = dest.node;
+                edge.target = source.node;
+            } else {
+                edge.source = source.node;
+                edge.target = dest.node;
+            }
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
-                it.setForeground(BLUE3.copy)
+                if (source.production) {
+                    it.setForeground(BLUE3.copy)
+                } else {
+                    it.setForeground(RED1.copy)
+                    
+                }
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 //                if (t.isImmediate2) {
                 it.lineStyle = LineStyle::CUSTOM;
                 it.lineStyle.dashPattern.clear;
                 it.lineStyle.dashPattern += TRANSITION_DOT_PATTERN;
             //                }
-            //it.addArrowDecorator()
+                it.addArrowDecorator()
             ]
         ];
     }
@@ -118,7 +131,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
@@ -143,21 +156,24 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
 
         val knode = model.createNode();
 
-        knode.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
-        knode.setLayoutOption(LayoutOptions::SPACING, 25f);
+        // Apply spline edge routing on root level
+        knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+
+        knode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
+        knode.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
 
         //knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        knode.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        knode.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
 
         //knode.setLayoutOption(Properties::THOROUGHNESS, 100)
-        knode.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+        knode.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
 
         //knode.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
         //knode.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
         for (elem : model.visibleFeatures) {
 
-            System.out.println("TRANSFORM " + elem.id);
+            KiCoUIPlugin.log("TRANSFORM " + elem.id);
 
             if (!(elem instanceof FeatureGroup)) {
 
@@ -188,7 +204,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            node.setLayoutOption(KlighdProperties.EXPAND, true);
             val cornerRadius = 17; //if(!feature.isGroup) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
@@ -257,7 +273,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = transformation.createNode().putToLookUpWith(transformation) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            node.setLayoutOption(KlighdProperties.EXPAND, true);
             val cornerRadius = 6;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;

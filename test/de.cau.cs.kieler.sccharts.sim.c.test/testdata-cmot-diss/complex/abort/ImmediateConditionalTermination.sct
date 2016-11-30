@@ -1,0 +1,15 @@
+@Transformation ABORT
+scchart ImmediateConditionalTermination {
+  input bool I;
+  output int O;
+  
+  initial state A {
+    
+    initial state A0
+    --> A1 immediate with / O = 1;
+    
+    final state A1;
+  }>-> F immediate with I / O = 2;
+   
+  final state F;
+}

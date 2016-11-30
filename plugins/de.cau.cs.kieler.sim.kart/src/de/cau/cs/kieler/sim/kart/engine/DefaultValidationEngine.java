@@ -16,10 +16,10 @@ package de.cau.cs.kieler.sim.kart.engine;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.elk.core.util.Pair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.Utilities;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -130,43 +130,46 @@ public class DefaultValidationEngine implements IValidationEngine {
             final String errSignalVar, final JSONObject retval) {
 
         Iterator<String> signals = recSignals.keySet().iterator();
-        StringBuffer errSignalsBuf = new StringBuffer();
-
+        StringBuffer missingSignalsBuf = new StringBuffer();
+        StringBuffer wrongValueSignalsBuf = new StringBuffer();
+        
         while (signals.hasNext()) {
             String signal = signals.next();
-
-            if (!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || Utilities
-                    .compareValues(recSignals.get(signal), simSignals.get(signal))))) {
-                if (errSignalsBuf.length() != 0) {
-                    errSignalsBuf.append(", ");
+            // Check that no signal is missing (signal is present in eso file but not in simulation)
+            if (!simSignals.containsKey(signal)) {
+            	addWithSeparator(missingSignalsBuf, signal);
+            } else {
+            	// Check that values of signals match
+                if(!Utilities.compareValues(recSignals.get(signal), simSignals.get(signal))) {
+                	addWithSeparator(wrongValueSignalsBuf, signal);
                 }
-                errSignalsBuf.append(signal);
             }
             simSignals.remove(signal);
         }
-
-        if (errSignalsBuf.length() != 0) {
-            if (!isHistoryStep) {
-                KiemPlugin.getDefault().showError(
-                        "Validation error: The signals " + errSignalsBuf.toString()
-                                + " were produced erroneously, they were either not "
-                                + "present when they should "
-                                + "have been or in the case of valued signals were"
-                                + " present with a wrong value", KartConstants.PLUGINID, null,
+        
+        if (!isHistoryStep) {
+        	if(missingSignalsBuf.length() > 0) {
+        		
+        		KiemPlugin.getDefault().showError(
+                        "Validation error: The signal(s) " + missingSignalsBuf.toString()
+                                + " were not present" 
+                                + " although they should have been.", KartConstants.PLUGINID, null,
                         KartConstants.ERR_SILENT);
-            }
+        	}
+        	if(wrongValueSignalsBuf.length() > 0) {
+        		KiemPlugin.getDefault().showError(
+                        "Validation error: The signal(s) " + wrongValueSignalsBuf.toString()
+                            + " were present with a wrong value", KartConstants.PLUGINID, null,
+                        KartConstants.ERR_SILENT);
+        	}
         }
 
         StringBuffer excessSignalsBuf = new StringBuffer();
-        if (!(ignoreAdditionalSignals || simSignals.isEmpty())) {
+        if (!ignoreAdditionalSignals && !simSignals.isEmpty()) {
             Iterator<String> it2 = simSignals.keySet().iterator();
             while (it2.hasNext()) {
                 String signal = it2.next();
-                excessSignalsBuf.append(signal);
-
-                if (it2.hasNext()) {
-                    excessSignalsBuf.append(", ");
-                }
+                addWithSeparator(excessSignalsBuf, signal);
             }
             if (!isHistoryStep) {
                 KiemPlugin.getDefault().showError(
@@ -176,12 +179,8 @@ public class DefaultValidationEngine implements IValidationEngine {
             }
         }
 
-        if (errSignalsBuf.length() != 0) {
-            errSignalsBuf.append(", ");
-        }
-
         try {
-            retval.accumulate(errSignalVar, errSignalsBuf.toString() + excessSignalsBuf.toString());
+            retval.accumulate(errSignalVar, missingSignalsBuf.toString() + wrongValueSignalsBuf.toString() + excessSignalsBuf.toString());
         } catch (JSONException e) {
             // do nothing
         }
@@ -189,4 +188,10 @@ public class DefaultValidationEngine implements IValidationEngine {
 
     // -------------------------------------------------------------------------
 
+    private void addWithSeparator(StringBuffer buffer, String item) {
+    	if(buffer.length() > 0)
+    		buffer.append(", ");
+    	buffer.append(item);   
+    }
+    
 }

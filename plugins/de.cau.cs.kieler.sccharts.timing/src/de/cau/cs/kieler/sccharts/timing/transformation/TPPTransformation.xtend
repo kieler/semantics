@@ -16,10 +16,11 @@ package de.cau.cs.kieler.sccharts.timing.transformation
 import com.google.common.collect.Iterators
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -29,7 +30,6 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import de.cau.cs.kieler.sccharts.timing.TimingAnalysis
 import de.cau.cs.kieler.sccharts.timing.TimingUtil
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -49,8 +49,6 @@ import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource;
-import de.cau.cs.kieler.kico.KiCoProperties
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -477,7 +475,7 @@ class TPPTransformation extends AbstractProductionTransformation
                         val TextExpression tppText = KExpressionsFactory.eINSTANCE.
                             createTextExpression();
                         tppText.setText("TPP(" + tppNumber + ")");
-                        tpp.setAssignment(tppText);
+                        tpp.setExpression(tppText);
                         // insert the new assignment node in the edge
                         tpp.setNext(newEdge);
                         controlFlow.setTarget(tpp);

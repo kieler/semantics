@@ -32,6 +32,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.core.model.PluginLog;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.ResourceExtension;
@@ -48,7 +49,7 @@ import de.cau.cs.kieler.kico.transformation.Processor;
  * @kieler.design 2015-03-11 proposed
  * @kieler.rating 2015-03-11 proposed yellow
  */
-public class KiCoPlugin extends Plugin {
+public class KiCoPlugin extends PluginLog {
 
     /** The logger. */
     @Inject
@@ -430,14 +431,14 @@ public class KiCoPlugin extends Plugin {
         resourceExtensionsCached = new HashMap<String, ResourceExtension>();
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
-                String className = resourceExtensions[i].getAttribute("className");
+                String className = resourceExtensions[i].getAttribute("ePackageName");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
                 String editorID = resourceExtensions[i].getAttribute("editor_id");
                 resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
                         isXMI.toLowerCase().equals("true"), editorID));
 
-                logInfo("KiCo register resource extension: " + extension + " for class "
+                logInfo("KiCo register resource extension: " + extension + " for package "
                         + className);
             } finally {
                 // do nothing

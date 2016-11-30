@@ -1,0 +1,48 @@
+@diagram[KLayLayered] false
+
+@VHLayout  
+scchart ComplexFinalState2 {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  output bool A1 = false;
+  output int R1S = 0;
+  output int R2S = 0;
+  
+  region " ":
+
+  initial state M {
+
+    region "Region 1":
+
+    initial state S1 {
+      entry / R1S = 1;
+    }
+    --> S2 with T1;
+
+    final state S2 {
+      entry / R1S = 2;
+    };
+    
+    region "Region 2":
+
+    initial state S3 {
+      entry / R2S = 3;
+    }
+    --> S4 with T2;
+
+    final state S4 {
+      entry / R2S = 4;
+    }
+    --> S3 with T2 
+    --> S5 with T3; 
+    
+    final state S5 {
+      entry / R2S = 5;
+    }
+    --> S3 with T3; 
+  }
+  >-> F with / A1 = true;
+
+  final state F;
+} 

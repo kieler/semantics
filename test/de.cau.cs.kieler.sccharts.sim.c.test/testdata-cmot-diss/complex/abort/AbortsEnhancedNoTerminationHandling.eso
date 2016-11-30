@@ -1,0 +1,62 @@
+! reset;
+
+% Output: 
+;
+
+% Output: S1toS2(1) 
+;
+
+% Output: S1toS2(1) S2toS3(1) N1act(1) 
+;
+
+% Output: S1toS2(1) S2toS3(1) N1act(1) 
+;
+
+% Output: S1toS2(1) S2toS3(1) N1act(1) 
+;
+! reset;
+S1trig 
+% Output: S1act(1) 
+;
+
+% Output: S1act(1) 
+;
+
+% Output: S1act(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: S1toS2(1) 
+;
+S1trig 
+% Output: S1toS2(1) S1act(1) 
+;
+
+% Output: S1toS2(1) S1act(1) 
+;
+! reset;
+W1trig 
+% Output: W1act(1) 
+;
+
+% Output: W1act(1) 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: S1toS2(1) 
+;
+W1trig 
+% Output: S1toS2(1) S2toS3(1) W1act(1) 
+;
+
+% Output: S1toS2(1) S2toS3(1) W1act(1) 
+;
+
+% Output: S1toS2(1) S2toS3(1) W1act(1) 
+;

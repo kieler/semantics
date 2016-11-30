@@ -14,22 +14,22 @@
  package de.cau.cs.kieler.s.sj.xtend
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Assignment
@@ -50,7 +50,8 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -126,7 +127,7 @@ class S2Java {
 
     «includeHeader»
     «FOR hostcode : program.getAnnotations(ANNOTATION_HOSTCODE)»
-        «(hostcode as StringAnnotation).values.head»
+        «(hostcode as StringAnnotation).values.head.removeEscapeChars»
     «ENDFOR»
     
     
@@ -134,7 +135,8 @@ class S2Java {
 
    «/* Variables */»
     «sVariables(program)»    
-    
+    «program.tickVariables»
+    boolean _PRE_GO = false;
     ''' 
    }
    
@@ -173,7 +175,7 @@ class S2Java {
        if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
            return '''public'''
        }
-       return '''private'''
+       return '''public'''
    }
 
    // Generate variables.
@@ -206,7 +208,7 @@ class S2Java {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF declaration.volatile»
-              «'''  '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «''' public '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray
 //TODO: initial values für arrays
 »
@@ -274,6 +276,7 @@ class S2Java {
    def sResetFunction(Program program) {
        '''  public void reset(){
        _GO = true;
+       _PRE_GO = false;
        «program.resetVariables»
        return;
     }
@@ -285,12 +288,14 @@ class S2Java {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''  public void tick(){
-       	«program.tickVariables»
+       if (_PRE_GO) {
+            _GO = false;
+       }
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
        «program.setPreVariables»
-       _GO = false;
+       _PRE_GO = _GO;
        return;
     }
     '''
@@ -326,8 +331,14 @@ class S2Java {
    // -------------------------------------------------------------------------   
 
    // Host code without "..."
+   // Removes the first and last character from a String if these are matching quotation marks.
    def extractCode(String hostCodeString) {
-        hostCodeString.substring(1, hostCodeString.length-1);
+        if ((hostCodeString.startsWith("'") && hostCodeString.endsWith("'"))
+            || (hostCodeString.startsWith('"') && hostCodeString.endsWith('"'))) {
+            return hostCodeString.substring(1, hostCodeString.length - 1);
+        } else {
+            return hostCodeString
+        }
    }
 
    def extractCode(TextExpression hostCode) {

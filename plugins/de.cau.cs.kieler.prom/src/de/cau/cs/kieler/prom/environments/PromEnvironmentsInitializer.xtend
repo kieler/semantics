@@ -14,15 +14,15 @@
 package de.cau.cs.kieler.prom.environments
 
 import de.cau.cs.kieler.prom.common.EnvironmentData
+import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.ArrayList
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer
 import org.eclipse.jface.preference.IPreferenceStore
-import de.cau.cs.kieler.prom.common.KiCoLaunchData
-import de.cau.cs.kieler.prom.launchconfig.LaunchConfiguration
 
 /**
  * This class handles initialization of default environments.
@@ -42,9 +42,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * when the preferences page is opened for the first time in this run.
      */
     override void initializeDefaultPreferences() {
-        if(EnvironmentData.isPreferenceStoreEmpty(store)){
-            initializeDefaultEnvironments()
-        }
+        initializeDefaultEnvironments()
     }
 
     /** 
@@ -52,7 +50,9 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
      * Any other environment data in the store will be lost. 
      */
     public static def void initializeDefaultEnvironments(){
-        EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
+        if(EnvironmentData.isPreferenceStoreEmpty(store)){
+            EnvironmentData.saveAllToPreferenceStore(store, getAllDefaultEnvironments())
+        }
     }
 
     /**
@@ -117,7 +117,7 @@ class PromEnvironmentsInitializer extends AbstractPreferenceInitializer implemen
         var launchData = new KiCoLaunchData()
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
-        launchData.targetDirectory = LaunchConfiguration.BUILD_DIRECTORY
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         
         var env = new EnvironmentData("Generic Java")
         env.launchData = launchData

@@ -17,6 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.elk.graph.KEdge;
+import org.eclipse.elk.graph.KLabel;
+import org.eclipse.elk.graph.KNode;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,31 +40,22 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.kgraph.KEdge;
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.kgraph.KLabel;
-import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement;
-import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.krendering.Colors;
-import de.cau.cs.kieler.core.krendering.KBackground;
-import de.cau.cs.kieler.core.krendering.KColor;
-import de.cau.cs.kieler.core.krendering.KContainerRendering;
-import de.cau.cs.kieler.core.krendering.KForeground;
-import de.cau.cs.kieler.core.krendering.KRendering;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
-import de.cau.cs.kieler.core.krendering.KStyle;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.klighd.ui.view.DiagramView;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
-import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.krendering.Colors;
+import de.cau.cs.kieler.klighd.krendering.KBackground;
+import de.cau.cs.kieler.klighd.krendering.KColor;
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering;
+import de.cau.cs.kieler.klighd.krendering.KForeground;
+import de.cau.cs.kieler.klighd.krendering.KRendering;
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle;
+import de.cau.cs.kieler.klighd.krendering.KStyle;
+import de.cau.cs.kieler.klighd.krendering.KText;
+import de.cau.cs.kieler.klighd.krendering.impl.KRoundedRectangleImpl;
+import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -76,8 +74,10 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @kieler.ignore (excluded from review process)
  * 
  */
-public abstract class KiViDataComponent extends JSONObjectDataComponent implements
-        IJSONObjectDataComponent {
+public abstract class KiViDataComponent extends JSONObjectDataComponent
+        implements IJSONObjectDataComponent {
+    
+    private static final boolean DEBUG = false;
 
     private static final int DEFAULT_STEPS = 0; // changed by cmot upon rvh's request
 
@@ -124,13 +124,20 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     /** Remember when wrapup() was executed. */
     private boolean wrapupDone = false;
 
-    private static KColor SCCHARTSRED1 = KRenderingFactory.eINSTANCE.createKColor().setColor(255,
-            215, 215);
-    private static KColor SCCHARTSRED2 = KRenderingFactory.eINSTANCE.createKColor().setColor(255,
-            158, 158);
+    private static KColor SCCHARTSRED1 =
+            KRenderingFactory.eINSTANCE.createKColor().setColor(255, 215, 215);
+    private static KColor SCCHARTSRED2 =
+            KRenderingFactory.eINSTANCE.createKColor().setColor(255, 158, 158);
 
     private static KBackground STYLE1 = KRenderingFactory.eINSTANCE.createKBackground()
             .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
+
+    // private static KBackground STYLETRANSPARENT = KRenderingFactory.eINSTANCE.createKBackground()
+    // .setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
+
+    // private static KColor SCCHARTSWHITE =
+    // KRenderingFactory.eINSTANCE.createKColor().setColor(255,
+    // 255, 255);
 
     private ArrayList<KNode> expanded = new ArrayList<KNode>();
 
@@ -151,7 +158,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (!(editorInput instanceof FileEditorInput)) {
             return;
         }
-        
+
         List<DiagramView> diagramViews = DiagramView.getDiagramViews(diagramEditor);
         if (diagramViews.isEmpty()) {
             throw new KiemInitializationException(
@@ -159,7 +166,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         }
         DiagramView viewPart = diagramViews.get(0);
         viewContext = viewPart.getViewer().getViewContext();
-        
+
         Object potentionEObject = viewContext.getInputModel();
         if (potentionEObject instanceof EObject) {
             modelRoot = (EObject) potentionEObject;
@@ -168,11 +175,11 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         }
 
         resource = getModelResource(true);
-//        if (resource == null) {
-//            throw new KiemInitializationException(
-//               "Model is not contained in a resource and cannot be visualized", true, null);
-//        }
-        
+        // if (resource == null) {
+        // throw new KiemInitializationException(
+        // "Model is not contained in a resource and cannot be visualized", true, null);
+        // }
+
         stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();
         errorStateKey = getProperties()[KIEM_PROPERTY_ERRORSTATENAME].getValue();
@@ -197,11 +204,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * 
      */
     public void wrapup() throws KiemInitializationException {
+        hightLightStates(new ArrayList<EObject>());
+        hightLightTransitions(new ArrayList<EObject>());
+        expanded.clear();
+        eObjectMap.clear();
         if (diagramEditor == null) {
             return;
         }
-        hightLightStates(new ArrayList<EObject>());
-        hightLightTransitions(new ArrayList<EObject>());
         // Necessary to remove scaling!
         LightDiagramServices.layoutDiagram(viewContext);
         wrapupDone = true;
@@ -252,22 +261,27 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     }
 
     // --------------------------------------------------------------------------
-    
     Resource getModelResource(boolean force) {
+        return getModelResource(force, false);
+    }
+
+    Resource getModelResource(boolean force, boolean norefresh) {
         if (resource != null && !force) {
             return resource;
         }
         resource = modelRoot.eResource();
         if (resource == null) { // || resource.getURI() == null) {
-                // We try to create a dummy resource
-                // Create a dummy resource by calling serialization (this creates a dummy
-                // resource on the fly)
-                 @SuppressWarnings("unused")
-                 KielerCompilerContext context = new KielerCompilerContext("", null);
-                 String discard = KiCoUtil.serialize(modelRoot, context, true);
-                 resource = context.getMainResource();
+            // We try to create a dummy resource
+            // Create a dummy resource by calling serialization (this creates a dummy
+            // resource on the fly)
+            @SuppressWarnings("unused")
+            KielerCompilerContext context = new KielerCompilerContext("", null);
+            String discard = KiCoUtil.serialize(modelRoot, context, true);
+            resource = context.getMainResource();
         }
-        refreshEObjectMap();
+        if (!norefresh) {
+            refreshEObjectMap();
+        }
         return resource;
     }
 
@@ -445,9 +459,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         // Remove new highlighted from ALL elements to get NOT highlighted
         @SuppressWarnings("unchecked")
         final List<? extends KNode> notHighlightedStates =
-                (List<? extends KNode>) Lists
-                        .newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
-                                .eAllContentsOfType2(viewContext.getViewModel(), KNode.class));
+                (List<? extends KNode>) Lists.newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
+                        .eAllContentsOfType2(viewContext.getViewModel(), KNode.class));
         notHighlightedStates.removeAll(currentStates);
 
         // Remove highlighting for NOT highlighted elements
@@ -458,10 +471,56 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
-                        for (KText t : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
-                                KText.class))) {
-                            Iterables.removeIf(t.getStyles(), redFilter);
+                        // KText[] array =
+                        // Iterables.toArray(Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
+                        // KText.class)), KText.class);
+                        ArrayList<Object> objList = Lists.newArrayList(ren.eAllContents());
+                        for (Object obj : objList) {
+                            if (obj instanceof KText) {
+                                KText t = (KText) obj;
+                                // if (t.getText().startsWith("during")) {
+                                // System.out.println("ALERT");
+                                // }
+                                try {
+                                    Iterables.removeIf(t.getStyles(), redFilter);
+                                } catch (Exception e) {
+                                    // TODO: why ??!
+                                    // System.out.println(t.getText());
+                                    //e.printStackTrace();
+                                }
+                            } else if (obj instanceof KContainerRendering) {
+                                // for final states
+                                if (ren.eContents().size() > 0) {
+                                    for (EObject ren2 : ren.eContents()) {
+                                        if (ren2 instanceof KRendering) {
+                                            try {
+                                                KRendering k2 = (KRendering) ren2;
+                                                EList<KStyle> styles = k2.getStyles();
+                                                Iterables.removeIf(styles, filter);
+                                            } catch (Exception e) {
+                                                // TODO: why ??!
+                                                // System.out.println(t.getText());
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
+                            }
+
                         }
+
+                        // KText[] array = Iterables.toArray(Iterables2.filter(), KText.class);
+                        // for (KText t : array) {
+                        // try {
+                        // Iterables.removeIf(t.getStyles(), redFilter);
+                        // } catch (Exception e) {
+                        // // TODO: why ??!
+                        // System.out.println(t.getText());
+                        // e.printStackTrace();
+                        // }
+                        // }
                     }
                     if (expanded.contains(k)) {
                         viewContext.getViewer().collapse(k);
@@ -472,14 +531,20 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         });
 
         // Add highlighting for NEW highlighted elements
-        final KBackground style1 =
-                KRenderingFactory.eINSTANCE.createKBackground()
-                        .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
+        final KBackground style1 = KRenderingFactory.eINSTANCE.createKBackground()
+                .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
         style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
-        style1.setPropagateToChildren(true);
+        // style1.setPropagateToChildren(true);
+
         final KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
+        style2.setPropagateToChildren(true);
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        style3.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
+
+        // KBackground styletransparent = KRenderingFactory.eINSTANCE.createKBackground()
+        // .setColors(SCCHARTSWHITE,SCCHARTSWHITE).setGradientAngle2(90);
+        // styletransparent.setAlpha(100);
 
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
@@ -490,13 +555,22 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
-                        for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
-                                ren.eAllContents(), KText.class))) {
-                            viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
-
+                        for (KText viewElementStateLabel : Iterables2
+                                .toIterable(Iterators.filter(ren.eAllContents(), KText.class))) {
+                            // viewElementStateLabel.getStyles().add(EcoreUtil.copy(styletransparent));
                         }
                         ren.getStyles().add(EcoreUtil.copy(style2));
                         ren.getStyles().add(EcoreUtil.copy(style1));
+
+                        // for final states
+                        if (ren.eContents().size() > 0) {
+                            for (EObject ren2 : ren.eContents()) {
+                                if (ren2 instanceof KContainerRendering) {
+                                    ((KContainerRendering) ren2).getStyles()
+                                            .add(EcoreUtil.copy(style1));
+                                }
+                            }
+                        }
 
                         viewContext.getViewer().scale(viewElementState, 1.0f);
                         for (KNode r : viewElementState.getChildren()) {
@@ -530,9 +604,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         @SuppressWarnings("unchecked")
         final List<KEdge> notHighlightedEdges = new ArrayList<KEdge>();
         final List<? extends KNode> allNodes =
-                (List<? extends KNode>) Lists
-                        .newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
-                                .eAllContentsOfType2(viewContext.getViewModel(), KNode.class));
+                (List<? extends KNode>) Lists.newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
+                        .eAllContentsOfType2(viewContext.getViewModel(), KNode.class));
         for (KNode kNode : allNodes) {
             for (KEdge kEdge : kNode.getOutgoingEdges()) {
                 notHighlightedEdges.add(kEdge);
@@ -692,12 +765,14 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private void refreshEObjectMap(final EObject baseObj) {
         // Add this item
         if (baseObj.eResource() == null) {
-            resource = getModelResource(true);
+            resource = getModelResource(true, true);
         }
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
-            System.out.println(baseObjID + ":" + baseObj);
+            if (DEBUG) {
+                SimKiViPlugin.log(baseObjID + ":" + baseObj);
+            }
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();

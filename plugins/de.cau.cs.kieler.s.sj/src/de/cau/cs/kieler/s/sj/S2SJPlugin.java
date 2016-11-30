@@ -22,6 +22,7 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sj.xtend.AuxiliaryStates;
 import de.cau.cs.kieler.s.sj.xtend.S2SJ;
@@ -33,7 +34,7 @@ import de.cau.cs.kieler.s.sj.xtend.S2SJ;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class S2SJPlugin extends AbstractUIPlugin {
+public class S2SJPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sc"; //$NON-NLS-1$

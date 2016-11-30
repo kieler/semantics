@@ -13,26 +13,23 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
-import com.google.common.base.Joiner
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KRectangle
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
-
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * Styles for {@link State}.
  * 
@@ -182,12 +179,23 @@ class StateStyles {
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
         ]
     }
+    
+    /**
+     * Adds an empty label placeholder to a state figure to fix surrounding space for following elements.
+     */
+    def KRectangle addEmptyStateLabel(KNode node) {
+        node.contentContainer.addRectangle => [
+            invisible = true
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+        ]
+    }
 
     /**
      * Adds a label in declaration style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addActionLabel(KNode node, Pair<List<String>, List<String>> components) {
+    def KRectangle addActionLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
         node.actionsContainer.addKeywordLabel(components);
     }
 
@@ -195,14 +203,14 @@ class StateStyles {
      * Adds a label in action style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addDeclarationLabel(KNode node, Pair<List<String>, List<String>> components) {
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<CharSequence, Boolean>> components) {
         return node.declarationsContainer.addKeywordLabel(components);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
-    package def addKeywordLabel(KContainerRendering container, Pair<List<String>, List<String>> components) {
+    package def addKeywordLabel(KContainerRendering container, List<Pair<CharSequence, Boolean>> components) {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
@@ -211,15 +219,40 @@ class StateStyles {
                 invisible = true;
                 // Add left alignment
                 setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
-                setGridPlacement(2);
-                val joiner = Joiner.on(" ");
-                addText(joiner.join(components.key) + " ") => [
-                    foreground = KEYWORD.color;
-                    fontBold = true;
-                ]
-                addText(joiner.join(components.value));
+                var parts = 0
+                val entries = components.iterator
+                val builder = new StringBuilder()
+                var keyword = true
+                var KText ktext = null               
+                while (entries.hasNext) {
+                	val entry = entries.next
+                	if (builder.length > 0 && keyword != entry.value) {
+		                ktext = it.addText(builder.append(" ").toString)
+		                if (keyword) {
+		                	ktext.highlightKeyword
+		                }                		
+		                builder.length = 0
+                		parts++
+                	}
+                	if (builder.length > 0) {
+                		builder.append(" ")
+                	}
+                	builder.append(entry.key)
+                	keyword = entry.value
+                }
+                ktext = addText(builder.toString)
+                if (keyword) {
+                	ktext.highlightKeyword
+                }
+                parts++
+                setGridPlacement(parts)
             ]
         ]
+    }
+    
+    package def highlightKeyword(KText ktext) {
+        ktext.foreground = KEYWORD.color;
+        ktext.fontBold = true;    	
     }
 
     /**

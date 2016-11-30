@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -43,7 +44,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -61,6 +62,10 @@ import de.cau.cs.kieler.kico.transformation.Processor;
  * 
  */
 public class KiCoUtil {
+
+    // default list of extensions for serialization and parsing
+    static String[] defaultPreferredExtensions = {"sct","scg","s","circuit","kgx","kgt"};
+    
 
     /** The reg is necessary to find serializer or parser for Xtext models. */
     @Inject
@@ -85,9 +90,9 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-
     // -------------------------------------------------------------------------
 
+    
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
      * implemented by finding the first suitable XtextResourceProvider that is able to serialize the
@@ -99,6 +104,33 @@ public class KiCoUtil {
      */
     public static String serialize(EObject model, KielerCompilerContext context,
             boolean updateMainResource) {
+        return serialize(model, context,
+                updateMainResource, defaultPreferredExtensions);
+    }
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, boolean raiseError){
+        return serialize(model, context,
+                updateMainResource, defaultPreferredExtensions, false);
+    }    
+
+    /**
+     * Serialize the EObject (if the compilation result is not plain text (String)). This is
+     * implemented by finding the first suitable XtextResourceProvider that is able to serialize the
+     * model.
+     * 
+     * @param model
+     *            the model
+     * @param preferredExtensions
+     *            a list of extensions to test
+     * @return the string
+     */
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, String[] preferredExtensions) {
+        return serialize(model, context,
+                updateMainResource, preferredExtensions, false);
+    }
+    public static String serialize(EObject model, KielerCompilerContext context,
+            boolean updateMainResource, String[] preferredExtensions, boolean raiseError) {
         String num = (model.hashCode() + "").replace("-", "");
 
         String returnText = "";
@@ -118,21 +150,27 @@ public class KiCoUtil {
         HashMap<String, ResourceExtension> resourceExtensionMap =
                 KiCoPlugin.getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
-            System.out.println("MODEL eCLASS: " + model.eClass().getName());
+            KiCoPlugin.log("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
         }
-        ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getName());
+        ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getEPackage().getName());
         if (specificExtension != null) {
             extensionKeyList.clear();
-            if (!specificExtension.isXMI()) {
-                extensionKeyList.add(0, specificExtension.getExtension());
+            extensionKeyList.add(0, specificExtension.getExtension());
+        } else {
+            for (int i = preferredExtensions.length -1; i >= 0; i--) {
+                extensionKeyList.add(0, preferredExtensions[i]);
             }
         }
 
+        
         try {
-
             for (String ext : extensionKeyList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
-
+                
+                if (KiCoPlugin.DEBUG) {
+                    KiCoPlugin.log("Trying to serialize as extension '" + ext + "' ... ");
+                }
+                
                 ResourceSet resourceSet = null;
                 if (context != null) {
                     resourceSet = context.getModelResourceSet();
@@ -161,11 +199,17 @@ public class KiCoUtil {
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (KiCoPlugin.DEBUG) {
+                        KiCoPlugin.log("success.");
+                    }
                     if (updateMainResource) {
                         context.setMainResource(res);
                     }
                 } catch (Exception e) {
-                    // e.printStackTrace();
+                    if (KiCoPlugin.DEBUG) {
+                        KiCoPlugin.log("failed.");
+                    }
+                    //e.printStackTrace();
                 }
 
                 if (done) {
@@ -185,13 +229,20 @@ public class KiCoUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            String text2 = "";
-            if (model != null) {
-                text2 = model.getClass().getName();
+            if (KiCoPlugin.DEBUG) {
+                KiCoPlugin.log("failed.");
             }
-            KiCoPlugin.getInstance().showError("Could not serialize model '" + text2 + "'",
-                    KiCoPlugin.PLUGIN_ID, e, true);
+            //e.printStackTrace();
+            if (raiseError) {
+                throw e;
+            } else {
+                String text2 = "";
+                if (model != null) {
+                    text2 = model.getClass().getName();
+                }
+                KiCoPlugin.getInstance().showError("Could not serialize model '" + text2 + "'",
+                        KiCoPlugin.PLUGIN_ID, e, true);
+            }
         }
 
         return returnText;
@@ -213,7 +264,7 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Parse the model provided as a serialized String. This is implemented by finding the first
      * suitable XtextResourceProvider that is able to parse the model to an EObject.
@@ -230,6 +281,28 @@ public class KiCoUtil {
      */
     public static EObject parse(String text, KielerCompilerContext context, boolean mainModel,
             String extension) {
+        return parse( text, context , mainModel,
+                 extension, defaultPreferredExtensions); 
+    }
+    
+    /**
+     * Parse the model provided as a serialized String. This is implemented by finding the first
+     * suitable XtextResourceProvider that is able to parse the model to an EObject.
+     * 
+     * @param text
+     *            the text
+     * @param context
+     *            the context may be null, otherwise the resource is added to the context
+     * @param mainModel
+     *            the main model
+     * @param extension
+     *            the extension may be null if unknown
+     * @param extensionPreferences
+     *            the order in which extensions (if existing) are tested
+     * @return the e object
+     */
+    public static EObject parse(String text, KielerCompilerContext context, boolean mainModel,
+            String extension, String[] preferredExtensions) {
         EObject returnEObject = null;
 
         boolean done = false;
@@ -248,8 +321,26 @@ public class KiCoUtil {
         if (!done) {
             try {
 
+                // build a list respecting the preferred extension list
+                ArrayList<String> extensionList = new ArrayList<String>();
+                for (String ext : preferredExtensions) {
+                    extensionList.add(ext);
+                }
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                    System.out.println("Testing extension ''" + ext + "''");
+                    boolean exists = false;
+                    for (String otherExt : extensionList) {
+                        if (otherExt.equals(ext)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        extensionList.add(ext);
+                    }
+                }
+                
+                for (String ext : extensionList) {
+                    KiCoPlugin.log("Testing extension ''" + ext + "''");
                     if (extension != null && !extension.equals(ext)) {
                         // if an extension is given, then continue if this is not the right
                         // extension!
@@ -520,11 +611,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -570,11 +661,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -621,11 +712,11 @@ public class KiCoUtil {
                         Class<?> parameter = parameters[0];
                         String compareName = parameter.getName();
                         if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }

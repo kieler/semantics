@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.core.model.util;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-
-import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
+import org.eclipse.elk.core.util.BasicProgressMonitor;
 
 /**
  * Wrapper class for Eclipse progress monitors.

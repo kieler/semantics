@@ -1,0 +1,25 @@
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+@diagram[Declarations] false
+//@VHLayout
+scchart ALDO "AbortConnector" {
+  input bool I; 
+  input bool I2; 
+  output bool D = false;
+  output bool O = false;
+
+  region Main " ":
+  
+  initial state On {
+    initial state Do --> _C with / D = true;
+    
+    connector state  _C
+    --> T with I2
+    --> Do;
+    
+    state T;
+    
+  }
+  o-> Off immediate with I / O = true;
+  state Off;
+}

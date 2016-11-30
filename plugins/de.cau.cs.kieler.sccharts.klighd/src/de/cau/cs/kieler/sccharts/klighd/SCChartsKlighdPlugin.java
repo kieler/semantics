@@ -3,7 +3,9 @@ package de.cau.cs.kieler.sccharts.klighd;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class SCChartsKlighdPlugin implements BundleActivator {
+import de.cau.cs.kieler.core.model.PluginLog;
+
+public class SCChartsKlighdPlugin extends PluginLog implements BundleActivator {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.klighd"; //$NON-NLS-1$

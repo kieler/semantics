@@ -13,19 +13,10 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.Annotatable
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KGraphElement
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kiml.LayoutMetaDataService
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope
@@ -33,8 +24,16 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
-
+import org.eclipse.elk.core.data.LayoutMetaDataService
+import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KGraphElement
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.CoreOptions
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -86,7 +85,7 @@ class LayoutHook extends SynthesisHook {
         // Find global direction annotation
         for (annotation : scope.getTypedAnnotations(LAYOUT_OPTIONS_ANNOTATION)) {
             val data = LAYOUT_OPTIONS_SERVICE.getOptionDataBySuffix(annotation.type ?: "")
-            if (data != null && data.id == LayoutOptions.DIRECTION.id) {
+            if (data != null && data.id == CoreOptions.DIRECTION.id) {
                 golbalDirection = data.parseValue(annotation.values?.head ?: "".toLowerCase) as Direction
             }
         }
@@ -104,7 +103,7 @@ class LayoutHook extends SynthesisHook {
         // Default layout direction for controlflow region
         if (region instanceof ControlflowRegion) {
             if (golbalDirection != null) {
-                node.setLayoutOption(LayoutOptions.DIRECTION, golbalDirection)
+                node.setLayoutOption(CoreOptions.DIRECTION, golbalDirection)
             } else { // Alternating
                 node.setDepthDirection(region, true, 0)
             }
@@ -127,7 +126,7 @@ class LayoutHook extends SynthesisHook {
             // Set layout option
             if (data != null && value != null) {
                 element.setLayoutOption(data.id, value)
-                if (data.id == LayoutOptions.DIRECTION.id && element instanceof KNode) {
+                if (data.id == CoreOptions.DIRECTION.id && element instanceof KNode) {
                     element.setLayoutOption(BLOCK_ALTERNATIN_LAYOUT, true);
                 }
             }
@@ -179,9 +178,9 @@ class LayoutHook extends SynthesisHook {
         if (!node.isBlockingAlternatingLayout) {
             val depth = (depthMap.get(scope) ?: 0) - depthOffset
             if (Boolean.logicalXor(isHV,(depth % 2 == 0))) {
-                node.setLayoutOption(LayoutOptions.DIRECTION, Direction.DOWN)
+                node.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
             } else {
-                node.setLayoutOption(LayoutOptions.DIRECTION, Direction.RIGHT)
+                node.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
             }
         }
     }

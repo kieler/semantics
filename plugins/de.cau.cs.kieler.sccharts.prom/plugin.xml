@@ -34,11 +34,12 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
+            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
-            id="de.cau.cs.kieler.sccharts.prom.launchShortcut"
+            id="de.cau.cs.kieler.sccharts.prom.kiCoLaunchShortcut"
             label="KiCo Compilation"
-            modes="run, debug">
+            modes="run, debug"
+            path="/kieler">
          <contextualLaunch>
             <enablement>
                <with
@@ -83,6 +84,28 @@
                id="de.cau.cs.kieler.sccharts.prom.filewizard">
          </newWizardShortcut>
       </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.prom.projectwizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.prom.filewizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <commonWizard
+            type="new"
+            wizardId="de.cau.cs.kieler.sccharts.prom.projectwizard">
+         <enablement></enablement>
+      </commonWizard>
+      <commonWizard
+            type="new"
+            wizardId="de.cau.cs.kieler.sccharts.prom.filewizard">
+         <enablement></enablement>
+      </commonWizard>
    </extension>
 
 </plugin>

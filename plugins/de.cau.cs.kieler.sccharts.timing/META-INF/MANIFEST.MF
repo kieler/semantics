@@ -7,11 +7,12 @@ Bundle-Activator: de.cau.cs.kieler.sccharts.timing.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
+ org.eclipse.elk.graph,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.klighd;bundle-version="0.4.0",
- de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.4.0",
+ de.cau.cs.kieler.klighd.krendering.extensions,
  javax.inject;bundle-version="1.0.0",
  com.google.inject;bundle-version="3.0.0",
  org.eclipse.xtext;bundle-version="2.4.2",
@@ -21,7 +22,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg.s;bundle-version="0.1.1",
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg;bundle-version="0.1.1",
- de.cau.cs.kieler.sccharts.klighd;bundle-version="0.1.1"
+ de.cau.cs.kieler.sccharts.klighd;bundle-version="0.1.1",
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.sccharts.preferences
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,

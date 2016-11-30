@@ -1,14 +1,15 @@
 @Transformation ABORT
 scchart ConditionalTermination {
   input bool I;
+  output bool O;
   
   initial state A {
     
     initial state A0
-    --> A1;
+    --> A1 with / O = 1;
     
     final state A1;
-  }>-> F with I;
+  }>-> F with I / O = 2;
   
   final state F;
 }

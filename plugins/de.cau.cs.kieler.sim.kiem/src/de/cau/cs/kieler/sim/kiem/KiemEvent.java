@@ -396,7 +396,7 @@ public class KiemEvent {
                 try {
                     int currentEvent = f.getInt(f);
                     if (currentEvent > 0 && this.isEvent(currentEvent)) {
-                        // System.out.println(f.getName());
+                        // KiemPlugin.log(f.getName());
                         returnList.add(currentEvent);
                     }
                 } catch (IllegalArgumentException e) {

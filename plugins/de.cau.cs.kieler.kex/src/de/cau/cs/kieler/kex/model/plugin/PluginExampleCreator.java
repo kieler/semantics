@@ -34,6 +34,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.elk.core.util.WrappedException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,7 +43,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.kex.controller.ErrorMessage;
 import de.cau.cs.kieler.kex.controller.ExportResource;
 import de.cau.cs.kieler.kex.controller.util.IOHandler;
@@ -182,13 +182,13 @@ public class PluginExampleCreator {
             }
         } catch (ParserConfigurationException e) {
             String msg = ErrorMessage.NOT_PARSE_PLUGIN + "\n" + e.getLocalizedMessage();
-            throw new WrappedException(e, msg);
+            throw new WrappedException(msg, e);
         } catch (SAXException e) {
             String msg = ErrorMessage.NOT_PARSE_PLUGIN + "\n" + e.getLocalizedMessage();
-            throw new WrappedException(e, msg);
+            throw new WrappedException(msg, e);
         } catch (IOException e) {
             String msg = ErrorMessage.NOT_PARSE_PLUGIN + "\n" + e.getLocalizedMessage();
-            throw new WrappedException(e, msg);
+            throw new WrappedException(msg, e);
         }
 
         NodeList plugins = this.parsedXML.getElementsByTagName(PluginConstants.PLUGIN);
@@ -241,7 +241,7 @@ public class PluginExampleCreator {
         try {
             docBuilder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException p) {
-            throw new WrappedException(p, ErrorMessage.DOC_BUILDER_NEW_ERROR);
+            throw new WrappedException(ErrorMessage.DOC_BUILDER_NEW_ERROR, p);
         }
 
         DOMImplementation impl = docBuilder.getDOMImplementation();
@@ -421,7 +421,7 @@ public class PluginExampleCreator {
             StringBuilder errorMessage = new StringBuilder();
             errorMessage.append(ErrorMessage.PLUGIN_WRITE_ERROR).append("\ndestination: ")
                     .append(destPath).append(", image: ").append(sourcePath);
-            throw new WrappedException(e, errorMessage.toString());
+            throw new WrappedException(errorMessage.toString(), e);
         }
         return destLocation;
 

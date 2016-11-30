@@ -444,7 +444,7 @@ public class CExecution extends AbstractExecution {
 
             String compile = buildCompileCommandLine(filePaths);
 
-            System.out.println(compile);
+            SCPlugin.log(compile);
             executionProcess = Runtime.getRuntime().exec(compile);
 
             InputStream stderr = executionProcess.getErrorStream();

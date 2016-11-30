@@ -12,7 +12,7 @@
    <extension
          point="de.cau.cs.kieler.kico.extension">
       <ExtensionInformation
-            className="SCLProgram"
+            ePackageName="scl"
             editor_id="de.cau.cs.kieler.scl.SCL"
             extensionName="scl"
             isXMI="false">

@@ -16,9 +16,9 @@ package de.cau.cs.kieler.kico.klighd.internal;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.ui.IEditorPart;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController;
 import de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController.ChangeEvent;

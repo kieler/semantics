@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.elk.graph.properties.MapPropertyHolder;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
-import de.cau.cs.kieler.core.properties.MapPropertyHolder;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.internal.Transformation;
@@ -127,14 +127,14 @@ public class KielerCompilerContext extends MapPropertyHolder {
                 if (transformation == null) {
                     this.getCompilationResult().addPostponedWarning(
                             new KielerCompilerException("KieleCompiler", "KielerCompiler",
-                                    "Transformation with '" + id + "' cannot be found."));
+                                    "Transformation with ID '" + id + "' cannot be found."));
                 }
             } else {
                 Feature feature = KielerCompiler.getFeature(id);
                 if (feature == null) {
                     this.getCompilationResult().addPostponedWarning(
                             new KielerCompilerException("KieleCompiler", "KielerCompiler",
-                                    "Feature with '" + id + "' cannot be found."));
+                                    "Feature with ID '" + id + "' cannot be found."));
                 }
             }
         }
@@ -344,6 +344,7 @@ public class KielerCompilerContext extends MapPropertyHolder {
         if (compilationChain == null || forceUpdate) {
             recomputeTransformationChain(true);
         }
+        validateSelection();
         return compilationChain;
     }
 

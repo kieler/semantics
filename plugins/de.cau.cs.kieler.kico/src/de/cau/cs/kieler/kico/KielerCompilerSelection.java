@@ -128,7 +128,6 @@ public class KielerCompilerSelection {
      *            the clear
      */
     private void parseStringArguments(String stringArguments, boolean clear) {
-
         String trimmed = stringArguments.replace(" ", "");
         if (trimmed.length() == 0) {
             return;
@@ -147,6 +146,9 @@ public class KielerCompilerSelection {
         }
         for (String id : Arrays.asList(idArray)) {
             String idTrimmed = id.trim();
+            if (idTrimmed.length() < 1) {
+                continue;
+            }
             boolean preferred = false;
             boolean disabled = false;
             boolean isTransformation = false;
@@ -248,7 +250,9 @@ public class KielerCompilerSelection {
     private static void copyList(List<String> copyFrom, List<String> copyTo) {
         copyTo.clear();
         for (String item : copyFrom) {
-            copyTo.add(item);
+            if (item.trim().length() > 0) {
+                copyTo.add(item);
+            }
         }
     }
 

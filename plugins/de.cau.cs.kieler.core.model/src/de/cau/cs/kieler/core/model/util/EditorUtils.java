@@ -14,16 +14,25 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.model.util;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.elk.core.util.Maybe;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Static utility class for working with editors.
@@ -129,5 +138,7 @@ public final class EditorUtils {
             CoreModelPlugin.getDefault().getLog().log(status);
         }
     }
+
+
 
 }

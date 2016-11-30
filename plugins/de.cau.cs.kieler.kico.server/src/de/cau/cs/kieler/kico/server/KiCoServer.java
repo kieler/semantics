@@ -15,14 +15,19 @@ package de.cau.cs.kieler.kico.server;
 
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.Diagnostician;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.IntermediateResult;
+import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -45,6 +50,12 @@ import de.cau.cs.kieler.server.HttpUtils;
  * 
  */
 public class KiCoServer extends HttpServer {
+    
+    public static String SCCHARTS_PREFERRED = "ABORT,INITIALIZATION,scg.basicblock.sc,s.c,sccharts.scg,s.c,scg.guards, scg.scheduling,NOSIMULATIONVISUALIZATION";
+    public static String SCCHARTS_EXT = "sct";
+
+    public static String SCG_PREFERRED = "scg.basicblock.sc,s.c,scg.guards, scg.scheduling";
+    public static String SCG_EXT = "scg";    
 
     // -------------------------------------------------------------------------
 
@@ -75,7 +86,9 @@ public class KiCoServer extends HttpServer {
         // String body = request.bodyAsText();
 
         String bodyAsString = request.bodyAsText();
-        System.out.println(bodyAsString);
+        if (KiCoPlugin.DEBUG) {
+            KiCoServerPlugin.log(bodyAsString);
+        }
 
         HttpQuery query = header.getQuery();
         if (request.header().isMethodPOST()) {
@@ -117,7 +130,9 @@ public class KiCoServer extends HttpServer {
             if (extString.trim().length() > 0) {
                 ext = extString.toLowerCase().trim();
             }
+            String synth = query.getValue("synth");
 
+            
             // Read all models in "model" and "include1", "include2", ...
             ArrayList<String> models = new ArrayList<String>();
             String mainModelString = query.getValue("model");
@@ -140,6 +155,8 @@ public class KiCoServer extends HttpServer {
             // Parse models
             EObject mainModel = null;
             KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
+            
+            
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
@@ -147,6 +164,39 @@ public class KiCoServer extends HttpServer {
                 if (isMainModel) {
                     mainModel = eObject;
                 }
+            }
+ 
+            
+            String validationOrSerializationError = null;
+            
+
+            // validate model
+            if (mainModel != null) {
+                Diagnostic diagnostic = Diagnostician.INSTANCE.validate(mainModel);
+                if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
+                    validationOrSerializationError = "The source model contains errors.";
+                }         
+                Resource r = mainModel.eResource();
+                if (r != null) {
+                    if (r.getErrors().size() > 0) {
+                        validationOrSerializationError = "The source model contains errors.";
+                    }
+                }
+            }
+                        
+            if (KiCoPlugin.DEBUG) {
+                KiCoServerPlugin.log(mainModel.eClass().getName().toString());
+            }
+            
+            if (ext != null) {
+                if (ext.equals(SCCHARTS_EXT)) {
+                    context.getSelection().setPreferredTransformationIds(Arrays.asList(SCCHARTS_PREFERRED.split(",")));
+                } else if (ext.equals(SCG_EXT)) {
+                    context.getSelection().setPreferredTransformationIds(Arrays.asList(SCG_PREFERRED.split(",")));
+                }
+            } else {
+                // use SCCharts still as our default for compilation
+                context.getSelection().setPreferredTransformationIds(Arrays.asList(SCCHARTS_PREFERRED.split(",")));
             }
             
             // Validate the selection
@@ -166,6 +216,10 @@ public class KiCoServer extends HttpServer {
                 context.setVerboseMode(verbose);
                 context.setAdvancedSelect(!strict);
                 context.setMainResource(mainModel.eResource());
+                
+                if (context.getTransformationObject() == null) {
+                    context.setTransformationObject(mainModel);
+                }
 
                 // process the model
                 CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -196,8 +250,18 @@ public class KiCoServer extends HttpServer {
                     if (compiledModel != null) {
                         serializedCompiledModel = compiledModel.toString();
                         if (compiledModel instanceof EObject) {
-                            serializedCompiledModel =
-                                    KiCoUtil.serialize((EObject) compiledModel, context, false);
+                            try {
+                                if (synth != null && synth.length() > 0) {
+                                    String[] prefExt = new String[]{synth};
+                                    serializedCompiledModel =
+                                            KiCoUtil.serialize((EObject) compiledModel, context, false, prefExt, true);
+                                } else {
+                                    serializedCompiledModel =
+                                            KiCoUtil.serialize((EObject) compiledModel, context, false, true);
+                                }
+                            } catch(Exception e) {
+                                validationOrSerializationError = "Could not serialize model.";
+                            }
                         }
                         debug("Model serialized");
                     }
@@ -205,6 +269,10 @@ public class KiCoServer extends HttpServer {
                 
                 lastError = compilationResult.getAllErrors();
                 lastWarning = compilationResult.getAllWarnings();
+            }
+            
+            if (validationOrSerializationError != null) {
+                lastError = validationOrSerializationError;
             }
 
 

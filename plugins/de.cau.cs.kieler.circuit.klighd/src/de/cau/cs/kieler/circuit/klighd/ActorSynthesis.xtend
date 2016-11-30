@@ -15,21 +15,21 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.Trigger
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kiml.options.SizeConstraint
-import de.cau.cs.kieler.klay.layered.properties.EdgeLabelSideSelection
-import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.Trigger
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.EnumSet
+import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.graph.KNode
+
 /**
  * @author fry
  * 
@@ -92,7 +92,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		if (atomicActor) {
 			if (!hasType) { // without a type no specified gate can be created.
 				actorNode.addRoundedRectangle(4, 4, 2)
-				actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+				actorNode.addLayoutParam(LayeredOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 			} else {
 				//check for type and call synthesis for the gate
 				switch (actor.type) {
@@ -115,7 +115,7 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 							it.selectionBackground = "red".color;
 						]
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME)
-						actorNode.addLayoutParam(LayoutOptions.SIZE_CONSTRAINT, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+						actorNode.addLayoutParam(LayeredOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
 					}
 				}
 			}
@@ -136,10 +136,10 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// Create the rendering for the expanded version of this region
 				val expandedRendering = createRegion(actorNode, actor)
 				expandedRendering.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
-				expandedRendering.setProperty(Properties.EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.SMART)
-				expandedRendering.setProperty(LayoutOptions.SELF_LOOP_INSIDE, true);
+				expandedRendering.setProperty(LayeredOptions.EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.SMART)
+				expandedRendering.setProperty(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
 				expandedRendering.addAction(Trigger::DOUBLECLICK, KlighdConstants::ACTION_COLLAPSE_EXPAND)
-				expandedRendering.setProperty(LayoutOptions.SIZE_CONSTRAINT, SizeConstraint.free)
+				expandedRendering.setProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
 				
 				actorNode.data += expandedRendering
 		}

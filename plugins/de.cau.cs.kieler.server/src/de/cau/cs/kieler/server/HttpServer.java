@@ -193,7 +193,7 @@ public abstract class HttpServer extends Job {
      */
     protected void debug(String text) {
         if (debug) {
-            System.out.println(text);
+            KielerServerPlugin.log(text);
         }
     }
 
@@ -284,7 +284,7 @@ public abstract class HttpServer extends Job {
                 if (socket == null) {
                     debug("No socket. Creating socket.");
                     try {
-                        socket = new ServerSocket(this.listenPort, 10);
+                        socket = new ServerSocket(this.listenPort, 0);
                         debug("Server listen socket established");
                         errorCnt = 0;
                     } catch (IOException e1) {
@@ -361,12 +361,12 @@ public abstract class HttpServer extends Job {
             // now read http requests from client until it disconnects
             // while (true) {
             try {
-                // System.out.println("Parsing ...");
+                // KielerServerPlugin.log("Parsing ...");
 
                 // parse next request from client
                 this.httpParser.parseRequestResponse();
 
-                // System.out.println("Generating Response ...");
+                // KielerServerPlugin.log("Generating Response ...");
 
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
@@ -392,10 +392,10 @@ public abstract class HttpServer extends Job {
                     // Set server name automatically
                     response.header.setServerName(serverName);
 
-                    // System.out.println("Writing Response ...");
+                    // KielerServerPlugin.log("Writing Response ...");
                     // output this response to client
 
-                    // System.out.println(response.header.toString());
+                    // KielerServerPlugin.log(response.header.toString());
 
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
@@ -407,7 +407,7 @@ public abstract class HttpServer extends Job {
                 this.to_client.close();
                 this.connection.close();
 
-                // System.out.println("Connection Closed.");
+                // KielerServerPlugin.log("Connection Closed.");
 
             } catch (Exception e) {
                 e.printStackTrace();

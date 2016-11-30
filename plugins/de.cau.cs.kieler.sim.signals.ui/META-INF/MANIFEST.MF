@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.json,
  de.cau.cs.kieler.sim.signals,
  de.cau.cs.kieler.sim.kiem,
- org.eclipse.core.resources;bundle-version="3.7.101"
+ org.eclipse.core.resources;bundle-version="3.7.101",
+ de.cau.cs.kieler.core.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.ui.dialogs
 Export-Package: de.cau.cs.kieler.sim.signals.ui.views

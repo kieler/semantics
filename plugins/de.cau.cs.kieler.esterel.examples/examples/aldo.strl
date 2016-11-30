@@ -1,0 +1,19 @@
+module ALDO:
+input A;
+output D;
+output O;
+
+signal L in
+[
+	await A;
+	emit L;
+	||
+	abort
+		pause;
+		sustain D;
+	when immediate L;
+	emit O;
+	halt;
+];
+end signal;
+end module

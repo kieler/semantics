@@ -18,14 +18,15 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
- * @author ssm
+ * @author ssm, cmot
  *
  */
 class SctValidator extends SctJavaValidator {
@@ -115,19 +116,46 @@ class SctValidator extends SctJavaValidator {
     } 
 
     /**
+     * Checks if the given state has abort transitions without trigger and adds a warning.
+     * In most cases an abort without trigger is meant to be a termination transition.
+     */
+    @Check
+    public def void checkAbortHasTrigger(de.cau.cs.kieler.sccharts.State state) {
+        if(state.isHierarchical) {
+            for (transition : state.outgoingTransitions) {
+                if ((transition.type == TransitionType.STRONGABORT || transition.type == TransitionType.WEAKABORT)
+                    && transition.trigger == null) {
+                    warning(ABORT_WITHOUT_TRIGGER, transition, null, -1);
+                }
+            }
+        }
+    } 
+    
+    /**
      * Checks if the given valued signal has a combination function.
      * This check can be removed if there is a transformation
      * that handles valued signals without combination function (see KISEMA-1071).   
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
-    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
             if(valuedObject.combineOperator == null || valuedObject.combineOperator.equals(CombineOperator.NONE)) {
                 warning(VALUED_SIGNAL_NEED_COMBINE, valuedObject, null)
             }
+        }
+    } 
+    
+    /**
+     * Checks that static variables are initialized.
+     * If it is not initialized the static modifier is useless from a modeling perspective.   
+     */
+    @Check
+    public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        if(valuedObject.isStatic && valuedObject.initialValue == null) {
+            warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
         }
     } 
     
@@ -160,5 +188,39 @@ class SctValidator extends SctJavaValidator {
     			}
     		}
     	}
-    } 
+    }
+    
+    
+    /**
+     * Checks scope of valued objects of transition triggers are correct.
+     */
+    @Check
+    public def void checkScopeOfOutgoingTransitionVarRefs(de.cau.cs.kieler.kexpressions.ValuedObject testValuedObject) {
+        val stateOrRegion = testValuedObject.eContainer.eContainer
+        var de.cau.cs.kieler.sccharts.State state
+        if (stateOrRegion instanceof de.cau.cs.kieler.sccharts.State) {
+            state = (stateOrRegion as de.cau.cs.kieler.sccharts.State)
+        } else {
+            val region = (stateOrRegion as Region)
+            state = region.parentState
+        }
+        
+        for (transition : state.outgoingTransitions) {
+            val valuedObjectRefs = transition.eAllContents.filter(typeof(ValuedObjectReference))
+            if (valuedObjectRefs.filter[valuedObject == testValuedObject].size > 0) {
+                error(VALUEDOBJECT_TRANSITION_SCOPE_WRONG, testValuedObject, null, -1);
+            }
+        }
+    }  
+
+    
+    /**
+     * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
+     */
+    @Check
+    public def void checkNoInputOutput(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        if(valuedObject.isInput && valuedObject.isOutput) {
+                warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
+       }
+    }  
 }

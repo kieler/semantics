@@ -224,14 +224,16 @@ public class KielerCompiler {
         // out the right transformations based on the selection.
         List<Transformation> compilationTransformations = context.getTransformationChain(true);
 
-        System.out.print("\nKiCo Compilation:\n [");
+        String logString = "\nKiCo Compilation:\n [";
         for (Transformation transformation : compilationTransformations) {
-            System.out.print(transformation.getId());
+            logString += transformation.getId();
             if (transformation != compilationTransformations.get(compilationTransformations.size()-1)) {
-                System.out.print(", ");
+                logString += ", ";
             }
         }
-        System.out.println("]");
+        logString += "]";
+        KiCoPlugin.log(logString);
+        System.out.println(logString);
 
         
         // The progress monitor is optional and may be null!
@@ -299,10 +301,10 @@ public class KielerCompiler {
         }
         long end = System.currentTimeMillis();
         String seconds = (((float) (end - start)) / 1000) + "";
-        System.out.println("KIELER Compiler compiled in " + seconds + " seconds.");
+        KiCoPlugin.log("KIELER Compiler compiled in " + seconds + " seconds.");
 
-        context.getCompilationResult().processPostponedWarnings();
-        context.getCompilationResult().processPostponedErrors();
+        context.getCompilationResult().processPostponedWarnings(false);
+        context.getCompilationResult().processPostponedErrors(false);
         return context.getCompilationResult();
     }
 
@@ -494,7 +496,7 @@ public class KielerCompiler {
 
         for (IHook hook : getHooks()) {
             EObject hookCopy = hook.copy(original, context);
-            if (copy != null) {
+            if (copy != null && hookCopy != null) {
                 throw new IllegalStateException("Multiple hooks try to perfom model copy");
             }
             if (hookCopy != null) {

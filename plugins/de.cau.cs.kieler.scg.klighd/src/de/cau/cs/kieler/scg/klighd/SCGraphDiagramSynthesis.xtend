@@ -13,87 +13,86 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.kgraph.KPort
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KiCoProperties
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kiml.options.PortAlignment
-import de.cau.cs.kieler.kiml.options.PortConstraints
-import de.cau.cs.kieler.kiml.options.PortSide
-import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
-import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.krendering.KColor
+import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.scg.AbsoluteWrite_Read
-import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import java.util.Properties
 import java.util.Set
 import javax.inject.Inject
+import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.PortAlignment
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.KPort
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
+import de.cau.cs.kieler.scg.SCGAnnotations
+import static extension de.cau.cs.kieler.scg.SCGAnnotations.*
+import com.google.common.collect.Multimap
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -104,21 +103,6 @@ import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
  * @kieler.rating 2013-10-23 proposed yellow
  */
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
-
-    // -------------------------------------------------------------------------
-    // -- Guice
-    // -------------------------------------------------------------------------
-    // Retrieve an injector and instances for the serialization.
-    private static var Injector guiceInjector;
-
-    //    @SuppressWarnings("unused")
-    private static val KExpressionsStandaloneSetup standAloneSetup = new KExpressionsStandaloneSetup() => [
-        guiceInjector = Guice.createInjector(new SCGRuntimeModule);
-        it.register(guiceInjector);
-    ]
-    private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
-        typeof(SCGKExpressionsScopeProvider));
-//    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -173,10 +157,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     @Inject
     extension SCGThreadExtensions
-
-    /** Inject analysis extensions. */
-    @Inject
-    extension SCGDeclarationExtensions
     
     @Inject
     extension SCGSerializeHRExtensions
@@ -316,17 +296,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 255)),
-            new Pair<IProperty<?>, List<?>>(Properties::NODE_PLACER, NodePlacementStrategy::values)
+            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 255)),
+            specifyLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::values)
         );
     }
+    
 
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
-    /** Spacing for guard indentation. */
-    private static val String KLIGHDSPACERCHAR = " " 
-    private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR
 
     /** Color codes */
     private static val KColor SCCHARTSBLUE = RENDERING_FACTORY.createKColor() =>
@@ -347,17 +325,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor DEPENDENCY_CONTROL = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 192; it.blue = 192;]
+    private static val KColor DEPENDENCY_EXPRESSION = RENDERING_FACTORY.createKColor() =>
+        [it.red = 168; it.green = 128; it.blue = 96;]
+    private static val KColor DEPENDENCY_GUARD = RENDERING_FACTORY.createKColor() =>
+        [it.red = 240; it.green = 128; it.blue = 128;]
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor() =>
         [it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 0; it.blue = 0;]
-    private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
-        [it.red = 144; it.green = 144; it.blue = 144;]
+//    private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 144; it.green = 144; it.blue = 144;]
     private static val KColor SCHEDULING_SCHEDULINGEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 0; it.blue = 253;]
     private static val KColor SCHEDULING_DEADCODE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 128; it.blue = 128;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
+    private static val KColor SCHEDULEBORDER = RENDERING_FACTORY.createKColor() =>
+        [it.red = 0; it.green = 0; it.blue = 128;]
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
         [it.red = 255; it.green = 0; it.blue = 0;]
@@ -373,14 +357,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
     private static val String ANNOTATIONRECTANGLE = "caRectangle"
 
-    /** Constants for annotations */
-    private static val String ANNOTATION_BRANCH = "branch"
-    private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
-    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"   
-    private static val String ANNOTATION_SCPDGTRANSFORMATION = "scpdg" 
-    private static val String ANNOTATION_LABEL = "label"
-
     /** 
 	 * Constants for hierarchical node groups
 	 * Since hierarchy, basic blocks and scheduling blocks use the same mechanism to group nodes and draw hierarchical edges, 
@@ -389,6 +365,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int NODEGROUPING_HIERARCHY = 0
     private static val int NODEGROUPING_BASICBLOCK = 1
     private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
+    private static val int NODEGROUPING_GUARDBLOCK = 3
+    private static val int NODEGROUPING_SCHEDULE = 4
 
     /** Constants for the graph orientation */
     private static val int ORIENTATION_PORTRAIT = 0
@@ -413,12 +391,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
-    private int orientation;
+    private int orientation
     
     private int sequentializedSCGCounter = 0
     
-    private SCGraph SCGraph;
-    protected boolean isSCPDG;
+    private SCGraph SCGraph
+    protected boolean isSCPDG
+    protected boolean isGuardSCG
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -431,9 +410,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the root KNode.
 	 */
     override transform(SCGraph model) {
-
-        // Connect the model to the scope provider for the serialization.
-        scopeProvider.parent = model;
 
         compilationResult = this.usedContext.getProperty(KiCoProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
@@ -463,31 +439,36 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * @return Returns the top level KNode.
      */
     private def dispatch KNode synthesize(SCGraph scg) {
-        return scg.createNode().putToLookUpWith(scg) => [ node |
+        return scg.createNode().associateWith(scg) => [ node |
             // Set root node and layout options.
             rootNode = node
             isSCPDG = scg.hasAnnotation(ANNOTATION_SCPDGTRANSFORMATION)
+            isGuardSCG = scg.hasAnnotation(SCGFeatures::GUARDS_ID) 
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
             if (topdown)
-                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+                node.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
             else
-                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
-            node.setLayoutOption(LayoutOptions::SPACING, 25f);
-            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(Properties::THOROUGHNESS, 100)
-            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+                node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+            node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+            node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
+            node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
-                node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
-                node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
             }
             
             
-            //Suasage folding on/off
+            // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
-                node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
-                node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
+                node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH);
+                node.addLayoutParam(LayeredOptions::SAUSAGE_FOLDING, true);
             }
+    
+            // Added as suggested by uru (mail to cmot, 11.11.2016)            
+            node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
+            
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
@@ -529,7 +510,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if(it instanceof Fork) (it as Fork).getNext().forEach[synthesizeControlFlow("")]
                 if (it instanceof Conditional) {
                     (it as Conditional).then?.synthesizeControlFlow(SCGPORTID_OUTGOING_THEN)
-                    (it as Conditional).^else.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
+                    (it as Conditional).^else?.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
                 
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
@@ -606,23 +587,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (SHOW_DEPENDENCIES.booleanValue && !(LAYOUT_DEPENDENCIES.booleanValue || isSCPDG)) {
                 scg.nodes.filter(Assignment).forEach[
-                    it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+                    it.dependencies.forEach[ synthesizeDependency ]
                 ]
             }
             // Draw analysis visualization if present.
             scg.synthesizeAnalyses
+            scg.synthesizeSchedule
+            scg.synthesizeScheduleGroups
+            
+            if (SHOW_HIERARCHY.booleanValue) {
+                scg.nodes.filter(Assignment).filter[ dependencies.filter(GuardDependency).size > 0].forEach[
+                	val allNodes = it.dependencies.filter(GuardDependency).map[ target ].toList
+                	val kContainer = allNodes.createHierarchy(NODEGROUPING_GUARDBLOCK, null)
+                	for(edge : kContainer.outgoingEdges.immutableCopy) {
+                		edge.targetPort.remove
+                		edge.remove
+                	}
+                	while(kContainer.incomingEdges.size > 1) {
+                		val edge = kContainer.incomingEdges.get(1)
+                		edge.targetPort.remove
+                		kContainer.incomingEdges -= edge
+                		edge.remove
+                	}
+                	kContainer.incomingEdges.head.getData(typeof(KRoundedBendsPolyline)).addArrowDecorator
+                ]
+            }
         ]
-    }
-
-
-
-    // added by cmot (9.3.14)
-    private def String getTextExpressionString(Expression expression) {
-        if (expression instanceof TextExpression) {
-            val text = (expression as TextExpression).getText
-            return text
-        }
-        return null
     }
 
     /**
@@ -633,12 +623,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Assignment assignment) {
-        return assignment.createNode().putToLookUpWith(assignment) => [ node |
+        return assignment.createNode().associateWith(assignment) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Straightforward rectangle drawing
             val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
             (figure) => [
-                putToLookUpWith(assignment)
+                associateWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 var assignmentStr = ""
@@ -648,78 +638,46 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     assignmentStr = serializeHR(assignment) as String
                 }
                         
-                it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
+                it.addText(assignmentStr).associateWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
                     if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                 ]
             ]
             // Add ports for control-flow and dependency routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
-            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
-            if (topdown()) {
-                node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)                
-                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
-                node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-//                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+            if (isGuardSCG) {
+            	node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
             } else {
-                node.addPort("dummyN", 27, 0, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort("dummyS", 27, 0, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
+	            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            }
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::SPACING_PORT, 10f)
+            if (!isGuardSCG) {            
+                if (topdown()) {
+                    node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)                
+                    node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 1)
+                    node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 1)
+                    node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+    //                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+                } else {
+                    node.addPort("dummyN", 27, 0, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+                    node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort("dummyS", 27, 0, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
+                    node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+	                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+	            }
+	        } else {
+                if (assignment.hasAnnotation(SCGAnnotations.ANNOTATION_HEADNODE)) {
+                    var sbHeadNodeName = assignment.getStringAnnotationValue(SCGAnnotations.ANNOTATION_HEADNODE)
+                	sbHeadNodeName.createLabel(node).associateWith(assignment).configureOutsideTopLeftNodeLabel(sbHeadNodeName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = "black".color
+ 				}
             }
         ]
     }
     
-    private def KNode synthesizeConditionalAssignmentAnnotation(Assignment assignment) {
-//        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-//        val VO = SCGraph.findValuedObjectByName(VOName)
-//        val kNode = assignment.createNode(VO).putToLookUpWith(VO) => [ node |
-//            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75)
-//            
-//            node.addPort("DEBUGPORT", 0, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
-//            
-//            node.setLayoutOption(LayoutOptions.COMMENT_BOX, true)
-//        ]
-//        val figure = kNode.addRectangle().setLineWidth(LINEWIDTH).background = Colors::YELLOW;
-//        (figure) => [ 
-//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
-//            
-//            val assignmentStr = "false"
-//            it.addText(assignmentStr).putToLookUpWith(VO).setSurroundingSpace(4, 0, 2, 0) => [
-//                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
-//            ] 
-//        ]
-//        kNode 
-    }  
-    
-    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
-//        val kEdge = createNewEdge() => [ edge |
-//            // Get and set source and target information.
-//            var sourceNode = aNode
-//            var targetNode = bNode
-//            edge.source = sourceNode
-//            edge.target = targetNode
-//            edge.sourcePort = aNode.getPort("DEBUGPORT")
-//            edge.targetPort = bNode.getPort("DEBUGPORT")            
-//            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
-//            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
-//
-//            edge.addPolyline(1.0f) => [
-//                it.lineStyle = LineStyle::DOT
-//                it.foreground = Colors::GRAY
-//            ]
-//            
-////            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-//        ]
-//        
-//        kEdge
-    }    
-
     /**
 	 * This dispatch method is triggered when a conditional must be synthesized.
 	 * 
@@ -728,12 +686,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Conditional conditional) {
-        return conditional.createNode().putToLookUpWith(conditional) => [ node |
+        return conditional.createNode().associateWith(conditional) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a diamond figure for conditionals.
             val figure = node.addPolygon.createDiamondShape
             figure => [
-                putToLookUpWith(conditional)
+                associateWith(conditional)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 // Serialize the condition in the conditional
                 var conditionalStr = ""
@@ -746,7 +704,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.KContainerRendering.addText(
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
                         conditionalStr).setAreaPlacementData.
-                        from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional) => [
+                        from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).associateWith(conditional) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -760,35 +718,48 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     switchBranch = true
                 }
             }
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
-            node.addLayoutParam(LayoutOptions::PORT_ALIGNMENT, PortAlignment::CENTER)
-            node.addLayoutParam(LayoutOptions::PORT_SPACING, 10f)
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
+            node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
+            node.addLayoutParam(CoreOptions::SPACING_PORT, 10f)
             var KPort port
             if (topdown) {
-                node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
-                node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 1)
+                node.addPort("dummyS", 27, 0, 1, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 7, 12.5f, 0, PortSide::WEST)
-                else
+                else {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-                port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
+                }
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5f)
             } else {
-                node.addPort("dummyW", 27, 0, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
-                node.addPort("dummyE", 27, 0, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 1)
+                node.addPort("dummyW", 27, 0, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
+                node.addPort("dummyE", 27, 0, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                 if (switchBranch)
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 0, 0, PortSide::NORTH)
-                else
+                else {
                     port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
-                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(LayoutOptions::PORT_INDEX, 2)
-                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(LayoutOptions::PORT_INDEX, 0)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0f)
+//                    // Added as suggested by uru (mail to cmot, 11.11.2016)            
+//                    port.addLayoutParam(LayeredOptions::PRIORITY, -10);
+//                    for (edge : port.allEdges) {
+//                        edge.addLayoutParam(LayeredOptions::PRIORITY, -10);
+//                    }
+                }
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f)
             }
+            // Removed as suggested by uru (mail to cmot, 11.11.2016)            
+            //            port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
+           
+            // Added as suggested by uru (mail to cmot, 11.11.2016)            
+            port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
+
         ]
     }
 
@@ -800,7 +771,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Surface surface) {
-        return surface.createNode().putToLookUpWith(surface) => [ node |
+        return surface.createNode().associateWith(surface) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a surface node...
             var KPolygon figure
@@ -809,7 +780,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 figure => [
                     node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue)
-                        node.KContainerRendering.addText("surface").putToLookUpWith(surface) => [
+                        node.KContainerRendering.addText("surface").associateWith(surface) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -820,20 +791,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("surface").setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).
-                            to(RIGHT, 0, 0, BOTTOM, 3, 0).putToLookUpWith(surface)
+                            to(RIGHT, 0, 0, BOTTOM, 3, 0).associateWith(surface)
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             }
             // Add ports for control-flow/tick edge routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             }
         ]
     }
@@ -846,10 +817,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Depth depth) {
-        return depth.createNode().putToLookUpWith(depth) => [ node |
+        return depth.createNode().associateWith(depth) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, depth nodes are placed in the first layer.
-            if(ALIGN_TICK_START.booleanValue) node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            if(ALIGN_TICK_START.booleanValue) node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
             // Draw a depth figure;
             var KPolygon figure
             if (topdown) {
@@ -858,7 +829,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("depth").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
-                            RIGHT, 0, 0, BOTTOM, 4, 0).putToLookUpWith(depth) => [
+                            RIGHT, 0, 0, BOTTOM, 4, 0).associateWith(depth) => [
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -869,20 +840,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("depth").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
-                            RIGHT, 10, 0, BOTTOM, 2, 0).putToLookUpWith(depth)
+                            RIGHT, 10, 0, BOTTOM, 2, 0).associateWith(depth)
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             }
             // Add ports for control-flow/tick edge routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             }
         ]
     }
@@ -895,24 +866,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Entry entry) {
-        return entry.createNode().putToLookUpWith(entry) => [ node |
+        return entry.createNode().associateWith(entry) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, exit nodes are placed in the first layer;
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
-                node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
             // Draw an ellipse figure for exit nodes...
             val figure = node.addEllipse()
             figure => [
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue)
                     node.KContainerRendering.addText("entry").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
-                        0, 0, BOTTOM, 1, 0).putToLookUpWith(entry) => [
+                        0, 0, BOTTOM, 1, 0).associateWith(entry) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             // Add ports for control-flow routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -931,24 +902,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Exit exit) {
-        return exit.createNode().putToLookUpWith(exit) => [ node |
+        return exit.createNode().associateWith(exit) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, exit nodes are placed in the last layer.
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
-                node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
+                node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             // Draw an ellipse for an exit node...
             val figure = node.addEllipse()
             figure => [
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue)
                     node.KContainerRendering.addText("exit").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
-                        0, 0, BOTTOM, 1, 0).putToLookUpWith(exit) => [
+                        0, 0, BOTTOM, 1, 0).associateWith(exit) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             // Add ports for control-flow routing.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -967,7 +938,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Fork fork) {
-        return fork.createNode().putToLookUpWith(fork) => [ node |
+        return fork.createNode().associateWith(fork) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a fork triangle...
             var KPolygon figure
@@ -977,7 +948,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("fork").setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(
-                            RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(fork) => [
+                            RIGHT, 0, 0, BOTTOM, 0, 0).associateWith(fork) => [
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -988,7 +959,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(MINIMALHEIGHT, MINIMALWIDTH);
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("fork").setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(
-                            RIGHT, 0, 0, BOTTOM, 2, 0).putToLookUpWith(fork) => [
+                            RIGHT, 0, 0, BOTTOM, 2, 0).associateWith(fork) => [
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -996,13 +967,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // Only add one port for incoming control flow edges.
             // Outgoing ports are added by the control flows.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
-                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
             }
         ]
     }
@@ -1015,7 +986,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the top level KNode. 
 	 */
     private def dispatch KNode synthesize(Join join) {
-        return join.createNode().putToLookUpWith(join) => [ node |
+        return join.createNode().associateWith(join) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a join triangle...
             var KPolygon figure
@@ -1025,7 +996,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("join").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
-                            RIGHT, 0, 0, BOTTOM, 10, 0).putToLookUpWith(join) => [
+                            RIGHT, 0, 0, BOTTOM, 10, 0).associateWith(join) => [
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -1036,7 +1007,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(MINIMALHEIGHT, MINIMALWIDTH)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("join").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
-                            RIGHT, 0, 0, BOTTOM, 4, 0).putToLookUpWith(join) => [
+                            RIGHT, 0, 0, BOTTOM, 4, 0).associateWith(join) => [
                                 if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if (SHOW_SHADOW.booleanValue) {
@@ -1046,13 +1017,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // Only add one port for an outgoing control flow edge.
             // Incoming ports are added by the control flows.
-            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5f)
             } else {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
-                port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5f)
             }
         ]
     }
@@ -1065,12 +1036,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the KEdge.
 	 */
     private def KEdge synthesizeTickEdge(Depth depth) {
-        return depth.createNewEdge().putToLookUpWith(depth) => [ edge |
+        return depth.createNewEdge().associateWith(depth) => [ edge |
             edge.source = depth.surface?.node;
             edge.target = depth.node;
             edge.sourcePort = depth.surface?.node.getPort(SCGPORTID_OUTGOING)
             edge.targetPort = depth.node.getPort(SCGPORTID_INCOMING)
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                 it.lineStyle = LineStyle::DOT;
             ]
@@ -1091,7 +1062,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def KEdge synthesizeControlFlow(ControlFlow controlFlow, String outgoingPortId) {
         if(controlFlow.target == null || controlFlow.eContainer == null) return null;
 
-        return controlFlow.createNewEdge().putToLookUpWith(controlFlow) => [ edge |
+        return controlFlow.createNewEdge().associateWith(controlFlow) => [ edge |
             // Get and set source and target information.
             val sourceObj = controlFlow.eContainer
             val targetObj = controlFlow.target
@@ -1099,39 +1070,56 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             var targetNode = targetObj.node
             edge.source = sourceNode
             edge.target = targetNode
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
             // If the source is a fork node, create a new port for this control flow and attach it.
             // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
                     if (topdown())
-                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH)
+                        it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::SOUTH)
                     else
-                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST)
+                        it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::EAST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
-                    it.addLayoutParam(LayoutOptions::OFFSET, -3f)
+                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
                     sourceObj.node.ports += it
                 ]
             } else {
-                edge.sourcePort = sourceNode.getPort(outgoingPortId)
+            	if (isGuardSCG) {
+    				edge.sourcePort = sourceNode.addHelperPort(edge.hashCode.toString, PortSide::SOUTH)        		
+            	} else {
+	                edge.sourcePort = sourceNode.getPort(outgoingPortId)
+                    if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
+                        // Added as suggested by uru (mail to cmot, 11.11.2016)            
+                        edge.addLayoutParam(LayeredOptions::PRIORITY, 10);
+                    }
+                }
             }
             // If the target is a join node, create a new port for this control flow and attach it.
             // Otherwise, use the default incoming port.
             if (targetObj instanceof Join) {
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
                     if (topdown())
-                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH)
+                        it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::NORTH)
                     else
-                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST)
+                        it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
-                    it.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
+                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5f)
                     targetObj.node.ports += it
                 ]
             } else {
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+            	if (isGuardSCG) {
+    				edge.targetPort = targetNode.addHelperPort(edge.hashCode.toString, PortSide::NORTH)        		
+            	} else {
+            		edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+                    if (outgoingPortId.equals(SCGPORTID_OUTGOING_ELSE)) {
+                        // Added as suggested by uru (mail to cmot, 11.11.2016)            
+                        edge.addLayoutParam(LayeredOptions::PRIORITY, 10);
+                    }
+          		}
             }
             // Finally, draw the solid edge and add a decorator.
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
@@ -1160,33 +1148,37 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def Dependency synthesizeDependency(Dependency dependency) {
 
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if(dependency instanceof DataDependency) {
-            val dataDependency = dependency as DataDependency
-            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dataDependency.isConcurrent))) return dependency;
-            if(!SHOW_CONFLUENT.booleanValue && dataDependency.confluent) return dependency;    
+        if (dependency instanceof DataDependency) {
+            if((!isSCPDG) && ((!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent))) return dependency;
+            if(!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;    
         }
-
-        if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency;
-        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency;
-        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency instanceof AbsoluteWrite_Read) return dependency;
-        if(!SHOW_DEPENDENCY_RELWRITE_READ.booleanValue && dependency instanceof RelativeWrite_Read) return dependency;
+        if (dependency instanceof ScheduleDependency) return dependency;
+		
+		if (dependency instanceof DataDependency) {
+	        if(!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency.type == DataDependencyType.WRITE_WRITE) return dependency;
+	        if(!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) return dependency;
+	        if(!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency.type == DataDependencyType.WRITE_READ) return dependency;
+        }
 
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
         val targetNode = dependency.target.node
 
         // Draw the dashed dependency edge....
-        dependency.createNewEdge().putToLookUpWith(dependency) => [ edge |
+        dependency.createNewEdge().associateWith(dependency) => [ edge |
             if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
             edge.source = sourceNode
             edge.target = targetNode
             if (dependency instanceof DataDependency) {
 	            edge.addRoundedBendsPolyline(8, 2) => [
     	            // ... and use the predefined color for the different dependency types.    
-        	        if(dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
-            	    if(dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
-                	if(dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
-                	if(dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+            	    if (dependency.type == DataDependencyType.WRITE_READ) {
+            	    	it.foreground = DEPENDENCY_ABSWRITEREAD.copy
+            	    } else 	if (dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) { 
+                		it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
+               		} else if (dependency.type == DataDependencyType.WRITE_WRITE) {
+                		it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
+               		}
                 	it.lineStyle = LineStyle::DASH
                 	it.addArrowDecorator
             	]
@@ -1199,15 +1191,41 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 	it.addArrowDecorator
             	]
             }
+            else if (dependency instanceof ExpressionDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        it.foreground = DEPENDENCY_EXPRESSION.copy
+                	it.lineStyle = LineStyle::SOLID
+                	it.addArrowDecorator
+            	]            	
+            }
+            else if (dependency instanceof GuardDependency) {
+	            edge.addRoundedBendsPolyline(8, 2) => [
+    	            // ... and use the predefined color for the different dependency types.    
+        	        it.foreground = DEPENDENCY_GUARD.copy
+                	it.lineStyle = LineStyle::DASHDOTDOT
+                	it.addArrowDecorator
+            	]            	
+            }
             // If dependency edges are layouted, use the dependency ports to attach the edges.
-            if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG)) {
-                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+            if ((LAYOUT_DEPENDENCIES.booleanValue) || (isSCPDG) || (isGuardSCG)) {
+            	if (isGuardSCG) {
+            		edge.sourcePort = sourceNode.addHelperPort(edge.hashCode.toString, PortSide::SOUTH)
+            		edge.targetPort = targetNode.addHelperPort(edge.hashCode.toString, PortSide::NORTH)
+            		if (dependency instanceof GuardDependency) {
+	            		targetNode => [
+	            			val polyline = it.getData(typeof(KRoundedRectangle)).foreground = DEPENDENCY_GUARD.copy
+	                		polyline.foreground.propagateToChildren = true
+	            		]
+            		}
+            	} else {
+                	edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
+                	edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+                }
             } else {
-
                 // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
                 // drawing.
-                edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                edge.setLayoutOption(CoreOptions::NO_LAYOUT, true)
             }
         ]
 
@@ -1244,19 +1262,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
 
         // Set options for the container.
-//        kContainer.addLayoutParam(LayoutOptions::SPACING, 10.0f)
+//        kContainer.addLayoutParam(CoreOptions::SPACING, 10.0f)
         if (topdown())
-            kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+            kContainer.addLayoutParam(CoreOptions::DIRECTION, Direction::DOWN)
         else
-            kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
-        kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-        kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, LAYOUT_SEPARATE_CC.booleanValue);
-        kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+            kContainer.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
+        kContainer.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+        kContainer.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        kContainer.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, LAYOUT_SEPARATE_CC.booleanValue);
+        kContainer.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
         if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
+//            kContainer.addLayoutParam(CoreOptions::SPACING, 25.0f)
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE.copy;
             kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
@@ -1264,7 +1282,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
+//            kContainer.addLayoutParam(CoreOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
@@ -1275,7 +1293,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
-//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
+//            kContainer.addLayoutParam(CoreOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 lineStyle = LineStyle::SOLID
                 associateWith(contextObject)
@@ -1285,7 +1303,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background = SCCHARTSBLUE.copy;
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
-
+        if (nodeGrouping == NODEGROUPING_GUARDBLOCK) {
+            kContainer.addRoundedRectangle(1, 1, 1) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = DEPENDENCY_GUARD.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(255f)
+            kContainer.KRendering.background = DEPENDENCY_GUARD.copy;
+            kContainer.KRendering.background.alpha = Math.round(80f)
+        }
+        if (nodeGrouping == NODEGROUPING_SCHEDULE) {
+            kContainer.addRoundedRectangle(1, 1, 7) => [
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
+            ]
+            kContainer.KRendering.foreground = SCHEDULEBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(196f)
+            kContainer.KRendering.background = SCCHARTSBLUE.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
+        
         // Add the nodes to the container.
         // They will be removed from the original parent!
         for (tn : nodes) {
@@ -1327,7 +1365,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             newEdge.sourcePort = origSourcePort
             newEdge.target = kContainer
             newEdge.targetPort = kContainer.getPort(portName)
-            newEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            newEdge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             if (USE_ADAPTIVEZOOM.booleanValue) newEdge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             newEdge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                 it.lineStyle = ne.KRendering.lineStyleValue
@@ -1356,19 +1394,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock).associateWith(basicBlock)
                 bbContainerList.put(basicBlock, bbContainer)
-//                val bbName = serializer.serialize(bb.guards.head.reference)
-                var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
+                var bbName = basicBlock.schedulingBlocks.head.guards.head.valuedObject.name 
                 
-                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                    val guard = basicBlock.schedulingBlocks.head.guard
+                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
+                    val guard = basicBlock.schedulingBlocks.head.guards.head
                     var String expText
-                    if (guard.dead) {
-                        expText = "<dead>"
+                    if (basicBlock.deadBlock && (guard == null || guard.expression == null)) {
+                        expText = "<null>"
                     } else {
                         val exp = guard.expression.copy
                     	expText = serializeHR(exp) as String
                     }
-//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
                 
@@ -1378,27 +1414,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for (schedulingBlock : basicBlock.schedulingBlocks) {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock).associateWith(schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
-//                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
                      if (!schedulingBlock.label.nullOrEmpty) {
                          sbName = schedulingBlock.label + " "
                      }
-                     if (schedulingBlock.guard != null) { 
-                         if (schedulingBlock.guard.valuedObject.name != schedulingBlock.label) {
-                            sbName = sbName + "(" + schedulingBlock.guard.valuedObject.name + ")"//reference.valuedObject.name
+                     if (schedulingBlock.guards.head != null) { 
+                         if (schedulingBlock.guards.head.valuedObject.name != schedulingBlock.label) {
+                            sbName = sbName + "(" + schedulingBlock.guards.head.valuedObject.name + ")"//reference.valuedObject.name
                          }
                      }
 
-	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+	                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
-        	            	expText = serializeHR(schedulingBlock.guard.expression) as String
+	                    if (schedulingBlock.guards.head != null /* && !schedulingBlock.basicBlock.deadBlock */) {
+        	            	expText = serializeHR(schedulingBlock.guards.head.expression) as String
     	            	}	
-//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
 					}
             	    
-                	sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+            	    if (!SHOW_BASICBLOCKS.booleanValue) {
+                	   sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
+               	    }
                 	
                     if (basicBlock.deadBlock) {
                         sbContainer.getData(typeof(KRoundedRectangle)) => [
@@ -1411,64 +1447,73 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
         }
 
-        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
-            var Node source = null
-            var Node target = null
-            for (scheduleBlock : scg.schedules.head.scheduleBlocks) {
-                for (node : scheduleBlock.schedulingBlock.nodes) {                
-                target = node
-                if (target != null && source != null) {
-
-                    val controlFlows = source.getControlFlows(target)
-                    if (controlFlows.size > 0) {
-                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
-                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
-                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
-                    } else {
-                        val sourceF = source.node
-                        val targetF = target.node
-                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-                            edge.source = sourceF
-                            edge.target = targetF
-                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
-                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
-                                it.addArrowDecorator
-                            ]
-                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-                        ]
-                    }
-                }
-                source = target
-                }
-            }
-
-            // not schedulable blocks!
-            // TODO: draw not scheduled blocks
-            
-            if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
-                val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.scheduleBlocks.forEach[ 
-//                    if (!it.schizophrenic) {
-//                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
-                        usBlocks -= it.schedulingBlock
-//                    } 
-                ]
-                for(deadGuard : scg.guards.filter[ dead ]) {
-                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
-                    usBlocks -= deadBlocks
-                }
-                usBlocks.forEach [
-                    val node = schedulingBlockMapping.get(it)
-                    node.getData(typeof(KRoundedRectangle)) => [
-                        it.lineStyle = LineStyle::SOLID
-                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
+        
+    }
+    
+    private def void synthesizeSchedule(SCGraph scg) {
+        if (!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
+        
+    	for(node : scg.nodes) {
+    	    // filter[ !dependencies.filter(ScheduleDependency).empty ]
+    	    if (!node.dependencies.filter(ScheduleDependency).empty) { 
+      		    val sourceKNode = node.node 
+      			val targetNode = node.dependencies.filter(ScheduleDependency).head.target
+       			val targetKNode = targetNode.node
+				val nonScheduleDependencies = node.dependencies.filter[ !(it instanceof ScheduleDependency) ].
+					filter[ target == targetNode ]
+		        		
+                if (!nonScheduleDependencies.empty) {
+                    nonScheduleDependencies.forEach[
+                    	colorDependency(SCHEDULING_SCHEDULINGEDGE)
+                    	thickenDependency(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)
+                    	dependencyAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)
                     ]
-                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
-                    node.KRendering.background.alpha = 128
-                ]
+                } else {				        		
+	        		node.createEdge => [
+	        			it.source = sourceKNode
+	        			it.target = targetKNode
+						it.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
+	                        it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
+	                        it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
+	                        it.addArrowDecorator
+	                    ]
+	                    if (!isGuardSCG) {
+	                    	it.setLayoutOption(CoreOptions::NO_LAYOUT, true)
+                    	} else {
+		            		it.sourcePort = sourceKNode.addHelperPort(it.hashCode.toString, PortSide::SOUTH)
+        		    		it.targetPort = targetKNode.addHelperPort(it.hashCode.toString, PortSide::NORTH)                    		
+                    	}        			
+	        		]
+        		}
             }
         }
+    }
+    
+    private def void synthesizeScheduleGroups(SCGraph scg) {
+        if (!(scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue)) return;
+        
+        val schedules = <List<Node>> newArrayList
+
+        for(node : scg.nodes.filter[ incoming.filter(ScheduleDependency).empty && incoming.filter(GuardDependency).empty ]) {
+            val newSchedule = <Node> newArrayList => [ s | 
+                s += node
+                node.dependencies.filter(GuardDependency).forEach[ s += it.target ]
+            ]
+            var next = node.dependencies.filter(ScheduleDependency).head?.target
+            while(next!=null) {
+                newSchedule += next
+                next.dependencies.filter(GuardDependency).forEach[ newSchedule += it.target ]
+                next = next.dependencies.filter(ScheduleDependency).head?.target
+            }            
+            
+            schedules += newSchedule
+        }        
+        
+        System.out.println("Schedules " + schedules.size)
+        for(schedule : schedules) {
+            System.out.println(schedule)
+            schedule.createHierarchy(NODEGROUPING_SCHEDULE, null)
+        }        
     }
 
     /**
@@ -1631,13 +1676,29 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 polyline.lineWidth.propagateToChildren = true
             ]]
     }
+    
+    def Dependency dependencyAlpha(Dependency dependency, int alpha) {
+        dependency => [
+            allEdges.forEach [
+                val polyline = it.getData(typeof(KRoundedBendsPolyline)) => [getForeground.alpha = alpha];
+                polyline.foreground.propagateToChildren = true
+            ]]
+    }    
+    
+    def Node colorNode(Node node, KColor color) {
+        node => [
+            getNode => [
+                val polyline = it.getData(typeof(KRoundedRectangle)).foreground = color.copy
+                polyline.foreground.propagateToChildren = true
+            ]]
+    }
 
     // -------------------------------------------------------------------------
     // -- Helper: Ports 
     // -------------------------------------------------------------------------
     def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side) {
         node.createPort(mapping) => [
-            it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+            it.addLayoutParam(CoreOptions::PORT_SIDE, side);
             it.setPortPos(x, y)
             it.setPortSize(size, size)
             it.addRectangle.invisible = true;
@@ -1646,12 +1707,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
     def KPort addPortFixedSide(KNode node, String mapping, PortSide side) {
-        node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+        node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
         node.addPort(mapping, 37, 0, 3, side)
     }
 
     def KPort addHelperPort(KNode node, String mapping) {
         node.createPort(mapping) => [
+            node.ports += it
+        ]
+    }
+    
+    def KPort addHelperPort(KNode node, String mapping, PortSide side) {
+        node.createPort(mapping) => [
+        	it.addLayoutParam(CoreOptions::PORT_SIDE, side);
             node.ports += it
         ]
     }

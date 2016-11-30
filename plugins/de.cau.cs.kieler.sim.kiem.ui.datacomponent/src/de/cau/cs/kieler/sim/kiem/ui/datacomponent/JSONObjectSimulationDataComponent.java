@@ -59,6 +59,9 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
+    /** How many characters maximum for the error message. */
+    protected static final int ERROR_MESSAGE_MAX_CHARACTERS = 200;
+
     /** The properties added by this super-component shift all sub components properties by one. */
     protected static final int KIEM_PROPERTY_DIFF = 1;
 
@@ -99,6 +102,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      */
     public boolean isDirty() {
         return true;
+    }
+    
+    public void setDirty(boolean isDirty) {
+        //
     }
     
     // -------------------------------------------------------------------------
@@ -304,13 +311,18 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                 doModel2ModelTransform(monitor);
             }
         } catch (Exception e) {
+            setDirty(true);
             monitor.done();
             exception = e;
+            String message = exception.getMessage();
             transformationCompleted = true;
             transformationError = true;
             return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
-                    "Model transformation failed.", e);
+                    "Model transformation failed.\n" , null);
+//            return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
+//                    "Model transformation failed.", e);
         }
+        setDirty(false);
         monitor.done();
         transformationCompleted = true;
         transformationError = false;
@@ -337,7 +349,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+    public final JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         // If an opened EMF model editor is involved, check the timestamp
         if (this.getModelRootElement() != null && getModelRootElement().eResource() != null) {
             try {
@@ -571,7 +583,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
-                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e), true, e);
+                    + "respective Eclipse Problems View have been cleared.\n\n" + KiemUtil.getStackTraceString(e, ERROR_MESSAGE_MAX_CHARACTERS), true, e);
         }
     }
 
@@ -639,6 +651,8 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {
                 throw (KiemInitializationException) exception;
+//                throw (new KiemInitializationException(exception.getMessage(), true, null));
+//                exception.printStackTrace();
             } else {
                 exception.printStackTrace();
             }

@@ -1,0 +1,17 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN 
+scchart AbortComplexityWeakNotSchedulable {
+  input bool R;
+
+  initial state S {
+
+    initial state I
+    --> S;
+
+    state S;
+  }
+  --> F  with  R;
+
+  state F --> S immediate;
+}

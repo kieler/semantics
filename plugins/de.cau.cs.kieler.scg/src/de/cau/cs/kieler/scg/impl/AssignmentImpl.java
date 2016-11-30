@@ -2,9 +2,12 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -29,36 +32,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getOperator <em>Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class AssignmentImpl extends NodeImpl implements Assignment {
-    /**
-     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getNext()
-     * @generated
-     * @ordered
-     */
-    protected ControlFlow next;
-
-    /**
-     * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getAssignment()
-     * @generated
-     * @ordered
-     */
-    protected Expression assignment;
-
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
@@ -70,6 +53,16 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     protected ValuedObject valuedObject;
 
     /**
+     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getExpression()
+     * @generated
+     * @ordered
+     */
+	protected Expression expression;
+
+				/**
      * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +80,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      * @ordered
      */
-    protected static final de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator OPERATOR_EDEFAULT = de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator.ASSIGN;
+    protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
 
     /**
      * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -97,7 +90,17 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      * @ordered
      */
-    protected de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator operator = OPERATOR_EDEFAULT;
+    protected AssignOperator operator = OPERATOR_EDEFAULT;
+
+				/**
+     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getNext()
+     * @generated
+     * @ordered
+     */
+    protected ControlFlow next;
 
                 /**
      * <!-- begin-user-doc -->
@@ -166,49 +169,6 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression getAssignment() {
-        return assignment;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetAssignment(Expression newAssignment, NotificationChain msgs) {
-        Expression oldAssignment = assignment;
-        assignment = newAssignment;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, newAssignment);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setAssignment(Expression newAssignment) {
-        if (newAssignment != assignment) {
-            NotificationChain msgs = null;
-            if (assignment != null)
-                msgs = ((InternalEObject)assignment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-            if (newAssignment != null)
-                msgs = ((InternalEObject)newAssignment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-            msgs = basicSetAssignment(newAssignment, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, newAssignment, newAssignment));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public ValuedObject getValuedObject() {
         if (valuedObject != null && valuedObject.eIsProxy()) {
             InternalEObject oldValuedObject = (InternalEObject)valuedObject;
@@ -247,6 +207,49 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
 	 * <!-- end-user-doc -->
      * @generated
      */
+	public Expression getExpression() {
+        return expression;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+        Expression oldExpression = expression;
+        expression = newExpression;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public void setExpression(Expression newExpression) {
+        if (newExpression != expression) {
+            NotificationChain msgs = null;
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
 	public EList<Expression> getIndices() {
         if (indices == null) {
             indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.ASSIGNMENT__INDICES);
@@ -259,23 +262,23 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator getOperator() {
+    public AssignOperator getOperator() {
         return operator;
     }
 
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public void setOperator(de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator newOperator) {
-        de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator oldOperator = operator;
+	public void setOperator(AssignOperator newOperator) {
+        AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__OPERATOR, oldOperator, operator));
     }
 
-    /**
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -283,12 +286,12 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.ASSIGNMENT__NEXT:
-                return basicSetNext(null, msgs);
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                return basicSetAssignment(null, msgs);
+            case ScgPackage.ASSIGNMENT__EXPRESSION:
+                return basicSetExpression(null, msgs);
             case ScgPackage.ASSIGNMENT__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return basicSetNext(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -301,17 +304,17 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ScgPackage.ASSIGNMENT__NEXT:
-                return getNext();
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                return getAssignment();
             case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
+            case ScgPackage.ASSIGNMENT__EXPRESSION:
+                return getExpression();
             case ScgPackage.ASSIGNMENT__INDICES:
                 return getIndices();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return getOperator();
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return getNext();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -325,21 +328,21 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
 				@Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((ControlFlow)newValue);
-                return;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                setAssignment((Expression)newValue);
-                return;
             case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
+                return;
+            case ScgPackage.ASSIGNMENT__EXPRESSION:
+                setExpression((Expression)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__INDICES:
                 getIndices().clear();
                 getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__OPERATOR:
-                setOperator((de.cau.cs.kieler.core.kexpressions.keffects.AssignOperator)newValue);
+                setOperator((AssignOperator)newValue);
+                return;
+            case ScgPackage.ASSIGNMENT__NEXT:
+                setNext((ControlFlow)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -353,20 +356,20 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((ControlFlow)null);
-                return;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                setAssignment((Expression)null);
-                return;
             case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
+                return;
+            case ScgPackage.ASSIGNMENT__EXPRESSION:
+                setExpression((Expression)null);
                 return;
             case ScgPackage.ASSIGNMENT__INDICES:
                 getIndices().clear();
                 return;
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 setOperator(OPERATOR_EDEFAULT);
+                return;
+            case ScgPackage.ASSIGNMENT__NEXT:
+                setNext((ControlFlow)null);
                 return;
         }
         super.eUnset(featureID);
@@ -380,21 +383,69 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ScgPackage.ASSIGNMENT__NEXT:
-                return next != null;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                return assignment != null;
             case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
                 return valuedObject != null;
+            case ScgPackage.ASSIGNMENT__EXPRESSION:
+                return expression != null;
             case ScgPackage.ASSIGNMENT__INDICES:
                 return indices != null && !indices.isEmpty();
             case ScgPackage.ASSIGNMENT__OPERATOR:
                 return operator != OPERATOR_EDEFAULT;
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return next != null;
         }
         return super.eIsSet(featureID);
     }
 
     /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Effect.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.ASSIGNMENT__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+                case ScgPackage.ASSIGNMENT__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
+                case ScgPackage.ASSIGNMENT__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+                case ScgPackage.ASSIGNMENT__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Effect.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == de.cau.cs.kieler.kexpressions.keffects.Assignment.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return ScgPackage.ASSIGNMENT__VALUED_OBJECT;
+                case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.ASSIGNMENT__EXPRESSION;
+                case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.ASSIGNMENT__INDICES;
+                case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.ASSIGNMENT__OPERATOR;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -404,7 +455,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (Operator: ");
+        result.append(" (operator: ");
         result.append(operator);
         result.append(')');
         return result.toString();

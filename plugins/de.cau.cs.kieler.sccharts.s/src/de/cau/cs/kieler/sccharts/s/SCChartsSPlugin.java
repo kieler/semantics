@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts.s;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -23,7 +25,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2013-10-10 proposed
  * @kieler.rating 2013-10-10 proposed yellow
  */
-public class SCChartsSPlugin extends AbstractUIPlugin {
+public class SCChartsSPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.s"; //$NON-NLS-1$

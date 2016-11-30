@@ -1,0 +1,32 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart ComplexFinalStateRoot {
+  input bool T1;
+  input bool T2;
+  output int R1S = 0;
+  output int R2S = 0;
+  
+  region "Region 1":
+
+  initial state S1 {
+    entry / R1S = 1;
+  }
+  --> S2 with T1;
+
+  final state S2 {
+    entry / R1S = 2;
+  };
+  
+  region "Region 2":
+
+  initial state S3 {
+    entry / R2S = 3;
+  }
+  --> S4 with T2;
+
+  final state S4 {
+    entry / R2S = 4;
+  }
+  --> S3 with T2;
+} 

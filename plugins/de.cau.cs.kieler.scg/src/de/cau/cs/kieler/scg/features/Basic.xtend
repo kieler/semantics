@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scg.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
 
@@ -50,7 +50,7 @@ class Basic extends Feature {
         return !(
                 scg.hasAnnotation(SCGFeatures::DEPENDENCY_ID) ||
                 scg.hasAnnotation(SCGFeatures::BASICBLOCK_ID) || 
-                scg.hasAnnotation(SCGFeatures::GUARD_ID) ||
+                scg.hasAnnotation(SCGFeatures::GUARD_EXPRESSIONS_ID) ||
                 scg.hasAnnotation(SCGFeatures::SCHEDULING_ID) ||
                 scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)
                 )

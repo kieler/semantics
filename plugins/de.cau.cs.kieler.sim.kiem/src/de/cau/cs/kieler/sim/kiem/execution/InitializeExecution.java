@@ -269,8 +269,7 @@ public class InitializeExecution implements Runnable {
                     JSONObject localInitialVariables = dataComponentWrapper
                             .provideInitialVariables();
                     if (localInitialVariables != null) {
-                        JSONMerger jsonMerger = new JSONMerger();
-                        JSONObject merged = jsonMerger.mergeObjects(globalInitialVariables,
+                        JSONObject merged = JSONMerger.mergeObjects(globalInitialVariables,
                                 localInitialVariables);
                         globalInitialVariables = merged;
                     } // end if not null

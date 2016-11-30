@@ -207,7 +207,7 @@ public class Benchmark {
 //            }
             
             
-            System.out.println("M2M 17 benchmak: " + compile);
+          SimBenchmarkPlugin.log("M2M 17 benchmak: " + compile);
 
             // Compile the code with the settings from above
             Process process = Runtime.getRuntime().exec(compile);
@@ -219,7 +219,7 @@ public class Benchmark {
             while ((line = br.readLine()) != null) {
                 errorString.append("\n" + line);
             }
-            System.out.println("M2M 18");
+            SimBenchmarkPlugin.log("M2M 18");
 
             int exitValue = process.waitFor();
 

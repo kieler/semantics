@@ -222,12 +222,14 @@ litigation.
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
-      <import feature="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.elk.feature" version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.ui.feature" version="0.1.0.201607121925"/>
+      <import feature="org.eclipse.elk.graphviz.feature" version="0.1.0.201607121925"/>
+      <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
-
 
    <plugin
          id="de.cau.cs.kieler.circuit"
@@ -235,7 +237,7 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
+
    <plugin
          id="de.cau.cs.kieler.circuit.kivi"
          download-size="0"
@@ -249,7 +251,7 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
+
    <plugin
          id="de.cau.cs.kieler.core.annotations"
          download-size="0"
@@ -429,8 +431,7 @@ litigation.
          id="de.cau.cs.kieler.prom"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="true"/>
+         version="0.0.0"/>
 
    <plugin
          id="de.cau.cs.kieler.s"
@@ -531,6 +532,14 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sim.kiem.toolbar"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+
+   <plugin
          id="de.cau.cs.kieler.sim.instructions"
          download-size="0"
          install-size="0"
@@ -608,6 +617,12 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sccharts.examples"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
          id="de.cau.cs.kieler.sccharts.klighd"
          download-size="0"
          install-size="0"
@@ -615,11 +630,17 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sccharts.preferences"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+
+   <plugin
          id="de.cau.cs.kieler.sccharts.prom"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="true"/>         
+         version="0.0.0"/>
 
    <plugin
          id="de.cau.cs.kieler.sccharts.s"
@@ -637,6 +658,13 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.sccharts.sim.c"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.sim.java"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -662,13 +690,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
-	<plugin
+
+   <plugin
          id="de.cau.cs.kieler.sccharts.timing"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>		 
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.scg"
@@ -676,13 +704,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
+
    <plugin
          id="de.cau.cs.kieler.scg.circuit"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>		 
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.scg.edit"
@@ -699,6 +727,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.scg.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.scg.klighd"
          download-size="0"
          install-size="0"
@@ -707,6 +742,27 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.scg.s"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.scl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.scl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.scl"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -795,6 +851,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+  <plugin
+         id="de.cau.cs.kieler.esterel.sim.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>          
 
    <plugin
          id="de.cau.cs.kieler.sim.signals"
@@ -818,7 +881,6 @@ litigation.
          id="org.freemarker"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="true"/>         
+         version="0.0.0"/>
 
 </feature>

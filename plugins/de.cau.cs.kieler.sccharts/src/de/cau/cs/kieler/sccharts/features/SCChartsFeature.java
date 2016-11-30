@@ -84,10 +84,10 @@ public class SCChartsFeature {
     public final static String TRIGGEREFFECT_NAME = "Trigger/Effect";
 
     public final static String SURFACEDEPTH_ID = "SURFACEDEPTH";
-    public final static String SURFACEDEPTH_NAME = "Suface/Depth";
+    public final static String SURFACEDEPTH_NAME = "Surface/Depth";
 
     public final static String EXPOSELOCALVALUEDOBJECT_ID = "EXPOSELOCALVALUEDOBJECT";
-    public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expore Local ValuedObject";
+    public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expose Local ValuedObject";
 
     public final static String INPUTOUTPUT_ID = "INPUTOUTPUT";
     public final static String INPUTOUTPUT_NAME = "Input and Output";

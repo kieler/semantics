@@ -1,0 +1,16 @@
+@Transformation STATIC
+scchart StaticVariableScopes {
+  
+  output int OXA;
+  output int OXB;
+  
+  initial state A {
+    static int x = 100;
+    exit / x = x + 1 ;OXA= x;
+  }--> B;
+  
+  state B {
+    static int x = 200;
+    exit / x = x - 1; OXB = x;
+  }--> A;
+}

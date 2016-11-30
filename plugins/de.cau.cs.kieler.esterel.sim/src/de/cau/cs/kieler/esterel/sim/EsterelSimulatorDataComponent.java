@@ -430,15 +430,15 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
     protected java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        System.out.println("convertEMFtoJavaURI 1");
+        EsterelSimPlugin.log("convertEMFtoJavaURI 1");
 
         IPath path = new Path(uri.toPlatformString(false));
-        System.out.println("convertEMFtoJavaURI 2" + path);
+        EsterelSimPlugin.log("convertEMFtoJavaURI 2" + path);
         IFile file = myWorkspaceRoot.getFile(path);
-        System.out.println("convertEMFtoJavaURI 3" + file.toString());
+        EsterelSimPlugin.log("convertEMFtoJavaURI 3" + file.toString());
 
         IPath fullPath = file.getLocation();
-        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString());
+        EsterelSimPlugin.log("convertEMFtoJavaURI 4" + fullPath.toString());
 
         return new java.net.URI(fullPath.toString());
     }
@@ -476,18 +476,18 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             final EsterelSimulationProgressMonitor monitor) throws IOException, URISyntaxException;
 //    {
 //        monitor.subTask("Reading Esterel file");
-//        System.out.println("Compile 1" + strlFile.toString() + " , " + outFile.toString());
+//        EsterelSimPlugin.log("Compile 1" + strlFile.toString() + " , " + outFile.toString());
 //        java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
 //
-//        System.out.println("Compile 2" + inputURI.toString());
+//        EsterelSimPlugin.log("Compile 2" + inputURI.toString());
 //        InputStream strl = CEC.runSTRL(inputURI);
-//        System.out.println("Compile 3");
+//        EsterelSimPlugin.log("Compile 3");
 //        monitor.worked(1);
 //        if (monitor.isCanceled()) {
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 4");
+//        EsterelSimPlugin.log("Compile 4");
 //        monitor.subTask("Parsing Esterel file");
 //        InputStream strlxml = CEC.runSTRLXML(strl);
 //        monitor.worked(1);
@@ -495,7 +495,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 5");
+//        EsterelSimPlugin.log("Compile 5");
 //        monitor.subTask("Expanding Esterel file");
 //        // InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
 //        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml, System.out);
@@ -504,7 +504,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 6");
+//        EsterelSimPlugin.log("Compile 6");
 //        monitor.subTask("Dismantle Esterel file");
 //        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
 //        monitor.worked(1);
@@ -512,7 +512,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 7");
+//        EsterelSimPlugin.log("Compile 7");
 //        monitor.subTask("ASTGRC");
 //        InputStream astgrc = CEC.runASTGRC(dismantle);
 //        monitor.worked(1);
@@ -520,7 +520,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 8");
+//        EsterelSimPlugin.log("Compile 8");
 //        monitor.subTask("GRCOPT");
 //        InputStream grcopt = CEC.runGRCOPT(astgrc);
 //        monitor.worked(1);
@@ -542,7 +542,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 9");
+//        EsterelSimPlugin.log("Compile 9");
 //        monitor.subTask("EEC");
 //        InputStream eec = CEC.runEEC(pdgccfg);
 //        monitor.worked(1);
@@ -557,10 +557,10 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //            strl.close();
 //            return null;
 //        }
-//        System.out.println("Compile 10");
+//        EsterelSimPlugin.log("Compile 10");
 //        monitor.subTask("Generating C code");
 //        java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
-//        System.out.println("Compile 11" + uri);
+//        EsterelSimPlugin.log("Compile 11" + uri);
 //
 //        if (benchmark) {
 //            File currentFile = new File(uri.getPath());
@@ -702,7 +702,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
             final boolean debug, final boolean benchmarkParam) throws KiemInitializationException {
-        System.out.println("M2M 1");
+        EsterelSimPlugin.log("M2M 1");
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
         EsterelSimulationProgressMonitor esterelSimulationProgressMonitor =
@@ -713,7 +713,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 
         File executable = null;
         String compile = "";
-        System.out.println("M2M 2");
+        EsterelSimPlugin.log("M2M 2");
 
         try {
             myModel = (Program) this.getModelRootElement();
@@ -722,7 +722,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             // might not be resolvable resulting in nasty error messages.
             EcoreUtil.resolveAll(myModel);
 
-            System.out.println("M2M 3");
+            EsterelSimPlugin.log("M2M 3");
             if (myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the CEC", true, null);
@@ -731,7 +731,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             URI esterelOutput = URI.createURI("");
             // By default there is no additional transformation necessary
             Program transformedProgram = EcoreUtil.copy(myModel);
-            System.out.println("M2M 4");
+            EsterelSimPlugin.log("M2M 4");
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -744,17 +744,17 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                         Guice.createInjector().getInstance(Esterel2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
             }
-            System.out.println("M2M 5");
+            EsterelSimPlugin.log("M2M 5");
 
             // Calculate output path
             URI input = URI.createPlatformResourceURI(this.getModelFilePath().toString(), true);
-            System.out.println("M2M 6" + input.toString());
+            EsterelSimPlugin.log("M2M 6" + input.toString());
 
             esterelOutput = URI.createURI(input.toString());
             esterelOutput = esterelOutput.trimFragment();
             esterelOutput =
                     esterelOutput.trimFileExtension().appendFileExtension("simulation.strl");
-            System.out.println("M2M 7" + esterelOutput.toString());
+            EsterelSimPlugin.log("M2M 7" + esterelOutput.toString());
 
             try {
                 // Write out copy/transformation of Esterel program
@@ -769,13 +769,13 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                 throw new KiemInitializationException("Cannot write output Esterel file.", true,
                         null);
             }
-            System.out.println("M2M 8");
+            EsterelSimPlugin.log("M2M 8");
 
             // Compile Esterel to C
             URL output =
                     this.compileEsterelToC(esterelOutput, getDefaultOutFile(),
                             esterelSimulationProgressMonitor).toURL();
-            System.out.println("M2M 9");
+            EsterelSimPlugin.log("M2M 9");
 
             // Possibly add #include for a header file
             String possibleHeader = "";
@@ -784,7 +784,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
 //                possibleHeader = getPossibleHeaderFile(mainModuleName, input, output);
                   output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
-            System.out.println("M2M 10");
+            EsterelSimPlugin.log("M2M 10");
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -793,7 +793,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
                     Guice.createInjector().getInstance(InterfaceDeclarationFix.class);
             Program fixedTransformedProgram = (Program) EcoreUtil.copy(transformedProgram);
             interfaceDeclarationFix.fix(fixedTransformedProgram);
-            System.out.println("M2M 11");
+            EsterelSimPlugin.log("M2M 11");
 
             String esterelCCodeFile = output.getPath();
             int i = esterelCCodeFile.lastIndexOf("strl");
@@ -806,19 +806,19 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             URL data =
                     generateCSimulationInterface(fixedTransformedProgram, esterelOutput, benchmark,
                             esterelCCodeFileName, possibleHeader);
-            System.out.println("M2M 12");
+            EsterelSimPlugin.log("M2M 12");
 
             // Compile C code
             Bundle bundle = Platform.getBundle(EsterelSimPlugin.PLUGIN_ID);
-            System.out.println("M2M 13");
+            EsterelSimPlugin.log("M2M 13");
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
             String bundelLocationString = (new Path(bundleLocation.getPath())).toOSString();
 
-            System.out.println("M2M 14");
+            EsterelSimPlugin.log("M2M 14");
 
-            System.out.println("M2M 15");
+            EsterelSimPlugin.log("M2M 15");
 
             String compiler =
                     (getProperties()[KIEM_PROPERTY_CCOMPILER
@@ -862,7 +862,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             // D_NO_EXTERN_DEFINITIONS
             // D_NO_FUNCTION_DEFINITIONS
 
-            System.out.println("M2M 15" + compile);
+            EsterelSimPlugin.log("M2M 15" + compile);
             simFile = executable;
 
             // Compile the code with the settings from above
@@ -875,7 +875,7 @@ public abstract class EsterelSimulatorDataComponent extends JSONObjectSimulation
             while ((line = br.readLine()) != null) {
                 errorString.append("\n" + line);
             }
-            System.out.println("M2M 16");
+            EsterelSimPlugin.log("M2M 16");
 
             int exitValue = process.waitFor();
 

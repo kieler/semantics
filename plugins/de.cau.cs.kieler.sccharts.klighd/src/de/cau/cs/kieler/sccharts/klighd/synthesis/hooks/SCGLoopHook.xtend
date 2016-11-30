@@ -13,21 +13,16 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
-import de.cau.cs.kieler.core.kgraph.KGraphElement
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
@@ -35,16 +30,21 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.List
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.graph.KGraphElement
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -162,7 +162,7 @@ class SCGLoopHook extends SynthesisActionHook {
         SourceModelTrackingAdapter tracking) {
 
         // TODO This transformation selection should be sensitive to the user selection in KiCoSelectionView regarding its editor
-        val context = new KielerCompilerContext(SCGFeatures.GUARD_ID +
+        val context = new KielerCompilerContext(SCGFeatures.GUARD_EXPRESSIONS_ID +
             ",*T_ABORT,*T_INITIALIZATION,*T_scg.basicblock.sc,*T_s.c,*T_sccharts.scg,*T_NOSIMULATIONVISUALIZATION",
             scc);
         context.setProperty(Tracing.ACTIVE_TRACING, true);

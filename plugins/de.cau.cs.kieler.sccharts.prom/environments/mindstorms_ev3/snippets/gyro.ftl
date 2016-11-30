@@ -33,7 +33,7 @@
      Example for SCCharts:
          @Wrapper CalibrateGyro, S3;
          output bool resetGyro; -->
-<#macro CalibrateGyro port autoReset = 'true'>
+<#macro CalibrateGyro port autoReset = true>
     <@init>
         <@InitGyroSensor port />
     </@>
@@ -41,7 +41,7 @@
         // Reset gyro sensor
         if(scchart.${varname}){
             gyroSensor${port}.reset();
-            <#if autoReset == 'true'>
+            <#if autoReset>
             scchart.${varname} = false;
             </#if>
         }
@@ -53,8 +53,7 @@
 <#-- Auxiliary macro to initialize a gyro sensor if it is not yet initialized.
      This macro is not meant to be used in a model file. -->
 <#macro InitGyroSensor port>
-        <#if !((initializedLights![])?seq_contains(port))>
-        <#assign initializedLights = (initializedLights![]) + [port]>
+        <@singleton "gyro_"+port>
         EV3GyroSensor gyroSensor${port} = new EV3GyroSensor(SensorPort.${port});
-        </#if>
+        </@>
 </#macro>

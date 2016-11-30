@@ -1,0 +1,23 @@
+// abort and termination behaves wrong (when aborted, termination transition is used)
+
+@diagram[KLayLayered] false  
+scchart S "AbortTerminationWeak" {
+  output int O = 0;
+  output bool A1;
+  output bool A2;
+  input bool I;
+
+  initial state Inner {
+
+    initial state A
+    --> B with / O = O + 1;
+
+    final state B;
+  }
+  >-> Terminated immediate with / A1 = true
+  --> Aborted immediate with I / A2 = true;
+
+  state Terminated;
+
+  state Aborted; 
+} 

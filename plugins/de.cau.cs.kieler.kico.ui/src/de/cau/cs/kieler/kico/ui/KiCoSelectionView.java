@@ -5,9 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.util.Pair;
+import org.eclipse.elk.graph.KNode;
+import org.eclipse.elk.graph.properties.IProperty;
+import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -30,10 +36,7 @@ import org.eclipse.ui.progress.UIJob;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
@@ -45,18 +48,19 @@ import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
 import de.cau.cs.kieler.kico.ui.klighd.TransformationFeature;
-import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.ui.view.KlighdViewPlugin;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData;
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The Class KiCoSelectionView.
@@ -441,7 +445,18 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
         }
-
+        
+//        // Restore if nothing is selected
+//        if (selection.getSelectedFeatureAndTransformationIds().size() == 0) {
+//            // Restore old KIEM value
+//            IEditorPart editorPart = KiemPlugin.getOpenedModelEditors()
+//                    .get(new Path("de.cau.cs.kieler.kico.klighd.sourceModel"));
+//            if (editorPart != null) {
+//                IPath inputModelPath = ModelUtil.getInputModelPath(editorPart);
+//                KiemPlugin.setCurrentModelFile(inputModelPath);
+//            }
+//        }
+ 
     }
 
     // -------------------------------------------------------------------------
@@ -632,7 +647,6 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public void updateViewOnClose(IWorkbenchPartReference ref) {
         if (ref != null) {
-
             IWorkbenchPart part = ref.getPart(true);
 
             if (part instanceof EditorPart) {
@@ -676,8 +690,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // }
 
                 if (clearAll) {
-                    // removeSelectedTransformationVisualization(activeEditorID);
-                    updateView(activeEditorID, new ArrayList<String>(), new ArrayList<String>());
                     notifySelectionChangeEventListener();
                     // Clear cache
                     KiCoSelectionAction.clearCache();
@@ -897,8 +909,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         toolBarManager.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
             // Constructor
             {
-                setImageDescriptor(KimlUiPlugin
-                        .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+                setImageDescriptor(KlighdViewPlugin.getImageDescriptor("icons/full/menu16/arrange.gif"));
             }
 
             @Override

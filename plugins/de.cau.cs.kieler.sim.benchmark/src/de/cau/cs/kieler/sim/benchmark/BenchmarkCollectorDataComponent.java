@@ -122,7 +122,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
         IPath modelFilePath = this.getModelFilePath();
         IPath benchmarkFilePath = modelFilePath.removeFileExtension().addFileExtension(
                 BENCHMARK_FILE_ENDING);
-        System.out.println("+++ wrapup start ");
+        SimBenchmarkPlugin.log("+++ wrapup start ");
 
         try {
             if (benchmarkData.size() > 0) {
@@ -135,7 +135,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
         } catch (CoreException e) {
             throw new KiemInitializationException("Could not write Benchmark data.", false, e, true);
         }
-        System.out.println("+++ wrapup done ");
+        SimBenchmarkPlugin.log("+++ wrapup done ");
     }
 
     // -------------------------------------------------------------------------
@@ -202,7 +202,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
             }
         }
 
-        System.out.println("+++ STEP ADD: " + benchmarkDataEntry);
+        SimBenchmarkPlugin.log("+++ STEP ADD: " + benchmarkDataEntry);
         this.benchmarkData.add(benchmarkDataEntry);
 
         return null;
@@ -213,7 +213,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
     public void writeTextFile(final IPath path, final List<String> stringList, final boolean append)
             throws IOException, CoreException, KiemInitializationException {
         
-        System.out.println("+++ WRITE TEXT FILE ");
+        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE ");
         
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
@@ -323,11 +323,11 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
                                 // the values might not be integers (e.g., strings).
                                 e.printStackTrace();
                             }
-                            System.out.println("+++ WRITE TEXT FILE: U ");
+                            SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: U ");
                             
                         }
 
-                        System.out.println("+++ WRITE TEXT FILE: X ");
+                        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: X ");
 
                         // Construct updated old line
                         String updatedOldLine = "";
@@ -341,7 +341,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
                         oldFileContent.remove(i);
                         oldFileContent.add(i, updatedOldLine);
                         
-                        System.out.println("+++ WRITE TEXT FILE: Z ");
+                        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: Z ");
                         // We found the tick to consolidate
                         break;
                     }
@@ -349,7 +349,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
             }
         }
 
-        System.out.println("+++ WRITE TEXT FILE: 1 ");
+        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: 1 ");
 
         if (!newFile) {
             for (String line : oldFileContent) {
@@ -358,7 +358,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
             }
         }
 
-        System.out.println("+++ WRITE TEXT FILE: 2 ");
+        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: 2 ");
 
         if (newFile || consolidation.equals(CONSOLIDATE_NONE)) {
             // Append new contents (if not already consolidated)
@@ -367,7 +367,7 @@ public class BenchmarkCollectorDataComponent extends JSONObjectSimulationDataCom
             }
         }
 
-        System.out.println("+++ WRITE TEXT FILE: CLOSE ");
+        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: CLOSE ");
         out.close();
     }
 

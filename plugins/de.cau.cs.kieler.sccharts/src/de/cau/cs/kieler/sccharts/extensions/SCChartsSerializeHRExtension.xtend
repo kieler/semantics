@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Joiner
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -24,64 +21,199 @@ import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.IterateAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
-import java.util.List
+import java.util.Listimport de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * @author ssm
- *
+ * 
  * @kieler.design 2014-09-04 proposed ssm
  * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
-    
-    def dispatch CharSequence serialize(Transition transition) {
-        transition.serialize(false);
-    }
-    
-    def dispatch CharSequence serializeHR(Transition transition) {
-        transition.serialize(true);
-    }
-    
-    private def CharSequence serialize(Transition transition, boolean hr) {
-        val label = new StringBuilder();
 
-        if (transition.trigger != null) {
-            if (transition.delay > 1) {
-                label.append(transition.delay.toString).append(" ");
-            }
-            if (hr) {
-                label.append(transition.trigger.serializeHR);
-            }else{
-                label.append(transition.trigger.serialize); 
-            }
-        }
+	def dispatch CharSequence serialize(Transition transition) {
+		transition.serialize(false);
+	}
 
-        if (!transition.effects.empty) {
-            label.append(" / ")
-            if (hr) {
-                label.append(transition.effects.serializeHR);
-            } else {
-                label.append(transition.effects.serialize);
-            }
-        }
+	def dispatch CharSequence serializeHR(Transition transition) {
+		transition.serialize(true);
+	}
 
-        return label.toString;
-    }
+	private def CharSequence serialize(Transition transition, boolean hr) {
+		val label = new StringBuilder();
 
-    def dispatch CharSequence serialize(Action action){
-        action.serialize(false)
-    }
+		if (transition.trigger != null) {
+			if (transition.delay > 1) {
+				label.append(transition.delay.toString).append(" ");
+			}
+			if (hr) {
+				label.append(transition.trigger.serializeHR);
+			} else {
+				label.append(transition.trigger.serialize);
+			}
+		}
+
+		if (!transition.effects.empty) {
+			label.append(" / ")
+			if (hr) {
+				label.append(transition.effects.serializeHR);
+			} else {
+				label.append(transition.effects.serialize);
+			}
+		}
+
+		return label.toString;
+	}
+
+	def dispatch CharSequence serialize(Action action) {
+		action.serialize(false)
+	}
+
+	def dispatch CharSequence serializeHR(Action action) {
+		action.serialize(true)
+	}
+
+	private def CharSequence serialize(Action action, boolean hr) {
+		val joiner = Joiner.on(" ");
+		val parts = action.serializeHighlighted(hr)
+		return joiner.join(parts.map[key])
+	}
+
+	def List<Pair<CharSequence, Boolean>> serializeHighlighted(Action action, boolean hr) {
+		val components = newArrayList
+
+		if (action.immediate) {
+			components.addKeyword("immediate");
+		}
+
+		components.addKeyword(switch action {
+			EntryAction: "entry"
+			DuringAction: "during"
+			ExitAction: "exit"
+			SuspendAction case action.isWeak: "weak suspend"
+			SuspendAction: "suspend"
+			IterateAction: "iterate"
+			default: ""
+		})
+
+		if (action.trigger != null) {
+			components.addText(if (hr) {
+				action.trigger.serializeHR
+			} else {
+				action.trigger.serialize
+			})
+		}
+
+		if (!action.effects.empty) {
+			components.addText("/")
+			components.addText(if (hr) {
+				action.effects.serializeHR
+			} else {
+				action.effects.serialize
+			})
+		}
+
+		return components;
+	}
+
+	def dispatch CharSequence serialize(Declaration declaration) {
+		declaration.serialize(false)
+	}
+
+	def dispatch CharSequence serializeHR(Declaration declaration) {
+		declaration.serialize(true)
+	}
+
+	private def CharSequence serialize(Declaration declaration, boolean hr) {
+		val joiner = Joiner.on(" ");
+		val parts = declaration.serializeHighlighted(hr)
+		return joiner.join(parts.map[key])
+	}
+
+	def List<Pair<CharSequence, Boolean>> serializeHighlighted(Declaration declaration, boolean hr) {
+		val components = newArrayList
+
+		// Modifiers
+		if (declaration.isExtern) {
+			components.addKeyword("extern")
+		}
+		if (declaration.isStatic) {
+			components.addKeyword("static ")
+		}
+		if (declaration.isConst) {
+			components.addKeyword("const")
+		}
+		if (declaration.isVolatile) {
+			components.addKeyword("volatile")
+		}
+		if (declaration.isInput) {
+			components.addKeyword("input")
+		}
+		if (declaration.isOutput) {
+			components.addKeyword("output")
+		}
+		if (declaration.isSignal) {
+			components.addKeyword("signal")
+		}
+
+		// Type
+		val type = declaration.type;
+		if (type == ValueType.PURE) {
+			// Nothing - indicated by signal keyword
+		} else if (type == ValueType.HOST) {
+			components.addKeyword(declaration.hostType)
+		} else {
+			components.addKeyword(if (hr) {
+				type.serializeHR
+			} else {
+				type.serialize
+			})
+		}
+
+		// Content
+		val voIter = declaration.valuedObjects.iterator;
+		while (voIter.hasNext) {
+			val vo = voIter.next;
+			components.addText(if (hr) {
+				vo.serializeHR
+			} else {
+				vo.serialize
+			})
+			if (vo.initialValue != null) {
+				components.addText("=");
+				components.addText(if (hr) {
+					vo.initialValue.serializeHR;
+				} else {
+					vo.initialValue.serialize;
+				})
+			}
+			if (vo.combineOperator != null && vo.combineOperator != CombineOperator.NONE) {
+				components.addKeyword("combine");
+				components.addText(if (hr) {
+					vo.combineOperator.serializeHR;
+				} else {
+					vo.combineOperator.serialize;
+				})
+			}
+			if (voIter.hasNext) {
+				components.addText(",");
+			}
+		}
+
+		return components;
+	}
+	
+	private def addKeyword(List<Pair<CharSequence, Boolean>> list, CharSequence text) {
+		list += new Pair(text, true)
+	}
+	
+	private def addText(List<Pair<CharSequence, Boolean>> list, CharSequence text) {
+		list += new Pair(text, false)
+	}
     
-    def dispatch CharSequence serializeHR(Action action){
-        action.serialize(true)
-    }
-    
-    private def CharSequence serialize(Action action, boolean hr) {
-        val joiner = Joiner.on(" ");
-        val parts = action.serializeComponents(hr)
-        return joiner.join(parts.key) + joiner.join(parts.value);
-    }
-
     def Pair<List<String>, List<String>> serializeComponents(Action action, boolean hr) {
         val keywords = newLinkedList;
         val content = newLinkedList;
@@ -118,20 +250,6 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         }
 
         return new Pair(keywords, content);
-    }
-    
-    def dispatch CharSequence serialize(Declaration declaration) {
-        declaration.serialize(false)
-    }
-       
-    def dispatch CharSequence serializeHR(Declaration declaration) {
-        declaration.serialize(true)
-    }
-    
-    private def CharSequence serialize(Declaration declaration, boolean hr) {
-        val joiner = Joiner.on(" ");
-        val parts = declaration.serializeComponents(hr)
-        return joiner.join(parts.key) + joiner.join(parts.value);
     }
     
     def Pair<List<String>, List<String>> serializeComponents(Declaration declaration, boolean hr) {

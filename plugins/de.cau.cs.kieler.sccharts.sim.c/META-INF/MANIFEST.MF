@@ -21,7 +21,10 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xmi,
- de.cau.cs.kieler.scg
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.circuit,
+ de.cau.cs.kieler.kico.klighd
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.sccharts.sim.c
 

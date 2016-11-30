@@ -90,7 +90,7 @@ public class HttpParser {
             }
         } catch (Exception e) {
         }
-        // System.out.println("LINE:"+Line);
+        // KielerServerPlugin.log("LINE:"+Line);
         return line;
     }
 
@@ -314,22 +314,22 @@ public class HttpParser {
 
                 // now we precisely know the size -> copy buffer to this.Body
                 this.body = new byte[bytecounter];
-                // System.out.println("--------------------------------");
+                // KielerServerPlugin.log("--------------------------------");
                 for (int c = 0; c < bytecounter; c++) {
                     this.body[c] = buffer[c];
                     // System.out.print((char)this.Body[c] + "");
                 }
-                // System.out.println("\n--------------------------------");
+                // KielerServerPlugin.log("\n--------------------------------");
 
                 // the following lines output the body in HEY digits for debugging //
                 /*
-                 * System.out.println("----------------- BODY HEX --------------------"); int
+                 * KielerServerPlugin.log("----------------- BODY HEX --------------------"); int
                  * linecnt = 0; for (int c = 0; c < bytecounter; c++) { int mychar = this.Body[c];
                  * mychar &= 0x000000FF; String hexstring = Integer.toHexString(mychar); if
                  * (hexstring.length() == 1) hexstring = "0" + hexstring;
                  * System.out.print(hexstring); System.out.print(" "); linecnt++; if (linecnt == 16)
-                 * { linecnt = 0; System.out.println(""); } }
-                 * System.out.println("\n----------------- BODY HEX --------------------");
+                 * { linecnt = 0; KielerServerPlugin.log(""); } }
+                 * KielerServerPlugin.log("\n----------------- BODY HEX --------------------");
                  */
             }// end if
         } catch (Exception e) {

@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.esterel.kexpressions;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -163,7 +163,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+    int VALUED_OBJECT__ANNOTATIONS = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -172,7 +172,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int VALUED_OBJECT__NAME = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -181,7 +181,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int VALUED_OBJECT__TYPE = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Initial Value</b></em>' attribute.
@@ -190,7 +190,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int VALUED_OBJECT__INITIAL_VALUE = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Host Type</b></em>' attribute.
@@ -199,7 +199,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__HOST_TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int VALUED_OBJECT__HOST_TYPE = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Valued Object</em>' class.
@@ -208,7 +208,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int VALUED_OBJECT_FEATURE_COUNT = de.cau.cs.kieler.annotations.AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.esterel.kexpressions.impl.SignalImpl <em>Signal</em>}' class.

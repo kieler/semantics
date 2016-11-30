@@ -12,5 +12,5 @@ Export-Package: de.cau.cs.kieler.circuit,
  de.cau.cs.kieler.circuit.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- de.cau.cs.kieler.core.annotations;visibility:=reexport
+ de.cau.cs.kieler.annotations;visibility:=reexport
 Bundle-ActivationPolicy: lazy

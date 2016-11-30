@@ -17,52 +17,47 @@ import com.google.common.collect.HashMultimap
 import com.google.inject.Binder
 import com.google.inject.Guice
 import com.google.inject.Module
-import de.cau.cs.kieler.core.kgraph.KGraphFactory
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.KBackground
-import de.cau.cs.kieler.core.krendering.KRendering
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.core.util.Maybe
+import com.google.inject.Scopes
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.klighd.krendering.KBackground
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
-import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException
 import java.util.Set
+import org.eclipse.elk.core.klayoutdata.KLayoutData
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.util.Maybe
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import com.google.inject.Scopes
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.krendering.KRectangle
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.guardCreation.GuardCreator
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.klighd.ui.view.DiagramView
+
+import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author ssm als cmot
@@ -118,8 +113,8 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
                             guardMapping.putAll(node.valuedObject.name,
                                 context.getTargetElements(node).filter(typeof(KRendering)))
                         }
-                        if (node.hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
-                            val guardName = node.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+                        if (node.hasAnnotation(ANNOTATION_CONDITIONALASSIGNMENT)) {
+                            val guardName = node.getStringAnnotationValue(ANNOTATION_CONDITIONALASSIGNMENT)
                             
                             annotationMapping.putAll(guardName, context.getTargetElements(node).filter(typeof(KRendering)))
                             
@@ -128,15 +123,16 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
                         }
                     }
                 }
-                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                    for (guard : scg.guards) {
-                        val schedulingBlock = guard.schedulingBlockLink
-                        if (schedulingBlock != null) {
-                            guardMapping.putAll(guard.valuedObject.name,
-                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
-                        }
-                    }
-                }
+// FIXME
+//                if (scg.hasAnnotation(ANNOTATION_GUARDCREATOR)) {
+//                    for (guard : scg.guards) {
+//                        val schedulingBlock = guard.schedulingBlockLink
+//                        if (schedulingBlock != null) {
+//                            guardMapping.putAll(guard.valuedObject.name,
+//                                context.getTargetElements(schedulingBlock).filter(typeof(KRendering)))
+//                        }
+//                    }
+//                }
                 LightDiagramServices.layoutDiagram(context)
             }
         ] 
@@ -255,10 +251,10 @@ class SCGVisualizationDataComponent extends JSONObjectDataComponent {
     }
     
     private def KNode synthesizeConditionalAssignmentAnnotation(KNode sourceNode, Assignment assignment, SCGraph scg) {
-        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+        val VOName = assignment.getStringAnnotationValue(ANNOTATION_CONDITIONALASSIGNMENT)
         val VO = scg.findValuedObjectByName(VOName)
         val kNode = assignment.createNode(VO) => [ node |
-            node.getData(typeof(KLayoutData)).setProperty(LayoutOptions.COMMENT_BOX, true)
+            node.getData(typeof(KLayoutData)).setProperty(CoreOptions.COMMENT_BOX, true)
 //            node.setNodeSize(75.0f, 20.0f)
         ]
 //            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 

@@ -1,16 +1,67 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
        "http://www.w3.org/TR/html4/loose.dtd"><head>
-<title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>
+<title>KIELER SCCharts Compiler - Sequentially Constructive Statecharts - KIELER Compiler - KiCo </title>
 <meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- Syntax Highlighting #950055 -->
+	<link rel="stylesheet" href="codemirror.css">
+	<script type="text/javascript" src="codemirror.js"></script>
+	<style type="text/css">
+.cm-marked{
+    color:#950055;
+	font-weight:bold
+}	
+.cm-layout{
+    color:#869DD0;
+}	
+.cm-scchartscomment{
+    color:#3F7F5F;
+}	
+.cm-scchartsstring{
+    color:#4E00FF;
+}	
+.cm-unmarked{
+    color:#000000;
+}	
+.CodeMirror-line-numbers {
+	        width: 2.2em;
+	        color: #aaa;
+	        background-color: #eee;
+	        text-align: right;
+	        padding-right: .3em;
+	        font-size: 10pt;
+	        font-family: monospace;
+	        padding-top: .4em;
+	      }
+    </style>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
 <style type="text/css">
 <!--
 .Stil8 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: small;
 }
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: small; font-weight: bold; }
+.style7 {font-size: medium}
+.style9 {font-size: xx-small; font-weight: normal}
 -->
 </style>
 </head>
+<body style="background-color: #F7FAFE ;">
 
 	   <style type="text/css">
 <!--
@@ -27,6 +78,22 @@
 .Stil15 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
 .Stil18 {font-size: xx-small; font-weight: bold; }
 .Stil20 {color: #999999}
+.style7 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-small; }
+.style10 {
+	color: #0066FF;
+	font-weight: bold;
+	font-size: medium;
+}
+.style13 {font-family: Verdana, Arial, Helvetica, sans-serif; color: #0066FF; font-size: medium; }
+.style13b {font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF; font-size: medium; }
+.style14 {font-size: medium}
+.style15 {color: #0066FF}
+.boxed {
+   width: 600px;
+height: 400px;
+background-color: 0066FF;
+border: solid 2px blue;
+} 
 -->
        </style>
 
@@ -57,52 +124,51 @@ var renderServerURL   = new Array("http://render.sccharts.com", "http://www.scch
 
 
 var windowContent = " <body onBlur='self.focus();'>\
-<div align='left'><img src='http://www.sccharts.com/transformations.jpg' alt='s' border='0' usemap='#Map' />\
+<div align='left'><img src='http://www.sccharts.com/transformations.jpg' width='1759' height='341' alt='s' border='0' usemap='#Map' />\
   <map name='Map' id='Map'>\
-    <area shape='rect' coords='4,3,837,19' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/>\
-    <area shape='rect' coords='410,51,830,68' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/>\
-    <area shape='rect' coords='211,103,349,118' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/>\
-    <area shape='rect' coords='18,67,68,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"REFERENCE\"'/>\
-    <area shape='rect' coords='80,68,103,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"MAP\"'/>\
-    <area shape='rect' coords='114,65,137,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"FOR\"' />\
-    <area shape='rect' coords='176,66,200,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"' />\
-    <area shape='rect' coords='217,66,251,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"' />\
-    <area shape='rect' coords='268,65,308,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/>\
-    <area shape='rect' coords='324,67,383,83' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/>\
-    <area shape='rect' coords='218,131,282,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/>\
-    <area shape='rect' coords='299,130,338,146' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/>\
-    <area shape='rect' coords='252,162,282,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/>\
-    <area shape='rect' coords='297,158,328,173' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/>\
-    <area shape='rect' coords='419,109,500,125' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"' />\
-    <area shape='rect' coords='513,77,598,94' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/>\
-    <area shape='rect' coords='528,103,584,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTDEFAULT\"'/>\
-    <area shape='rect' coords='521,129,589,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTALTERNATIVE\"'/>\
-    <area shape='rect' coords='609,121,647,139' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/>\
-    <area shape='rect' coords='614,149,645,170' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONST\"'/>\
-    <area shape='rect' coords='675,103,699,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/>\
-    <area shape='rect' coords='660,147,714,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/>\
-    <area shape='rect' coords='727,146,755,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/>\
-    <area shape='rect' coords='772,144,825,162' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/>\
-    <area shape='rect' coords='851,73,1015,89' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/>\
-    <area shape='rect' coords='859,98,933,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/>\
-    <area shape='rect' coords='943,99,1006,116' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/>\
-    <area shape='rect' coords='1026,59,1396,75' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGRAPH\"'/>\
-    <area shape='rect' coords='1036,99,1062,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG\"'/>\
-    <area shape='rect' coords='1072,98,1133,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGDEP\"'/>\
-    <area shape='rect' coords='1141,84,1216,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBBGROUP\"'/>\
-    <area shape='rect' coords='1155,106,1207,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBB\"' />\
-    <area shape='rect' coords='1225,85,1314,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDGROUP\"'/>\
-    <area shape='rect' coords='1233,104,1307,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDSIMPLE\"'/>\
-    <area shape='rect' coords='1325,100,1388,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSEQ\"'/>\
-    <area shape='rect' coords='1406,77,1486,91' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CODEGENERATION\"' />\
-    <area shape='rect' coords='1412,98,1454,114' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG2C\"' />\
-    <area shape='rect' coords='10,39,142,53' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXPANSIONS\"'/>\
-    <area shape='rect' coords='170,41,387,55' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
+    <area shape='rect' coords='1639,117,1733,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.arduino\"'/>\
+    <area shape='rect' coords='1651,155,1726,187' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.java\"'/>\
+    <area shape='rect' coords='4,5,838,35' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/>\
+    <area shape='rect' coords='220,106,822,135' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/>\
+    <area shape='rect' coords='13,37,209,67' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/>\
+    <area shape='rect' coords='1638,80,1736,110' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s.target\"'/>\
+    <area shape='rect' coords='1587,293,1637,325' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.seqssa\"'/>\
+    <area shape='rect' coords='1637,294,1705,324' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit.basic\"'/>\
+    <area shape='rect' coords='100,205,139,235' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"'/>\
+    <area shape='rect' coords='40,205,92,237' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"'/>\
+    <area shape='rect' coords='40,252,105,285' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/>\
+    <area shape='rect' coords='112,253,194,287' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/>\
+    <area shape='rect' coords='27,80,122,112' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/>\
+    <area shape='rect' coords='124,77,196,109' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/>\
+    <area shape='rect' coords='63,117,122,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/>\
+    <area shape='rect' coords='130,118,182,150' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/>\
+    <area shape='rect' coords='326,207,444,241' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"'/>\
+    <area shape='rect' coords='455,167,551,197' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/>\
+    <area shape='rect' coords='466,200,538,236' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORT\"'/>\
+    <area shape='rect' coords='462,240,537,273' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_ABORTWTO\"'/>\
+    <area shape='rect' coords='229,200,320,235' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/>\
+    <area shape='rect' coords='1587,134,1628,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"s\"'/>\
+    <area shape='rect' coords='566,243,635,276' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/>\
+    <area shape='rect' coords='556,146,647,180' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/>\
+    <area shape='rect' coords='647,195,731,228' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/>\
+    <area shape='rect' coords='733,218,812,253' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/>\
+    <area shape='rect' coords='850,118,1060,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/>\
+    <area shape='rect' coords='859,151,947,185' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/>\
+    <area shape='rect' coords='954,151,1048,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/>\
+    <area shape='rect' coords='1078,119,1559,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg\"'/>\
+    <area shape='rect' coords='1084,152,1131,188' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basic\"'/>\
+    <area shape='rect' coords='1137,149,1221,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.dependency\"'/>\
+    <area shape='rect' coords='1308,148,1364,185' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.guard\"'/>\
+    <area shape='rect' coords='1225,148,1307,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.basicblock\"'/>\
+    <area shape='rect' coords='1580,257,1708,287' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"circuit\"'/>\
+    <area shape='rect' coords='1370,152,1448,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.scheduling\"'/>\
+    <area shape='rect' coords='1456,152,1546,186' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"scg.sequentialize\"'/>\
+    <area shape='rect' coords='1579,42,1751,74' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"codegeneration\"'/>\
+    <area shape='rect' coords='1651,190,1720,221' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"T_s.c\"'/>\
+    <area shape='rect' coords='28,170,208,196' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
   </map>\
   <input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
-  <br />\
-    <span style='font-family: Verdana, Arial, Helvetica, sans-serif;\
-	font-size: x-small'>Click on the transformation that you like to add to the list of applied compile transformations.</span> </div>\
+  </div>\
 </body>";
 
 var mywindow;
@@ -115,7 +181,7 @@ function openSelectWindow() {
 	}catch(e) {
   }
   transformationsTimer=setInterval(function(){updateTransformations()},500);
-  mywindow = window.open("", "selectWindow", "width=950,height=270, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
+  mywindow = window.open("", "selectWindow", "width=1110,height=417, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
 
   mywindow.focus();
@@ -153,6 +219,11 @@ function updateTransformations() {
 var transformationsTimer;
 
 
+function setResultTextAndCompile() {
+	setResultText();
+	compile();
+}
+
 function setResultText() {
     var scale = document.getElementById("scale");
 	scale.disabled = true;
@@ -162,7 +233,6 @@ function setResultText() {
     var text = document.getElementById("resultTextDiv");
 	text.style.display="block";
 	image.style.display="none";
-	compile();
 //	alert("setResultText" + image + text);
 }
 
@@ -184,11 +254,29 @@ function setResultImage(type) {
 	compile();
 }
 
+
+function isTextTransformationSelected() {
+	    // hack: if transformations contain obvious text/code-output transformations
+		// such as s.c s.java s.target s codegeneration then switch to text output!
+		var selectedTransormations = document.getElementById("transformations").value;
+		var allTransformations = selectedTransormations.split(',');
+		var index;
+		for (index in allTransformations) {
+			var transformation = allTransformations[index].trim();
+			if ((transformation == "s")||(transformation == "T_s.c")||(transformation == "T_s.java")||(transformation == "T_s.arduino")||(transformation == "s.target")||(transformation == "codegeneration")) {
+					return true;
+			}
+		}
+		return false;
+}
+
 var doUpdateImage = false;
 
 function compile() {
 	window.clearInterval(compileTimer);
-	resultText.value = "Compiling, please wait...";
+	resultText.value = "Loading...";
+	resultTextEditor.setValue("Loading...");
+	document.getElementById("compiling").style.display="block";
 	clearErrors();
     var outputText = document.getElementById("outputText");
     if(outputText.checked) {
@@ -196,11 +284,26 @@ function compile() {
 		compileText();
 	}
 	else {
-		// first disable current compile image
-		progressImage();
-		doUpdateImage = true;
-		compileText();
+		var foundCodeTransformation = isTextTransformationSelected();
+		if (foundCodeTransformation) {
+			setResultText();
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			doUpdateImage = false;
+			compileText();
+		} else {
+			// first disable current compile image
+			progressImage();
+			doUpdateImage = true;
+			compileText();
+		}
 	}
+}
+
+function scheduleCompile() {
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
 }
 
 function replaceAll(inputStr, findStr, replaceStr) {
@@ -208,6 +311,7 @@ function replaceAll(inputStr, findStr, replaceStr) {
 }
 
 function compileText() {
+
 	//var data = new FormData();
 	//data.append('model', model.value);
 	//data.append('transformations', transformations.value);
@@ -219,14 +323,20 @@ function compileText() {
 
 	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
 	var resultUrl =  document.getElementById("KiCoURL").value;
-	var data =  "model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
-    document.getElementById("lastCompilerCall").value = resultUrl;
+
+	
+	var data = "synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(ext.value) + "&model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	//alert("synthVal" + synthVal);
+    //document.getElementById("lastCompilerCall").value = resultUrl;
+
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 	      var resultText = document.getElementById("resultText");
    		  resultText.value = xmlhttp.responseText;
+   	  	  resultTextEditor.setValue(xmlhttp.responseText);
+		  document.getElementById("compiling").style.display="none";
 
 		  var errorMsg = xmlhttp.getResponseHeader("compile-error");
 		  if (errorMsg != null) {
@@ -287,6 +397,18 @@ function setConfig(i) {
 }
 
 
+function toggleAutoWidth() {
+	var sizeElement =  document.getElementById("size");
+	if (sizeElement.value == 0) { 
+		// was resize -> new 100%
+		sizeElement.value = 1;
+		 resizeImage();
+	} else {
+		// was concrete -> new resize
+		sizeElement.value = 0;
+		resizeImage();
+	}
+}
 
 var isOnline = {};
 // On page load: Find & select the first server where compile AND render is online in order: 1. local host (3), 2. main, 3. backup1, 4. backup2
@@ -331,16 +453,44 @@ function progressImage() {
         new_image.id = "resultImage";
 		var imageUrl = "http://www.sccharts.com/progress.gif";
         new_image.src = imageUrl;
-		new_image.width = 252;
-		new_image.height = 252;
+		new_image.style.width = '70%';
+ 	    document.getElementById("compiling").style.display="block";
+		//new_image.width =  550; //252;
+		//new_image.height = 550;
         image.parentNode.insertBefore(new_image, image);
         image.parentNode.removeChild(image);
     }
 }
 
+var originalWidth = 0;
+var originalHeight = 0;
+function resizeImage() {
+			      var image = document.getElementById("resultImage");
+	   			  var size = document.getElementById("size");
+ 				  if (size.value != 0) {
+				  		// concrete %
+						image.style.width = "";
+						image.width = originalWidth/size.value;
+						image.height = originalHeight/size.value;
+				  } else {
+		  			    //var width = new_image.naturalWidth;
+						//var height = new_image.naturalHeight;
+				  		// fit screen
+						//var modelElement = document.getElementById("model");
+						//var modelWidth = modelElement.clientWidth; //.css("width");
+						//var percent = width / modelWidth;
+						image.style.width = '100%';
+						image.style.height = '100%';
+						//new_image.width = width/percent;
+						//new_image.height = height/percent;
+				  }
+}
+
+
 function updateImage() {
     var image = document.getElementById("resultImage");
     if(image.complete) {
+ 	    document.getElementById("compiling").style.display="none";
 	    var model = document.getElementById("model")
 	    var transformations = document.getElementById("transformations")
 	    var scale = document.getElementById("scale")
@@ -352,9 +502,14 @@ function updateImage() {
 				imageFormat = "svg+xml";
 		}
 
+		var tempExt = ext.value;
+		if (transformations.value.trim() != "") {
+			tempExt = synth.value;
+		}
 		var imageUrl = document.getElementById("KLighDURL").value
-		var data = "encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new Date().getTime();
-		document.getElementById("lastRenderCall").value = imageUrl;
+		var data = "layout="+encodeURIComponent(layout.value) + "&synth="+encodeURIComponent(synth.value) + "&ext="+encodeURIComponent(tempExt) + "&encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new
+
+		//document.getElementById("lastRenderCall").value = imageUrl;
 
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange=function() {
@@ -372,11 +527,10 @@ function updateImage() {
 	          image.parentNode.removeChild(image);
 
 			  new_image.onload = function() {
-	   			  var size = document.getElementById("size");
-				  var width = new_image.naturalWidth;
-				  var height = new_image.naturalHeight;
-				  new_image.width = width/size.value;
-				  new_image.height = height/size.value;
+		  			originalWidth = new_image.naturalWidth;
+					originalHeight = new_image.naturalHeight;
+					resizeImage();
+				  showServerOnline();
 	    	  }
 			}
 
@@ -391,126 +545,193 @@ function updateImage() {
 
 </script>
 
-<div align="center">
-  <p><img src="http://www.sccharts.com/sccharts.png" width="512" height="150" /></p>
-  <p><span class="Stil3">Sequentially Constructive Charts &mdash; SCCharts</span><span class="Stil1"><br />
-      <span class="Stil4">ONLINE COMPILER</span></span><br>
-      <span class="Stil15">If after a while there is still no compilation result, please select another server or local host <a href="#server">below</a>.</span> </p>
-    <table width="300" border="0" cellspacing="0">
-      <tr>
-        <td colspan="2" valign="top" scope="row"><label></label>
-          <table width="300" border="0" cellspacing="10">
-            <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">
-                <p>1. Textual SCChart (SCT)<br>
-                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">here</a>) </span></p>
-                </div></th>
-              <td valign="top"><label>
-                <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
-@HVLayout
-scchart ABRO {
+
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="wrap">
+    <div align="center" style="background-color: #E9F2FE;min-width: 100%;max-width: 100%">
+      <p><img src="http://www.sccharts.com/sccharts.png" alt="SCCharts" width="320" height="81" style="margin-top:20px" /> <span class="Stil1"><span class="Stil3"><br>
+        SCCharts</span></span><span class="Stil3"><span class="style15"> ONLINE&nbsp;COMPILER</span></span><br>
+        <br>
+      </p>
+    </div>
+    <div class="container-fluid" >
+	  
+ <div name="inputmodelDiv" id="inputmodelDiv" class="col-sm-6" style="margin-top:20px">
+
+				<label>
+                </label><label>
+                </label>
+                <span class="style13"><strong>Textual SCCharts Model &nbsp;&nbsp;</strong></span>
+                <span class="Stil12"> <span class="Stil8"><a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">SCT-Language</a>&nbsp;&nbsp;</span></span>
+    
+                
+                <label></label>
+                <span style="margin-top:20px">
+				
+            
+	   <select class="form-control" style="margin-top:5px"  name="example" id="example" onchange="loadExample();">
+         <option selected="selected" value="">Load example...</option>
+         <option value="ao.sct">AO</option>
+         <option value="aldo.sct">ALDO</option>
+         <option value="abro.sct">ABRO</option>
+         <option value="dvdplayer.sct">DVD Player</option>
+         <option value="trafficlight.sct">Traffic Light</option>
+         <option value="empty.sct">Empty SCChart</option>
+       </select> <textarea name="model"  class="form-control" style="margin-top:5px;font-family:monospace;font-weight:normal;min-width: 100%;max-width: 100%" cols="70" rows="20" id="model" onchange="compile();">
+// The AO example is one of the simpler SCCharts models. It has a boolean input
+// A and a boolean output O. O is initially set to false, which is an extended
+// SCCharts feature.
+// AO waits for A becoming true inside state wA. If A becomes true, in any
+// tick other than the initial one, and AO is still inside state wA, then the
+// transition from wA to dA is taken. This also sets the output O to true.
+// Note that AO is not responsive in state dA. However, as dA is not a final 
+// state, AO does not terminate.
+
+@HVLayout 
+//@layout[direction] DOWN
+scchart AO { 
   input bool A;
-  input bool B;
-  input bool R;
-  output bool O = false;
-
-  region Main:
-
-  initial state ABO {
-
-    initial state WaitAB {
-
-      region HandleA:
-
-      initial state WA
-      --> DA with A;
-
-      final state DA;
-
-      region HandleB:
-
-      initial state WB
-      --> DB with B;
-
-      final state DB;
-    }
-    >-> Done with / O = true;
-
-    state Done;
-  }
-  o-> ABO with R;
-}
-            </textarea>
-              </label></td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations<br />
-                <span class="Stil15 Stil13 Stil13">(comma separated)</span></div></th>
-              <td><label>
-			  <div class="input-w"  style="width: auto">
+  output bool O = false;     
+    
+  initial state wA   
+  --> dA with A / O = true; 
+     
+  state dA;          
+} 
+		   </textarea>		
+        </span></div>
+	  
+	  
+	  	   <div class="col-sm-6" style="margin-top:24px"><span class="Stil8"><span class="style10">Compile Transformations / Output</span> </span>
+			    <span class="Stil8 Stil12">&nbsp;&nbsp;<a href="#" onclick="toggleAdvancedTransformations();">Show/Hide Advanced Mode</a></span>
+			      <div class="input-w"  style="width: auto">
+				  
+	   <select class="form-control" style="margin-top:5px"  name="simpleTransformationSelection" id="simpleTransformationSelection" onchange="applySimpleTransformationSelection();">
+         <option selected="selected" value="">Modeled SCChart Diagram (default)</option>
+         <option value="EXTENDED">Core SCChart Diagram</option>
+         <option value="TEXTENDED">Core SCChart (SCT)</option>
+         <option value="CORE">Normalized SCChart Diagram</option>
+         <option value="TCORE">Normalized SCChart (SCT)</option>
+         <option value="scg.basic">SCG Diagram</option>
+         <option value="scg.sequentialize">Sequentialized SCG Diagram</option>
+         <option value="scg.seqssa">Sequentialized SSA SCG Diagram</option>
+         <option value="circuit.basic">HW Circuit Diagram</option>
+         <option value="T_s.c">C Code</option>
+         <option value="T_s.java">Java Code</option>
+         <option value="T_s.arduino">Arduino Code</option>
+       </select>				  
+				  
+                <div id="advancedTransformationsOptions" style="display: none">
                 <p>
-                  <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
-                  <span class="Stil15">Examples: ABORT, INITIALIZATION, ENTRY, SCG, SCGRAPH, CODEGENERATION</span><input type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" />
+                  <input class="form-control input-sm" name="transformations" type="text" oninput="scheduleCompile();"  id="transformations" size="94" value="" style="width: 100%"/>
+				<span class="Stil15 Stil13 Stil13">(Comma separated list of transformations to apply)</span><br>
+       
+                  <input class='btn btn-primary' style="margin-top:5px" type="submit" name="selectTransformations" value="Select Transformations ..." onclick="openSelectWindow()" /><br><br>
+				  <span class="style7">Examples: ABORT, INITIALIZATION, ENTRY, scg.basic, scg, codegeneration, circuit, scg.seqssa</span>
                 </p>
+				</div>
                 </div>
-              </label></td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><div align="right"><span class="Stil8">3. Other Options</span></div></th>
-              <td align="left"><p>
-                <label><span class="Stil8">
-                  <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-                  Strict</span></label>
-                <span class="Stil8 Stil10">(only apply the listed transformations)
-                  <label></label>
-              </span></p>
-                <p> <span class="Stil8 Stil10">
-                  <label>
-                  <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
-                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label>
-                  <label> <br>
+              </label>
+ </div>
+ 
+ 
+ 
+ 
+	  
+	   <div class="col-sm-6" style="margin-top:20px">
+		<div id="resultErrorDiv" style="display: none">
+           <textarea class="form-control"  name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888;margin-top:5px;font-family:monospace;min-width: 100%;max-width: 100%"></textarea>
+           <br>
+         </div>
+           <div id="resultWarningDiv" style="display: none">
+             <textarea class="form-control" name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88;margin-top:5px;font-family:monospace;min-width: 100%;max-width: 100%"></textarea>
+             <br>
+           </div>
+		   
+<center>
+<div id="compiling" style="font:24px bold; display: none;margin-bottom:40px;">
+<br>
+<div style="font:24px bold; background-color:#0066FF">
+	   <span class="style13b" style="font:48px;background-color:#0066FF;"><br><b>Compiling or rendering, please wait...</b> <BR>
+	   <BR>
+	   If, for a while, there is no result displayed, try again by refreshing or reloading the page.       <br><br></span>
+</div>
+</div>
+<div id="serverdownDiv" style="font:24px bold; display: none;margin-bottom:0px">
+        <img id="serverdownImg" src="http://www.sccharts.com/serverdown.png"/></div>
+		         <div id="resultImageDiv" style="font:24px bold; display: none;min-width: 100%;max-width: 100%">
+        <a href="javascript:toggleAutoWidth();"><img src="xxx" name="resultImage" id="resultImage" onclick="toggleAutoWidth()"  style="min-width: 100%;max-width: 100;"/></a></div></center>
+<div id="resultTextDiv" style="margin-bottom:0px">
+<span class="style13"><strong>Transformed Output &nbsp;&nbsp;</strong></span>
+<textarea name="resultText" class="form-control" cols="70" rows="25" id="resultText" readonly=true style="margin-top:1px;font-family:monospace;background-color: #CCCCCC;min-width: 100%;max-width: 100%"></textarea></div>
+	   </div>
+
+
+	  
+ <div class="col-sm-6" style="margin-top:40px">
+
+				<span class="style5"><span class="style13">Other Options</span>
+			  </span>
+                <p> <span class="Stil8 Stil10"> 
+    <label>
+                  <input name="output" type="radio" id="outputText" onclick="setResultTextAndCompile();" value="text"  />
+    <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label><br>
+    <label> 
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
-                  <label> <br>
-                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG) <span class="Stil12">(compile and render)</span><BR>
+    <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label><br>
+                <label> 
+                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" checked />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> <strong>Graphical output (PNG) <span class="Stil12">(compile and render)</span><br />
                   <BR>
-  &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
-                  <label></label>
-                  <label></label>
-                  </span> <span class="Stil8 Stil10">
-                  <label> </label>
-                  <select name="scale" id="scale" disabled="disabled" onchange="compile();">
-                    <option>1</option>
+  Image Quality:
+                  <span class="Stil8 Stil10">
+                  <select name="scale" id="scale"  onchange="compile();">
+                    <option  selected="selected">1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
                   </select>
                     , Size:
-  <select name="size" id="size" disabled="disabled" onchange="compile();">
+  <select name="size" id="size"  onchange="resizeImage();">
+    <option selected="selected" value="0">fit screen</option>
     <option value="0.5">200%</option>
-    <option selected="selected" value="1">100%</option>
+    <option value="1">100%</option>
     <option value="1.5">75%</option>
     <option value="2">50%</option>
     <option value="4">25%</option>
     <option value="10">10%</option>
   </select>
-                  </span><br>
-                  <br>
-                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
+                  </span>
+                <p><span class="Stil8 Stil10">
+                  Layout: 
+                  <select name="layout" id="layout" onchange="compile();">
+                    <option selected="selected" value="dot">Graphviz</option>
+                    <option value="klay">KIELER</option>
+                  </select>
+                  
 
-		<div id="advancedOptions" style="font:24px bold; display: none">
+                </span><br>
+                  <br>
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Show/Hide Advanced Options</a></span>
+                <div id="advancedOptions" style="font:24px bold; display: none">
+                <label><span class="Stil8">
+                <input  name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+              Strict Mode</span></label>
+                <span class="Stil8 Stil10">(only apply the listed transformations)</span>
+				
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
                   <tr>
-                    <th width="200" scope="row"><div align="right">KielerCompiler URL: </div></th>
+                    <th width="200" scope="row"><div align="right">KiCo URL: </div></th>
                     <td width="200"><label>
                       <input name="KiCoURL" type="text" id="KiCoURL" size="30" value="http://www.sccharts.com:5556">
                     </label></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">KLighD Render URL: </div></th>
+                    <th scope="row"><div align="right">KLighD URL: </div></th>
                     <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
                   </tr>
                   <tr>
@@ -518,87 +739,155 @@ scchart ABRO {
                     <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">Last Compiler Call:</div></th>
-                    <td><input name="lastCompilerCall" type="text" id="lastCompilerCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                    <th scope="row"><div align="right">Input:</div></th>
+                    <td><select  name="ext" id="ext" onchange="compile();">
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
+                    <option value="kgt">KGT</option>
+                  </select></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">Last Render Call:</div></th>
-                    <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                    <th scope="row"><div align="right">Output:</div></th>
+                    <td><select name="synth" id="synth" onchange="compile();">
+                    <option selected="selected" value="">auto detect</option>
+                    <option value="sct">SCChart</option>
+                    <option value="scg">SCG</option>
+                    <option value="s">S</option>
+                    <option value="circuit">Circuit</option>
+                    <option value="kgx">KGX</option>
+                    <option value="kgt">KGT</option>
+                  </select></td>
                   </tr>
                 </table>
-		</span></div>
-					  </td>
-            </tr>
-            <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server <BR><span class="Stil15 Stil13 Stil13">(compile/render)</span></p></th>
-              <td align="left"><p>
-                <label></label>
-              </p>
-                <table width="327" border="0" cellspacing="5">
-                      <tr>
-                        <td width="315" valign="top" scope="row"><span class="Stil8">
-                        <label>
-                          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
-                          <br>
-                          <label>
-                        <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
-                          <span class="Stil12">(faster)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
-                          <span class="Stil12">(slower)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
-                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
-</span><span class="Stil8">
-                      <label></label>
-                        </span><span class="Stil8">
-                          <label></label>
-                        </span></td>
-                      </tr>
-                </table>
-					</td>
-            </tr>
-            <tr>
-              <th scope="row"><label></label></th>
-              <th scope="row"><div align="left">
-                  <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
-              </div></th>
-            </tr>
-          </table>
-          <p><br />
-          </p></td>
-        <td  valign="top">
-
-          <table width="300" border="0" cellspacing="10">
-            <tr><td>
-
-		<div id="resultErrorDiv" style="font:24px bold; display: none">
-          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
-		  <br>
-		 </div>
-        <div id="resultWarningDiv" style="font:24px bold; display: none">
-          <textarea name="resultWarning" cols="70" rows="4" id="resultWarning" readonly=true style="background-color: #FFFB88"></textarea>
-          <br>
-         </div>
-		<div id="resultImageDiv" style="font:24px bold; display: none">
-        <img src="xxx" name="resultImage" id="resultImage"/></div>
-		<div id="resultTextDiv" style="font:24px bold; display: block">
-          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC"></textarea>
-		  </div>
-		  </td>
-      </tr>
-    </table>
+		</span></div>			  
+ </div>
+	  
+ <div class="col-sm-6" style="margin-top:40px">
+   <table width="100%" border="0" cellspacing="5">
+     <tr>
+       <td width="315" valign="top" scope="row"><span class="Stil8">
+         <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>Server </strong></span><span class="Stil10 Stil3 Stil10 style14"><span class="Stil15 Stil13 Stil13">(compile / render)</span></span><br>
+         <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server* <span class="Stil12">(fast)</span></label>
+         <br>
+         <label>
+         <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b"> Backup Server</label>
+         <span class="Stil12">(slow)</span><br>
+<!--         <label>
+         <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
+         <span class="Stil12">(slower)</span><br> 
+         <label> -->
+         <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
+         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Compiler#KIELERCommandLineCompiler-EnabletheKielerCompilerHTTPServer" target="_blank">here</a> and <a href="https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Command+Line+Rendering#KIELERCommandLineRendering-EnabletheKLighDHTTPServer" target="_blank">here</a>)</span></label>
+         </span><span class="Stil8">
+         <label></label>
+         </span><span class="Stil8">
+         <label></label>
+         <br>
+         <br>
+<!--         <span class="style9">(* Due to technical issues with headless offline rendering using a VNC server, the Main Server may in some circumstances be effected by VNC server crashes but will
+		 auto recover within the next minutes. A locally running KIELER SCCharts will not suffer from this problem. <br>
+         <b>Please do not render such large diagrams with our Main Server, which is online only for demonstration purposes and not to perform heavy duty compilations or renderings.</b> </span>
+		 -->
+		 </span></td>
+     </tr>
+   </table>
+ </div>
 
 
-	    </td>
-      </tr>
-    </table>
-  <p><span class="Stil15">copyright (c) 2014 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a><br />
-  </p>
+
+
+
+
+
+
+
+	  <div class="col-sm-12" style="margin-top:40px">
+	  <label> <span class="Stil10 Stil3 Stil10 style13 style14"><strong>References </strong></span>
+	  <span class="style9">
+<br>
+
+[1] Reinhard von Hanxleden, Björn Duderstadt, Christian Motika, Steven Smyth, Michael Mendler, Joaquín Aguado, Stephen Mercer, and Owen O’Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/pldi14.pdf" target="_blank">SCCharts: Sequentially Constructive Statecharts for Safety-Critical Applications</a>. In Proc. ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI 2014), Edinburgh, UK, June 2014.<BR>
+
+[2] Christian Motika, Steven Smyth, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola14.pdf" target="_blank">Compiling SCCharts — A case-study on interactive model-based compilation</a>. In Proceedings of the 6th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2014), volume 8802 of LNCS, pages 443–462, Corfu, Greece, October 2014.<BR>
+
+[3] Francesca Rybicki, Steven Smyth, Christian Motika, Alexander Schulz-Rosengarten, and Reinhard von Hanxleden. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/isola16.pdf" target="_blank">Interactive model-based compilation continued — interactive incremental hardware synthesis for SCCharts</a>. In Proceedings of the 7th International Symposium on Leveraging Applications of Formal Methods, Verification and Validation (ISoLA 2016), LNCS, October 2016.<BR>
+
+[4] Reinhard von Hanxleden, Michael Mendler, Joaquín Aguado, Björn Duderstadt, Insa Fuhrmann, Christian Motika, Stepjen Mercer, and Owen O'Brien. <a href="http://rtsys.informatik.uni-kiel.de/~biblio/downloads/papers/date13.pdf" target="_blank">Sequentially Constructive Concurrency - A conservative extension of the synchronous model of computation</a>. In Proc. Design, Automation and Test in Europe Conference (DATE 2013), Grenoble, France, March 2013.<BR>
+
+
+[5] Charles André. Semantics of SyncCharts, Technical Report ISRN I3S/RR-2003-24-FR, I3S Laboratory, Sophia-Antipolis, France, April 2003.<BR>
+
+[6] Gerad Berry. The foundations of Esterel, In G. Plotkin, C. Stirling, and M. Tofte, editors, Proof, Language, and Interaction: Essays in Honour of Robin Milner, pages 425-454, Cambridge, MA, USA, 2000.<BR>
+
+[7] David Harel. Statecharts: A visual formalism for complex systems, Science of Computer Programming, 8(3):231-274, June 1987.<BR>
+	 </span>
+	   </div>
+
+    </div>
+
+	  
+	  
+	  
+
+	  
+	  
+<style type="text/css">
+
+      /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #E9F2FE;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
+
+    </style>
+		  
+<div id="footer"  style="margin-top:10px">
+ <br>
+ <div class="container">
+   <div align="center"><span class="Stil15">copyright (c) 2014-2016 Reinhard von Hanxleden, Christian Motika, Steven Smyth, see: </span> <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts" class="Stil15">http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCCharts</a><br>
+     
+   </div>
+ </div>
 </div>
 
 <script>
@@ -614,13 +903,57 @@ function toggleAdvanced() {
   }
 }
 
+var advancedTransformationsShown = false;
+function toggleAdvancedTransformations() {
+  advancedTransformationsShown = !advancedTransformationsShown;
+  if (advancedTransformationsShown) {
+	document.getElementById('advancedTransformationsOptions').style.display='block';
+  }
+  else {
+	document.getElementById('advancedTransformationsOptions').style.display='none';
+  }
+}
 
 
+function showServerOffline() {
+	document.getElementById('resultTextDiv').style.display='none';
+	document.getElementById('resultImageDiv').style.display='none';
+	document.getElementById('serverdownDiv').style.display='block';
+	document.getElementById('serverdownImg').style.width = '70%';
+	document.getElementById('serverdownImg').style.height = '70%';
+	document.getElementById("compiling").style.display="none";
+}
+function showServerOnline() {
+	document.getElementById('serverdownDiv').style.display='none';
+    var outputText = document.getElementById("outputText");
+    if(outputText.checked || isTextTransformationSelected()) {
+		document.getElementById('resultTextDiv').style.display='block';
+		document.getElementById('resultImageDiv').style.display='none';
+	} else {
+		document.getElementById('resultImageDiv').style.display='block';
+		document.getElementById('resultTextDiv').style.display='none';
+	}
+}
 
+function checkServerOnline() {
+	var online = false;
+    var serverOrder = new Array(3,0,1,2);
+    for (var c = 0; c < 4; c++) {
+        if (isOnline[compileServerName[serverOrder[c]]] == true && isOnline[renderServerName[serverOrder[c]]] == true) {
+			online = true;
+		}
+	}
+	if (!online) {
+		showServerOffline();
+	} else {
+		showServerOnline();
+	}
+}
+setTimeout(function() { checkServerOnline(); }, 5000);
 
 var compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
 
-var area = document.getElementById("model");
+var area = modelEditor;//document.getElementById("model");
 if (area.addEventListener) {
   area.addEventListener('input', function() {
     // event handling code for sane browsers
@@ -651,4 +984,157 @@ if (area.addEventListener) {
   });
 }
 
+
+
+function applySimpleTransformationSelection() {
+	var exampleElem = document.getElementById("simpleTransformationSelection");
+	var sel = exampleElem.value;
+	
+	var switchToText = false; 
+	
+	if ((sel == "TEXTENDED")||(sel == "TCORE")) {
+		switchToText = true;
+		if (sel == "TEXTENDED") {
+			sel = "EXTENDED";
+		}
+		if (sel == "TCORE") {
+			sel = "CORE";
+		}
+	}
+
+
+	var transformationsElem = document.getElementById("transformations");
+	transformationsElem.value = sel;
+	if (switchToText) {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = false;
+			document.getElementById("outputText").checked = true;
+			setResultTextAndCompile();
+	}
+	else {
+			document.getElementById("outputImageSVG").checked = false;
+			document.getElementById("outputImagePNG").checked = true;
+			document.getElementById("outputText").checked = false;
+			setResultImage('png');
+	}
+	
+	compile();
+}
+
+
+function loadExample() {
+	var modelElem = document.getElementById("model");
+  
+	var exampleElem = document.getElementById("example");
+	var sel = exampleElem.value;
+	exampleElem.value = "";
+	
+	var exampleUrl = "http://www.sccharts.com/"  + sel;
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", exampleUrl, true);
+	xmlhttp.onreadystatechange=function() {
+ 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	      var modelElem = document.getElementById("model");
+		  var exampleSCT = xmlhttp.responseText;
+	  	  modelEditor.setValue(exampleSCT);
+		  modelElem.value = exampleSCT;
+	      compile();
+		}
+	}
+	//xmlhttp.open('POST', exampleUrl, true);
+	//xmlhttp.setRequestHeader('Content-type', 'text/plain');
+	xmlhttp.send(null);
+}
+
+
+// default image
+setResultImage('png');
+     
 </script>
+
+<style>
+.style1 { color: red; }
+.style2 { color: blue; }
+</style>
+
+<script>
+  // HIGHLIGHTING
+  var modelElem = document.getElementById("model");
+  
+ // alert("BEFORE");
+  
+  var keywordsSCCharts = ("scchart,input,output,signal,bool,int,float,region,initial,state,with,final,during,entry,exit,immediate,history,deferred,deep,suspend,weak suspend,connector,-->,>->,o->").split(',');
+
+//  alert("AFTER");
+  
+//	for (var i in keywordsSCCharts) {
+//		alert(keywordsSCCharts[i]);
+//	}
+	
+  //CodeMirror.defineSimpleMode("simplemode", {});
+  CodeMirror.defineMode("scchartsmode", function() {
+  return {
+    token: function(stream,state) {
+		if (stream.match("//")) {
+				while ((ch = stream.next()) != null)
+                if (ch == "\n") break;
+	        return "scchartscomment";
+		} else if (stream.match("@layout")) {  
+				while ((ch = stream.next()) != null)
+                if (ch == " " && stream.next() == " ") break;
+	        return "layout";
+		} else if (stream.match("@Layout")) {  
+				while ((ch = stream.next()) != null)
+                if (ch == " " && stream.next() == " ") break;
+	        return "layout";
+		} else if (stream.match("\"")) {  
+				while ((ch = stream.next()) != null)
+                if (ch == "\"") break;
+	        return "scchartsstring";
+		} else if (stream.match("@VHLayout")) {   
+	        return "layout";
+		} else if (stream.match("@HVLayout")) {   
+	        return "layout";
+		} else {
+			for (var i in keywordsSCCharts) {
+		        if (stream.match(keywordsSCCharts[i])) {
+	   		        return "marked";
+				}
+			}
+    	    stream.next();
+	        return null;
+        }		
+    }
+  };
+
+});
+  
+  var modelEditor = CodeMirror.fromTextArea(modelElem, {
+   mode: "scchartsmode",
+   lineNumbers: true
+  });
+//  modelEditor.setValue(modelElem.value);
+  //modelEditor.setAttribute("onchange", function(){compile();});
+ // modelEditor.onchange = compile();
+ modelEditor.on("change", function() {
+    var modelElem = document.getElementById("model");
+	modelElem.value =  modelEditor.getValue();
+	scheduleCompile();
+  });
+  
+  
+  var resultTextElem = document.getElementById("resultText");
+  var resultTextEditor = CodeMirror.fromTextArea(resultTextElem, {
+   mode: "scchartsmode",
+   lineNumbers: true,
+   readOnly: true
+  });
+  
+  //modelEditor.addEventListener(
+  //   'change',
+  //   function() {compile();},
+  //   false
+  //);
+</script>
+</body>

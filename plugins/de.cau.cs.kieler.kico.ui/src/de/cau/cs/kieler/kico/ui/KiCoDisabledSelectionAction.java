@@ -13,7 +13,8 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import de.cau.cs.kieler.core.kgraph.KNode;
+import org.eclipse.elk.graph.KNode;
+
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.features.FeatureGroup;
@@ -86,7 +87,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                     KiCoSelectionView.enableTransformation(feature, selection,
                             context.getViewContext());
                 }
-                System.out.println("Selected features are: " + selection);
+                KiCoUIPlugin.log("Selected features are: " + selection);
             }
 
         }

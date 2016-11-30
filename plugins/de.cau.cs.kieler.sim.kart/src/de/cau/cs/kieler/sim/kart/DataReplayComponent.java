@@ -22,12 +22,11 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.elk.core.util.Pair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.eso.EsoFile;
 import de.cau.cs.kieler.sim.eso.ISignal;
 import de.cau.cs.kieler.sim.eso.ITick;
@@ -42,7 +41,6 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
@@ -157,7 +155,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         // Read the file in case of NO training mode (validation) or Automatic training mode
         ITraceProvider tracefile = new EsoFile();
         try {
-            List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
+            List<ITrace> tracelist = tracefile.loadTrace(esoFilePath);
             try {
                 trace = tracelist.get(tracenum);
             } catch (IndexOutOfBoundsException e) {
@@ -367,10 +365,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             // only read inputs in this case
             loadInputs(retval);
         }
-
+        
         loadPreviousInputSignals(obj, retval);
         loadValConfigVars(retval);
-
+        
         // inject signals into simulation
         return retval;
     }
@@ -452,7 +450,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                         prevSignals.accumulate(field, obj);
                     }
                 } catch (JSONException e) {
-                    System.out.println(e.getMessage());
+                    KartPlugin.logError(e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -505,7 +503,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 Entry<String, Object> variable = variables.next();
                 value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
             }
-
+            
             json.accumulate(outputVarName, value);
         } catch (JSONException e) {
             throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);

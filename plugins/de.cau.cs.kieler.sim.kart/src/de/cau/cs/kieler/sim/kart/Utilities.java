@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.ecore.EObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.eso.ISignal;
 import de.cau.cs.kieler.sim.eso.eso.impl.EsoBoolImpl;
 import de.cau.cs.kieler.sim.eso.eso.impl.EsoFloatImpl;

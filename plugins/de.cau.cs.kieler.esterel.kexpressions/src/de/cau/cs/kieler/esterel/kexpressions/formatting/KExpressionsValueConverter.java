@@ -19,7 +19,7 @@ import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.nodemodel.INode;
 
-import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsValueConverter;
+import de.cau.cs.kieler.annotations.formatting.AnnotationsValueConverter;
 
 /**
  * @author chsch

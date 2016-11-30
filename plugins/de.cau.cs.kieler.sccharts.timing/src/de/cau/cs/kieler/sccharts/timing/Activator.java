@@ -17,10 +17,12 @@ package de.cau.cs.kieler.sccharts.timing;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends AbstractUIPluginLog {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.tsccharts"; //$NON-NLS-1$

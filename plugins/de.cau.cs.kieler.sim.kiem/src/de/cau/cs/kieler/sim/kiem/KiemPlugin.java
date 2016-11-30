@@ -55,6 +55,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.InitializeExecution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -74,7 +75,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @kieler.rating 2010-01-15 yellow
  * 
  */
-public class KiemPlugin extends AbstractUIPlugin {
+public class KiemPlugin extends AbstractUIPluginLog {
 
     /** The Constant DEBUG. */
     public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean(). getInputArguments().toString().contains("-agentlib:jdwp");
@@ -965,7 +966,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         for (int i = 0; i < jsonComponents.length; i++) {
             try {
                 if (DEBUG) {
-                    System.out.println("KIEM loading component: "
+                    KiemPlugin.log("KIEM loading component: "
                             + jsonComponents[i].getContributor().getName());
                 }
                 JSONObjectDataComponent dataComponent = (JSONObjectDataComponent) jsonComponents[i]
@@ -990,7 +991,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         for (int i = 0; i < stringComponents.length; i++) {
             try {
                 if (DEBUG) {
-                    System.out.println("KIEM loading component: "
+                    KiemPlugin.log("KIEM loading component: "
                             + stringComponents[i].getContributor().getName());
                 }
                 JSONStringDataComponent dataComponent = (JSONStringDataComponent) stringComponents[i]
@@ -1005,7 +1006,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                             + jsonComponents[i].getContributor().getName(), KiemPlugin.PLUGIN_ID,
                             null, true);
                 }
-                // System.out.println(dataComponent.getName());
+                // KiemPlugin.log(dataComponent.getName());
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
@@ -1460,7 +1461,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param message
      *            the message to present
      */
-    private void showWarning(final String message) {
+    public void showWarning(final String message) {
         if (parentShell != null) {
             MessageDialog.openWarning(parentShell, Messages.mViewTitle, message);
         } else {

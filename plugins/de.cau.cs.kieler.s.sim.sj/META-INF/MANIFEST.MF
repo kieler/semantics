@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.s.sim,
- de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.s,
  de.cau.cs.kieler.sim.signals,
  de.cau.cs.kieler.sjl,
@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.console,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.jface,
- de.cau.cs.kieler.core.annotations
+ org.eclipse.core.resources,
+ de.cau.cs.kieler.annotations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.s.sim.sj

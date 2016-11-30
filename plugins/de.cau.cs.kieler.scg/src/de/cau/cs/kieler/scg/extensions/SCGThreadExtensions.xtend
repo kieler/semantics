@@ -159,23 +159,51 @@ class SCGThreadExtensions {
      * @param entry
      * 			the entry node of the thread
      * @return Returns a list of nodes of the given thread. 
-     */
-    def Map<Entry, Set<Node>> getAllThreadNodes (Entry entry) {
+     */ 
+    def Map<Entry, Set<Node>> getAllThreadNodes(Entry entry) {
+    	val threadMapping = <Entry, Set<Node>> newHashMap
+    	val nodeMapping = <Node, List<Entry>> newHashMap
+    	entry.getAllThreadNodesAndThreads(threadMapping, nodeMapping)
+    	threadMapping
+	}     
+     
+     
+    /**
+     * Retrieves all nodes of a thread. In the SCG sense a thread starts at its 
+     * entry node and ends at its exit node. Hence, each thread is identified by
+     * its entry node and the successors of a fork node (retrievable via
+     * {@link #getAllNext(Node)}) are the entry nodes of each thread of that fork node.
+     * 
+     * @param entry
+     * 			the entry node of the thread
+     * @return Returns a list of nodes of the given thread. 
+     */     
+    def void getAllThreadNodesAndThreads(Entry entry, Map<Entry, Set<Node>> threadMapping, Map<Node, List<Entry>> nodeMapping) {
     	// Create a new list of nodes and 
     	// a list of control flows that mark paths within the thread.
-    	val returnMap = <Entry, Set<Node>> newHashMap
+    	val returnMap = threadMapping
         val nodeSet = <Node> newHashSet
         val controlFlows = <ControlFlow> newLinkedList
+        
+        val entryList = <Entry> newArrayList => [
+        	add(entry)
+        	val previousNode = entry.allPrevious.head?.eContainer as Node
+        	if (previousNode != null) {
+        		addAll(nodeMapping.get(previousNode))
+        	}
+        ]
         
         // Add the entry node itself and retrieve the exit of the thread
         // with aid of the opposite relation in the entry node. 
         returnMap.put(entry, nodeSet)
+        nodeMapping.put(entry, entryList)
         val exit = entry.exit
         
         // If the exit node follows the entry node directly, exit here.
         if (entry.next.target == exit) {
 	        nodeSet.add(exit)
-    	    return returnMap
+	        nodeMapping.put(exit, entryList)
+    	    return 
         }
         
         // Now, follow the control flow until the exit node is reached 
@@ -191,21 +219,25 @@ class SCGThreadExtensions {
             nodeSet.add(nextNode);
             
             if (nextNode instanceof Entry) {
-            	val nNMap = (nextNode as Entry).getAllThreadNodes
+            	val nNMap = <Entry, Set<Node>> newHashMap;
+            	nextNode.getAllThreadNodesAndThreads(nNMap, nodeMapping)
             	for(k : nNMap.keySet) {
             		val nNNodeList = nNMap.get(k)
             		returnMap.put(k, nNNodeList)
             		nodeSet.addAll(nNNodeList)
             	}
-            	nextNode = (nextNode as Entry).exit
+            	nextNode = nextNode.exit
             	nodeSet.add(nextNode);
-            }
+            } else {
+				nodeMapping.put(nextNode, entryList)            	
             
-            if (nextNode instanceof Surface) {
-	            // Since surface node do not have extra control flows to their 
-    	        // corresponding depth, set the next node manually.
-                nextNode = (nextNode as Surface).depth
-                nodeSet.add(nextNode);                                
+	            if (nextNode instanceof Surface) {
+		            // Since surface node do not have extra control flows to their 
+	    	        // corresponding depth, set the next node manually.
+	                nextNode = nextNode.depth
+	                nodeSet.add(nextNode);     
+	                nodeMapping.put(nextNode, entryList)                           
+	            }
             }
             
             // Now, add all succeeding control flow provided 
@@ -225,28 +257,33 @@ class SCGThreadExtensions {
         while(!controlFlows.empty) {
             var nextNode = controlFlows.head.eContainer as Node
             controlFlows.remove(0)
-            nodeSet.add(nextNode)
-            if (nextNode instanceof Exit) {
-            	// It is not necessary to reverse search the included threads again
-            	// because their reverse search was executed in the previous call also.
-            	// Therefore, proceed directly with the entry node.
-            	nextNode = (nextNode as Exit).entry
-            	nodeSet.add(nextNode);
-            }            
-            if (nextNode instanceof Depth) {
-                nextNode = (nextNode as Depth).surface
-                nodeSet.add(nextNode)
+            if (!nodeSet.contains(nextNode)) {
+            	nodeSet.add(nextNode)
+            	if (!(nextNode instanceof Entry)){ 
+	            	nodeMapping.put(nextNode, entryList)
+            	}  
+            	if (nextNode instanceof Exit) {
+            		// It is not necessary to reverse search the included threads again
+	            	// because their reverse search was executed in the previous call also.
+    	        	// Therefore, proceed directly with the entry node.
+        	    	nextNode = (nextNode as Exit).entry
+            		nodeSet.add(nextNode);
+            	} else if (nextNode instanceof Depth) {
+	                nextNode = (nextNode as Depth).surface
+    	            nodeSet.add(nextNode)
+    	            nodeMapping.put(nextNode, entryList)
+   	            }
+       	    } 
+       	    if (nextNode != null && nextNode != exit.entry) {
+	            nextNode.allPrevious.filter[ 
+	                (!nodeSet.contains(it.eContainer)) && 
+	                (!controlFlows.contains(it)) ] 
+	                    => [ controlFlows.addAll(it) ]
             }
-            if (nextNode != null && nextNode != exit.entry)
-            nextNode.allPrevious.filter[ 
-                (!nodeSet.contains(it.eContainer)) && 
-                (!controlFlows.contains(it)) ] 
-                    => [ controlFlows.addAll(it) ]
         }
         
         // Add the exit node and return.
         nodeSet.add(exit)
-        returnMap
     }   
     
     /**
@@ -513,7 +550,7 @@ class SCGThreadExtensions {
         		threadTypes.putAll(childMap)
         		newType = threadTypes.get(entry).combineThreadType(newType)
         	}
-        	fork.join.next.accumulateThreadControlFlowsTypes(
+        	fork.join.next?.accumulateThreadControlFlowsTypes(
         		localFlow, newType, threadTypes, source
         	)
         } else {

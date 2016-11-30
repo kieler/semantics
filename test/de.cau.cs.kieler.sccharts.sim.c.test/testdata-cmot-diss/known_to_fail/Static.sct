@@ -1,0 +1,21 @@
+// Does not work?
+// "Validation error: The signal(s) OY were present with a wrong value"
+@diagram[KLayLayered] false  
+scchart Static {
+  output int OX;
+  output int OY;
+
+  initial state S1
+  --> S2;
+
+  state S2 {
+    static int x = 42;
+    int y = 42;
+    
+    initial state S21
+    --> S22 with / x++; y++; OX = x; OY = y;
+    
+    final state S22;    
+  }  
+  >-> S1;
+}                

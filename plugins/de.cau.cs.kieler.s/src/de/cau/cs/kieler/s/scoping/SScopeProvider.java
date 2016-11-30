@@ -17,7 +17,7 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.s.s.HostCodeInstruction;
 
 

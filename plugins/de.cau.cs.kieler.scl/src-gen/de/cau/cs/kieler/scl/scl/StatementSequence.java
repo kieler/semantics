@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
 import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.annotations.Annotatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,10 +13,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.StatementSequence#getStatements <em>Statements</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementSequence()
  * @model

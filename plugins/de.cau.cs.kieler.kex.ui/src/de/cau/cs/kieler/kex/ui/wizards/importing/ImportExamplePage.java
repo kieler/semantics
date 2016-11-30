@@ -25,6 +25,8 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.elk.core.util.Maybe;
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -60,13 +62,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.WizardResourceImportPage;
 import org.osgi.framework.Bundle;
 
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.ui.util.TreeViewerCheckStateHandler;
-import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kex.controller.ExampleManager;
 import de.cau.cs.kieler.kex.model.Category;
 import de.cau.cs.kieler.kex.model.Example;
@@ -369,8 +369,9 @@ public class ImportExamplePage extends WizardPage {
             }
         }
         treeViewer.setInput(viewElement);
-        TreeViewerCheckStateHandler checkStateManager = new TreeViewerCheckStateHandler(treeViewer);
-        checkStateManager.checkElements(values);
+        // FIXME TreeViewerCheckStateHandler no longer provided by pragmatics
+//        TreeViewerCheckStateHandler checkStateManager = new TreeViewerCheckStateHandler(treeViewer);
+//        checkStateManager.checkElements(values);
     }
 
     /**

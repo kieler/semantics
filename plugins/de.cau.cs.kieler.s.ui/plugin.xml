@@ -50,6 +50,7 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+              category="de.cau.cs.kieler.sccharts"
               class="de.cau.cs.kieler.s.ui.SExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.s.S"
               name="S">

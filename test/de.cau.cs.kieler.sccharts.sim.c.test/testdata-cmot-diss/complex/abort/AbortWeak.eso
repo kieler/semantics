@@ -1,0 +1,19 @@
+! reset;
+
+% Output: O(1) 
+;
+
+% Output: O2(1) O(2) 
+;
+
+% Output: O2(2) O(3) 
+;
+R 
+% Output: O2(3) 
+;
+
+% Output: O2(3) 
+;
+
+% Output: O2(3) 
+;

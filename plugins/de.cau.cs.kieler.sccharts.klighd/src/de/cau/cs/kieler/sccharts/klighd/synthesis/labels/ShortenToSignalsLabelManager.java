@@ -17,7 +17,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.core.kgraph.KLabel;
+import org.eclipse.elk.graph.KLabel;
+
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**

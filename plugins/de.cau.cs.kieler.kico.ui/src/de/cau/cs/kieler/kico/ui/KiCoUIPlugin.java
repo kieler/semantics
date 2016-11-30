@@ -22,11 +22,10 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
-import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.features.Feature;
@@ -39,7 +38,7 @@ import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
  * @kieler.design 2014-04-08 proposed
  * @kieler.rating 2014-04-08 proposed yellow
  */
-public class KiCoUIPlugin extends AbstractUIPlugin {
+public class KiCoUIPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.ui"; //$NON-NLS-1$

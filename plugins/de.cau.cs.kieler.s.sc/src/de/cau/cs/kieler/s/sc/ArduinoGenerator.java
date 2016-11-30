@@ -189,15 +189,15 @@ public class ArduinoGenerator {
     private java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        System.out.println("convertEMFtoJavaURI 1");
+        S2SCPlugin.log("convertEMFtoJavaURI 1");
 
         IPath path = new Path(uri.toPlatformString(false));
-        System.out.println("convertEMFtoJavaURI 2" + path);
+        S2SCPlugin.log("convertEMFtoJavaURI 2" + path);
         IFile file = myWorkspaceRoot.getFile(path);
-        System.out.println("convertEMFtoJavaURI 3" + file.toString());
+        S2SCPlugin.log("convertEMFtoJavaURI 3" + file.toString());
 
         IPath fullPath = file.getLocation();
-        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString());
+        S2SCPlugin.log("convertEMFtoJavaURI 4" + fullPath.toString());
 
         return new java.net.URI(fullPath.toString());
     }

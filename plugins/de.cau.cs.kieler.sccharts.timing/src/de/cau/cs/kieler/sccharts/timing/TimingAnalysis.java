@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,22 +45,21 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.krendering.KRectangle;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
+import de.cau.cs.kieler.klighd.krendering.KRectangle;
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
+import de.cau.cs.kieler.klighd.krendering.KText;
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.timing.transformation.TPPInformation;
-import de.cau.cs.kieler.sccharts.timing.TimingAnnotationProvider;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
@@ -76,6 +76,16 @@ public class TimingAnalysis extends Job {
 
 	public static final boolean DEBUG = false;
 	public static final boolean DEBUG_VERBOSE = false;
+	
+	/**
+	 * Log the time needed for interactive timing analysis execution.
+	 */
+	public static final boolean RUNTIME_OUTPUT_LOG = false;
+	
+	/**
+	 * Log the timing analysis tool output.
+	 */
+	public static final boolean TIMING_ANALYSIS_TOOL_OUTPUT_LOG = false;
 
 	/**
 	 * Switch on/of highlighting.
@@ -163,8 +173,11 @@ public class TimingAnalysis extends Job {
 	 */
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
-		long startTime = System.currentTimeMillis();
-		
+	    long startTime = 0;
+	    if (RUNTIME_OUTPUT_LOG) {
+		startTime = System.currentTimeMillis();
+	    }
+	    
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 1: Compile SCChart to sequentialized SCG with Timing Program 
 		// Points (TPP), uses the TPPTransformation at the end of the chain
@@ -184,18 +197,8 @@ public class TimingAnalysis extends Job {
 
 		if (!(compilationResult.getEObject() instanceof SCGraph) || compilationResult
 				.getPostponedErrors().size() > 0) {
-			if (!(compilationResult.getEObject() instanceof SCGraph)) {
-				System.out.println("The scg sequentialization did not return an scg.");
-			} else {
-				System.out.println("The sequentialization yielded postponed Errors:\n");
-				Iterator<KielerCompilerException> errorIterator = compilationResult
-						.getPostponedErrors().iterator();
-				while (errorIterator.hasNext()) {
-					KielerCompilerException currentError = errorIterator.next();
-					System.out.println(currentError.getMessage() + "\n");
-				}
-			}
-			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "SCG sequentialization failed in the "
+			        + "interactive timing analysis.");
 		}
 
 		SCGraph scg = (SCGraph) compilationResult.getEObject();
@@ -212,7 +215,8 @@ public class TimingAnalysis extends Job {
 			tppRegionMap = tppInformation.getTPPRegionMapping();
 		} else {
 			return new Status(IStatus.ERROR, pluginId,
-					"Error in the TPP placement phase. No auxiliary data was produced (ITA).");
+					"Error in the TPP placement phase of the interactive timing analysis. "
+					+ "No auxiliary data was produced.");
 		}
 		
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,18 +227,8 @@ public class TimingAnalysis extends Job {
 		compilationResult = KielerCompiler.compile(context);
 
 		if (compilationResult.getString() == null || compilationResult.getPostponedErrors().size() > 0) {
-			if (compilationResult.getString() == null) {
-				System.out.println("The code generation yielded no code string.");
-			} else {
-				System.out.println("The code generation yielded postponed Errors:\n");
-				Iterator<KielerCompilerException> errorIterator = compilationResult.getPostponedErrors()
-						.iterator();
-				while (errorIterator.hasNext()) {
-					KielerCompilerException currentError = errorIterator.next();
-					System.out.println(currentError.getMessage() + "\n");
-				}
-			}
-			return new Status(IStatus.ERROR, pluginId, "The code generation failed. (ITA)");
+			return new Status(IStatus.ERROR, pluginId, "The code generation failed in the context "
+			        + "of the interactive timing analysis.");
 		}
 
 		String code = compilationResult.getString();
@@ -252,9 +246,9 @@ public class TimingAnalysis extends Job {
 		String fileLocationString = null;
 		if (resource != null) {
 			IFile file = ResourceUtil.getFile(resource);
-			uriString = file.getLocationURI().toString();
+			uriString = file.getRawLocation().toFile().getAbsolutePath();
 			fileName = file.getName();
-			fileLocationString = uriString.replace("file:", "");
+			fileLocationString = uriString;
 			fileFolder = fileLocationString.replace(fileName, "");
 		} else {
 			return new Status(IStatus.ERROR, pluginId, "The resource for the given model could "
@@ -270,8 +264,7 @@ public class TimingAnalysis extends Job {
 			Files.deleteIfExists(Paths.get(taFileLocationString, ""));
 			Files.deleteIfExists(Paths.get(taOutFileLocationString, ""));
 		} catch (IOException e1) {
-			System.out.println("IOException when deleting outdated timing files: \n");
-			e1.printStackTrace();
+		    return new Status(IStatus.ERROR, pluginId, "Delete of outdated timing files failed.");
 		}
 		try {
 			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -310,22 +303,26 @@ public class TimingAnalysis extends Job {
 		// As the kta tool calls the mipsel-mcb32-elf-gcc compiler, we have to make sure it is on the 
 		// PATH for the kta tool, so it can find it
 		env.put("PATH", compilerLocation + ":$PATH");
+		StringBuilder toolOutputStringBuilder = new StringBuilder();
 		try {
 			Process p = pb.start();
 			// get the timing analysis tool's console output
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			// read the output of the analysis tool
-			System.out.println("Output from the timing analysis tool:");
+			toolOutputStringBuilder.append("Output from the timing analysis tool:\n");
 			String s = null;
 			while ((s = stdInput.readLine()) != null) {
-				System.out.println(s);
+			    toolOutputStringBuilder.append(s + "\n");
 			}
 			// read error messages of the anaylsis tool
-			System.out.println("Error output from the timing analysis tool:");
-			System.out.println("-----end of timing analysis tool output-------\n");
+			toolOutputStringBuilder.append("Error output from the timing analysis tool:\n");
+			toolOutputStringBuilder.append("-----end of timing analysis tool output-------\n");
 			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+			    toolOutputStringBuilder.append(s + "\n");
+			}
+			if (TIMING_ANALYSIS_TOOL_OUTPUT_LOG){
+			    Activator.log(toolOutputStringBuilder.toString() + "\n");
 			}
 			// wait for the timing analysis tool to complete its job
 			p.waitFor();
@@ -363,7 +360,16 @@ public class TimingAnalysis extends Job {
 		int timingInformationFetch = timingAnnotationProvider.getTimingInformation(resultList, taPath,
 				rep);
 		if (timingInformationFetch == 1) {
-			return new Status(IStatus.ERROR, pluginId, "The timing information file was not found");
+		    Throwable detailException = new Throwable("Suggestions: Check, whether there is an .asu"
+                    + " file (with the same name as the model .sct file) with FunctionWCET "
+                    + "assumptions for each hostcode function that is called. Check, whether"
+                    + " you have given the correct path for the compiler used by the analysis tool "
+                    + "in the preferences page for the interactive timing analysis.\n\n"
+                    + toolOutputStringBuilder.toString());
+            return new Status(IStatus.ERROR, pluginId,
+                    "The timing information file was not found. This means that the timing analysis"
+                    + " tool could not work correctly.",
+                    detailException);
 		} else if (timingInformationFetch == 2) {
 			return new Status(IStatus.ERROR, pluginId,
 					"An IO error occurred while timing information was retrieved from file.");
@@ -428,30 +434,44 @@ public class TimingAnalysis extends Job {
 					}
 					// If the region belongs to the WCET path, highlight, if
 					// requested by user
-					if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
-						// determine how much percent of the overall WCET is
-						// attributed to this region
-						BigInteger percentage = new BigInteger("0");
-						int percentageInt = 0;
-						if (timingResultChart != null) {
-							StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
-							BigInteger timingvalue = new BigInteger(resultTokenizer.nextToken());
-							BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
-							percentage = timingvalue.divide(onePercent);
-							percentageInt = percentage.intValue();
-						}
-						timingHighlighter.highlightRegion(region, percentageInt, timingLabels.get(region), 
-								regionRectangles, renderingExtensions);
-					}
+                    if (highlight && HOTSPOT_HIGHLIGHTING && wcpRegions.contains(region)) {
+                        // determine how much percent of the overall WCET is
+                        // attributed to this region
+                        int percentageInt = 0;
+                        StringTokenizer resultTokenizer = new StringTokenizer(timingResult);
+                        // stop calculating with BigIntegers, when overall time value is small
+                        // enough to fit a double
+                        double overallWCETDouble = overallWCET.doubleValue();
+                        if ((overallWCETDouble != Double.NEGATIVE_INFINITY)
+                                && (overallWCETDouble != Double.POSITIVE_INFINITY)) {
+                            double timingvalue = Double.parseDouble(resultTokenizer.nextToken());
+                            double onePercent = overallWCETDouble / 100.0;
+                            double percentage = timingvalue / onePercent;
+                            percentageInt = (int)percentage;
+                        } else {
+                            BigInteger percentage = new BigInteger("0");
+                            if (timingResultChart != null) {
+                                BigInteger timingvalue =
+                                        new BigInteger(resultTokenizer.nextToken());
+                                BigInteger onePercent = overallWCET.divide(new BigInteger("100"));
+                                percentage = timingvalue.divide(onePercent);
+                                percentageInt = percentage.intValue();
+                            }
+                        }
+                        timingHighlighter.highlightRegion(region, percentageInt,
+                                timingLabels.get(region), regionRectangles, renderingExtensions);
+                    }
 				}
 				return Status.OK_STATUS;
 			}
 		}.schedule();
+		if (RUNTIME_OUTPUT_LOG){
 		long stopTime = System.currentTimeMillis();
 		long elapsedTime = stopTime - startTime;
 		// delete temporary files if not needed for debugging
-		System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
-				+ " ms).");
+        Activator.log("Interactive Timing Analysis completed (elapsed time: " + elapsedTime 
+                + " ms).");
+		}
 		return Status.OK_STATUS;
 	}
 
@@ -481,59 +501,77 @@ public class TimingAnalysis extends Job {
 		FileWriter assumptionFileWriter = new FileWriter();
 		TimingAnnotationProvider assumptionTimingAnnotationProvider = new TimingAnnotationProvider();
 		StringBuilder stringBuilder = new StringBuilder();
+		
+		// In any case we will ask for the analysis of the tick function and statevariable _GO is 
+		// generated for any scchart
+        stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+        
+        // Get the inputs for which we want to have globalvar assumptions
+        // Note that at the moment we will generate globalvar assumptions
+        // automatically only from boolean inputs, as the kta tool treats all GlobalVar assumptions
+        // as Input
+        EList<Declaration> declarationList = scchart.getDeclarations();
+        Iterator<Declaration> declarationListIterator = declarationList.iterator();
+        HashSet<String> inputOutputNameSet = new HashSet<String>();
+        while (declarationListIterator.hasNext()) {
+            Declaration currentDeclaration = declarationListIterator.next();
+            String name = currentDeclaration.getValuedObjects().get(0)
+                    .getName();
+            if (currentDeclaration.isInput()) {
+                ValueType type = currentDeclaration.getType();
+                if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
+                    stringBuilder
+                            .append("\nGlobalVar " + name + " 0..1");
+                    inputOutputNameSet.add(name);
+                }
+            } else {
+                if (currentDeclaration.isOutput()) {
+                    inputOutputNameSet.add(name);
+                }
+            }
+        }
 
-		// In any case we will ask for the analysis of the tick function
-		stringBuilder.append("Function tick\nInitFunction reset\nState _GO");
+		
 		// Declare the state variables (corresponding to the registers, this is
-		// about execution
-		// states)
-		StringTokenizer codeTokenizer = new StringTokenizer(code);
-		while (codeTokenizer.hasMoreTokens()) {
-			String currentToken = codeTokenizer.nextToken();
-			if (currentToken.startsWith("PRE")) {
-				currentToken = currentToken.replace(";", "");
-				stringBuilder.append("\nState " + currentToken);
-			}
-			if (currentToken.startsWith("reset")) {
+		// about execution states)
+        StringTokenizer codeTokenizer = new StringTokenizer(code);
+        while (codeTokenizer.hasMoreTokens()) {
+            String currentToken = codeTokenizer.nextToken();
+            if (currentToken.startsWith("int")) {
+                String variableNameToken = codeTokenizer.nextToken();
+                String name = variableNameToken.replace(";", "");
+                // rule out a helper variable that has been inserted for kta tool
+                if (!variableNameToken.startsWith("dummy")) {
+                    // at the moment, we do not write GlobalVar assumptions for anything but inputs
+                    // as the kta tool treats all variables with GlobalVar assumptions as inputs.
+                    //boolean test = name.matches("g\\d.*");
+                    if (!(name.matches("g\\d(.)*")
+                            || name.matches("_condg\\d(.)*"))) {
+                        // neither inputs nor outputs are state variables
+                        if (!inputOutputNameSet.contains(name)) {
+                            stringBuilder.append("\nState " + name);
+                        }
+                    }
+                }
+            }		
+			if (currentToken.startsWith("reset()")) {
+			    if (!currentToken.startsWith("reset(){dummy")) {
 				break;
+			    }
 			}
 		}
-		// Get the inputs for which we want to have globalvar assumptions
-		// Note that at the moment we will generate globalvar assumptions
-		// automatically only form boolean inputs, others have to be specified in the .asu file
-		// First, add an assumption line for _GO, which will always be there,we treat it
-		// analogously to environment inputs (as opposed to states)
-		EList<Declaration> declarationList = scchart.getDeclarations();
-		Iterator<Declaration> declarationListIterator = declarationList.iterator();
-		while (declarationListIterator.hasNext()) {
-			Declaration currentDeclaration = declarationListIterator.next();
-			if (currentDeclaration.isInput()) {
-				ValueType type = currentDeclaration.getType();
-				if (type.equals(ValueType.BOOL) || type.equals(ValueType.PURE)) {
-					stringBuilder
-							.append("\nGlobalVar " + currentDeclaration.getValuedObjects().get(0)
-									.getName() + " 0..1");
-				}
-			}
-		}
+		
 		// read (optional) additional assumptions and timing assumptions for called functions into
 		// the assumptions file
 		String assumptionFile = uriString.replace(".sct", ".asu");
-		String assumptionFilePath = assumptionFile.replace("file:", "");
-		boolean assumptionFilePresent = assumptionTimingAnnotationProvider
-				.getAssumptions(assumptionFilePath, stringBuilder);
-		if (!assumptionFilePresent) {
-			System.out.println("An associated assumption file for this model was not found. No timing "
-					+ "assumptions for called functions available.");
-		}
-		System.out.println(stringBuilder.toString());
-		// write timing requests appended to the assumptionString
-		LinkedList<TimingRequestResult> resultList = assumptionTimingAnnotationProvider
-				.writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
+        String assumptionFilePath = assumptionFile.replace("file:", "");
+        assumptionTimingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        // write timing requests appended to the assumptionString
+        LinkedList<TimingRequestResult> resultList = assumptionTimingAnnotationProvider
+                .writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
 		// .ta file string complete, write it to file
 		String requestFile = uriString.replace(".sct", ".ta");
 		String requestFilePath = requestFile.replace("file:", "");
-		System.out.println(stringBuilder.toString());
 		assumptionFileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
 		return resultList;
 	}

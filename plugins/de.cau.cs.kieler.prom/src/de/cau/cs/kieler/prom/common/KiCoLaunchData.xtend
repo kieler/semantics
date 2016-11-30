@@ -1,6 +1,24 @@
-package de.cau.cs.kieler.prom.common
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2015 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+ package de.cau.cs.kieler.prom.common
 
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.features.Feature
+import de.cau.cs.kieler.kico.internal.Transformation
+import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures
 import java.util.List
+import java.util.Set
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -11,6 +29,17 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * Key for the attribute that holds a launch data object.
      */
     private static val LAUNCH_DATA_IDENTIFIER_ATTR = "launchdata"
+    
+    /**
+     * The features of the KIELER Compiler that produces finished code.
+     * The field is used to cache the features.
+     */
+    private static var Feature codeGenerationFeatures
+    /**
+     * The trasnformations of the KIELER Compiler that produces finished code.
+     * The field is used to cache the transformations.
+     */
+     private static var Set<Transformation> codeGenerationTransformations
     
     /**
      * The name of the project that should be launched
@@ -27,13 +56,13 @@ class KiCoLaunchData extends ConfigurationSerializable {
      * The files that should be compiled via KiCo
      */
     @Accessors
-    protected List<FileCompilationData> files = newArrayList()
+    protected List<FileData> files = newArrayList()
     
     /**
      * The target language for KiCo compilation.
      * This is the id of a KiCo transformation feature.
      */
-    @Accessors
+    @Accessors(PRIVATE_SETTER, PUBLIC_GETTER)
     protected String targetLanguage = ""
     /**
      * The file extension for the specified target language (e.g. '.java' for Java Code) 
@@ -91,6 +120,36 @@ class KiCoLaunchData extends ConfigurationSerializable {
     }
     
     /**
+     * Setter for the compilation target.
+     */
+    public def void setTargetLanguage(String value) {
+        targetLanguage = value;
+    }
+    
+    /**
+     * Flag that is infered from the target language and determines
+     * if the target is a single transformation for code generation (e.g. "s.java")
+     * or a complex compile chain (e.g. "*T_ABORTWTO, T_EXIT").
+     */
+    public def boolean isCompileChain() {
+        var isCompileChain = false
+        // Get code transformations of KiCo
+        if(codeGenerationFeatures == null) {
+            codeGenerationFeatures = KielerCompiler.getFeature(CodeGenerationFeatures.TARGET_ID)
+            if(codeGenerationFeatures != null) {
+                codeGenerationTransformations = codeGenerationFeatures.expandingTransformations
+            }
+        }
+        // Check if target matches a transformation
+        if(codeGenerationTransformations != null && !codeGenerationTransformations.isEmpty) {            
+            // There is no transformation with the given id
+            // => the target is a compile chain and not a transformation.
+            isCompileChain = codeGenerationTransformations.filter[it.id == targetLanguage].isEmpty    
+        }
+        return isCompileChain
+    }
+    
+    /**
      * Creates a data object and loads its state from the given launch configuration.
      * 
      * @param configuration The launch configuration where the data object should be loaded from
@@ -115,7 +174,7 @@ class KiCoLaunchData extends ConfigurationSerializable {
         // Load commands
         commands = CommandData.loadAllFromConfiguration(configuration)
         // Load files
-        files = FileCompilationData.loadAllFromConfiguration(configuration)
+        files = FileData.loadAllFromConfiguration(configuration)
     }
 
     /**
@@ -131,6 +190,6 @@ class KiCoLaunchData extends ConfigurationSerializable {
         // Save commands
         CommandData.saveAllToConfiguration(configuration, data.commands)
         // Save files
-        FileCompilationData.saveAllToConfiguration(configuration, data.files)
+        FileData.saveAllToConfiguration(configuration, data.files)
     }
 }
