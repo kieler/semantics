@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SCG Code Optimizer
+Bundle-SymbolicName: de.cau.cs.kieler.scg.opt;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.scg.opt.Activator
+Bundle-Vendor: Jonas Busse
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.kico;bundle-version="0.1.0",
+ de.cau.cs.kieler.scg;bundle-version="0.1.1",
+ de.cau.cs.kieler.core.model;bundle-version="0.7.3",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.osgi,
+ com.google.inject;bundle-version="3.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.scg.opt,
+ de.cau.cs.kieler.scg.opt.cp
+

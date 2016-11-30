@@ -1,0 +1,8 @@
+scchart ^entry {
+  output bool O;
+  
+  initial state A {
+    entry / O = false;
+  };
+  
+}

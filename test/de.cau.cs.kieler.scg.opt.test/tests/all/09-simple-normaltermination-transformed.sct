@@ -1,0 +1,15 @@
+scchart simple {
+  input signal I;
+  output signal O;
+  input signal L;
+
+  initial state R {
+
+    initial state S
+    --> E with I / L;
+
+    state E
+    --> E with L;
+  }
+  --> R with L / O;
+}

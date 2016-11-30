@@ -1,0 +1,8 @@
+scchart triggereffect {
+  input bool I;
+  output bool O;
+  
+  initial state A
+  --> B with I / O = false;
+  final state B;
+}

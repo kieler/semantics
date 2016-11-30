@@ -1,0 +1,43 @@
+scchart _28_exit_actions "28-exit-actions" {
+  output signal O;
+  input signal R;
+  output signal ExitSetC;
+  output signal ExitResetC;
+
+  initial state hierarchy {
+
+    state exited;
+
+    state ^entry {
+
+      region EntrySurroundRegion25588941:
+
+      state done;
+
+      initial state init {
+
+        initial state initI
+        --> dummy immediate;
+
+        state initF;
+
+        state dummy
+        --> initF immediate with / ExitResetC;
+      }
+      --> done immediate;
+    }
+    o-> exited with / ExitSetC;
+
+    initial state realEntry
+    --> ^entry;
+  }
+  o-> hierarchy with R;
+
+  region ExitActionRegion17159221:
+
+  initial state Reset
+  --> Set with ExitSetC / O;
+
+  state Set
+  --> Reset with ExitResetC;
+}

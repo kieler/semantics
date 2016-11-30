@@ -1,0 +1,7 @@
+scchart simple {
+  input bool I;
+  input bool I2;
+  input bool I3;
+  initial state A
+  --> A with pre(I) || pre(I2) || pre(I3);
+}

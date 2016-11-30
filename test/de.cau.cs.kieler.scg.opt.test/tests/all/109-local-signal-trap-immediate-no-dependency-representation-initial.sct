@@ -1,0 +1,28 @@
+scchart _109_local_signal_trap_immediate_no_dependency_representation_initial
+"109-local-signal-trap-immediate-no-dependency-representation-initial" {
+  output signal T;
+
+  region R0:
+
+  initial state F {
+
+    region R0:
+
+    initial state A
+    --> C;
+
+    state C {
+
+      initial state L {
+
+        initial state LL;
+      }
+      --> O immediate with / T;
+
+      state O;
+    };
+  }
+  --> F2 with T;
+
+  state F2 "F";
+}

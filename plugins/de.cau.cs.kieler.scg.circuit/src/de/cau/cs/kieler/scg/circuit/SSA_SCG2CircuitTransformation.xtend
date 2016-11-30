@@ -335,6 +335,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 				//else { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  add for no red regions
 				//					logic.innerActors += actor
 				//				}
+				
 				inputPort.name = subexpr.serialize.toString
 			}
 		}
@@ -356,11 +357,11 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation {
 		 * TODO: Find a better solution!!! 
 		 * */
 		else if (expr instanceof ValuedObjectReference) {
-			if (assignment.valuedObject.name == "g0") {
-				voExpressions.put(expr.valuedObject.name, assignment.valuedObject)
-			} else {
+			//if (assignment.valuedObject.name == "g0") {
+			//	voExpressions.put(expr.valuedObject.name, assignment.valuedObject)
+			//} else {
 				voExpressions.put(assignment.valuedObject.name, expr.valuedObject)
-			}
+			//}
 		}
 
 	}

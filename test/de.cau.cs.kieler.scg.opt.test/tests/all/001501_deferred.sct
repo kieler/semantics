@@ -1,0 +1,13 @@
+scchart ^deferred {
+  
+  initial state A {
+    bool O;
+    
+    initial state A1
+    --> A2 deferred with / O = true;
+    
+    state A2
+    --> A1;
+  };
+  
+}

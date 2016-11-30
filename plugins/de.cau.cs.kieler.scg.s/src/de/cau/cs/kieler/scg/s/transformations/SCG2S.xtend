@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.s.transformations
 
 import com.google.inject.Inject
+
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
