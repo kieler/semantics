@@ -29,8 +29,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
     
     override getDefaultEnvironments() {
         val List<EnvironmentData> datas = newArrayList()
-        // Mindstorms NXJ
-        datas += getMindstormsNXJDefaultEnvironment()
+        // Mindstorms NXT
+        datas += getMindstormsNXTDefaultEnvironment()
         // Mindstorms EV3
         datas += getMindstormsEV3DefaultEnvironment()
         // Arduino
@@ -45,7 +45,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      * Creates the default environment for Mindstorms NXT running leJOS.
      * @return  The default environment for Mindstorms NXT running leJOS.
      */
-    private static def EnvironmentData getMindstormsNXJDefaultEnvironment(){
+    private static def EnvironmentData getMindstormsNXTDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
         launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
@@ -56,11 +56,11 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
 
         val initialResources = newArrayList() 
-        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/Main.ftl")
-        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets")
+        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/Main.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/snippets")
         initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
         
-        var env = new EnvironmentData("Mindstorms NXJ")
+        var env = new EnvironmentData("Mindstorms NXT")
         env.launchData = launchData
         env.initialResources = initialResources
         env.modelFile = "src/${project_name}"
@@ -84,7 +84,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
 
         val initialResources = newArrayList() 
         initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/Main.ftl")
-        initialResources += new FileData("snippets/lejos", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxj/snippets")
+        initialResources += new FileData("snippets/lejos", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/snippets")
         initialResources += new FileData("snippets/lejos/ev3", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_ev3/snippets")
         initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
         
