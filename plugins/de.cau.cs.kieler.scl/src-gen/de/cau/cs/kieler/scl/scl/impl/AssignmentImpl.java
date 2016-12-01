@@ -11,12 +11,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Assignment</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */
-public class AssignmentImpl extends de.cau.cs.kieler.core.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
+public class AssignmentImpl extends de.cau.cs.kieler.kexpressions.keffects.impl.AssignmentImpl implements Assignment {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -22,10 +22,10 @@ package de.cau.cs.kieler.esterel.kexpressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.OperatorExpression#getOperator <em>Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getOperatorExpression()
  * @model

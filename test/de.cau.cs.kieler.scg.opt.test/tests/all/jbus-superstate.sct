@@ -1,0 +1,5 @@
+scchart superstate {
+  initial state A {
+    initial state A1;
+  };
+}

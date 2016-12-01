@@ -1,0 +1,55 @@
+scchart sequential_concurrent_hierarchy "sequential-concurrent-hierarchy" {
+  output signal L1;
+  signal L2;
+  input signal I;
+  input signal E;
+  output signal O1;
+  output signal O2;
+
+  initial state G2 "G"
+  --> H immediate with L1 / L2;
+
+  state H;
+
+  region:
+
+  initial state L
+  --> N immediate with !L1;
+
+  state N
+  --> O with !L1;
+
+  state O;
+
+  region:
+
+  initial state M {
+
+    initial state A
+    --> B immediate with I & !L1 / L1;
+
+    state B
+    --> C immediate with L1 / O1;
+
+    state C;
+  }
+  o-> E immediate with E
+  --> D immediate with L1;
+
+  state D
+  --> F immediate with L2 / O2;
+
+  state E;
+
+  state F;
+
+  region:
+
+  initial state I
+  --> J immediate with !L2;
+
+  state J
+  --> K with !L2;
+
+  state K;
+}

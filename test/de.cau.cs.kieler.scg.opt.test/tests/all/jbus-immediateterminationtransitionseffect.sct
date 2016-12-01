@@ -1,0 +1,9 @@
+scchart simple {
+  output bool OUT;
+  initial state A {
+    region R0:
+    initial final state S1;
+  }
+  >-> B immediate with / OUT = true;
+  final state B;
+}

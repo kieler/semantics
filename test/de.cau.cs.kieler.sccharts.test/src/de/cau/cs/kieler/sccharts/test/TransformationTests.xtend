@@ -14,8 +14,8 @@ package de.cau.cs.kieler.sccharts.test
 
 import com.google.common.base.Strings
 import com.google.common.collect.Lists
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage
-import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.AnnotationsPackage
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.SCChartsPackage

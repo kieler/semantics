@@ -1,0 +1,6 @@
+scchart simple {
+  input bool IN;
+  initial state A
+  o-> B immediate with IN;
+  final state B;
+}

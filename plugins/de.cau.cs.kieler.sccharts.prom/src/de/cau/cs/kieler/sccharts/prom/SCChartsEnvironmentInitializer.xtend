@@ -19,6 +19,7 @@ import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
+import de.cau.cs.kieler.prom.common.CommandData
 
 /**
  * Returns a list with default environments ready to use.
@@ -31,6 +32,8 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         val List<EnvironmentData> datas = newArrayList()
         // Mindstorms NXT
         datas += getMindstormsNXTDefaultEnvironment()
+        // Mindstorms NXT MAC
+        datas += getMindstormsNXTMacDefaultEnvironment()
         // Mindstorms EV3
         datas += getMindstormsEV3DefaultEnvironment()
         // Arduino
@@ -47,14 +50,17 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
      */
     private static def EnvironmentData getMindstormsNXTDefaultEnvironment(){
         var launchData = new KiCoLaunchData()
-        launchData.mainFile = "src/${project_name}Main.ftl"
+        //val shortName = "${project_name}".sub
+        
+        //TODO: rename longer project names to a shortended version 
+        launchData.mainFile = "src/Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
         launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
-
+        
         val initialResources = newArrayList() 
         initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/Main.ftl")
         initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/snippets")
@@ -67,6 +73,53 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         env.associatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
         return env
     } 
+
+
+
+
+    /**
+     * Creates the default environment for Mindstorms NXT running leJOS.
+     * @return  The default environment for Mindstorms NXT running leJOS.
+     */
+    private static def EnvironmentData getMindstormsNXTMacDefaultEnvironment(){
+        var launchData = new KiCoLaunchData()
+        //val shortName = "${project_name}".sub
+        
+        //TODO: rename longer project names to a shortended version 
+        launchData.mainFile = "src/Main.ftl"
+        launchData.targetLanguage = "s.java"
+        launchData.targetLanguageFileExtension = ".java"
+        launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
+        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeSnippetDirectory = "snippets"
+        
+        
+        //val javapath = System.getenv("LEJOS_NXT_JAVA_HOME");
+        val lejos = System.getenv("NXJ_HOME");
+        val cd1 = new CommandData("Compile leJOS", '''"«lejos»/bin/nxjc" -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" "«KiCoLaunchConfig.BUILD_DIRECTORY»/Main.java"''');
+        val cd2 = new CommandData("Deploy and Run leJOS", '''"«lejos»/bin/nxj" -r -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" -o "Main.nxj" Main''');
+        launchData.commands.add(cd1);
+        launchData.commands.add(cd2);
+        
+
+        val initialResources = newArrayList() 
+        initialResources += new FileData(launchData.mainFile, "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/Main.ftl")
+        initialResources += new FileData("snippets", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/mindstorms_nxt/snippets")
+        initialResources += new FileData("snippets/core.ftl", "platform:/plugin/de.cau.cs.kieler.sccharts.prom/environments/core/core.ftl")
+        
+        var env = new EnvironmentData("Mindstorms NXT (MacOSX)")
+        env.launchData = launchData
+        env.initialResources = initialResources
+        env.modelFile = "src/${project_name}"
+        env.associatedProjectWizardClass = "org.lejos.nxt.ldt.wizard.NewNXTProject"
+        return env
+    } 
+
+
+
+
+
+
     
     /**
      * Creates the default environment for Mindstorms EV3 running leJOS.

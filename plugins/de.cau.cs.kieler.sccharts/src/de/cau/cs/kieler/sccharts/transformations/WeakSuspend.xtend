@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -107,8 +107,6 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
                 duringAction.setImmediate(weakSuspend.immediate)
-                // NOT needs to be relative write because it is sequentially AFTER setting to FALSE!
-                // duringAction.addEffect(weakSuspendFlag.assign(weakSuspendFlag.reference.or(weakSuspend.trigger.copy)))
                 duringAction.addEffect(weakSuspendFlag.assign(weakSuspend.trigger.copy))
                 state.localActions.remove(weakSuspend)
             }

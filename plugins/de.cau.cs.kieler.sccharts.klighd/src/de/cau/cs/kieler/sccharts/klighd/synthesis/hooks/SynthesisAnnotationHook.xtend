@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering

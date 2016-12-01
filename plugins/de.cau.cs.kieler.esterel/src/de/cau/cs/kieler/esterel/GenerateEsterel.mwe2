@@ -12,9 +12,9 @@ var runtimeProject = "../${projectName}"
 Workflow {
 	bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage"
-		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.annotations/model/annotations.genmodel"
 		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.genmodel"
 	}
 
@@ -41,10 +41,6 @@ Workflow {
 
 			// generates Java API for the generated EPackages
 			fragment = ecore.EcoreGeneratorFragment {
-            // referencedGenModels =
-            // "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
-            // referencedGenModels =
-            // "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 			}
 
 			// the serialization component

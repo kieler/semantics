@@ -1,5 +1,5 @@
-grammar de.cau.cs.kieler.sccharts.text.actions.Actions with de.cau.cs.kieler.core.kexpressions.text.KEXT
- 
+grammar de.cau.cs.kieler.sccharts.text.actions.Actions with de.cau.cs.kieler.kexpressions.kext.KExt
+  
 //// we do not need to generate the transitionlabel ecore model, because we
 //// only reuse classes of the official sccharts metamodel
 //generate transitionlabel "http://kieler.cs.cau.de/sccharts/actionlabel"

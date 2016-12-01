@@ -25,6 +25,7 @@ package de.cau.cs.kieler.scg;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.DataDependency#isConcurrent <em>Concurrent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.DataDependency#isConfluent <em>Confluent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.DataDependency#getType <em>Type</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency()
@@ -85,5 +86,34 @@ public interface DataDependency extends Dependency {
      * @generated
      */
     void setConfluent(boolean value);
+
+				/**
+     * Returns the value of the '<em><b>Type</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.scg.DataDependencyType}.
+     * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+     * @return the value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.DataDependencyType
+     * @see #setType(DataDependencyType)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getDataDependency_Type()
+     * @model
+     * @generated
+     */
+	DataDependencyType getType();
+
+				/**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.DataDependency#getType <em>Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.DataDependencyType
+     * @see #getType()
+     * @generated
+     */
+	void setType(DataDependencyType value);
 
 } // DataDependency

@@ -112,8 +112,16 @@ class SCGControlFlowExtensions {
 	 * 			the node in question
 	 * @return Returns a list of control flows.
 	 */   
-    def Iterable<ControlFlow> getAllPrevious (Node node) {
-        node.incoming.filter(typeof(ControlFlow))
+    def Iterable<ControlFlow> getAllPrevious(Node node) {
+        node.incoming.filter(ControlFlow)
+    }
+    
+    def ControlFlow getAllPreviousHead(Node node) {
+    	node.incoming.filter(ControlFlow)?.head	
+    }
+    
+    def Node getAllPreviousHeadNode(Node node) {
+    	node.incoming.filter(ControlFlow)?.head?.eContainer as Node	
     }
    
 	/** 

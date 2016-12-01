@@ -1,0 +1,6 @@
+scchart Signal {
+  output signal OUT;
+  output signal OUT2;
+  initial state init
+  --> init with / OUT ; OUT2;
+}  

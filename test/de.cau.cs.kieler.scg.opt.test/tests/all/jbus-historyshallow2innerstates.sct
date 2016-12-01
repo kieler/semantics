@@ -1,0 +1,10 @@
+scchart HistoryShallow {
+  initial state A
+  --> B shallow history;
+  state B {
+    initial state B1
+    --> B2;
+    final state B2
+    --> B1;
+  };
+}

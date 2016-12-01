@@ -1,0 +1,7 @@
+scchart superstate {
+  input bool IN;
+  initial state A {
+    weak suspend IN;
+    initial state A1;
+  };
+}

@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
@@ -54,7 +54,6 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import org.eclipse.core.runtime.IProgressMonitor
@@ -71,6 +70,7 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.scg.DataDependencyType
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -370,7 +370,6 @@ class SCGDependencyHook extends SynthesisActionHook {
 							}
 						}
 					}
-
 				}
 			}
 		}
@@ -418,9 +417,11 @@ class SCGDependencyHook extends SynthesisActionHook {
 		}
 		val line = edge.getData(KCustomRendering).children.filter(KPolyline).head;
 		// Configure mutual dependency with additional arrow
-		if (dependency instanceof Write_Write) {
-			line.foreground = Colors.RED
-			line.foreground.propagateToChildren = true;
+		if (dependency instanceof DataDependency) {
+		    if (dependency.type == DataDependencyType.WRITE_WRITE) {
+    			line.foreground = Colors.RED
+    			line.foreground.propagateToChildren = true;
+			}
 		}
 		if (opposite) {
 			line.addTailArrowDecorator.placementData as KDecoratorPlacementData => [

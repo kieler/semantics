@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCompareExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 
 /**
  * SCCharts SurfaceDepth Transformation.

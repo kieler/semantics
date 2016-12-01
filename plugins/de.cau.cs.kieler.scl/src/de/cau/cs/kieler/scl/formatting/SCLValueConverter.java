@@ -13,12 +13,12 @@
  */
 package de.cau.cs.kieler.scl.formatting;
 
-import de.cau.cs.kieler.core.kexpressions.text.formatting.KEXTValueConverter;
+import de.cau.cs.kieler.kexpressions.kext.formatting.KExtValueConverter;
 
 /**
  * @author ssm
  *
  */
-public class SCLValueConverter extends KEXTValueConverter {
+public class SCLValueConverter extends KExtValueConverter {
 
 }

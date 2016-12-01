@@ -11,8 +11,6 @@ import org.eclipse.swt.widgets.Shell;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-//import de.cau.cs.kieler.core.kexpressions.Declaration;
-//import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.esterel.esterel.Module;

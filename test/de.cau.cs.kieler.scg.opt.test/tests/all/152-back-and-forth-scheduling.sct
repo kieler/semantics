@@ -1,0 +1,35 @@
+scchart Example {
+  input signal S;
+  input signal I;
+  output signal O;
+  signal R;
+  signal A;
+
+  initial state A
+  --> B with S;
+
+  state B {
+
+    initial state C
+    --> D with I;
+
+    state D {
+
+      initial state E
+      --> E with / R;
+    }
+    --> F immediate with A / O;
+
+    final state F;
+
+    region:
+
+    initial state G
+    --> H;
+
+    state H
+    --> G with R / A
+    --> G with !R;
+  }
+  o-> B with S;
+}

@@ -1,0 +1,34 @@
+scchart instcommhiearchy {
+  signal L1;
+  signal L2;
+  signal L3;
+  input signal I;
+  output signal O;
+
+  initial state ABC {
+
+    initial state A
+    --> BC with I / L1;
+
+    state BC {
+
+      initial state B
+      --> C immediate with L2 / L3;
+
+      state C;
+    };
+  };
+
+  region:
+
+  initial state X
+  --> YZ immediate with L1 / L2;
+
+  state YZ {
+
+    initial state Y
+    --> Z immediate with L3 / O;
+
+    state Z;
+  };
+}

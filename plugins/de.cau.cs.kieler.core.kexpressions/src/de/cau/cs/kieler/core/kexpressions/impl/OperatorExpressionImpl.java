@@ -119,6 +119,10 @@ public class OperatorExpressionImpl extends ExpressionImpl implements OperatorEx
 		}
 		return subExpressions;
 	}
+    
+    public void setSubExpressions(EList<Expression> newList) {
+    	subExpressions = newList;
+    }
 
     /**
 	 * <!-- begin-user-doc -->

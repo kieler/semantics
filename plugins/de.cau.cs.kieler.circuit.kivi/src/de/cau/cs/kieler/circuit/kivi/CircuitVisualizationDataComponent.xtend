@@ -33,9 +33,6 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
-import de.cau.cs.kieler.sim.kiem.IKiemEventListener
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemEvent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
@@ -54,8 +51,12 @@ import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
-
 import static java.lang.Math.toIntExact
+import java.util.List
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener
+import de.cau.cs.kieler.sim.kiem.KiemEvent
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author fry 

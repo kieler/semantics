@@ -14,7 +14,7 @@
  package de.cau.cs.kieler.scg.circuit
 
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.CircuitFactory
 
@@ -59,7 +59,7 @@ class CircuitInitialization {
 		// -------------------------------------------------------
 		init.innerActors += createRegister("_GO", "Reset" , "Reset_local")
 		
-		createPort(logic, "g0", "InConnectorLogic")
+		createPort(logic, "_GO", "InConnectorLogic")
 		createPort(init, "g0", "OutConnectorInit")
 
 		// -------------------------------------------------------

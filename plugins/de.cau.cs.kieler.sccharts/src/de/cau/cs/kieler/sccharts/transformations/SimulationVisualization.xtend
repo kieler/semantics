@@ -24,12 +24,10 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * This class handles the<BR>
@@ -71,7 +69,7 @@ class SimulationVisualization extends AbstractExpansionTransformation {
     extension KExpressionsCreateExtensions
     
     @Inject
-    extension KEffectsExtensions;
+    extension KEffectsExtensions
 
     @Inject
     extension SCChartsExtension

@@ -18,13 +18,12 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.xtext.validation.Check
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * @author ssm, cmot
@@ -139,7 +138,7 @@ class SctValidator extends SctJavaValidator {
      */
     // TODO: (KISEMA-1071) Remove this check when there is a transformation that handles valued signals without combination function.
     @Check
-    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+    public def void checkValuedSignalHasCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         // Check if actually a valued signal
         if(valuedObject.isSignal && !valuedObject.isPureSignal) {
             // Check if there is a combine operator
@@ -154,7 +153,7 @@ class SctValidator extends SctJavaValidator {
      * If it is not initialized the static modifier is useless from a modeling perspective.   
      */
     @Check
-    public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+    public def void checkStaticVariableIsInitialized(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         if(valuedObject.isStatic && valuedObject.initialValue == null) {
             warning(STATIC_VARIABLE_WITHOUT_INITIALIZATION, valuedObject, null)
         }
@@ -196,7 +195,7 @@ class SctValidator extends SctJavaValidator {
      * Checks scope of valued objects of transition triggers are correct.
      */
     @Check
-    public def void checkScopeOfOutgoingTransitionVarRefs(de.cau.cs.kieler.core.kexpressions.ValuedObject testValuedObject) {
+    public def void checkScopeOfOutgoingTransitionVarRefs(de.cau.cs.kieler.kexpressions.ValuedObject testValuedObject) {
         val stateOrRegion = testValuedObject.eContainer.eContainer
         var de.cau.cs.kieler.sccharts.State state
         if (stateOrRegion instanceof de.cau.cs.kieler.sccharts.State) {
@@ -219,7 +218,7 @@ class SctValidator extends SctJavaValidator {
      * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
      */
     @Check
-    public def void checkNoInputOutput(de.cau.cs.kieler.core.kexpressions.ValuedObject valuedObject) {
+    public def void checkNoInputOutput(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
         if(valuedObject.isInput && valuedObject.isOutput) {
                 warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
        }
