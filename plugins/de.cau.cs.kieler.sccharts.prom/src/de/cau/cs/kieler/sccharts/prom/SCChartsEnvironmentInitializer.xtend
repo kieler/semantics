@@ -53,7 +53,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         //val shortName = "${project_name}".sub
         
         //TODO: rename longer project names to a shortended version 
-        launchData.mainFile = "src/Main.ftl"
+        launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
@@ -86,7 +86,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         //val shortName = "${project_name}".sub
         
         //TODO: rename longer project names to a shortended version 
-        launchData.mainFile = "src/Main.ftl"
+        launchData.mainFile = "src/${project_name}Main.ftl"
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
