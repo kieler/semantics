@@ -97,7 +97,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         //val javapath = System.getenv("LEJOS_NXT_JAVA_HOME");
         val lejos = System.getenv("NXJ_HOME");
         val cd1 = new CommandData("Compile leJOS", '''"«lejos»/bin/nxjc" -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" "«KiCoLaunchConfig.BUILD_DIRECTORY»/Main.java"''');
-        val cd2 = new CommandData("Deploy and Run leJOS", '''"«lejos»/bin/nxj" -r -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" -o "Main.nxj" Main''');
+        val cd2 = new CommandData("Deploy and Run leJOS", '''"«lejos»/bin/nxj" -usb -r -cp "«lejos»/lib:src:«KiCoLaunchConfig.BUILD_DIRECTORY»" -o "Main.nxj" Main''');
         launchData.commands.add(cd1);
         launchData.commands.add(cd2);
         
