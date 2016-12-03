@@ -373,13 +373,20 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             KiCoModelUpdateController other = (KiCoModelUpdateController) source;
             lastSaveDirectory = other.lastSaveDirectory;
             compileToggleAction.setChecked(other.compileToggleAction.isChecked());
-            pinToggleAction.setChecked(other.pinToggleAction.isChecked());
-            for (Entry<IEditorPart, Pair<KielerCompilerSelection, Boolean>> entry : other.pinnedTransformations
-                    .entrySet()) {
+            // Pin forked view
+            pinToggleAction.setChecked(true);
+            for (Entry<IEditorPart, Pair<KielerCompilerSelection, Boolean>> entry : other.pinnedTransformations.entrySet()) {
                 pinnedTransformations.put(entry.getKey(),
                         new Pair<KielerCompilerSelection, Boolean>(
                                 entry.getValue().getFirst().clone(),
                                 entry.getValue().getSecond().booleanValue()));
+            }
+            // Pin current selection
+            if (!pinnedTransformations.containsKey(other.getEditor()) && other.selection != null) {
+                pinnedTransformations.put(other.getEditor(), 
+                        new Pair<KielerCompilerSelection, Boolean>(
+                                other.selection.getFirst().clone(),
+                                other.selection.getSecond().booleanValue()));
             }
             syncEditorToggleAction.setChecked(other.syncEditorToggleAction.isChecked());
             sideBySideToggleAction.setChecked(other.sideBySideToggleAction.isChecked());
@@ -405,6 +412,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE);
         tracingToggleAction.setChecked(TRACING_TOGGLE_ACTION_DEFAULT_STATE);
         tracingChainToggleAction.setChecked(TRACING_CHAIN_TOGGLE_ACTION_DEFAULT_STATE);
+        getProperties().getAllProperties().clear();
     }
 
     /**
