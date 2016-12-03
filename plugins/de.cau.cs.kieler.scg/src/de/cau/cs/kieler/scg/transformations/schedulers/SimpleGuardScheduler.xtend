@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.DataDependency
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -117,6 +118,9 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
     		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
+    		context.compilationResult?.addPostponedWarning(
+    		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
+    		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
     		var sl = "";
