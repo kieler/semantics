@@ -117,17 +117,10 @@ class SimpleGuardScheduler extends AbstractProductionTransformation implements T
     	
     	// ASC schedulability output
     	if (schedule.size < estimatedScheduleSize) {
-//    		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
-//    		context.compilationResult?.addPostponedWarning(
-//    		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
-//    		)
-//            val result = context.compilationResult
-//            if (result != null) {
-//                val e = new KielerCompilerException(getId, null, "Currently the Circuits can only handle boolean inputs but your model contains other input types as well.");
-//                result.addPostponedWarning(e);
-//                return scg;
-//            }
-
+    		SCGPlugin.logError("The SCG is NOT asc-schedulable!")
+    		context.compilationResult?.addPostponedWarning(
+    		    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!")
+    		)
     	} else {
     		SCGPlugin.log("The SCG is asc-schedulable.")
     		var sl = "";
