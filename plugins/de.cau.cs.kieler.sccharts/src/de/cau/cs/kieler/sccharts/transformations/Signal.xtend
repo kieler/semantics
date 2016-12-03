@@ -87,7 +87,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // -------------------------------------------------------------------------
     // TODO: for inputs no during action!
     // TODO: relative writes!!
-    private static val String variableValueExtension = GENERATED_PREFIX + "val";
+    public static val String variableValueExtension = GENERATED_PREFIX + "val";
     private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // @requires: during actions
