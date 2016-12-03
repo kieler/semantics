@@ -143,7 +143,9 @@ class SimpleGuardSequentializer extends AbstractProductionTransformation impleme
             }
             
             // Add a new schedule dependency to cover the last guarded assignments.
-            scheduleDependencies += scheduleDependencies.last.target.createScheduleDependency(null) 
+            if (scheduleDependencies != null && !scheduleDependencies.empty) {
+                scheduleDependencies += scheduleDependencies.last.target.createScheduleDependency(null)
+            } 
             
             // Connect assignments
             for(schedule : scheduleDependencies) {
