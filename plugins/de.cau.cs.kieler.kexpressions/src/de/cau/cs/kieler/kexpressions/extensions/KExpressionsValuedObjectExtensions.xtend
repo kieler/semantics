@@ -91,6 +91,10 @@ class KExpressionsValuedObjectExtensions {
     def public boolean isSignal(ValuedObject valuedObject) {
         valuedObject.declaration.isSignal
     }   
+
+    def public boolean isValuedSignal(ValuedObject valuedObject) {
+        valuedObject.declaration.isSignal && valuedObject.type != ValueType::PURE
+    }   
     
     def ValuedObject createValuedObject() {
         KExpressionsFactory::eINSTANCE.createValuedObject()
