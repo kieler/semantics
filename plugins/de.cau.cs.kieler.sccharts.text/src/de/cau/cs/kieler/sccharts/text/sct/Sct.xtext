@@ -83,14 +83,19 @@ SCChart returns sccharts::State:
       ('{'
             (declarations+=Declaration | localActions+=LocalAction)*
             (
-                (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? (regions+=Region)*
+// ssm: DEACTIVATED dataflow for Synchron Release
+//                (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? (regions+=Region)*
+                (regions+=SingleControlflowRegion)? (regions+=Region)*
             )? // this rule only works correctly if it is optional
        '}')
     )?
 ;
 
+
 Region returns sccharts::Region:
-	ControlflowRegion | DataflowRegion	
+// ssm: DEACTIVATED dataflow for Synchron Release
+//	ControlflowRegion | DataflowRegion	
+    ControlflowRegion  
 ;
 
 //ImportDecl: 
@@ -124,7 +129,9 @@ State returns sccharts::State:
      | 
       ('{'
             (declarations+=Declaration | localActions+=LocalAction)*
-		    ( (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)? (regions+=Region)* )
+// ssm: DEACTIVATED dataflow for Synchron Release
+		    ( (regions+=SingleControlflowRegion)? (regions+=Region)* )
+            ( (regions+=SingleDataflowRegion|regions+=SingleControlflowRegion)? (regions+=Region)* )
       '}') 
     )?
      // The semicolon is mandatory for backtracking!

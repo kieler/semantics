@@ -241,8 +241,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.DATAFLOW_REGION:
-				if (rule == grammarAccess.getDataflowRegionRule()
-						|| rule == grammarAccess.getRegionRule()) {
+				if (rule == grammarAccess.getDataflowRegionRule()) {
 					sequence_DataflowRegion(context, (DataflowRegion) semanticObject); 
 					return; 
 				}
@@ -335,7 +334,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Contexts:
 	 *     DataflowRegion returns DataflowRegion
-	 *     Region returns DataflowRegion
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* (equations+=Equation | nodes+=Node)*)
@@ -395,7 +393,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? regions+=Region*)
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* regions+=SingleControlflowRegion? regions+=Region*)
 	 *         )
 	 *     )
 	 */
@@ -441,7 +439,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? regions+=Region*)
+	 *             (
+	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
+	 *                 regions+=SingleControlflowRegion? 
+	 *                 regions+=Region* 
+	 *                 (regions+=SingleDataflowRegion | regions+=SingleControlflowRegion)? 
+	 *                 regions+=Region*
+	 *             )
 	 *         ) 
 	 *         outgoingTransitions+=Transition*
 	 *     )
