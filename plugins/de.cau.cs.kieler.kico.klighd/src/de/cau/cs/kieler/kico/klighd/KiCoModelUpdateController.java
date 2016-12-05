@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.elk.core.options.CoreOptions;
 import org.eclipse.elk.core.util.Pair;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -70,6 +71,7 @@ import de.cau.cs.kieler.kico.klighd.internal.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.internal.model.CodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
 import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.KlighdPreferences;
 import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController;
@@ -696,6 +698,8 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     public void update(final ChangeEvent change) {
         update(change, null);
     }
+    
+    boolean lastCodeModel = false;
 
     /**
      * Updates the model caused by changeEvent including return of asynchronous compilation.
@@ -912,6 +916,25 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     compileToggleAction.isChecked() && selection == null && selection_changed;
 
             if (do_update_diagram) {
+                if (model instanceof CodePlaceHolder) {
+                    if (!lastCodeModel) {
+                        lastCodeModel = true;
+                        // root knoten
+                        // CoreOptions.animate false
+                        properties.setProperty(CoreOptions.ANIMATE,
+                                false);
+                        System.out.println("NOW");
+                        update(ChangeEvent.SAVED);
+                    }
+                } else {
+                    if (lastCodeModel) {
+                        lastCodeModel = false;
+                        System.out.println("NOW");
+                        properties.setProperty(CoreOptions.ANIMATE,
+                                false);
+                        update(ChangeEvent.SAVED);
+                    }
+                }
                 updateModel(model, properties);
             }
         } else {
