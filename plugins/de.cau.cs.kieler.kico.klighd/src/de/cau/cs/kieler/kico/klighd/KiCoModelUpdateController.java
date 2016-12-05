@@ -50,6 +50,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
@@ -98,7 +99,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @author als
      * 
      */
-    public enum ChangeEvent {
+    public static enum ChangeEvent {
         SAVED, DISPLAY_MODE, SELECTION, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
     }
 
@@ -921,18 +922,53 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                         lastCodeModel = true;
                         // root knoten
                         // CoreOptions.animate false
-                        properties.setProperty(CoreOptions.ANIMATE,
-                                false);
+
+//                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
+//                                false);
+                        
+//                      properties.setProperty(CoreOptions.ANIMATE,
+//                      false);
+//                        updateModel(null, properties);
                         System.out.println("NOW");
-                        update(ChangeEvent.SAVED);
+
+                        //                        Display.getDefault().syncExec(new Runnable() {
+                            
+                            final KiCoModelUpdateController controller = this;
+                            (new Thread(new Runnable() {
+                                public void run() {
+                                    try {
+                                        Thread.sleep(200);
+                                    } catch (InterruptedException e) {
+                                    }
+                                    controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
+                                }
+                            })).start();
+                            
+                            //controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
                     }
                 } else {
                     if (lastCodeModel) {
                         lastCodeModel = false;
                         System.out.println("NOW");
-                        properties.setProperty(CoreOptions.ANIMATE,
-                                false);
-                        update(ChangeEvent.SAVED);
+//                        properties.setProperty(CoreOptions.ANIMATE,
+//                                false);
+//                        updateModel(null, properties);
+
+//                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
+//                                false);
+//                        update(ChangeEvent.SAVED);
+                        
+                        final KiCoModelUpdateController controller = this;
+                        (new Thread(new Runnable() {
+                            public void run() {
+                                try {
+                                    Thread.sleep(200);
+                                } catch (InterruptedException e) {
+                                }
+                                controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
+                            }
+                        })).start();
+                        
                     }
                 }
                 updateModel(model, properties);
