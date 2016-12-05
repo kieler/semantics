@@ -700,7 +700,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         update(change, null);
     }
     
-    boolean lastCodeModel = false;
+//    boolean lastCodeModel = false;
 
     /**
      * Updates the model caused by changeEvent including return of asynchronous compilation.
@@ -917,60 +917,60 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     compileToggleAction.isChecked() && selection == null && selection_changed;
 
             if (do_update_diagram) {
-                if (model instanceof CodePlaceHolder) {
-                    if (!lastCodeModel) {
-                        lastCodeModel = true;
-                        // root knoten
-                        // CoreOptions.animate false
-
-//                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
-//                                false);
-                        
-//                      properties.setProperty(CoreOptions.ANIMATE,
-//                      false);
-//                        updateModel(null, properties);
-                        System.out.println("NOW");
-
-                        //                        Display.getDefault().syncExec(new Runnable() {
-                            
-                            final KiCoModelUpdateController controller = this;
-                            (new Thread(new Runnable() {
-                                public void run() {
-                                    try {
-                                        Thread.sleep(200);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
-                                }
-                            })).start();
-                            
-                            //controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
-                    }
-                } else {
-                    if (lastCodeModel) {
-                        lastCodeModel = false;
-                        System.out.println("NOW");
-//                        properties.setProperty(CoreOptions.ANIMATE,
-//                                false);
-//                        updateModel(null, properties);
-
-//                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
-//                                false);
-//                        update(ChangeEvent.SAVED);
-                        
-                        final KiCoModelUpdateController controller = this;
-                        (new Thread(new Runnable() {
-                            public void run() {
-                                try {
-                                    Thread.sleep(200);
-                                } catch (InterruptedException e) {
-                                }
-                                controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
-                            }
-                        })).start();
-                        
-                    }
-                }
+//                if (model instanceof CodePlaceHolder) {
+//                    if (!lastCodeModel) {
+//                        lastCodeModel = true;
+//                        // root knoten
+//                        // CoreOptions.animate false
+//
+////                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
+////                                false);
+//                        
+////                      properties.setProperty(CoreOptions.ANIMATE,
+////                      false);
+////                        updateModel(null, properties);
+//                        System.out.println("NOW");
+//
+//                        //                        Display.getDefault().syncExec(new Runnable() {
+//                            
+//                            final KiCoModelUpdateController controller = this;
+//                            (new Thread(new Runnable() {
+//                                public void run() {
+//                                    try {
+//                                        Thread.sleep(200);
+//                                    } catch (InterruptedException e) {
+//                                    }
+//                                    controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
+//                                }
+//                            })).start();
+//                            
+//                            //controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
+//                    }
+//                } else {
+//                    if (lastCodeModel) {
+//                        lastCodeModel = false;
+//                        System.out.println("NOW");
+////                        properties.setProperty(CoreOptions.ANIMATE,
+////                                false);
+////                        updateModel(null, properties);
+//
+////                        getDiagramView().getViewContext().getViewModel().setProperty(CoreOptions.ANIMATE,
+////                                false);
+////                        update(ChangeEvent.SAVED);
+//                        
+//                        final KiCoModelUpdateController controller = this;
+//                        (new Thread(new Runnable() {
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(200);
+//                                } catch (InterruptedException e) {
+//                                }
+//                                controller.update(KiCoModelUpdateController.ChangeEvent.SAVED);
+//                            }
+//                        })).start();
+//                        
+//                    }
+//                }
                 updateModel(model, properties);
             }
         } else {
