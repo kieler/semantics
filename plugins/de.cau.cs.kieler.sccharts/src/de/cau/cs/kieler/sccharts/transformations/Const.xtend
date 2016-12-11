@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -39,9 +39,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
  */
 class Const extends AbstractExpansionTransformation implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         return SCChartsTransformation::CONST_ID
     }
@@ -62,7 +62,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
         return Sets.newHashSet(SCChartsFeature::REFERENCE_ID)
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     @Inject
     extension AnnotationsExtensions
 
@@ -72,17 +72,21 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension ValuedObjectRise
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
 
-    //-------------------------------------------------------------------------
-    //--                           C O N S T                                 --
-    //-------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
+    // --                           C O N S T                                 --
+    // -------------------------------------------------------------------------
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
+
+        targetRootState.transformValuedObjectRise
 
         // Traverse all states
         for (states : targetRootState.getAllStates.immutableCopy) {
@@ -92,7 +96,7 @@ class Const extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformConst(State state) {
-        val constObjects = state.valuedObjects.filter[ isConst && initialValue != null ]
+        val constObjects = state.valuedObjects.filter[isConst && initialValue != null]
 
         for (const : constObjects.toList.immutableCopy) {
             val replacement = const.initialValue
