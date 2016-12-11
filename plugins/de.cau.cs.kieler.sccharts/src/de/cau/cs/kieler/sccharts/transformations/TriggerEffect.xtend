@@ -66,6 +66,9 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
     //-------------------------------------------------------------------------    
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -81,6 +84,8 @@ class TriggerEffect extends AbstractExpansionTransformation implements Traceable
     //     Add T_eff to C's outgoing transitions. 
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
+        
+         targetRootState.transformValuedObjectRise
 
         // Traverse all transitions
         for (targetTransition : targetRootState.getAllContainedTransitions) {
