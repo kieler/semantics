@@ -86,10 +86,7 @@ class ValuedObjectRise {
     def void transformValuedObjectRise(ControlflowRegion region, State targetRootState) {
         if (!region.declarations.nullOrEmpty) {
             
-            var regionId = region.id;
-            if (regionId == null) {
-                regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region)
-            }
+            val regionId = GENERATED_PREFIX + "region" + region.parentState.regions.indexOf(region)
             
             for (valuedObject : region.valuedObjects) {
                 valuedObject.setName(regionId + GENERATED_PREFIX +
