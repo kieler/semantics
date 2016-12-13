@@ -78,8 +78,8 @@ class MergeExpressionExtension {
     // -------------------------------------------------------------------------
 
     // CANNOT HANDLE CYCLES
-    val patternCache = <ValuedObject, MergeExpression>newHashMap
-    val schedules = <ValuedObject, List<Assignment>>newHashMap
+    val static patternCache = <ValuedObject, MergeExpression>newHashMap
+    val static schedules = <ValuedObject, List<Assignment>>newHashMap
     
     // -------------------------------------------------------------------------
     
@@ -101,6 +101,7 @@ class MergeExpressionExtension {
             copy.nodes.forEach[dependencies.clear]
             
             // Remove independent nodes
+            // TODO this seems to break the scg sometimes
             val voCopy = copier.get(vo)      
             val independentNodes = copy.nodes.filter(Assignment).filter[valuedObject != voCopy && !eAllContents.filter(ValuedObjectReference).exists[valuedObject == voCopy]].toList
             for (in : independentNodes) {

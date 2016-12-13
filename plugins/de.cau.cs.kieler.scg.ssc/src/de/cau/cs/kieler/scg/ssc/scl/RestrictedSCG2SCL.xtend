@@ -84,6 +84,9 @@ class RestrictedSCG2SCL {
         
         scg.transform(scl)
         
+        for (labelIdx : labels.values.indexed) {
+            labelIdx.value.label = labelIdx.value.label + labelIdx.key
+        }
         for (goto : gotos.keySet) {
             goto.targetLabel = labels.get(gotos.get(goto)).label
         }

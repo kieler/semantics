@@ -498,9 +498,9 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             if (stm instanceof EmptyStatement) {
                 if (!stm.label.nullOrEmpty) {
                     labels.put(stm.label, stmIdx.key)
-                } else {
-                    stm.eAllContents.filter(Goto).forEach[gotos.put(it.targetLabel, stmIdx.key)]
                 }
+            } else {
+                stm.eAllContents.filter(Goto).forEach[gotos.put(it.targetLabel, stmIdx.key)]
             }
         }
         val nestingHead = newLinkedList
@@ -509,8 +509,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             val idx = stmIdx.key
             if (labels.containsValue(idx)) {
                 val label = (stm as EmptyStatement).label
-                val forward = gotos.get(label).forall[it > idx]
-                val backward = gotos.get(label).forall[it < idx]
+                val forward = gotos.get(label).forall[it < idx]
+                val backward = gotos.get(label).forall[it > idx]
                 
                 if (forward && backward) {
                     throw new UnsupportedOperationException("Cannot handle forward and backward jump to the same label: " + label)
@@ -967,8 +967,14 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     private def Expression signalReference(ValuedObjectReference ref, boolean presentSignal) {
         return createValuedObjectReference => [
             if (presentSignal) {
+                if (!voPSigMap.containsKey(ref.valuedObject)) {
+                    throw new NullPointerException
+                }
                 valuedObject = voPSigMap.get(ref.valuedObject)
             }else {
+                if (!voSigMap.containsKey(ref.valuedObject)) {
+                    throw new NullPointerException
+                }
                 valuedObject = voSigMap.get(ref.valuedObject)
             }
         ]
