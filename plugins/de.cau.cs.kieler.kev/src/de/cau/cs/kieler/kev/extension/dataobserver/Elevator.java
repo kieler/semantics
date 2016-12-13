@@ -110,13 +110,14 @@ public class Elevator extends JSONObjectDataComponent implements IJSONObjectData
 
             result.accumulate("signal_up", jSONObject.has(MOVE_UP)
                     && (JSONSignalValues.isPresent(jSONObject.get(MOVE_UP))));
+            
             result.accumulate("signal_down", jSONObject.has(MOVE_DOWN)
                     && (JSONSignalValues.isPresent(jSONObject.get(MOVE_DOWN))));
 
             // generate inputs
-            result.accumulate(IS_UP, JSONSignalValues.newValue(pos == MAX));
-            result.accumulate(IS_DOWN, JSONSignalValues.newValue(pos == MIN));
-            result.accumulate(SECOND, JSONSignalValues.newValue(sec));
+            result.accumulate(IS_UP, JSONSignalValues.newValue(pos == MAX, pos == MAX));
+            result.accumulate(IS_DOWN, JSONSignalValues.newValue(pos == MIN, pos == MIN));
+            result.accumulate(SECOND, JSONSignalValues.newValue(sec, sec));
             sec = !sec;
 
         } catch (JSONException e) {
