@@ -14,22 +14,16 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import java.util.List
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Transformation Extensions. Extension in order to improve readability of SCCharts extended
@@ -488,6 +482,12 @@ class SCChartsTransformationExtension {
             val newDeclaration = createDeclaration(declaration)
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
+            val parent = declaration.eContainer
+            if (parent instanceof State) {
+                    parent.declarations.add(newDeclaration)                
+            } else if (parent instanceof ControlflowRegion) {
+                    parent.declarations.add(newDeclaration)                
+            }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }

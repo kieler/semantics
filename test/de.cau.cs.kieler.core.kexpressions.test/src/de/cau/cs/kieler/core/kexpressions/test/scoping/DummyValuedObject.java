@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl;
 
 /**
  * The Class DummyVariable.

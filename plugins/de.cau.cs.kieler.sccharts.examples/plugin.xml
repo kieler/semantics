@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kex">
+      <category
+            id="de.cau.cs.kieler.sccharts"
+            title="SCCharts">
+      </category>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts"
+            contact="kieler@informatik.uni-kiel.de"
+            description="AO is a very primitive starter example"
+            generation_date="de.cau.cs.kieler.sccharts.example.example1"
+            id="de.cau.cs.kieler.sccharts.ao"
+            overview_pic="examples/ao.png"
+            root_directory="examples/"
+            title="AO">
+         <resource
+               direct_open="true"
+               local_path="examples/ao.sct"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts"
+            contact="kieler@informatik.uni-kiel.de"
+            description="ALDO is a primary example for the SLIC-based KIELER Compiler (KiCo)"
+            generation_date="de.cau.cs.kieler.sccharts.example.example2"
+            id="de.cau.cs.kieler.sccharts.aldo"
+            overview_pic="examples/aldo.png"
+            root_directory="examples/"
+            title="ALDO">
+         <resource
+               direct_open="true"
+               local_path="examples/aldo.sct"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts"
+            contact="kieler@informatik.uni-kiel.de"
+            description="ABRO The hello world of synchronous programming"
+            generation_date="de.cau.cs.kieler.sccharts.example.example3"
+            id="de.cau.cs.kieler.sccharts.abro"
+            overview_pic="examples/abro.png"
+            root_directory="examples/"
+            title="ABRO">
+         <resource
+               direct_open="true"
+               local_path="examples/abro.sct"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts"
+            contact="kieler@informatik.uni-kiel.de"
+            description="A simple DVD player example"
+            generation_date="de.cau.cs.kieler.sccharts.example.example4"
+            id="de.cau.cs.kieler.sccharts.dvdplayer"
+            overview_pic="examples/dvdplayer.png"
+            root_directory="examples/"
+            title="DVD Player">
+         <resource
+               direct_open="true"
+               local_path="examples/dvdplayer.sct"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.sccharts"
+            contact="kieler@informatik.uni-kiel.de"
+            description="A traffic light controller example"
+            generation_date="de.cau.cs.kieler.sccharts.example.example5"
+            id="de.cau.cs.kieler.sccharts.trafficlight"
+            overview_pic="examples/trafficlight.png"
+            root_directory="examples/"
+            title="Traffic Light">
+         <resource
+               direct_open="true"
+               local_path="examples/trafficlight.sct"
+               resource_type="file">
+         </resource>
+      </example>
+      </extension>
+
+</plugin>

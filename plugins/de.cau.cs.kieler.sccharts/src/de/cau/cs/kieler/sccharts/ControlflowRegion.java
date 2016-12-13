@@ -33,10 +33,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.ControlflowRegion#getStates <em>States</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getControlflowRegion()
  * @model

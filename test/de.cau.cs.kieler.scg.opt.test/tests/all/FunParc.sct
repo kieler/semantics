@@ -1,0 +1,428 @@
+scchart FunParc{
+  input bool weekend;
+  input bool dark;
+  input bool celebration;
+  input bool wet;
+  input bool frost;
+  output bool ALampC;
+  output bool BLampC;
+  output bool CLampC;
+  output bool DLampC;
+  output bool ELampC;
+  output bool ExtraLampsC;
+  output bool ALampM;
+  output bool BLampM;
+  output bool CLampM;
+  output bool DLampM;
+  output bool ELampM;
+  output bool FlampM;
+  output bool ExtraLampsM;
+  output bool waterLight;
+  output bool extraWater;
+  output bool securityBrakesR;
+  output bool frostGripsR;
+  output bool securityBrakesL;
+  output bool frostGripsL;
+  output bool wheelLights;
+  output bool wheelJingle;
+  output bool extraRound;
+  output bool sharkLight;
+  output bool sharkExtraStop;
+  output bool sharkJingle;
+  output bool sharkExtraSpeed;
+  output bool towerCircleLight;
+  output bool towerDrivingLight;
+  output bool swingboatMotorSlow;
+  output bool swingboatLight;
+  output bool towerLight;
+  output bool towerMotorSlow;
+  output bool rC1;
+  output bool rC2;
+  output bool rC3;
+  output bool rC4;
+  output bool rC5;
+  output bool rC6;
+  output bool rC7;
+  output bool rC8;
+  output bool rC9;
+  output bool dL1;
+  output bool dL2;
+  output bool dL3;
+  output bool dL4;
+  output bool dL5;
+  output bool dL6;
+  output bool dL7;
+  output bool dL8;
+  output bool dL9;
+  output bool dL10;
+  
+  region Main:
+  initial state running{
+  
+  region rollerCoaster:
+  initial state init
+  --> driveSlowR immediate with wet / securityBrakesR = true
+  --> driveFrostR immediate with frost / frostGripsR = true
+  --> driveNormalR immediate;
+  
+  state driveSlowR {
+    initial state initS
+    --> leftCurveS immediate with / rC1 = true;
+    state leftCurveS
+    --> rightCurveS immediate with / rC2 = true;
+    state rightCurveS
+    --> snakeCurveS immediate with / rC3 = false;
+    state snakeCurveS
+   --> spiralS immediate with / rC4 = true;
+    state spiralS
+   --> dropS immediate with / rC5 = true;
+   state dropS
+   --> smallHillS immediate with / rC6 = true;
+   state smallHillS
+   --> sharpRightS immediate with / rC7 = true;
+   state sharpRightS
+   --> smallDropS immediate with / rC8 = true;
+   state smallDropS
+   --> doneS immediate with / rC9 = true;
+   final state doneS;
+  }
+  >-> doneR immediate;
+  
+  state driveFrostR{
+     initial state initF
+    --> leftCurveF immediate with / rC1 = true;
+    state leftCurveF
+    --> rightCurveF immediate with / rC2 = true;
+    state rightCurveF
+    --> snakeCurveF immediate with / rC3 = false;
+    state snakeCurveF
+   --> spiralF immediate with / rC4 = true;
+    state spiralF
+   --> dropF immediate with / rC5 = false;
+   state dropF
+   --> smallHillF immediate with / rC6 = true;
+   state smallHillF
+   --> sharpRightF immediate with / rC7 = false;
+   state sharpRightF
+   --> smallDropF immediate with / rC8 = true;
+   state smallDropF
+   --> doneF immediate with / rC9 = true;
+   final state doneF;
+  }
+  >-> doneR immediate;
+  
+  state driveNormalR{
+     initial state init
+    --> leftCurve immediate with / rC1 = true;
+    state leftCurve
+    --> rightCurve immediate with / rC2 = true;
+    state rightCurve
+    --> snakeCurve immediate with / rC3 = true;
+    state snakeCurve
+   --> spiral immediate with / rC4 = true;
+    state spiral
+   --> drop immediate with / rC5 = true;
+   state drop
+   --> smallHill immediate with / rC6 = true;
+   state smallHill
+   --> sharpRight immediate with / rC7 = true;
+   state sharpRight
+   --> smallDrop immediate with / rC8 = true;
+   state smallDrop
+   --> done immediate with / rC9 = true;
+   final state done;
+  } 
+  >-> doneR immediate;
+  
+  final state doneR;
+  
+  region carousel:
+  initial state init
+  --> lightItems immediate;
+  state lightItems{
+    region lightHorse:
+    initial state init
+    --> done immediate with / ALampC = true;
+    final state done;
+    
+    region lightCar:
+    initial state init
+    --> done immediate with / BLampC = true;
+    final state done;
+    
+    region lightLoco:
+    initial state init
+    --> done immediate with / CLampC = true;
+    final state done;
+    
+    region lightShip:
+    initial state init
+    --> done immediate with / DLampC = true;
+    final state done;
+    
+    region lightFireEngine:
+    initial state init
+    --> done immediate with / DLampC = true;
+    final state done;
+  }
+  >-> extraLamps immediate;
+  state extraLamps
+  --> done immediate with dark / ExtraLampsC = true
+  --> done immediate;
+  final state done;
+  
+  region waterSplash:
+  initial state init
+  --> operating immediate;
+  state operating{
+    region lights:
+    initial state init
+    --> done immediate with dark / waterLight = true
+    --> done immediate;
+    final state done;
+    
+    region water:
+    initial state init
+    --> done immediate with celebration / wheelJingle = true
+    --> done immediate;
+    final state done;
+  }
+  >-> done immediate;
+  final state done;
+  
+  region shark:
+  initial state init
+  --> running immediate;
+  state running {
+    
+    region lights:
+    initial state init
+    --> done immediate with dark / sharkLight = true
+    --> done immediate;
+    final state done;
+    
+     region wait:
+    initial state init
+    --> done immediate with weekend / sharkExtraStop = true
+    --> done immediate;
+    final state done;
+    
+     region fast:
+    initial state init
+    --> done immediate with weekend / sharkExtraSpeed = true
+    --> done immediate;
+    final state done;
+    
+     region jingle:
+    initial state init
+    --> done immediate with celebration / sharkJingle = true
+    --> done immediate;
+    final state done;
+  }
+  >-> done immediate;
+  final state done;
+  
+  region bigWheel:
+  initial state init
+  --> operating immediate;
+  state operating{
+    region lights:
+    initial state init
+    --> done immediate with dark / wheelLights = true
+    --> done immediate;
+    final state done;
+    
+    region water:
+    initial state init
+    --> done immediate with weekend / extraWater = true
+    --> done immediate;
+    final state done;
+    
+    region motor:
+    initial state init
+    --> backSlow immediate;
+    state backSlow
+    --> backFast immediate;
+    state backFast
+    --> done immediate with celebration / extraRound = true
+    --> forthSlow immediate;
+    state forthSlow
+    --> forthFast immediate;
+    state forthFast
+    --> done immediate;
+    final state done;
+    
+    
+  }
+  >-> done immediate;
+  final state done;
+  
+  region dragonLoop:
+  initial state init
+  --> driveSlow immediate with wet / securityBrakesL = true
+  --> driveFrost immediate with frost / frostGripsL = true
+  --> driveNormal immediate;
+  
+  state driveSlow {
+    initial state init
+    --> leftCurve immediate with / dL1 = true;
+    state leftCurve
+    --> rightCurve immediate with / dL2 = true;
+    state rightCurve
+    --> snakeCurve immediate with / dL3 = false;
+    state snakeCurve
+   --> spiral immediate with / dL4 = true;
+    state spiral
+   --> drop immediate with / dL5 = true;
+   state drop
+   --> looping immediate with / dL6 = true;
+   state looping
+   --> smallHill immediate with / dL7 = true;
+   state smallHill
+   --> sharpRight immediate with / dL8 = true;
+   state sharpRight
+   --> smallDrop immediate with / dL9 = true;
+   state smallDrop
+   --> done immediate with / dL10 = true;
+   final state done;
+  }
+  >-> doneR immediate;
+  
+  state driveFrost{
+      initial state init
+    --> leftCurve immediate with / dL1 = true;
+    state leftCurve
+    --> rightCurve immediate with / dL2 = true;
+    state rightCurve
+    --> snakeCurve immediate with / dL3 = false;
+    state snakeCurve
+   --> spiral immediate with / dL4 = true;
+    state spiral
+   --> drop immediate with / dL5 = true;
+   state drop
+   --> looping immediate with / dL6 = true;
+   state looping
+   --> smallHill immediate with / dL7 = true;
+   state smallHill
+   --> sharpRight immediate with / dL8 = false;
+   state sharpRight
+   --> smallDrop immediate with / dL9 = true;
+   state smallDrop
+   --> done immediate with / dL10 = true;
+   final state done;
+  }
+  >-> doneR immediate;
+  
+  state driveNormal{
+     initial state init
+    --> leftCurve immediate with / dL1 = true;
+    state leftCurve
+    --> rightCurve immediate with / dL2 = true;
+    state rightCurve
+    --> snakeCurve immediate with / dL3 = true;
+    state snakeCurve
+   --> spiral immediate with / dL4 = true;
+    state spiral
+   --> drop immediate with / dL5 = true;
+   state drop
+   --> looping immediate with / dL6 = true;
+   state looping
+   --> smallHill immediate with / dL7 = true;
+   state smallHill
+   --> sharpRight immediate with / dL8 = true;
+   state sharpRight
+   --> smallDrop immediate with / dL9 = true;
+   state smallDrop
+   --> done immediate with / dL10 = true;
+   final state done;
+  }
+  >-> doneR immediate;
+  
+  final state doneR;
+  
+  region highTower:
+   initial state init
+  --> swinging immediate;
+  
+  state swinging {
+    region controlMotor:
+    initial state init
+    --> done immediate with frost / towerMotorSlow = true
+    --> done immediate;
+    final state done;
+    
+    region controlLights:
+    initial state init
+    --> done immediate with dark / towerLight = true
+    --> done immediate;
+    final state done;
+  }
+  >-> done immediate;
+  
+  final state done;
+  
+  region merryGoRound:
+  initial state init
+  --> lightItems immediate;
+  state lightItems{
+    region lightHorse:
+    initial state init
+    --> done immediate with / ALampM = true;
+    final state done;
+    
+    region lightCar:
+    initial state init
+    --> done immediate with / BLampM = true;
+    final state done;
+    
+    region lightLoco:
+    initial state init
+    --> done immediate with / CLampM = true;
+    final state done;
+    
+    region lightShip:
+    initial state init
+    --> done immediate with / DLampM = true;
+    final state done;
+    
+    region lightFireEngine:
+    initial state init
+    --> done immediate with / DLampM = true;
+    final state done;
+    
+     region lightPlane:
+    initial state init
+    --> done immediate with / FlampM = true;
+    final state done;
+  }
+  >-> extraLamps immediate;
+  state extraLamps
+  --> done immediate with dark / ExtraLampsM = true
+  --> done immediate;
+  final state done;
+  
+  region swingBoat:
+  
+  initial state init
+  --> swinging immediate;
+  
+  state swinging {
+    region controlMotor:
+    initial state init
+    --> done immediate with frost / swingboatMotorSlow = true
+    --> done immediate;
+    final state done;
+    
+    region controlLights:
+    initial state init
+    --> done immediate with dark / swingboatLight = true
+    --> done immediate;
+    final state done;
+  }
+  >-> done immediate;
+  
+  final state done;
+}
+>-> Stop immediate;
+final state Stop;
+}

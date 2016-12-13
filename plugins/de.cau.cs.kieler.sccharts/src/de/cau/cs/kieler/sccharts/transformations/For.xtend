@@ -20,15 +20,14 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import com.google.inject.Scopes
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * SCCharts For Transformation.
@@ -134,7 +133,7 @@ class For extends AbstractExpansionTransformation {
             return null
         }
         val data0 = region.label.trim
-        System.out.println("FOR label '" + data0 + "' ")
+        //System.out.println("FOR label '" + data0 + "' ")
         
         if (!data0.startsWith("for")) {
             return null
@@ -170,11 +169,11 @@ class For extends AbstractExpansionTransformation {
     }
 
     def public ValuedObject findValuedObject(Region region, String valuedObjectName) {
-        System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
+        //System.out.println("FOR findValuedObject find '" + valuedObjectName + "' ")
         if (region.parentState != null) {
             val list = region.parentState.valuedObjects.filter[e|e.name.equals(valuedObjectName)].toList
             if (!list.nullOrEmpty) {
-                System.out.println("FOR findValuedObject" + list.size)
+                //System.out.println("FOR findValuedObject" + list.size)
                 return list.get(0)
             }
             if (region.parentState.parentRegion != null) {

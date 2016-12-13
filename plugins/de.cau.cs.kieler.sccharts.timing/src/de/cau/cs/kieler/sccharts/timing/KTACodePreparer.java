@@ -38,12 +38,8 @@ public class KTACodePreparer implements ICodePreparer {
 		    + "\n#include \"../tpp.h\"");
 		String assumptionFile = uriString.replace(".sct", ".asu");
 		String assumptionFilePath = assumptionFile.replace("file:", "");
-		boolean assumptionFileFound = timingAnnotationProvider.writeStubs(assumptionFilePath, 
+		timingAnnotationProvider.writeStubs(assumptionFilePath, 
 				codeAdditionBuilder);
-		if (!assumptionFileFound) {
-			System.out.println("There are no assumptions on called functions found.");
-		}
-		System.out.println(codeAdditionBuilder.toString());
 		String codeAdapted = code.replace("***/\nint", "***/" + codeAdditionBuilder.toString() 
 		      + "\nint");
 		return codeAdapted;

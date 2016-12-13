@@ -13,16 +13,15 @@
 package de.cau.cs.kieler.sccharts.text.sct.sctgenerator
 
 import com.google.inject.Inject
-import com.google.inject.Singleton
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
@@ -32,6 +31,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator.*
+import com.google.inject.Singleton
 
 /**
  * The Model Generator class

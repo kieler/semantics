@@ -80,9 +80,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.sccharts.text.sct.ui.SctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            name="Sct">
+              category="de.cau.cs.kieler.sccharts"
+              class="de.cau.cs.kieler.sccharts.text.sct.ui.SctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+              name="Sct">
             <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
         <page
@@ -364,7 +365,7 @@
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Netlist Compilation"
             priority="100"
-            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java, scc, ssc, T_scg.ssa.scssa, T_scg.ssa.cssa, T_scg.ssa.regular"
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, circuit, VHDL, circuit.basic, scg.seqssa, codegeneration, s, s.target, s.c, s.java"
             preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, NOSIMULATIONVISUALIZATION"></editor>
       <!--<editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"

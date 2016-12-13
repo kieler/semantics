@@ -1,0 +1,520 @@
+/* 
+ * Station2Station/ICIC.sct
+ * Author: nbw
+ * Description:
+ * Performs one loop in the inner Circle
+ * Implements automatic arrival track switching
+ *
+ * Tests:
+ * - One train circle from IC_ST_2 to IC_ST_2
+ * - Two trains circle from IC_ST_2 and IC_ST_3
+ * - Two trains circle to IC_ST_2
+ * - Two trains circle to IC_ST_1 
+ */
+
+@VHLayout
+scchart ICIC "IC to IC Controller" {
+  input int IC_JCT_0_perm, IC_LN_0_perm, IC_LN_1_perm, IC_LN_2_perm;
+  input int IC_LN_3_perm, IC_LN_4_perm, IC_LN_5_perm, IC_ST_0_perm;
+  input int IC_ST_1_perm, IC_ST_2_perm, IC_ST_3_perm, IC_ST_4_perm;
+  output bool IC_JCT_0_req[11], IC_LN_0_req[11], IC_LN_1_req[11], IC_LN_2_req[11];
+  output bool IC_LN_3_req[11], IC_LN_4_req[11], IC_LN_5_req[11], IC_ST_0_req[11];
+  output bool IC_ST_1_req[11], IC_ST_2_req[11], IC_ST_3_req[11], IC_ST_4_req[11];
+
+  input int trainNum;
+  input int depTrack;
+  input int destTrack;
+  input bool cleanup;
+  input bool debug;
+  output int arrTrack;
+  output bool trainTravelling;
+  int i_arrOnTrack;
+
+  initial state init {
+    bool perm_all_next_signals = false;
+    entry debug / 'println("[trainNum][IC-IC] Requesting permission to leave IC_ST")';
+
+    initial state waitForPerm {
+      entry / IC_ST_4_req[trainNum] = true;
+      entry / IC_LN_0_req[trainNum] = true;
+    }
+    --> gotPerm with (IC_ST_4_perm == trainNum) & (IC_LN_0_perm == trainNum) / trainTravelling = true
+    --> backOff with (IC_ST_4_perm == trainNum) | (IC_LN_0_perm == trainNum);
+
+    state backOff
+    --> backoff1;
+    
+    state backoff1 {
+      entry / IC_ST_4_req[trainNum] = false;
+      entry / IC_LN_0_req[trainNum] = false;
+    }
+    --> waitForPerm;
+
+  final state gotPerm; 
+  }
+  >-> Dep_IC_ST;
+
+  state Dep_IC_ST {
+    entry debug & depTrack == 1 / 'println("[trainNum][IC-IC] Leaving IC_ST_1")';
+    entry debug & depTrack == 2 / 'println("[trainNum][IC-IC] Leaving IC_ST_2")';
+    entry debug & depTrack == 3 / 'println("[trainNum][IC-IC] Leaving IC_ST_3")';
+    entry / 'railPoint(29,STRAIGHT)';
+    entry depTrack == 1 / 'railPoint(24,STRAIGHT)';
+    entry depTrack > 1  / 'railPoint(24,BRANCH)';
+    entry depTrack == 2 / 'railPoint(23,BRANCH)';
+    entry depTrack == 3 / 'railPoint(23,STRAIGHT)';
+    entry depTrack == 1 / 'railSignal(IC_ST_1, FWD, GREEN)';
+    entry depTrack == 2 / 'railSignal(IC_ST_2, FWD, GREEN)';
+    entry depTrack == 3 / 'railSignal(IC_ST_3, FWD, GREEN)';
+    entry depTrack == 1 / 'railTrack(IC_ST_1,FWD,trainNum,NORMAL)';
+    entry depTrack == 2 / 'railTrack(IC_ST_2,FWD,trainNum,NORMAL)';
+    entry depTrack == 3 / 'railTrack(IC_ST_3,FWD,trainNum,NORMAL)';
+    entry / 'railSignal(IC_LN_0, FWD, RED)';
+    entry / 'railTrack(IC_LN_0,FWD,trainNum,NORMAL)';
+    entry / 'railTrack(IC_ST_4,FWD,trainNum,NORMAL)';
+  } --> IC_LN_0 with 'railContact(IC_LN_0,0)';
+
+  state IC_LN_0 {
+    entry / 'println("[trainNum][IC-IC] Entering IC_LN_0")';
+    entry debug / 'println("[trainNum][IC-IC] Requesting permission for IC_LN_1")';
+    entry depTrack == 1 / 'railSignal(IC_ST_1, FWD, RED)';
+    entry depTrack == 2 / 'railSignal(IC_ST_2, FWD, RED)';
+    entry depTrack == 3 / 'railSignal(IC_ST_3, FWD, RED)';
+    entry depTrack == 1 / 'railTrackOff(IC_ST_1)';
+    entry depTrack == 2 / 'railTrackOff(IC_ST_2)';
+    entry depTrack == 3 / 'railTrackOff(IC_ST_3)';
+    entry depTrack == 1 / IC_ST_1_req[trainNum] = false;
+    entry depTrack == 2 / IC_ST_2_req[trainNum] = false;
+    entry depTrack == 3 / IC_ST_3_req[trainNum] = false;
+    entry / IC_LN_1_req[trainNum] = true;
+
+    region Travel:
+      initial state Entry
+      --> Continue with 'railContact(IC_LN_0,0)' & (IC_LN_1_perm == trainNum)
+      --> Slowdown with 'railContact(IC_LN_0,0)';
+
+      state Slowdown {
+        entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_0")';
+        entry / 'railTrack(IC_LN_0,FWD,trainNum,CAUTION)';
+      }
+      --> Waiting with 'railContact(IC_LN_0,1)'
+      --> Continue with IC_LN_1_perm == trainNum;
+
+      state Waiting {
+        entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_0")';
+        entry / 'railTrackBrake(IC_LN_0)';
+      }
+      --> Continue with IC_LN_1_perm == trainNum;
+
+      state Continue {
+        entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_0")';
+        entry / 'railSignal(IC_LN_0,FWD,GREEN)';
+        entry / 'railTrack(IC_LN_0,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_LN_1,FWD,trainNum,NORMAL)';
+        entry / 'railSignal(IC_LN_1, FWD, RED)';
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Cleanup:
+      initial state Entry
+      --> cleanup with 'railContact(IC_LN_0,0)';
+
+      state cleanup {
+      entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_0 completely")';
+      entry / 'railTrackOff(IC_ST_4)';
+      entry / IC_ST_4_req[trainNum] = false;
+      }
+      --> done immediate;
+      
+      final state done;
+  }>-> IC_LN_0_IC_LN_1;
+
+  state IC_LN_0_IC_LN_1
+  --> IC_LN_1 with 'railContact(IC_LN_1,0)';
+
+  state IC_LN_1 {
+    entry / 'println("[trainNum][IC-IC] Entering IC_LN_1")';
+    entry debug / 'println("[trainNum][IC-IC] Requesting permission for IC_LN_2")';
+    entry / IC_LN_2_req[trainNum] = true;
+    entry / 'railSignal(IC_LN_0, FWD, RED)';
+
+    region Travel:
+      initial state Entry
+      --> Continue with 'railContact(IC_LN_1,0)' & (IC_LN_2_perm == trainNum)
+      --> Slowdown with 'railContact(IC_LN_1,0)';
+
+      state Slowdown {
+        entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_1")';
+        entry / 'railTrack(IC_LN_1,FWD,trainNum,CAUTION)';
+      }
+      --> Waiting with 'railContact(IC_LN_1,1)'
+      --> Continue with (IC_LN_2_perm == trainNum);
+
+      state Waiting {
+        entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_1")';
+        entry / 'railTrackBrake(IC_LN_1)';
+      }
+      --> Continue with (IC_LN_2_perm == trainNum);
+
+      state Continue {
+        entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_1")';
+        entry / 'railSignal(IC_LN_1,FWD,GREEN)';
+        entry / 'railTrack(IC_LN_1,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_LN_2,FWD,trainNum,NORMAL)';
+        entry / 'railSignal(IC_LN_2, FWD, RED)';
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Cleanup:
+      initial state Entry
+      --> cleanup with 'railContact(IC_LN_1,0)';
+
+      state cleanup {
+        entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_1 completely")';
+        entry / 'railTrackOff(IC_LN_0)';
+        entry / IC_LN_0_req[trainNum] = false;
+      }
+      --> done immediate;
+      
+      final state done;
+  }>-> IC_LN_1_IC_LN_2;
+
+  state IC_LN_1_IC_LN_2
+  --> IC_LN_2 with 'railContact(IC_LN_2,0)';
+
+  state IC_LN_2 {
+  entry / 'println("[trainNum][IC-IC] Entering IC_LN_2")';
+  entry debug / 'println("[trainNum][IC-IC] Requesting permission for IC_LN_3")';
+  entry / IC_LN_3_req[trainNum] = true;
+  entry / 'railSignal(IC_LN_1, FWD, RED)';
+  
+  region Travel:
+    initial state Entry
+    --> Continue with 'railContact(IC_LN_2,0)' & (IC_LN_3_perm == trainNum)
+    --> Slowdown with 'railContact(IC_LN_2,0)';
+
+    state Slowdown {
+      entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_2")';
+      entry / 'railTrack(IC_LN_2,FWD,trainNum,CAUTION)';
+    }
+    --> Waiting with 'railContact(IC_LN_2,1)'
+    --> Continue with (IC_LN_3_perm == trainNum);
+
+    state Waiting {
+      entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_2")';
+      entry / 'railTrackBrake(IC_LN_2)';
+    }
+    --> Continue with (IC_LN_3_perm == trainNum);
+
+    state Continue {
+      entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_2")';
+      entry / 'railSignal(IC_LN_2,FWD,GREEN)';
+      entry / 'railTrack(IC_LN_2,FWD,trainNum,NORMAL)';
+      entry / 'railTrack(IC_LN_3,FWD,trainNum,NORMAL)';
+      entry / 'railSignal(IC_LN_3, FWD, RED)';
+    }
+    --> done immediate;
+
+    final state done;
+
+  region Cleanup:
+    initial state Entry
+    --> cleanup with 'railContact(IC_LN_2,0)';
+
+    state cleanup {
+      entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_2 completely")';
+      entry / 'railTrackOff(IC_LN_1)';
+      entry / IC_LN_1_req[trainNum] = false;
+    }
+    --> done immediate;
+      
+    final state done;
+  }>-> IC_LN_2_IC_LN_3;
+
+  state IC_LN_2_IC_LN_3
+  --> IC_LN_3 with 'railContact(IC_LN_3,0)';
+
+  state IC_LN_3 {
+    entry / 'println("[trainNum][IC-IC] Entering IC_LN_3")';
+    entry debug / 'println("[trainNum][IC-IC] Requesting permission for IC_LN_4")';
+    entry / IC_LN_4_req[trainNum] = true;
+    entry / 'railSignal(IC_LN_2, FWD, RED)';
+
+    region Travel:
+      initial state Entry
+      --> Continue with 'railContact(IC_LN_3,0)' & (IC_LN_4_perm == trainNum)
+      --> Slowdown with 'railContact(IC_LN_3,0)';
+
+      state Slowdown {
+        entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_3")';
+        entry / 'railTrack(IC_LN_3,FWD,trainNum,CAUTION)';
+      }
+      --> Waiting with 'railContact(IC_LN_3,1)'
+      --> Continue with (IC_LN_4_perm == trainNum);
+
+      state Waiting {
+        entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_3")';
+        entry / 'railTrackBrake(IC_LN_3)';
+      }
+      --> Continue with (IC_LN_4_perm == trainNum);
+
+      state Continue {
+        entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_3")';
+        entry / 'railSignal(IC_LN_3,FWD,GREEN)';
+        entry / 'railTrack(IC_LN_3,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_LN_4,FWD,trainNum,NORMAL)';
+        entry / 'railSignal(IC_LN_4, FWD, RED)';
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Cleanup:
+      initial state Entry
+      --> cleanup with 'railContact(IC_LN_3,0)';
+
+      state cleanup {
+        entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_3 completely")';
+        entry / 'railTrackOff(IC_LN_2)';
+        entry / IC_LN_2_req[trainNum] = false;
+      }
+      --> done immediate;
+      
+      final state done;
+  }>-> IC_LN_3_IC_LN_4;
+
+  state IC_LN_3_IC_LN_4
+  --> IC_LN_4 with 'railContact(IC_LN_4,0)';
+
+  state IC_LN_4 {
+    bool perm_all_next_segments = false;
+    entry / 'println("[trainNum][IC-IC] Entering IC_LN_4")';
+    entry / 'railSignal(IC_LN_3, FWD, RED)';
+
+    region Travel:
+      initial state Entry
+      --> Continue with 'railContact(IC_LN_4,0)' & perm_all_next_segments
+      --> Slowdown with 'railContact(IC_LN_4,0)';
+
+      state Slowdown {
+        entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_4")';
+        entry / 'railTrack(IC_LN_4,FWD,trainNum,CAUTION)';
+      }
+      --> Waiting with 'railContact(IC_LN_4,1)'
+      --> Continue with perm_all_next_segments;
+
+      state Waiting {
+        entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_4")';
+        entry / 'railTrackBrake(IC_LN_4)';
+      }
+      --> Continue with perm_all_next_segments;
+
+      state Continue {
+        entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_4")';
+        entry / 'railPoint(11,STRAIGHT)';
+        entry / 'railPoint(13,STRAIGHT)';
+        entry / 'railSignal(IC_LN_4,FWD,GREEN)';
+        entry / 'railTrack(IC_LN_4,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_LN_5,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_JCT_0,FWD,trainNum,NORMAL)';
+        entry / 'railSignal(IC_LN_5, FWD, RED)';
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Cleanup:
+      initial state Entry
+      --> cleanup with 'railContact(IC_LN_4,0)';
+
+      state cleanup {
+        entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_4 completely")';
+        entry / 'railTrackOff(IC_LN_3)';
+        entry / IC_LN_3_req[trainNum] = false;
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Permissions:
+      initial state checking {
+        entry debug / 'println("[trainNum][IC-IC] Requesting permissions for IC_JCT_0 and IC_LN_5")';
+        entry / IC_LN_5_req[trainNum] = true;
+        entry / IC_JCT_0_req[trainNum] = true;
+      }
+      --> success with IC_JCT_0_perm == trainNum & IC_LN_5_perm == trainNum
+      --> resolving with IC_JCT_0_perm == trainNum | IC_LN_5_perm == trainNum;
+
+      state resolving
+    --> backoff1;
+    
+    state backoff1 {
+        entry / IC_LN_5_req[trainNum] = false;
+        entry / IC_JCT_0_req[trainNum] = false;
+      }
+      --> checking;
+
+      state success{
+        entry / perm_all_next_segments = true;
+      }
+      --> done immediate;
+      
+      final state done;
+  } >-> IC_LN_4_IC_LN_5;
+
+  state IC_LN_4_IC_LN_5
+  --> IC_LN_5 with 'railContact(IC_LN_5,0)';
+
+  state IC_LN_5 {
+    int perm_all_next_segments = false;
+    entry / 'println("[trainNum][IC-IC] Entering IC_LN_5")';
+    entry / 'railSignal(IC_LN_4, FWD, RED)';
+
+    region Travel:
+      initial state Entry
+      --> Continue with 'railContact(IC_LN_5,0)' & perm_all_next_segments
+      --> Slowdown with 'railContact(IC_LN_5,0)';
+
+      state Slowdown {
+        entry debug / 'println("[trainNum][IC-IC] Slowing down on IC_LN_5")';
+        entry / 'railTrack(IC_LN_5,FWD,trainNum,CAUTION)';
+      }
+      --> Waiting with 'railContact(IC_LN_5,1)'
+      --> Continue with perm_all_next_segments;
+
+      state Waiting {
+        entry debug / 'println("[trainNum][IC-IC] Stopping on IC_LN_5")';
+        entry / 'railTrackBrake(IC_LN_5)';
+      }
+      --> Continue with perm_all_next_segments;
+
+      state Continue {
+        entry debug / 'println("[trainNum][IC-IC] Continuing on IC_LN_5")';
+        entry / 'railPoint(18,STRAIGHT)';
+        entry i_arrOnTrack == 1 / 'railPoint(20,STRAIGHT)';
+        entry i_arrOnTrack > 1  / 'railPoint(20,BRANCH)';
+        entry i_arrOnTrack == 2 / 'railPoint(19,BRANCH)';
+        entry i_arrOnTrack == 3 / 'railPoint(19,STRAIGHT)';
+        entry / 'railSignal(IC_LN_5,FWD,GREEN)';
+        entry / 'railTrack(IC_LN_5,FWD,trainNum,NORMAL)';
+        entry / 'railTrack(IC_ST_0,FWD,trainNum,NORMAL)';
+        entry i_arrOnTrack == 1 / 'railTrack(IC_ST_1,FWD,trainNum,NORMAL)';
+        entry i_arrOnTrack == 2 / 'railTrack(IC_ST_2,FWD,trainNum,NORMAL)';
+        entry i_arrOnTrack == 3 / 'railTrack(IC_ST_3,FWD,trainNum,NORMAL)';
+        entry i_arrOnTrack == 1 / 'railSignal(IC_ST_1, FWD, RED)';
+        entry i_arrOnTrack == 2 / 'railSignal(IC_ST_2, FWD, RED)';
+        entry i_arrOnTrack == 3 / 'railSignal(IC_ST_3, FWD, RED)';
+        entry / arrTrack = i_arrOnTrack;
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Cleanup:
+      initial state Entry
+      --> cleanup with 'railContact(IC_LN_5,0)';
+
+      state cleanup {
+        entry debug / 'println("[trainNum][IC-IC] Entered IC_LN_5 completely")';
+        entry / 'railTrackOff(IC_JCT_0)';
+        entry / 'railTrackOff(IC_LN_4)';
+        entry / IC_JCT_0_req[trainNum] = false;
+        entry / IC_LN_4_req[trainNum] = false;
+      }
+      --> done immediate;
+      
+      final state done;
+
+    region Permissions:
+      initial state checking {
+        entry / IC_ST_0_req[trainNum] = true;
+        entry destTrack == 1 | !cleanup / IC_ST_1_req[trainNum] = true;
+        entry destTrack == 2 | !cleanup / IC_ST_2_req[trainNum] = true;
+        entry destTrack == 3 | !cleanup / IC_ST_3_req[trainNum] = true;
+      }
+      --> success with destTrack == 1 & IC_ST_0_perm == trainNum & IC_ST_1_perm == trainNum / i_arrOnTrack = 1
+      --> success with destTrack == 2 & IC_ST_0_perm == trainNum & IC_ST_2_perm == trainNum / i_arrOnTrack = 2
+      --> success with destTrack == 3 & IC_ST_0_perm == trainNum & IC_ST_3_perm == trainNum / i_arrOnTrack = 3
+      --> success with IC_ST_0_perm == trainNum & IC_ST_1_perm == trainNum / i_arrOnTrack = 1
+      --> success with IC_ST_0_perm == trainNum & IC_ST_2_perm == trainNum / i_arrOnTrack = 2
+      --> success with IC_ST_0_perm == trainNum & IC_ST_3_perm == trainNum / i_arrOnTrack = 3
+      --> resolving with IC_ST_0_perm == trainNum | IC_ST_3_perm == trainNum | IC_ST_2_perm == trainNum | IC_ST_1_perm == trainNum;
+
+      state resolving
+    --> backoff1;
+    
+    state backoff1 {
+        entry / IC_ST_0_req[trainNum] = false;
+        entry / IC_ST_1_req[trainNum] = false;
+        entry / IC_ST_2_req[trainNum] = false;
+        entry / IC_ST_3_req[trainNum] = false;
+      }
+      --> checking;
+
+      state success
+    --> success1;
+    
+    state success1 {
+        entry !(i_arrOnTrack == 1) / IC_ST_1_req[trainNum] = false;      
+        entry !(i_arrOnTrack == 2) / IC_ST_2_req[trainNum] = false;
+        entry !(i_arrOnTrack == 3) / IC_ST_3_req[trainNum] = false;
+        entry / perm_all_next_segments = true;
+      }
+      --> done immediate;
+      
+      final state done;
+  }>-> IC_LN_5_IC_ST;
+
+  state IC_LN_5_IC_ST
+  --> Arr_IC_ST with i_arrOnTrack == 1 & 'railContact(IC_ST_1,0)'
+  --> Arr_IC_ST with i_arrOnTrack == 2 & 'railContact(IC_ST_2,0)'
+  --> Arr_IC_ST with i_arrOnTrack == 3 & 'railContact(IC_ST_3,0)';
+
+  state Arr_IC_ST {
+    entry i_arrOnTrack == 1 / 'println("[trainNum][IC-IC] Entering IC_ST_1")';
+    entry i_arrOnTrack == 2 / 'println("[trainNum][IC-IC] Entering IC_ST_2")';
+    entry i_arrOnTrack == 3 / 'println("[trainNum][IC-IC] Entering IC_ST_3")';
+    entry / 'railSignal(IC_LN_5, FWD, RED)';
+    entry / 'railTrackOff(IC_LN_5)';
+    entry / 'railTrack(IC_ST_0,FWD,trainNum,SLOW)';
+    entry i_arrOnTrack == 1 / 'railTrack(IC_ST_1,FWD,trainNum,SLOW)';
+    entry i_arrOnTrack == 2 / 'railTrack(IC_ST_2,FWD,trainNum,SLOW)';
+    entry i_arrOnTrack == 3 / 'railTrack(IC_ST_3,FWD,trainNum,SLOW)';
+    entry / IC_LN_5_req[trainNum] = false;
+
+    initial state SlowEntry
+    --> Slow with i_arrOnTrack == 1 & 'railContact(IC_ST_1,0)'
+    --> Slow with i_arrOnTrack == 2 & 'railContact(IC_ST_2,0)'
+    --> Slow with i_arrOnTrack == 3 & 'railContact(IC_ST_3,0)';
+
+    state Slow {
+      entry / 'railTrackOff(IC_ST_0)';
+      entry / IC_ST_0_req[trainNum] = false;
+    }
+    --> Halt with i_arrOnTrack == 1 & 'railContact(IC_ST_1,1)'
+    --> Halt with i_arrOnTrack == 2 & 'railContact(IC_ST_2,1)'
+    --> Halt with i_arrOnTrack == 3 & 'railContact(IC_ST_3,1)';
+
+    state Halt {
+      entry i_arrOnTrack == 1 / 'railTrackBrake(IC_ST_1)';
+      entry i_arrOnTrack == 2 / 'railTrackBrake(IC_ST_2)';
+      entry i_arrOnTrack == 3 / 'railTrackBrake(IC_ST_3)';
+      entry i_arrOnTrack == 1 / 'railArrival(trainNum,IC_ST_1)';
+      entry i_arrOnTrack == 2 / 'railArrival(trainNum,IC_ST_2)';
+      entry i_arrOnTrack == 3 / 'railArrival(trainNum,IC_ST_3)';
+    }
+    --> done immediate;
+      
+    final state done;
+  }
+  >-> done;
+
+  state done
+  --> reallyDone with 'railDeparture(trainNum)' / trainTravelling = false;
+
+  final state reallyDone;
+}

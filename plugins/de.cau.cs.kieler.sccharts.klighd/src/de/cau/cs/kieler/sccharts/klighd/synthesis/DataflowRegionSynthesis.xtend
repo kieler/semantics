@@ -14,15 +14,15 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.krendering.KPolygon

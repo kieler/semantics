@@ -781,7 +781,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * public KiemEvent provideEventOfInterest() { <BR>
      *        int[] events = {KiemEvent.CMD_STEP, KiemEvent.SAVE}; <BR>
      *        KiemEvent event = new KiemEvent(events); <BR>
-     *        System.out.println(event.getEventCodesAsList()); <BR>
+     *        KiemPlugin.log(event.getEventCodesAsList()); <BR>
      *        return (event); <BR>
      * }     * }<BR>
      * <BR>

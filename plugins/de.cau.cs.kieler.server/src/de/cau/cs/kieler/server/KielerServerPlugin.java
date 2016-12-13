@@ -15,6 +15,8 @@ package de.cau.cs.kieler.server;
 
 import org.eclipse.core.runtime.Plugin;
 
+import de.cau.cs.kieler.core.model.PluginLog;
+
 
 /**
  * The KielerServerPlugin is a non-UI component for building light-weight HTTP servers.
@@ -25,7 +27,7 @@ import org.eclipse.core.runtime.Plugin;
  * @kieler.design 2014-07-08 proposed
  * @kieler.rating 2014-07-08 proposed yellow
  */
-public class KielerServerPlugin extends Plugin {
+public class KielerServerPlugin extends PluginLog {
 
         /** The Constant PLUGIN_ID. */
         public static final String PLUGIN_ID = "de.cau.cs.kieler.server"; //$NON-NLS-1$

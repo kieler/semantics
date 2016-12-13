@@ -101,7 +101,7 @@ public class KiCoServerDialog extends Dialog {
 
         Link link = new Link(composite, SWT.NONE);
         link.setBounds(27, 105, 259, 32);
-        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console</a>");
+        link.setText("<a>http://www.sccharts.com</a>");
 
         CLabel lblMoreInformation = new CLabel(composite, SWT.NONE);
         lblMoreInformation.setText("More Information:");

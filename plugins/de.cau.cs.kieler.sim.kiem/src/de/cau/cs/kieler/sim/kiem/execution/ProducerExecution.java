@@ -174,7 +174,7 @@ public class ProducerExecution implements Runnable {
                             .getContributor().getName(), e);
                 }
 
-                // System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc start");
+                // KiemPlugin.log("  "+dataComponent.getName() + " (Pure Producer) calc start");
                 // do asynchronous call
                 if (this.dataComponent instanceof JSONObjectDataComponent) {
                     JSONObjectDataComponent compJSON = (JSONObjectDataComponent) dataComponent;
@@ -204,7 +204,7 @@ public class ProducerExecution implements Runnable {
                 }
             } // end if not done
 
-            // System.out.println("  "+dataComponent.getName() + " (Pure Producer) calc end");
+            // KiemPlugin.log("  "+dataComponent.getName() + " (Pure Producer) calc end");
 
         } // next while not stop
     }

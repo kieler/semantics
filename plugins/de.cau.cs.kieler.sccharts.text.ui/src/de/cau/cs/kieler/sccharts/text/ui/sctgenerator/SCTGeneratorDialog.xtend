@@ -270,3 +270,4 @@ class SCTGeneratorDialog extends TitleAreaDialog {
     }   
 
 }
+

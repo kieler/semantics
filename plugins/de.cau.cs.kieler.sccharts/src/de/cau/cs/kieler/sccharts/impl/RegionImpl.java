@@ -33,10 +33,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getParentState <em>Parent State</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

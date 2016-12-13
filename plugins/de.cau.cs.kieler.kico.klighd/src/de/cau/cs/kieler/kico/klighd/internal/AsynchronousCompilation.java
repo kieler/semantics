@@ -40,7 +40,7 @@ import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
- */
+ */ 
 public class AsynchronousCompilation extends Job {
 
     /** ModelView which spawned this job. */

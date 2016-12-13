@@ -43,6 +43,7 @@ package de.cau.cs.kieler.sccharts;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}</li>
@@ -51,7 +52,6 @@ package de.cau.cs.kieler.sccharts;
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition()
  * @model

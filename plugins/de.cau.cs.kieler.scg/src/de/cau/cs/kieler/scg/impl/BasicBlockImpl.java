@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.ScgPackage;

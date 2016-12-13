@@ -35,6 +35,8 @@ import org.eclipse.elk.graph.KEdge
 import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
+
 //import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 //import de.cau.cs.kieler.kico.transformation.IExpansionTransformation
 
@@ -171,7 +173,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         //knode.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
         for (elem : model.visibleFeatures) {
 
-            System.out.println("TRANSFORM " + elem.id);
+            KiCoUIPlugin.log("TRANSFORM " + elem.id);
 
             if (!(elem instanceof FeatureGroup)) {
 

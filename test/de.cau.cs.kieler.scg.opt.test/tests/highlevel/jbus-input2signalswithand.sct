@@ -1,0 +1,6 @@
+scchart Signal {
+  input signal IN;
+  input signal IN2;
+  initial state init
+  --> init with IN && IN2;
+}  

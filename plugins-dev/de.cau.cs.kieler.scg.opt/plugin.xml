@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.feature">
+      <featureGroupClass
+            class="de.cau.cs.kieler.scg.opt.features.OptimizerGroup">
+      </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.opt.features.CopyPropagationFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.opt.features.ReuseVariablesFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.opt.features.SimplifyBooleans">
+      </featureClass>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.opt.cp.CopyPropagation">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.opt.reusevars.ReuseVariables">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.opt.simpbool.SimplifyBoolean">
+      </productionTransformationClass>
+   </extension>
+
+</plugin>

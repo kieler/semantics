@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.scl.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -38,8 +38,8 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scl.scl.SCLProgram
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /** 
  * SCG to SCL Transformation 
@@ -148,7 +148,7 @@ class SCGToSCLTransformation {
         val statement = SclFactory::eINSTANCE.createInstructionStatement
         statement.instruction = SclFactory::eINSTANCE.createAssignment => [
             it.valuedObject = assignment.valuedObject.copyValuedObject
-            it.expression = assignment.assignment.copyExpression
+            it.expression = assignment.expression.copyExpression
         ]
         sSeq.statements.add(statement)
         assignment.next.target.transform(sSeq)
@@ -244,5 +244,4 @@ class SCGToSCLTransformation {
 
    // -------------------------------------------------------------------------   
 
-   
 }

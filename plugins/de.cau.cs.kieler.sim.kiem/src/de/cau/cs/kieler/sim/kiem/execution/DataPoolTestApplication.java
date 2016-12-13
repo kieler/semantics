@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.kiem.execution;
 
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+
 /**
  * The Class DataPoolTestApplication. It only exists for experimental use debug and testing of the
  * {@link JSONDataPool}.
@@ -56,22 +58,22 @@ public final class DataPoolTestApplication {
             dataPool.putData(new JSONObject("{key05=value05}"));
             dataPool.putData(new JSONObject("{key06=value06}"));
             dataPool.putData(new JSONObject("{key07={key07=value07}}"));
-            // System.out.println(dataPool.getDeltaData(filter,index).toString());
-            System.out.println(dataPool.getData(null).toString());
+            // KiemPlugin.log(dataPool.getDeltaData(filter,index).toString());
+            KiemPlugin.log(dataPool.getData(null).toString());
 
-            System.out.println("");
-            System.out.println(dataPool.getPoolCounter());
-            System.out.println("");
+            KiemPlugin.log("");
+            KiemPlugin.log(dataPool.getPoolCounter() + "");
+            KiemPlugin.log("");
             // CHECKSTYLEOFF MagicNumber
             // Rationale: This is just a test application
-            System.out.println(dataPool.getDeltaData(filter, 0).toString());
-            System.out.println(dataPool.getDeltaData(filter, 1).toString());
-            System.out.println(dataPool.getDeltaData(filter, 2).toString());
-            System.out.println(dataPool.getDeltaData(filter, 3).toString());
-            System.out.println(dataPool.getDeltaData(filter, 4).toString());
-            System.out.println(dataPool.getDeltaData(filter, 5).toString());
-            System.out.println(dataPool.getDeltaData(filter, 6).toString());
-            System.out.println(dataPool.getDeltaData(filter, 7).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 0).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 1).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 2).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 3).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 4).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 5).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 6).toString());
+            KiemPlugin.log(dataPool.getDeltaData(filter, 7).toString());
             // CHECKSTYLEON MagicNumber
 
         } catch (Exception e) {

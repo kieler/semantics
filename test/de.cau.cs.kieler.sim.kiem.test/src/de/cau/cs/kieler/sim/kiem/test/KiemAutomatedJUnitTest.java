@@ -141,7 +141,7 @@ public abstract class KiemAutomatedJUnitTest {
     // Private properties
 
     /** The kiem plugin single instance. */
-    private static KiemPlugin kiemPlugin = null;
+    protected static KiemPlugin kiemPlugin = null;
 
     /** The ESO files. */
     private static List<IPath> esoFiles = new LinkedList<IPath>();
@@ -366,7 +366,8 @@ public abstract class KiemAutomatedJUnitTest {
         allWorkspaceFiles.addAll(allExternalFiles);
 
         // Test if a valid execution file is defined
-        IPath executionFilePath = getExecutionFilePath(allWorkspaceFiles, getExecutionFileName());
+        String tmp = getExecutionFileName();
+        IPath executionFilePath = getExecutionFilePath(allWorkspaceFiles, tmp);
         if (executionFilePath == null) {
             throw new RuntimeException(
                     "No execution file is defined or the execution file is not found.");
@@ -1114,7 +1115,7 @@ public abstract class KiemAutomatedJUnitTest {
                 .getDataComponentWrapperList();
         for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
             String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
-            System.out.println("Foring " + dataComponentId);
+            //System.out.println("Foring " + dataComponentId);
             if (dataComponentId.startsWith(KartConstants.KART_REPLAY_DATACOMPONENT_ID_START)) {
                 return dataComponentWrapper;
             }

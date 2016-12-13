@@ -1,0 +1,8 @@
+scchart simple {
+  initial state A {
+    region R0:
+    initial final state S1;
+  }
+  >-> B immediate;
+  final state B;
+}

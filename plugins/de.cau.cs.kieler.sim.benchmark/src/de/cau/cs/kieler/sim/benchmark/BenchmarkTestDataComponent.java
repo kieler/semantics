@@ -118,7 +118,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
      */
     public static void setTrace(int trace) {
         BenchmarkTestDataComponent.trace = trace;
-        System.out.println("BENCHMARK setTrace("+trace+") => trac := " + BenchmarkTestDataComponent.trace);
+        SimBenchmarkPlugin.log("BENCHMARK setTrace("+trace+") => trac := " + BenchmarkTestDataComponent.trace);
     }
 
     // -------------------------------------------------------------------------
@@ -205,7 +205,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        System.out.println("+++ wrapup start: " + tick);
+        SimBenchmarkPlugin.log("+++ wrapup start: " + tick);
 
         try {
             possiblyWriteBenchmarkFile(benchmarkFilePath, benchmarkData);
@@ -216,7 +216,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
             throw new KiemInitializationException("Could not write Benchmark data.", false, e,
                     true);
         }
-        System.out.println("+++ wrapup done ");
+        SimBenchmarkPlugin.log("+++ wrapup done ");
         // Reset for the next run!
         BenchmarkTestDataComponent.trace = 0;
     }
@@ -346,12 +346,12 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
         if (!file.exists()) {
             // Only validate if a *.bench file exists
-            System.out.println("+++ NO BENCHMARK FILE EXISTS!");
+            SimBenchmarkPlugin.log("+++ NO BENCHMARK FILE EXISTS!");
             return null;
         }
 
         String stringPath = file.getRawLocation().toString();
-        System.out.println("+++ BENCHMARK FILE EXISTS:" + stringPath);
+        SimBenchmarkPlugin.log("+++ BENCHMARK FILE EXISTS:" + stringPath);
 
 
         // Read in old data
@@ -362,7 +362,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
         }
 
         if (benchmarkTick != tick) {
-            System.out.println("+++ BENCHMARK TICK "+benchmarkTick+" NOT REACHED YET ("+tick+")");
+            SimBenchmarkPlugin.log("+++ BENCHMARK TICK "+benchmarkTick+" NOT REACHED YET ("+tick+")");
             // The benchmark tick has not been reached
             return null;
         }
@@ -394,7 +394,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                             + "' > '" + barrierValue
                             + "' which is the barrier value including tolerance ("
                             + absoluteToleranceArray[i] + " + " + relativeToleranceArray[i] + "%).";
-                    System.out.println("BENCHMARK FAILED :" + message);
+                    SimBenchmarkPlugin.log("BENCHMARK FAILED :" + message);
                     returnValue.accumulate(ERRORMESSAGE, message);
                     return returnValue;
                 }
@@ -404,7 +404,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
         }
 
-        System.out.println("BENCHMARK OK ");
+        SimBenchmarkPlugin.log("BENCHMARK OK ");
         try {
             returnValue.accumulate(ERRORMESSAGE, "");
         } catch (JSONException e) {
@@ -437,10 +437,10 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 fileName = fileName.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                 if (fileName.equals(modelPath.toOSString())) {
                     if (traceCntDown > 0) {
-                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN :" + traceCntDown--);
+                        SimBenchmarkPlugin.log("BENCHMARK TRACE NUMBER COUNT DOWN :" + traceCntDown--);
                     }
                     else {
-                        System.out.println("BENCHMARK TRACE NUMBER COUNT DOWN : 0");
+                        SimBenchmarkPlugin.log("BENCHMARK TRACE NUMBER COUNT DOWN : 0");
                         isSeekedBenchmarkInformation = true;
                         String benchmarkTickString = br.readLine();
                         benchmarkTickString = benchmarkTickString.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
@@ -448,7 +448,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                             benchmarkTick = Integer.parseInt(benchmarkTickString);
                         } catch (Exception e) {
                         }
-                        System.out.println("BENCHMARK benchmarkTick : " + benchmarkTick);
+                        SimBenchmarkPlugin.log("BENCHMARK benchmarkTick : " + benchmarkTick);
                         line = br.readLine();
                         line = line.substring(CMDLINEOUTPUTINPUT_FILE_OFFSET);
                     }
@@ -472,7 +472,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                         double dataValue = Double.parseDouble(dataValueString);
                         int i = getMarkerIndex(dataName);
                         oldData[i] = dataValue;
-                        System.out.println("BENCHMARK "+dataName+" : " + dataValue);
+                        SimBenchmarkPlugin.log("BENCHMARK "+dataName+" : " + dataValue);
                     } catch (Exception e) {
                     }
                 }
@@ -520,7 +520,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
     public void possiblyWriteBenchmarkFile(final IPath modelPath, final double[] data)
             throws IOException, CoreException, KiemInitializationException {
 
-        System.out.println("+++ WRITE TEXT FILE ");
+        SimBenchmarkPlugin.log("+++ WRITE TEXT FILE ");
 
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
@@ -533,21 +533,21 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
 
             // by convention the first number represents the last tick which is used to for
             // evaluation
-            System.out.println(Benchmark.BENCHMARK_CMDLINE_START_DELEMITER);
+            SimBenchmarkPlugin.log(Benchmark.BENCHMARK_CMDLINE_START_DELEMITER);
 
-            System.out.println(modelPath.toOSString());
-            System.out.println(tick - 1);
+            SimBenchmarkPlugin.log(modelPath.toOSString());
+            SimBenchmarkPlugin.log((tick - 1) + "");
             // String stringPath = file.getRawLocation().toString();
-            // System.out.println(stringPath);
+            // SimBenchmarkPlugin.log(stringPath);
             for (String marker : markerArray) {
                 String line = "";
                 // Trim away any white space
                 marker = marker.trim();
                 int i = getMarkerIndex(marker);
                 line = marker + BENCHMARK_DATA_SEPARATOR + data[i];
-                System.out.println(line);
+                SimBenchmarkPlugin.log(line);
             }
-            System.out.println(Benchmark.BENCHMARK_CMDLINE_END_DELEMITER);
+            SimBenchmarkPlugin.log(Benchmark.BENCHMARK_CMDLINE_END_DELEMITER);
         } else {
             // We want separate benchmark files
             if (file.exists()) {
@@ -575,7 +575,7 @@ public class BenchmarkTestDataComponent extends JSONObjectSimulationDataComponen
                 out.println(line);
             }
 
-            System.out.println("+++ WRITE TEXT FILE: CLOSE ");
+            SimBenchmarkPlugin.log("+++ WRITE TEXT FILE: CLOSE ");
             out.close();
         }
 

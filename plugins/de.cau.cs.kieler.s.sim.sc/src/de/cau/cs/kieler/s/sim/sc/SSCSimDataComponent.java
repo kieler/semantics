@@ -39,10 +39,10 @@ import org.json.JSONObject;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -225,7 +225,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             scExecution.getInterfaceToExecution().flush();
             while (scExecution.getInterfaceError().ready()) {
                 // Error output, if any
-                System.out.print(scExecution.getInterfaceError().read());
+                SSimSCPlugin.logError("ERROR: " + scExecution.getInterfaceError().read() + "");
             }
 
             String receivedMessage = scExecution.getInterfaceFromExecution().readLine();

@@ -66,28 +66,10 @@
          </editor>
       </executionFile>
       <executionFile
-            file="execution/sccharts_c_novis.execution">
-         <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
-               priority="100">
-         </editor>
-         <editor
-               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
-               name="SCG (Tree) Editor"
-               priority="100">
-         </editor>
-         <editor
-               id=" de.cau.cs.kieler.scl.SCL"
-               name="SCL (Textual) Editor"
-               priority="100">
-         </editor>
-      </executionFile>
-      <executionFile
             file="execution/scg_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
+               id="de.cau.cs.kieler.scg.impl.SCGraphImpl"
+               name="SCG Model"
                priority="100">
          </editor>
          <editor
@@ -102,10 +84,10 @@
          </editor>
       </executionFile>
       <executionFile
-            file="execution/scg_c_novis.execution">
+            file="execution/circuit_c.execution">
          <editor
-               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-               name="Textual SCCharts (SCT) Editor"
+               id="de.cau.cs.kieler.circuit.impl.ActorImpl"
+               name="Circuit Model"
                priority="100">
          </editor>
          <editor
@@ -119,12 +101,6 @@
                priority="100">
          </editor>
       </executionFile>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <expansionTransformationClass
-            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization">
-      </expansionTransformationClass>
    </extension>
 
 </plugin>

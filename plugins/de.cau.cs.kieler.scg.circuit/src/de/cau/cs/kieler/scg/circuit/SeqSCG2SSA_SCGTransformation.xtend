@@ -14,14 +14,14 @@
  package de.cau.cs.kieler.scg.circuit
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
@@ -37,6 +37,8 @@ import de.cau.cs.kieler.scg.features.SCGFeatures
 import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /**
  * @author fry
@@ -99,6 +101,15 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	// -------------------------------------------------------------------------
 
 	def transform(SCGraph scg, KielerCompilerContext context) {
+	    
+	    if (scg.declarations.filter[type != ValueType::BOOL].size > 0) {
+	        val result = context.compilationResult
+	        if (result != null) {
+	            result.addPostponedWarning(new KielerCompilerException(getId, null, "Currently the circuit transformation can only handle boolean inputs 
+but your model contains other input types as well."));
+	        }
+	    }
+	    
 
 		valuedObjectList.clear
 		outputOccurenceCounter.clear
@@ -108,12 +119,17 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 		// Assuming only one entry node exists in a sequentialized SCG; 
 		// Make it the starting point of the SSA transformation
 		val entry = scg.nodes.filter(Entry).head
+		
+		// If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
+		val firstAssignment = if (entry == null)  
+		  scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+		  else (entry.next.target as Assignment)
 
 		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
 		filterRelevantAssignments(scg.nodes.filter(Assignment).toList)
 		
 		// Create the SSA SCG. Start with entry node.
-		createSSAs(entry.next.target, scg)
+        createSSAs(firstAssignment, scg)
 		
 		// Store input output variables for link creation
 		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
@@ -136,12 +152,13 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	 *     remember the target of the "else"-branch (conditionalEndNodes) and call createSSAs with this node.
 	 */
 	def void createSSAs(Node n, SCGraph scg) {
-
+        if (n == null) return;
+        
 		if (!(n instanceof Exit)) {
 
 			if (n instanceof Assignment) {
 				transformAssignmentNodes(n, scg)
-				createSSAs(n.next.target, scg)
+				createSSAs(n.next?.target, scg)
 			} else if (n instanceof Conditional) {
 				val target = n.^else.target
 				transformConditionalNodes(n, n, n, n.^else.target, scg)
@@ -201,9 +218,9 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 					val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					expression.setOperator(OperatorType::PRE)
 					expression.subExpressions.add(storeVO.reference)
-					newNode.assignment = expression
+					newNode.expression = expression
 				} else {
-					newNode.assignment = storeVO.reference
+					newNode.expression = storeVO.reference
 				}
 				scg.nodes += newNode
 
@@ -245,7 +262,7 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 
 		if (ssaMap.containsKey(name)) {
 
-			transformExpressions(n.assignment)
+			transformExpressions(n.expression)
 			val m = ssaMap.get(name)
 			ssaMap.replace(name, m, m + 1)
 
@@ -277,8 +294,8 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 				valuedObjectList.replace(name, vo)
 			}
 		} else {
-			val expr = n.assignment
-			n.assignment = transformExpressions(expr)
+			val expr = n.expression
+			n.expression = transformExpressions(expr)
 		}
 
 	}

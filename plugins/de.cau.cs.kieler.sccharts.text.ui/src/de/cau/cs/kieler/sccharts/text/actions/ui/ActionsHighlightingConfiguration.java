@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sccharts.text.actions.ui;
 
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
-import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsHighlightingConfiguration;
-import de.cau.cs.kieler.core.kexpressions.ui.KExpressionsHighlightingConfiguration;
+import de.cau.cs.kieler.annotations.ui.AnnotationsHighlightingConfiguration;
+import de.cau.cs.kieler.kexpressions.ui.KExpressionsHighlightingConfiguration;
 
 /**
  * Custom {@link IHighlightingConfiguration} contributing to the Actions editor. The required method

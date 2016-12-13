@@ -75,7 +75,7 @@ public class DataComponentWrapper implements Serializable {
     // private synchronized void writeObject( java.io.ObjectOutputStream s )
     // throws IOException {
     // //do not save anything
-    // System.out.println("SAVING");
+    // KiemPlugin.log("SAVING");
     // }
 
     // -------------------------------------------------------------------------

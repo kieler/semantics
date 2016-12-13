@@ -16,17 +16,17 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.common.collect.ImmutableList
 import com.google.common.collect.Iterators
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -54,8 +54,8 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsReplacementExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 
 //import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -63,7 +63,7 @@ import static extension de.cau.cs.kieler.sccharts.iterators.ScopeIterator.*
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Equation
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * SCCharts Extensions.
@@ -1134,8 +1134,18 @@ class SCChartsExtension {
     def String getHierarchicalName(Scope scope, String decendingName) {
         if (scope == null)
             return decendingName
-        else
-            return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
+        else {
+            var scopeId = "";
+            if (scope.id != null) {
+                scopeId = scope.id
+            } else {
+                val parent = (scope.eContainer as Scope);
+                if (parent instanceof State) {
+                    scopeId = "region" + parent.regions.indexOf(scope)
+                }
+            }
+            return (scope.eContainer as Scope).getHierarchicalName(scopeId + "_" + decendingName)
+        }
     }
 
 
@@ -1240,15 +1250,18 @@ class SCChartsExtension {
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
         if (state == targetRootState) {
+            for(valuedObject : state.valuedObjects.filter[!isInput && !isOutput].toList.immutableCopy) {
+                valuedObject.declaration.output = true
+            }
             return;
         }
         
         val declarations = state.declarations.toList
         val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-        for(declaration : declarations) {
+        for(declaration : declarations.immutableCopy) {
             targetRootState.declarations += declaration
             if (expose) declaration.output = true
-            for(valuedObject : declaration.valuedObjects) {
+            for(valuedObject : declaration.valuedObjects.immutableCopy) {
                 if (expose) {
                     valuedObject.name = hierarchicalStateName + "_" + valuedObject.name
                 } else {

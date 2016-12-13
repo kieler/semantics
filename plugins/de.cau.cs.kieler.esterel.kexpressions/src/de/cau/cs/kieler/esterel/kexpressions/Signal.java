@@ -30,13 +30,13 @@ package de.cau.cs.kieler.esterel.kexpressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.Signal#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.Signal#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.Signal#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.Signal#getHostCombineOperator <em>Host Combine Operator</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getSignal()
  * @model

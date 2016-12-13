@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts.sim.c;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -23,21 +25,11 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2014-07-17 proposed cmot
  * @kieler.rating 2014-07-17 proposed yellow
  */
-public class SCChartsSimCPlugin extends AbstractUIPlugin {
+public class SCChartsSimCPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.sim.c"; //$NON-NLS-1$
 
-    /**
-     * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
-     */
-    public static final String AUXILIARY_VARIABLE_TAG_TRANSITION = "_T";
-
-    /**
-     * The Constant AUXILIARY_VARIABLE_TAG for a State.
-     */
-//    public static final String AUXILIARY_VARIABLE_TAG_STATE = "oSCCHARTSoAUXSTATEo";
-    public static final String AUXILIARY_VARIABLE_TAG_STATE = "_S";
 
     /** The shared instance. */
     private static SCChartsSimCPlugin plugin;

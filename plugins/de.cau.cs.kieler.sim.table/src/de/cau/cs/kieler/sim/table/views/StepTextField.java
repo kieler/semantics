@@ -1,0 +1,86 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
+package de.cau.cs.kieler.sim.table.views;
+
+import org.eclipse.jface.action.ControlContribution;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
+
+
+/**
+ * The Class StepTextField. This is the GUI component that shows the number of current steps during
+ * a running or paused execution.
+ * 
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
+ * 
+ */
+public class StepTextField extends ControlContribution {
+
+    /** The SWT text field component. */
+    private Text textfield;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new step text field GUI ControlContribution.
+     */
+    public StepTextField() {
+        super("Tick");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
+     */
+    @Override
+    protected Control createControl(final Composite parent) {
+        textfield = new Text(parent, SWT.BORDER);
+        this.textfield.setEnabled(false);
+        textfield.setToolTipText("Current Tick");
+        // reserver some amount of space
+        textfield.setText("\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020");
+        return textfield;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update the contents (i.e., the # of steps) of the text field.
+     * 
+     * @param text
+     *            the text to display in the text field
+     */
+    public void updateTextfield(final String text) {
+        if (textfield.isDisposed()) {
+            return;
+        }
+        if (text == null) {
+            // this.textfield.setVisible(false);
+            this.textfield.setText("");
+        } else {
+             this.textfield.setText(text);
+            // this.textfield.setVisible(true);
+        }
+    }
+
+}

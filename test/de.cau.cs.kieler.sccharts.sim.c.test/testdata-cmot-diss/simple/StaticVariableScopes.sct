@@ -6,9 +6,11 @@ scchart StaticVariableScopes {
   
   initial state A {
     static int x = 100;
-  }--> B with / x = x + 1; OXA= x;
+    exit / x = x + 1 ;OXA= x;
+  }--> B;
   
   state B {
     static int x = 200;
-  }--> A with / x = x - 1; OXB = x;
+    exit / x = x - 1; OXB = x;
+  }--> A;
 }

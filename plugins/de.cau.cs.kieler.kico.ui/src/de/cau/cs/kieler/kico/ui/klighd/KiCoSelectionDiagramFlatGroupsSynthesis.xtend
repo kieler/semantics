@@ -34,6 +34,7 @@ import org.eclipse.elk.graph.KNode
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -104,7 +105,7 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
 
         for (elem : model.visibleFeatures) {
 
-            System.out.println("TRANSFORM " + elem.id);
+            KiCoUIPlugin.log("TRANSFORM " + elem.id);
 
             //            if (elem.visibleContainer(model.visibleFeatures) == null) {
             visibleFeatures.add(elem);

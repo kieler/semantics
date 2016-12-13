@@ -1,0 +1,20 @@
+scchart ^deferred {
+  
+  initial state A {
+    bool O;
+    
+    initial state A1
+    --> A2 deferred with / O = true;
+    
+    state A2 {
+      entry / O = false
+      
+      initial state A21
+      --> A22;
+      
+      final state A22;
+    }
+    --> A1;
+  };
+  
+}

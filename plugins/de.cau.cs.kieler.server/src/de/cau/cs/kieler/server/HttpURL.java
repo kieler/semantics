@@ -120,7 +120,7 @@ public class HttpURL {
             } else if (ColonFound)
                 Port += OneCharacter;
 
-            // System.out.println("XXX"+c+ Host + Port + ColonFound);
+            // KielerServerPlugin.log("XXX"+c+ Host + Port + ColonFound);
         }
         BackString = rawURL.substring(c, rawURL.length()).trim();
 

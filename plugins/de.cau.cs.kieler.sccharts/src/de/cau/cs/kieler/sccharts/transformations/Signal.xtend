@@ -15,14 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
@@ -34,8 +26,14 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.DuringActionimport de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * SCCharts Signal Transformation.
@@ -81,6 +79,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension SCChartsTransformationExtension
 
+    @Inject
+    extension ValuedObjectRise
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
@@ -89,7 +90,7 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // -------------------------------------------------------------------------
     // TODO: for inputs no during action!
     // TODO: relative writes!!
-    private static val String variableValueExtension = GENERATED_PREFIX + "val";
+    public static val String variableValueExtension = GENERATED_PREFIX + "val";
     private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // @requires: during actions
@@ -103,7 +104,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
-
+        
+        targetRootState.transformValuedObjectRise
+        
         // Traverse all states
         targetRootState.getAllStates.forEach [ targetState |
             targetState.transformSignal(targetRootState);

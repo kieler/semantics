@@ -1,0 +1,9 @@
+scchart simple {
+  input bool IN;
+  initial state A {
+    region R0:
+    initial final state S1;
+  }
+  >-> B immediate with IN;
+  final state B;
+}

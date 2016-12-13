@@ -18,15 +18,15 @@ import java.util.Set;
 
 import org.eclipse.xtext.validation.Check;
 
-import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.DoubleValue;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.IntValue;
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
+import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.Declaration;
+import de.cau.cs.kieler.kexpressions.DoubleValue;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.FloatValue;
+import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
@@ -62,6 +62,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String STATIC_VARIABLE_WITHOUT_INITIALIZATION = "Static variables should be initialized";
     //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
     public static final String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function";
+    public static final String MINMAX_COMBINE = "Min or max combine operators are currently not supported";
     
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
@@ -70,6 +71,11 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String ABORT_WITHOUT_TRIGGER = "Abort transitions should have a trigger";
     
     public static final String MISSING_BINDING_FOR = "Missing binding for variable: ";
+
+    //TODO: fix this or move this check to the simulation component only
+    public static final String INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR = "Variables that war input AND output at the same time are currently not supported by the simulator";
+
+    public static final String VALUEDOBJECT_TRANSITION_SCOPE_WRONG = "Variable or signal used out of its scope. Declare it one hierarchy layer up!";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
@@ -82,7 +88,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Emission emission) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.kexpressions.keffects.Emission emission) {
         if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
             if (!declaration.isSignal()) {
@@ -99,7 +105,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkNoBooleanEmissions(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
         if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
             Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
             if (declaration.isSignal()) {
@@ -207,7 +213,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      * @param state the state
      */
     @Check
-    public void checkAssignmentToConst(final de.cau.cs.kieler.core.kexpressions.keffects.Assignment assignment) {
+    public void checkAssignmentToConst(final de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
     	if (assignment.getValuedObject() != null) {
     		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
     		if (declaration.isConst()) {

@@ -1,0 +1,5 @@
+projectKey=kieler:optimizer
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/kieler:optimizer
+ceTaskId=AVRXl7BXEw44F-oOsd2W
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVRXl7BXEw44F-oOsd2W

@@ -41,7 +41,7 @@ public class KiemLaunchShortcut implements ILaunchShortcut {
      */
     public void launch(final ISelection selection, final String model) {
         if (KiemUILaunchPlugin.DEBUG) {
-            System.out.println("LAUNCH SELECTION" + selection.toString() + ", " + model);
+            KiemUILaunchPlugin.log("LAUNCH SELECTION" + selection.toString() + ", " + model);
         }
     }
 
@@ -52,7 +52,7 @@ public class KiemLaunchShortcut implements ILaunchShortcut {
      */
     public void launch(final IEditorPart editor, final String model) {
         if (KiemUILaunchPlugin.DEBUG) {
-            System.out.println("LAUNCH EDITOR" + editor.toString() + ", " + model);
+            KiemUILaunchPlugin.log("LAUNCH EDITOR" + editor.toString() + ", " + model);
         }
     }
 

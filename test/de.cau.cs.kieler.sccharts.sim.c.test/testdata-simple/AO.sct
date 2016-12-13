@@ -5,5 +5,9 @@ scchart AO {
   initial state wA
   --> da with A / O = true;  
  
-  final state da;  
+  final state da {
+    initial state A
+    --> B;
+    state B;
+  };  
 }   

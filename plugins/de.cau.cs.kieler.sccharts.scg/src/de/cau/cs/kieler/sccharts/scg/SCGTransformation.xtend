@@ -16,26 +16,26 @@ package de.cau.cs.kieler.sccharts.scg
 import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.keffects.Effect
-import de.cau.cs.kieler.core.kexpressions.keffects.FunctionCallEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.HostcodeEffect
-import de.cau.cs.kieler.core.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
@@ -60,17 +60,15 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
-import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
+import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.transformations.SCGTransformations
 import java.util.HashMap
 import java.util.Set
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
@@ -126,9 +124,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     extension KEffectsExtensions
 
     @Inject
-    extension SCGDeclarationExtensions
-
-    @Inject
     extension SCChartsExtension
 
     @Inject
@@ -136,7 +131,6 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
 
     private val stateTypeCache = <State, Set<PatternType>>newHashMap
     private val uniqueNameCache = <String>newArrayList
@@ -245,7 +239,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
     // }
     def SCGraph transform(State rootState, KielerCompilerContext context) {
 
-        System.out.print("Beginning preparation of the SCG generation phase...");
+        SCChartsSCGPlugin.log("Beginning preparation of the SCG generation phase...");
         var timestamp = System.currentTimeMillis
 
         val scopeList = rootState.eAllContents.filter(Scope).toList
@@ -253,17 +247,17 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // fixTerminationWithEffects() and fixPossibleHaltStates() should be and is (now) handled by trigger/effect and surface/depth transformation!                
 //        // Fix termination transitions that have effects
-//        System.out.print(" ... ")
+//        SCChartsSCGPlugin.log(" ... ")
 //        var state = rootState.fixTerminationWithEffects(stateList.fold(newLinkedList)[first, second |
 //            first += second.outgoingTransitions first])
 //        // Fix possible halt states
 //        state = state.fixPossibleHaltStates(stateList)
-//        System.out.print(" ... ")
+//        SCChartsSCGPlugin.log(" ... ")
 
 
         // Expose local variables
         scopeList.transformLocalValuedObjectCached(rootState, uniqueNameCache)
-        System.out.print(" ... ")
+        SCChartsSCGPlugin.log(" ... ")
 
         // Clear mappings
         resetMapping
@@ -272,7 +266,8 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
-            label = if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
+            // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
+            label = rootState.id; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
         ]
 
         creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
@@ -581,20 +576,18 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transition.effects.get(0) as Effect
-            if (effect instanceof de.cau.cs.kieler.core.kexpressions.keffects.Assignment) {
-
+            if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
                 assignment.operator = effect.operator
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
-                val sCChartAssignment = (effect as de.cau.cs.kieler.core.kexpressions.keffects.Assignment)
+                val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
                 if (sCChartAssignment.valuedObject != null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 if (!effect.isPostfixOperation) {
-                    assignment.setAssignment(
-                        sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
                 }
                 if (!sCChartAssignment.indices.nullOrEmpty) {
                     sCChartAssignment.indices.forEach [
@@ -602,10 +595,9 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
                     ]
                 }
             } else if (effect instanceof HostcodeEffect) {
-                assignment.setAssignment((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as HostcodeEffect).convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
-                assignment.setAssignment(
-                    (effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
+                assignment.setExpression((effect as FunctionCallEffect).convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional

@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.features
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -48,6 +48,9 @@ class ExposeLocalValuedObject extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
+        if (model.valuedObjects.filter[!isOutput && !isInput].size > 0) {
+            return true;
+        }
         val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             // NOT need to check for root state because we chose all-CONTAINED-states above

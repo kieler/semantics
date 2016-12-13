@@ -1,0 +1,5 @@
+scchart CountDelay {
+  input bool IN;
+  initial state A
+  --> A with 2 IN;
+}

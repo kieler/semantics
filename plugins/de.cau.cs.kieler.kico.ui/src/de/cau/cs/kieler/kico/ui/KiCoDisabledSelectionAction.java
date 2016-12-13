@@ -87,7 +87,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                     KiCoSelectionView.enableTransformation(feature, selection,
                             context.getViewContext());
                 }
-                System.out.println("Selected features are: " + selection);
+                KiCoUIPlugin.log("Selected features are: " + selection);
             }
 
         }

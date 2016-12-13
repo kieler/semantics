@@ -16,17 +16,22 @@ package de.cau.cs.kieler.sim.kiem.config.ui;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.part.EditorPart;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
@@ -49,14 +54,14 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  */
-public class ScheduleSelector extends ControlContribution implements SelectionListener,
-        FocusListener, IKiemConfigEventListener {
+public class ScheduleSelector extends ControlContribution
+        implements SelectionListener, FocusListener, IKiemConfigEventListener {
 
     /** string display for the matching schedules entry. */
-    private static final String MATCHING_HEADER = "Matching schedules";
+    private static final String MATCHING_HEADER = "Select Execution >>>";
     /** The tooltip for the matching combo. */
-    private static final String MATCHING_TOOLTIP = "Displays all schedules matching"
-            + " the currently active editor.";
+    private static final String MATCHING_TOOLTIP =
+            "Displays all schedules matching" + " the currently active editor.";
 
     /** string display for the recent schedules entry. */
     private static final String RECENT_HEADER = "Recently used schedules";
@@ -132,8 +137,8 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
 
         combo = new Combo(parentComponent, SWT.READ_ONLY | SWT.BORDER);
         combo.setEnabled(true);
-        String tooltip = listType == ContributionManager.RECENT_COMBO ? RECENT_TOOLTIP
-                : MATCHING_TOOLTIP;
+        String tooltip =
+                listType == ContributionManager.RECENT_COMBO ? RECENT_TOOLTIP : MATCHING_TOOLTIP;
         combo.setToolTipText(tooltip);
 
         combo.addSelectionListener(this);
@@ -145,7 +150,8 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
     /**
      * Sets the enabled.
      *
-     * @param enabled the new enabled
+     * @param enabled
+     *            the new enabled
      */
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
@@ -196,8 +202,8 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
             }
 
             // get header
-            String header = listType == ContributionManager.RECENT_COMBO ? RECENT_HEADER
-                    : MATCHING_HEADER;
+            String header =
+                    listType == ContributionManager.RECENT_COMBO ? RECENT_HEADER : MATCHING_HEADER;
             String[] names = { " " };
             EditorIdWrapper editorId = null;
             String editorName = null;
@@ -214,8 +220,30 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
                 editorName = editor.getRegisteredName();
             }
             if (editorId == null) {
+                // The KLighD case
+                IPath modelFilePath = KiemPlugin.getCurrentModelFile();
+                if (modelFilePath != null) {
+                    EObject sourceModel = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+                    if (sourceModel != null) {
+                        String modelID = sourceModel.getClass().getCanonicalName();
+                        editorId = new EditorIdWrapper(modelID);
+                        editorName = null;
+                    }
+                }
+            }
+            if (editorId == null) {
                 editorId = EditorManager.getInstance().getDefaultEditorId();
                 editorName = EditorManager.getInstance().getDefaultEditorName();
+            }
+
+            if (editorId
+                    .equals("de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID")) {
+                // TODO: Handle this exception in another, more clean way in the future
+                IEditorPart ep = KiemPlugin.getOpenedModelEditors()
+                        .get(new Path("de.cau.cs.kieler.kico.klighd.sourceModel"));
+                if (ep != null) {
+                    editorId = new EditorIdWrapper(ep.getSite().getId());
+                }
             }
 
             ScheduleManager manager = ScheduleManager.getInstance();
@@ -231,7 +259,7 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
             default:
                 data = null;
             }
-            
+
             if (data != null) {
                 boolean showHeader = showHeader();
                 // create the store for the schedule names
@@ -354,8 +382,8 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
             } catch (ScheduleFileMissingException e0) {
                 KiemPlugin.getDefault().showError("Execution file not found",
                         KiemConfigurationPlugin.PLUGIN_ID, e0, true);
-                ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                        parentComponent.getShell(), selected);
+                ExecutionFileMissingDialog dialog =
+                        new ExecutionFileMissingDialog(parentComponent.getShell(), selected);
                 String result = dialog.open();
                 if (result.equals(ExecutionFileMissingDialog.CANCEL)) {
                     combo.select(0);

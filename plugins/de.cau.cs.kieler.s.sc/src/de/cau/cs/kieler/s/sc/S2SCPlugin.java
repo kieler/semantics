@@ -22,9 +22,10 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions;
+import de.cau.cs.kieler.kexpressions.ValueType;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2C;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
@@ -38,7 +39,7 @@ import de.cau.cs.kieler.s.extensions.SExtension;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 yellow KI-28
  */
-public class S2SCPlugin extends AbstractUIPlugin {
+public class S2SCPlugin extends AbstractUIPluginLog {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sc"; //$NON-NLS-1$

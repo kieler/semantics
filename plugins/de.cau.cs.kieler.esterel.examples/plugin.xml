@@ -11,9 +11,10 @@
             author="KIELER Workgroup"
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
-            description="ABRO The hello world of synchronous languages"
-            generation_date="de.cau.cs.kieler.esterel.example.example2"
+            description="ABRO The hello world of synchronous programming"
+            generation_date="de.cau.cs.kieler.esterel.example.example1"
             id="de.cau.cs.kieler.esterel.abro"
+            overview_pic="examples/abro.png"
             root_directory="examples/"
             title="ABRO">
          <resource
@@ -23,12 +24,77 @@
          </resource>
       </example>
       <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.esterel"
+            contact="kieler@informatik.uni-kiel.de"
+            description="ALDO is a primary example for the SLIC-based KIELER Compiler (KiCo)"
+            generation_date="de.cau.cs.kieler.esterel.example.example2"
+            id="de.cau.cs.kieler.esterel.aldo"
+            overview_pic="examples/aldo.png"
+            root_directory="examples/"
+            title="ALDO">
+         <resource
+               direct_open="true"
+               local_path="examples/aldo.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.esterel"
+            contact="kieler@informatik.uni-kiel.de"
+            description="A shifter with pure Esterel statements and no pre Operator"
+            generation_date="de.cau.cs.kieler.esterel.example.example3"
+            id="de.cau.cs.kieler.esterel.shifter3pure"
+            overview_pic="examples/shifter3pure.png"
+            root_directory="examples/"
+            title="Shifter3Pure">
+         <resource
+               direct_open="true"
+               local_path="examples/shifter3pure.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.esterel"
+            contact="kieler@informatik.uni-kiel.de"
+            description="A backhoe controller for use with KIELER Environment Visualization (KEV)"
+            generation_date="de.cau.cs.kieler.esterel.example.example4"
+            id="de.cau.cs.kieler.esterel.backhoe"
+            overview_pic="examples/backhoe.png"
+            root_directory="examples/"
+            title="Backhoe">
+         <resource
+               direct_open="true"
+               local_path="examples/backhoe.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
             author="(KIELER Workgroup)"
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
-            description="The wristwatch example"
-            generation_date="de.cau.cs.kieler.esterel.example.example4"
+            description="An RS flipflop from Gerad Berry"
+            generation_date="de.cau.cs.kieler.esterel.example.example5"
+            id="de.cau.cs.kieler.esterel.rsflipflop"
+            overview_pic="examples/rsflipflop.png"
+            root_directory="examples/"
+            title="RS Flipflop">
+         <resource
+               direct_open="true"
+               local_path="examples/rsflipflop.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="(KIELER Workgroup)"
+            category="de.cau.cs.kieler.esterel"
+            contact="kieler@informatik.uni-kiel.de"
+            description="The Harel Wristwatch example"
+            generation_date="de.cau.cs.kieler.esterel.example.example6"
             id="de.cau.cs.kieler.esterel.ww"
+            overview_pic="examples/abro.png"
             root_directory="examples/"
             title="Wristwatch">
          <resource
@@ -41,9 +107,10 @@
             author="(KIELER Workgroup)"
             category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
-            description="The wristwatch example in expanded form."
-            generation_date="de.cau.cs.kieler.esterel.example.example3"
+            description="The Harel Wristwatch example in an expanded form"
+            generation_date="de.cau.cs.kieler.esterel.example.example7"
             id="de.cau.cs.kieler.esterel.ww_expanded"
+            overview_pic="examples/ww_expanded.png"
             root_directory="examples/"
             title="Wristwatch Expanded">
          <resource

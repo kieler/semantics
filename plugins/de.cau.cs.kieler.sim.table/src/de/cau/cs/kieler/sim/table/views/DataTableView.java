@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.table.views;
 
+import org.eclipse.elk.core.util.Pair;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -30,6 +31,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.events.KeyEvent;
@@ -43,7 +45,13 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.table.TablePlugin;
+
+import org.eclipse.elk.core.util.Maybe;
+import org.eclipse.elk.core.util.Pair;
 
 /**
  * The class DataTableView implements the ViewPart of the KIEM data table. This is the basic user
@@ -54,7 +62,7 @@ import de.cau.cs.kieler.sim.table.TablePlugin;
  * @author cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
-public class DataTableView extends ViewPart {
+public class DataTableView extends ViewPart implements IKiemEventListener {
 
     /** The ID of the view as specified by the extension. */
     public static final String ID = "de.cau.cs.kieler.sim.table.views.KiemTable";
@@ -109,6 +117,8 @@ public class DataTableView extends ViewPart {
     public DataTableView() {
         dataTableView = this;
         currentlyEditing = false;
+        
+        KiemPlugin.getDefault().getEventManager().add(this);
     }
 
     // -------------------------------------------------------------------------
@@ -300,6 +310,8 @@ public class DataTableView extends ViewPart {
     private void contributeToActionBars() {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
+        toolBarManager.add(getStepTextField());
+        toolBarManager.add(new Separator());
         toolBarManager.add(getActionAdd());
         toolBarManager.add(getActionDelete());
         toolBarManager.add(new Separator());
@@ -557,4 +569,92 @@ public class DataTableView extends ViewPart {
         viewer.getControl().setFocus();
     }
 
+    // -------------------------------------------------------------------------
+    
+    static long tick = 0;
+    
+    /** The step text field. */
+    private StepTextField stepTextField;
+    
+
+    /**
+     * Gets the step text field.
+     * 
+     * @return the step text field
+     */
+    private StepTextField getStepTextField() {
+        if (stepTextField != null) {
+            return stepTextField;
+        }
+        stepTextField = new StepTextField();
+        return stepTextField;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates steps in the steps text field asynchronously from within another thread.
+     */
+    public void updateStepsAsync() {
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                KiemPlugin kIEMInstance = KiemPlugin.getDefault();
+                if (kIEMInstance.getExecution() != null) {
+                    // update step counter if run
+                    String steps2 = "" + kIEMInstance.getExecution().getSteps();
+                    if (tick < 0) {
+                        steps2 = "";
+                    }
+                    if (kIEMInstance.getExecution().isHistoryStep()) {
+                        steps2 = "[" + steps2 + "]";
+                    }
+                    getStepTextField().updateTextfield(steps2);
+                } else {
+                    // hide textfield otherwise
+                    getStepTextField().updateTextfield("");
+                }
+            }
+        });
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the step number according to the button the user pressed. This is needed to correctly
+     * handle history steps or jumps.
+     * 
+     * @param event
+     *            the event
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void notifyEvent(final KiemEvent event) {
+        tick = -1;
+        if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
+            tick = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
+            updateStepsAsync();
+        } 
+        else if (event.isEvent(KiemEvent.CMD_STOP)) {
+            updateStepsAsync();
+        } 
+        else if (event.isEvent(KiemEvent.CMD_STEP)) {
+            updateStepsAsync();
+        } 
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Return the types of events this component listens to.
+     * 
+     * @return the event types, currently only {@code KiemEvent.STEP_INFO}
+     */
+    @Override
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.STEP_INFO, KiemEvent.CMD_STOP, KiemEvent.CMD_STEP};
+        KiemEvent event = new KiemEvent(events);
+        return event;
+    }    
+
+    // -------------------------------------------------------------------------
 }

@@ -1,0 +1,9 @@
+scchart superstate {
+  initial state init
+  --> A;
+  final state A {
+    initial state A1
+    --> B1;
+    final state B1;
+  };
+}

@@ -1,0 +1,5 @@
+scchart simple {
+  initial state A
+  --> B immediate;
+  final state B;
+}

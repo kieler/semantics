@@ -13,13 +13,15 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.ScgPackage;
-
-import de.cau.cs.kieler.scg.SchedulingBlock;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -29,8 +31,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,18 +44,15 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOriginalObject <em>Original Object</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSequentialize <em>Sequentialize</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isDead <em>Dead</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOperator <em>Operator</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
+public class GuardImpl extends NodeImpl implements Guard {
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getValuedObject()
@@ -73,86 +72,36 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
     protected Expression expression;
 
     /**
-     * The default value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #isSchizophrenic()
+     * @see #getIndices()
      * @generated
      * @ordered
      */
-	protected static final boolean SCHIZOPHRENIC_EDEFAULT = false;
+	protected EList<Expression> indices;
 
 				/**
-     * The cached value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+     * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #isSchizophrenic()
+     * @see #getOperator()
      * @generated
      * @ordered
      */
-	protected boolean schizophrenic = SCHIZOPHRENIC_EDEFAULT;
+	protected static final AssignOperator OPERATOR_EDEFAULT = AssignOperator.ASSIGN;
 
 				/**
-     * The cached value of the '{@link #getSchedulingBlockLink() <em>Scheduling Block Link</em>}' reference.
+     * The cached value of the '{@link #getOperator() <em>Operator</em>}' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getSchedulingBlockLink()
+     * @see #getOperator()
      * @generated
      * @ordered
      */
-	protected SchedulingBlock schedulingBlockLink;
+	protected AssignOperator operator = OPERATOR_EDEFAULT;
 
 				/**
-     * The cached value of the '{@link #getOriginalObject() <em>Original Object</em>}' reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #getOriginalObject()
-     * @generated
-     * @ordered
-     */
-	protected EList<ValuedObject> originalObject;
-
-				/**
-     * The default value of the '{@link #isSequentialize() <em>Sequentialize</em>}' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #isSequentialize()
-     * @generated
-     * @ordered
-     */
-	protected static final boolean SEQUENTIALIZE_EDEFAULT = true;
-
-				/**
-     * The cached value of the '{@link #isSequentialize() <em>Sequentialize</em>}' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #isSequentialize()
-     * @generated
-     * @ordered
-     */
-	protected boolean sequentialize = SEQUENTIALIZE_EDEFAULT;
-
-				/**
-     * The default value of the '{@link #isDead() <em>Dead</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isDead()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean DEAD_EDEFAULT = false;
-
-                /**
-     * The cached value of the '{@link #isDead() <em>Dead</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isDead()
-     * @generated
-     * @ordered
-     */
-    protected boolean dead = DEAD_EDEFAULT;
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -177,41 +126,36 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
      * @generated
      */
     public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, valuedObject));
+            }
+        }
         return valuedObject;
     }
 
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, newValuedObject);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+	public ValuedObject basicGetValuedObject() {
+        return valuedObject;
     }
 
-    /**
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     public void setValuedObject(ValuedObject newValuedObject) {
-        if (newValuedObject != valuedObject) {
-            NotificationChain msgs = null;
-            if (valuedObject != null)
-                msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
-            if (newValuedObject != null)
-                msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
-            msgs = basicSetValuedObject(newValuedObject, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, newValuedObject, newValuedObject));
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -262,37 +206,11 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isSchizophrenic() {
-        return schizophrenic;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setSchizophrenic(boolean newSchizophrenic) {
-        boolean oldSchizophrenic = schizophrenic;
-        schizophrenic = newSchizophrenic;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SCHIZOPHRENIC, oldSchizophrenic, schizophrenic));
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public SchedulingBlock getSchedulingBlockLink() {
-        if (schedulingBlockLink != null && schedulingBlockLink.eIsProxy()) {
-            InternalEObject oldSchedulingBlockLink = (InternalEObject)schedulingBlockLink;
-            schedulingBlockLink = (SchedulingBlock)eResolveProxy(oldSchedulingBlockLink);
-            if (schedulingBlockLink != oldSchedulingBlockLink) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.GUARD__SCHEDULING_BLOCK_LINK, oldSchedulingBlockLink, schedulingBlockLink));
-            }
+	public EList<Expression> getIndices() {
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, ScgPackage.GUARD__INDICES);
         }
-        return schedulingBlockLink;
+        return indices;
     }
 
 				/**
@@ -300,8 +218,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public SchedulingBlock basicGetSchedulingBlockLink() {
-        return schedulingBlockLink;
+	public AssignOperator getOperator() {
+        return operator;
     }
 
 				/**
@@ -309,68 +227,14 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setSchedulingBlockLink(SchedulingBlock newSchedulingBlockLink) {
-        SchedulingBlock oldSchedulingBlockLink = schedulingBlockLink;
-        schedulingBlockLink = newSchedulingBlockLink;
+	public void setOperator(AssignOperator newOperator) {
+        AssignOperator oldOperator = operator;
+        operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SCHEDULING_BLOCK_LINK, oldSchedulingBlockLink, schedulingBlockLink));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__OPERATOR, oldOperator, operator));
     }
 
 				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EList<ValuedObject> getOriginalObject() {
-        if (originalObject == null) {
-            originalObject = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, ScgPackage.GUARD__ORIGINAL_OBJECT);
-        }
-        return originalObject;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public boolean isSequentialize() {
-        return sequentialize;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setSequentialize(boolean newSequentialize) {
-        boolean oldSequentialize = sequentialize;
-        sequentialize = newSequentialize;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SEQUENTIALIZE, oldSequentialize, sequentialize));
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isDead() {
-        return dead;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setDead(boolean newDead) {
-        boolean oldDead = dead;
-        dead = newDead;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__DEAD, oldDead, dead));
-    }
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -378,10 +242,10 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                return basicSetValuedObject(null, msgs);
             case ScgPackage.GUARD__EXPRESSION:
                 return basicSetExpression(null, msgs);
+            case ScgPackage.GUARD__INDICES:
+                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -395,20 +259,14 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case ScgPackage.GUARD__VALUED_OBJECT:
-                return getValuedObject();
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
             case ScgPackage.GUARD__EXPRESSION:
                 return getExpression();
-            case ScgPackage.GUARD__SCHIZOPHRENIC:
-                return isSchizophrenic();
-            case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
-                if (resolve) return getSchedulingBlockLink();
-                return basicGetSchedulingBlockLink();
-            case ScgPackage.GUARD__ORIGINAL_OBJECT:
-                return getOriginalObject();
-            case ScgPackage.GUARD__SEQUENTIALIZE:
-                return isSequentialize();
-            case ScgPackage.GUARD__DEAD:
-                return isDead();
+            case ScgPackage.GUARD__INDICES:
+                return getIndices();
+            case ScgPackage.GUARD__OPERATOR:
+                return getOperator();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -428,21 +286,12 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
             case ScgPackage.GUARD__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
-            case ScgPackage.GUARD__SCHIZOPHRENIC:
-                setSchizophrenic((Boolean)newValue);
+            case ScgPackage.GUARD__INDICES:
+                getIndices().clear();
+                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
-            case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
-                setSchedulingBlockLink((SchedulingBlock)newValue);
-                return;
-            case ScgPackage.GUARD__ORIGINAL_OBJECT:
-                getOriginalObject().clear();
-                getOriginalObject().addAll((Collection<? extends ValuedObject>)newValue);
-                return;
-            case ScgPackage.GUARD__SEQUENTIALIZE:
-                setSequentialize((Boolean)newValue);
-                return;
-            case ScgPackage.GUARD__DEAD:
-                setDead((Boolean)newValue);
+            case ScgPackage.GUARD__OPERATOR:
+                setOperator((AssignOperator)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -462,20 +311,11 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
             case ScgPackage.GUARD__EXPRESSION:
                 setExpression((Expression)null);
                 return;
-            case ScgPackage.GUARD__SCHIZOPHRENIC:
-                setSchizophrenic(SCHIZOPHRENIC_EDEFAULT);
+            case ScgPackage.GUARD__INDICES:
+                getIndices().clear();
                 return;
-            case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
-                setSchedulingBlockLink((SchedulingBlock)null);
-                return;
-            case ScgPackage.GUARD__ORIGINAL_OBJECT:
-                getOriginalObject().clear();
-                return;
-            case ScgPackage.GUARD__SEQUENTIALIZE:
-                setSequentialize(SEQUENTIALIZE_EDEFAULT);
-                return;
-            case ScgPackage.GUARD__DEAD:
-                setDead(DEAD_EDEFAULT);
+            case ScgPackage.GUARD__OPERATOR:
+                setOperator(OPERATOR_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -493,18 +333,60 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
                 return valuedObject != null;
             case ScgPackage.GUARD__EXPRESSION:
                 return expression != null;
-            case ScgPackage.GUARD__SCHIZOPHRENIC:
-                return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
-            case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
-                return schedulingBlockLink != null;
-            case ScgPackage.GUARD__ORIGINAL_OBJECT:
-                return originalObject != null && !originalObject.isEmpty();
-            case ScgPackage.GUARD__SEQUENTIALIZE:
-                return sequentialize != SEQUENTIALIZE_EDEFAULT;
-            case ScgPackage.GUARD__DEAD:
-                return dead != DEAD_EDEFAULT;
+            case ScgPackage.GUARD__INDICES:
+                return indices != null && !indices.isEmpty();
+            case ScgPackage.GUARD__OPERATOR:
+                return operator != OPERATOR_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Effect.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == Assignment.class) {
+            switch (derivedFeatureID) {
+                case ScgPackage.GUARD__VALUED_OBJECT: return KEffectsPackage.ASSIGNMENT__VALUED_OBJECT;
+                case ScgPackage.GUARD__EXPRESSION: return KEffectsPackage.ASSIGNMENT__EXPRESSION;
+                case ScgPackage.GUARD__INDICES: return KEffectsPackage.ASSIGNMENT__INDICES;
+                case ScgPackage.GUARD__OPERATOR: return KEffectsPackage.ASSIGNMENT__OPERATOR;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Effect.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
+        if (baseClass == Assignment.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.ASSIGNMENT__VALUED_OBJECT: return ScgPackage.GUARD__VALUED_OBJECT;
+                case KEffectsPackage.ASSIGNMENT__EXPRESSION: return ScgPackage.GUARD__EXPRESSION;
+                case KEffectsPackage.ASSIGNMENT__INDICES: return ScgPackage.GUARD__INDICES;
+                case KEffectsPackage.ASSIGNMENT__OPERATOR: return ScgPackage.GUARD__OPERATOR;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
 				/**
@@ -517,12 +399,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (schizophrenic: ");
-        result.append(schizophrenic);
-        result.append(", sequentialize: ");
-        result.append(sequentialize);
-        result.append(", dead: ");
-        result.append(dead);
+        result.append(" (operator: ");
+        result.append(operator);
         result.append(')');
         return result.toString();
     }

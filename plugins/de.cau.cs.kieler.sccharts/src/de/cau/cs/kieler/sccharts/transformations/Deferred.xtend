@@ -15,10 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -29,7 +25,10 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * SCCharts Deferred Transformation.

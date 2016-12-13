@@ -1,0 +1,5 @@
+scchart simple {
+  output bool OUT;
+  initial state A
+  --> A with / OUT = true;
+}

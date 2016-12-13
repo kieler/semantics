@@ -1,0 +1,61 @@
+module shifter3:
+input I;
+output s0 , s1, O;
+
+signal PREI  in
+signal PRES0  in
+signal PRES1  in 
+
+ nothing;
+ loop  
+  await PREI;  
+  emit s0; 
+ end loop  
+|| 
+ loop 
+  await PRES0;  
+  emit s1; 
+ end loop 
+||  
+ loop 
+  await PRES1; 
+  emit O; 
+ end loop 
+ 
+ ||
+  loop 
+   abort 
+     halt
+   when I;
+   pause;
+   weak abort
+     sustain PREI
+   when [not I];
+ end loop
+|| 
+ loop
+   abort
+     halt
+   when s0;
+   pause;
+   weak abort
+     sustain PRES0;
+   when [not s0];
+ end loop
+|| 
+ loop
+   abort
+     halt
+   when s1;
+   pause;
+   weak abort
+     sustain PRES1;
+   when [not s1];
+ end loop
+  
+ end 
+ end
+ end
+
+end module
+ 

@@ -13,9 +13,10 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->

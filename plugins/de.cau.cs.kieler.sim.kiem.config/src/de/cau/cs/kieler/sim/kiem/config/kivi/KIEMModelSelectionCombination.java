@@ -32,6 +32,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
+import de.cau.cs.kieler.core.model.util.EditorUtils;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
@@ -138,7 +140,7 @@ public class KIEMModelSelectionCombination implements
 
         // Go thru all editors
         for (IEditorPart editorPart : localEditors) {
-            IPath inputModelPath = getInputModelPath(editorPart);
+            IPath inputModelPath = ModelUtil.getInputModelPath(editorPart);
            
             if (inputModelPath != null) {
                 // this is the active editor if any
@@ -148,7 +150,7 @@ public class KIEMModelSelectionCombination implements
 
                 // add to opened model files
                 KiemPlugin.getOpenedModelFiles().add(inputModelPath);
-                EObject rootObject = getInputModelEObject(editorPart);
+                EObject rootObject = ModelUtil.getInputModelEObject(editorPart);
 
                 if (rootObject != null) {
                     KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
@@ -207,72 +209,7 @@ public class KIEMModelSelectionCombination implements
 
     }
 
-    // -------------------------------------------------------------------------
 
-    /**
-     * Gets the input model EObject.
-     * 
-     * @param editorPart
-     *            the editor part
-     * @return the input model e object
-     */
-    protected static EObject getInputModelEObject(final IEditorPart editorPart) {
-        EObject model = null;
-        // removed gmf dependency, 24.07., ssm
-//        if (editorPart instanceof DiagramEditor) {
-//            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
-//        } else 
-        if (editorPart instanceof XtextEditor) {
-            boolean ignoreDirtyEditor = true;
-            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart,
-                    ignoreDirtyEditor);
-        }
-        return model;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the input model.
-     * 
-     * @param editorPart
-     *            the editor part
-     * @return the input model
-     */
-    protected static IPath getInputModelPath(final IEditorPart editorPart) {
-        EObject model = getInputModelEObject(editorPart);
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        IPath fullPath = null;
-        if (model != null) {
-            if (model.eResource() != null) {
-                // EMF model case
-                org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-                if (uri != null) {
-                    String platformURI = uri.toPlatformString(false);
-                    if (platformURI != null) {
-                        IPath path = new Path(platformURI);
-                        IFile file = myWorkspaceRoot.getFile(path);
-                        fullPath = file.getFullPath();
-                    }
-                }
-            } 
-            if (fullPath == null && editorPart.getEditorInput() instanceof FileEditorInput){
-                FileEditorInput input = (FileEditorInput) editorPart.getEditorInput();
-                fullPath = input.getFile().getFullPath();
-            }
-        } else {
-            // Other editors
-            if (editorPart != null) {
-                IEditorInput editorInput = editorPart.getEditorInput();
-                if (editorInput instanceof FileEditorInput) {
-                    FileEditorInput fileEditorInput = (FileEditorInput) editorInput;
-                    IFile file = fileEditorInput.getFile();
-                    fullPath = file.getFullPath();
-                }
-            }
-        }
-        return fullPath;
-    }
 
     // -------------------------------------------------------------------------
 

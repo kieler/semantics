@@ -41,19 +41,16 @@ import java.util.Map
  */
 class SCGCacheExtensions { 
     
-    public def int createSchedulingBlockCache(SCGraph scg, Map<Node, SchedulingBlock> map) {
-        var sBlocks = 0
-        
-        for(basicBlock : scg.basicBlocks) {
-            for(schedulingBlock: basicBlock.schedulingBlocks) {
-                for(node : schedulingBlock.nodes) {
-                    map.put(node, schedulingBlock)
-                }
-                sBlocks = sBlocks + 1
-            }
-        }
-        
-        sBlocks        
+    public def Map<Node, SchedulingBlock> createSchedulingBlockCache(SCGraph scg) {
+        <Node, SchedulingBlock> newHashMap => [
+	        for(basicBlock : scg.basicBlocks) {
+	            for(schedulingBlock: basicBlock.schedulingBlocks) {
+	                for(node : schedulingBlock.nodes) {
+	                    it.put(node, schedulingBlock)
+	                }
+	            }
+	        }
+        ]
     } 
     
 }

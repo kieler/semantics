@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Declaration;
+
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -29,7 +30,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getSchedules <em>Schedules</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getLabel <em>Label</em>}</li>
  * </ul>
@@ -57,7 +57,7 @@ public interface SCGraph extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
@@ -86,22 +86,6 @@ public interface SCGraph extends Annotatable {
      * @generated
      */
     EList<BasicBlock> getBasicBlocks();
-
-    /**
-     * Returns the value of the '<em><b>Schedules</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Schedule}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Schedules</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Schedules</em>' containment reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Schedules()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Schedule> getSchedules();
 
     /**
      * Returns the value of the '<em><b>Guards</b></em>' containment reference list.

@@ -14,13 +14,14 @@
 package de.cau.cs.kieler.scg.s.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
@@ -39,8 +40,9 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.scg.s.SCG2SPlugin
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Transform SCG to S
@@ -142,7 +144,7 @@ class SCG2S extends AbstractProductionTransformation {
         }
 
         var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for S transformation finished (time used: " + (time / 1000) + "s).")
+        SCG2SPlugin.log("Preparation for S transformation finished (time used: " + (time / 1000) + "s).")
 
         val tickState = SFactory::eINSTANCE.createState => [
             name = "Tick"
@@ -165,7 +167,7 @@ class SCG2S extends AbstractProductionTransformation {
 //            (node as Conditional).el            
 //            (node as Assignment).n
 //            if (node instanceof Assignment) {
-//              System.out.println("SCG: " + (node as Assignment).toString)
+//              SCG2SPlugin.log("SCG: " + (node as Assignment).toString)
 //                
 //            }
             node.translate(instructionList)
@@ -175,7 +177,7 @@ class SCG2S extends AbstractProductionTransformation {
         tickState.instructions += instructionCache
 
         time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("S transformation finished (time used overall: " + (time / 1000) + "s).")
+        SCG2SPlugin.log("S transformation finished (time used overall: " + (time / 1000) + "s).")
         sProgram
     }
 
@@ -200,22 +202,22 @@ class SCG2S extends AbstractProductionTransformation {
             sAssignment.valuedObject = valuedObjectMapping.get(assignment.valuedObject)
 // TODO: VERIFY removal of fixHostCode            
 //            val expression = assignment.assignment.copyExpression.fixHostCode     
-            if (assignment.assignment != null) {
-                val expression = assignment.assignment.copyExpression
+            if (assignment.expression != null) {       
+                val expression = assignment.expression.copyExpression
                 sAssignment.expression = expression
             }
             for (index : assignment.indices) {
                 sAssignment.indices += index.copyExpression
             }
             instructions += sAssignment
-        } else if (assignment.assignment instanceof TextExpression) {
+        } else if (assignment.expression instanceof TextExpression) {
 
             // This is the case when the valuedObject is null
-            val hostCode = (assignment.assignment as TextExpression).text // .copy.fixHostCode as TextExpression
+            val hostCode = (assignment.expression as TextExpression).text //.copy.fixHostCode as TextExpression
             instructions += hostCode.createHostCode
-        } else if (assignment.assignment instanceof FunctionCall) {
+        } else if (assignment.expression instanceof FunctionCall) {
             val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
-            sAssignment.expression = assignment.assignment.copyExpression
+            sAssignment.expression = assignment.expression.copyExpression
             instructions += sAssignment
         }
 

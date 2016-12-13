@@ -31,9 +31,6 @@ import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
-import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
-import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
-import de.cau.cs.kieler.sim.kiem.IKiemEventListener
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent
 import de.cau.cs.kieler.sim.kiem.KiemEvent
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException
@@ -54,8 +51,12 @@ import org.eclipse.ui.IWorkbenchPage
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.json.JSONObject
-
 import static java.lang.Math.toIntExact
+import java.util.List
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener
+import de.cau.cs.kieler.sim.kiem.KiemEvent
+import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.synchronizer.DepthJoinSynchronizer
 
 /**
  * @author fry 
@@ -141,7 +142,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 
 		val Runnable run = [|
 			for (context : contextsCirc) {
-				System.out.println("-- Initialize circuit simulation... --")
+				CircuitKiviPlugin.log("-- Initialize circuit simulation... --");
 				val circuit = context.inputModel as Actor
 
 				// -------------------------------------------------------------
@@ -246,7 +247,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	}
 
 	override wrapup() throws KiemInitializationException {
-		System.out.println("wrapup----------------------------------------")
+		CircuitKiviPlugin.log("wrapup----------------------------------------")
 		//remove all highlighting
 		val Runnable run = [|
 			
@@ -280,7 +281,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	// In each step: list the gates which shall be highlighted                     --
 	// -------------------------------------------------------------------------------------------------
 	override step(JSONObject jSONObject) throws KiemExecutionException {
-		System.out.println("step ---------------------------------------- " + tick)
+		CircuitKiviPlugin.log("step ---------------------------------------- " + tick)
 		// -----------------------------------------------------------
 		// Use highlighting information from C Code            --
 		// -----------------------------------------------------------
@@ -289,7 +290,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		//only if this tick is a new tick, new highlighting information need to be computed
 		//otherwise, old information is copied from "...Collection" lists.
 		if (newTick) {
-			System.out.println("this is a new tick..")
+			CircuitKiviPlugin.log("this is a new tick..")
 			for (key : jSONObject.keys.toIterable) {
 
 				// check for active guards in this tick
@@ -378,9 +379,9 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 		// if this is not a new tick, use the values stored in the "...Collection" lists
 		else if (!newTick) {
 			for (entry : muxFlapChangeCollection) {
-					System.out.println("muxflapchange11: " + entry)
+					CircuitKiviPlugin.log("muxflapchange11: " + entry)
 			}
-			System.out.println("this is an old tick..")
+			CircuitKiviPlugin.log("this is an old tick..")
 			highlighting.clear
 			val tickInt = toIntExact(tick)
 			highlighting.addAll(highlightingCollection.get(tickInt - 1))
@@ -579,7 +580,7 @@ class CircuitVisualizationDataComponent extends JSONObjectDataComponent implemen
 	// This method finally highlights the gates and links                   --
 	// -----------------------------------------------------------------------
 	protected def void highlight(Set<String> highlighting) {
-		System.out.println("highlighting for step -------------------------------------" + tick)
+		CircuitKiviPlugin.log("highlighting for step -------------------------------------" + tick)
 		val Runnable run = [|
 
 			// highlight actors: check for each entry (actor) if its name is in highlighting list. If so, highlight it.

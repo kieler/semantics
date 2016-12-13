@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.Annotatable
-import de.cau.cs.kieler.core.annotations.Annotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Scope

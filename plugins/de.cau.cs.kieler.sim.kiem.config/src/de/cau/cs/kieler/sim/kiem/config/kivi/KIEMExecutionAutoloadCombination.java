@@ -15,6 +15,9 @@ package de.cau.cs.kieler.sim.kiem.config.kivi;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPart;
@@ -43,6 +46,9 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * 
  */
 public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
+
+    /** KIEM ID for source model. */
+    public static final String SOURCE_MODEL_ID = "de.cau.cs.kieler.kico.klighd.sourceModel";
 
     private static String lastValidEditorId = null;
 
@@ -130,10 +136,10 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
                 ScheduleManager scheduleManager = ScheduleManager.getInstance();
                 List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(
                         editorId, editorName);
+                lastValidEditorId = editorId.getString();
 
                 // if at least one matching schedule, take the first one
                 if (scheduleDataList.size() > 0) {
-                    lastValidEditorId = editorId.getString();
                     ScheduleData scheduleData = scheduleDataList.get(0);
                     // open execution file
                     try {
@@ -144,6 +150,39 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
                 }
             }
 
+        } else {
+            String modelID = null;
+            // The interactive selection case!
+            // Inspect the model type
+            IPath modelFilePath = KiemPlugin.getCurrentModelFile();
+            if (modelFilePath != null) {
+                EObject sourceModel = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+                if (sourceModel != null) {
+                    modelID = sourceModel.getClass().getCanonicalName();
+                }
+            }
+
+            // only if editor has been changed to a valid one (OR schedules are still empty because
+            // of first selection)
+            if (modelID == null || (!modelID.equals(lastValidEditorId))) {
+                ScheduleManager scheduleManager = ScheduleManager.getInstance();
+                EditorIdWrapper dummyEditorId = new EditorIdWrapper(modelID);
+                List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(dummyEditorId, null);
+
+                // if at least one matching schedule, take the first one
+                if (scheduleDataList.size() > 0) {
+                    lastValidEditorId = modelID;
+                    ScheduleData scheduleData = scheduleDataList.get(0);
+                    // open execution file
+                    try {
+                        scheduleManager.openSchedule(scheduleData);
+                    } catch (ScheduleFileMissingException e) {
+                        // fail silently if this does not work
+                    }
+                }
+                // }
+
+            }
         }
 
     }

@@ -86,10 +86,10 @@ public class ObserverExecution implements Runnable {
         // check if we already done
         if (!done) {
             // deadline missed
-            // System.out.println("  SKIPPED - NOT READY YET");
+            // KiemPlugin.log("  SKIPPED - NOT READY YET");
             return false;
         } else {
-            // System.out.println("  START - READY");
+            // KiemPlugin.log("  START - READY");
             // deadline met
             this.done = false;
             // awake this thread
@@ -131,7 +131,7 @@ public class ObserverExecution implements Runnable {
                 synchronized (this) {
                     // now we got the result and are done
                     this.done = true;
-                    // System.out.println("  "+dataComponent.getName() +
+                    // KiemPlugin.log("  "+dataComponent.getName() +
                     // " (Pure Observer) calc end");
                     if (done) {
                         this.wait();
@@ -142,7 +142,7 @@ public class ObserverExecution implements Runnable {
             }
 
             try {
-                // System.out.println("  "+dataComponent.getName() + " (Pure Observer) calc start");
+                // KiemPlugin.log("  "+dataComponent.getName() + " (Pure Observer) calc start");
                 // do asynchronous call
                 if (this.dataComponent instanceof JSONObjectDataComponent) {
                     JSONObjectDataComponent compJSON = (JSONObjectDataComponent) dataComponent;

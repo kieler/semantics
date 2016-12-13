@@ -42,12 +42,10 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEquationAccess().getAlternatives_1(), "rule__Equation__Alternatives_1");
 					put(grammarAccess.getSCChartAccess().getAlternatives_4(), "rule__SCChart__Alternatives_4");
 					put(grammarAccess.getSCChartAccess().getAlternatives_4_1_1(), "rule__SCChart__Alternatives_4_1_1");
-					put(grammarAccess.getSCChartAccess().getAlternatives_4_1_2_0(), "rule__SCChart__Alternatives_4_1_2_0");
-					put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
 					put(grammarAccess.getStateAccess().getAlternatives_1(), "rule__State__Alternatives_1");
 					put(grammarAccess.getStateAccess().getAlternatives_6(), "rule__State__Alternatives_6");
 					put(grammarAccess.getStateAccess().getAlternatives_6_1_1(), "rule__State__Alternatives_6_1_1");
-					put(grammarAccess.getStateAccess().getAlternatives_6_1_2_0(), "rule__State__Alternatives_6_1_2_0");
+					put(grammarAccess.getStateAccess().getAlternatives_6_1_3_0(), "rule__State__Alternatives_6_1_3_0");
 					put(grammarAccess.getNodeAccess().getAlternatives(), "rule__Node__Alternatives");
 					put(grammarAccess.getDefineNodeAccess().getAlternatives_11(), "rule__DefineNode__Alternatives_11");
 					put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
@@ -99,6 +97,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_6_0_2_2(), "rule__State__Group_6_0_2_2__0");
 					put(grammarAccess.getStateAccess().getGroup_6_1(), "rule__State__Group_6_1__0");
 					put(grammarAccess.getStateAccess().getGroup_6_1_2(), "rule__State__Group_6_1_2__0");
+					put(grammarAccess.getStateAccess().getGroup_6_1_3(), "rule__State__Group_6_1_3__0");
 					put(grammarAccess.getCallNodeAccess().getGroup(), "rule__CallNode__Group__0");
 					put(grammarAccess.getCallNodeAccess().getGroup_6(), "rule__CallNode__Group_6__0");
 					put(grammarAccess.getDefineNodeAccess().getGroup(), "rule__DefineNode__Group__0");
@@ -228,8 +227,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCChartAccess().getBindingsAssignment_4_0_2_2_1(), "rule__SCChart__BindingsAssignment_4_0_2_2_1");
 					put(grammarAccess.getSCChartAccess().getDeclarationsAssignment_4_1_1_0(), "rule__SCChart__DeclarationsAssignment_4_1_1_0");
 					put(grammarAccess.getSCChartAccess().getLocalActionsAssignment_4_1_1_1(), "rule__SCChart__LocalActionsAssignment_4_1_1_1");
-					put(grammarAccess.getSCChartAccess().getRegionsAssignment_4_1_2_0_0(), "rule__SCChart__RegionsAssignment_4_1_2_0_0");
-					put(grammarAccess.getSCChartAccess().getRegionsAssignment_4_1_2_0_1(), "rule__SCChart__RegionsAssignment_4_1_2_0_1");
+					put(grammarAccess.getSCChartAccess().getRegionsAssignment_4_1_2_0(), "rule__SCChart__RegionsAssignment_4_1_2_0");
 					put(grammarAccess.getSCChartAccess().getRegionsAssignment_4_1_2_1(), "rule__SCChart__RegionsAssignment_4_1_2_1");
 					put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 					put(grammarAccess.getStateAccess().getInitialAssignment_1_0_0(), "rule__State__InitialAssignment_1_0_0");
@@ -244,9 +242,11 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getBindingsAssignment_6_0_2_2_1(), "rule__State__BindingsAssignment_6_0_2_2_1");
 					put(grammarAccess.getStateAccess().getDeclarationsAssignment_6_1_1_0(), "rule__State__DeclarationsAssignment_6_1_1_0");
 					put(grammarAccess.getStateAccess().getLocalActionsAssignment_6_1_1_1(), "rule__State__LocalActionsAssignment_6_1_1_1");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_2_0_0(), "rule__State__RegionsAssignment_6_1_2_0_0");
-					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_2_0_1(), "rule__State__RegionsAssignment_6_1_2_0_1");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_2_0(), "rule__State__RegionsAssignment_6_1_2_0");
 					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_2_1(), "rule__State__RegionsAssignment_6_1_2_1");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_3_0_0(), "rule__State__RegionsAssignment_6_1_3_0_0");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_3_0_1(), "rule__State__RegionsAssignment_6_1_3_0_1");
+					put(grammarAccess.getStateAccess().getRegionsAssignment_6_1_3_1(), "rule__State__RegionsAssignment_6_1_3_1");
 					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_7(), "rule__State__OutgoingTransitionsAssignment_7");
 					put(grammarAccess.getCallNodeAccess().getIdAssignment_1(), "rule__CallNode__IdAssignment_1");
 					put(grammarAccess.getCallNodeAccess().getCallReferenceAssignment_3(), "rule__CallNode__CallReferenceAssignment_3");

@@ -44,7 +44,7 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -90,8 +90,8 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-
     // -------------------------------------------------------------------------
+
     
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
@@ -150,7 +150,7 @@ public class KiCoUtil {
         HashMap<String, ResourceExtension> resourceExtensionMap =
                 KiCoPlugin.getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
-            System.out.println("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
+            KiCoPlugin.log("MODEL eCLASS: " + model.eClass().getName() + " in ePackage: " + model.eClass().getEPackage().getName());
         }
         ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getEPackage().getName());
         if (specificExtension != null) {
@@ -166,7 +166,11 @@ public class KiCoUtil {
         try {
             for (String ext : extensionKeyList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
-
+                
+                if (KiCoPlugin.DEBUG) {
+                    KiCoPlugin.log("Trying to serialize as extension '" + ext + "' ... ");
+                }
+                
                 ResourceSet resourceSet = null;
                 if (context != null) {
                     resourceSet = context.getModelResourceSet();
@@ -195,11 +199,17 @@ public class KiCoUtil {
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (KiCoPlugin.DEBUG) {
+                        KiCoPlugin.log("success.");
+                    }
                     if (updateMainResource) {
                         context.setMainResource(res);
                     }
                 } catch (Exception e) {
-                     e.printStackTrace();
+                    if (KiCoPlugin.DEBUG) {
+                        KiCoPlugin.log("failed.");
+                    }
+                    //e.printStackTrace();
                 }
 
                 if (done) {
@@ -219,7 +229,10 @@ public class KiCoUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (KiCoPlugin.DEBUG) {
+                KiCoPlugin.log("failed.");
+            }
+            //e.printStackTrace();
             if (raiseError) {
                 throw e;
             } else {
@@ -327,7 +340,7 @@ public class KiCoUtil {
                 }
                 
                 for (String ext : extensionList) {
-                    System.out.println("Testing extension ''" + ext + "''");
+                    KiCoPlugin.log("Testing extension ''" + ext + "''");
                     if (extension != null && !extension.equals(ext)) {
                         // if an extension is given, then continue if this is not the right
                         // extension!
@@ -598,11 +611,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -648,11 +661,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -699,11 +712,11 @@ public class KiCoUtil {
                         Class<?> parameter = parameters[0];
                         String compareName = parameter.getName();
                         if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
-                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // KiCoPlugin.log(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // KiCoPlugin.log(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }

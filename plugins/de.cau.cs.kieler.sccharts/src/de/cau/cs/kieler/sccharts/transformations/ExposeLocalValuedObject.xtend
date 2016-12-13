@@ -70,9 +70,10 @@ class ExposeLocalValuedObject extends AbstractExpansionTransformation implements
         val targetRootState = rootState;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach [ targetState |
-            targetState.transformExposeLocalValuedObject(targetRootState, true);
-        ]
+        for (state : targetRootState.getAllStates.immutableCopy) {
+            state.transformExposeLocalValuedObject(targetRootState, true)
+        }
+        
         targetRootState;
     }
 

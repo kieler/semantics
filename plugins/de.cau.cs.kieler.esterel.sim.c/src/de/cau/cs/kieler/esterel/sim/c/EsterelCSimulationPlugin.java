@@ -3,6 +3,8 @@ package de.cau.cs.kieler.esterel.sim.c;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -10,7 +12,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2014-11-26 proposed cmot
  * @kieler.rating 2014-11-26 proposed yellow
  */
-public class EsterelCSimulationPlugin extends AbstractUIPlugin {
+public class EsterelCSimulationPlugin extends AbstractUIPluginLog {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.sim.c"; //$NON-NLS-1$

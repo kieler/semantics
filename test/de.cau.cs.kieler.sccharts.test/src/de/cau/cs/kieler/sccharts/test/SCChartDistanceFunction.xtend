@@ -16,8 +16,8 @@ import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.emf.compare.Comparison
 import org.eclipse.emf.compare.match.eobject.EditionDistance
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * EMFCompare object to calculate the distance of EObjects in two SCCharts.

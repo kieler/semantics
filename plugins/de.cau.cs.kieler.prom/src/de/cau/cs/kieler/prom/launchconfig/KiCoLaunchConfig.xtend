@@ -396,7 +396,7 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION"
+            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, *T_scg.guards, *T_scg.scheduling, *T_ABORT, *T_scg.basicblock.sc, *T_sccharts.scg"
             if(launchData.isCompileChain) {
                 compileChain += ", " + launchData.targetLanguage
             } else {
