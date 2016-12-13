@@ -1,0 +1,40 @@
+scchart CounterNonimmediate {
+  input signal a;
+  input bool start;
+  input bool stop;
+  output signal b;
+  output signal c;
+  output bool end = false; //output bool O2 = false;
+
+   state Counting {
+
+    region:
+
+    initial state C0
+    --> C1 with c;
+
+    state C1
+    --> C0 with c / end = true;
+
+    region:
+
+    initial state B0
+    --> B1 with b;
+
+    state B1
+    --> B0  with b / c;
+
+    region:
+
+    initial state A0
+    --> A1 with a;
+
+    state A1
+    --> A0 with a / b;
+  }
+  --> NotCounting with end
+  --> NotCounting with stop;
+
+  initial state NotCounting
+  --> Counting with start;
+} 
