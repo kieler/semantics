@@ -275,28 +275,28 @@ public class Backhoe extends JSONObjectDataComponent implements
 
 		if (boom >= Backhoe.boomMAX) {
 			try {
-				returnObj.accumulate("BOOM_OUT", JSONSignalValues
+				returnObj.accumulate("BOOM_IN", JSONSignalValues
 						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			boom = Backhoe.boomMAX;
 		} else {
 			try {
-				returnObj.accumulate("BOOM_OUT", JSONSignalValues
+				returnObj.accumulate("BOOM_IN", JSONSignalValues
 						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 		if (boom <= Backhoe.boomMIN) {
 			try {
-				returnObj
-						.accumulate("BOOM_IN", JSONSignalValues.newValue(true, true));
+				returnObj.accumulate("BOOM_OUT", JSONSignalValues
+                        .newValue(true, true));
 			} catch (Exception e) {
 			}
 			boom = Backhoe.boomMIN;
 		} else {
 			try {
-				returnObj.accumulate("BOOM_IN", JSONSignalValues
+				returnObj.accumulate("BOOM_OUT", JSONSignalValues
 						.newValue(false, false));
 			} catch (Exception e) {
 			}
