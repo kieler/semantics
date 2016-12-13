@@ -113,11 +113,11 @@
        y="352.95239" />
   </g>
   <g
-     id="button_up"
+     id="g_button_up"
      transform="translate(-22.632955,-16.849)">
     <rect
        style="fill:#7c86ff;fill-opacity:0.76878614;fill-rule:evenodd;stroke:#000000;stroke-width:0.97480001pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect1559"
+       id="button_up"
        width="48.756096"
        height="48.809299"
        x="235.60925"
@@ -136,11 +136,11 @@
        d="M 261.52737,477.02369 C 264.16744,477.46551 264.94825,479.15745 266.57552,481.14201 C 268.54112,483.51741 270.54356,485.90908 272.70656,488.10911 C 273.51008,488.89702 274.3576,489.53006 275.30176,490.13192 C 275.66363,490.37302 276.02148,490.61945 276.3707,490.87861 L 272.2316,493.43083 C 271.97415,493.23761 271.70705,493.05748 271.44247,492.87424 C 270.21463,492.06982 269.13774,491.1631 268.12859,490.0931 C 266.01254,487.76732 264.03895,485.3064 261.98237,482.92779 C 260.11905,480.79457 258.25933,480.33107 261.52737,480.86677 L 261.52737,477.02369 z" />
   </g>
   <g
-     id="button_down"
+     id="g_button_down"
      transform="translate(-22.632955,-16.849)">
     <rect
        style="fill:#7c86ff;fill-opacity:0.76878614;fill-rule:evenodd;stroke:#000000;stroke-width:0.97480001pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect1560"
+       id="button_down"
        width="48.756096"
        height="48.809299"
        x="296.86713"
@@ -165,11 +165,11 @@
      d="M 536.58978,323.32559 A 23.90863,23.084196 0 1 1 488.77252,323.32559 A 23.90863,23.084196 0 1 1 536.58978,323.32559 z"
      transform="matrix(0.763955,0,0,0.795812,-153.04586,101.8488)" />
   <g
-     id="button_alarm"
+     id="g_button_alarm"
      transform="translate(-22.632955,-16.849)">
     <rect
        style="fill:#ffff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.97480001pt;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="rect1561"
+       id="button_alarm"
        width="48.756096"
        height="48.809299"
        x="235.60925"
@@ -235,7 +235,7 @@
      transform="translate(-249.69746,45.864099)" />
   <g
      id="signal_down"
-     style="fill:#009e00;fill-opacity:1"
+     style="fill:#FF0000;fill-opacity:1"
      transform="translate(-22.632955,-16.849)">
     <path
        id="path4119"
@@ -246,7 +246,7 @@
   </g>
   <g
      id="signal_up"
-     style="fill:#008800;fill-opacity:1"
+     style="fill:#FF0000;fill-opacity:1"
      transform="translate(-22.632955,-16.849)">
     <path
        id="path4747"
