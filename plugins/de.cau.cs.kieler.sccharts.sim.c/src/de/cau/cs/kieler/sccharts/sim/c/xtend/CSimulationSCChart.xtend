@@ -16,6 +16,7 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Transformation from SCChart to wrapper code for the simulation.
@@ -120,8 +121,12 @@ void writeOutputs() {
     cJSON* value;;
 	«FOR output : scchart.getValuedObjects().filter[ isOutput ]»
 	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
-	cJSON_AddItemToObject(output, "«output.name»", value);
+	«IF output.type != ValueType::STRING»
+        cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
+	«ELSE»
+        cJSON_AddItemToObject(value, "value", cJSON_CreateString(«output.name»));
+	«ENDIF»
+     cJSON_AddItemToObject(output, "«output.name»", value);
     «ENDFOR»
 }'''
    }
