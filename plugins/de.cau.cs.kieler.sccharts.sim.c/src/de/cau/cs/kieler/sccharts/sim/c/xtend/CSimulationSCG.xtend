@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Transformation from SCG to wrapper code for the simulation.
@@ -136,14 +137,22 @@ void writeOutputs() {
 	«FOR output : scg.getValuedObjects().filter[ !isInput ]»
 	«SCChartsSimCPlugin.log("=====> " + output.name)»
 	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
+    «IF output.type != ValueType::STRING»
+        cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
+    «ELSE»
+        cJSON_AddItemToObject(value, "value", cJSON_CreateString(«output.name»));
+    «ENDIF»
 	cJSON_AddItemToObject(output, "«output.name»", value);
 	
 	// Add pre outputs
 	«IF scg.usesPre(output)»
         «SCChartsSimCPlugin.log("=====> PRE_" + output.name)»
         value = cJSON_CreateObject();
-        cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(PRE_«output.name»));
+        «IF output.type != ValueType::STRING»
+            cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(PRE_«output.name»));
+        «ELSE»
+            cJSON_AddItemToObject(value, "value", cJSON_CreateString(PRE_«output.name»));
+        «ENDIF»
         cJSON_AddItemToObject(output, "PRE_«output.name»", value);
 	«ENDIF»
     «ENDFOR»

@@ -1,0 +1,24 @@
+scchart Counter {
+input signal A, start;
+output signal done, nc;
+region main:
+signal B, C, end;
+     initial state NotCounting{
+
+     }
+     --> Counting with start;
+     state Counting{
+       region bit1:
+       initial state A1
+       --> A2 with A;
+       state A2
+       -->A1 with A / B;
+
+       region bit2:
+       initial state B1
+       --> B2 with B;
+       state B2
+       -->B1 with B/end;
+     }
+     --> NotCounting with end/done;
+  } 

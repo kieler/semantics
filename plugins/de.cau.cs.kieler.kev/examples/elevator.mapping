@@ -6,13 +6,13 @@
    </svgElement>
   
   <svgElement id="signal_up">
-    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
-   <animation xsi:type="mapping:Colorize" input="false" fillColor="#009e00"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#FF0000"/>
+   <animation xsi:type="mapping:Colorize" input="true" fillColor="#009e00"/>
   </svgElement>
   
   <svgElement id="signal_down">
-    <animation xsi:type="mapping:Colorize" input="true" fillColor="#FF0000"/>
-    <animation xsi:type="mapping:Colorize" input="false" fillColor="#009e00"/>
+    <animation xsi:type="mapping:Colorize" input="false" fillColor="#FF0000"/>
+    <animation xsi:type="mapping:Colorize" input="true" fillColor="#009e00"/>
   </svgElement>
   
   <svgElement id="signal_alarm">
