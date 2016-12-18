@@ -323,6 +323,8 @@ class TPPTransformation extends AbstractProductionTransformation
                     def private LinkedList<ControlFlow> getEdgesInFixedTraversingOrder(SCGraph scg)
                     {
                         val LinkedList<ControlFlow> edgeList = new LinkedList<ControlFlow>();
+                        val scgNodes = scg.nodes;
+                        System.out.println(scgNodes.toString());
                         // Find start entry node
                         // Assuming only one entry node exists in a sequentialized SCG; 
         // Make it the starting point of the SSA transformation

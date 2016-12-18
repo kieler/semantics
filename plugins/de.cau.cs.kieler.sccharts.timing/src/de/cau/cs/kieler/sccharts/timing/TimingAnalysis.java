@@ -186,10 +186,13 @@ public class TimingAnalysis extends Job {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
 		}
-
-		KielerCompilerContext context = new KielerCompilerContext(
-				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
-						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
+        KielerCompilerContext context = new KielerCompilerContext(
+                "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
+                + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
+                + "*T_scg.scheduling, T_scg.tpp", scchart);
+//		KielerCompilerContext context = new KielerCompilerContext(
+//				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
+//						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
 		context.setProperty(Tracing.ACTIVE_TRACING, true);
 		context.setProperty(SCGTransformation.ENABLE_SFR, false);
 		context.setAdvancedSelect(true);
