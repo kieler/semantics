@@ -39,6 +39,13 @@ class KExpressionsDeclarationExtensions {
         ]
     }   
     
+    
+    def public Declaration createSignalDeclaration() {
+        val decl = createDeclaration(ValueType::PURE)
+        decl.signal = true
+        decl
+    }    
+    
     def public Declaration createIntDeclaration() {
         createDeclaration(ValueType::INT)
     }    

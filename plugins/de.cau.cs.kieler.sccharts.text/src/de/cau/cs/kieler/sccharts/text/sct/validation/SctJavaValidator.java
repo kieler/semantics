@@ -63,6 +63,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     //TODO (KISEMA-1071) Remove this message when there is a transformation that handles valued signals without combine operator.
     public static final String VALUED_SIGNAL_NEED_COMBINE = "Valued signals must have a combine function";
     public static final String MINMAX_COMBINE = "Min or max combine operators are currently not supported";
+    public static final String NOCOMBINE = "A valued signal should have a combine function, otherwise any emits cannot be scheduled.";
     
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";

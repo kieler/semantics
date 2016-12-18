@@ -79,6 +79,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension SCChartsTransformationExtension
 
+    @Inject
+    extension ValuedObjectRise
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
@@ -101,7 +104,9 @@ class Signal extends AbstractExpansionTransformation implements Traceable {
     // Transforming a signal to a variable. 
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
-
+        
+        targetRootState.transformValuedObjectRise
+        
         // Traverse all states
         targetRootState.getAllStates.forEach [ targetState |
             targetState.transformSignal(targetRootState);

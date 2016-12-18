@@ -1,0 +1,43 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+a start 
+% Output: 
+;
+a 
+% Output: b(true) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(true) c(true) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(true) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(true) c(true) end(true) 
+;
+a 
+% Output: end(true) 
+;
+a 
+% Output: end(true) 
+;
+a 
+% Output: end(true) 
+;
