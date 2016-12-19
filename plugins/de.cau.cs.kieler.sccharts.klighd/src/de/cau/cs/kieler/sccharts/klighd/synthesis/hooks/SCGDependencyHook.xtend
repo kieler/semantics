@@ -205,15 +205,10 @@ class SCGDependencyHook extends SynthesisActionHook {
 		}
 		val scc = model as State;
 		val context = usedContext;
-		val propertyHolder = rootNode.data.filter(KLayoutData).head;
-		if (propertyHolder == null) {
-			throw new IllegalArgumentException("Missing property holder on root element");
-		}
-
-		val edges = propertyHolder.getProperty(DEPENDENCY_EDGES);
+		val edges = rootNode.getProperty(DEPENDENCY_EDGES);
 		// If not already created
 		if (edges == null) {
-			val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
+			val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
 			if (tracker == null) {
 				throw new IllegalArgumentException("Missing source model tracker");
 			}
@@ -232,8 +227,8 @@ class SCGDependencyHook extends SynthesisActionHook {
 					new UIJob(JOB_NAME) {
 
 						override runInUIThread(IProgressMonitor monitor) {
-							if (propertyHolder.getProperty(DEPENDENCY_EDGES) == null) {
-								propertyHolder.setProperty(DEPENDENCY_EDGES, newLoopElements);
+							if (rootNode.getProperty(DEPENDENCY_EDGES) == null) {
+								rootNode.setProperty(DEPENDENCY_EDGES, newLoopElements);
 								val type = context.getOptionValue(SCG_DEPENDENCY_TYPES) as DepType;
 								val viewer = context.viewer;
 								newLoopElements.entries.forEach [

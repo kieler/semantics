@@ -101,15 +101,10 @@ class SCGLoopHook extends SynthesisActionHook {
         }
         val scc = model as State;
         val context = usedContext;
-        val propertyHolder = rootNode.data.filter(KLayoutData).head;
-        if (propertyHolder == null) {
-            throw new IllegalArgumentException("Missing property holder on root element");
-        }
-
-        val loopElements = propertyHolder.getProperty(LOOP_ELEMENTS);
+        val loopElements = rootNode.getProperty(LOOP_ELEMENTS);
         // If not already calculated
         if (loopElements == null) {
-            val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
+            val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
             if (tracker == null) {
                 throw new IllegalArgumentException("Missing source model tracker");
             }
@@ -124,8 +119,8 @@ class SCGLoopHook extends SynthesisActionHook {
                     new UIJob(JOB_NAME) {
 
                         override runInUIThread(IProgressMonitor monitor) {
-                            if (propertyHolder.getProperty(LOOP_ELEMENTS) == null) {
-                                propertyHolder.setProperty(LOOP_ELEMENTS, newLoopElements);
+                            if (rootNode.getProperty(LOOP_ELEMENTS) == null) {
+                                rootNode.setProperty(LOOP_ELEMENTS, newLoopElements);
                                 if (context.getOptionValue(SHOW_SCG_LOOPS) as Boolean) {
                                     newLoopElements.forEach[addHighlighting];
                                 }
