@@ -15,26 +15,26 @@ a
 % Output: 
 ;
 a 
-% Output: b(true) 
+% Output: b(1) 
 ;
 a 
 % Output: 
 ;
 a 
-% Output: b(true) c(true) 
+% Output: b(1) c(1) 
 ;
 a 
 % Output: 
 ;
 a 
-% Output: b(true) 
+% Output: b(1) 
 ;
 a 
 % Output: 
 ;
 a 
-% Output: b(true) c(true) end(true) 
+% Output: b(1) c(1) end(1) 
 ;
 a 
-% Output: end(true) 
+% Output: end(1) 
 ;
