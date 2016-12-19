@@ -73,9 +73,10 @@ class SCGLoopHook extends SynthesisActionHook {
     private static final IProperty<Boolean> IS_HIGHLIGHTING = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.highlighting", false);
 
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SCG_LOOPS);
-    }
+// Deactivated until new SCG compilation provides loop information
+//    override getDisplayedSynthesisOptions() {
+//        return newLinkedList(SHOW_SCG_LOOPS);
+//    }
 
     override finish(Scope model, KNode rootNode) {
         if (SHOW_SCG_LOOPS.booleanValue) {
