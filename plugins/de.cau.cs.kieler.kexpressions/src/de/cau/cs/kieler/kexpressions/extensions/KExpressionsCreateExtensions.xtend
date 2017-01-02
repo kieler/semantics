@@ -287,6 +287,13 @@ class KExpressionsCreateExtensions {
     def Parameter createParameter() {
         KExpressionsFactory::eINSTANCE.createParameter()
     }
+    
+    def Parameter createParameter(FunctionCall fc, Expression exp) {
+        createParameter() => [
+            expression = exp
+            fc.parameters.add(it)
+        ]
+    }
 
     // Create a text expression.
     def TextExpression createTextExpression(String text) {

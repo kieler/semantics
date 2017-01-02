@@ -12,27 +12,27 @@
  */
 package de.cau.cs.kieler.scg.ssc.strl
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeHRExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.Statement
 import de.cau.cs.kieler.esterel.esterel.StatementContainer
+import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.ssc.features.SSAEstFeature
@@ -45,23 +45,12 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
-import java.util.BitSet
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.common.util.EList
 
 import static com.google.common.collect.Lists.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
-
-import static extension java.lang.Math.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.core.kexpressions.Value
-import de.cau.cs.kieler.esterel.esterel.TrapDecl
-import de.cau.cs.kieler.esterel.esterel.Sequence
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import java.util.LinkedList
-import com.google.common.collect.Table
-import com.google.common.collect.HashMultimap
 
 /**
  * @author als
@@ -159,7 +148,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         
         // Local variables in nested signal declarations
         var StatementContainer signalNestingHead = null
-        for (decl : scl.declarations.filter[!(input || output) && type == de.cau.cs.kieler.core.kexpressions.ValueType.BOOL]) {
+        for (decl : scl.declarations.filter[!(input || output) && type == de.cau.cs.kieler.kexpressions.ValueType.BOOL]) {
             val sigDecl = createLocalSignalDecl
             sigDecl.optEnd = "signal"
             val sigs = createLocalSignal
@@ -183,7 +172,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
         
         // error and term
-        val isDelayed = scl.declarations.exists[type == de.cau.cs.kieler.core.kexpressions.ValueType.PURE]
+        val isDelayed = scl.declarations.exists[type == de.cau.cs.kieler.kexpressions.ValueType.PURE]
         val sigDecl = createLocalSignalDecl
         sigDecl.optEnd = "signal"
         val sigs = createLocalSignal
@@ -193,7 +182,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             name = "error"
         ]
         if (isDelayed) {
-            val term = scl.declarations.findFirst[type == de.cau.cs.kieler.core.kexpressions.ValueType.PURE].valuedObjects.head
+            val term = scl.declarations.findFirst[type == de.cau.cs.kieler.kexpressions.ValueType.PURE].valuedObjects.head
             sigs.signal += createISignal => [
                 name = term.name
                 termSig = new Pair(term, it)
@@ -597,7 +586,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     }
     
-    private def Expression getErrorExpression(de.cau.cs.kieler.core.kexpressions.Expression expression) {
+    private def Expression getErrorExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
         val presenceExp = expression.presenceExpression
         val conflictExp = expression.conflictExpression
         if (presenceExp != null && conflictExp != null) {
@@ -702,7 +691,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     }
     
-    private def dispatch Expression getConflictExpression(de.cau.cs.kieler.core.kexpressions.Expression expression) {
+    private def dispatch Expression getConflictExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
          return null
     }
     
@@ -798,7 +787,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     }
     
-    private def dispatch Expression getValueExpression(de.cau.cs.kieler.core.kexpressions.Expression expression) {
+    private def dispatch Expression getValueExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
          return null
     }
     
@@ -827,7 +816,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 return exp
             }
         } else {
-            if (expression.operator == de.cau.cs.kieler.core.kexpressions.OperatorType.PRE) {
+            if (expression.operator == de.cau.cs.kieler.kexpressions.OperatorType.PRE) {
                 return createOperatorExpression => [
                     operator = OperatorType.PRE
                     subExpressions.add(expression.subExpressions.head.presenceExpression)
@@ -873,11 +862,11 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     }
         
-    private def dispatch Expression getPresenceExpression(de.cau.cs.kieler.core.kexpressions.Expression expression) {
+    private def dispatch Expression getPresenceExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
          return null
     }
     
-    private def boolean isAlwaysPresent(de.cau.cs.kieler.core.kexpressions.Expression expression) {
+    private def boolean isAlwaysPresent(de.cau.cs.kieler.kexpressions.Expression expression) {
         if (expression instanceof ValuedObjectReference) {
             return !voPSigMap.containsKey(expression.valuedObject)
         } else {
@@ -930,7 +919,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     private def dispatch OperatorType translateOP(String t) {
         var match = OperatorType.getByName(t)
         if (match == null) {
-           match = de.cau.cs.kieler.core.kexpressions.OperatorType.getByName(t).translateOP
+           match = de.cau.cs.kieler.kexpressions.OperatorType.getByName(t).translateOP
         }
         if (match == null) {
            throw new IllegalArgumentException("Illegal Operator: "+t)
@@ -938,7 +927,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         return match
     }   
     
-    private def dispatch OperatorType translateOP(de.cau.cs.kieler.core.kexpressions.OperatorType t) {
+    private def dispatch OperatorType translateOP(de.cau.cs.kieler.kexpressions.OperatorType t) {
         return switch (t) {
 //            case EQ: OperatorType.EQ
 //            case LT: 

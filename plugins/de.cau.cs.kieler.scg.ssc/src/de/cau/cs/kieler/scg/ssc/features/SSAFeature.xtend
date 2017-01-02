@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.scg.ssc.features
 
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.scg.SCGraph
 import javax.inject.Inject

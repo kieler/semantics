@@ -13,21 +13,20 @@
 package de.cau.cs.kieler.scg.ssc.ssa
 
 import com.google.common.collect.BiMap
-import com.google.common.collect.HashBasedTable
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import com.google.common.collect.Table
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kitt.tracing.Tracing
@@ -45,6 +44,7 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 import java.util.Collection
 import java.util.LinkedList
 import java.util.List
@@ -56,8 +56,10 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
-import de.cau.cs.kieler.core.kexpressions.StringValue
+import de.cau.cs.kieler.scg.Dependency
+import com.google.common.base.Predicates
+import de.cau.cs.kieler.scg.ScheduleDependency
+import de.cau.cs.kieler.scg.GuardDependency
 
 /**
  * @author als
@@ -111,7 +113,7 @@ class MergeExpressionExtension {
             copy.nodes.removeAll(independentNodes)
             
             // Compile SCG scheduling
-            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
+            val context = new KielerCompilerContext(SCGFeatures.DEPENDENCY_ID +","+ SCGFeatures.BASICBLOCK_ID +","+ SCGFeatures.GUARD_EXPRESSIONS_ID +","+ SCGFeatures.GUARDS_ID +","+ SCGFeatures.SCHEDULING_ID + ",*T_scg.basicblock.sc", copy);
             context.advancedSelect = false;
             context.setProperty(Tracing.ACTIVE_TRACING, true);
             val result = KielerCompiler.compile(context);
@@ -134,17 +136,25 @@ class MergeExpressionExtension {
             }
             val schedVO = findCopyVO
             val schedule = <Assignment>newArrayList
-            for (sb : schedSCG.schedules.head.scheduleBlocks.map[schedulingBlock]) {
-                for (a : sb.nodes.filter(Assignment).filter[valuedObject == schedVO]) {
+            val start = schedSCG.nodes.filter[!incoming.exists(Predicates.or(ScheduleDependency.instanceOf, GuardDependency.instanceOf))].toList
+            var next = start.head
+            while (next != null) {
+                for(a : next.dependencies.filter(GuardDependency).map[target].scheduleOrder.filter(Assignment).filter[valuedObject == schedVO]) {
                     val copyAsm = mapping.get(a).filter(Assignment).head
                     val asm = copier.entrySet.findFirst[value == copyAsm].key
                     schedule.add(asm as Assignment)
                 }
+                next = next.dependencies.findFirst(ScheduleDependency.instanceOf)?.target
             }
             
             // store schedule
             schedules.put(vo, schedule)
         }
+    }
+    
+    private def List<Node> scheduleOrder(Iterable<Node> nodes) {
+        // TODO oder
+        return nodes.toList
     }
 
     /**
@@ -392,11 +402,11 @@ class MergeExpressionExtension {
         // Prepend inputs and register reads
         if (vo.declaration.input) {
             schedule.add(createAssignment => [
-                assignment = vo.reference
+                expression = vo.reference
             ])
         } else if (scg.isDelayed) {
             schedule.add(createAssignment => [
-                assignment = createOperatorExpression(OperatorType.PRE) => [
+                expression = createOperatorExpression(OperatorType.PRE) => [
                     subExpressions += ssaDecl.get(vo).valuedObjects.findFirst[isRegister].reference
                 ]
             ])
@@ -412,7 +422,7 @@ class MergeExpressionExtension {
             if (head.valuedObject == null) {
                 return SEQ.createFunction => [
                     parameters += createParameter => [
-                        expression = head.assignment
+                        expression = head.expression
                     ]
                 ]                
             } else {
@@ -426,7 +436,7 @@ class MergeExpressionExtension {
         } else if (head.isUpdate){
              return COMBINE.createFunction => [
                 parameters += createParameter => [
-                    var op = (head.assignment as OperatorExpression).operator.getName
+                    var op = (head.expression as OperatorExpression).operator.getName
                     if (op.contains("_")) {
                         op = op.substring(op.indexOf('_')+1)
                     }

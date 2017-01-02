@@ -13,14 +13,17 @@
 package de.cau.cs.kieler.scg.ssc.scl
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
@@ -28,17 +31,15 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scg.Entry
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.scl.extensions.SCLExtensions
 
 /**
  * @author als
@@ -201,7 +202,7 @@ class RestrictedSCG2SCL {
         val statement = createInstructionStatement => [
             instruction = createAssignment => [
                 valuedObject = assignment.valuedObject.copyValuedObject
-                expression = assignment.assignment.copyExpression
+                expression = assignment.expression.copyExpression
             ]
         ]
         sSeq.statements.add(statement)

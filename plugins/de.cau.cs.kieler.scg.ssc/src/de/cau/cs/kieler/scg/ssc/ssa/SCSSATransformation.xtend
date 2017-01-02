@@ -15,14 +15,14 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
@@ -207,11 +207,11 @@ class SCSSATransformation extends AbstractProductionTransformation {
                         // transform update
                         if (isUpdate) {
                             s.valuedObject.markSSA(COMBINE)
-                            val oe = s.assignment as OperatorExpression
+                            val oe = s.expression as OperatorExpression
                             if (oe.subExpressions.size > 2) {
                                 oe.subExpressions.removeIf[it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo]
                             } else {
-                                s.assignment = oe.subExpressions.filter[!(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo)].head
+                                s.expression = oe.subExpressions.filter[!(it instanceof ValuedObjectReference && (it as ValuedObjectReference).valuedObject == vo)].head
                             }
                         }
                     }

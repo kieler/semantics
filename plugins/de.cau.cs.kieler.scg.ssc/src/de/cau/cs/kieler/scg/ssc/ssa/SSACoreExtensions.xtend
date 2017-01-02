@@ -15,19 +15,19 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.collect.HashBiMap
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.Annotatable
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory
-import de.cau.cs.kieler.core.annotations.ReferenceAnnotation
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.ReferenceAnnotation
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
@@ -213,7 +213,7 @@ class SSACoreExtensions {
         // Analyse graph for uses
         for (node : scg.nodes) {
             if (node instanceof Assignment) {
-                node.assignment.allReferences.map[valuedObject].forEach [
+                node.expression.allReferences.map[valuedObject].forEach [
                     use.put(it, node)
                 ]
             } else if (node instanceof Conditional) {

@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.scg.ssc.features
 
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.UnEmit
 import de.cau.cs.kieler.kico.features.Feature

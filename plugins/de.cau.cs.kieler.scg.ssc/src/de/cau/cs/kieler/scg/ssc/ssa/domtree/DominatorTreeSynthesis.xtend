@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scg.ssc.ssa.domtree
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
@@ -37,7 +37,6 @@ import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.alg.mrtree.MrTree
 
 class DominatorTreeSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     

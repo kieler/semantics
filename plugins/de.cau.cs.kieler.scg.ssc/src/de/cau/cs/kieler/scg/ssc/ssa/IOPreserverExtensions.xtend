@@ -15,16 +15,16 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.collect.BiMap
 import com.google.common.collect.LinkedHashMultimap
 import com.google.common.collect.Multimap
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
@@ -35,7 +35,6 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 import javax.inject.Inject
-import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /**
  * The SSA transformation for SCGs
@@ -116,7 +115,7 @@ class IOPreserverExtensions {
                 fork.createControlFlow.target = entryNode
                 val termExitAsm = createAssignment => [
                     valuedObject = term
-                    assignment = createBoolValue(true)
+                    expression = createBoolValue(true)
                 ]
                 scg.nodes += termExitAsm
                 for (cf : entryNode.exit.incoming.immutableCopy) {
@@ -176,13 +175,13 @@ class IOPreserverExtensions {
                 if (!nodes.empty) {
                     map.put(vo, createAssignment => [
                         valuedObject = entry.value.valuedObjects.findFirst[isRegister]
-                        assignment = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, vo, ssaReferences, ssaDecl, dt)
                     ])
                 } else {
                     map.put(vo, createAssignment => [
                         val reg = entry.value.valuedObjects.findFirst[isRegister]
                         valuedObject = reg
-                        assignment = createOperatorExpression => [
+                        expression = createOperatorExpression => [
                             operator = OperatorType.PRE
                             subExpressions.add(reg.reference)
                         ]
@@ -194,16 +193,16 @@ class IOPreserverExtensions {
                     valuedObject = iovo
                     val nodes = scg.nodes.filter(Assignment).filter[valuedObject == iovo].map[it as Node].toList
                     if (nodes.empty) {
-                        assignment = iovo.reference
+                        expression = iovo.reference
                     } else {
-                        assignment = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt)
+                        expression = nodes.head.createMergeExpression(nodes, iovo, ssaReferences, ssaDecl, dt)
                     }
                 ])
             }
             for (entry : ssaDecl.entrySet.filter[!key.declaration.input && key.declaration.output && value.valuedObjects.exists[isRegister]].sortBy[(value.eContainer as SCGraph).declarations.indexOf(value)]) {
                 map.put(entry.key, createAssignment => [
                     valuedObject = entry.key
-                    assignment = entry.value.valuedObjects.findFirst[isRegister].reference
+                    expression = entry.value.valuedObjects.findFirst[isRegister].reference
                 ])
             }
         }
@@ -221,7 +220,7 @@ class IOPreserverExtensions {
                     // Create self assignment which will not be renamed
                     val asm = createAssignment => [
                         valuedObject = vo
-                        assignment = vo.reference
+                        expression = vo.reference
                         markOutputPreserver
                     ]
                     val sb = node.schedulingBlock

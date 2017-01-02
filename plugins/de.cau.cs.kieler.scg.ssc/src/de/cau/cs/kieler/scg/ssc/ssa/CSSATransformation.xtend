@@ -14,12 +14,12 @@ package de.cau.cs.kieler.scg.ssc.ssa
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ControlFlow
@@ -41,9 +41,7 @@ import javax.inject.Inject
 
 import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
-import de.cau.cs.kieler.scg.RelativeWrite_Read
-import de.cau.cs.kieler.scg.AbsoluteWrite_Read
-import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
+import static de.cau.cs.kieler.scg.DataDependencyType.*
 
 /**
  * The SSA transformation for SCGs
@@ -164,7 +162,7 @@ class CSSATransformation extends RegularSSATransformation {
             }
             if (psi) {
                 phi.markSSA(PSI)
-                (phi.assignment as FunctionCall).functionName = PSI.symbol
+                (phi.expression as FunctionCall).functionName = PSI.symbol
                 psiDefs.add(phi)
             }
         }
@@ -175,7 +173,7 @@ class CSSATransformation extends RegularSSATransformation {
         val refs = HashMultimap.<Assignment, Parameter>create
         val nodes = newHashMap
         for (n : scg.nodes.filter[!isSSA]) {
-            val incomingDeps = n.incoming.filter(DataDependency).filter[concurrent && (it instanceof RelativeWrite_Read || it instanceof AbsoluteWrite_Read || it instanceof AbsoluteWrite_RelativeWrite)].toList
+            val incomingDeps = n.incoming.filter(DataDependency).filter[concurrent && (type == WRITE_READ || type == WRITE_RELATIVEWRITE)].toList
             if (!incomingDeps.empty) {
                 val concVODefs = HashMultimap.<ValuedObject, Assignment>create
                 incomingDeps.forEach[
@@ -191,7 +189,7 @@ class CSSATransformation extends RegularSSATransformation {
                     asm.valuedObject = vo
                     asm.markSSA(PI)
                     val func = PI.createFunction
-                    asm.assignment = func
+                    asm.expression = func
                     // Insert before
                     n.allPrevious.toList.forEach[target = asm]
                     asm.createControlFlow.target = n

@@ -14,23 +14,25 @@ package de.cau.cs.kieler.scg.ssc.scl
 
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.StringValue
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
@@ -41,8 +43,6 @@ import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import java.util.Map
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.core.kexpressions.Value
 
 /**
  * @author als
@@ -118,7 +118,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
         try {
             for (n : scg.nodes) {
                 if (n instanceof Assignment) {
-                    n.assignment.replace(n.assignment.convertToBoolean)
+                    n.expression.replace(n.expression.convertToBoolean)
                 } else if (n instanceof Conditional) {
                     n.condition.replace(n.condition.convertToBoolean)
                 }
@@ -157,7 +157,7 @@ class SSASCG2SSASCL extends AbstractProductionTransformation {
             return true
         }
         if (defs.containsKey(vo)) {
-            return defs.get(vo).assignment.isBoolExp
+            return defs.get(vo).expression.isBoolExp
         }
         return true
     }

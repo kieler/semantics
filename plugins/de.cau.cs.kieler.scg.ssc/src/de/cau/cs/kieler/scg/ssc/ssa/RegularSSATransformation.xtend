@@ -15,13 +15,13 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.base.Function
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
@@ -42,13 +42,13 @@ import java.util.Collection
 import java.util.Deque
 import java.util.LinkedList
 import javax.inject.Inject
-import org.eclipse.elk.core.util.Pair
 
 import static com.google.common.collect.Lists.*
 import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * The SSA transformation for SCGs
@@ -162,7 +162,7 @@ class RegularSSATransformation extends AbstractProductionTransformation {
                             placedAssignment.add(asm)
                             asm.valuedObject = vo
                             asm.markSSA(PHI)
-                            asm.assignment = PHI.createFunction
+                            asm.expression = PHI.createFunction
                             if (bbHead instanceof Join) {
                                 // Insert after
                                 val cf = bbHead.allNext.head
@@ -231,7 +231,7 @@ class RegularSSATransformation extends AbstractProductionTransformation {
                     } else {
                         ssaDecl.inverse.get(asm.valuedObject.declaration)
                     }
-                    (asm.assignment as FunctionCall).createParameter(
+                    (asm.expression as FunctionCall).createParameter(
                         ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek).reference)
                 }
             }
@@ -245,7 +245,7 @@ class RegularSSATransformation extends AbstractProductionTransformation {
             stack.get(vo).pop
         }
     }
-
+    
     protected def get(Function<ValuedObject, Deque<Integer>> stackFunc, ValuedObject vo) {
         return stackFunc.apply(vo)
     }
