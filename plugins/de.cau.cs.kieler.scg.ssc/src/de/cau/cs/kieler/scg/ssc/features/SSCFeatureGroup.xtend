@@ -30,7 +30,7 @@ class SSCFeatureGroup extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        newHashSet("scg.ssa", "scl.ssa", "esterel.ssa")
+        newHashSet("scg.ssa", "scl.ssa", "scl.dualrailencoding", "esterel.ssa")
 
     }
 

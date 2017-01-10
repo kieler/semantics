@@ -25,8 +25,6 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -36,7 +34,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.ssc.features.SSAEstFeature
-import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.EmptyStatement
@@ -51,6 +48,8 @@ import org.eclipse.emf.common.util.EList
 
 import static com.google.common.collect.Lists.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
+import de.cau.cs.kieler.scg.ssc.features.DualRailFeature
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author als
@@ -76,7 +75,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     }
 
     override getRequiredFeatureIds() {
-        return newHashSet(SSASCLFeature.ID)
+        return newHashSet(DualRailFeature.ID)
     }
 
     // -------------------------------------------------------------------------
@@ -97,15 +96,14 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     
     val Map<ValuedObject, ISignal> voSigMap = newHashMap
-    val Map<ValuedObject, ISignal> voPSigMap = newHashMap
     val Map<String, TrapDecl> labelsMap = newHashMap
-    var ISignal error
-    var Pair<ValuedObject, ISignal> termSig
+    var Pair<ValuedObject, ISignal> error
+    var Pair<ValuedObject, ISignal> term
     
     def Program transform(SCLProgram scl, KielerCompilerContext context) {
         voSigMap.clear
-        voPSigMap.clear
         labelsMap.clear
+        
         val prog = createProgram
 
         val module = createModule
@@ -155,10 +153,6 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             sigDecl.signalList = sigs
             for (vo : decl.valuedObjects) {
                 sigs.signal += createISignal => [
-                    voPSigMap.put(vo, it)
-                    name = vo.name+"p"
-                ]
-                sigs.signal += createISignal => [
                     voSigMap.put(vo, it)
                     name = vo.name
                 ]
@@ -172,34 +166,33 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
         
         // error and term
-        val isDelayed = scl.declarations.exists[type == de.cau.cs.kieler.kexpressions.ValueType.PURE]
-        val sigDecl = createLocalSignalDecl
-        sigDecl.optEnd = "signal"
+        val ssaVOs = scl.declarations.findFirst[type == ValueType.PURE]
+        val ssaSigDecl = createLocalSignalDecl
+        ssaSigDecl.optEnd = "signal"
         val sigs = createLocalSignal
-        sigDecl.signalList = sigs
-        sigs.signal += createISignal => [
-            error = it
-            name = "error"
-        ]
-        if (isDelayed) {
-            val term = scl.declarations.findFirst[type == de.cau.cs.kieler.kexpressions.ValueType.PURE].valuedObjects.head
+        term = null
+        error = null
+        for (vo : ssaVOs.valuedObjects) {
             sigs.signal += createISignal => [
-                name = term.name
-                termSig = new Pair(term, it)
-            ]            
-        } else {
-            termSig = null
+                if (vo.name.contains("term")) {
+                    term = new Pair(vo, it)
+                } else if (vo.name.contains("error")) {
+                    error = new Pair(vo, it)
+                }
+                voSigMap.put(vo, it)
+                name = vo.name
+            ]
         }
+        ssaSigDecl.signalList = sigs
         if (signalNestingHead == null) {
-            body.statements += sigDecl
+            body.statements += ssaSigDecl
         } else {
-            signalNestingHead.statement = sigDecl
+            signalNestingHead.statement = ssaSigDecl
         }
-        signalNestingHead = sigDecl
+        signalNestingHead = ssaSigDecl
         
-        
-        if (isDelayed) {
-            signalNestingHead.statement = scl.statements.head.translate.head
+        if (term != null) {
+            signalNestingHead.statement = scl.statements.head.translate
         } else {
             // Parallel error thread
             signalNestingHead.statement = createBlock => [
@@ -209,14 +202,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                             scl.statements.translateStatements(list)
                         ]
                     } else {
-                        val s = scl.statements.head.translate
-                        if (s.size > 1) {
-                            list += createSequence => [
-                                list += s
-                            ]
-                        } else {
-                            list += s
-                        }
+                        list += scl.statements.head.translate
                     }
                     list += errorPattern
                 ]
@@ -227,170 +213,54 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         return prog
     }
 
-    private dispatch def List<Statement> translate(EmptyStatement empty) {
+    private dispatch def Statement translate(EmptyStatement empty) {
         throw new IllegalArgumentException("Failed to translate label: " + empty.label)
     }
 
-    private dispatch def List<Statement> translate(InstructionStatement stm) {
+    private dispatch def Statement translate(InstructionStatement stm) {
         return stm.instruction.translate
     }
 
-    private dispatch def List<Statement> translate(Assignment asm) {
-        val s = newArrayList
+    private dispatch def Statement translate(Assignment asm) {
         val vo = asm.valuedObject
-        if (termSig != null && asm.valuedObject == termSig.key) {
-            s.add(createEmit => [
-                signal = termSig.value
-            ])
-        } else if (asm.expression instanceof BoolValue) {
-            val asmExp = asm.expression as BoolValue
-            if (asmExp.value) {
-                if (voPSigMap.containsKey(vo)) {
-                    s.add(
-                        createEmit => [
-                            signal = voPSigMap.get(vo)
-                        ]
-                    )
-                }
-                s.add(
-                    createEmit => [
-                        signal = voSigMap.get(vo)
-                    ]
-                )
-            } else if (voPSigMap.containsKey(vo)) {
-                s.add(
-                    createEmit => [
-                        signal = voPSigMap.get(vo)
-                    ]
-                )
-            }
+        if (voSigMap.containsKey(vo)) {
+            return createEmit => [
+                signal = voSigMap.get(vo)
+            ]
         } else {
-            val errorExp = asm.expression.errorExpression
-            val valueExp = asm.expression.valueExpression
-            
-            val emission = createPresent => [
+            throw new IllegalArgumentException("No signal with name " + vo.name)
+        }
+    }
+
+    private dispatch def Statement translate(Conditional cond) {
+        if (!cond.statements.nullOrEmpty || !cond.elseStatements.nullOrEmpty) {
+            return createPresent => [
                 body = createPresentEventBody => [
                     event = createPresentEvent => [
-                        expression = valueExp
+                        expression = cond.expression.translateExpression
                     ]
-                    thenPart = createThenPart => [
-                        statement = createEmit => [
-                            signal = voSigMap.get(vo)
-                        ]
-                    ]
-                ]
-            ]
-            
-            if (errorExp != null) {
-                s.add(
-                    createPresent => [
-                        body = createPresentEventBody => [
-                            event = createPresentEvent => [
-                                expression = errorExp
-                            ]
-                            thenPart = createThenPart => [
-                                statement = createEmit => [
-                                    signal = error
-                                ]
-                            ]
-                        ]
-                        elsePart = createElsePart => [
-                            statement = createSequence => [
-                                if (voPSigMap.containsKey(vo)) {
-                                    list.add(
-                                        createEmit => [
-                                            signal = voPSigMap.get(vo)
-                                        ]
-                                    )
-                                }
-                                list.add(emission)
-                            ]
-                            // Remove sequence if one-elemeted
-                            if (!voPSigMap.containsKey(vo)) {
-                                statement = (statement as Sequence).list.get(0)
-                            }
-                        ]
-                    ]
-                )
-            } else {
-                if (voPSigMap.containsKey(vo)) {
-                    s.add(
-                        createEmit => [
-                            signal = voPSigMap.get(vo)
-                        ]
-                    )
-                }
-                s.add(emission)
-            }
-        }
-        
-        return s
-    }
-
-    private dispatch def List<Statement> translate(Conditional cond) {
-        val s = newArrayList
-        val errorExp = cond.expression.errorExpression
-        val conditionExp = cond.expression.valueExpression
-        
-        val branches = createPresent => [
-            body = createPresentEventBody => [
-                event = createPresentEvent => [
-                    expression = conditionExp
-                ]
-                if (!cond.statements.nullOrEmpty) {
-                    thenPart = createThenPart => [
-                        statement = cond.statements.translateStatements
-                    ]
-                }
-            ]
-            if (!cond.elseStatements.nullOrEmpty) {
-                elsePart = createElsePart => [
-                    statement = cond.elseStatements.translateStatements
-                ]
-            }
-        ]
-        
-        if (errorExp != null) {
-            s.add(
-                createPresent => [
-                    body = createPresentEventBody => [
-                        event = createPresentEvent => [
-                            expression = errorExp
-                        ]
+                    if (!cond.statements.nullOrEmpty) {
                         thenPart = createThenPart => [
-                            if (cond.eAllContents.exists[it instanceof Pause]) {
-                                statement = createSequence => [
-                                    list.add(
-                                        createEmit => [
-                                            signal = error
-                                        ]
-                                    )                              
-                                    list.add(createPause)
-                                ]
-                            } else {
-                                statement = createEmit => [
-                                    signal = error
-                                ]
-                            }
+                            statement = cond.statements.translateStatements
                         ]
-                    ]
-                    elsePart = createElsePart => [
-                        statement = branches
-                    ]
+                    }
                 ]
-            )
+                if (!cond.elseStatements.nullOrEmpty) {
+                    elsePart = createElsePart => [
+                        statement = cond.elseStatements.translateStatements
+                    ]
+                }
+            ]
         } else {
-            s.add(branches)
+            return createNothing
         }
-
-        return s
     }
     
-    private dispatch def List<Statement> translate(Parallel fork) {
-        val b = createBlock => [
+    private dispatch def Statement translate(Parallel fork) {
+        return createBlock => [
             statement = createParallel => [
                 for (th : fork.threads) {
-                    if (termSig != null && th.statements.filter(InstructionStatement).map[instruction].filter(Conditional).map[expression].filter(ValuedObjectReference).exists[valuedObject == termSig.key]) {
+                    if (term != null && th.statements.filter(InstructionStatement).map[instruction].filter(Conditional).map[expression].filter(ValuedObjectReference).exists[valuedObject == term.key]) {
                         list.add(translatePreseverThread(th.statements))
                     } else {
                         list += th.statements.translateStatements
@@ -398,18 +268,16 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 }
             ]
         ]
-        return newArrayList(b)
     }
     
-    private dispatch def List<Statement> translate(Goto goto) {
-        val exit = createExit => [
+    private dispatch def Statement translate(Goto goto) {
+        return createExit => [
             trap = goto.targetLabel.trapSignal
         ]
-        return newArrayList(exit)
     }
 
-    private dispatch def List<Statement> translate(Pause pause) {
-        return newArrayList(createPause)
+    private dispatch def Statement translate(Pause pause) {
+        return createPause
     }
         
     private def translatePreseverThread(EList<de.cau.cs.kieler.scl.scl.Statement> stms) {
@@ -417,22 +285,23 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         val trap = createTrapDecl => [
             name = "PauseLoop";
         ]
-        return createPresent => [
-            body = createPresentEventBody => [
-                event = createPresentEvent => [
-                    expression = createValuedObjectReference => [
-                        valuedObject = termSig.value
-                    ]
-                ]
-                thenPart = createThenPart => [
-                    statement = createSequence => [
-                        list.add(errorPattern)
-                        preserver.translateStatements(list)
-                    ]
-                ]
-            ]
-            elsePart = createElsePart => [
-                statement = createTrap => [
+//        return createPresent => [
+//            body = createPresentEventBody => [
+//                event = createPresentEvent => [
+//                    expression = createValuedObjectReference => [
+//                        valuedObject = termSig.value
+//                    ]
+//                ]
+//                thenPart = createThenPart => [
+//                    statement = createSequence => [
+//                        list.add(errorPattern)
+//                        preserver.translateStatements(list)
+//                    ]
+//                ]
+//            ]
+//            elsePart = createElsePart => [
+//                statement = createTrap => [
+                  return createTrap => [
                     trapDeclList = createTrapDeclList => [
                         trapDecls += trap
                     ]
@@ -446,7 +315,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                                     body = createPresentEventBody => [
                                         event = createPresentEvent => [
                                             expression = createValuedObjectReference => [
-                                                valuedObject = termSig.value
+                                                valuedObject = term.value
                                             ]
                                         ]
                                         thenPart = createThenPart => [
@@ -464,8 +333,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                         ]
                     ]
                 ]
-            ]
-        ]
+//            ]
+//        ]
     }
    
     private def void translateStatements(List<de.cau.cs.kieler.scl.scl.Statement> stms, EList<Statement> list) {
@@ -567,10 +436,10 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             } else {
                 val translatedStm = stm.translate
                 if (nestingHead.empty) {
-                    translated.addAll(translatedStm)
+                    translated.add(translatedStm)
                 } else {
                     val seq = nestingHead.peek.key
-                    seq.list.addAll(seq.list.size -1 ,translatedStm)
+                    seq.list.add(seq.list.size -1 ,translatedStm)
                     if (idx >= nestingHead.peek.value) {
                         nestingHead.pop
                     }
@@ -585,295 +454,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             return translated.head
         }
     }
-    
-    private def Expression getErrorExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
-        val presenceExp = expression.presenceExpression
-        val conflictExp = expression.conflictExpression
-        if (presenceExp != null && conflictExp != null) {
-            return createOperatorExpression => [
-                operator = OperatorType.OR
-                subExpressions.add(conflictExp)
-                subExpressions.add(
-                    createOperatorExpression => [
-                        operator = OperatorType.NOT
-                        subExpressions.add(presenceExp)
-                    ]
-                )
-            ]
-        } else if (presenceExp != null) {
-            return createOperatorExpression => [
-                operator = OperatorType.NOT
-                subExpressions.add(presenceExp)
-            ]
-        } else if (conflictExp != null) {
-            return conflictExp
-        } else {
-            return null
-        }
-    }
-    
-    private def dispatch Expression getConflictExpression(ValuedObjectReference expression) {
-        return null
-    }
-    
-    private def dispatch Expression getConflictExpression(OperatorExpression expression) {
-        val subconflict = createOperatorExpression => [
-            operator = OperatorType.OR
-            for (subexp : expression.subExpressions) {
-                val csubexp = subexp.conflictExpression
-                if (csubexp != null) {
-                    subExpressions.add(csubexp)
-                }
-            }
-        ]
-        if (subconflict.subExpressions.empty) {
-            return null
-        } else {
-            return subconflict
-        }
-    }
-    
-    private def dispatch Expression getConflictExpression(FunctionCall expression) {
-        if (expression.functionName == CONC.symbol) {
-            return createOperatorExpression => [
-                operator = OperatorType.AND
-                val p0 = expression.parameters.get(0).expression
-                val p1 = expression.parameters.get(1).expression
-                val p0presence = p0.presenceExpression
-                if (p0presence != null) {subExpressions.add(p0presence)}
-                val p1presence = p1.presenceExpression
-                if (p0presence != null) {subExpressions.add(p1presence)}
-                subExpressions.add(
-                    createOperatorExpression => [
-                        operator = OperatorType.OR
-                        subExpressions.add(
-                            createOperatorExpression => [
-                                operator = OperatorType.AND
-                                subExpressions.add(p0.valueExpression)
-                                subExpressions.add(
-                                    createOperatorExpression => [
-                                        operator = OperatorType.NOT
-                                        subExpressions.add(p1.valueExpression)
-                                    ]
-                                )
-                            ]
-                        )
-                        subExpressions.add(
-                            createOperatorExpression => [
-                                operator = OperatorType.AND
-                                subExpressions.add(
-                                    createOperatorExpression => [
-                                        operator = OperatorType.NOT
-                                        subExpressions.add(p0.valueExpression)
-                                    ]
-                                )
-                                subExpressions.add(p1.valueExpression)
-                            ]
-                        )
-                    ]
-                )
-            ]
-        } else {
-            val subconflict = createOperatorExpression => [
-                operator = OperatorType.OR
-                for (subexp : expression.parameters.map[expression]) {
-                    val csubexp = subexp.conflictExpression
-                    if (csubexp != null) {
-                        subExpressions.add(csubexp)
-                    }
-                }
-            ]
-            if (subconflict.subExpressions.empty) {
-                return null
-            } else {
-                return subconflict
-            }
-        }
-    }
-    
-    private def dispatch Expression getConflictExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
-         return null
-    }
-    
-    private def dispatch Expression getValueExpression(ValuedObjectReference expression) {
-        return expression.signalReference(false)
-    }
-    
-    private def dispatch Expression getValueExpression(OperatorExpression expression) {
-        return createOperatorExpression => [
-            operator = expression.operator.translateOP
-            for (subexp : expression.subExpressions) {
-                subExpressions.add(subexp.valueExpression)
-            }
-        ]
-    }
-        
-    private def dispatch Expression getValueExpression(FunctionCall expression) {
-        val p0 = expression.parameters.get(0).expression
-        val p1 = expression.parameters.get(1).expression
-        return switch (expression.functionName) {
-            case SEQ.symbol:
-                createOperatorExpression => [
-                    operator = OperatorType.OR
-                    subExpressions.add(
-                        createOperatorExpression => [
-                            operator = OperatorType.AND
-                            subExpressions.add(
-                                createOperatorExpression => [
-                                    operator = OperatorType.NOT
-                                    subExpressions.add(p1.presenceExpression)
-                                ]
-                            )
-                            subExpressions.add(p0.valueExpression)
-                        ]
-                    )
-                    subExpressions.add(
-                        createOperatorExpression => [
-                            operator = OperatorType.AND
-                            subExpressions.add(p1.presenceExpression)
-                            subExpressions.add(p1.valueExpression)
-                        ]
-                    )
-                ]
-            case CONC.symbol:
-                createOperatorExpression => [
-                    operator = OperatorType.OR
-                    subExpressions.add(p0.valueExpression)
-                    subExpressions.add(p1.valueExpression)
-                ]
-            case COMBINE.symbol: {
-                val p2 = expression.parameters.get(2).expression;
-                createOperatorExpression => [
-                    operator = OperatorType.OR
-                    val op = p0.translateOP
-                    switch (op) {
-                        case OR: {
-                            subExpressions.add(p1.valueExpression)
-                            subExpressions.add(
-                                createOperatorExpression => [
-                                    operator = OperatorType.AND
-                                    subExpressions.add(p2.presenceExpression)
-                                    subExpressions.add(p2.valueExpression)
-                                ]
-                            )
-                        }
-                        case AND: {
-                            subExpressions.add(
-                                createOperatorExpression => [
-                                    operator = OperatorType.AND
-                                    subExpressions.add(
-                                        createOperatorExpression => [
-                                            operator = OperatorType.NOT
-                                            subExpressions.add(p2.presenceExpression)
-                                        ]
-                                    )
-                                    subExpressions.add(p1.valueExpression)
-                                ]
-                            )
-                            subExpressions.add(
-                                createOperatorExpression => [
-                                    operator = OperatorType.AND
-                                    subExpressions.add(p2.presenceExpression)
-                                    subExpressions.add(p2.valueExpression)
-                                    subExpressions.add(p1.valueExpression)
-                                ]
-                            )
-                        }
-                    }
-                ]
-            }
-            default:
-                null
-        }
-    }
-    
-    private def dispatch Expression getValueExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
-         return null
-    }
-    
-    private def dispatch Expression getPresenceExpression(ValuedObjectReference expression) {
-        if (voPSigMap.containsKey(expression.valuedObject)) {
-            return expression.signalReference(true)
-        } else {
-            return null
-        }
-    }
-    
-    private def dispatch Expression getPresenceExpression(OperatorExpression expression) {
-        if (expression.subExpressions.size > 1) {
-            val exp = createOperatorExpression => [
-                operator = OperatorType.AND
-                for (subexp : expression.subExpressions) {
-                    val csubexp = subexp.presenceExpression
-                    if (csubexp != null) {
-                        subExpressions.add(csubexp)
-                    }
-                }
-            ]
-            if (exp.subExpressions.empty) {
-                return null
-            } else {
-                return exp
-            }
-        } else {
-            if (expression.operator == de.cau.cs.kieler.kexpressions.OperatorType.PRE) {
-                return createOperatorExpression => [
-                    operator = OperatorType.PRE
-                    subExpressions.add(expression.subExpressions.head.presenceExpression)
-                ]
-            } else {
-                return expression.subExpressions.head.presenceExpression
-            }
-        }
-    }
-    
-    private def dispatch Expression getPresenceExpression(FunctionCall expression) {
-        val p0 = expression.parameters.get(0).expression
-        val p1 = expression.parameters.get(1).expression
-        return switch (expression.functionName) {
-            case SEQ.symbol:
-                if (p0.alwaysPresent || p1.alwaysPresent) {
-                    null
-                } else {
-                    createOperatorExpression => [
-                        operator = OperatorType.OR
-                        subExpressions.add(p0.presenceExpression)
-                        subExpressions.add(p1.presenceExpression)
-                    ]
-                }
-            case CONC.symbol:
-                if (p0.alwaysPresent || p1.alwaysPresent) {
-                    null
-                } else {
-                    createOperatorExpression => [
-                        operator = OperatorType.OR
-                        subExpressions.add(p0.presenceExpression)
-                        subExpressions.add(p1.presenceExpression)
-                    ]
-                }
-            case COMBINE.symbol:
-                if (p1.alwaysPresent) {
-                    null
-                } else {
-                    p1.presenceExpression
-                }
-            default:
-                null
-        }
-    }
-        
-    private def dispatch Expression getPresenceExpression(de.cau.cs.kieler.kexpressions.Expression expression) {
-         return null
-    }
-    
-    private def boolean isAlwaysPresent(de.cau.cs.kieler.kexpressions.Expression expression) {
-        if (expression instanceof ValuedObjectReference) {
-            return !voPSigMap.containsKey(expression.valuedObject)
-        } else {
-            return expression.eAllContents.filter(ValuedObjectReference).exists[!voPSigMap.containsKey(it)]
-        }
-    }
-
+   
     private def Statement errorPattern() {
         return createLocalSignalDecl => [
             optEnd = "signal"
@@ -888,7 +469,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 body = createPresentEventBody => [
                     event = createPresentEvent => [
                         expression = createValuedObjectReference => [
-                            valuedObject = error
+                            valuedObject = error.value
                         ]
                     ]
                     thenPart = createThenPart => [
@@ -910,6 +491,29 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                 ]
             ]
         ]
+    }
+    
+    private def dispatch Expression translateExpression(ValuedObjectReference expression) {
+        if (voSigMap.containsKey(expression.valuedObject)) {
+            return createValuedObjectReference => [
+                valuedObject = voSigMap.get(expression.valuedObject)
+            ]
+        } else {
+            throw new IllegalArgumentException("No signal for valued object "+expression.valuedObject.name)
+        }
+    }
+    
+    private def dispatch Expression translateExpression(OperatorExpression expression) {
+        return createOperatorExpression => [
+            operator = expression.operator.translateOP
+            for (subexp : expression.subExpressions) {
+                subExpressions.add(subexp.translateExpression)
+            }
+        ]
+    }
+    
+    private def dispatch Expression translateExpression(Expression expression) {
+        throw new UnsupportedOperationException("Unsupported expression: "+expression)
     }
     
     private def dispatch OperatorType translateOP(StringValue s) {
@@ -953,22 +557,6 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     } 
     
-    private def Expression signalReference(ValuedObjectReference ref, boolean presentSignal) {
-        return createValuedObjectReference => [
-            if (presentSignal) {
-                if (!voPSigMap.containsKey(ref.valuedObject)) {
-                    throw new NullPointerException
-                }
-                valuedObject = voPSigMap.get(ref.valuedObject)
-            }else {
-                if (!voSigMap.containsKey(ref.valuedObject)) {
-                    throw new NullPointerException
-                }
-                valuedObject = voSigMap.get(ref.valuedObject)
-            }
-        ]
-    }
-
     private def TrapDecl getTrapSignal(String label) {
         if (!labelsMap.containsKey(label)) {
             labelsMap.put(label, createTrapDecl => [name = label])

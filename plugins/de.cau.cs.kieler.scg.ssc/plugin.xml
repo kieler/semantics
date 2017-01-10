@@ -15,6 +15,9 @@
       <featureGroupClass
             class="de.cau.cs.kieler.scg.ssc.features.SSCFeatureGroup">
       </featureGroupClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.ssc.features.DualRailFeature">
+      </featureClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -32,6 +35,9 @@
       </productionTransformationClass>
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.ssc.strl.SSASCL2SSAEsterel">
+      </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.ssc.scl.DualRailEncoding">
       </productionTransformationClass>
    </extension>
    <extension
