@@ -15,4 +15,27 @@
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.priorityActions">
+      </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.SCCActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.sccActions">
+      </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.optPrioActions">
+      </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions">
+      </action>
+      <action
+            class="de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions"
+            id="de.cau.cs.kieler.scg.klighd.actions.priorityStatements">
+      </action>
+   </extension>
 </plugin>
