@@ -20,6 +20,6 @@ Require-Bundle:
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.kico.klighd,
- de.cau.cs.kieler.scg.priorities;bundle-version="1.0.0"
+ de.cau.cs.kieler.scg.priorities
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scg.klighd
