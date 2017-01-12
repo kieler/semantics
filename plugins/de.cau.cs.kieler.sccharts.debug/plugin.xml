@@ -102,9 +102,6 @@
             file="execution/sccharts_c_debug.execution">
       </executionFile>
       <executionFile
-            file="execution/scg_c_debug.execution">
-      </executionFile>
-      <executionFile
             file="execution/sccharts_c_no_visualization_debug.execution">
       </executionFile>
    </extension>

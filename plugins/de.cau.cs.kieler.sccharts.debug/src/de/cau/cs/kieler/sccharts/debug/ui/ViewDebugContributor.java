@@ -189,7 +189,8 @@ public class ViewDebugContributor implements IKiemToolbarContributor {
                 if (buttonFastForward.getSelection()) {
                     DataComponent.FAST_FORWARD = true;
                     oldStepDuration = KiemPlugin.getDefault().getAimedStepDuration();
-                    KiemPlugin.getDefault().setAimedStepDuration(0);
+                    // Reduce step time, but don't set it to zero so observer components can synchronize.
+                    KiemPlugin.getDefault().setAimedStepDuration(50);
                 } else {
                     DataComponent.FAST_FORWARD = false;
                     KiemPlugin.getDefault().setAimedStepDuration(oldStepDuration);

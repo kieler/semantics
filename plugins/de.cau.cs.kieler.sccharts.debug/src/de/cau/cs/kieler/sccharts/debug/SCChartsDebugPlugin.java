@@ -36,8 +36,12 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation;
+import de.cau.cs.kieler.sccharts.debug.ui.ViewDebugContributor;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
+import de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
@@ -72,6 +76,11 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * Saves the data corresponding to a non-debug schedule in relation to the schedule chosen.
      */
     public ScheduleData nonDebugSchedule;
+
+    /**
+     * Indicates whether the selected schedule has a corresponding debug schedule.
+     */
+    private boolean correspondingDebugFound = false;
 
     /**
      * Indicates if the initial load of the schedule is terminated. Needed to allow the choosing of
@@ -218,6 +227,7 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * @param path
      *            The current chosen schedule.
      * @return Returns if the given schedule was a debug schedule or not.
+     * @throws ScheduleFileMissingException
      */
     public boolean updateDebugScheduleData(IPath path) {
         IPath debugPath;
@@ -247,20 +257,26 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
 
         // --------------------- Update the schedule data variables. ------------------------------
         if (!(noDebugS || debugS)) {
-            int foundBoth = 2;
+            boolean foundNonDebug = false;
+            boolean foundDebug = false;
             List<ScheduleData> scheduledata = ScheduleManager.getInstance().getAllSchedules();
             for (ScheduleData s : scheduledata) {
                 if (nonDebugPath.toString().contains(s.getExtendedName() + ".execution")) {
                     nonDebugSchedule = s;
-                    foundBoth--;
+                    foundNonDebug = true;
                 }
                 if (debugPath.toString().contains(s.getExtendedName() + ".execution")) {
                     debugSchedule = s;
-                    foundBoth--;
+                    foundDebug = true;
                 }
-                if (foundBoth == 0) {
+                if (foundDebug && foundNonDebug) {
                     break;
                 }
+            }
+            if (!foundDebug) {
+                correspondingDebugFound = false;
+            } else {
+                correspondingDebugFound = true;
             }
         }
         return isDebugSchedule;
@@ -270,11 +286,26 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
      * Schedules the schedule data according to the debug mode.
      */
     public void scheduleExecution() {
-        ScheduleData toScheudle = DataComponent.DEBUG_MODE ? debugSchedule : nonDebugSchedule;
         try {
-            ScheduleManager.getInstance().openSchedule(toScheudle);
+            // DEBUG MODE - UP-TO-DATE SCHEDULE
+            if (DataComponent.DEBUG_MODE && correspondingDebugFound) {
+                ScheduleManager.getInstance().openSchedule(debugSchedule);
+            
+            // DEBUG MODE - NO UP-TO-DATE SCHEDULE
+            } else if (DataComponent.DEBUG_MODE && !correspondingDebugFound) {
+                throw new ScheduleFileMissingException("No debug schedule found! \n"
+                        + "In order to use debugging functionalities, manually add the Debugger component. \n", nonDebugSchedule);
+            
+            // NO DEBUG MODE
+            } else {
+                ScheduleManager.getInstance().openSchedule(nonDebugSchedule);
+            }
         } catch (ScheduleFileMissingException e) {
-            e.printStackTrace();
+            KiemPlugin.getDefault().showError(e.getMessage() + "Corresponding schedule: " + ((ScheduleData) e.getInfo()).getExtendedName());
+            if (DataComponent.DEBUG_MODE) {
+                DataComponent.DEBUG_MODE = false;
+                ViewDebugContributor.setButtonDebugSelection();
+            } 
         }
     }
 
@@ -301,8 +332,10 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
                         if (b != null && b.isEnabled()) {
 
                             IResource bResource = b.getMarker().getResource();
+                            String resourcePath = resource.getURI().path();
+                            String breakpointResource = bResource.getFullPath().toString();
 
-                            if (resource.getURI().toString().contains(bResource.getName())) {
+                            if (resourcePath.endsWith(breakpointResource)) {
                                 return true;
                             }
                         }

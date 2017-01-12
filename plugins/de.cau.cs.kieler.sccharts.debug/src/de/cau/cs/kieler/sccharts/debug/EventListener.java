@@ -11,13 +11,15 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 package de.cau.cs.kieler.sccharts.debug;
- 
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.sccharts.debug.ui.ViewDebugContributor;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 
 /**
  * The event listener for KIEM events so it can be reacted accordingly.
@@ -35,7 +37,7 @@ public class EventListener implements IKiemEventListener {
      * 
      * On Execution Stop Event: Enable the debug mode button.
      * 
-     * On Step Event: Update the breakpoints map if needed. 
+     * On Step Event: Update the breakpoints map if needed.
      * 
      * {@inheritDoc}
      */
@@ -47,11 +49,14 @@ public class EventListener implements IKiemEventListener {
         if (event.isEvent(KiemEvent.LOAD)) {
 
             IPath path = (IPath) event.getInfo();
-            boolean debug = SCChartsDebugPlugin.getDefault().updateDebugScheduleData(path);
-            
+            boolean debug = !DataComponent.DEBUG_MODE;
+
+            debug = SCChartsDebugPlugin.getDefault().updateDebugScheduleData(path);
+
             // If these two variables don't fit, the schedule wasn't chosen correctly.
-            if (debug ^ DataComponent.DEBUG_MODE) {
-                plugin.scheduleExecution();                
+            if (debug ^ DataComponent.DEBUG_MODE
+                    || DataComponent.DEBUG_MODE && plugin.debugSchedule == null) {
+                plugin.scheduleExecution();
             }
         }
 
