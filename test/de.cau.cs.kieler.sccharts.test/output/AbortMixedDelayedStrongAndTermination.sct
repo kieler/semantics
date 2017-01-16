@@ -1,0 +1,75 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+scchart AbortMixedDelayedStrongAndTermination {
+  input bool I1;
+  output bool O1;
+  output bool O2;
+  output bool A;
+  bool _term;
+  bool _trig;
+
+  region Main " ":
+
+  initial state S {
+
+    region _Entry:
+
+    state _Main {
+      @finalstate ""
+
+      final state F;
+
+      initial state I
+      --> _S2 immediate with / A = true;
+
+      state _S2
+      --> F immediate with / _term = true;
+
+      region _Ctrl:
+
+      initial state _Run
+      --> _Done immediate with _term
+      --> _Pause immediate;
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I1
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate with / _term = false;
+
+    final state _Done;
+
+    state _C
+    --> _Main immediate with / _trig = false;
+  }
+  >-> _Depth3;
+
+  state _Depth3
+  --> _S immediate with _trig
+  --> _S4 immediate;
+
+  state _S
+  --> _Depth immediate with / O1 = true;
+
+  state _Depth
+  --> _Depth;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _S4
+  @terminationtransition ""
+  --> _Depth2 immediate with / O2 = true;
+}

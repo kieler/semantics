@@ -1,0 +1,52 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart ExitActionStrongAbort {
+  output bool Ae1;
+  output bool A1, A2, A3;
+  input bool T1;
+  input bool T2;
+
+  initial state S1
+  --> S2;
+
+  state S2 {
+
+    initial state S21
+    --> S22 immediate with T2
+    --> _Pause immediate;
+
+    state S22
+    --> _Done immediate with / Ae1 = true;
+
+    final state _Done;
+
+    state _S
+    --> S22 immediate with / A1 = true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> S22 immediate with T2
+    --> _S3 immediate;
+
+    state _S3
+    --> _S immediate with T1
+    --> _Pause immediate;
+  }
+  >-> _Depth2;
+
+  state _Depth2
+  --> _S immediate with T2
+  --> _S3 immediate;
+
+  state _S
+  --> _Depth immediate with / A2 = true;
+
+  state _Depth
+  --> _Depth;
+
+  state _S3
+  --> _Depth immediate with / A3 = true;
+}

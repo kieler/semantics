@@ -1,0 +1,39 @@
+scchart sequentialconstructiveness {
+  output bool S;
+  output bool O;
+  input bool I;
+
+  state _S
+  --> _Depth2 immediate with / O = O || true;
+
+  state _S2
+  --> _Depth3 immediate with / S = S || true;
+
+  initial state A
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with S
+  --> _S4 immediate;
+
+  state _S4
+  --> _S2 immediate with I
+  --> A immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / S = false;
+
+  state _S3
+  --> _S immediate with / O = false;
+}

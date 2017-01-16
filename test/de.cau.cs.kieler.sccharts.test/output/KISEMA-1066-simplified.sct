@@ -1,0 +1,96 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+scchart StrongMixedDelayedAndImmediate {
+  input bool T1;
+  input bool T2a;
+  input bool T2b;
+  output bool A;
+  output bool O1;
+  output bool O2;
+  bool _trig;
+
+  region Main " ":
+
+  state S1 {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state S11
+      --> S12 immediate with T2a
+      --> _S2 immediate;
+
+      final state S12;
+
+      state _S
+      --> S12 immediate with / A = true;
+
+      state _S2
+      --> _S immediate with T1
+      --> _Pause immediate;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> S12 immediate with T2a
+      --> _S4 immediate;
+
+      state _S4
+      --> S12 immediate with _trig
+      --> _S2 immediate;
+
+      region _Ctrl:
+
+      initial state _Run
+      --> _Done immediate with T2a
+      --> _Pause immediate;
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _Done immediate with T2a
+      --> _S3 immediate;
+
+      state _S3
+      --> _S immediate with T2b
+      --> _Pause immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _Depth;
+
+  final state S2;
+
+  state _Depth
+  --> _S immediate with T2a
+  --> _S2 immediate;
+
+  initial state _Init
+  --> _C2 immediate with / A = false;
+
+  state _C2
+  --> _C3 immediate with / O1 = false;
+
+  state _C3
+  --> S1 immediate with / O2 = false;
+
+  state _S
+  --> S2 immediate with / O2 = true;
+
+  state _S2
+  --> S2 immediate with / O1 = true;
+}

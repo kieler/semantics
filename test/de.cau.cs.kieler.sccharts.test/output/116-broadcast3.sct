@@ -1,0 +1,52 @@
+scchart SyncChart {
+  input bool I;
+  output bool O;
+
+  initial state ^normal {
+    bool L;
+
+    initial state _Depth
+    --> _S immediate with L
+    --> _Pause immediate;
+
+    state _S
+    --> _Depth2 immediate with / O = O || true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth2
+    --> _Depth2;
+
+    region:
+
+    initial state _Depth
+    --> _S immediate with I
+    --> _Pause immediate;
+
+    state _S
+    --> _Depth2 immediate with / L = L || true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth2
+    --> _Depth2;
+
+    region _During:
+
+    initial state _I
+    --> _S immediate with / L = false;
+
+    state _S
+    --> _I;
+  };
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

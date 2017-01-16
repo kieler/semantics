@@ -1,0 +1,91 @@
+scchart ^suspend {
+  input bool I;
+  input bool I2;
+  output bool O1;
+  output bool O2;
+  output bool O3;
+
+  initial state A2 {
+    bool _enabled;
+
+    initial state A {
+      bool _enabled2;
+
+      state _S
+      --> C immediate with / O1 = O1 || true;
+
+      state _S2
+      --> D immediate with / O2 = O2 || true;
+
+      state _S3
+      --> B immediate with / O3 = O3 || true;
+
+      initial state B
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with _enabled && _enabled2
+      --> B immediate;
+
+      state C
+      --> _Depth2;
+
+      state _Depth2
+      --> _S2 immediate with _enabled && _enabled2
+      --> C immediate;
+
+      state D
+      --> _Depth3;
+
+      state _Depth3
+      --> _S3 immediate with _enabled && _enabled2
+      --> D immediate;
+
+      region _During:
+
+      initial state _I
+      --> _S immediate with / _enabled2 = true;
+
+      state _S
+      --> _I;
+
+      region _During2:
+
+      initial state _I
+      --> _S;
+
+      state _S
+      --> _I immediate with / _enabled2 = _enabled2 && !I;
+    };
+
+    region _During:
+
+    initial state _I
+    --> _S immediate with / _enabled = true;
+
+    state _S
+    --> _I;
+
+    region _During2:
+
+    initial state _I
+    --> _S;
+
+    state _S
+    --> _I immediate with / _enabled = _enabled && !I2;
+  };
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / O1 = false;
+
+  state _S3
+  --> _S4 immediate with / O2 = false;
+
+  state _S4
+  --> _S immediate with / O3 = false;
+}

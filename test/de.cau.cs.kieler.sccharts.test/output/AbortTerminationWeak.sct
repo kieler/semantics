@@ -1,0 +1,52 @@
+
+@diagram[KLayLayered] false
+scchart S "AbortTerminationWeak" {
+  output int O;
+  output bool A1;
+  output bool A2;
+  input bool I;
+  bool _termD;
+
+  state Inner {
+
+    state A
+    --> B immediate with I
+    --> _Pause immediate;
+    @finalstate ""
+
+    final state B;
+
+    initial state _Init
+    --> A immediate with / _termD = false;
+
+    state _Depth
+    --> _S2 immediate with / O = O + 1;
+
+    state _S2
+    --> B immediate with / _termD = true;
+
+    state _Pause
+    --> _Depth;
+  }
+  >-> _Depth3;
+
+  state _Depth3
+  @terminationtransition ""
+  --> _S immediate with _termD
+  --> _S4 immediate;
+
+  initial state _Init
+  --> Inner immediate with / O = 0;
+
+  state _S
+  --> _Depth immediate with / A1 = true;
+
+  state _Depth
+  --> _Depth;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _S4
+  --> _Depth2 immediate with / A2 = true;
+}

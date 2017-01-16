@@ -1,0 +1,125 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+scchart CountdownReloaded {
+  input bool R;
+  output int T;
+  output int O;
+  bool _termD;
+  bool _trig;
+  @layout[direction] RIGHT
+
+  region:
+
+  initial state Counting {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state Cnt3 {
+
+        region _Entry:
+
+        initial state _Init
+        --> _Done immediate with / O = 3;
+
+        final state _Done;
+      }
+      >-> _Exit;
+
+      state _Depth {
+
+        region _Entry:
+
+        initial state _Init
+        --> _Done immediate with / O = 2;
+
+        final state _Done;
+      }
+      >-> _Exit2;
+
+      state _Depth2 {
+
+        region _Entry:
+
+        initial state _Init
+        --> _Done immediate with / O = 1;
+
+        final state _Done;
+      }
+      >-> _Exit3;
+      @finalstate ""
+
+      final state Cnt0;
+
+      final state _Aborted;
+
+      state _Exit2
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      state _Exit3
+      --> _Aborted immediate with _trig
+      --> _Pause3 immediate;
+
+      state _C
+      --> Cnt0 immediate with / O = 0;
+
+      state _Depth3
+      --> _C immediate with / _termD = true;
+
+      state _Exit
+      --> _Depth;
+
+      state _Pause2
+      --> _Depth2;
+
+      state _Pause3
+      --> _Depth3;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _Done immediate with _termD
+      --> _S3 immediate;
+
+      state _S3
+      --> _S immediate with R
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate with / _termD = false;
+
+    final state _Done;
+
+    state _C
+    --> _Main immediate with / _trig = false;
+  }
+  >-> _C;
+
+  state _C
+  @terminationtransition ""
+  --> _S immediate with _termD
+  --> Counting immediate;
+
+  state _S
+  --> Done immediate with / T ++;
+
+  state Done
+  --> _Depth;
+
+  state _Depth
+  --> Counting immediate with R
+  --> Done immediate;
+}

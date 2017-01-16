@@ -1,0 +1,26 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart ExitAction {
+  output bool Ae1, A2;
+
+  initial state S1 {
+
+    region _Exit:
+
+    initial state _Init
+    --> _Memorize;
+
+    final state _Done;
+
+    state _Memorize
+    --> _Done immediate with / Ae1 = true;
+  }
+  >-> _ExitOption immediate;
+
+  state _ExitOption
+  --> _Depth immediate with / A2 = true;
+
+  state _Depth
+  --> _Depth;
+}

@@ -1,0 +1,55 @@
+
+@diagram[KLayLayered] false
+scchart DuringAction {
+  input bool T1, T2;
+  output int A1, A2, A3, A4;
+
+  initial state S1
+  --> S2;
+
+  state S2 {
+
+    region _During:
+
+    initial state _I
+    --> _S;
+
+    state _S
+    --> _I immediate with / A1 += 1;
+
+    region _During2:
+
+    initial state _I
+    --> _S immediate with / A2 += 1;
+
+    state _S
+    --> _I;
+
+    region _During3:
+
+    state _S
+    --> _I immediate with / A3 += 1;
+
+    initial state _I
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with T1
+    --> _I immediate;
+
+    region _During4:
+
+    initial state _Depth
+    --> _S2 immediate with T2
+    --> _Pause immediate;
+
+    state _S
+    --> _Depth;
+
+    state _S2
+    --> _S immediate with / A4 += 1;
+
+    state _Pause
+    --> _Depth;
+  };
+}

@@ -1,0 +1,27 @@
+scchart S0 "non_deterministic" {
+  output bool A;
+
+  state _S
+  --> _Depth2 immediate with / A = A || true;
+
+  state _S4
+  --> _Depth2 immediate with / A = A || true;
+
+  initial state S0 "s1"
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with A
+  --> _S4 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / A = false;
+
+  state _S
+  --> _I;
+}

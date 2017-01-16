@@ -1,0 +1,79 @@
+scchart _45_initial_states_with_hierarchy2 "45-initial-states-with-hierarchy2" {
+  output bool O;
+  output bool ExitSetC;
+  input bool I;
+  bool _trig;
+
+  initial state A {
+
+    region _Entry:
+
+    state _Main {
+
+      state _Depth
+      --> _Aborted immediate with _trig
+      --> _Pause immediate;
+
+      final state _Aborted;
+
+      state _Depth2
+      --> _Depth immediate with / ExitSetC = ExitSetC || true;
+
+      state _Pause
+      --> _Depth;
+
+      initial state AA
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _Depth immediate;
+
+  state _Depth
+  --> _Depth;
+
+  region ExitActionRegion17159221:
+
+  state _S
+  --> _Depth2 immediate with / O = O || true;
+
+  initial state C
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with ExitSetC
+  --> C immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / O = false;
+
+  state _S3
+  --> _S immediate with / ExitSetC = false;
+}

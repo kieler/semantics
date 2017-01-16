@@ -1,0 +1,25 @@
+scchart simple {
+  input bool I;
+  output bool O;
+
+  state _S
+  --> _Depth2 immediate with / O = O || true;
+
+  initial state A
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I
+  --> A immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

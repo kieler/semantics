@@ -1,0 +1,48 @@
+scchart Hierarchy {
+  output bool O1, O2, O3, O4;
+
+  initial state S0 {
+
+    initial state S1 {
+
+      initial state S2 {
+
+        initial state S3
+        --> _S;
+
+        final state S4;
+
+        state _S
+        --> S4 immediate with / O1 = true;
+      }
+      >-> S5;
+
+      state S5
+      --> _S;
+
+      final state S6;
+
+      state _S
+      --> S6 immediate with / O2 = true;
+    }
+    >-> S7;
+
+    state S7
+    --> _S;
+
+    final state S8;
+
+    state _S
+    --> S8 immediate with / O3 = true;
+  }
+  >-> S9;
+
+  state S9
+  --> _S;
+
+  state _S
+  --> _Depth immediate with / O4 = true;
+
+  state _Depth
+  --> _Depth;
+}

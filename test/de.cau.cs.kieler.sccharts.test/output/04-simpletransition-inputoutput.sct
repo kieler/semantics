@@ -1,0 +1,25 @@
+scchart _04_simpletransition "04-simpletransition" {
+  input bool I;
+  output bool O;
+
+  state _S
+  --> _Depth2 immediate with / O = O || true;
+
+  initial state S
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I
+  --> S immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

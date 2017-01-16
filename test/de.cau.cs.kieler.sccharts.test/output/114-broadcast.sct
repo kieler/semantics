@@ -1,0 +1,47 @@
+scchart SyncChart {
+  bool door;
+  input bool up;
+  output bool out;
+
+  initial state s1 {
+
+    state _S
+    --> _Depth2 immediate with / door = door || true;
+
+    initial state s1
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with up
+    --> s1 immediate;
+
+    state _Depth2
+    --> _Depth2;
+  };
+
+  region:
+
+  state _S
+  --> _Depth2 immediate with / out = out || true;
+
+  initial state s1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with door
+  --> s1 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / door = false;
+
+  state _S3
+  --> _S immediate with / out = false;
+}

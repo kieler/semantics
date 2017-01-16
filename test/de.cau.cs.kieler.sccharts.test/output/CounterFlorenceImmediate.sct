@@ -1,0 +1,221 @@
+scchart CounterImmediate {
+  input bool a;
+  input bool start;
+  input bool stop;
+  output bool b;
+  output bool c;
+  output bool end;
+  bool _trig;
+  bool _trig2;
+
+  region _Entry:
+
+  state _Main {
+
+    state Counting {
+      bool _deferred;
+      bool _deferred2;
+      bool _deferred3;
+
+      region _Entry:
+
+      state _Main {
+
+        initial state C0 {
+
+          region _During:
+
+          initial state _I
+          --> _Aborted4 immediate with !_deferred && c || (_trig || _trig2) -->
+          _Pause immediate;
+
+          final state _Aborted4;
+
+          state _Depth
+          --> _I immediate with / _deferred = false;
+
+          state _Pause
+          --> _Depth;
+        }
+        >-> _C2;
+
+        state C1
+        --> _Aborted immediate with _trig || _trig2
+        --> _Pause immediate;
+
+        final state _Aborted;
+
+        state _C2
+        --> C1 immediate with !_deferred && c
+        --> _Aborted immediate;
+
+        state _S
+        --> _S2 immediate with / end = true;
+
+        state _S2
+        --> C0 immediate with / _deferred = true;
+
+        state _Pause
+        --> _Depth;
+
+        state _Depth
+        --> _S immediate with c
+        --> C1 immediate;
+
+        region:
+
+        initial state B0 {
+
+          region _During:
+
+          initial state _I
+          --> _Aborted5 immediate with !_deferred2 && b || (_trig ||
+          _trig2) --> _Pause immediate;
+
+          final state _Aborted5;
+
+          state _Depth
+          --> _I immediate with / _deferred2 = false;
+
+          state _Pause
+          --> _Depth;
+        }
+        >-> _C3;
+
+        state B1
+        --> _Aborted2 immediate with _trig || _trig2
+        --> _Pause immediate;
+
+        final state _Aborted2;
+
+        state _C3
+        --> B1 immediate with !_deferred2 && b
+        --> _Aborted2 immediate;
+
+        state _S
+        --> _S2 immediate with / c = c || true;
+
+        state _S2
+        --> B0 immediate with / _deferred2 = true;
+
+        state _Pause
+        --> _Depth;
+
+        state _Depth
+        --> _S immediate with b
+        --> B1 immediate;
+
+        region:
+
+        initial state A0 {
+
+          region _During:
+
+          initial state _I
+          --> _Aborted6 immediate with !_deferred3 && a || (_trig ||
+          _trig2) --> _Pause immediate;
+
+          final state _Aborted6;
+
+          state _Depth
+          --> _I immediate with / _deferred3 = false;
+
+          state _Pause
+          --> _Depth;
+        }
+        >-> _C4;
+
+        state A1
+        --> _Aborted3 immediate with _trig || _trig2
+        --> _Pause immediate;
+
+        final state _Aborted3;
+
+        state _C4
+        --> A1 immediate with !_deferred3 && a
+        --> _Aborted3 immediate;
+
+        state _S
+        --> _S2 immediate with / b = b || true;
+
+        state _S2
+        --> A0 immediate with / _deferred3 = true;
+
+        state _Pause
+        --> _Depth;
+
+        state _Depth
+        --> _S immediate with a
+        --> A1 immediate;
+
+        region _Ctrl:
+
+        final state _Done;
+
+        state _S
+        --> _Done immediate with / _trig = true;
+
+        state _S2
+        --> _Done immediate with / _trig2 = true;
+
+        initial state _Run
+        --> _Depth;
+
+        state _Depth
+        --> _S immediate with end
+        --> _S4 immediate;
+
+        state _S4
+        --> _S2 immediate with stop
+        --> _Run immediate;
+      }
+      >-> _Done;
+
+      initial state _Init
+      --> _C immediate with / _deferred = false;
+
+      final state _Done;
+
+      state _C
+      --> _C2 immediate with / _deferred2 = false;
+
+      state _C2
+      --> _C3 immediate with / _deferred3 = false;
+
+      state _C3
+      --> _C4 immediate with / _trig = false;
+
+      state _C4
+      --> _Main immediate with / _trig2 = false;
+    }
+    >-> _C;
+
+    state _C
+    --> NotCounting immediate with _trig
+    --> NotCounting immediate;
+
+    initial state NotCounting
+    --> _Depth;
+
+    state _Depth
+    --> Counting immediate with start
+    --> NotCounting immediate;
+
+    region _During:
+
+    state _S
+    --> _Depth;
+
+    initial state _Depth
+    --> _S3 immediate with / b = false;
+
+    state _S3
+    --> _S immediate with / c = false;
+  }
+  >-> _Done;
+
+  initial state _Init
+  --> _Main immediate with / end = false;
+
+  final state _Done;
+}

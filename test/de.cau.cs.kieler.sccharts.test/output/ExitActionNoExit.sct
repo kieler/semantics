@@ -1,0 +1,12 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart ExitActionNoExit {
+  output bool Ae1;
+
+  initial state S1
+  --> _Depth;
+
+  state _Depth
+  --> _Depth;
+}

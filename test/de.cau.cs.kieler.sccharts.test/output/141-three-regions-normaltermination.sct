@@ -1,0 +1,40 @@
+scchart threeregionsnormaltermination {
+  output bool O;
+
+  initial state M {
+
+    initial state C
+    --> D;
+
+    final state D;
+
+    region:
+
+    initial state E
+    --> F;
+
+    final state F;
+
+    region:
+
+    initial state A
+    --> B;
+
+    final state B;
+  }
+  >-> _S;
+
+  state _S
+  --> _Depth immediate with / O = O || true;
+
+  state _Depth
+  --> _Depth;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

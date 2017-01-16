@@ -1,0 +1,53 @@
+scchart S0 "nested_broadcast" {
+  input bool I;
+  bool L;
+  output bool O;
+
+  initial state S0 "macro1" {
+
+    state _S
+    --> _Depth2 immediate with / O = O || true;
+
+    initial state S0 "s1"
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with L
+    --> S0 immediate;
+
+    state _Depth2
+    --> _Depth2;
+  };
+
+  region:
+
+  initial state S0 "macro2" {
+
+    initial state S0 "macro3" {
+
+      state _S
+      --> _Depth2 immediate with / L = L || true;
+
+      initial state S0 "s3"
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I
+      --> S0 immediate;
+
+      state _Depth2
+      --> _Depth2;
+    };
+  };
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / L = false;
+
+  state _S3
+  --> _S immediate with / O = false;
+}

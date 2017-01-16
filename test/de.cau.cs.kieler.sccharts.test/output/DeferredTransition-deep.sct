@@ -1,0 +1,126 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart DeferredTransition "DeferredTransition-deep" {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  input bool T4;
+  output bool A1;
+  output bool A2;
+  output bool A3;
+  output bool A4;
+  output bool A5;
+  bool _deferred;
+  bool _trig;
+
+  state S2 {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state S21
+      --> _Depth2 immediate with / A2 = true;
+
+      state _Depth2
+      --> _Depth3 immediate with / A3 = true;
+
+      state _Depth3
+      --> _Aborted immediate with _trig || !_deferred && T4
+      --> _Pause3 immediate;
+
+      final state _Aborted;
+
+      state _Pause3
+      --> _Depth3;
+
+      region _During:
+
+      initial state _I
+      --> _Aborted2 immediate with _trig || !_deferred && T4
+      --> _Pause immediate;
+
+      final state _Aborted2;
+
+      state _Depth
+      --> _I immediate with / _deferred = false;
+
+      state _Pause
+      --> _Depth;
+
+      region _Ctrl:
+
+      initial state _Run
+      --> _Done immediate with !_deferred && T4
+      --> _Pause immediate;
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with T3
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _Depth3;
+
+  state _Depth3
+  --> _S3 immediate with _trig
+  --> _S7 immediate;
+
+  initial state _Init
+  --> _C2 immediate with / A1 = false;
+
+  state _C2
+  --> _C3 immediate with / A2 = false;
+
+  state _C3
+  --> _C4 immediate with / A3 = false;
+
+  state _C4
+  --> _C5 immediate with / A4 = false;
+
+  state _C5
+  --> _C6 immediate with / A5 = false;
+
+  state _C6
+  --> S1 immediate with / _deferred = false;
+
+  state _S
+  --> S2 immediate with / _deferred = true;
+
+  state _S2
+  --> S2 immediate with / _deferred = false;
+
+  state _S3
+  --> _Depth2 immediate with / A4 = true;
+
+  state S1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with T1
+  --> _S5 immediate;
+
+  state _S5
+  --> _S2 immediate with T2
+  --> S1 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _S7
+  --> _Depth2 immediate with / A5 = true;
+}

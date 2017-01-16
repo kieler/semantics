@@ -1,0 +1,205 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+scchart ComplexFinalStateHierarchy {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  input bool T4;
+  output bool A1;
+  bool _term;
+  bool _term2;
+  bool _term3;
+  bool _trig;
+
+  region " ":
+
+  state M {
+    bool _term4;
+    bool _trig2;
+
+    region _Entry:
+
+    state _Main {
+
+      region "Region 3":
+
+      initial state S5
+      --> _Aborted immediate with _trig
+      --> _Pause immediate;
+
+      state S6
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      state S7 {
+
+        region _Entry:
+
+        state _Main {
+
+          initial state S8
+          --> _Aborted2 immediate with _trig2 || _trig
+          --> _Pause immediate;
+
+          state _Depth2
+          --> _S2 immediate with T4
+          --> _S4 immediate;
+
+          final state _Aborted2;
+
+          state _Depth
+          --> _Depth2 immediate with / _term4 = true;
+
+          state _S2
+          --> S8 immediate with / _term4 = false;
+
+          state _Pause
+          --> _Depth;
+
+          state _S4
+          --> _Aborted2 immediate with _trig2 || _trig
+          --> _Pause2 immediate;
+
+          state _Pause2
+          --> _Depth2;
+
+          region _Ctrl2:
+
+          initial state _Run2
+          --> _Done2 immediate with _trig
+          --> _Pause immediate;
+
+          final state _Done2;
+
+          state _S
+          --> _Done2 immediate with / _trig2 = true;
+
+          state _Pause
+          --> _Depth;
+
+          state _Depth
+          --> _S immediate with _term4
+          --> _Run2 immediate;
+        }
+        >-> _Done;
+
+        initial state _Init
+        --> _C immediate with / _term4 = false;
+
+        final state _Done;
+
+        state _C
+        --> _Main immediate with / _trig2 = false;
+      }
+      >-> _C2;
+
+      final state _Aborted;
+
+      state _C2
+      --> _S3 immediate with _trig2
+      --> _Aborted immediate;
+
+      state _S
+      --> S6 immediate with / _term = true;
+
+      state _S2
+      --> S5 immediate with / _term = false;
+
+      state _S3
+      --> S5 immediate with / _term = false;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with T3
+      --> S5 immediate;
+
+      state _Pause2
+      --> _Depth2;
+
+      state _Depth2
+      --> _S2 immediate with T3
+      --> _S6 immediate;
+
+      state _S6
+      --> S7 immediate with T4
+      --> S6 immediate;
+
+      region "Region 1":
+
+      final state S2;
+
+      state _S
+      --> S2 immediate with / _term2 = true;
+
+      initial state S1
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with T1
+      --> _S3 immediate;
+
+      state _S3
+      --> S2 immediate with _trig
+      --> S1 immediate;
+
+      region "Region 2":
+
+      final state S4;
+
+      state _S
+      --> S4 immediate with / _term3 = true;
+
+      initial state S3
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with T2
+      --> _S3 immediate;
+
+      state _S3
+      --> S4 immediate with _trig
+      --> S3 immediate;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with (_term && _term2) && _term3
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate with / _term = false;
+
+    final state _Done;
+
+    state _C
+    --> _C2 immediate with / _term2 = false;
+
+    state _C2
+    --> _C3 immediate with / _term3 = false;
+
+    state _C3
+    --> _Main immediate with / _trig = false;
+  }
+  >-> _S immediate;
+
+  final state F;
+
+  initial state _Init
+  --> M immediate with / A1 = false;
+
+  state _S
+  --> F immediate with / A1 = true;
+}

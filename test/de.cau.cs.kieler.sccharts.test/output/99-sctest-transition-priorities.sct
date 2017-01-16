@@ -1,0 +1,104 @@
+scchart H {
+  input bool I1;
+  output bool S1;
+  output bool S2;
+  output bool O1;
+  input bool I2;
+  output bool O2;
+  input bool I3;
+  output bool O3;
+  output bool S3;
+
+  region R1:
+
+  state _S
+  --> _Depth3 immediate with / S2 = S2 || true;
+
+  state _S2
+  --> _Depth4 immediate with / O3 = O3 || true;
+
+  state _S3
+  --> _Depth2 immediate with / O1 = O1 || true;
+
+  initial state I1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I2
+  --> _S5 immediate;
+
+  state _S5
+  --> _S2 immediate with S3
+  --> _S6 immediate;
+
+  state _S6
+  --> _S3 immediate with S1
+  --> I1 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  state _Depth4
+  --> _Depth4;
+
+  region R0:
+
+  state _S
+  --> _Depth2 immediate with / S1 = S1 || true;
+
+  state _S2
+  --> _Depth3 immediate with / O2 = O2 || true;
+
+  state _S3
+  --> _Depth4 immediate with / S3 = S3 || true;
+
+  initial state I0
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I1
+  --> _S5 immediate;
+
+  state _S5
+  --> _S2 immediate with S2
+  --> _S6 immediate;
+
+  state _S6
+  --> _S3 immediate with I3
+  --> I0 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  state _Depth4
+  --> _Depth4;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / S1 = false;
+
+  state _S3
+  --> _S4 immediate with / S2 = false;
+
+  state _S4
+  --> _S5 immediate with / O1 = false;
+
+  state _S5
+  --> _S6 immediate with / O2 = false;
+
+  state _S6
+  --> _S7 immediate with / O3 = false;
+
+  state _S7
+  --> _S immediate with / S3 = false;
+}

@@ -1,0 +1,58 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+@HVLayout
+scchart WeakAbortDuring {
+  input bool I;
+  output int O;
+  output bool A;
+  bool _trig;
+
+  initial state S0 {
+
+    region _Entry:
+
+    state _Main {
+
+      region _During:
+
+      initial state _Depth2
+      --> _S immediate with / O ++;
+
+      state _S
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _S immediate;
+
+  final state S1;
+
+  state _S
+  --> S1 immediate with / A = true;
+}

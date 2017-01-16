@@ -1,0 +1,62 @@
+scchart sequential_concurrent_simple "sequential-concurrent-simple" {
+  output bool S;
+
+  state _Depth2
+  --> _Depth3 immediate with S
+  --> _Pause2 immediate;
+
+  state _S
+  --> _Depth2 immediate with / S = S || true;
+
+  initial state A
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with !S
+  --> A immediate;
+
+  state _Pause2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  region:
+
+  initial state D2 "D"
+  --> _Depth;
+
+  state _Depth
+  --> _Depth2 immediate with S
+  --> D2 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  region:
+
+  initial state F2 "F"
+  --> _Depth;
+
+  state _Depth
+  --> G2 immediate with !S
+  --> F2 immediate;
+
+  state G2 "G"
+  --> _Depth2;
+
+  state _Depth2
+  --> _Depth3 immediate with !S
+  --> G2 immediate;
+
+  state _Depth3
+  --> _Depth3;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / S = false;
+
+  state _S
+  --> _I;
+}

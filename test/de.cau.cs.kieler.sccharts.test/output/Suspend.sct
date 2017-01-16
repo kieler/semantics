@@ -1,0 +1,124 @@
+
+@diagram[KLayLayered] false
+scchart Suspend {
+  input bool S;
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  input bool T4;
+  output bool A1;
+  output bool A2;
+  output bool A3;
+  output bool A4;
+  bool _enabled;
+  bool _term;
+
+  region _Main:
+
+  state _I {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state S1
+      --> _S2 immediate with T3 && _enabled
+      --> _S7 immediate;
+
+      state S2
+      --> _S5 immediate with T4 && _enabled
+      --> _S9 immediate;
+
+      final state S3;
+
+      state _S
+      --> S2 immediate with / A1 = true;
+
+      state _S2
+      --> S2 immediate with / A3 = true;
+
+      state _S3
+      --> _S4 immediate with / A2 = true;
+
+      state _S4
+      --> S3 immediate with / _term = true;
+
+      state _S5
+      --> _S6 immediate with / A4 = true;
+
+      state _S6
+      --> S3 immediate with / _term = true;
+
+      state _S7
+      --> S3 immediate with _term
+      --> _Pause immediate;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with T1 && _enabled
+      --> S1 immediate;
+
+      state _S9
+      --> S3 immediate with _term
+      --> _Pause2 immediate;
+
+      state _Pause2
+      --> _Depth2;
+
+      state _Depth2
+      --> _S3 immediate with T2 && _enabled
+      --> S2 immediate;
+
+      region _During:
+
+      initial state _Depth2
+      --> _S immediate with / _enabled = true;
+
+      state _S
+      --> _Aborted immediate with _term
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _During2:
+
+      initial state _I
+      --> _Aborted2 immediate with _term
+      --> _Pause immediate;
+
+      final state _Aborted2;
+
+      state _Depth
+      --> _I immediate with / _enabled = _enabled && !S;
+
+      state _Pause
+      --> _Depth;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _term = false;
+
+    final state _Done;
+  }
+  >-> _F immediate;
+
+  final state _F;
+
+  initial state _Init
+  --> _C immediate with / A1 = false;
+
+  state _C
+  --> _C2 immediate with / A2 = false;
+
+  state _C2
+  --> _C3 immediate with / A3 = false;
+
+  state _C3
+  --> _I immediate with / A4 = false;
+}

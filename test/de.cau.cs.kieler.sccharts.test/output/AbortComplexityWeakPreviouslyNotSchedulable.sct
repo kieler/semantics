@@ -1,0 +1,48 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+scchart AbortComplexityWeakNotSchedulable {
+  input bool R;
+  bool _trig;
+
+  initial state _Depth {
+
+    region _Entry:
+
+    state _Main {
+
+      state _Depth2
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      initial state I
+      --> _Depth2;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with R
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _Depth immediate;
+}

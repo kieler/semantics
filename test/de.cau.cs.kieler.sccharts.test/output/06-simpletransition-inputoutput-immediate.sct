@@ -1,0 +1,42 @@
+scchart syncchart {
+  input bool I;
+  output bool O;
+
+  initial state H {
+
+    initial state A
+    --> _Aborted immediate with I
+    --> _Pause immediate;
+
+    state _Depth2
+    --> _Depth3 immediate with / O = O || true;
+
+    state _Depth3
+    --> _Aborted immediate with I
+    --> _Pause3 immediate;
+
+    final state _Aborted;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> _Depth2 immediate with I
+    --> A immediate;
+
+    state _Pause3
+    --> _Depth3;
+  }
+  >-> _Depth immediate;
+
+  state _Depth
+  --> _Depth;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

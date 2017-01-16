@@ -1,0 +1,118 @@
+
+@diagram[KLayLayered] false
+scchart Countdown_StrongAbort_Wrong {
+  input bool R;
+  output int T;
+  output int O;
+  bool Zero;
+  @direction RIGHT
+
+  region:
+
+  initial state Counting {
+
+    region Main " ":
+
+    initial state Cnt3 {
+
+      region _Entry:
+
+      initial state _Init
+      --> _Done immediate with / O = 3;
+
+      final state _Done;
+    }
+    >-> _Exit;
+
+    state _S3 {
+
+      region _Entry:
+
+      initial state _Init
+      --> _Done immediate with / O = 2;
+
+      final state _Done;
+    }
+    >-> _Exit2;
+
+    state _S5 {
+
+      region _Entry:
+
+      initial state _Init
+      --> _Done immediate with / O = 1;
+
+      final state _Done;
+    }
+    >-> _Exit3;
+
+    final state Cnt0;
+
+    final state _Aborted;
+
+    state _C
+    --> Cnt0 immediate with / O = 0;
+
+    state _S7
+    --> _C immediate with / Zero = Zero || true;
+
+    state _Exit
+    --> _Depth;
+
+    state _Depth
+    --> _Aborted immediate with R || Zero
+    --> _S3 immediate;
+
+    state _Exit2
+    --> _Depth2;
+
+    state _Depth2
+    --> _Aborted immediate with R || Zero
+    --> _S5 immediate;
+
+    state _Exit3
+    --> _Depth3;
+
+    state _Depth3
+    --> _Aborted immediate with R || Zero
+    --> _S7 immediate;
+
+    region _Ctrl:
+
+    final state _Done;
+
+    initial state _Run
+    --> _Depth;
+
+    state _Depth
+    --> _Done immediate with R
+    --> _S2 immediate;
+
+    state _S2
+    --> _Done immediate with Zero
+    --> _Run immediate;
+  }
+  >-> _Depth2;
+
+  state _Depth2
+  --> Counting immediate with R
+  --> _S2 immediate;
+
+  state Done
+  --> _Depth;
+
+  state _Depth
+  --> Counting immediate with R
+  --> Done immediate;
+
+  state _S2
+  --> Done immediate with / T ++;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / Zero = false;
+
+  state _S
+  --> _I;
+}

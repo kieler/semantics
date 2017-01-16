@@ -1,0 +1,20 @@
+scchart TriggerAndEffect {
+  input bool I;
+  output bool O;
+
+  initial state _Init
+  --> S1 immediate with / O = false;
+
+  state _S
+  --> _Depth2 immediate with / O = true;
+
+  state S1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I
+  --> S1 immediate;
+
+  state _Depth2
+  --> _Depth2;
+}

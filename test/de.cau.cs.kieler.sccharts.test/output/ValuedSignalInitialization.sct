@@ -1,0 +1,109 @@
+
+@diagram[KLayLayered] false
+scchart Initialization {
+  input bool A;
+  output bool O;
+  output int O_val combine +;
+  int O_curval combine +;
+  bool _term;
+
+  region _Main:
+
+  state _I {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state WA
+      --> DA immediate with _term
+      --> _Pause immediate;
+
+      final state DA;
+
+      state _S
+      --> _S2 immediate with / O_curval = O_curval + 2;
+
+      state _S2
+      --> _S3 immediate with / O = O || true;
+
+      state _S3
+      --> DA immediate with / _term = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with A
+      --> WA immediate;
+
+      region _During:
+
+      initial state _Depth2
+      --> _S immediate with / O = false;
+
+      state _S
+      --> _Aborted immediate with _term
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _During2:
+
+      initial state _Depth2
+      --> _S2 immediate with O
+      --> _S3 immediate;
+
+      state _S
+      --> _Aborted2 immediate with _term
+      --> _Pause2 immediate;
+
+      final state _Aborted2;
+
+      state _S2
+      --> _S immediate with / O_val = O_curval;
+
+      state _S3
+      --> _Aborted2 immediate with _term
+      --> _Pause immediate;
+
+      state _Pause
+      --> _Depth2;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _During3:
+
+      initial state _Depth2
+      --> _S immediate with / O_curval = 0;
+
+      state _S
+      --> _Aborted3 immediate with _term
+      --> _Pause2 immediate;
+
+      final state _Aborted3;
+
+      state _Pause2
+      --> _Depth2;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _term = false;
+
+    final state _Done;
+  }
+  >-> _F immediate;
+
+  final state _F;
+
+  initial state _Init
+  --> _C immediate with / O_val = 42;
+
+  state _C
+  --> _I immediate with / O_curval = 42;
+}

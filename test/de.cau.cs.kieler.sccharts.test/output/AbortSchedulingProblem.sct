@@ -1,0 +1,43 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+@HVLayout
+scchart S "AbortSchedulingProblem" {
+  output bool O;
+  input bool I;
+  bool _termD;
+
+  state Inner {
+
+    state A
+    --> B immediate with I
+    --> _Pause immediate;
+    @finalstate ""
+
+    final state B;
+
+    initial state _Init
+    --> A immediate with / _termD = false;
+
+    state _Depth
+    --> _S2 immediate with / O = true;
+
+    state _S2
+    --> B immediate with / _termD = true;
+
+    state _Pause
+    --> _Depth;
+  }
+  >-> _C;
+
+  state _C
+  @terminationtransition ""
+  --> Inner immediate with _termD
+  --> _Depth immediate;
+
+  initial state _Init
+  --> Inner immediate with / O = false;
+
+  state _Depth
+  --> _Depth;
+}

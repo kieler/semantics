@@ -1,0 +1,24 @@
+scchart FinalStateAndTermination {
+  output bool O1, O2;
+
+  initial state A {
+
+    initial state A0
+    --> A1;
+
+    state A1
+    --> _S;
+
+    final state A2;
+
+    state _S
+    --> A2 immediate with / O1 = true;
+  }
+  >-> _S;
+
+  state _S
+  --> _Depth immediate with / O2 = true;
+
+  state _Depth
+  --> _Depth;
+}

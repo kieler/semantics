@@ -1,0 +1,148 @@
+
+@layout[direction] DOWN
+scchart History {
+  output int leaveState;
+  output int State;
+  int _M;
+  bool _trig;
+
+  state M {
+
+    region _Entry:
+
+    state _Main {
+
+      state _Depth4 {
+
+        region _Entry:
+
+        initial state _Init
+        --> _C immediate with / State = 0;
+
+        final state _Done;
+
+        state _C
+        --> _Done immediate with / _M = 0;
+      }
+      >-> _Exit;
+
+      state _Depth2 {
+
+        region _Entry:
+
+        initial state _Init
+        --> _C immediate with / State = 1;
+
+        final state _Done;
+
+        state _C
+        --> _Done immediate with / _M = 1;
+      }
+      >-> _Exit2;
+
+      state _Depth3 {
+
+        region _Entry:
+
+        initial state _Init
+        --> _C immediate with / State = 2;
+
+        final state _Done;
+
+        state _C
+        --> _Done immediate with / _M = 2;
+      }
+      >-> _Exit3;
+
+      initial state _Init
+      --> _Depth4 immediate with _M == 0
+      --> _S immediate;
+
+      final state _Aborted;
+
+      state _Exit
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      state _Exit2
+      --> _Aborted immediate with _trig
+      --> _Pause3 immediate;
+
+      state _Exit3
+      --> _Aborted immediate with _trig
+      --> _Pause4 immediate;
+
+      state _S
+      --> _Depth3 immediate with _M == 2
+      --> _S2 immediate;
+
+      state _S2
+      --> _Depth2 immediate with _M == 1
+      --> _Pause immediate;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _Depth4 immediate with _M == 0
+      --> _S4 immediate;
+
+      state _S4
+      --> _Depth3 immediate with _M == 2
+      --> _S5 immediate;
+
+      state _S5
+      --> _Depth2 immediate with _M == 1
+      --> _S6 immediate;
+
+      state _S6
+      --> _Aborted immediate with _trig
+      --> _Pause immediate;
+
+      state _Pause2
+      --> _Depth2;
+
+      state _Pause3
+      --> _Depth3;
+
+      state _Pause4
+      --> _Depth4;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with State == leaveState
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _S immediate;
+
+  state MHist
+  --> M;
+
+  initial state _Init
+  --> _C immediate with / leaveState = 1;
+
+  state _C
+  --> M immediate with / _M = 0;
+
+  state _S
+  --> _S2 immediate with / leaveState --;
+
+  state _S2
+  --> MHist immediate with / leaveState = (leaveState + 3) % 3;
+}

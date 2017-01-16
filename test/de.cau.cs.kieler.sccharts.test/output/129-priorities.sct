@@ -1,0 +1,50 @@
+scchart transitions_and_signals {
+  input bool I1;
+  input bool I2;
+  output bool O1;
+  output bool O2;
+  output bool O3;
+
+  state _S
+  --> _Depth2 immediate with / O1 = O1 || true;
+
+  state _S2
+  --> _Depth3 immediate with / O2 = O2 || true;
+
+  state _S6
+  --> _Depth4 immediate with / O3 = O3 || true;
+
+  initial state s1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with I1 & I2
+  --> _S5 immediate;
+
+  state _S5
+  --> _S2 immediate with I1
+  --> _S6 immediate;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  state _Depth4
+  --> _Depth4;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / O1 = false;
+
+  state _S3
+  --> _S4 immediate with / O2 = false;
+
+  state _S4
+  --> _S immediate with / O3 = false;
+}

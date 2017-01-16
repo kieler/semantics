@@ -1,0 +1,59 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+@HVLayout
+scchart AbortComplexityWeak {
+  input bool R;
+  output int O;
+  output bool A;
+  bool _trig;
+
+  region Main " ":
+
+  initial state S {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state _Depth2
+      --> S immediate with / O ++;
+
+      state S
+      --> _Aborted immediate with _trig
+      --> _Pause2 immediate;
+
+      final state _Aborted;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with R
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _S immediate;
+
+  state _S
+  --> _Depth immediate with / A = true;
+
+  state _Depth
+  --> _Depth;
+}

@@ -1,0 +1,90 @@
+
+@diagram[KLayLayered] false
+@layout[direction] DOWN
+@diagram[Declarations] false
+scchart AbortsEnhancedNoTerminationHandling {
+  output bool S1toS2;
+  output bool S2toS3;
+  input bool S1trig;
+  output bool S1act;
+  input bool W1trig;
+  output bool W1act;
+  output bool N1act;
+  bool _termD;
+
+  initial state M {
+
+    state S1
+    --> S3 immediate with S1trig
+    --> _S4 immediate;
+
+    state S2
+    --> S3 immediate with S1trig
+    --> _S7 immediate;
+    @finalstate ""
+
+    final state S3;
+
+    initial state _Init
+    --> S1 immediate with / _termD = false;
+
+    state _S6
+    --> S2 immediate with / S1toS2 = true;
+
+    state _S9
+    --> _S3 immediate with / S2toS3 = true;
+
+    state _S3
+    --> S3 immediate with / _termD = true;
+
+    state _S4
+    --> S3 immediate with W1trig
+    --> _Pause immediate;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth
+    --> S3 immediate with S1trig
+    --> _S6 immediate;
+
+    state _S7
+    --> S3 immediate with W1trig
+    --> _Pause2 immediate;
+
+    state _Pause2
+    --> _Depth2;
+
+    state _Depth2
+    --> S3 immediate with S1trig
+    --> _S9 immediate;
+  }
+  >-> _Depth4;
+
+  state _Depth4
+  --> _S immediate with S1trig
+  --> _S6 immediate;
+
+  state _S
+  --> _Depth immediate with / S1act = true;
+
+  state _S2
+  --> _Depth2 immediate with / W1act = true;
+
+  state _Depth
+  --> _Depth;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _Depth3
+  --> _Depth3;
+
+  state _S6
+  --> _S2 immediate with W1trig
+  --> _S7 immediate;
+
+  state _S7
+  @terminationtransition ""
+  --> _Depth3 immediate with / N1act = true;
+}

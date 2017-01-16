@@ -1,0 +1,53 @@
+
+@Transformation ABORT
+scchart ConditionalTermination {
+  input bool I;
+  output int O;
+  bool _term;
+  bool _trig;
+
+  initial state A {
+
+    region _Entry:
+
+    state _Main {
+
+      final state A1;
+
+      initial state _Depth
+      --> _S2 immediate with / O = 1;
+
+      state _S2
+      --> A1 immediate with / _term = true;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I && _term
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate with / _term = false;
+
+    final state _Done;
+
+    state _C
+    --> _Main immediate with / _trig = false;
+  }
+  >-> _S immediate;
+
+  final state F;
+
+  state _S
+  --> F immediate with / O = 2;
+}

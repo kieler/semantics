@@ -1,0 +1,40 @@
+scchart Regions {
+  output bool O1;
+  output bool O2;
+
+  region _Entry:
+
+  state _Main {
+
+    region R1:
+
+    initial state S1
+    --> _S;
+
+    state _S
+    --> _Depth immediate with / O1 = true;
+
+    state _Depth
+    --> _Depth;
+
+    region R2:
+
+    initial state S3
+    --> _S;
+
+    state _S
+    --> _Depth immediate with / O2 = true;
+
+    state _Depth
+    --> _Depth;
+  }
+  >-> _Done;
+
+  initial state _Init
+  --> _C immediate with / O1 = false;
+
+  final state _Done;
+
+  state _C
+  --> _Main immediate with / O2 = false;
+}

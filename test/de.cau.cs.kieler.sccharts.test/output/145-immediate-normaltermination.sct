@@ -1,0 +1,39 @@
+scchart ImmediateNormalTermination {
+  input bool I2;
+  input bool I1;
+  output bool O;
+
+  state B {
+
+    initial state _Depth
+    --> D immediate with I2
+    --> _Pause immediate;
+
+    final state D;
+
+    state _Pause
+    --> _Depth;
+  }
+  >-> _S;
+
+  state _S
+  --> _Depth immediate with / O = O || true;
+
+  state _Depth
+  --> _Depth;
+
+  initial state A
+  --> _Depth2;
+
+  state _Depth2
+  --> B immediate with I1
+  --> A immediate;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / O = false;
+
+  state _S
+  --> _I;
+}

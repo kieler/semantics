@@ -1,0 +1,36 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart EntryAction {
+  output bool Ae1;
+  output bool A1;
+
+  state S0
+  --> S1;
+
+  state S1 {
+
+    region _Entry:
+
+    initial state _Init
+    --> _Done immediate with / Ae1 = true;
+
+    final state _Done;
+  }
+  >-> _Exit;
+
+  initial state _Init
+  --> _C immediate with / Ae1 = false;
+
+  state _C
+  --> S0 immediate with / A1 = false;
+
+  state _Exit
+  --> _S;
+
+  state _S
+  --> _Depth immediate with / A1 = true;
+
+  state _Depth
+  --> _Depth;
+}

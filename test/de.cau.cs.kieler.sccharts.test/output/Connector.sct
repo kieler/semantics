@@ -1,0 +1,47 @@
+
+@diagram[KLayLayered] false
+scchart Connector {
+  input bool T1;
+  input bool T2;
+  input bool T3;
+  output bool A1;
+  output bool A2;
+  output bool A3;
+  output bool A4;
+
+  state _Depth2
+  --> _S2 immediate with T3
+  --> _S6 immediate;
+
+  state _Depth5
+  --> _S3 immediate with T2
+  --> _Pause5 immediate;
+
+  state _S
+  --> _Depth2 immediate with / A1 = true;
+
+  state _S2
+  --> _Depth3 immediate with / A3 = true;
+
+  state _S3
+  --> _Depth2 immediate with / A2 = true;
+
+  initial state S1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with T1
+  --> _Depth5 immediate;
+
+  state _S6
+  --> _Depth4 immediate with / A4 = true;
+
+  state _Depth3
+  --> _Depth3;
+
+  state _Depth4
+  --> _Depth4;
+
+  state _Pause5
+  --> _Depth5;
+}

@@ -1,0 +1,82 @@
+scchart SurfDepth {
+  input bool A0;
+  input bool B0;
+  input bool A1;
+  input bool B1;
+  input bool C1;
+  output bool U0;
+  output bool V0;
+  output bool U1;
+  output bool V1;
+  output bool W1;
+
+  region R0:
+
+  initial state S0
+  --> _S2 immediate with B0
+  --> _Pause immediate;
+
+  state S1
+  --> _S4 immediate with B1
+  --> _Pause2 immediate;
+
+  state S2
+  --> S0;
+
+  state _S
+  --> S1 immediate with / U0 = U0 || true;
+
+  state _S2
+  --> S1 immediate with / V0 = V0 || true;
+
+  state _S3
+  --> S2 immediate with / U1 = U1 || true;
+
+  state _S4
+  --> S2 immediate with / V1 = V1 || true;
+
+  state _S5
+  --> S2 immediate with / W1 = W1 || true;
+
+  state _Pause
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with A0
+  --> S0 immediate;
+
+  state _Pause2
+  --> _Depth2;
+
+  state _Depth2
+  --> _S3 immediate with A1
+  --> _S8 immediate;
+
+  state _S8
+  --> _S4 immediate with B1
+  --> _S9 immediate;
+
+  state _S9
+  --> _S5 immediate with C1
+  --> _Pause2 immediate;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / U0 = false;
+
+  state _S3
+  --> _S4 immediate with / V0 = false;
+
+  state _S4
+  --> _S5 immediate with / U1 = false;
+
+  state _S5
+  --> _S6 immediate with / V1 = false;
+
+  state _S6
+  --> _S immediate with / W1 = false;
+}

@@ -1,0 +1,78 @@
+
+@diagram[KLayLayered] false
+@layout[direction] RIGHT
+scchart AbortMixedDelayedImmediateStrong {
+  input bool I1;
+  input bool I2;
+  output bool O1;
+  output bool O2;
+  bool _trig;
+
+  region Main " ":
+
+  initial state S1 {
+
+    region _Entry:
+
+    state _Main {
+
+      initial state S11
+      --> _Aborted immediate with I2
+      --> _Pause immediate;
+
+      final state _Aborted;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _Aborted immediate with I2
+      --> _S2 immediate;
+
+      state _S2
+      --> _Aborted immediate with _trig
+      --> _Pause immediate;
+
+      region _Ctrl:
+
+      initial state _Run
+      --> _Done immediate with I2
+      --> _Pause immediate;
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with I1
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _Main immediate with / _trig = false;
+
+    final state _Done;
+  }
+  >-> _Depth3;
+
+  state _Depth3
+  --> _S immediate with _trig
+  --> _S4 immediate;
+
+  state _S
+  --> _Depth immediate with / O1 = true;
+
+  state _Depth
+  --> _Depth;
+
+  state _Depth2
+  --> _Depth2;
+
+  state _S4
+  --> _Depth2 immediate with / O2 = true;
+}

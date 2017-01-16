@@ -1,0 +1,81 @@
+scchart instcommhiearchy {
+  bool L1;
+  bool L2;
+  bool L3;
+  input bool I;
+  output bool O;
+
+  initial state ABC {
+
+    state BC {
+
+      initial state _Depth
+      --> _S immediate with L2
+      --> _Pause immediate;
+
+      state _S
+      --> _Depth2 immediate with / L3 = L3 || true;
+
+      state _Pause
+      --> _Depth;
+
+      state _Depth2
+      --> _Depth2;
+    };
+
+    state _S
+    --> BC immediate with / L1 = L1 || true;
+
+    initial state A
+    --> _Depth;
+
+    state _Depth
+    --> _S immediate with I
+    --> A immediate;
+  };
+
+  region:
+
+  initial state _Depth
+  --> _S immediate with L1
+  --> _Pause immediate;
+
+  state YZ {
+
+    initial state _Depth
+    --> _S immediate with L3
+    --> _Pause immediate;
+
+    state _S
+    --> _Depth2 immediate with / O = O || true;
+
+    state _Pause
+    --> _Depth;
+
+    state _Depth2
+    --> _Depth2;
+  };
+
+  state _S
+  --> YZ immediate with / L2 = L2 || true;
+
+  state _Pause
+  --> _Depth;
+
+  region _During:
+
+  state _S
+  --> _Depth;
+
+  initial state _Depth
+  --> _S3 immediate with / L1 = false;
+
+  state _S3
+  --> _S4 immediate with / L2 = false;
+
+  state _S4
+  --> _S5 immediate with / L3 = false;
+
+  state _S5
+  --> _S immediate with / O = false;
+}

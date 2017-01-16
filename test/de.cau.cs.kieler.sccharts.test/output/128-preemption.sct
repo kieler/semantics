@@ -1,0 +1,35 @@
+scchart SyncChart {
+  input bool power;
+  output bool running;
+
+  state on {
+
+    final state _Aborted;
+
+    state _S3
+    --> sustain immediate with / running = running || true;
+
+    initial state sustain
+    --> _Depth;
+
+    state _Depth
+    --> _Aborted immediate with power
+    --> _S3 immediate;
+  }
+  >-> off immediate;
+
+  initial state off
+  --> _Depth;
+
+  state _Depth
+  --> on immediate with power
+  --> off immediate;
+
+  region _During:
+
+  initial state _I
+  --> _S immediate with / running = false;
+
+  state _S
+  --> _I;
+}

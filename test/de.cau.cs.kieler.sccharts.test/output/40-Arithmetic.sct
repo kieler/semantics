@@ -1,0 +1,133 @@
+scchart Arithmetic {
+  output bool a, b, c;
+  output int u, v, w, x, y, z;
+
+  state S0
+  --> _S;
+
+  state S1
+  --> _S3;
+
+  state S2
+  --> _S4;
+
+  state S3
+  --> _S6;
+
+  state S4
+  --> _S11;
+
+  state S5
+  --> _S15;
+
+  state S6
+  --> _S17;
+
+  state S7
+  --> _S19;
+
+  state S8
+  --> _S22;
+
+  initial state _Init
+  --> _C immediate with / a = false;
+
+  state _C
+  --> _C2 immediate with / b = true;
+
+  state _C2
+  --> _C3 immediate with / c = true;
+
+  state _C3
+  --> _C4 immediate with / u = 10;
+
+  state _C4
+  --> _C5 immediate with / v = 20;
+
+  state _C5
+  --> _C6 immediate with / w = 30;
+
+  state _C6
+  --> _C7 immediate with / x = 40;
+
+  state _C7
+  --> _C8 immediate with / y = 50;
+
+  state _C8
+  --> S0 immediate with / z = 60;
+
+  state _S
+  --> _S2 immediate with / a = a || true;
+
+  state _S2
+  --> S1 immediate with / b = b && false;
+
+  state _S3
+  --> S2 immediate with / c = c && b;
+
+  state _S4
+  --> _S5 immediate with / c = c || a;
+
+  state _S5
+  --> S3 immediate with / b = false || true && false;
+
+  state _S6
+  --> _S7 immediate with / u = u + 2;
+
+  state _S7
+  --> _S8 immediate with / v = v - 2;
+
+  state _S8
+  --> _S9 immediate with / w = w * 2;
+
+  state _S9
+  --> _S10 immediate with / x = x : 2;
+
+  state _S10
+  --> S4 immediate with / y = y % 4;
+
+  state _S11
+  --> _S12 immediate with / u += 2;
+
+  state _S12
+  --> _S13 immediate with / v -= 2;
+
+  state _S13
+  --> _S14 immediate with / w *= 2;
+
+  state _S14
+  --> S5 immediate with / x /= 2;
+
+  state _S15
+  --> _S16 immediate with / u ++;
+
+  state _S16
+  --> S6 immediate with / v --;
+
+  state _S17
+  --> _S18 immediate with / u = u | z;
+
+  state _S18
+  --> S7 immediate with / v = v & w;
+
+  state _S19
+  --> _S20 immediate with / a = x > y;
+
+  state _S20
+  --> _S21 immediate with / b = x < y;
+
+  state _S21
+  --> S8 immediate with / c = x == y;
+
+  state _S22
+  --> _S23 immediate with / a = x >= y;
+
+  state _S23
+  --> _S24 immediate with / b = x <= y;
+
+  state _S24
+  --> _Depth immediate with / c = x != y;
+
+  state _Depth
+  --> _Depth;
+}

@@ -1,0 +1,56 @@
+
+@diagram[KLayLayered] false
+@VHLayout
+scchart DeferredTransition {
+  input bool T1;
+  input bool T2;
+  output bool O;
+  bool _deferred;
+
+  state S2 {
+
+    region _During:
+
+    initial state _I
+    --> _Aborted immediate with !_deferred
+    --> _Pause immediate;
+
+    final state _Aborted;
+
+    state _Depth
+    --> _I immediate with / _deferred = false;
+
+    state _Pause
+    --> _Depth;
+  }
+  >-> _S3 immediate;
+
+  initial state _Init
+  --> _C immediate with / O = false;
+
+  state _C
+  --> S1 immediate with / _deferred = false;
+
+  state _S
+  --> S2 immediate with / _deferred = true;
+
+  state _S2
+  --> S2 immediate with / _deferred = false;
+
+  state _S3
+  --> _Depth2 immediate with / O = true;
+
+  state S1
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with T1
+  --> _S5 immediate;
+
+  state _S5
+  --> _S2 immediate with T2
+  --> S1 immediate;
+
+  state _Depth2
+  --> _Depth2;
+}

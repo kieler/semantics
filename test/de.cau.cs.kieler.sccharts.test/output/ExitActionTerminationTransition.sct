@@ -1,0 +1,92 @@
+scchart ExitAction {
+  output bool Ae1;
+  output bool A1;
+  bool _term;
+  bool _term2;
+  bool _trig;
+
+  initial state init {
+
+    region _Entry:
+
+    state _Main {
+
+      region R1:
+
+      state S2 {
+
+        region _Exit:
+
+        initial state _Depth
+        --> _Memorize immediate with _trig
+        --> _Pause immediate;
+
+        final state _Done;
+
+        state _Memorize
+        --> _Done immediate with / Ae1 = true;
+
+        state _Pause
+        --> _Depth;
+      }
+      >-> _Depth2 immediate;
+
+      final state _Depth2;
+
+      state _Depth
+      --> S2 immediate with / _term = true;
+
+      initial state S1
+      --> _Depth;
+
+      region R2:
+
+      state _Depth
+      --> S3 immediate with _trig
+      --> _Pause2 immediate;
+
+      final state S3;
+
+      state _Depth2
+      --> S3 immediate with / _term2 = true;
+
+      initial state S1
+      --> _Depth;
+
+      state _Pause2
+      --> _Depth2;
+
+      region _Ctrl:
+
+      final state _Done;
+
+      state _S
+      --> _Done immediate with / _trig = true;
+
+      initial state _Run
+      --> _Depth;
+
+      state _Depth
+      --> _S immediate with _term && _term2
+      --> _Run immediate;
+    }
+    >-> _Done;
+
+    initial state _Init
+    --> _C immediate with / _term = false;
+
+    final state _Done;
+
+    state _C
+    --> _C2 immediate with / _term2 = false;
+
+    state _C2
+    --> _Main immediate with / _trig = false;
+  }
+  >-> _S immediate;
+
+  final state fin;
+
+  state _S
+  --> fin immediate with / A1 = true;
+}

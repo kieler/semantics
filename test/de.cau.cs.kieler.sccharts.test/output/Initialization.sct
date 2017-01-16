@@ -1,0 +1,25 @@
+
+@diagram[KLayLayered] false
+scchart Initialization {
+  input bool A;
+  output int O;
+  output int V;
+
+  final state DA;
+
+  initial state _Init
+  --> _C immediate with / O = 1;
+
+  state _C
+  --> WA immediate with / V = O;
+
+  state _S
+  --> DA immediate with / O = 2;
+
+  state WA
+  --> _Depth;
+
+  state _Depth
+  --> _S immediate with A
+  --> WA immediate;
+}
