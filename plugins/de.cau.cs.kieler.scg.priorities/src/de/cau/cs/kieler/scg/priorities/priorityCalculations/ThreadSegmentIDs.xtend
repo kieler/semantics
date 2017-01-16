@@ -114,6 +114,9 @@ class ThreadSegmentIDs {
         if(!visited.get(node)) {
             visited.put(node, true)
             if(node instanceof Fork) {
+                //The thread with the highest node Priority always gets the highest thread priority.
+                //This assures that when joining, the thread with the highest node priority when forking
+                //will not get the lowest thread priority when joining.
                 val sortedNeighbors = neighbors.sortBy[neighbor | nodePrios.get(neighbor)]
                 
                 //var LinkedList<Integer> childIDs = <Integer> newLinkedList

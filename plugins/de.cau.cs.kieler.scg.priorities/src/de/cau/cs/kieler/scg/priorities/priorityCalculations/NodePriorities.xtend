@@ -24,6 +24,8 @@ import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import javax.inject.Inject
+import com.sun.java.util.jar.pack.Fixups.Fixup
+import de.cau.cs.kieler.scg.Fork
 
 /**
  * Class for the calculation of node priorities of an SCG.
@@ -142,8 +144,11 @@ class NodePriorities {
             visitedNodes = <Node, Boolean> newHashMap
             propagateUpwards(node)
         }
+        fixFirstAndLastPriorities(nodes)
     }
     
+    
+    //WARNING: MIGHT LEAD TO UNEXPECTED PROBLEMS!!
     /**
      *  Finds join, entry or depth nodes, or nodes that have incoming dependencies. If these are encountered, they return 
      *  their node priority and propagate them to their following nodes.
@@ -186,6 +191,36 @@ class NodePriorities {
             }
             return nodePrio.get(currentNode)
         }
+    }
+    
+    /**
+     *  Fixes the Priorities of threads where the thread with the highest entry priority
+     *  also has the lowest exit priority. The SCL macros would not be able to properly schedule such
+     *  programs and therefore these occurences need to be removed.
+     * 
+     * 
+     */
+    private def void fixFirstAndLastPriorities(List<Node> nodes) {
+        
+        val forks = nodes.filter[it instanceof Fork]
+        
+        for (fork : forks) {
+            val innerEntryNodes = fork.neighbors.sortBy[nodePrio.get(it)]
+            val innerExitNodes = <Node> newLinkedList
+            for(entry : innerEntryNodes) {
+                innerExitNodes.add((entry as Entry).exit)
+            }
+
+            val sortedExitNodes = innerExitNodes.sortBy[nodePrio.get(it)]
+            //If the thread with the highest entry priority is also 
+            //the thread with the lowest exit priority, we have to lower the second lowest priority
+            //in an exit node to the priority of the first thread. With this, the scheduler can perform 
+            //the join as intended.
+            if((innerEntryNodes.last as Entry).exit.equals(sortedExitNodes.head)) {
+                nodePrio.replace(sortedExitNodes.get(1), nodePrio.get(sortedExitNodes.head))
+            }
+        }
+        
     }
     
 }

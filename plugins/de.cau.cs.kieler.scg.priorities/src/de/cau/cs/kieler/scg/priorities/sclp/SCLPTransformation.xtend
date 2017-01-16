@@ -178,8 +178,13 @@ class SCLPTransformation extends AbstractProductionTransformation{
                 sb.appendInd(declaration.type.toString)
             }
             //sb.append("int")
-            sb.append(" ")
-            sb.append(declaration.valuedObjects.head.name)
+            for(variables : declaration.valuedObjects) {
+                if(!(variables.equals(declaration.valuedObjects.head))) {
+                    sb.append(",")
+                }
+                sb.append(" ")
+                sb.append(variables.name)                
+            }
             sb.append(";\n")
         }
         sb.append("\n")
@@ -367,6 +372,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var labelList = <String> newArrayList
         var nodeList = <Node> newArrayList
         var prioList = <Integer> newArrayList
+        var endPrioList = <Integer> newArrayList
         var Node nodeHead
         var String labelHead
         var max = -1;
@@ -381,12 +387,15 @@ class SCLPTransformation extends AbstractProductionTransformation{
         for (cFlow : fork.next) {
             val nxt = cFlow.target
             val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
+            val last = (nxt as Entry).exit
             if (ann.value == max) {
                 nodeHead = cFlow.target
             }
             if(ann.value != max) {                
                 nodeList.add(nxt)
                 prioList.add(ann.value)
+                endPrioList.add((last.getAnnotation("optPrioIDs") as IntAnnotation).value) 
+                
                 if (nxt.getStringAnnotationValue("regionName") == "") {
                     labelList.add("region_" + regionNr++)
                 } else {
@@ -431,10 +440,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
         sb.appendInd("\n")
         
         var joinPrioList = <Integer> newArrayList
-        joinPrioList.add((nodeHead.getAnnotation("optPrioIDs") as IntAnnotation).value)
-        joinPrioList.addAll(prioList)
+        joinPrioList.add(((nodeHead as Entry).exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
+        joinPrioList.addAll(endPrioList)
         joinPrioList.remove(joinPrioList.min())
-        
         
         sb.generateJoinn(joinPrioList.size, joinPrioList)
         
