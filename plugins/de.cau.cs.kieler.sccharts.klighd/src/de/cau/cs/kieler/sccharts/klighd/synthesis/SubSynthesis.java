@@ -21,17 +21,19 @@ import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
-import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks.Type;
 
 /**
  * Abstract class for partial syntheses, delegating helper methods.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
@@ -44,14 +46,15 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
     private SynthesisHooks hooks;
 
     @Inject
-    private SCChartsSynthesis parent;
-
+    private AbstractDiagramSynthesis<?> parent;
+    
     /** The input type this synthesis handles */
     private final Type hookType;
     @Inject
     public SubSynthesis() {
         java.lang.reflect.Type[] generics =
                 ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments();
+        
         // Get hook type from input generic type
         this.hookType = SynthesisHooks.getType((Class<? extends EObject>) generics[0]);
     }
@@ -141,8 +144,8 @@ public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> {
      * @return
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getUsedContext()
      */
-    public ViewContext getUsedContext() {
-        return parent.getUsedContext();
-    }
+//    public ViewContext getUsedContext() {
+//        return parent.getUsedContext();
+//    }
 
 }

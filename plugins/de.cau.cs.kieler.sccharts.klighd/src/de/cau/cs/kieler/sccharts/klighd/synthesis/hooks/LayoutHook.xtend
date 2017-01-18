@@ -34,6 +34,8 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.CoreOptions
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -44,7 +46,7 @@ import org.eclipse.elk.core.options.CoreOptions
  * 
  */
 @ViewSynthesisShared
-class LayoutHook extends SynthesisHook {
+class LayoutHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
 
     /** This property is set if any element should override HV or VH layout annotation effects */
     private static final IProperty<Boolean> BLOCK_ALTERNATIN_LAYOUT = new Property<Boolean>(

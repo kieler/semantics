@@ -21,6 +21,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Shows priority label of the priority based compilation.
@@ -33,7 +36,7 @@ import org.eclipse.elk.graph.KNode
  * 
  */
  @ViewSynthesisShared
-class PrioritybasedCompilationHook extends SynthesisHook {
+class PrioritybasedCompilationHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
 
     @Inject
     extension SCChartsExtension

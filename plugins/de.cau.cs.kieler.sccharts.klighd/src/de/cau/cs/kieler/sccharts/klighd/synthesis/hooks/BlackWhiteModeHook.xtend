@@ -28,6 +28,9 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+
 /**
  * Applies paper color theme.
  *  
@@ -37,7 +40,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color
  * 
  */
 @ViewSynthesisShared
-class BlackWhiteModeHook extends SynthesisHook {
+class BlackWhiteModeHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
 
     @Inject
     extension KRenderingExtensions

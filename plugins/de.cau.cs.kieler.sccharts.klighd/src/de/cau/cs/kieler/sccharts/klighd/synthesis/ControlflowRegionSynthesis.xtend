@@ -26,7 +26,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import java.util.Properties
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.graph.KNode
@@ -36,17 +35,19 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
-class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> {
+class ControlflowRegionSynthesis extends SubSynthesis<AbstractSCChartsSynthesis<Scope>, ControlflowRegion, KNode> {
 
     @Inject
     extension KNodeExtensions

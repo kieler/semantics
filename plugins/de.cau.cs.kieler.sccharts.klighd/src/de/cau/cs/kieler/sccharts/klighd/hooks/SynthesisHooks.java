@@ -31,15 +31,15 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.klighd.SCChartsKlighdPlugin;
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
 
 /**
- * This class provides new instances of all available hooks for the {@link SCChartsSynthesis}.
+ * This class provides new instances of all available hooks for the {@link SRTGSynthesis}.
  * 
  * @author als
  * @kieler.design 2015-08-13 proposed
@@ -139,10 +139,10 @@ public class SynthesisHooks {
      *            the injector used for the injection of this class.
      */
     @Inject
-    public SynthesisHooks(Injector injector) {
+    public SynthesisHooks(Injector injector, AbstractDiagramSynthesis<?> synthesis) {
         hooks = new ArrayList<SynthesisHook>(registeredHooks.size());
-        for (Class<? extends SynthesisHook> hookClass : registeredHooks) {
-            hooks.add(injector.getInstance(hookClass));
+        for (Class<? extends SynthesisHook> hook : registeredHooks) {
+            hooks.add((SynthesisHook) injector.getInstance(hook));
         }
         hooks.sort(decendingHookPriority);
     }

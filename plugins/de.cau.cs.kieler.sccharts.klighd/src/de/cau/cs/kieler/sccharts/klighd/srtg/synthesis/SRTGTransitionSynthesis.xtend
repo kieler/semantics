@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.synthesis
+package de.cau.cs.kieler.sccharts.klighd.srtg.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -30,19 +30,18 @@ import org.eclipse.elk.graph.KEdge
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SubSynthesis
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
  * 
- * @author als ssm
- * @kieler.design 2015-08-13 proposed
- * @kieler.rating 2015-08-13 proposed yellow
+ * @author ssm
+ * @kieler.design 2017-01-18 proposed 
+ * @kieler.rating 2017-01-18 proposed 
  * 
  */
 @ViewSynthesisShared
-class TransitionSynthesis extends SubSynthesis<AbstractSCChartsSynthesis<Scope>, Transition, KEdge> {
+class SRTGTransitionSynthesis extends SubSynthesis<SRTGSynthesis, Transition, KEdge> {
 
     @Inject
     extension KNodeExtensions
@@ -81,22 +80,10 @@ class TransitionSynthesis extends SubSynthesis<AbstractSCChartsSynthesis<Scope>,
             edge.setImmediateStyle
         }
 
-        switch (transition.history) {
-            case SHALLOW: edge.addShallowHistoryDecorator
-            case DEEP: edge.addDeepHistoryDecorator
-            case !transition.deferred: edge.addDefaultDecorator
-        }
-
-        if (transition.deferred) {
-            edge.addDeferredDecorator(transition.history == HistoryType::DEEP ||
-                transition.history == HistoryType::SHALLOW);
-        }
-
         switch (transition.type) {
             case STRONGABORT: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
-            default: {
-            }
+            case WEAKABORT: {}
         };
 
         // Add Label

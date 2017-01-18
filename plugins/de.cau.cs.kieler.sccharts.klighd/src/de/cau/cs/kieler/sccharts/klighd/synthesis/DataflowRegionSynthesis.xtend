@@ -46,7 +46,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import java.util.Properties
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.NodeLabelPlacement
@@ -62,17 +61,19 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
-class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
+class DataflowRegionSynthesis extends SubSynthesis<AbstractSCChartsSynthesis<Scope>, DataflowRegion, KNode> {
 
     @Inject 
     extension KNodeExtensions

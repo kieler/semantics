@@ -27,6 +27,8 @@ import org.eclipse.elk.graph.KNode
 
 import static extension java.lang.Character.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 
 /**
  * Evaluates synthesis option annotations in the model.
@@ -35,7 +37,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * @kieler.design 2015-11-4 proposed
  * @kieler.rating 2015-11-4 proposed yellow
  */
-class SynthesisAnnotationHook extends SynthesisHook {
+class SynthesisAnnotationHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
 
     // Annotation Keyword
     /** The annotation keyword for setting synthesis options */

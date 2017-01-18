@@ -24,9 +24,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
-import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
-import java.util.Properties
 import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
@@ -35,17 +33,19 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
 @ViewSynthesisShared
-class StateSynthesis extends SubSynthesis<State, KNode> {
+class StateSynthesis extends SubSynthesis<SCChartsSynthesis, State, KNode> {
 
     @Inject
     extension KNodeExtensions

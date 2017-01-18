@@ -71,6 +71,8 @@ import org.eclipse.ui.progress.UIJob
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.scg.DataDependencyType
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -82,7 +84,7 @@ import de.cau.cs.kieler.scg.DataDependencyType
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGDependencyHook extends SynthesisActionHook {
+class SCGDependencyHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
 
 	extension KRenderingFactory = KRenderingFactory.eINSTANCE
 

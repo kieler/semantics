@@ -17,7 +17,7 @@ import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
 
 /**
- * The {@link SynthesisOption}s generally used in the {@link SCChartsSynthesis}. <br>
+ * The {@link SynthesisOption}s generally used in the {@link SRTGSynthesis}. <br>
  * Specific {@link SynthesisOption} related to {@link SynthesisHook} are declared in the
  * corresponding class.
  * 

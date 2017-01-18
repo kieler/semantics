@@ -28,6 +28,9 @@ import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
+
 /**
  * Shows or hides or shortens transition labels.
  * 
@@ -37,7 +40,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
  * 
  */
 @ViewSynthesisShared
-class LabelShorteningHook extends SynthesisActionHook {
+class LabelShorteningHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook";

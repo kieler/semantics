@@ -45,6 +45,8 @@ import org.eclipse.ui.progress.UIJob
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
 import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -56,7 +58,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGLoopHook extends SynthesisActionHook {
+class SCGLoopHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
