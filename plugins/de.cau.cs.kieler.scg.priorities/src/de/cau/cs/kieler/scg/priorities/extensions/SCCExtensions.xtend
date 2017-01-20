@@ -71,44 +71,37 @@ class SCCExtensions {
         var neighbors = <Node> newLinkedList
         
         if(n instanceof Entry) {
-            val entry = n as Entry
-            if(entry.next != null) {
-                neighbors.add(entry.next.target)                
+            if(n.next != null) {
+                neighbors.add(n.next.target)                
             }
         }
         
         if(n instanceof Exit) {
-            val exit = n as Exit
-            if(exit.next != null) {
-                neighbors.add(exit.next.target)
+            if(n.next != null) {
+                neighbors.add(n.next.target)
             }
         }
         
         if(n instanceof Assignment) {
-            val ass = n as Assignment
-            neighbors.add(ass.next.target)
+            neighbors.add(n.next.target)
         }
         
         if(n instanceof Conditional) {
-            val cond = n as Conditional
-            neighbors.addAll(cond.then.target, cond.^else.target)
+            neighbors.addAll(n.then.target, n.^else.target)
         }
         
         if(n instanceof Fork) {
-            val fork = n as Fork
-            for(next : fork.next) {
+            for(next : n.next) {
                 neighbors.add(next.target)
             }
         }
         
         if(n instanceof Join) {
-            val join = n as Join
-            neighbors.add(join.next.target)
+            neighbors.add(n.next.target)
         }
         
         if(n instanceof Depth) {
-            val depth = n as Depth
-            neighbors.add(depth.next.target)
+            neighbors.add(n.next.target)
         }
         
         if(n instanceof Surface) {
@@ -132,8 +125,7 @@ class SCCExtensions {
         
         var neighbors = <Node> newLinkedList
         if(n instanceof Surface) {
-            val sur = n as Surface
-            neighbors.add(sur.depth)
+            neighbors.add(n.depth)
             neighbors
         } else {
             return n.neighbors
@@ -154,8 +146,7 @@ class SCCExtensions {
         //Get only concurrent dependencies!!
         for(dep : n.dependencies) {
             if(dep instanceof DataDependency) {
-                val dataDep = dep as DataDependency
-                if(dataDep.concurrent && !dataDep.confluent) {
+                if(dep.concurrent && !dep.confluent) {
                     deps.add(dep.target)
                 }
                 

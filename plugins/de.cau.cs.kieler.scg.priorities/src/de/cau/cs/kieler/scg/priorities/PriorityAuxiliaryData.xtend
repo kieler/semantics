@@ -33,20 +33,17 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     private LinkedList<LinkedList<Node>> stronglyConnectedComponents
     private HashMap<Node, Integer> sccMap
     
-    
+    /**
+     *  Returns all Strongly Connected Components of a SCG
+     */
     public def LinkedList<LinkedList<Node>> getStronglyConnectedComponents() {
         stronglyConnectedComponents
     }
     
+    /**
+     *  Saves the Strongly Connected Components of a SCG for later use
+     */
     public def void setStronglyConnectedComponents(LinkedList<LinkedList<Node>> scc) {
         this.stronglyConnectedComponents = scc
-    }
-    
-    public def void setSccMap(HashMap<Node, Integer> sccMap) {
-        this.sccMap = sccMap.clone as HashMap<Node, Integer>
-    }
-    
-    public def HashMap<Node, Integer> getSccMap() {
-        sccMap
     }
 }

@@ -443,9 +443,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** List of all strongly connected components of the SCG */
     private LinkedList<LinkedList<Node>> scc
-    
-    /** Optimized priority ID of each node */
-    private HashMap<Node, Integer> sccMap
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -467,11 +464,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val PILR = compilationResult.getAuxiliaryData(PotentialInstantaneousLoopResult).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
             
-            //Get the Priorities of the nodes
+            //Get the Strongly Connected Components of the SCG
             val prioAuxData = compilationResult.getAuxiliaryData(PriorityAuxiliaryData).head
             if(prioAuxData != null) {
                 scc = prioAuxData.stronglyConnectedComponents
-                sccMap = prioAuxData.sccMap
                 
             }
         }

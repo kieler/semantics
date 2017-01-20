@@ -152,9 +152,9 @@ class StronglyConnectedComponentCalc {
                 val dependencies = node.dependencies
                 for(dependency : dependencies) {
                     if(dependency instanceof DataDependency) {
-                        val dep = dependency as DataDependency
-                        if(dep.concurrent && !dep.confluent) {
-                            if(dep.type == DataDependencyType.WRITE_WRITE || scc.contains(dep.target)) {
+                        if(dependency.concurrent && !dependency.confluent) {
+                            if(dependency.type == DataDependencyType.WRITE_WRITE 
+                                || scc.contains(dependency.target)) {
 //                                println(node + " has a dependency issue with " + dep.target)
                                 return false
                             }
