@@ -569,12 +569,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                     text = text + threadPathType.toString2
                                 }
-                                
+                                if (SHOW_POTENTIALPROBLEMS.booleanValue) {
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(REGIONLABEL.copy);
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
-                                    
+                                } 
                                     
                             ]
                         }
