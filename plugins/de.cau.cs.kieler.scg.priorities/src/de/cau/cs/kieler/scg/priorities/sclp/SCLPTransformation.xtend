@@ -37,6 +37,7 @@ import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
+import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -51,6 +52,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      extension KExpressionsValuedObjectExtensions
      @Inject
      extension SCLPTransformationExtensions
+     @Inject 
+     extension SCG2CSerializeHRExtensions
+     
      
      
     /** Default indentation of a c file */
@@ -101,6 +105,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
     override getRequiredFeatureIds() {
         return newHashSet("scg.scgPrio");
     }
+    
+    int x = 0;
     
     /**
      * Transform the SCG to C code based on the priority compilation.
@@ -239,6 +245,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Node node) {
+        valuedObjectPrefix = "";
         
         //If the node is a Join, we don't want it to be called within the controlFlow. It is supposed to be 
         //called from the Fork-Node. This guarantees that a Join will not get a label
@@ -246,12 +253,11 @@ class SCLPTransformation extends AbstractProductionTransformation{
             return
         }
 
-
         if(!previousNode.empty()) {
             val prev = previousNode.peek()
             val prevPrio = prev.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
-            
+            println(prev)
             if(!(prev instanceof Fork) && prevPrio.value != prio.value) {
                 sb.appendInd("prio(" + prio.value + ");\n")
             }
@@ -315,11 +321,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The Assignment node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Assignment ass) {
-
-
-        sb.appendInd(ass.valuedObject.name)
-        sb.append(" = ")
-        sb.expand(ass.expression)
+        
+        sb.appendInd("")
+        sb.append(ass.serializeHR)
         sb.append(";\n")
         
         sb.transformNode(ass.next.target)

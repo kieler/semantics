@@ -155,7 +155,8 @@ class StronglyConnectedComponentCalc {
                         if(dependency.concurrent && !dependency.confluent) {
                             if(dependency.type == DataDependencyType.WRITE_WRITE 
                                 || scc.contains(dependency.target)) {
-//                                println(node + " has a dependency issue with " + dep.target)
+                                //println(node.concurrentDependencies)
+                                //println(node + " has a dependency issue with " + dependency.target + " " + dependency.concurrent)
                                 return false
                             }
                         }
