@@ -73,6 +73,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *  unique region number. */
     private var regionNr = 0
     
+    /** Keeps track of previously used region names */
+    private var regionNames = new ArrayList<String>
+    
     /** StringBuilder to keep track of forks and joins with more than 4 elements. 
      *  There exists no macro for these forks and joins, therefore new macros are created if this happens. */
     private var forkJoinSb = new StringBuilder
@@ -106,7 +109,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
         return newHashSet("scg.scgPrio");
     }
     
-    int x = 0;
     
     /**
      * Transform the SCG to C code based on the priority compilation.
@@ -257,7 +259,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
             val prev = previousNode.peek()
             val prevPrio = prev.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
-            println(prev)
             if(!(prev instanceof Fork) && prevPrio.value != prio.value) {
                 sb.appendInd("prio(" + prio.value + ");\n")
             }
@@ -379,42 +380,57 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var endPrioList = <Integer> newArrayList
         var Node nodeHead
         var String labelHead
-        var max = -1;
+        var children = fork.next
         
-        for(cFlow : fork.next) {
-            val prio = cFlow.target.getAnnotation("optPrioIDs") as IntAnnotation
-            if(max < prio.value) {
-                max = prio.value
-            }
-        }
+        //FIXME: Sorts by beginning priority, but end priority should also be considered.
+        //End Priority should not be important --> As long as the largest start priority is not the smallest
+        //end priority (which it isnt), the cleanup should always work due to the join macros
+        val xchildren = children.sortBy[(it.target.getAnnotation("optPrioIDs") as IntAnnotation).value].reverse
         
-        for (cFlow : fork.next) {
-            val nxt = cFlow.target
+        
+        nodeHead = xchildren.head.target
+        
+        for (child : xchildren) {
+            val nxt = child.target
             val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
             val last = (nxt as Entry).exit
-            if (ann.value == max) {
-                nodeHead = cFlow.target
-            }
-            if(ann.value != max) {                
+            //FIXME: Empty Regions do not work (create Labels that do not compile since they have nothing inside
+            //FIXME: Dumb enumeration of regions
+            val regionName = nxt.getStringAnnotationValue("regionName")
+            
+            if(!nxt.equals(nodeHead)) {                
                 nodeList.add(nxt)
                 prioList.add(ann.value)
                 endPrioList.add((last.getAnnotation("optPrioIDs") as IntAnnotation).value) 
                 
-                if (nxt.getStringAnnotationValue("regionName") == "") {
+                if (regionName == "") {
                     labelList.add("region_" + regionNr++)
                 } else {
-                    labelList.add(nxt.getStringAnnotationValue("regionName"))
+                    if(regionNames.contains(regionName)) {
+                        val newName = regionName + "_" + regionNr++
+                        labelList.add(newName)
+                        regionNames.add(newName)
+                    } else {
+                        labelList.add(regionName)
+                        regionNames.add(regionName)
+                    }
                 }
             } else {
-                if(nxt.getStringAnnotationValue("regionName") == "") {
+                if(regionName == "") {
                     labelHead = "region_" + regionNr++
                 } else {
-                    labelHead = nxt.getStringAnnotationValue("regionName")
+                    if(regionNames.contains(regionName)) {
+                        val newName = regionName + "_" + regionNr++
+                        labelHead = newName
+                        regionNames.add(newName)
+                    } else {
+                        labelHead = regionName
+                        regionNames.add(regionName)
+                    }
                 }
             }
             
         }
-
         sb.generateForkn(nodeList.length, labelList, prioList)
                 
         //Creates the Strings for the different threads
@@ -632,9 +648,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The priorities of the threads
      */
     private def generateJoinn(StringBuilder sb, int n, ArrayList<Integer> prioList) {
-        
         sb.appendInd("} join" + n + "(" + prioList.createPrioString + ");\n")
-        
         
         if(n > 4 && !generatedJoins.contains(n)) {
             forkJoinSb.append("#define join" + n + "(")
@@ -655,5 +669,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
             
             generatedJoins.add(n)
         }
+        /*sb.appendInd("}")
+        for(prio : prioList) {
+            sb.append(" join1(" + prio + ");\n")
+        }*/
     }
 }
