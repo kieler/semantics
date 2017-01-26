@@ -398,15 +398,6 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.macosx.x86"
-         os="macosx"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
          id="de.cau.cs.kieler.esterel.cec.macosx.x86_64"
          os="macosx"
          arch="x86_64"
