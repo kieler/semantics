@@ -40,7 +40,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * 
  */
 @ViewSynthesisShared
-class LabelShorteningHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
+class LabelShorteningHook extends SynthesisActionHook {
 
     /** Action ID */
     public static final String ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook";

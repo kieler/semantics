@@ -14,6 +14,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.model.Log
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
@@ -26,8 +27,6 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -58,8 +57,8 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         
     // -------------------------------------------------------------------------
     // Hooks
-//    @Inject
-//    SynthesisHooks<AbstractSCChartsSynthesis<Scope>> hooks  
+    @Inject
+    SynthesisHooks hooks  
     
     // -------------------------------------------------------------------------
     // Fields
@@ -81,7 +80,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 //        options.addAll(dataflowSynthesis.displayedSynthesisOptions);
         
         // Add options of hooks
-//        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
+        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
         
         // Add categories options
         options.addAll(APPEARANCE, DEBUGGING)
@@ -104,7 +103,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         val rootNode = createNode();
                 
         //START
-//        hooks.invokeStart(root, rootNode);
+        hooks.invokeStart(root, rootNode);
         
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
@@ -122,7 +121,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
-//        hooks.invokeFinish(root, rootNode);
+        hooks.invokeFinish(root, rootNode);
 
         // Log elapsed time
         Log.log(

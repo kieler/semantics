@@ -23,6 +23,7 @@ import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -40,7 +41,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis;
  * structural element the related method is invoked allowing modification of the input and output of
  * each step.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
@@ -49,8 +50,8 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis;
 public abstract class SynthesisHook {
 
     @Inject
-    private AbstractDiagramSynthesis<?> parent;
-
+    protected AbstractDiagramSynthesis<?> parent;
+    
     /**
      * The {@link SynthesisOption} this hook contributes to the synthesis.
      * 

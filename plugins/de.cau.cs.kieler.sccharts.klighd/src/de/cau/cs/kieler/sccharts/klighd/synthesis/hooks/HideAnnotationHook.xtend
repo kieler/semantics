@@ -41,7 +41,7 @@ import de.cau.cs.kieler.sccharts.Scope
  * 
  */
 @ViewSynthesisShared
-class HideAnnotationHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class HideAnnotationHook extends SynthesisHook {
 
     @Inject
     extension StateStyles

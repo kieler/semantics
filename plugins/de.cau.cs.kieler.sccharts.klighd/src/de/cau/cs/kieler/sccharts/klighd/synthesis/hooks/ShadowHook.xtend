@@ -34,7 +34,7 @@ import de.cau.cs.kieler.sccharts.Scope
  * 
  */
 @ViewSynthesisShared
-class ShadowHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class ShadowHook extends SynthesisHook {
 
     @Inject
     extension KRenderingExtensions

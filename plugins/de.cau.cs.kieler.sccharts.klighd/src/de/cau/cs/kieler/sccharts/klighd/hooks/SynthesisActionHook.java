@@ -17,15 +17,16 @@ import org.eclipse.elk.graph.KNode;
 
 import com.google.inject.Binder;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
+import com.google.inject.TypeLiteral;
 
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
+import de.cau.cs.kieler.klighd.syntheses.ReinitializingDiagramSynthesisProxy;
 
 /**
  * Normal {@link SynthesisHook} with additional {@link IAction} capability. If the action
@@ -35,24 +36,16 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
  * Any extending class must be double registered in the extension points. A klighd.action and
  * sccharts.hook.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
+@SuppressWarnings("restriction")
 public abstract class SynthesisActionHook extends SynthesisHook implements IAction {
 
-    @Inject
-    private SCChartsSynthesis parent;
-
     /** Injector for injecting member if this class was not injected (the action instance) */
-    private static final Injector injector = Guice.createInjector(new Module() {
-
-        @Override
-        public void configure(Binder binder) {
-            binder.bindScope(ViewSynthesisShared.class, Scopes.SINGLETON);
-        }
-    });
+//    private static final Injector injector = );
 
     // -------------------------------------------------------------------------
     // Action
@@ -76,7 +69,23 @@ public abstract class SynthesisActionHook extends SynthesisHook implements IActi
     public ActionResult execute(ActionContext context) {
         // inject members
         if (parent == null) {
-            injector.injectMembers(this);
+            Guice.createInjector(new Module() {
+
+                @SuppressWarnings({ "unchecked" })
+                @Override
+                public void configure(Binder binder) {
+                    ISynthesis synthesis = context.getViewContext().getDiagramSynthesis();
+                    // als magic
+                    if (synthesis instanceof ReinitializingDiagramSynthesisProxy<?>) {
+                        binder.bind(new TypeLiteral<AbstractDiagramSynthesis<?>>() { })
+                            .to((Class<? extends AbstractDiagramSynthesis<?>>) ((ReinitializingDiagramSynthesisProxy<?>) synthesis).getDelegate().getClass());
+                    } else {
+                        binder.bind(new TypeLiteral<AbstractDiagramSynthesis<?>>() { })
+                            .to((Class<? extends AbstractDiagramSynthesis<?>>) synthesis.getClass());
+                    }
+                    binder.bindScope(ViewSynthesisShared.class, Scopes.SINGLETON);
+                }
+            }).injectMembers(this);
         }
         
         // set used view context
@@ -86,6 +95,7 @@ public abstract class SynthesisActionHook extends SynthesisHook implements IActi
         if (context.getKNode() != null) {
             return executeAction(context.getKNode());
         }
+        
         
         return ActionResult.createResult(false);
     }

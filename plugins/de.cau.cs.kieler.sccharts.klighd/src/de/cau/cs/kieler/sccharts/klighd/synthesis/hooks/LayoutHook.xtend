@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * 
  */
 @ViewSynthesisShared
-class LayoutHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class LayoutHook extends SynthesisHook {
 
     /** This property is set if any element should override HV or VH layout annotation effects */
     private static final IProperty<Boolean> BLOCK_ALTERNATIN_LAYOUT = new Property<Boolean>(

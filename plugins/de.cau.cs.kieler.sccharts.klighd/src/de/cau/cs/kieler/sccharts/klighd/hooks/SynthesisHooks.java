@@ -41,13 +41,13 @@ import de.cau.cs.kieler.sccharts.klighd.SCChartsKlighdPlugin;
 /**
  * This class provides new instances of all available hooks for the {@link SRTGSynthesis}.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
 @ViewSynthesisShared
-public class SynthesisHooks {
+public class SynthesisHooks implements ISynthesisHooks {
 
     /**
      * Enumeration for fast invocation of the correct hook method.
@@ -142,7 +142,8 @@ public class SynthesisHooks {
     public SynthesisHooks(Injector injector, AbstractDiagramSynthesis<?> synthesis) {
         hooks = new ArrayList<SynthesisHook>(registeredHooks.size());
         for (Class<? extends SynthesisHook> hook : registeredHooks) {
-            hooks.add((SynthesisHook) injector.getInstance(hook));
+            SynthesisHook hookInstance = (SynthesisHook) injector.getInstance(hook);
+            hooks.add(hookInstance);
         }
         hooks.sort(decendingHookPriority);
     }

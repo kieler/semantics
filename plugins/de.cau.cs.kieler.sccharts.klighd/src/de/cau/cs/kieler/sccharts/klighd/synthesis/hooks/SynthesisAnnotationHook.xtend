@@ -37,7 +37,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * @kieler.design 2015-11-4 proposed
  * @kieler.rating 2015-11-4 proposed yellow
  */
-class SynthesisAnnotationHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class SynthesisAnnotationHook extends SynthesisHook {
 
     // Annotation Keyword
     /** The annotation keyword for setting synthesis options */

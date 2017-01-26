@@ -40,7 +40,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * 
  */
 @ViewSynthesisShared
-class BlackWhiteModeHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class BlackWhiteModeHook extends SynthesisHook {
 
     @Inject
     extension KRenderingExtensions

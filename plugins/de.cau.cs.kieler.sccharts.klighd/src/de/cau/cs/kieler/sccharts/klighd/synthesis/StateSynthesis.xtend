@@ -25,16 +25,14 @@ import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -45,7 +43,7 @@ import de.cau.cs.kieler.sccharts.Scope
  * 
  */
 @ViewSynthesisShared
-class StateSynthesis extends SubSynthesis<SCChartsSynthesis, State, KNode> {
+class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension KNodeExtensions
@@ -177,5 +175,5 @@ class StateSynthesis extends SubSynthesis<SCChartsSynthesis, State, KNode> {
         return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
-
+    
 }

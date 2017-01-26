@@ -30,8 +30,6 @@ import org.eclipse.elk.graph.KEdge
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
-import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -42,7 +40,7 @@ import de.cau.cs.kieler.sccharts.Scope
  * 
  */
 @ViewSynthesisShared
-class TransitionSynthesis extends SubSynthesis<AbstractSCChartsSynthesis<Scope>, Transition, KEdge> {
+class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     @Inject
     extension KNodeExtensions

@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
@@ -30,7 +29,6 @@ import org.eclipse.elk.graph.KEdge
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SubSynthesis
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -41,7 +39,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.SubSynthesis
  * 
  */
 @ViewSynthesisShared
-class SRTGTransitionSynthesis extends SubSynthesis<SRTGSynthesis, Transition, KEdge> {
+class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
 
     @Inject
     extension KNodeExtensions

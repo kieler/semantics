@@ -36,7 +36,7 @@ import de.cau.cs.kieler.sccharts.Scope
  * 
  */
  @ViewSynthesisShared
-class PrioritybasedCompilationHook extends SynthesisHook<AbstractSCChartsSynthesis<Scope>> {
+class PrioritybasedCompilationHook extends SynthesisHook {
 
     @Inject
     extension SCChartsExtension

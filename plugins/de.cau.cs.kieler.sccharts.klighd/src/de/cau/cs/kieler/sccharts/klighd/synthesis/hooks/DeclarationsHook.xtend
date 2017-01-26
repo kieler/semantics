@@ -45,7 +45,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * 
  */
 @ViewSynthesisShared
-class DeclarationsHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
+class DeclarationsHook extends SynthesisActionHook {
 
     @Inject
     extension StateStyles

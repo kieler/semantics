@@ -58,7 +58,7 @@ import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
  * @kieler.rating 2015-08-13 proposed yellow
  * 
  */
-class SCGLoopHook extends SynthesisActionHook<AbstractSCChartsSynthesis<Scope>> {
+class SCGLoopHook extends SynthesisActionHook {
 
     extension KRenderingFactory = KRenderingFactory::eINSTANCE
 

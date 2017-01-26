@@ -23,7 +23,6 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SubSynthesis
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -34,7 +33,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.SubSynthesis
  * 
  */
 @ViewSynthesisShared
-class SRTGStateSynthesis extends SubSynthesis<SRTGSynthesis, State, KNode> {
+class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
 
     @Inject
     extension KNodeExtensions
