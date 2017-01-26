@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.ui.ide.workbench"
-            description="%productDescription"
+            description="A research project on enhancing the model-based design of complex systems."
             name="KIELER">
          <property
                name="aboutText"
