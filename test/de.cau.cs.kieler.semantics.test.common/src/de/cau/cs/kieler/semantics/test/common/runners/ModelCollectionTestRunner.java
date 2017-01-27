@@ -415,6 +415,12 @@ public class ModelCollectionTestRunner extends Suite {
             ModelFilter modelFilterAn = getClassAnnotation(ModelFilter.class);
             String modelFilter = modelFilterAn != null ? modelFilterAn.value() : null;
             
+            System.out.println("BundleId:"+bundleId);
+            System.out.println("ModelPaths:"+modelPaths);
+            System.out.println("ModelFilter:"+modelFilter);
+            
+            System.out.println("Bundle:"+ Platform.getBundle(bundleId));
+            
             // try to obtain the mandatory and optional provider methods:
             FrameworkMethod bundleIdMethod = bundleId == null
                     ? getAnnotatedMethod(getTestClass(), BundleId.class) : null;
