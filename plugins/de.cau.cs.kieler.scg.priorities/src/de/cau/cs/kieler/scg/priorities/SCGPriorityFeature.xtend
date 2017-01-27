@@ -26,7 +26,7 @@ class SCGPriorityFeature extends Feature {
     }
     
     override getName() {
-        "SCG Prio Test"
+        "Priority Calculation"
     }   
     
     

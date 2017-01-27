@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.priorities.extensions.SCLPTransformationExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Stack
@@ -50,8 +49,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
      extension AnnotationsExtensions
      @Inject 
      extension KExpressionsValuedObjectExtensions
-     @Inject
-     extension SCLPTransformationExtensions
      @Inject 
      extension SCG2CSerializeHRExtensions
      
@@ -130,6 +127,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         currentIndentation = ""
         forkJoinSb = new StringBuilder
         generatedForks.clear
+        previousNode.clear
         
         
         program.addHeader;
@@ -287,9 +285,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         }
         visited.put(node, true)
         
-        
         previousNode.push(node)
-        
         //Translate the node depending on its type
         if (node instanceof Assignment) {
             sb.transformNode(node as Assignment)
@@ -382,9 +378,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var String labelHead
         var children = fork.next
         
-        //FIXME: Sorts by beginning priority, but end priority should also be considered.
-        //End Priority should not be important --> As long as the largest start priority is not the smallest
-        //end priority (which it isnt), the cleanup should always work due to the join macros
         val xchildren = children.sortBy[(it.target.getAnnotation("optPrioIDs") as IntAnnotation).value].reverse
         
         
@@ -394,7 +387,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
             val nxt = child.target
             val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
             val last = (nxt as Entry).exit
-            //FIXME: Empty Regions do not work (create Labels that do not compile since they have nothing inside
             //FIXME: Dumb enumeration of regions
             val regionName = nxt.getStringAnnotationValue("regionName")
             
@@ -674,4 +666,31 @@ class SCLPTransformation extends AbstractProductionTransformation{
             sb.append(" join1(" + prio + ");\n")
         }*/
     }
+    
+    
+    /**
+     * Helper function to create a String containing the priorities of the different threads.
+     * Used for the joinn-macro.
+     * 
+     * @param prioList
+     *                  The priorities of the threads listed in the join statement
+     */
+    def createPrioString(ArrayList<Integer> prioList) {
+        
+        var s = new StringBuilder()
+        
+        for(prio : prioList) {
+            s.append(prio)
+            if(!prio.equals(prioList.last)) {
+                s.append(", ")
+            }
+        }
+        
+        
+        return s.toString
+    }
+    
+    
+    
+    
 }
