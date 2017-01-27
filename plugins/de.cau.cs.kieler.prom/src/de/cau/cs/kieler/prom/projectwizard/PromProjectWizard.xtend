@@ -313,7 +313,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 MessageDialog.openError(shell, "Error", "Could not initialize '" + resolvedProjectRelativePath +"'\n" 
                     + "with '" + data.origin + "'.\n"
                     + "Please make sure that all paths are valid.\n\n"
-                    + e.message
+                    + e.stackTrace
                 )
                 return false
             }
