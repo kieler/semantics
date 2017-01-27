@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
+import java.util.ArrayList
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
@@ -29,7 +30,6 @@ import org.eclipse.elk.graph.KEdge
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import java.util.ArrayList
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -60,7 +60,7 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
 
-        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+//        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
         } else {
@@ -72,7 +72,7 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         edge.target = transition.targetState.node;
 
         // Basic spline
-        edge.addTransitionPolyline();
+        edge.addTransitionSpline();
 
         // Modifiers
         if (transition.isImmediate2) {
@@ -103,7 +103,7 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         }
         
 //        edge.setLayoutOption(CoreOptions.NO_LAYOUT, true)
-        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
+//        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
 
         return new ArrayList<KEdge>(1) => [ add(edge) ];
     }

@@ -32,6 +32,8 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import org.eclipse.elk.core.options.HierarchyHandling
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.graph.KNode
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -80,6 +82,8 @@ class SRTGSynthesis extends AbstractSCChartsSynthesis<Scope> {
         
         return options.toList;
     }
+    
+    public static KNode myRootNode 
 
     // -------------------------------------------------------------------------
     // The main entry transform function   
@@ -87,12 +91,15 @@ class SRTGSynthesis extends AbstractSCChartsSynthesis<Scope> {
         val startTime = System.currentTimeMillis;
         
         val rootNode = createNode();
+        myRootNode = rootNode
         
         rootNode.setLayoutOption(CoreOptions.ALGORITHM, "org.eclipse.elk.layered")
+//        rootNode.setLayoutOption(LayeredOptions.NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX)
         rootNode.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
-        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::POLYLINE);
+        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED);
 //        rootNode.setLayoutOption(CoreOptions.LAYOUT_HIERARCHY, true)
+//        rootNode.setLayoutOption(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.SEPARATE_CHILDREN)
 //        rootNode.setLayoutOption(LayeredOptions.SPACING_IN_LAYER_SPACING_FACTOR, 200f);
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad

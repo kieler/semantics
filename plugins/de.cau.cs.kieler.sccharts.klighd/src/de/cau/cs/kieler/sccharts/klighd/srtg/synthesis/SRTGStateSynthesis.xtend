@@ -28,6 +28,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
+import org.eclipse.elk.core.options.Direction
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -45,6 +47,9 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
     
     @Inject
     extension KEdgeExtensions    
+    
+    @Inject
+    extension KRenderingExtensions    
 
     @Inject
     extension SRTGTransitionSynthesis
@@ -62,13 +67,13 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
         val node = state.createNode().associateWith(state);
         val result = <KNode> newArrayList(node)
 
-//        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
-//        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-//        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
-//        node.setLayoutOption(CoreOptions::SPACING_NODE, 10f);
+        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
+        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
+        node.setLayoutOption(CoreOptions::SPACING_NODE, 10f);
 
         // Basic state style
-        node.addMacroFigure
+        node.addDefaultFigure
 
         // Styles from modifiers
         if (state.isInitial) {
@@ -80,11 +85,11 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
 
         node.setShadowStyle
 
-//        if (!state.label.nullOrEmpty) {
-//           node.addSimpleStateLabel(state.label).associateWith(state)
-//        } else {
-//            node.addEmptyStateLabel
-//        }
+        if (!state.label.nullOrEmpty) {
+           node.addSimpleStateLabel(state.label).associateWith(state)
+        } else {
+            node.addEmptyStateLabel
+        }
 
         // Transform all outgoing transitions
         for (transition : state.outgoingTransitions) {
@@ -96,16 +101,26 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
             transition.transform
         }
         
+//        val stateRegionNode = createNode
+//        stateRegionNode.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
+////        stateRegionNode.setLayoutOption(CoreOptions.COMMENT_BOX, true)
+//        result += stateRegionNode
+//        stateRegionNode.addRectangle => [
+//            lineWidth = 1
+//        ]        
+//                
 
         // Transform regions
         for (region : state.regions) {
             switch region {
                 ControlflowRegion: {
                         val regionNodes = region.transform
-                        result += regionNodes
+//                        result += regionNodes
+                            SRTGSynthesis.myRootNode.children += regionNodes
+//                        stateRegionNode.children += regionNodes
                         
                         val regionNode = regionNodes.head
-                        val edge = state.createEdge
+                        val edge = state.createEdge(region)
 
                         if (USE_KLAY.booleanValue) {
                             edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f)
@@ -117,7 +132,21 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
                         edge.target = regionNode
 
                         edge.addTransitionPolyline
-                        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
+                        edge.setLayoutOption(CoreOptions.NO_LAYOUT, true)
+
+
+                        val dummyEdge = createEdge
+                        dummyEdge.addTransitionPolyline => [
+                            lineWidth = 0
+                        ]
+                        if (state.eContainer == null) {
+                            dummyEdge.source = state.node                        
+                        } else {
+                            dummyEdge.source = state.eContainer.getNode("states")
+                        }
+                        dummyEdge.target = region.node
+                        dummyEdge.setLayoutOption(CoreOptions.PRIORITY, 2)
+
                     }
             }
         }

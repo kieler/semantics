@@ -30,6 +30,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import java.util.ArrayList
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import org.eclipse.elk.core.options.Direction
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -75,9 +76,25 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
             addButton("" + label)
         ]
 
+        val regionStateNode = region.createNode("states")
+        regionStateNode.setLayoutOption(CoreOptions.DIRECTION, Direction.RIGHT)
+        regionStateNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        result += regionStateNode
+        regionStateNode.addRectangle => [
+            lineWidth = 0
+        ]
+        
+        val dummyEdge = regionStateNode.createEdge
+        dummyEdge.addTransitionPolyline => [
+            lineWidth = 0
+        ]
+        dummyEdge.source = node
+        dummyEdge.target = regionStateNode
+
         for (state : region.states) {
             val stateNodes = state.transform
-            result += stateNodes
+//            result += stateNodes
+            regionStateNode.children += stateNodes
                         
             val stateNode = stateNodes.head
             val edge = region.createEdge(stateNode)
@@ -93,6 +110,7 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
             edge.target = stateNode
 
             edge.addTransitionPolyline
+            edge.setLayoutOption(CoreOptions.NO_LAYOUT, true)
         }
 
         return result;
