@@ -142,15 +142,15 @@ typedef int bool;
     PAUSEG_(__LABEL__); }
 
 #define join2(sib1, sib2)					\
-  _case __LABEL__: if (isEnabledAnyOf((u2b(sib1) | u2b(sib2)))) {	\
+  _case __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2))) {	\
     PAUSEG_(__LABEL__); }
 
 #define join3(sib1, sib2, sib3)						\
-  _case __LABEL__: if (isEnabledAnyOf((u2b(sib1) | u2b(sib2) | u2b(sib3)))) {	\
+  _case __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3))) {	\
     PAUSEG_(__LABEL__); }
 
 #define join4(sib1, sib2, sib3, sib4)					\
-  _case __LABEL__: if (isEnabledAnyOf((u2b(sib1) | u2b(sib2) | u2b(sib3) | u2b(sib4)))) { \
+  _case __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3) | u2b(sib4))) { \
     PAUSEG_(__LABEL__); }
 
 // Terminate the thread leading up to "par"

@@ -257,12 +257,12 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
 #define _setCopyFrom(set1, set2)     set1 = set2
 #define _setAddSet(set1, set2)       set1 |= set2
 #define _setDelSet(set1, set2)       set1 &= ~set2
-#define _setIsEmpty(set)             (set == 0)
+#define _setIsEmpty(set)             ((set) == 0)
 //#define _setContains(set, i)         (printf("set=%ld, u2b=%lu, set & u2b(i)=%ld",set, (unsigne
-#define _setContains(set, i)         ((set & u2b(i)) != 0)
-#define _setNotOnlyElem0(set)        (set != u2b(0))
-#define _setIsDisjoint(set1, set2)   ((set1 & set2) == 0)
-//#define _setIsNotDisjoint(set1, set2) ((set1 & set2) != 0)
+#define _setContains(set, i)         (((set) & u2b(i)) != 0)
+#define _setNotOnlyElem0(set)        ((set) != u2b(0))
+#define _setIsDisjoint(set1, set2)   (((set1) & (set2)) == 0)
+//#define _setIsNotDisjoint(set1, set2) (((set1) & (set2)) != 0)
 
 _setPartType * enabledPtr, *signalsPtr, *tickInputsPtr, *tickOutputsPtr, *tickSignalsPtr;
 
