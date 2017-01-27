@@ -123,7 +123,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure;
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
 
     /**

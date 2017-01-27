@@ -22,7 +22,12 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.KNode
 
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -37,6 +42,9 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
 
     @Inject
     extension KNodeExtensions
+    
+    @Inject
+    extension KEdgeExtensions    
 
     @Inject
     extension SRTGTransitionSynthesis
@@ -45,18 +53,22 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
     extension SRTGControlflowRegionSynthesis
 
     @Inject
-    extension StateStyles
+    extension SRTGStateStyles
+    
+    @Inject
+    extension SRTGTransitionStyles
 
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
+        val result = <KNode> newArrayList(node)
 
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
-        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
+//        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+//        node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
+//        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
+//        node.setLayoutOption(CoreOptions::SPACING_NODE, 10f);
 
         // Basic state style
-        node.addDefaultFigure
+        node.addMacroFigure
 
         // Styles from modifiers
         if (state.isInitial) {
@@ -68,25 +80,49 @@ class SRTGStateSynthesis extends SRTGSubSynthesis<State, KNode> {
 
         node.setShadowStyle
 
-        if (!state.label.nullOrEmpty) {
-           node.addSimpleStateLabel(state.label).associateWith(state)
-        } else {
-            node.addEmptyStateLabel
-        }
+//        if (!state.label.nullOrEmpty) {
+//           node.addSimpleStateLabel(state.label).associateWith(state)
+//        } else {
+//            node.addEmptyStateLabel
+//        }
 
         // Transform all outgoing transitions
         for (transition : state.outgoingTransitions) {
-            transition.transform;
+            
+//            val transitionNode = transition.createNode
+//            transitionNode.addConnectorFigure
+//            node.children += transitionNode        
+
+            transition.transform
         }
+        
 
         // Transform regions
         for (region : state.regions) {
             switch region {
-                ControlflowRegion: node.children += region.transform
+                ControlflowRegion: {
+                        val regionNodes = region.transform
+                        result += regionNodes
+                        
+                        val regionNode = regionNodes.head
+                        val edge = state.createEdge
+
+                        if (USE_KLAY.booleanValue) {
+                            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f)
+                        } else {
+                            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f)
+                        }
+        
+                        edge.source = node
+                        edge.target = regionNode
+
+                        edge.addTransitionPolyline
+                        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
+                    }
             }
         }
 
-        return node;
+        return result;
     }
 
 }

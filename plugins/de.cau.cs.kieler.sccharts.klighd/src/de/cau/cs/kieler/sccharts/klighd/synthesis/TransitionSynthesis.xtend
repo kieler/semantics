@@ -112,7 +112,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.addLabel(label.toString).associateWith(transition);
         }
 
-        return edge;
+        return <KEdge> newArrayList(edge)
     }
 
 }

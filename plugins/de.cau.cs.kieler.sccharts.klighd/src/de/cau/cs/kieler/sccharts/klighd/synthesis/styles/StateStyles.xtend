@@ -66,13 +66,13 @@ class StateStyles {
     public static final IProperty<KContainerRendering> DECLARATIONS_CONTAINER = new Property<KContainerRendering>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.style.state.declarations", null);
 
-    private var baseLineWidth = 1;
+    protected var baseLineWidth = 1;
     
     /**
      * Adds a connector figure.
      */
     def KRoundedRectangle addConnectorFigure(KNode node) {
-        node.setNodeSize(7, 7);
+        node.setNodeSize(2, 2);
         node.addRoundedRectangle(7, 7, baseLineWidth) => [
             background = STATE_CONNECTOR.color;
             foreground = STATE_CONNECTOR.color;

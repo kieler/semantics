@@ -167,7 +167,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.children += state.createReferenceRegion
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
 
     /** Checks if given state should be visualized as macro state */

@@ -180,7 +180,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             ]
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
     
     private static val int MINIMALNODEWIDTH = 40

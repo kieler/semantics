@@ -66,11 +66,14 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
      *            the model element to transform.
      * @return the transformed diagram element.
      */
-    public final O transform(I element) {
-        O result = performTranformation(element);
+    public final List<O> transform(I element) {
+        List<O> result = performTranformation(element);
         ISynthesisHooks hooks = getHooks();
-        if (hooks != null) 
-            hooks.invokeHooks(hookType, element, result);
+        if (hooks != null) {
+            for(O ele : result) {
+                hooks.invokeHooks(hookType, element, ele);
+            }
+        }
         return result;
     }
 
@@ -81,7 +84,7 @@ public abstract class AbstractSubSynthesis<I extends EObject, O extends KGraphEl
      *            the model element to transform.
      * @return the transformed diagram element.
      */
-    abstract public O performTranformation(I element);
+    abstract public List<O> performTranformation(I element);
 
     /**
      * The {@link SynthesisOption} this hook contributes to the synthesis.

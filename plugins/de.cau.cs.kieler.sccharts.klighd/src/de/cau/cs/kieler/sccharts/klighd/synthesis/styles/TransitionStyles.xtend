@@ -75,6 +75,12 @@ class TransitionStyles {
         ]
     }
     
+    def KPolyline addTransitionPolyline(KEdge edge) {
+        edge.addPolyline => [
+            lineWidth = 2;
+        ]
+    }    
+    
     /**
      * Sets the style of the line to immediate.
      */

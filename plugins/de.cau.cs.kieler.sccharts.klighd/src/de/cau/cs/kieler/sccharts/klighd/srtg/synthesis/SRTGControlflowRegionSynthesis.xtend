@@ -26,7 +26,10 @@ import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.graph.KNode
 
+import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import java.util.ArrayList
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -41,6 +44,9 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
 
     @Inject
     extension KNodeExtensions
+    
+    @Inject
+    extension KEdgeExtensions        
 
     @Inject
     extension KRenderingExtensions
@@ -53,14 +59,14 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
 
     @Inject
     extension ControlflowRegionStyles
+    
+    @Inject
+    extension SRTGTransitionStyles    
 
     override performTranformation(ControlflowRegion region) {
-        val node = region.createNode().associateWith(region);
-
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
-        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
+        val node = region.createNode().associateWith(region)
+        val result = <KNode> newArrayList(node)
+        node.setMinimalNodeSize(40,7)
         
         val label = if(region.label.nullOrEmpty) "" else " " + region.label;
 
@@ -70,10 +76,26 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
         ]
 
         for (state : region.states) {
-            node.children += state.transform;
+            val stateNodes = state.transform
+            result += stateNodes
+                        
+            val stateNode = stateNodes.head
+            val edge = region.createEdge(stateNode)
+
+//            node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
+            if (USE_KLAY.booleanValue) {
+                edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f)
+            } else {
+                edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f)
+            }
+
+            edge.source = node
+            edge.target = stateNode
+
+            edge.addTransitionPolyline
         }
 
-        return node;
+        return result;
     }
 
 }

@@ -29,6 +29,7 @@ import org.eclipse.elk.graph.KEdge
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import java.util.ArrayList
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -71,12 +72,14 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         edge.target = transition.targetState.node;
 
         // Basic spline
-        edge.addTransitionSpline();
+        edge.addTransitionPolyline();
 
         // Modifiers
         if (transition.isImmediate2) {
             edge.setImmediateStyle
         }
+        
+        edge.addDefaultDecorator
 
         switch (transition.type) {
             case STRONGABORT: edge.addStrongAbortionDecorator
@@ -98,8 +101,11 @@ class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }
+        
+//        edge.setLayoutOption(CoreOptions.NO_LAYOUT, true)
+        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
 
-        return edge;
+        return new ArrayList<KEdge>(1) => [ add(edge) ];
     }
 
 }

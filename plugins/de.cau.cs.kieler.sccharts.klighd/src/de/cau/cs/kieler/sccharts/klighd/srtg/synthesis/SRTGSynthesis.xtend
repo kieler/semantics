@@ -26,6 +26,12 @@ import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import java.util.LinkedHashSet
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import org.eclipse.elk.core.options.HierarchyHandling
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -81,15 +87,20 @@ class SRTGSynthesis extends AbstractSCChartsSynthesis<Scope> {
         val startTime = System.currentTimeMillis;
         
         val rootNode = createNode();
+        
+        rootNode.setLayoutOption(CoreOptions.ALGORITHM, "org.eclipse.elk.layered")
+        rootNode.setLayoutOption(CoreOptions.DIRECTION, Direction.DOWN)
+        rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::POLYLINE);
+        rootNode.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment.BALANCED);
+//        rootNode.setLayoutOption(CoreOptions.LAYOUT_HIERARCHY, true)
+//        rootNode.setLayoutOption(LayeredOptions.SPACING_IN_LAYER_SPACING_FACTOR, 200f);
                 
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
 
         if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
-        } else if (root instanceof ControlflowRegion) {
-            rootNode.children += controlflowSynthesis.transform(root).children;
-        }
+        } 
         
         // Add tracking adapter to allow access to source model associations
         val trackingAdapter = new SourceModelTrackingAdapter();
