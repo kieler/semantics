@@ -1,13 +1,8 @@
 package de.cau.cs.kieler.sccharts.test
 
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.Models
 import java.io.File
-import java.util.ArrayList
 import org.eclipse.core.runtime.Path
-import org.eclipse.core.runtime.Platform
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 
 class SCChartsTestBase {
     

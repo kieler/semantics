@@ -12,59 +12,60 @@
  */
 package de.cau.cs.kieler.sccharts.test
 
-import com.google.common.base.Strings
-import com.google.common.collect.Lists
-import de.cau.cs.kieler.annotations.AnnotationsPackage
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.sccharts.SCChartsPackage
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.Models
-import java.io.File
-import java.io.PrintStream
-import java.util.ArrayList
-import java.util.Collections
-import java.util.List
-import org.eclipse.core.runtime.Platform
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.compare.Diff
-import org.eclipse.emf.compare.DifferenceKind
-import org.eclipse.emf.compare.DifferenceSource
-import org.eclipse.emf.compare.EMFCompare
-import org.eclipse.emf.compare.Match
-import org.eclipse.emf.compare.diff.DefaultDiffEngine
-import org.eclipse.emf.compare.diff.DiffBuilder
-import org.eclipse.emf.compare.diff.FeatureFilter
-import org.eclipse.emf.compare.match.DefaultComparisonFactory
-import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
-import org.eclipse.emf.compare.match.eobject.ProximityEObjectMatcher
-import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
-import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
-import org.eclipse.emf.compare.scope.DefaultComparisonScope
-import org.eclipse.emf.ecore.EAttribute
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-import java.io.IOException
-
-/** 
- * Transformation tests.
- * The input model is compiled with a specific transformation
- * and the resulting output compared with a prototype for the transformation.
- * 
- * @author aas
- */
 // Commented out because the semantic tests in
 // kieler.sccharts.sim.c.test are better suited to test the transformations. 
 
+//import com.google.common.base.Strings
+//import com.google.common.collect.Lists
+//import de.cau.cs.kieler.annotations.AnnotationsPackage
+//import de.cau.cs.kieler.annotations.StringAnnotation
+//import de.cau.cs.kieler.kico.KielerCompiler
+//import de.cau.cs.kieler.kico.KielerCompilerContext
+//import de.cau.cs.kieler.sccharts.SCChartsPackage
+//import de.cau.cs.kieler.sccharts.State
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.Models
+//import java.io.File
+//import java.io.PrintStream
+//import java.util.ArrayList
+//import java.util.Collections
+//import java.util.List
+//import org.eclipse.core.runtime.Platform
+//import org.eclipse.emf.common.util.EList
+//import org.eclipse.emf.common.util.URI
+//import org.eclipse.emf.compare.Diff
+//import org.eclipse.emf.compare.DifferenceKind
+//import org.eclipse.emf.compare.DifferenceSource
+//import org.eclipse.emf.compare.EMFCompare
+//import org.eclipse.emf.compare.Match
+//import org.eclipse.emf.compare.diff.DefaultDiffEngine
+//import org.eclipse.emf.compare.diff.DiffBuilder
+//import org.eclipse.emf.compare.diff.FeatureFilter
+//import org.eclipse.emf.compare.match.DefaultComparisonFactory
+//import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
+//import org.eclipse.emf.compare.match.eobject.ProximityEObjectMatcher
+//import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
+//import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
+//import org.eclipse.emf.compare.scope.DefaultComparisonScope
+//import org.eclipse.emf.ecore.EAttribute
+//import org.eclipse.emf.ecore.EObject
+//import org.eclipse.emf.ecore.EReference
+//import org.eclipse.emf.ecore.EStructuralFeature
+//import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+//import org.junit.Assert
+//import org.junit.Test
+//import org.junit.runner.RunWith
+//import java.io.IOException
+//
+///** 
+// * Transformation tests.
+// * The input model is compiled with a specific transformation
+// * and the resulting output compared with a prototype for the transformation.
+// * 
+// * @author aas
+// */
+//
 //@RunWith(typeof(ModelCollectionTestRunner))
 //@ModelPath("tests/**")
 //class TransformationTest extends SCChartsTestBase {

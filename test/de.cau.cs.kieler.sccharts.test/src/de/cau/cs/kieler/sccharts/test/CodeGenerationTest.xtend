@@ -12,25 +12,26 @@
  */
 package de.cau.cs.kieler.sccharts.test
 
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath
-import org.eclipse.emf.ecore.EObject
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-
-/** 
- * Tests the KiCo compilation of model files to code. 
- * 
- * @author aas
- */
 // Commented out because the semantic tests in
 // kieler.sccharts.sim.c.test are better suited to test the transformations. 
 
+//import de.cau.cs.kieler.kico.KielerCompiler
+//import de.cau.cs.kieler.kico.KielerCompilerContext
+//import de.cau.cs.kieler.sccharts.State
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId
+//import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath
+//import org.eclipse.emf.ecore.EObject
+//import org.junit.Assert
+//import org.junit.Test
+//import org.junit.runner.RunWith
+//
+///** 
+// * Tests the KiCo compilation of model files to code. 
+// * 
+// * @author aas
+// */
+//
 //@RunWith(typeof(ModelCollectionTestRunner))
 //@ModelPath("tests/**")
 //class CodeGenerationTest extends SCChartsTestBase{
