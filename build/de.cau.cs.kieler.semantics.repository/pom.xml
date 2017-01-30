@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <version>0.10.0-SNAPSHOT</version>
+  <version>0.12.0-SNAPSHOT</version>
   <artifactId>de.cau.cs.kieler.semantics.repository</artifactId>
   <packaging>eclipse-repository</packaging>
   <name>KIELER Semantics Repository</name>
@@ -31,15 +30,15 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <unzip src="${update.site.dir}/content.jar" dest="${update.site.dir}" />
-                <delete file="${update.site.dir}/content.jar" />
-                <copy file="${basedir}/category.xml" tofile="${update.site.dir}/category.xml" overwrite="true" />
-                <copy file="${update.site.dir}/content.xml" tofile="${update.site.dir}/content.copy.xml" overwrite="true" />
-                <xslt style="contentfix.xsl" in="${update.site.dir}/content.copy.xml" out="${update.site.dir}/content.xml" />
-                <zip destfile="${update.site.dir}/content.jar" basedir="${update.site.dir}" includes="content.xml" />
-                <delete file="${update.site.dir}/category.xml" />
-                <delete file="${update.site.dir}/content.xml" />
-                <delete file="${update.site.dir}/content.copy.xml" />
+                <unzip src="${update.site.dir}/content.jar" dest="${update.site.dir}"/>
+                <delete file="${update.site.dir}/content.jar"/>
+                <copy file="${basedir}/category.xml" tofile="${update.site.dir}/category.xml" overwrite="true"/>
+                <copy file="${update.site.dir}/content.xml" tofile="${update.site.dir}/content.copy.xml" overwrite="true"/>
+                <xslt style="contentfix.xsl" in="${update.site.dir}/content.copy.xml" out="${update.site.dir}/content.xml"/>
+                <zip destfile="${update.site.dir}/content.jar" basedir="${update.site.dir}" includes="content.xml"/>
+                <delete file="${update.site.dir}/category.xml"/>
+                <delete file="${update.site.dir}/content.xml"/>
+                <delete file="${update.site.dir}/content.copy.xml"/>
               </tasks>
             </configuration>
             <goals>

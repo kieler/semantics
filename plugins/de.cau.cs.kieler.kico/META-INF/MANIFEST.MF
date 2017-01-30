@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Compiler
 Bundle-SymbolicName: de.cau.cs.kieler.kico;singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.KiCoPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.core.runtime,

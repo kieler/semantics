@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="de.cau.cs.kieler.dependencies.feature"
-      label="Dependencies"
-      version="0.5.2.qualifier"
-      provider-name="Kiel University">
+<feature id="de.cau.cs.kieler.dependencies.feature" label="Dependencies" version="0.12.0.qualifier" provider-name="Kiel University">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/">
       Dependencies of the KIELER project used for building a Rich Client Application.
@@ -13,36 +9,14 @@
       The plug-ins and features included in this feature originate from different projects.
    </copyright>
 
-   <includes
-         id="org.lejos.nxt.ldt.feature"
-         version="0.0.0"/>
+   <includes id="org.lejos.nxt.ldt.feature" version="0.0.0"/>
 
-   <plugin
-         id="org.eclipse.ui.views.log"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <plugin id="org.eclipse.ui.views.log" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin
-         id="org.apache.log4j"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <plugin id="org.apache.log4j" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin
-         id="org.apache.commons.lang"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <plugin id="org.apache.commons.lang" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin
-         id="de.cau.cs.kieler.core.product"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <plugin id="de.cau.cs.kieler.core.product" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>
