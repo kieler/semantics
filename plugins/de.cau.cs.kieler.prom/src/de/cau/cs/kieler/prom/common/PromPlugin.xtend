@@ -39,7 +39,7 @@ import org.osgi.framework.BundleContext
 class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     
     // The plug-in ID
-    public static val ID = "de.cau.kieler.prom"
+    public static val ID = "de.cau.cs.kieler.prom"
     
     // The shared instance
     private static PromPlugin plugin;
