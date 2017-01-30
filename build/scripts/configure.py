@@ -21,6 +21,7 @@ import argparse
 import traceback
 from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
+from myreuse import *
 
 releaseUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/'
 nightlyUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/'
@@ -90,6 +91,7 @@ def main(args):
 
     print '\n= Finished Configuring ='
 
+
 def createUpdatesiteFacade(template, args):
     target = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/facade/index.html')
     with open(template, 'r') as inFile:
@@ -103,6 +105,7 @@ def createUpdatesiteFacade(template, args):
 
             outFile.write(inFile.read().format(**settings))
             print 'Generated update site index for %s build' % settings['description']
+
 
 def setCategoryDesc(category, targetplatform, args):
     xml = etree.parse(category, parser = etree.XMLParser(remove_comments=False, remove_blank_text=True))
@@ -137,6 +140,7 @@ def setCategoryDesc(category, targetplatform, args):
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
+
 def setFeatureUpdatesite(features, args):
     for featureDir in sorted(os.listdir(features)):
         feature = join(features, featureDir, 'feature.xml')
@@ -161,6 +165,7 @@ def setFeatureUpdatesite(features, args):
                 f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
                 xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
+
 def setArtifactName(product, args):
     xml = etree.parse(product, parser = etree.XMLParser(remove_comments=False))
     archivename = xml.find('./p:build/p:plugins/p:plugin/p:configuration/p:products/p:product/p:archiveFileName', namespaces={'p':'http://maven.apache.org/POM/4.0.0'})
@@ -177,6 +182,7 @@ def setArtifactName(product, args):
     else:
         print 'Cannot find archiveFileName element in %s' % product
         pause(args)
+
 
 def setProductUpdateSite(pom, args):
     xml = etree.parse(pom, parser = etree.XMLParser(remove_comments=False))
@@ -200,6 +206,7 @@ def setProductUpdateSite(pom, args):
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
+
 def setProductUpdateSites(p2inf, targetplatform, args):
     updatesites = targetplatform
     if args.release:
@@ -215,19 +222,6 @@ def setProductUpdateSites(p2inf, targetplatform, args):
             f.write('  addRepository(type:0,location:%s);\\\n' % site.replace(':', '${#58}'))
             f.write('  addRepository(type:1,location:%s);\\\n' % site.replace(':', '${#58}'))
 
-def pause(args):
-    if not args.nonstop:
-        raw_input('Press Enter to continue...')
-
-def repository(path):
-    if not isdir(path):
-        raise argparse.ArgumentTypeError("%s is not a valid path" % path)
-    if not isdir(join(path, '.git')):
-        raise argparse.ArgumentTypeError("%s is not a git repository" % path)
-    if os.access(path, os.R_OK):
-        return path
-    else:
-        raise argparse.ArgumentTypeError("%s is not a readable directory" % path)
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='Release script to to configure the the build for a nightly or realease build.')

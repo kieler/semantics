@@ -19,8 +19,11 @@ import re
 import os
 import argparse
 import traceback
+import htmlentitydefs
+import xml.etree.ElementTree as serializer
 from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
+from myreuse import *
 
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 
@@ -41,15 +44,44 @@ def main(args):
         sys.exit(-1)
     setProjectVersion(features, args, [setFeatureVersion, setPomVersion])
 
-    print '\n- Updating category.xml -'
+    print '\n- Updating p2 repository -'
     # check category file
     category = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/category.xml')
     if not isfile(category):
         print 'category.xml does not exist: ' + category
         sys.exit(-1)
     updateCategory(features, category, args)
+    # check pom file
+    pom = join(args.path, 'build/de.cau.cs.kieler.semantics.repository/pom.xml')
+    if not isfile(pom):
+        print 'pom.xml does not exist: ' + pom
+        sys.exit(-1)
+    setPomVersion(join(args.path, 'build'), 'de.cau.cs.kieler.semantics.repository', args)
+
+    print '\n- Updating product plugin.xml -'
+    # check product file
+    product = join(args.path, 'plugins/de.cau.cs.kieler.core.product/plugin.xml')
+    if not isfile(product):
+        print 'plugin.xml does not exist: ' + product
+        sys.exit(-1)
+    updateProductPlugin(product, args)
+
+    print '\n- Updating product -'
+    # check product file
+    product = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/kieler.product')
+    if not isfile(product):
+        print 'plugin.xml does not exist: ' + product
+        sys.exit(-1)
+    updateProduct(product, args)
+    # check pom file
+    pom = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/pom.xml')
+    if not isfile(pom):
+        print 'pom.xml does not exist: ' + pom
+        sys.exit(-1)
+    setPomVersion(join(args.path, 'build'), 'de.cau.cs.kieler.semantics.product.repository', args)
 
     print '\n= Finished Version Update ='
+
 
 def setProjectVersion(directory, args, setter):
     for project in sorted(os.listdir(directory)):
@@ -65,6 +97,7 @@ def setProjectVersion(directory, args, setter):
                 print '-- %s' % ex
                 traceback.print_exc()
                 pause(args)
+
 
 def setMainfestVersion(directory, project, args):
     manifest = join(directory, project, 'META-INF', 'MANIFEST.MF')
@@ -82,6 +115,7 @@ def setMainfestVersion(directory, project, args):
         print '-- MANIFEST.MF file is missing!'
         pause(args)
 
+
 def setFeatureVersion(directory, project, args):
     feature = join(directory, project, 'feature.xml')
     if isfile(feature):
@@ -98,6 +132,7 @@ def setFeatureVersion(directory, project, args):
         print '-- feature.xml file is missing!'
         pause(args)
 
+
 def setPomVersion(directory, project, args):
     pom = join(directory, project, 'pom.xml')
     if isfile(pom):
@@ -109,6 +144,7 @@ def setPomVersion(directory, project, args):
     else:
         print '-- pom.xml file is missing!'
         pause(args)
+
 
 def updateCategory(features, category, args):
     xml = etree.parse(category, parser = etree.XMLParser(remove_comments=False, remove_blank_text=True))
@@ -146,19 +182,30 @@ def updateCategory(features, category, args):
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
-def pause(args):
-    if not args.nonstop:
-        raw_input('Press Enter to continue...')
-
-def repository(path):
-    if not isdir(path):
-        raise argparse.ArgumentTypeError("%s is not a valid path" % path)
-    if not isdir(join(path, '.git')):
-        raise argparse.ArgumentTypeError("%s is not a git repository" % path)
-    if os.access(path, os.R_OK):
-        return path
+def updateProductPlugin(product, args):
+    xml = etree.parse(product, parser = etree.XMLParser(remove_comments=False))
+    version = xml.find("./extension/product/property[@name='version']")
+    if version is not None:
+        version.attrib['value'] = args.version
+        print 'Set version in product plugin'
     else:
-        raise argparse.ArgumentTypeError("%s is not a readable directory" % path)
+        print 'Cannot find versio property element in %s' % version
+        pause(args)
+
+    with open(product, 'w') as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
+        xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
+
+def updateProduct(product, args):
+    xml = etree.parse(product, parser = etree.XMLParser(remove_comments=False))
+    xml.getroot().attrib['version'] = '%s.qualifier' % args.version
+    print 'Set version in product'
+
+    with open(product, 'w') as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
+        # restore html entities
+        f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
+
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='Release script to set version number in all plugins and update references.')
