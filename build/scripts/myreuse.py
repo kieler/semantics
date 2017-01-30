@@ -26,12 +26,13 @@ def pause(args):
 
 def restoreHTMLentities(text):
     entities = {
-        '"' : '&quot;',
-        "'" : '&apos;'
+        u'"' : u'&quot;',
+        u"'" : u'&apos;',
+        u'&amp;#' : u'&#'
     }
-    cdataPattern = re.compile(r'>[^<]*<')
-    entityPattern = re.compile(r'(' + '|'.join(entities.keys()) + r')')
-    return cdataPattern.sub(lambda x: entityPattern.sub(lambda y: entities[y.group()], x.group()), text)
+    cdataPattern = re.compile(ur'>[^<]*<', re.UNICODE)
+    entityPattern = re.compile(ur'(' + '|'.join(entities.keys()) + ur')', re.UNICODE)
+    return cdataPattern.sub(lambda x: entityPattern.sub(lambda y: entities[y.group()], x.group()), text.decode('UTF-8'), re.UNICODE).encode('UTF-8')
 
 
 def repository(path):

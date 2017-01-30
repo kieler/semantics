@@ -121,13 +121,11 @@ def setFeatureVersion(directory, project, args):
     if isfile(feature):
         xml = etree.parse(feature, parser = etree.XMLParser(remove_comments=False, resolve_entities=False))
         xml.getroot().attrib['version'] = '%s.qualifier' % args.version
-        # retain html entities
-        # license = xml.find('./license')
-        # if license is not None:
-        #     license.text = license.text.replace('"', '&quot;')
+
         with open(feature, 'w') as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
-            xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
+            # restore html entities
+            f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
     else:
         print '-- feature.xml file is missing!'
         pause(args)

@@ -157,13 +157,10 @@ def setFeatureUpdatesite(features, args):
                 print 'Set updatesite url in %s' % featureDir
             # no else because dependency feature has not url
 
-            # retain html entities
-            # license = xml.find('./license')
-            # if license is not None:
-            #     license.text = license.text.replace('"', '&quot;')
             with open(feature, 'w') as f:
                 f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
-                xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
+                # restore html entities
+                f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
 
 
 def setArtifactName(product, args):
@@ -200,11 +197,12 @@ def setProductUpdateSite(pom, args):
     # retain html entities
     trimspace = xml.find('./p:properties/p:sourceFeatureLabelSuffix', namespaces={'p':'http://maven.apache.org/POM/4.0.0'})
     if updatesite is not None:
-        trimspace.text = u'\xa0(Sources)'
+        trimspace.text = u'&#xA0;(Sources)'
 
     with open(pom, 'w') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
-        xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
+        # restore html entities
+        f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
 
 
 def setProductUpdateSites(p2inf, targetplatform, args):
