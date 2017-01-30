@@ -45,7 +45,7 @@
             <product>
               <id>de.cau.cs.kieler.product</id>
               <rootFolder>kieler</rootFolder>
-              <archiveFileName>sccharts_rca_${buildQualifier}</archiveFileName>
+              <archiveFileName>sccharts_rca_0.12.0</archiveFileName>
             </product>
           </products>
         </configuration>

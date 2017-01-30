@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics Release 0.12" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/">
-      Update site for the KIELER Semantics project release builds.
-   </description>
+  <description name="KIELER Semantics (Release 0.12.0)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/">Update site for the KIELER Semantics release 0.12.0.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
@@ -33,4 +31,9 @@
   <feature id="de.cau.cs.kieler.sccharts.feature.source" url="features/de.cau.cs.kieler.sccharts.feature.source_0.12.0.qualifier.jar" version="0.12.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
+  <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.1.0/" enabled="true"/>
+  <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
 </site>
