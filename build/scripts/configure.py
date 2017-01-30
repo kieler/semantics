@@ -22,7 +22,8 @@ import traceback
 from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
 
-PROJECT_PREFIX = 'de.cau.cs.kieler'
+releaseUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/'
+nightlyUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/'
 
 def main(args):
     if args.release:
@@ -54,6 +55,14 @@ def main(args):
         print 'category.xml does not exist: ' + category
         sys.exit(-1)
     setCategoryDesc(category, targetplatform, args)
+
+    print '\n- Processing Features -'
+    # check features path
+    features = join(args.path, 'features')
+    if not isdir(features):
+        print 'No features directory found in ' + args.path
+        sys.exit(-1)
+    setFeatureUpdatesite(features, args)
 
     print '\n- Setting product artifact name -'
     # check product pom file
@@ -103,11 +112,11 @@ def setCategoryDesc(category, targetplatform, args):
     if description is not None:
         if args.release:
             description.attrib['name'] = 'KIELER Semantics (Release %s)' % args.release
-            description.attrib['url'] = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/' % args.release
+            description.attrib['url'] = releaseUpdatesite % args.release
             description.text = 'Update site for the KIELER Semantics release %s.' % args.release
         else:
             description.attrib['name'] = 'KIELER Semantics (Nightly Builds)'
-            description.attrib['url'] = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/'
+            description.attrib['url'] = nightlyUpdatesite
             description.text = 'Update site for the KIELER Semantics project nightly builds.'
         print 'Description set to: %s' % description.attrib['name']
     else:
@@ -128,6 +137,29 @@ def setCategoryDesc(category, targetplatform, args):
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
+def setFeatureUpdatesite(features, args):
+    for featureDir in sorted(os.listdir(features)):
+        feature = join(features, featureDir, 'feature.xml')
+        if isfile(feature):
+            xml = etree.parse(feature, parser = etree.XMLParser(remove_comments=False))
+            updatesite = xml.find('./url/update')
+            if updatesite is not None:
+                if args.release:
+                    updatesite.attrib['label'] = 'KIELER Release %s' % args.release
+                    updatesite.attrib['url'] = releaseUpdatesite % args.release
+                else:
+                    updatesite.attrib['label'] = 'KIELER Nightly Builds'
+                    updatesite.attrib['url'] = nightlyUpdatesite
+                print 'Set updatesite url in %s' % featureDir
+            # no else because dependency feature has not url
+
+            # retain html entities
+            # license = xml.find('./license')
+            # if license is not None:
+            #     license.text = license.text.replace('"', '&quot;')
+            with open(feature, 'w') as f:
+                f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
+                xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
 
 def setArtifactName(product, args):
     xml = etree.parse(product, parser = etree.XMLParser(remove_comments=False))
@@ -151,9 +183,9 @@ def setProductUpdateSite(pom, args):
     updatesite = xml.find('./p:properties/p:kieler.semantics.updatesite', namespaces={'p':'http://maven.apache.org/POM/4.0.0'})
     if updatesite is not None:
         if args.release:
-            updatesite.text = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/' % args.release
+            updatesite.text = releaseUpdatesite % args.release
         else:
-            updatesite.text = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/'
+            updatesite.text = nightlyUpdatesite
         print 'Product Updatesite: %s' % updatesite.text
     else:
         print 'Cannot find kieler.semantics.updatesite element in %s' % pom
@@ -171,9 +203,9 @@ def setProductUpdateSite(pom, args):
 def setProductUpdateSites(p2inf, targetplatform, args):
     updatesites = targetplatform
     if args.release:
-        updatesites.append('http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/' % args.release)
+        updatesites.append(releaseUpdatesite % args.release)
     else:
-        updatesites.append('http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/')
+        updatesites.append(nightlyUpdatesite)
     print 'Registered Updatesites:'
     
     with open(p2inf, 'w') as f:
