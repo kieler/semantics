@@ -415,11 +415,14 @@ public class ModelCollectionTestRunner extends Suite {
             ModelFilter modelFilterAn = getClassAnnotation(ModelFilter.class);
             String modelFilter = modelFilterAn != null ? modelFilterAn.value() : null;
             
+            // Debug
             System.out.println("BundleId:"+bundleId);
-            System.out.println("ModelPaths:"+modelPaths);
-            System.out.println("ModelFilter:"+modelFilter);
-            
-            System.out.println("Bundle:"+ Platform.getBundle(bundleId));
+            System.out.println("Model filter:"+modelFilter);
+            if(modelPaths != null) {
+                for(String s : modelPaths ) {
+                    System.out.println("Test model:"+s);
+                }
+            }
             
             // try to obtain the mandatory and optional provider methods:
             FrameworkMethod bundleIdMethod = bundleId == null
@@ -515,6 +518,8 @@ public class ModelCollectionTestRunner extends Suite {
                             }
                         }
                     }
+                    
+                    System.out.println("Is recursive:"+recurse);
                     
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
