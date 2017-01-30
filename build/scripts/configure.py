@@ -160,7 +160,8 @@ def setFeatureUpdatesite(features, args):
             with open(feature, 'w') as f:
                 f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
                 # restore html entities
-                f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
+                restoreHTMLentities(xml)
+                f.write(fixHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
 
 
 def setArtifactName(product, args):
@@ -202,7 +203,8 @@ def setProductUpdateSite(pom, args):
     with open(pom, 'w') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         # restore html entities
-        f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
+        restoreHTMLentities(xml)
+        f.write(fixHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
 
 
 def setProductUpdateSites(p2inf, targetplatform, args):

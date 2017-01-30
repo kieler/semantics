@@ -60,17 +60,17 @@ def main(args):
 
     print '\n- Updating product plugin.xml -'
     # check product file
-    product = join(args.path, 'plugins/de.cau.cs.kieler.core.product/plugin.xml')
-    if not isfile(product):
-        print 'plugin.xml does not exist: ' + product
+    plugin = join(args.path, 'plugins/de.cau.cs.kieler.core.product/plugin.xml')
+    if not isfile(plugin):
+        print 'plugin.xml does not exist: ' + plugin
         sys.exit(-1)
-    updateProductPlugin(product, args)
+    updateProductPlugin(plugin, args)
 
     print '\n- Updating product -'
     # check product file
     product = join(args.path, 'build/de.cau.cs.kieler.semantics.product.repository/kieler.product')
     if not isfile(product):
-        print 'plugin.xml does not exist: ' + product
+        print 'kieler.product does not exist: ' + product
         sys.exit(-1)
     updateProduct(product, args)
     # check pom file
@@ -125,7 +125,8 @@ def setFeatureVersion(directory, project, args):
         with open(feature, 'w') as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
             # restore html entities
-            f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
+            restoreHTMLentities(xml)
+            f.write(fixHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
     else:
         print '-- feature.xml file is missing!'
         pause(args)
@@ -202,7 +203,8 @@ def updateProduct(product, args):
     with open(product, 'w') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         # restore html entities
-        f.write(restoreHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
+        restoreHTMLentities(xml)
+        f.write(fixHTMLentities(etree.tostring(xml, encoding='UTF-8', pretty_print=True, xml_declaration=False)))
 
 
 if __name__ == "__main__":

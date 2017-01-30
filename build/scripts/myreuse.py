@@ -19,20 +19,25 @@ import argparse
 import os
 from os.path import isdir, join
 
+entities = {
+    '"' : '&quot;',
+    "'" : '&apos;'
+}
+
 def pause(args):
     if not args.nonstop:
         raw_input('Press Enter to continue...')
 
 
-def restoreHTMLentities(text):
-    entities = {
-        u'"' : u'&quot;',
-        u"'" : u'&apos;',
-        u'&amp;#' : u'&#'
-    }
-    cdataPattern = re.compile(ur'>[^<]*<', re.UNICODE)
-    entityPattern = re.compile(ur'(' + '|'.join(entities.keys()) + ur')', re.UNICODE)
-    return cdataPattern.sub(lambda x: entityPattern.sub(lambda y: entities[y.group()], x.group()), text.decode('UTF-8'), re.UNICODE).encode('UTF-8')
+def restoreHTMLentities(xml):
+    for element in xml.getroot().iter():
+        if isinstance(element.tag, basestring) and element.text:
+            for entity in entities:
+                element.text = element.text.replace(entity, entities[entity])
+
+def fixHTMLentities(text):
+    cdataPattern = re.compile(ur'&amp;[#\w\w\w;|'+'|'.join([e[1:] for e in entities.values()])+ur']', re.UNICODE)
+    return cdataPattern.sub(lambda x: u'&' + x.group()[5:], text.decode('UTF-8'), re.UNICODE).encode('UTF-8')
 
 
 def repository(path):
