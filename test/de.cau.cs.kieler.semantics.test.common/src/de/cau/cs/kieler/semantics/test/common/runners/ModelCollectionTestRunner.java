@@ -510,11 +510,14 @@ public class ModelCollectionTestRunner extends Suite {
                         }
                     }
                     
+                    System.out.println("Model path:"+modelPath);
+                    
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
                     urls.addAll(Collections.list(Platform.getBundle(bundleId).findEntries(
                             modelPath, modelFilter, recurse)));
                     
+                    System.out.println("#URLs:"+urls.size());
                 }
 
                 if (urls.isEmpty()) {
