@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
   <description name="KIELER Semantics (Release 0.12.0)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/">Update site for the KIELER Semantics release 0.12.0.</description>
-  
   <!-- CATEGORY DEFINITIONS -->
-
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
          Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components
@@ -14,9 +12,7 @@
          Source features for features of all other categories.
       </description>
   </category-def>
-
   <!-- KIELER SEMANTICS -->
-
   <feature url="features/de.cau.cs.kieler.esterel.feature_0.12.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.12.0.qualifier">
     <category name="kieler-sem"/>
   </feature>
@@ -29,9 +25,7 @@
   <feature url="features/de.cau.cs.kieler.sccharts.feature.source_0.12.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.12.0.qualifier">
     <category name="kieler-sources"/>
   </feature>
-
   <!-- Repository references to associated sites -->
-
   <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/" enabled="true"/>
