@@ -21,7 +21,7 @@ import argparse
 import traceback
 from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
-from myreuse import *
+from reuse import *
 
 releaseUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/'
 nightlyUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/'
@@ -225,7 +225,7 @@ def setProductUpdateSites(p2inf, targetplatform, args):
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='Release script to to configure the the build for a nightly or realease build.')
-    argParser.add_argument('--nonstop', action='store_true', help='script will not pause (prompt confirmation) if an error or warning occurs')
+    argParser.add_argument('-nonstop', action='store_true', help='script will not pause (prompt confirmation) if an error or warning occurs')
     argParser.add_argument('-release', metavar='version', help='cofigures the build files for a release build with the given version number')
     argParser.add_argument('path', type=repository, nargs='?', default=normpath(join(dirname(abspath(sys.argv[0])),'../..')), help='path to the project repository directory')
     try:

@@ -23,7 +23,7 @@ import htmlentitydefs
 import xml.etree.ElementTree as serializer
 from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
-from myreuse import *
+from reuse import *
 
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 
@@ -146,37 +146,12 @@ def setPomVersion(directory, project, args):
 
 
 def updateCategory(features, category, args):
-    xml = etree.parse(category, parser = etree.XMLParser(remove_comments=False, remove_blank_text=True))
-    root = xml.getroot()
-    for feature in root.findall('feature'):
-        print "Removing %s" % feature.attrib['id']
-        root.remove(feature)
-    for feature in sorted(os.listdir(features)):
-        if isdir(join(features, feature)):
-            # feature
-            feat = etree.Element('feature', attrib = {
-                'url' : 'features/%s_%s.qualifier.jar' % (feature, args.version),
-                'id' : '%s' % feature,
-                'version' : '%s.qualifier' % args.version
-            })
-            cat = etree.Element('category', attrib = {
-                'name' : 'kieler-sem'
-            })
-            feat.append(cat)
-            root.append(feat)
-            print "Adding feature %s" % feat.attrib['id']
-            #source feature
-            feat = etree.Element('feature', attrib = {
-                'url' : 'features/%s.source_%s.qualifier.jar' % (feature, args.version),
-                'id' : '%s.source' % feature,
-                'version' : '%s.qualifier' % args.version
-            })
-            cat = etree.Element('category', attrib = {
-                'name' : 'kieler-sources'
-            })
-            feat.append(cat)
-            root.append(feat)
-            print "Adding source feature %s" % feat.attrib['id']
+    xml = etree.parse(category, parser = etree.XMLParser(remove_comments=False))
+    for feature in xml.findall('feature'):
+        feature.attrib['url'] = 'features/%s_%s.qualifier.jar' % (feature.attrib['id'], args.version)
+        feature.attrib['version'] = '%s.qualifier' % args.version
+        print "Updated version of %s feature" % feature.attrib['id']
+    
     with open(category, 'w') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n') # etree creates a wrong xml decl
         xml.write(f, encoding='UTF-8', pretty_print=True, xml_declaration=False)
@@ -209,7 +184,7 @@ def updateProduct(product, args):
 
 if __name__ == "__main__":
     argParser = argparse.ArgumentParser(description='Release script to set version number in all plugins and update references.')
-    argParser.add_argument('--nonstop', action='store_true', help='script will not pause (prompt confirmation) if an error or warning occurs')
+    argParser.add_argument('-nonstop', action='store_true', help='script will not pause (prompt confirmation) if an error or warning occurs')
     argParser.add_argument('version', help='version number to set')
     argParser.add_argument('path', type=repository, nargs='?', default=normpath(join(dirname(abspath(sys.argv[0])),'../..')), help='path to the project repository directory')
     try:
