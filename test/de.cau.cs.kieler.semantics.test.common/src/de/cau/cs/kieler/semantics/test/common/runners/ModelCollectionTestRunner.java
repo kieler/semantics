@@ -515,26 +515,12 @@ public class ModelCollectionTestRunner extends Suite {
                         }
                     }
                     
-                    System.out.println("Model path:"+modelPath);
-                    System.out.println("BundleId:"+bundleId);
-                    System.out.println("Filter:"+modelFilter);
-                    System.out.println("Recursive:"+recurse);
-                    
-                    System.out.println("#URLs A:"+urls.size());
-                    
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
                     Bundle bundle = Platform.getBundle(bundleId);
-                    Enumeration<URL> enuEntries = bundle.findEntries(modelPath, modelFilter, recurse);
-                    if(enuEntries != null) {
-                        ArrayList<URL> entries = Collections.list(enuEntries);
-                        for(URL e : entries) {
-                            System.out.println("Entry:"+e.toString());
-                        }
-                        System.out.println("Entries:"+entries);
-                        urls.addAll(entries);
-                        
-                        System.out.println("#URLs B:"+urls.size());
+                    Enumeration<URL> entries = bundle.findEntries(modelPath, modelFilter, recurse);
+                    if(entries != null) {
+                        urls.addAll(Collections.list(entries));
                     } else {
                         System.err.println("ModelCollectionTestRunner:No entries for path '" + modelPath
                                 +"' in plugin '" + bundleId + "' (filter:"+modelFilter+", recursive:"+recurse+")");
