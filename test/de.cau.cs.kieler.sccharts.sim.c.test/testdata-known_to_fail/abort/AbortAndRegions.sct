@@ -1,3 +1,4 @@
+// This model is not serializable after the Abort transformation (01.02.2016)
 @Transformation ABORT
 scchart AbortsAndRegions {
    

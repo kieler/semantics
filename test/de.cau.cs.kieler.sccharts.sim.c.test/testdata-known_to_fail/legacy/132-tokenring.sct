@@ -1,3 +1,4 @@
+// This model is not savable (see KISEMA-1131)
 scchart S0 "TokenRingArbiter" {
   signal pure P1;
   signal pure P2;

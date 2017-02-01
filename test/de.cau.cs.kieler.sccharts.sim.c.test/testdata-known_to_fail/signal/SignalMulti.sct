@@ -1,4 +1,4 @@
-@diagram[KLayLayered] false  
+// This model is not savable because of a grammar issue (see KISEMA-1131)
 scchart SignalMulti {
   output signal S1;
   output signal S2;
@@ -7,16 +7,12 @@ scchart SignalMulti {
   output bool A2 = false;
   
   region R1:
-
   initial state S1
   --> S2 with / S1; S2; S3; A1 = true;
-
   state S2;
 
   region R2:
-
   initial state S3
   --> S4 with S1 & S2 & S3 / A2 = true;
-
   state S4;
 }
