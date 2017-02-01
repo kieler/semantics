@@ -514,18 +514,31 @@ public class ModelCollectionTestRunner extends Suite {
                     }
                     
                     System.out.println("Model path:"+modelPath);
+                    System.out.println("BundleId:"+bundleId);
+                    System.out.println("Filter:"+modelFilter);
+                    System.out.println("Recursive:"+recurse);
+                    
                     System.out.println("#URLs A:"+urls.size());
                     
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
                     Bundle bundle = Platform.getBundle(bundleId);
-                    System.out.println("Bundle:"+bundle);
+                    ArrayList<URL> es = Collections.list(bundle.findEntries(modelPath, "*.*", true));
+                    for (URL e : es) {
+                        System.out.println(e);
+                    }
+                    
                     ArrayList<URL> entries = Collections.list(bundle.findEntries(modelPath, modelFilter, recurse));
+                    for(URL e : entries) {
+                        System.out.println("Entry:"+e.toString());
+                    }
+                    System.out.println("Entries:"+entries);
                     urls.addAll(entries);
                     
                     System.out.println("#URLs B:"+urls.size());
                 }
 
+                
                 if (urls.isEmpty()) {
                     // if nothing is found (without a failing) return an empty list
                     return Collections.emptyList();
