@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.eclipse.core.runtime.ILog;
@@ -523,21 +524,29 @@ public class ModelCollectionTestRunner extends Suite {
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
                     Bundle bundle = Platform.getBundle(bundleId);
-                    ArrayList<URL> es = Collections.list(bundle.findEntries(modelPath, "*.*", true));
-                    for (URL e : es) {
-                        System.out.println(e);
+                    System.out.println("state:"+bundle.getState());
+                    System.out.println("A");
+                    Enumeration<URL> enu = bundle.findEntries(modelPath, "*.*", true);
+                    System.out.println("Enumeration:"+enu);
+                    while(enu != null && enu.hasMoreElements()) {
+                        System.out.println(enu.nextElement());
                     }
                     
-                    ArrayList<URL> entries = Collections.list(bundle.findEntries(modelPath, modelFilter, recurse));
-                    for(URL e : entries) {
-                        System.out.println("Entry:"+e.toString());
+                    Enumeration<URL> enuEntries = bundle.findEntries(modelPath, modelFilter, recurse);
+                    if(enuEntries != null) {
+                        ArrayList<URL> entries = Collections.list(enuEntries);
+                        for(URL e : entries) {
+                            System.out.println("Entry:"+e.toString());
+                        }
+                        System.out.println("Entries:"+entries);
+                        urls.addAll(entries);
+                        
+                        System.out.println("#URLs B:"+urls.size());
+                    } else {
+                        System.err.println("ModelCollectionTestRunner:No entries for path " + modelPath
+                                +" in plugin " + bundleId + " (filter:"+modelFilter+", recursive:"+recurse+")");
                     }
-                    System.out.println("Entries:"+entries);
-                    urls.addAll(entries);
-                    
-                    System.out.println("#URLs B:"+urls.size());
                 }
-
                 
                 if (urls.isEmpty()) {
                     // if nothing is found (without a failing) return an empty list

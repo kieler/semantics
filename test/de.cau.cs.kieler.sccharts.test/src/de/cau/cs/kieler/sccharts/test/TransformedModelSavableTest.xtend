@@ -37,10 +37,10 @@ import java.io.File
  */
 @RunWith(typeof(ModelCollectionTestRunner))
 @BundleId("de.cau.cs.kieler.sccharts.sim.c.test")
-//@ModelPath("/testdata-basics/**", "/testdata-simple/**",
-//           "/testdata-cmot-diss/simple/**", "/testdata-cmot-diss/complex/**", "/testdata-cmot-diss/composite/**",
-//           "/testdata-advanced/**")
-@ModelPath("/testdata-basics/**")
+//@ModelPath("testdata-basics/**", "testdata-simple/**",
+//           "testdata-cmot-diss/simple/**", "testdata-cmot-diss/complex/**", "testdata-cmot-diss/composite/**",
+//           "testdata-advanced/**")
+@ModelPath("testdata-basics/**")
 @ModelFilter("*.sct")
 class TransformedModelSavableTest extends SCChartsTestBase{
     
