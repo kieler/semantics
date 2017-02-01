@@ -504,10 +504,11 @@ public class ModelCollectionTestRunner extends Suite {
                     if (modelPath != null) {
                         if (modelPath.endsWith("/**")) {
                             // SUPPRESS CHECKSTYLE NEXT 5 MagicNumber
-                            modelPath = modelPath.substring(0, modelPath.length() - 3);
+                            // The ending slash must stay to mark a folder
+                            modelPath = modelPath.substring(0, modelPath.length() - 2);
                         } else {
                             if (modelPath.endsWith("/**/")) {
-                                modelPath = modelPath.substring(0, modelPath.length() - 4);
+                                modelPath = modelPath.substring(0, modelPath.length() - 3);
                             } else {
                                 recurse = false;
                             }
@@ -543,8 +544,8 @@ public class ModelCollectionTestRunner extends Suite {
                         
                         System.out.println("#URLs B:"+urls.size());
                     } else {
-                        System.err.println("ModelCollectionTestRunner:No entries for path " + modelPath
-                                +" in plugin " + bundleId + " (filter:"+modelFilter+", recursive:"+recurse+")");
+                        System.err.println("ModelCollectionTestRunner:No entries for path '" + modelPath
+                                +"' in plugin '" + bundleId + "' (filter:"+modelFilter+", recursive:"+recurse+")");
                     }
                 }
                 
