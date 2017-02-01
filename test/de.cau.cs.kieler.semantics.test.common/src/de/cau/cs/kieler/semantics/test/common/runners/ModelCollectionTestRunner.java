@@ -21,10 +21,12 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -45,6 +47,7 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
+import org.osgi.framework.Bundle;
 
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
@@ -511,13 +514,16 @@ public class ModelCollectionTestRunner extends Suite {
                     }
                     
                     System.out.println("Model path:"+modelPath);
+                    System.out.println("#URLs A:"+urls.size());
                     
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
-                    urls.addAll(Collections.list(Platform.getBundle(bundleId).findEntries(
-                            modelPath, modelFilter, recurse)));
+                    Bundle bundle = Platform.getBundle(bundleId);
+                    System.out.println("Bundle:"+bundle);
+                    ArrayList<URL> entries = Collections.list(bundle.findEntries(modelPath, modelFilter, recurse));
+                    urls.addAll(entries);
                     
-                    System.out.println("#URLs:"+urls.size());
+                    System.out.println("#URLs B:"+urls.size());
                 }
 
                 if (urls.isEmpty()) {
@@ -537,8 +543,10 @@ public class ModelCollectionTestRunner extends Suite {
                 String message = "ModelCollectionTestRunner:Loading model resources of " + bundleId
                         + "failed with the following exception:"
                         + System.getProperty("line.separator");
-                Platform.getLog(Platform.getBundle(bundleId)).log(
-                        new Status(IStatus.ERROR, bundleId, message, t));
+                ILog log = Platform.getLog(Platform.getBundle(bundleId));
+                log.log( new Status(IStatus.ERROR, bundleId, message, t));
+                
+                System.err.println(message + t.toString());
             }
             return Collections.emptyList();
         }
