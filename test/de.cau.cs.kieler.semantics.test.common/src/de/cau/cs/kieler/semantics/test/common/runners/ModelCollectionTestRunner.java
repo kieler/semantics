@@ -525,14 +525,6 @@ public class ModelCollectionTestRunner extends Suite {
                     // ... try to access the specified path, transform the Enumeration of URLs
                     //  into a list, and add them to the whole url list
                     Bundle bundle = Platform.getBundle(bundleId);
-                    System.out.println("state:"+bundle.getState());
-                    System.out.println("A");
-                    Enumeration<URL> enu = bundle.findEntries(modelPath, "*.*", true);
-                    System.out.println("Enumeration:"+enu);
-                    while(enu != null && enu.hasMoreElements()) {
-                        System.out.println(enu.nextElement());
-                    }
-                    
                     Enumeration<URL> enuEntries = bundle.findEntries(modelPath, modelFilter, recurse);
                     if(enuEntries != null) {
                         ArrayList<URL> entries = Collections.list(enuEntries);
