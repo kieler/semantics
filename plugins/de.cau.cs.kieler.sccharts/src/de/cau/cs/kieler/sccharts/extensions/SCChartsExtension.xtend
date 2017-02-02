@@ -1139,7 +1139,12 @@ class SCChartsExtension {
         if (scope == null)
             return decendingName
         else
-            return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
+            if (scope.id == null) {
+                println("ID of Scope " + scope.toString + " is null. This should not happen!")
+                return (scope.eContainer as Scope).getHierarchicalName("_" + decendingName)
+            } else {
+                return (scope.eContainer as Scope).getHierarchicalName(scope.id + "_" + decendingName)
+            }
     }
 
 
