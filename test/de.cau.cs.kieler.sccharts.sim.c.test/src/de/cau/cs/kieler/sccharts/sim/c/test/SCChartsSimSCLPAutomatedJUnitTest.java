@@ -62,8 +62,8 @@ public class SCChartsSimSCLPAutomatedJUnitTest extends SCChartsSimCAutomatedJUni
 //        paths.add(new Path("/testdata-cmot-diss/complex/"));
 //        paths.add(new Path("/testdata-cmot-diss/composite/"));
         // Add more complex tests
-//        paths.add(new Path("/testdata-advanced/"));
-        paths.add(new Path("/testdata-priority/"));
+        paths.add(new Path("/testdata-advanced/"));
+        //paths.add(new Path("/testdata-priority/"));
         return paths;
     }
     
