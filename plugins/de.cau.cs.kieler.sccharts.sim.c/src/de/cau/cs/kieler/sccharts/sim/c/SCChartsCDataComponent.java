@@ -147,11 +147,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     private static final String KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH = "";
     
     /** The Constant KIEM_PROPERTY_DIRTY_DEVELOPER */
-    private static final int KIEM_PROPERTY_DIRTY_DEVELOPER = 9;
-    /** The Constant KIEM_PROPERTY_NAME_DIRTY_DEVELOPER */
-    private static final String KIEM_PROPERTY_NAME_DIRTY_DEVELOPER = "Modeler or Developer";
-    /** The Constant KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER */
-    private static final String KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER = "Modeler";
+    private static final int KIEM_PROPERTY_ALWAYS_RECOMPILE = 9;
+    /** The Constant KIEM_PROPERTY_NAME_ALWAYS_RECOMPILE */
+    private static final String KIEM_PROPERTY_NAME_ALWAYS_RECOMPILE = "Always Recompile";
     
     private static final int KIEM_PROPERTY_ALLVARS = 10;
     private static final String KIEM_PROPERTY_NAME_ALLVARS = "Expose ALL Variables";
@@ -230,11 +228,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_IMPORTED_PROJECT_PATH] =
                 new KiemProperty(KIEM_PROPERTY_NAME_IMPORTED_PROJECT_PATH,
                         KIEM_PROPERTY_DEFAULT_IMPORTED_PROJECT_PATH);
-        String[] items = {"Modeler", "Developer"};
-        properties[KIEM_PROPERTY_DIRTY_DEVELOPER] =
-                new KiemProperty(KIEM_PROPERTY_NAME_DIRTY_DEVELOPER,
-                        new KiemPropertyTypeChoice(items), 
-                        KIEM_PROPERTY_DEFAULT_DIRTY_DEVELOPER);
+        properties[KIEM_PROPERTY_ALWAYS_RECOMPILE] =
+                new KiemProperty(KIEM_PROPERTY_NAME_ALWAYS_RECOMPILE, true);
         properties[KIEM_PROPERTY_ALLVARS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_ALLVARS, KIEM_PROPERTY_DEFAULT_ALLVARS);
         
@@ -289,8 +284,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     public boolean isDirty() {
         // Calculate a dirty indicator from ALL model elements and their textual representation's
         // hash code.
-        String dirtyDeveloper = this.getProperties()[KIEM_PROPERTY_DIRTY_DEVELOPER + KIEM_PROPERTY_DIFF].getValue();
-        if(dirtyDeveloper != null && dirtyDeveloper.equals("Developer")) {
+        boolean alwaysRecompile = this.getProperties()[KIEM_PROPERTY_ALWAYS_RECOMPILE + KIEM_PROPERTY_DIFF].getValueAsBoolean();
+        if(alwaysRecompile) {
             return true;
         }
         

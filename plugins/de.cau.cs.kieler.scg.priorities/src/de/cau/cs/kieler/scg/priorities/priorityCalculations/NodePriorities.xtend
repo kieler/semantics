@@ -24,7 +24,6 @@ import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import javax.inject.Inject
-import com.sun.java.util.jar.pack.Fixups.Fixup
 import de.cau.cs.kieler.scg.Fork
 
 /**
@@ -148,7 +147,6 @@ class NodePriorities {
     }
     
     
-    //WARNING: MIGHT LEAD TO UNEXPECTED PROBLEMS!!
     /**
      *  Finds join, entry or depth nodes, or nodes that have incoming dependencies. If these are encountered, they return 
      *  their node priority and propagate them to their following nodes.

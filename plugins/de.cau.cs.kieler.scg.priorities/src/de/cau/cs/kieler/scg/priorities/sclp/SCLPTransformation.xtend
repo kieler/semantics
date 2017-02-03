@@ -14,7 +14,6 @@ package de.cau.cs.kieler.scg.priorities.sclp
 
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.scg.Assignment
@@ -29,14 +28,14 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGAnnotations
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
+import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Stack
 import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
-import de.cau.cs.kieler.scg.priorities.PriorityAuxiliaryData
-import de.cau.cs.kieler.scg.transformations.c.SCG2CSerializeHRExtensions
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -47,8 +46,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
     
      @Inject 
      extension AnnotationsExtensions
-     @Inject 
-     extension KExpressionsValuedObjectExtensions
      @Inject 
      extension SCG2CSerializeHRExtensions
      
@@ -338,10 +335,9 @@ class SCLPTransformation extends AbstractProductionTransformation{
      */
     private def void transformNode(StringBuilder sb, Conditional cond) {
         
-        val condition = cond.condition.getAllReferences.head.valuedObject
 
         //IF-Case
-        sb.appendInd("if(" + condition.name + "){\n")
+        sb.appendInd("if(" + cond.condition.serializeHR + "){\n")
         currentIndentation += DEFAULT_INDENTATION
         
         sb.transformNode(cond.then.target)
@@ -388,7 +384,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             val ann = nxt.getAnnotation("optPrioIDs") as IntAnnotation
             val last = (nxt as Entry).exit
             //FIXME: Dumb enumeration of regions
-            val regionName = nxt.getStringAnnotationValue("regionName")
+            val regionName = nxt.getStringAnnotationValue("regionName").replaceAll(" ","")
             
             if(!nxt.equals(nodeHead)) {                
                 nodeList.add(nxt)

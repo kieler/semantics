@@ -1,0 +1,23 @@
+scchart DependencyAndCycle {
+	
+	output int x;
+	output int y;
+	
+	region A:
+	
+    initial state init
+    --> exitS immediate with / y = 0; x++;
+    
+    final state exitS;
+    
+    region B:
+    
+    initial state init
+    --> init immediate with y == 0 / y++; x = 0
+    --> exitS immediate with / x++;
+    
+    
+    final state exitS;
+    
+    
+}

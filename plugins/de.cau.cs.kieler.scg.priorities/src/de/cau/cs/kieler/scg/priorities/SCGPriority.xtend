@@ -126,7 +126,7 @@ class SCGPriority extends AbstractProductionTransformation{
             // show warning
             if (context != null) {
                 context.getCompilationResult().addPostponedWarning(
-                    new KielerCompilerException(getId, getId, "The SCG is NOT ASC-schedulable!"));
+                    new KielerCompilerException(getId, getId, "The SCG is NOT IASC-schedulable!"));
             }
             println("NOT SCHEDULABLE")
         }

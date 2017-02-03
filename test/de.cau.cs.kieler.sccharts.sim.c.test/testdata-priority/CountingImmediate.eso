@@ -1,0 +1,22 @@
+! reset;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+x(30)
+% Output: 
+;
+go 
+% Output: y(30) 
+;
+! reset;
+x(99) go 
+% Output: 
+;
+go 
+% Output: y(99) 
+;
+

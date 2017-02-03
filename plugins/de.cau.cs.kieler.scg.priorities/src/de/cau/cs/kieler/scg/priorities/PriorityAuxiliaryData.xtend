@@ -14,7 +14,6 @@ package de.cau.cs.kieler.scg.priorities
 
 import de.cau.cs.kieler.kico.AbstractKielerCompilerAuxiliaryData
 import de.cau.cs.kieler.scg.Node
-import java.util.HashMap
 import java.util.LinkedList
 
 /**
@@ -31,7 +30,6 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     public static final String THREAD_SEGMENT_ANNOTATION = "threadSegmentIDs"
     
     private LinkedList<LinkedList<Node>> stronglyConnectedComponents
-    private HashMap<Node, Integer> sccMap
     
     /**
      *  Returns all Strongly Connected Components of a SCG

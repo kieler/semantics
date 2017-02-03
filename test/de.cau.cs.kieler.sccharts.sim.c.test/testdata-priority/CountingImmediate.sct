@@ -1,0 +1,15 @@
+scchart NewModel {
+  
+  input  int x;
+  input  bool go;
+  output int y;
+
+    initial state init
+    --> count with go;
+    
+    state count
+    --> count immediate with x > 0 / x--; y++
+    --> fin immediate;
+    
+    final state fin;
+}
