@@ -64,7 +64,13 @@ int main()
       outputsOK = checkOutputs(runCnt, tickCnt, tickOutputsPtr);
       if (outputsOK) {
 	for (i = 0; i < sigsetSize; i++) {
-	  sigCopyFrom(tickSignalsPtr[i], castSignals(tickInputsPtr[i]) | castSignals(tickOutputsPtr[i]));
+	  //sigCopyFrom(tickSignalsPtr[i], castSignals(tickInputsPtr[i]) | castSignals(tickOutputsPtr[i]));
+	  // The above assumed that inputs that are set by the environment
+	  // must be persistent at the end of a tick. This is true for signals,
+	  // which cannot be set to "absent" once they have been set to present
+	  // by the environment. However, under sequential constructiveness, this
+	  // must not hold for boolean inputs, which may be set to false during a tick.
+	  sigCopyFrom(tickSignalsPtr[i], castSignals(tickOutputsPtr[i]));
 	}
 	for (i = 0; outputsOK && (i < sigsetSize); i++) {
 	  outputsOK = (castSignals(signalsPtr[i]) == castSignals(tickSignalsPtr[i]));
