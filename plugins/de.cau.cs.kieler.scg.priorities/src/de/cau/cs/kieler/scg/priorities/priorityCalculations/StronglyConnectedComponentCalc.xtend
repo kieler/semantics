@@ -66,18 +66,6 @@ class StronglyConnectedComponentCalc {
         while(!unvisitedNodes.isEmpty) {
             tarjan(unvisitedNodes.head)
         }
-        
-        //Debug information
-        /*var i = 0
-        for(scc : sccList) {
-            println("scc no: " + i)
-            for(node : scc) {
-                print(node)
-            }
-            i++
-            println();
-        }*/
-        //Debug information over
         sccList
     }
     
@@ -155,8 +143,6 @@ class StronglyConnectedComponentCalc {
                         if(dependency.concurrent && !dependency.confluent) {
                             if(dependency.type == DataDependencyType.WRITE_WRITE 
                                 || scc.contains(dependency.target)) {
-                                //println(node.concurrentDependencies)
-                                //println(node + " has a dependency issue with " + dependency.target + " " + dependency.concurrent)
                                 return false
                             }
                         }

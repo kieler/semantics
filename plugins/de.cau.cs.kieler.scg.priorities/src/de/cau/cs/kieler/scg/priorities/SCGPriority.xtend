@@ -36,19 +36,14 @@ class SCGPriority extends AbstractProductionTransformation{
     
     @Inject
     extension StronglyConnectedComponentCalc
-    
     @Inject
     extension NodePriorities
-    
     @Inject
     extension SCCExtensions
-    
     @Inject
     extension ThreadSegmentIDs
-    
     @Inject
     extension PrioIDs
-    
     @Inject
     extension OptimizedPrioIDs
     
@@ -90,7 +85,6 @@ class SCGPriority extends AbstractProductionTransformation{
             
             //Calculate node priorities with the help of strongly connected components
             val nodePrios = calcNodePrios(scc, sccMap, nodes)
-           
             
             //Calculate Thread Segment IDs
             val threadSegmentIDs = calcThreadSegmentIDs(nodes, nodePrios)
@@ -123,12 +117,11 @@ class SCGPriority extends AbstractProductionTransformation{
             
             
         } else {
-            // show warning
             if (context != null) {
                 context.getCompilationResult().addPostponedWarning(
                     new KielerCompilerException(getId, getId, "The SCG is NOT IASC-schedulable!"));
             }
-            println("NOT SCHEDULABLE")
+//            println("NOT SCHEDULABLE")
         }
         
         

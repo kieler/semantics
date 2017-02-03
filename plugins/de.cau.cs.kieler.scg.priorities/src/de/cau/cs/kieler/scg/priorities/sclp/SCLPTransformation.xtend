@@ -174,13 +174,12 @@ class SCLPTransformation extends AbstractProductionTransformation{
     protected def void declareVariables(StringBuilder sb, SCGraph scg) {
         
         for(declaration : scg.declarations) {
-//            println(declaration)
             if(declaration.type.toString == "string" || declaration.type.toString == "STRING") {
                 sb.append("char*")
             } else {
                 sb.appendInd(declaration.type.toString)
             }
-            //sb.append("int")
+
             for(variables : declaration.valuedObjects) {
                 if(!(variables.equals(declaration.valuedObjects.head))) {
                     sb.append(",")
@@ -468,8 +467,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The Join node from which the code is extracted
      */
     private def void transformNode(StringBuilder sb, Join join) {
-        //Eigentlich erst hier joinn aber das ignorieren wir mal.
-        //Es macht ja keinen wirklichen Unterschied, ob das im Fork oder im Join generiert wird.
         sb.transformNode(join.next.target)
         
     }
@@ -495,8 +492,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
         
         sb.transformNode(entry.next.target)
         
-        //Wenn root, dann: tickstart(p);
-        //Ansonsten ignorieren
     }
     
     
@@ -657,10 +652,6 @@ class SCLPTransformation extends AbstractProductionTransformation{
             
             generatedJoins.add(n)
         }
-        /*sb.appendInd("}")
-        for(prio : prioList) {
-            sb.append(" join1(" + prio + ");\n")
-        }*/
     }
     
     
