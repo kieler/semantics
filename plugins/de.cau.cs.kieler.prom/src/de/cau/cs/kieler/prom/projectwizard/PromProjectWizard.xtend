@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
+import org.eclipse.core.runtime.Status
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jface.dialogs.MessageDialog
@@ -310,11 +311,20 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     }
                 }
             } catch (Exception e) {
-                MessageDialog.openError(shell, "Error", "Could not initialize '" + resolvedProjectRelativePath +"'\n" 
+                e.printStackTrace()                
+                
+                var msg = "Could not initialize '" + resolvedProjectRelativePath +"'\n" 
                     + "with '" + data.origin + "'.\n"
-                    + "Please make sure that all paths are valid.\n\n"
-                    + e.message
-                )
+                    + "Please make sure that all paths are valid."
+                
+                // Log error
+                val bundle = Platform.getBundle(PromPlugin.ID)
+                val log = Platform.getLog(bundle)
+                log.log(new Status(Status.ERROR, PromPlugin.ID, msg, e))
+                
+                // Open dialog
+                MessageDialog.openError(shell, "Error", msg)
+                
                 return false
             }
         }

@@ -89,6 +89,8 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     // Transforming PRE Operator.
     def State transform(State rootState) {
+        nameCache.clear();
+        
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states

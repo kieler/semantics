@@ -67,6 +67,7 @@
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sccharts</module>
+    <module>de.cau.cs.kieler.sccharts.debug</module>
     <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.kivi</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>

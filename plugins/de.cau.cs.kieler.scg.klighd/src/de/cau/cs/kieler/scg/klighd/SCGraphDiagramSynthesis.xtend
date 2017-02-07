@@ -628,6 +628,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     text = text + threadPathType.toString2
                                     
                                 }
+                                
                                 var threadSegmentIDText = ""
                                 if(entry.hasAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION)) {
                                     threadSegmentIDText = "ThreadID: " + 
@@ -640,17 +641,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     labelTR.KRendering.setProperty(THREAD_PRIO_PROPERTY, true)
                                 }
                                 
-                                //addInsideTopRightNodeLabel(threadSegmentIDText, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                               //     it.KRendering.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
-                                //]
-                                
-                                addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                    it.KRendering.setForeground(REGIONLABEL.copy);
-                                    if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
-                                    
-                                ]
-                                    
-                                    
+                                if (SHOW_POTENTIALPROBLEMS.booleanValue) {
+                                    addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
+                                        it.KRendering.setForeground(REGIONLABEL.copy);
+                                        if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
+                                    ]
+                                }                                   
                             ]
                         }
                     ]]
