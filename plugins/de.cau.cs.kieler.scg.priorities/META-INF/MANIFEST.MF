@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Priorities
+Bundle-Name: Priority Compilation
 Bundle-SymbolicName: de.cau.cs.kieler.scg.priorities;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.priorities.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -20,4 +20,5 @@ Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.priorities,
  de.cau.cs.kieler.scg.priorities.extensions,
  de.cau.cs.kieler.scg.priorities.sclp
+Bundle-Vendor: Kiel University
 

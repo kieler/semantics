@@ -84,6 +84,7 @@
     <module>de.cau.cs.kieler.scg.circuit</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg.kivi</module>
+    <module>de.cau.cs.kieler.scg.priorities</module>
     <module>de.cau.cs.kieler.scg.s</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.scl.ui</module>
