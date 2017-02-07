@@ -54,7 +54,7 @@ public class SCChartsSimSCLPAutomatedJUnitTest extends SCChartsSimCAutomatedJUni
         // First add tests that have to fail. These are used to test the tests themself.
 //        paths.add(new Path("/testdata-must-fail/"));
         // Add basic tests. These test core features like states, transitions and hierarchy as well as variable types and operators.
-//        paths.add(new Path("/testdata-basics/"));
+        paths.add(new Path("/testdata-basics/"));
         // Add simple tests
         paths.add(new Path("/testdata-simple/"));
         // Add tests that are based on cmot's diss (cmot-diss > images > sccharts > features)
@@ -62,7 +62,7 @@ public class SCChartsSimSCLPAutomatedJUnitTest extends SCChartsSimCAutomatedJUni
 //        paths.add(new Path("/testdata-cmot-diss/complex/"));
 //        paths.add(new Path("/testdata-cmot-diss/composite/"));
         // Add more complex tests
-        paths.add(new Path("/testdata-advanced/"));
+//        paths.add(new Path("/knowntofail/"));
         //paths.add(new Path("/testdata-priority/"));
         return paths;
     }
