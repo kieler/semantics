@@ -15,23 +15,26 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import java.util.List
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.Transitionimport de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.Emission
-import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * SCCharts Pre Transformation.
@@ -114,27 +117,32 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
          val hasOutgoingTerminations = outgoingTerminations.length > 0
          val complexPre = ((hasOutgoingTerminations || state.isRootState) && state.regionsMayTerminate)        
 
-        // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action)).toList;
-        val allPreValuedObjects = state.valuedObjects.filter(
-            valuedObject|
-                allActions.filter(
-                    action|
-                        action.getPreExpression(valuedObject).hasNext ||
-                            action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
 
         var ControlflowRegion preRegion = null;
         var State preInit = null;
         var State preWait = null;
         var Transition transInitWait = null;
         var Transition transWaitInit = null;
-        
-		for (preValuedObject : allPreValuedObjects.immutableCopy) {
-		    if (preRegion == null || preInit == null || preWait == null) {
-		        allPreValuedObjects.setDefaultTrace
-		        
-		        preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
-		        preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
+
+
+        // Filter all valuedObjects and retrieve those that are referenced
+        val allActions = state.eAllContents.filter(typeof(Action)).toList;
+        var List<ValuedObject> allPreValuedObjects = null
+        // Repeat the next steps until no pre occurs anymore (in case of nested pre)
+        do {
+            allPreValuedObjects = state.valuedObjects.filter(
+                valuedObject|
+                    allActions.filter(
+                        action|
+                            action.getPreExpression(valuedObject).hasNext ||
+                                action.getPreValExpression(valuedObject).hasNext).size > 0).toList;
+    
+            // Initialize sccharts elements that are used instead pre
+            if(!allPreValuedObjects.isNullOrEmpty&& (preRegion == null || preInit == null || preWait == null)) {
+                allPreValuedObjects.setDefaultTrace
+                
+                preRegion = state.createControlflowRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+                preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache)
                 preWait = preRegion.createState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
                 if (complexPre) {
                     preWait.setFinal
@@ -144,83 +152,97 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
                 transInitWait = preInit.createImmediateTransitionTo(preWait);
                 transWaitInit = preWait.createTransitionTo(preInit);
             }
-		    
-		    // Tracing
-            preValuedObject.setDefaultTrace
             
-            val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
-                + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
-            newPre.copyAttributes(preValuedObject)
-            val newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
-                + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
-            newAux.copyAttributes(preValuedObject)
-
-
-            //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
-            transInitWait.addEffect(newAux.assign(preValuedObject.reference))
-
-            transWaitInit.addEffect(newPre.assign(newAux.reference))
-
-            //            val transWaitDone = preWait.createTransitionTo(preDone)
-            //            transWaitDone.setTrigger()
-            //            val transInitDone = preInit.createTransitionTo(preDone)
-            // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
-            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-            for (action : allActions) {
-                val preExpressions = action.getPreExpression(preValuedObject);
-                val preValExpressions = action.getPreValExpression(preValuedObject);
-
-                while (preExpressions.hasNext) {
-                    val preExpression = preExpressions.next
-                    val container = preExpression.eContainer;
-
-                    if (container instanceof OperatorExpression) {
-
-                        // If nested PRE or PRE inside another complex expression
-                        val i = (container as OperatorExpression).subExpressions.indexOf(preExpression)
-                        (container as OperatorExpression).subExpressions.remove(preExpression);
-                        (container as OperatorExpression).subExpressions.add(i, newPre.reference);
-                    } else if (container instanceof Action) {
-
-                        // If PRE directly a trigger
-                        (container as Action).setTrigger(newPre.reference)
-                    } else if (container instanceof Assignment) {
-
-                        // If PRE directly a assigned value
-                        (container as Assignment).expression = newPre.reference
-                    } else if (container instanceof Emission) {
-
-                        // If PRE directly an emitted value
-                        (container as Emission).newValue = newPre.reference
-                    }
+            // Remove pre statement
+    		for (preValuedObject : allPreValuedObjects.immutableCopy) {
+    		    // Is the valued object a variable that was introduced by the pre trafo itself?
+                val isValuedObjectOfNestedPre = preValuedObject.name.startsWith(GENERATED_PREFIX + "pre")
+                
+    		    // Tracing
+                preValuedObject.setDefaultTrace
+                
+                // New pre variable
+                val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
+                    + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+                newPre.copyAttributes(preValuedObject)
+                // New register variable
+                var ValuedObject newAux
+                if(!isValuedObjectOfNestedPre) {
+                    newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
+                        + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+                    newAux.copyAttributes(preValuedObject)
                 }
-
-                while (preValExpressions.hasNext) {
-                    val preValExpression = preValExpressions.next
-                    val container = preValExpression.eContainer;
-
-                    if ((!preValExpression.subExpressions.nullOrEmpty) &&
-                        preValExpression.subExpressions.get(0) instanceof OperatorExpression &&
-                        (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) {
-
-                        // Transform pre(?V) --> ?PreV
-                        val valueExpression = preValExpression.subExpressions.get(0);
-                        (valueExpression as OperatorExpression).subExpressions.remove(0);
-                        (valueExpression as OperatorExpression).add(newPre.reference);
-                        if (container instanceof Emission) {
-                            (container as Emission).setNewValue(valueExpression.copy);
-                        } else if (container instanceof OperatorExpression) {
-
+                
+                //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
+                if(isValuedObjectOfNestedPre) {
+                    transInitWait.addEffectBefore(newPre.assign(preValuedObject.reference))
+                } else {
+                    transInitWait.addEffectBefore(newAux.assign(preValuedObject.reference))
+                    transInitWait.addEffectBefore(newPre.assign(newAux.reference))
+                }
+    
+                //            val transWaitDone = preWait.createTransitionTo(preDone)
+                //            transWaitDone.setTrigger()
+                //            val transInitDone = preInit.createTransitionTo(preDone)
+                // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
+                // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
+                for (action : allActions) {
+                    val preExpressions = action.getPreExpression(preValuedObject);
+                    val preValExpressions = action.getPreValExpression(preValuedObject);
+    
+                    while (preExpressions.hasNext) {
+                        val preExpression = preExpressions.next
+                        val container = preExpression.eContainer;
+    
+                        if (container instanceof OperatorExpression) {
+    
                             // If nested PRE or PRE inside another complex expression
-                            (container as OperatorExpression).subExpressions.remove(preValExpression);
-                            (container as OperatorExpression).add(valueExpression.copy);
+                            val i = (container as OperatorExpression).subExpressions.indexOf(preExpression)
+                            (container as OperatorExpression).subExpressions.remove(preExpression);
+                            (container as OperatorExpression).subExpressions.add(i, newPre.reference);
+                        } else if (container instanceof Action) {
+    
+                            // If PRE directly a trigger
+                            (container as Action).setTrigger(newPre.reference)
+                        } else if (container instanceof Assignment) {
+    
+                            // If PRE directly a assigned value
+                            (container as Assignment).expression = newPre.reference
+                        } else if (container instanceof Emission) {
+    
+                            // If PRE directly an emitted value
+                            (container as Emission).newValue = newPre.reference
                         }
                     }
-
+    
+                    while (preValExpressions.hasNext) {
+                        val preValExpression = preValExpressions.next
+                        val container = preValExpression.eContainer;
+    
+                        if ((!preValExpression.subExpressions.nullOrEmpty) &&
+                            preValExpression.subExpressions.get(0) instanceof OperatorExpression &&
+                            (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) {
+    
+                            // Transform pre(?V) --> ?PreV
+                            val valueExpression = preValExpression.subExpressions.get(0);
+                            (valueExpression as OperatorExpression).subExpressions.remove(0);
+                            (valueExpression as OperatorExpression).add(newPre.reference);
+                            if (container instanceof Emission) {
+                                (container as Emission).setNewValue(valueExpression.copy);
+                            } else if (container instanceof OperatorExpression) {
+    
+                                // If nested PRE or PRE inside another complex expression
+                                (container as OperatorExpression).subExpressions.remove(preValExpression);
+                                (container as OperatorExpression).add(valueExpression.copy);
+                            }
+                        }
+    
+                    }
                 }
+    
             }
-
-        }
+        
+        }while(!allPreValuedObjects.isNullOrEmpty)
 
     }
 
