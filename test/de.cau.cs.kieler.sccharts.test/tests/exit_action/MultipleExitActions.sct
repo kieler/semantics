@@ -1,5 +1,4 @@
-// Transformed model is not savable.
-// See KISEMA-1031
+
 @Transformation EXIT
 scchart MultipleExitActions {
     input bool I;

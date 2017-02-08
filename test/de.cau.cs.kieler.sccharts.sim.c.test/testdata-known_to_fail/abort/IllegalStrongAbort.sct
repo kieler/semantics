@@ -1,0 +1,20 @@
+// This model should not compile because the signal that triggers the strong abort
+// could not be emitted, if the strong abort is triggered.
+// In Esterel:
+// abort S in
+//    emit S
+//  end
+scchart IllegalStrongAbort {
+  input signal pure I;
+  output signal pure O;
+  bool L = false;
+
+  initial state C {
+
+    initial state _
+    --> _ with I / L = true;
+  }
+  o-> D with L / O;
+
+  state D;
+}   
