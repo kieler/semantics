@@ -183,7 +183,7 @@
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
-            editor="de.cau.cs.kieler.esterel.EsterelINVALID"
+            editor="de.cau.cs.kieler.esterel.Esterel"
             features="scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
             label="Esterel-SCL-Compilation"
             preferred="s.c, scl.scg, ESTERELNOSIMULATIONVISUALIZATION"
@@ -194,6 +194,13 @@
             features="ALL"
             label="All Transformations"
             priority="80">
+      </editor>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.ui.view.editor">
+      <editor
+            controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+            editorID="de.cau.cs.kieler.esterel.Esterel">
       </editor>
    </extension>
 

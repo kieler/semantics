@@ -108,7 +108,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
     
     def private WrapperCodeAnnotationData parseLineAndGetWrapperCodeAnnotation(String line) {
         // Find line comment
-        val wrapperCommentRegEx = "^//\\s*Wrapper "
+        val wrapperCommentRegEx = "^\\s*%\\s*Wrapper "
         val p = Pattern.compile(wrapperCommentRegEx);
         val m = p.matcher(line);
         if(m.find) {
