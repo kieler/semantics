@@ -3,10 +3,10 @@ instructions.configure=\
   addRepository(type:1,location:http${#58}//download.eclipse.org/releases/neon);\
   addRepository(type:0,location:http${#58}//download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/);\
   addRepository(type:1,location:http${#58}//download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/);\
-  addRepository(type:0,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/);\
-  addRepository(type:1,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/);\
-  addRepository(type:0,location:http${#58}//download.eclipse.org/elk/updates/releases/0.1.0/);\
-  addRepository(type:1,location:http${#58}//download.eclipse.org/elk/updates/releases/0.1.0/);\
+  addRepository(type:0,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02/);\
+  addRepository(type:1,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02/);\
+  addRepository(type:0,location:http${#58}//download.eclipse.org/elk/updates/releases/0.2.0/);\
+  addRepository(type:1,location:http${#58}//download.eclipse.org/elk/updates/releases/0.2.0/);\
   addRepository(type:0,location:http${#58}//www.lejos.org/tools/eclipse/plugin/nxj/);\
   addRepository(type:1,location:http${#58}//www.lejos.org/tools/eclipse/plugin/nxj/);\
   addRepository(type:0,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/);\

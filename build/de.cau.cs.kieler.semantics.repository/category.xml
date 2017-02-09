@@ -28,7 +28,7 @@
   <!-- Repository references to associated sites -->
   <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
-  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics-semanticsRC/" enabled="true"/>
-  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.1.0/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.0/" enabled="true"/>
   <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
 </site>
