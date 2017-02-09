@@ -43,7 +43,6 @@ import java.util.HashSet
 import java.util.Iterator
 import java.util.List
 import java.util.Map
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.util.Pair
 import org.eclipse.emf.ecore.EObject

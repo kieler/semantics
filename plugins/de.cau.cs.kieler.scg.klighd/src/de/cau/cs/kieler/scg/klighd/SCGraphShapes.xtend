@@ -21,8 +21,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import javax.inject.Inject
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
-import org.eclipse.elk.core.util.ElkUtil
 import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 
 /**

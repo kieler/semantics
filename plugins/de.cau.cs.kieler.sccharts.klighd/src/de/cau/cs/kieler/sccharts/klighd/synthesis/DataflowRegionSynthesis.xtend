@@ -175,7 +175,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 it.addDefaultLayoutParameter
                 //add Port
                 it.addPort(vo.reference, PortSide::WEST) => [
-                    it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                    it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                 ]
                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                     vo.reference.serialize as String,
@@ -271,7 +271,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                                 it.addDefaultLayoutParameter
                                 it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
-                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                                     subVo.serialize as String,
                                     LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -319,7 +319,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                                 it.addDefaultLayoutParameter
                                 it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
-                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                                     subVo.serialize as String,
                                     LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -388,7 +388,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                         it.addDefaultLayoutParameter
                         it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                         it.addPort(vo, PortSide::EAST)
-                            .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                            .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                         it.createLabel(it).configureInsideTopCenteredNodeLabel(
                             vo.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                         it.createEdge(vo) => [
@@ -566,7 +566,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
-            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
         ]
         n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String, LABELFONTSIZE,
                                                              KlighdConstants::DEFAULT_FONT_NAME)
@@ -595,7 +595,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
-            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
         ]
         n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String, LABELFONTSIZE,
                                                              KlighdConstants::DEFAULT_FONT_NAME)
@@ -656,7 +656,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
-                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                             ]
                             inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
                                 LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -692,7 +692,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 //create input and output ports for callReference
                 ref.inputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::WEST) => [
-                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0f)
+                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
                             PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -700,7 +700,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 ]]
                 ref.outputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::EAST) => [
-                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0f)
+                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
                             PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -741,7 +741,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
-                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                             ]
                             inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
                                 LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)

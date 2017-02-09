@@ -160,7 +160,7 @@ class KiCoSelectionDiagramFlatSynthesis extends KiCoSynthesis {
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
 
         knode.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
-        knode.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+        knode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
 
         //knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);

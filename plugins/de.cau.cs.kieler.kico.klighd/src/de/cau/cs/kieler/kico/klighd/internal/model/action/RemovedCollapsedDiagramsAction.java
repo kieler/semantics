@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd.internal.model.action;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutDataFactory;
-
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;

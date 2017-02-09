@@ -30,7 +30,6 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.LabelShorteningHook
 import java.lang.ref.WeakReference
 import java.util.HashSet
 import java.util.Set
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.jface.viewers.ISelectionChangedListener

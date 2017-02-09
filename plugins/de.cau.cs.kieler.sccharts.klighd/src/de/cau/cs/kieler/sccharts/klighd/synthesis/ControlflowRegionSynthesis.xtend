@@ -74,13 +74,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
-            node.setLayoutOption(CoreOptions::SPACING_LABEL, 5f);
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+//            node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
+//            node.setLayoutOption(CoreOptions::SPACING_LABEL, 5f);
+//            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
@@ -142,14 +142,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3);
+//            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+//        node.setLayoutOption(CoreOptions::SPACING_NODE, 40);
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);

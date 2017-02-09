@@ -77,8 +77,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::SPACING_BORDER, 2f);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 1f);
+        node.setLayoutOption(CoreOptions::SPACING_COMPONENT_COMPONENT, 2.0);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
 //        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
 
         //pre-evaluate type

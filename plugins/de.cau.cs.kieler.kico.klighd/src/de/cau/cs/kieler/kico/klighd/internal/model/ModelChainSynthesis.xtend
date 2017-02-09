@@ -85,7 +85,7 @@ class ModelChainSynthesis extends AbstractDiagramSynthesis<ModelChain> {
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
             specifyLayoutOption(CoreOptions::DIRECTION, newImmutableList(Direction::DOWN, Direction::RIGHT)),
-            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
+            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 150))
         );
     }
 

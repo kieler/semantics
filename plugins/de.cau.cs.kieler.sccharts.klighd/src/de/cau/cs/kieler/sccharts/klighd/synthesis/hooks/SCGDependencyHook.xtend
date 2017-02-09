@@ -59,7 +59,6 @@ import java.util.HashMap
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
@@ -71,6 +70,7 @@ import org.eclipse.ui.progress.UIJob
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.scg.DataDependencyType
+import de.cau.cs.kieler.klighd.kgraph.KLayoutData
 
 /**
  * Adds the SCG dependencies into the SCChart.

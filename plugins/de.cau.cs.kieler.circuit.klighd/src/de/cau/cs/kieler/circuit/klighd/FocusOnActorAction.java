@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.circuit.klighd;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutData;
-
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;

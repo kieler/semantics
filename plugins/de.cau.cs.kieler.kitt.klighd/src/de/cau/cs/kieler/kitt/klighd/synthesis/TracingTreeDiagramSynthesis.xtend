@@ -101,7 +101,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         return newLinkedList(
             specifyLayoutOption(CoreOptions::DIRECTION,
                 newImmutableList(Direction::DOWN, Direction::RIGHT)),
-            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
+            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 150))
         );
     }
 

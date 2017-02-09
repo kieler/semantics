@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.klighd.hooks;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutData;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;

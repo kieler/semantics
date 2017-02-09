@@ -25,11 +25,11 @@ import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator
 import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.Value
 import java.io.IOException
 import org.eclipse.core.resources.IProject
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import de.cau.cs.kieler.klighd.kgraph.KLayoutData
 
 /**
  * @author ssm

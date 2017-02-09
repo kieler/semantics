@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutData;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;

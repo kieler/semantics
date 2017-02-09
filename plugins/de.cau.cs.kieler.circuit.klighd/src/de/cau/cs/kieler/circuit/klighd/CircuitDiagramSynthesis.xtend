@@ -136,7 +136,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
         actorNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
 		actorNode.setLayoutOption(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
 		actorNode.setLayoutOption(LayeredOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.OUTSIDE);
-		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT, 20.0f)
+		actorNode.setLayoutOption(LayeredOptions.SPACING_PORT_PORT, 20.0)
 		actorNode.addLayoutParam(LayeredOptions.INSIDE_SELF_LOOPS_ACTIVATE, true);
 		actorNode.setLayoutOption(LayeredOptions.DIRECTION, Direction.RIGHT);
 				
@@ -187,7 +187,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 						it.setPortSize(5, 2);
 						it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.WEST)
 						it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-						it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f)
+						it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0.0 else -3.0)
 					}
 					
 					// "In_1" and "In_0" are MUX input ports. They have a specified order to ensure the flap in simulation working correctly.
@@ -205,7 +205,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 				// --------------------------------------------------------------
 				else if (port.type.startsWith("Out")) {
 					it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.EAST)
-					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f) 
+					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0.0 else -3.0) 
 					if (port.outgoingLinks.length == 0) {// mark unnecessary nodes in circuit...
 						it.addEllipse.setBackground("red".color).lineWidth = 0; 
 						it.setPortSize(6, 6);
@@ -222,7 +222,7 @@ class CircuitDiagramSynthesis extends AbstractDiagramSynthesis<Actor> {
 					it.setPortSize(2, 5);
 					it.setLayoutOption(LayeredOptions.PORT_SIDE, PortSide.SOUTH)
 					it.addRectangle.setBackground("black".color).lineJoin = LineJoin.JOIN_ROUND;
-					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0f else -3f)
+					it.setLayoutOption(LayeredOptions.PORT_BORDER_OFFSET, if(atomicActor) 0.0 else -3.0)
 
 				} 
 				

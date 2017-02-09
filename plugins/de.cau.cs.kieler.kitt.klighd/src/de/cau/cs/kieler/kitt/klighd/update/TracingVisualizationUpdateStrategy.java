@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutData;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;

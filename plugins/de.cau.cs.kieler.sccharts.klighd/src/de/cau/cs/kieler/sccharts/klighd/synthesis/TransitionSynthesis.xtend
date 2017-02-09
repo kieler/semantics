@@ -62,9 +62,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
         edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
+            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0);
         } else {
-            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f);
+            edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }
         
         // Connect with states

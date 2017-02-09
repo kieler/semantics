@@ -97,11 +97,12 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
 
         knode.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
-        knode.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+        knode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         knode.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         knode.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
-        knode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+        // TODO WrappingStrategy currently not exported
+//        knode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
         knode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
 
         var Transformation lastNode = null;
