@@ -10,6 +10,8 @@
    </copyright>
 
    <includes id="org.lejos.nxt.ldt.feature" version="0.0.0"/>
+   
+   <includes id="org.eclipse.epp.mpc" version="0.0.0"/>
 
    <plugin id="org.eclipse.ui.views.log" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
