@@ -163,7 +163,7 @@ class ComplexFinalState extends AbstractExpansionTransformation implements Trace
             val allStatesFinal = region.states.size == region.states.filter[isFinal].size
 
             // Use this new term variable to track final states of this region
-            val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+            val finalStates = region.states.filter[final && (incomingTransitions.size > 0 || initial)]
             finalStates.setDefaultTrace
 
             if (!allStatesFinal) {
