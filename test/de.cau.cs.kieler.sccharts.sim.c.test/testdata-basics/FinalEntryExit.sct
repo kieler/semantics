@@ -1,8 +1,8 @@
 scchart EntryExit {
-  output bool b;
+  output int O;
 
   initial final state A {
-    entry / b = true;
-    exit / b = false;
+    entry / O = 1;
+    exit / O = 2;
   };
 }
