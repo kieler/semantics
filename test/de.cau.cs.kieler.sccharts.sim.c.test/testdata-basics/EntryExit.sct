@@ -1,0 +1,8 @@
+scchart EntryExit {
+  output bool b;
+
+  initial state A {
+    entry / b = true;
+    exit / b = false;
+  };
+}
