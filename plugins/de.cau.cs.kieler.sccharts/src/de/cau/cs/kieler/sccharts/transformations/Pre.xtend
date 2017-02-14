@@ -124,7 +124,9 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
         var Transition transInitWait = null;
         var Transition transWaitInit = null;
 
-
+        // This list keeps track of the very last auxiliary pre variable of a nested pre
+        // (e.g. some 'int _pre__pre__pre_x') to remove their initialization as optimization.
+        var List<ValuedObject> lastPreVariablesOfNestedPre = newArrayList()
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList;
         var List<ValuedObject> allPreValuedObjects = null
@@ -161,25 +163,33 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
     		    // Tracing
                 preValuedObject.setDefaultTrace
                 
-                // New pre variable
-                val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
-                    + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
-                newPre.copyAttributes(preValuedObject)
                 // New register variable
                 var ValuedObject newAux
                 if(!isValuedObjectOfNestedPre) {
                     newAux = state.createVariable(GENERATED_PREFIX + "reg" + GENERATED_PREFIX 
                         + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
                     newAux.copyAttributes(preValuedObject)
+                    newAux.setDefaultValue()                    
                 }
+                // New pre variable
+                val newPre = state.createVariable(GENERATED_PREFIX + "pre" + GENERATED_PREFIX 
+                    + preValuedObject.name).setType(preValuedObject.getType).uniqueNameCached(nameCache)
+                newPre.copyAttributes(preValuedObject)
                 
                 //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
                 if(isValuedObjectOfNestedPre) {
                     transInitWait.addEffectBefore(newPre.assign(preValuedObject.reference))
+                    newPre.initialValue = preValuedObject.reference
                 } else {
                     transInitWait.addEffectBefore(newAux.assign(preValuedObject.reference))
-                    transInitWait.addEffectBefore(newPre.assign(newAux.reference))
+                    transInitWait.addEffectBefore(newPre.assign(newAux.reference))                    
+                    newPre.initialValue = newAux.reference
                 }
+
+                // The previous pre was not the last one.
+                lastPreVariablesOfNestedPre.remove(preValuedObject)
+                // This could be the last auxiliary pre variable.
+                lastPreVariablesOfNestedPre.add(newPre)
     
                 //            val transWaitDone = preWait.createTransitionTo(preDone)
                 //            transWaitDone.setTrigger()
@@ -243,7 +253,12 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
             }
         
         }while(!allPreValuedObjects.isNullOrEmpty)
-
+        
+        // Remove initialization of last auxilary pre variable as optimization.
+        // (It will be initialized anyway as part of the transition.)
+        for(valuedObject : lastPreVariablesOfNestedPre) {
+            valuedObject.initialValue = null
+        }
     }
 
 }
