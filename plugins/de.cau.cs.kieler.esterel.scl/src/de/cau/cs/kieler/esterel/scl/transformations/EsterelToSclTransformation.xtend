@@ -971,7 +971,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                     elseStatements += elsePart.statements
                 }
             ]
-            targetStatementSequence.add(cond)
+            val instr= SclFactory::eINSTANCE.createInstructionStatement
+            instr.instruction = cond
+            targetStatementSequence.add(instr)
 
             return targetStatementSequence
         }
