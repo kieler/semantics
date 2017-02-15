@@ -34,7 +34,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.prom.launchconfig.LaunchShortcut"
+            class="de.cau.cs.kieler.prom.launchconfig.ui.KiCoLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.esterel.prom.launchShortcut"
             label="KiCo Compilation"
@@ -65,6 +65,40 @@
       <analyzer
             class="de.cau.cs.kieler.esterel.prom.EsterelWrapperCodeAnnotationAnalyzer">
       </analyzer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.esterel.prom.projectwizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.esterel.prom.filewizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.esterel.prom.projectwizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="de.cau.cs.kieler.esterel.prom.filewizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <commonWizard
+            type="new"
+            wizardId="de.cau.cs.kieler.esterel.prom.projectwizard">
+         <enablement></enablement>
+      </commonWizard>
+      <commonWizard
+            type="new"
+            wizardId="de.cau.cs.kieler.esterel.prom.filewizard">
+         <enablement></enablement>
+      </commonWizard>
    </extension>
 
 </plugin>

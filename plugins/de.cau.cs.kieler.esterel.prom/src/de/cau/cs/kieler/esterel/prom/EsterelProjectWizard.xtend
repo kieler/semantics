@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.esterel.prom
 
-import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import de.cau.cs.kieler.prom.projectwizard.PromProjectWizard
 
 /**
