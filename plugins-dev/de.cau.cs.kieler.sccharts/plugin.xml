@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ 
+ http://www.informatik.uni-kiel.de/rtsys/kieler/
+ 
+ Copyright 2009 by
+ + Kiel University
+   + Department of Computer Science
+     + Real-Time and Embedded Systems Group
+ 
+ This code is provided under the terms of the Eclipse Public License (EPL).
+ See the file epl-v10.html for the license text.
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://kieler.cs.cau.de/sccharts/0.1.0"
+            class="de.cau.cs.kieler.sccharts.SCChartsPackage"
+            genModel="model/sccharts.genmodel"/>
+   </extension>
+
+     <extension
+           point="de.cau.cs.kieler.kico.extension">
+        <ExtensionInformation
+              ePackageName="sccharts"
+              editor_id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
+              extensionName="sct"
+              isXMI="true">
+        </ExtensionInformation>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kico.transformation">
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Abort">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.AbortWTO">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.ComplexFinalState">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Connector">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Const">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.CountDelay">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Deferred">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.During">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Entry">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Exit">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Map">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.For">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.History">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Initialization">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.InputOutputVariable">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Pre">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Reference">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Signal">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.SimulationVisualization">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.ExposeLocalValuedObject">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.NoSimulationVisualization">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Static">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.SurfaceDepth">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Suspend">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.TriggerEffect">
+        </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend">
+        </expansionTransformationClass>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kico.feature">
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Abort">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.ComplexFinalState">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Connector">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Const">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.CountDelay">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Deferred">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.During">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Entry">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Exit">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.For">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Map">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.History">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Initialization">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.InputOutput">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Pre">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Reference">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Signal">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.SimulationVisualization">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.ExposeLocalValuedObject">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Static">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.SurfaceDepth">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Suspend">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.TriggerEffect">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.WeakSuspend">
+        </featureClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.SCCharts">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Core">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Extended">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Expansion">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Statecharts">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.ScadeQuartzEsterel">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
+        </featureGroupClass>
+     </extension>   
+
+
+</plugin>
