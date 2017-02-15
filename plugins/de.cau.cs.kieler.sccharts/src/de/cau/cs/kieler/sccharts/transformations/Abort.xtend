@@ -32,8 +32,10 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
@@ -136,6 +138,12 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                 // val strongAborts = targetState.outgoingTransitions.filter[e|e.typeStrongAbort].size > 0
                 // noStrongMixedAborts
                 if ((!(singleTermination && noWeakAborts)) || delayedStrongAbortButImmediateTermination) { // }||(singleTermination && strongAborts)) {
+//=======
+//                val singleTermination = targetState.outgoingTransitions.filter [e|e.typeTermination && e.isImmediate2 && e.trigger == null].size == 1 
+//                                        && targetState.outgoingTransitions.filter[e|e.typeTermination].size == 1
+//                val noWeakAborts = targetState.outgoingTransitions.filter[e|e.typeWeakAbort].size == 0
+//                if (!(singleTermination && noWeakAborts)) {
+//>>>>>>> ssm/DJ
                     // optimization: If this termination is the only outgoing then do not transform terminations first
                     targetState.transformTermination(targetRootState)
                 }

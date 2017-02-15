@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -28,83 +28,87 @@ import java.util.List
  * @author ssm
  * @kieler.design 2014-09-24 proposed 
  * @kieler.rating 2014-09-24 proposed yellow
- *
+ * 
  */
- @Singleton
+@Singleton
 class SynchronizerSelector {
-    
-    @Inject
-    extension SCGControlFlowExtensions  
-    
-    @Inject
-    extension SCGThreadExtensions
-    
-    @Inject
-    extension AnnotationsExtensions 
-    
-    protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"    
-    protected static val ANNOTATION_IGNORETHREAD = "ignore"
-    public static val ANNOTATION_SELECTEDSYNCHRONIZER = "synchronizer"
 
-    protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
-        typeof(InstantaneousSynchronizer),
-        typeof(DepthSynchronizer),
-        typeof(SurfaceSynchronizer),
-        typeof(DepthJoinSynchronizer),
-        typeof(SurfaceSynchronizer)
-    )
-    protected val DEFAULT_SYNCHRONIZER = typeof(SurfaceSynchronizer)
-    
-    protected val synchronizerInstances = <AbstractSynchronizer> newArrayList
-    private var AbstractSynchronizer defaultSynchronizer = null
-    
-    new() {
-        for(synchronizerClass : SYNCHRONIZER_LIST) {
-            val synchronizer = Guice.createInjector().getInstance(synchronizerClass)
-            synchronizerInstances += synchronizer
-            if (synchronizerClass == DEFAULT_SYNCHRONIZER) {
-                defaultSynchronizer = synchronizer
-            }
-        }        
-    }
-    
-    public def AbstractSynchronizer chooseSynchronizer(Join join) {
-        val threadPathTypes = join.getEntryNodes.filter[ !hasAnnotation(ANNOTATION_IGNORETHREAD) ].
-        map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ].toList
-        for(synchronizer : synchronizerInstances) {
-            if (synchronizer.isSynchronizable(join.fork, threadPathTypes, false)) {
-                return synchronizer
-            }
-        }
-        
-        return defaultSynchronizer
-    }
-    
-    protected def getEntryNodes(Join join) {
-        join.allPrevious.map[ eContainer ].filter(typeof(Exit)).map[ entry ]
-    }   
-    
-    public def AbstractSynchronizer annotate(AbstractSynchronizer synchronizer, Join join) {
-        join.createStringAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
-        synchronizer
-    } 
-    
-    public def AbstractSynchronizer getSynchronizer(String id) {
-        for(synchronizer : synchronizerInstances) {
-            if (synchronizer.getId == id) {
-                return synchronizer
-            }
-        }
-        
-        throw new UnsupportedSCGException("Synchronizer Id not found: "+id)
-    }
-    
-    public def AbstractSynchronizer getSynchronizer(Join join) {
-        val id = join.getStringAnnotationValue(ANNOTATION_SELECTEDSYNCHRONIZER)
-        if (id == "") {
-            return defaultSynchronizer;
-        } else {
-            return id.getSynchronizer
-        }
-    }
+	@Inject
+	extension SCGControlFlowExtensions
+
+	@Inject
+	extension SCGThreadExtensions
+
+	@Inject
+	extension AnnotationsExtensions
+
+	protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+	protected static val ANNOTATION_IGNORETHREAD = "ignore"
+	public static val ANNOTATION_SELECTEDSYNCHRONIZER = "synchronizer"
+
+	protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>>newArrayList(
+		typeof(InstantaneousSynchronizer),
+		typeof(DepthSynchronizer),
+		typeof(IncrementalSurfaceSynchronizer),
+		typeof(DepthJoin2Synchronizer),
+		typeof(DepthJoinSynchronizer),
+		typeof(SurfaceSynchronizer)
+	)
+	protected val DEFAULT_SYNCHRONIZER = typeof(SurfaceSynchronizer)
+
+	protected val synchronizerInstances = <AbstractSynchronizer>newArrayList
+	private var AbstractSynchronizer defaultSynchronizer = null
+
+	new() {
+		for (synchronizerClass : SYNCHRONIZER_LIST) {
+			val synchronizer = Guice.createInjector().getInstance(synchronizerClass)
+			synchronizerInstances += synchronizer
+			if (synchronizerClass == DEFAULT_SYNCHRONIZER) {
+				defaultSynchronizer = synchronizer
+			}
+		}
+	}
+
+	public def AbstractSynchronizer chooseSynchronizer(Join join) {
+		val threadPathTypes = join.getEntryNodes.filter[!hasAnnotation(ANNOTATION_IGNORETHREAD)].map [
+			getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)
+		].map[fromString2].toList
+		// Check if there is an instantaneous feedback from the join to the fork
+		val noInstantaneousFeedback = getInstantaneousControlFlows(join, join.fork).isEmpty
+		for (synchronizer : synchronizerInstances) {
+			if (synchronizer.isSynchronizable(join.fork, threadPathTypes, !noInstantaneousFeedback)) {
+				return synchronizer
+			}
+		}
+
+		return defaultSynchronizer
+	}
+
+	protected def getEntryNodes(Join join) {
+		join.allPrevious.map[eContainer].filter(typeof(Exit)).map[entry]
+	}
+
+	public def AbstractSynchronizer annotate(AbstractSynchronizer synchronizer, Join join) {
+		join.createStringAnnotation(ANNOTATION_SELECTEDSYNCHRONIZER, synchronizer.getId)
+		synchronizer
+	}
+
+	public def AbstractSynchronizer getSynchronizer(String id) {
+		for (synchronizer : synchronizerInstances) {
+			if (synchronizer.getId == id) {
+				return synchronizer
+			}
+		}
+
+		throw new UnsupportedSCGException("Synchronizer Id not found: " + id)
+	}
+
+	public def AbstractSynchronizer getSynchronizer(Join join) {
+		val id = join.getStringAnnotationValue(ANNOTATION_SELECTEDSYNCHRONIZER)
+		if (id == "") {
+			return defaultSynchronizer;
+		} else {
+			return id.getSynchronizer
+		}
+	}
 }

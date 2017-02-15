@@ -36,8 +36,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import de.cau.cs.kieler.scg.transformations.sequentializer.EmptyExpression
-
-import static de.cau.cs.kieler.scg.SCGAnnotations.*
+import de.cau.cs.kieler.scg.SCGAnnotations
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -186,7 +185,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         var delayFound = false
         for(entry:data.join.getEntryNodes) {
-            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            val t = entry.getStringAnnotationValue(SCGAnnotations.ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
             threadPathTypes.put(entry.exit, t)
             if (t != ThreadPathType::INSTANTANEOUS) {
                 delayFound = true
@@ -201,7 +200,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
             
-            if ((!exit.entry.hasAnnotation(ANNOTATION_IGNORETHREAD)) &&
+            if ((!exit.entry.hasAnnotation(SCGAnnotations.ANNOTATION_IGNORETHREAD)) &&
                 ((!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS))) {
 	            
 	        	// Increment the exit node counter and retrieve the scheduling block of the exit node.
