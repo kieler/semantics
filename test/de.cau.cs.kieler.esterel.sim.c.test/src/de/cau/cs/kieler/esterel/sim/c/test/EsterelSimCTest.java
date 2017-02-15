@@ -15,6 +15,7 @@ package de.cau.cs.kieler.esterel.sim.c.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -27,6 +28,8 @@ public class EsterelSimCTest extends KiemAutomatedJUnitTest {
     
     public EsterelSimCTest(IPath esoFile) {
         super(esoFile);
+        
+        EsterelStandaloneSetup.doSetup();
     }
     
     @Override

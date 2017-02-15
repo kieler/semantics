@@ -11,7 +11,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.sim.kiem.test;bundle-version="0.1.1",
  de.cau.cs.kieler.semantics.test.common;bundle-version="0.1.1",
- de.cau.cs.kieler.sim.eso
+ de.cau.cs.kieler.sim.eso,
+ de.cau.cs.kieler.esterel;bundle-version="0.3.4",
+ de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 
