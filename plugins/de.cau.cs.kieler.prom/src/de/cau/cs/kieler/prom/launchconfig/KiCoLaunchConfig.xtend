@@ -396,13 +396,15 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
             // TODO: SIMULATIONVISUALIZATION throws an exception when used (28.10.2015), so we explicitly disable it.
-            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION"
+            // TODO: ABORTWTO often makes trouble and is not deterministicly choosen, so we explicitly disable it.
+            var String compileChain = "!T_ESTERELSIMULATIONVISUALIZATION, !T_SIMULATIONVISUALIZATION, !T_ABORTWTO"
             if(launchData.isCompileChain) {
                 compileChain += ", " + launchData.targetLanguage
             } else {
                 // If it is not a complete compile chain, it is assumed to be a transformation, which has to be prefixed with T_
                 compileChain += ", T_"+ launchData.targetLanguage
             }
+            println (compileChain)
             val context = new KielerCompilerContext(compileChain, model)
             context.inplace = false
             context.advancedSelect = true

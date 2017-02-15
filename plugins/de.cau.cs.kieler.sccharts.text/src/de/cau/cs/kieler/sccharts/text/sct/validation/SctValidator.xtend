@@ -36,6 +36,42 @@ class SctValidator extends SctJavaValidator {
     
     @Inject
     extension KExpressionsValuedObjectExtensions
+
+
+
+    /**
+     * Check if valued signal has a combine functions
+     *
+     * @param valuedObject the valuedObject
+     */
+    @Check
+    public def void checkCombineFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        // Check if actually a valued signal
+        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+            // Check if there is a combine operator
+            if(valuedObject.combineOperator == null) {
+                warning(NOCOMBINE, valuedObject, null)
+            }
+        }
+    } 
+
+
+    /**
+     * Check if max or min is used which is currently not supported
+     *
+     * @param valuedObject the valuedObject
+     */
+    @Check
+    public def void checkMinMaxUsedCombinationFunction(de.cau.cs.kieler.kexpressions.ValuedObject valuedObject) {
+        // Check if actually a valued signal
+        if(valuedObject.isSignal && !valuedObject.isPureSignal) {
+            // Check if there is a combine operator
+            if(valuedObject.combineOperator != null) {
+                if (valuedObject.combineOperator.equals(CombineOperator.MIN) || valuedObject.combineOperator.equals(CombineOperator.MAX))
+                warning(MINMAX_COMBINE, valuedObject, null)
+            }
+        }
+    } 
     
     /**
      * Check if there is exactly ONE initial state per region.

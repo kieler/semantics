@@ -1,0 +1,40 @@
+scchart CounterImmediate {
+  input signal a;
+  input bool start;
+  input bool stop;
+  output signal b;
+  output signal c;
+  output bool end = false;
+
+   state Counting {
+
+    region:
+
+    initial state C0
+    --> C1 immediate with c;
+
+    state C1
+    --> C0 deferred with c / end = true;
+
+    region:
+
+    initial state B0
+    --> B1 immediate with b;
+
+    state B1
+    --> B0  deferred with b / c;
+
+    region:
+
+    initial state A0
+    --> A1 immediate with a;
+
+    state A1
+    --> A0 deferred with a / b;
+  }
+  --> NotCounting with end
+  --> NotCounting with stop;
+
+  initial state NotCounting
+  --> Counting with start;
+} 

@@ -59,6 +59,7 @@ import de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCChart;
 import de.cau.cs.kieler.sccharts.sim.java.xtend.JavaSimulationSCG;
+import de.cau.cs.kieler.sccharts.transformations.Signal;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -417,27 +418,37 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
                 for (ValuedObject valuedObject : kExpressionValuedObjectExtensions
                         .getValuedObjects(myModel)) {
                     if (kExpressionValuedObjectExtensions.isInput(valuedObject)) {
-                        String signalName = valuedObject.getName();
-                        inputVariableList.add(signalName);
+                        String valuedObjectName = valuedObject.getName();
+                        inputVariableList.add(valuedObjectName);
                         if (kExpressionValuedObjectExtensions.isSignal(valuedObject)) {
                             res.accumulate(valuedObject.getName(),
                                     JSONSignalValues.newValue(false));
+                            if (kExpressionValuedObjectExtensions.isValuedSignal(valuedObject)) {
+                                inputVariableList.add(valuedObjectName + Signal.variableValueExtension);
+                                res.accumulate(valuedObject.getName() + Signal.variableValueExtension,
+                                        JSONSignalValues.newValue(false));
+                            }
                         } else {
                             res.accumulate(valuedObject.getName(),
                                     JSONSignalValues.newValue(false));
                         }
                     }
                     if (kExpressionValuedObjectExtensions.isOutput(valuedObject)) {
-                        String signalName = valuedObject.getName();
-                        if (signalName
+                        String valuedObjectName = valuedObject.getName();
+                        if (valuedObjectName
                                 .startsWith(SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
-                            outputStateList.add(signalName);
-                        } else if (signalName.startsWith(
+                            outputStateList.add(valuedObjectName);
+                        } else if (valuedObjectName.startsWith(
                                 SCChartsSimJavaPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
-                            outputTransitionList.add(signalName);
+                            outputTransitionList.add(valuedObjectName);
                         } else {
-                            res.accumulate(signalName, JSONSignalValues.newValue(false));
-                            outputVariableList.add(signalName);
+                            res.accumulate(valuedObjectName, JSONSignalValues.newValue(false));
+                            outputVariableList.add(valuedObjectName);
+                            if (kExpressionValuedObjectExtensions.isValuedSignal(valuedObject)) {
+                                outputVariableList.add(valuedObjectName + Signal.variableValueExtension);
+                                res.accumulate(valuedObject.getName() + Signal.variableValueExtension,
+                                        JSONSignalValues.newValue(false));
+                            }
                         }
                     }
                 }

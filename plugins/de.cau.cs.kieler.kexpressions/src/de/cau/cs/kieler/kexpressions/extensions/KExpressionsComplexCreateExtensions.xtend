@@ -76,6 +76,7 @@ class KExpressionsComplexCreateExtensions {
         addExpression.add(expressionSecond)
         addExpression
     }
+     
 
     // Create an MAX Expression and add expression as a sub expression.
     def Expression max(Expression expressionFirst, Expression expressionSecond) {

@@ -38,6 +38,7 @@ import java.util.HashMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /**
  * @author fry
@@ -100,6 +101,15 @@ class SeqSCG2SSA_SCGTransformation extends AbstractProductionTransformation {
 	// -------------------------------------------------------------------------
 
 	def transform(SCGraph scg, KielerCompilerContext context) {
+	    
+	    if (scg.declarations.filter[type != ValueType::BOOL].size > 0) {
+	        val result = context.compilationResult
+	        if (result != null) {
+	            result.addPostponedWarning(new KielerCompilerException(getId, null, "Currently the circuit transformation can only handle boolean inputs 
+but your model contains other input types as well."));
+	        }
+	    }
+	    
 
 		valuedObjectList.clear
 		outputOccurenceCounter.clear

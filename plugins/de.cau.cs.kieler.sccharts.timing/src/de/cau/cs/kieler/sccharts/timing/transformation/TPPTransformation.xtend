@@ -323,8 +323,19 @@ class TPPTransformation extends AbstractProductionTransformation
                     def private LinkedList<ControlFlow> getEdgesInFixedTraversingOrder(SCGraph scg)
                     {
                         val LinkedList<ControlFlow> edgeList = new LinkedList<ControlFlow>();
+                        val scgNodes = scg.nodes;
+                        System.out.println(scgNodes.toString());
                         // Find start entry node
-                        val Iterator<Entry> entryIter = Iterators.filter(
+                        // Assuming only one entry node exists in a sequentialized SCG; 
+        // Make it the starting point of the SSA transformation
+        val entry = scg.nodes.filter(Entry).head
+        
+        // If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
+        val firstAssignment = if (entry == null)  
+          scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+          else (entry.next.target as Assignment)
+                        
+                        /*val Iterator<Entry> entryIter = Iterators.filter(
                             ModelingUtil.eAllContentsOfType2(scg, Node), Entry);
                         var Node entry = null;
                         while (entryIter.hasNext())
@@ -334,16 +345,17 @@ class TPPTransformation extends AbstractProductionTransformation
                             {
                                 entry = currentEntry as Node;
                             }
-                        }
-                        traverseSequentialGraphEdges(entry, edgeList);
+                        }*/
+                        traverseSequentialGraphEdges(firstAssignment, edgeList);
                         return edgeList;
                     }
 
                     /**
                      * Recursive method to collect the edges of a sequential SCG in the traversing order top to
-                     * bottom, then branch first. The method relies on the special structure of the sequential SCG:
+                     * bottom, then branch first. The method relies on a special structure of the sequential SCG:
                      * there are no nested conditionals and only the then branches of a conditional have content.
-                     * Assumes that there are no empty then branches.
+                     * Assumes that there are no empty then branches. Also assumes that there is exactly one entry 
+                     * node and one exit node. Not to be used with the new SCG structure.
                      * 
                      * @param currentNode
                      *            The sequential SCG entry node, else the currentNode
@@ -351,6 +363,79 @@ class TPPTransformation extends AbstractProductionTransformation
                      *            The list to add the edges in traversing order, empty in initial call
                      */
                     def private void traverseSequentialGraphEdges(Node currentNode,
+                        LinkedList<ControlFlow> edgeList)
+                    {
+                        // There is only one Entry node in a sequential SCG, this is the start call
+                        if (currentNode instanceof Entry)
+                        {
+                            var ControlFlow outgoingEdge = (currentNode as Entry).getNext();
+                            edgeList.add(outgoingEdge);
+                            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
+                        }
+                        else
+                        {
+                            // There is only one Exit node in a sequential SCG, if we reach it, we are finished.
+                            if (currentNode instanceof Exit)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                if (currentNode instanceof Conditional)
+                                {
+                                    // We do then branch first order
+                                    val ControlFlow thenEdge = (currentNode as Conditional).getThen();
+                                    edgeList.add(thenEdge);
+                                    traverseSequentialGraphEdges(thenEdge.getTarget(), edgeList);
+                                }
+                                else
+                                {
+                                    if (currentNode instanceof Assignment)
+                                    {
+                                        val ControlFlow outgoingEdge = (currentNode as Assignment).
+                                            getNext();
+                                        if (outgoingEdge == null) {
+                                            // we have reached the end of the SCG (case: no exit node in SCG)
+                                            return;
+                                        }
+                                        edgeList.add(outgoingEdge);
+                                        // check whether this node ends a then branch, if so, add the else edge to
+                                        // the list also
+                                        val target = outgoingEdge.getTarget();
+                                        val EList<Link> targetIncomingList = target.getIncoming();
+                                        if (targetIncomingList.size() > 1)
+                                        {
+                                            val Iterator<Link> incomingEdgeIterator = targetIncomingList.
+                                                iterator();
+                                            while (incomingEdgeIterator.hasNext())
+                                            {
+                                                var Link currentLink = incomingEdgeIterator.next();
+                                                if (!(currentLink == outgoingEdge))
+                                                {
+                                                    edgeList.add(currentLink as ControlFlow);
+                                                }
+                                            }
+                                        }
+                                        traverseSequentialGraphEdges(target, edgeList);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    /**
+                     * Recursive method to collect the edges of a sequential SCG in the traversing order top to
+                     * bottom, then branch first. The method relies on a special structure of the sequential SCG:
+                     * there are no nested conditionals and only the then branches of a conditional have content.
+                     * Assumes that there are no empty then branches. Adapted to the new sequential SCG structure: 
+                     * Does not rely on the existence of exactly one entry and exit node each.
+                     * 
+                     * @param currentNode
+                     *            The sequentially first SCG node on first call, else the currentNode
+                     * @param edgeList
+                     *            The list to add the edges in traversing order, empty in initial call
+                     */
+                    def private void traverseSequentialGraphEdgesNewSCG(Node currentNode,
                         LinkedList<ControlFlow> edgeList)
                     {
                         // There is only one Entry node in a sequential SCG, this is the start call
@@ -419,7 +504,7 @@ class TPPTransformation extends AbstractProductionTransformation
                      *            attributed to regions of the SCChart and are then attributed to the SCChart, resp.
                      *            its dummy region)
                      * @param controlFlow
-                     *            The edge for which the start node region ist to be determined
+                     *            The edge for which the start node region is to be determined
                      * @return Returns the Region the source node of the controlFlow edge belongs to. Returns null,
                      *         if the edge container is no Node.
                      */

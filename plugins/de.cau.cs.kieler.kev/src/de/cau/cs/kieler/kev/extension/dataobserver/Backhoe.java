@@ -247,57 +247,57 @@ public class Backhoe extends JSONObjectDataComponent implements
 		if (legs >= Backhoe.legsMAX) {
 			try {
 				returnObj.accumulate("LEGS_OUT", JSONSignalValues
-						.newValue(true));
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			legs = Backhoe.legsMAX;
 		} else {
 			try {
 				returnObj.accumulate("LEGS_OUT", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 		if (legs <= Backhoe.legsMIN) {
 			try {
 				returnObj
-						.accumulate("LEGS_IN", JSONSignalValues.newValue(true));
+						.accumulate("LEGS_IN", JSONSignalValues.newValue(true, true));
 			} catch (Exception e) {
 			}
 			legs = Backhoe.legsMIN;
 		} else {
 			try {
 				returnObj.accumulate("LEGS_IN", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 
 		if (boom >= Backhoe.boomMAX) {
 			try {
-				returnObj.accumulate("BOOM_OUT", JSONSignalValues
-						.newValue(true));
+				returnObj.accumulate("BOOM_IN", JSONSignalValues
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			boom = Backhoe.boomMAX;
 		} else {
 			try {
-				returnObj.accumulate("BOOM_OUT", JSONSignalValues
-						.newValue(false));
+				returnObj.accumulate("BOOM_IN", JSONSignalValues
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 		if (boom <= Backhoe.boomMIN) {
 			try {
-				returnObj
-						.accumulate("BOOM_IN", JSONSignalValues.newValue(true));
+				returnObj.accumulate("BOOM_OUT", JSONSignalValues
+                        .newValue(true, true));
 			} catch (Exception e) {
 			}
 			boom = Backhoe.boomMIN;
 		} else {
 			try {
-				returnObj.accumulate("BOOM_IN", JSONSignalValues
-						.newValue(false));
+				returnObj.accumulate("BOOM_OUT", JSONSignalValues
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
@@ -305,28 +305,28 @@ public class Backhoe extends JSONObjectDataComponent implements
 		if (stick >= Backhoe.stickMAX) {
 			try {
 				returnObj.accumulate("STICK_IN", JSONSignalValues
-						.newValue(true));
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			stick = Backhoe.stickMAX;
 		} else {
 			try {
 				returnObj.accumulate("STICK_IN", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 		if (stick <= Backhoe.stickMIN) {
 			try {
 				returnObj.accumulate("STICK_OUT", JSONSignalValues
-						.newValue(true));
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			stick = Backhoe.stickMIN;
 		} else {
 			try {
 				returnObj.accumulate("STICK_OUT", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
@@ -334,28 +334,28 @@ public class Backhoe extends JSONObjectDataComponent implements
 		if (bucket >= Backhoe.bucketMAX) {
 			try {
 				returnObj.accumulate("BUCKET_IN", JSONSignalValues
-						.newValue(true));
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			bucket = Backhoe.bucketMAX;
 		} else {
 			try {
 				returnObj.accumulate("BUCKET_IN", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
 		if (bucket <= Backhoe.bucketMIN) {
 			try {
 				returnObj.accumulate("BUCKET_OUT", JSONSignalValues
-						.newValue(true));
+						.newValue(true, true));
 			} catch (Exception e) {
 			}
 			bucket = Backhoe.bucketMIN;
 		} else {
 			try {
 				returnObj.accumulate("BUCKET_OUT", JSONSignalValues
-						.newValue(false));
+						.newValue(false, false));
 			} catch (Exception e) {
 			}
 		}
@@ -375,7 +375,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("LEGS_EXTEND", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -388,7 +388,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("LEGS_RETRACT", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -400,7 +400,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("LEGS_STOP", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -412,7 +412,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("BOOM_PULL", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -423,7 +423,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("BOOM_PUSH", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -435,7 +435,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("STICK_PULL", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -447,7 +447,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("STICK_PUSH", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -459,7 +459,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("BUCKET_PULL", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -471,7 +471,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("BUCKET_PUSH", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -484,7 +484,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("ALARM_LAMP", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -497,7 +497,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("DONE_LAMP", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -511,7 +511,7 @@ public class Backhoe extends JSONObjectDataComponent implements
 				if (resetSignals) {
 					try {
 						returnObj.accumulate("CANCEL_LAMP", JSONSignalValues
-								.newValue(false));
+								.newValue(false, false));
 					} catch (Exception e) {
 					}
 				}
@@ -575,35 +575,35 @@ public class Backhoe extends JSONObjectDataComponent implements
 	public JSONObject provideInitialVariables() {
 		JSONObject returnObj = new JSONObject();
 		try {
-			returnObj.accumulate("BOOM_PUSH", JSONSignalValues.newValue(false));
-			returnObj.accumulate("BOOM_PULL", JSONSignalValues.newValue(false));
+			returnObj.accumulate("BOOM_PUSH", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("BOOM_PULL", JSONSignalValues.newValue(false, false));
 			returnObj
-					.accumulate("STICK_PUSH", JSONSignalValues.newValue(false));
+					.accumulate("STICK_PUSH", JSONSignalValues.newValue(false, false));
 			returnObj
-					.accumulate("STICK_PULL", JSONSignalValues.newValue(false));
+					.accumulate("STICK_PULL", JSONSignalValues.newValue(false, false));
 			returnObj.accumulate("BUCKET_PULL", JSONSignalValues
-					.newValue(false));
+					.newValue(false, false));
 			returnObj.accumulate("BUCKET_PUSH", JSONSignalValues
-					.newValue(false));
+					.newValue(false, false));
 			returnObj.accumulate("LEGS_EXTEND", JSONSignalValues
-					.newValue(false));
+					.newValue(false, false));
 			returnObj.accumulate("LEGS_RETRACT", JSONSignalValues
-					.newValue(false));
-			returnObj.accumulate("LEGS_STOP", JSONSignalValues.newValue(false));
+					.newValue(false, false));
+			returnObj.accumulate("LEGS_STOP", JSONSignalValues.newValue(false, false));
 			returnObj
-					.accumulate("ALARM_LAMP", JSONSignalValues.newValue(false));
-			returnObj.accumulate("DONE_LAMP", JSONSignalValues.newValue(false));
+					.accumulate("ALARM_LAMP", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("DONE_LAMP", JSONSignalValues.newValue(false, false));
 			returnObj.accumulate("CANCEL_LAMP", JSONSignalValues
-					.newValue(false));
-			returnObj.accumulate("BOOM_IN", JSONSignalValues.newValue(false));
-			returnObj.accumulate("BOOM_OUT", JSONSignalValues.newValue(false));
-			returnObj.accumulate("STICK_IN", JSONSignalValues.newValue(false));
-			returnObj.accumulate("STICK_OUT", JSONSignalValues.newValue(false));
-			returnObj.accumulate("BUCKET_IN", JSONSignalValues.newValue(false));
+					.newValue(false, false));
+			returnObj.accumulate("BOOM_IN", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("BOOM_OUT", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("STICK_IN", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("STICK_OUT", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("BUCKET_IN", JSONSignalValues.newValue(false, false));
 			returnObj
-					.accumulate("BUCKET_OUT", JSONSignalValues.newValue(false));
-			returnObj.accumulate("LEGS_IN", JSONSignalValues.newValue(false));
-			returnObj.accumulate("LEGS_OUT", JSONSignalValues.newValue(false));
+					.accumulate("BUCKET_OUT", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("LEGS_IN", JSONSignalValues.newValue(false, false));
+			returnObj.accumulate("LEGS_OUT", JSONSignalValues.newValue(false, false));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

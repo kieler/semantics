@@ -36,7 +36,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_IterateAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q;
-	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q;
+	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_4__q;
 	protected AbstractElementAlias match_SuspendAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_Transition_WithKeyword_7_0_q;
 	
@@ -57,7 +57,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_IterateAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getIterateActionAccess().getSemicolonKeyword_5());
 		match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_4_1_0()), new TokenAlias(false, false, grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_4_1_3()));
-		match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_3()));
+		match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_4()));
 		match_SuspendAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
 		match_Transition_WithKeyword_7_0_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_7_0());
 	}
@@ -102,8 +102,8 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 				emit_IterateAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q.equals(syntax))
 				emit_SCChart___LeftCurlyBracketKeyword_4_1_0_RightCurlyBracketKeyword_4_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q.equals(syntax))
-				emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_4__q.equals(syntax))
+				emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SuspendAction_SemicolonKeyword_5_q.equals(syntax))
 				emit_SuspendAction_SemicolonKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Transition_WithKeyword_7_0_q.equals(syntax))
@@ -311,7 +311,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	 *     label=STRING (ambiguity) ';' (rule end)
 	 *     label=STRING (ambiguity) outgoingTransitions+=Transition
 	 */
-	protected void emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -59,6 +59,9 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension ValuedObjectRise
+    
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
@@ -74,6 +77,8 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 
+        targetRootState.transformValuedObjectRise
+        
         // Traverse all states
         for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformStatic(targetRootState);
