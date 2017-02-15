@@ -741,7 +741,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 val condTimes = createConditional
                 condTimes.expression = transformExpression(await.delay.event.expr)
                 condTimes.statements.add(incrementInt(delayExpressionCounter))
-                targetStatementSequence.add(condTimes)
+                val instr = SclFactory::eINSTANCE.createInstructionStatement
+                instr.instruction = condTimes
+                targetStatementSequence.add(instr)
             } else {
                 targetStatementSequence.add(incrementInt(delayExpressionCounter))
                 val cond = createConditional
@@ -750,8 +752,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                     cond.statements.addAll(createSclPause(createStatementSequence).statements)
                 }
                 cond.statements.add(createGotoStatement(awaitStartLabel))
-
-                targetStatementSequence.add(cond)
+                val instr = SclFactory::eINSTANCE.createInstructionStatement
+                instr.instruction = cond
+                targetStatementSequence.add(instr)
                 if (await.delay.expr != null)
                     targetStatementSequence.add(createAssignment(delayExpressionCounter, createIntValue(0)))
             }
@@ -775,8 +778,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 awaitConditional.statements.addAll(createSclPause(createStatementSequence).statements)
             }
             awaitConditional.statements.add(createGotoStatement(awaitStartLabel))
-
-            targetStatementSequence.add(awaitConditional)
+            val instr = SclFactory::eINSTANCE.createInstructionStatement
+            instr.instruction = awaitConditional
+            targetStatementSequence.add(instr)
             if (await.delay.expr != null)
                 targetStatementSequence.add(createAssignment(delayExpressionCounter, createIntValue(0)))
         }
