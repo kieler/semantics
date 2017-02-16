@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.synthesis;
+package de.cau.cs.kieler.sccharts.klighd.srtg.synthesis;
 
 import org.eclipse.elk.graph.KGraphElement;
 import org.eclipse.emf.ecore.EObject;
@@ -21,6 +21,7 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.sccharts.klighd.hooks.ISynthesisHooks;
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
+import de.cau.cs.kieler.sccharts.klighd.synthesis.AbstractSubSynthesis;
 
 /**
  * Abstract class for partial syntheses, delegating helper methods.
@@ -31,13 +32,10 @@ import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks;
  * 
  */
 @ViewSynthesisShared
-public abstract class SubSynthesis<I extends EObject, O extends KGraphElement> 
+public abstract class SRTGSubSynthesis<I extends EObject, O extends KGraphElement> 
     extends AbstractSubSynthesis<I, O>{
 
-    @Inject
-    protected SynthesisHooks hooks;
-
     protected ISynthesisHooks getHooks() {
-        return hooks;
+        return null;
     }
 }

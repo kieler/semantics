@@ -23,9 +23,10 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
-import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
-import java.util.Properties
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.KNode
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
@@ -39,7 +40,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
@@ -177,7 +178,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.children += state.createReferenceRegion
         }
 
-        return node;
+        return <KNode> newArrayList(node)
     }
 
     /** Checks if given state should be visualized as macro state */
@@ -185,5 +186,5 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return state.hasInnerStatesOrControlflowRegions || state.hasDataflowRegions || !state.localActions.empty ||
             !state.declarations.empty || state.isReferencedState;
     }
-
+    
 }

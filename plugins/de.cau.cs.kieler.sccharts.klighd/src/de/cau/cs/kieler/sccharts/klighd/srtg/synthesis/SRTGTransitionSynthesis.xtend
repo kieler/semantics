@@ -11,17 +11,17 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd.synthesis
+package de.cau.cs.kieler.sccharts.klighd.srtg.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
+import java.util.ArrayList
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
@@ -34,13 +34,13 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
  * 
- * @author als ssm
- * @kieler.design 2015-08-13 proposed
- * @kieler.rating 2015-08-13 proposed yellow
+ * @author ssm
+ * @kieler.design 2017-01-18 proposed 
+ * @kieler.rating 2017-01-18 proposed 
  * 
  */
 @ViewSynthesisShared
-class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
+class SRTGTransitionSynthesis extends SRTGSubSynthesis<Transition, KEdge> {
 
     @Inject
     extension KNodeExtensions
@@ -60,7 +60,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
 
-        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+//        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
         } else {
@@ -78,23 +78,13 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (transition.isImmediate2) {
             edge.setImmediateStyle
         }
-
-        switch (transition.history) {
-            case SHALLOW: edge.addShallowHistoryDecorator
-            case DEEP: edge.addDeepHistoryDecorator
-            case !transition.deferred: edge.addDefaultDecorator
-        }
-
-        if (transition.deferred) {
-            edge.addDeferredDecorator(transition.history == HistoryType::DEEP ||
-                transition.history == HistoryType::SHALLOW);
-        }
+        
+        edge.addDefaultDecorator
 
         switch (transition.type) {
             case STRONGABORT: edge.addStrongAbortionDecorator
             case TERMINATION: edge.addNormalTerminationDecorator
-            default: {
-            }
+            case WEAKABORT: {}
         };
 
         // Add Label
@@ -111,8 +101,11 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }
+        
+//        edge.setLayoutOption(CoreOptions.NO_LAYOUT, true)
+//        edge.setLayoutOption(CoreOptions.PRIORITY, 2)
 
-        return <KEdge> newArrayList(edge)
+        return new ArrayList<KEdge>(1) => [ add(edge) ];
     }
 
 }

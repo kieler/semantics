@@ -25,6 +25,8 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.DataflowRegionStyles
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
+import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
 import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -37,6 +39,17 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * @author ssm
  *
+=======
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
+/**
+ * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
+ * 
+ * @author als ssm
+ * @kieler.design 2015-08-13 proposed
+ * @kieler.rating 2015-08-13 proposed yellow
+ * 
+>>>>>>> ssm/srtg
  */
 @ViewSynthesisShared
 class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
@@ -101,11 +114,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 
         // translate all direct dataflow equations
         for (equation: region.equations) {
-            node.children += equation.transformToSet;
+            node.children += equation.transform;
         }
         
 
-        return node;
+        return <KNode> newArrayList(node)
     }
     
     /**

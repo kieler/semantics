@@ -13,21 +13,18 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis
 import de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramProperties
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import java.util.List
-import java.util.logging.Logger
-import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.properties.IProperty
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 import org.eclipse.elk.core.options.CoreOptions
@@ -49,7 +46,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
+class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
     @Inject 
     extension KNodeExtensions
@@ -115,10 +112,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         options.add(SHOW_ALL_SCCHARTS)
         
         // Add options of subsyntheses
-        options.addAll(stateSynthesis.displayedSynthesisOptions);
-        options.addAll(transitionSynthesis.displayedSynthesisOptions);
-        options.addAll(controlflowSynthesis.displayedSynthesisOptions);
-        options.addAll(dataflowSynthesis.displayedSynthesisOptions);
+//        options.addAll(stateSynthesis.displayedSynthesisOptions);
+//        options.addAll(transitionSynthesis.displayedSynthesisOptions);
+//        options.addAll(controlflowSynthesis.displayedSynthesisOptions);
+//        options.addAll(dataflowSynthesis.displayedSynthesisOptions);
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
@@ -174,7 +171,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
             rootNode.children += stateSynthesis.transform(root);
         } else if (root instanceof ControlflowRegion) {
             //Adding all children to the root node will hide the graphical representation of the region itself.
-            rootNode.children += controlflowSynthesis.transform(root).children;
+//            rootNode.children += controlflowSynthesis.transform(root).children;
         }
         
         // Add tracking adapter to allow access to source model associations
@@ -197,12 +194,5 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
 		
         return rootNode;
     }
-
-    // -------------------------------------------------------------------------
-    // Increase Visibility of needed protected inherited methods
-    
-    override getUsedContext() {
-        return super.usedContext;
-    }
-    
+   
 }

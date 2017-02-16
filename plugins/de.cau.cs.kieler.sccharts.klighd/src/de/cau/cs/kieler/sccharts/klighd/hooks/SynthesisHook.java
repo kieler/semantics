@@ -23,32 +23,35 @@ import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis;
+import de.cau.cs.kieler.sccharts.klighd.AbstractSCChartsSynthesis;
 
 /**
- * This class allows hooking into the {@link SCChartsSynthesis}. Before and after each main
+ * This class allows hooking into the {@link SRTGSynthesis}. Before and after each main
  * structural element the related method is invoked allowing modification of the input and output of
  * each step.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  *
  */
+@SuppressWarnings("restriction")
 public abstract class SynthesisHook {
 
     @Inject
-    private SCChartsSynthesis parent;
-
+    protected AbstractDiagramSynthesis<?> parent;
+    
     /**
      * The {@link SynthesisOption} this hook contributes to the synthesis.
      * 
@@ -218,7 +221,7 @@ public abstract class SynthesisHook {
      * @see de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis#getUsedContext()
      */
     public ViewContext getUsedContext() {
-        return parent.getUsedContext();
+        return ((AbstractSCChartsSynthesis<?>) parent).getUsedContext();
     }
 
 }

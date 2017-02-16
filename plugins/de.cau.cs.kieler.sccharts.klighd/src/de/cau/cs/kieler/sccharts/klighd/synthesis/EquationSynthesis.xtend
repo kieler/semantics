@@ -52,7 +52,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  *
  */
 @ViewSynthesisShared
-class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
+class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     @Inject
     extension KNodeExtensionsReplacement
@@ -89,8 +89,8 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
     private val dataSinks = <ValuedObject> newHashSet
     private val dataRefs = <ValuedObject> newHashSet
     
-    override performTranformationToSet(Assignment equation) {
-        val nodes = <KNode> newHashSet
+    override performTranformation(Assignment equation) {
+        val nodes = <KNode> newLinkedList
         
         nodes += equation.performDataSourceTransformation;
         nodes += equation.performDataSinkTransformation;
@@ -110,7 +110,6 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
         
         nodes += equationNodes
         nodes += node
-        
         
         nodes
     }
@@ -327,6 +326,6 @@ class EquationSynthesis extends SubSetSynthesis<Assignment, KNode, Set<KNode>> {
                 filter[ !(eContainer instanceof ValuedObjectReference) ].toList
             }
         ]  
-    }     
+    }
     
 }
