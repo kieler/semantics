@@ -1,0 +1,11 @@
+system de.cau.cs.kieler.sccharts.netlist
+	version 1 
+	label "SCCharts Netlist-based Compilation to C"
+	input SCCharts
+	
+metric de.cau.cs.kieler.sccharts.metrics.objectCount	
+	
+system de.cau.cs.kieler.sccharts.extended
+system de.cau.cs.kieler.sccharts.core
+system de.cau.cs.kieler.scg
+de.cau.cs.kieler.scg.c
