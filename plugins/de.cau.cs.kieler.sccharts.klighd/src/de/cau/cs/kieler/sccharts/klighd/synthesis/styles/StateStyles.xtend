@@ -147,10 +147,37 @@ class StateStyles {
     /**
      * Sets the style of an existing figure to violation.
      */
-    def setViolationStyle(KNode node) {
-        node.getKContainerRendering => [
-            setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
-        ]
+    def setViolationStyle(KNode node, boolean isHaltState) {
+        if (isHaltState) {
+            val outer = node.getKContainerRendering as KRoundedRectangle;
+            val inner = outer.copy;
+            val offset = outer.lineWidthValue + if(outer.lineWidthValue == baseLineWidth) 3 else 1;
+            outer => [
+                // This figure is no longer the container for content
+                lineWidth = baseLineWidth +1
+                setProperty(IS_CONTENT_CONTAINER, false);
+                setCornerSize(offset + cornerWidth, offset + cornerHeight);
+                // Update minimal node size according to new corner radius (corner radius x 2)
+                node.setMinimalNodeSize(cornerWidth * 2, cornerHeight * 2);
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+                foreground = STATE_FIANL_FOREGROND.color;
+                // Add grid placement to correctly use offsets
+                setGridPlacement(1);
+                children += inner
+            ]
+            inner => [
+                lineWidth = baseLineWidth;
+                foreground = STATE_FIANL_FOREGROND.color;
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+                // Add surrounding space (white border)
+                setGridPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
+            ]   
+            return outer         
+        } else {
+            node.getKContainerRendering => [
+                setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+            ]
+        }
     }    
 
     /**

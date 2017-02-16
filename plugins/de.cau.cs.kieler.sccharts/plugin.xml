@@ -113,6 +113,9 @@
         <expansionTransformationClass
               class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend">
         </expansionTransformationClass>
+        <expansionTransformationClass
+              class="de.cau.cs.kieler.sccharts.enforcer.EnforcerTransformation">
+        </expansionTransformationClass>
      </extension>
      <extension
            point="de.cau.cs.kieler.kico.feature">
@@ -209,6 +212,9 @@
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
         </featureGroupClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.enforcer.EnforcerFeature">
+        </featureClass>
      </extension>   
 
 

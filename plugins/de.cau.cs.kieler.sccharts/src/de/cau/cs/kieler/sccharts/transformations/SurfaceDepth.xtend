@@ -102,10 +102,10 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
-        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
-            optimizeSuperflousImmediateTransitions.fixDeadCode
-//            optimizeSuperflousImmediateTransitions.fixDeadCode;
-//        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
+        targetRootState.fixAllTextualOrdersByPriorities
+            .optimizeSuperflousConditionalStates
+            .optimizeSuperflousImmediateTransitions
+            .fixDeadCode
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {

@@ -107,7 +107,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             node.setFinalStyle
         }
         if (state.isViolation) {
-            node.setViolationStyle
+            val isHaltState = state.outgoingTransitions.size == 0 
+                || !state.outgoingTransitions.exists[ targetState != state ]
+            node.setViolationStyle(isHaltState)
         }
 
         // Shadow
