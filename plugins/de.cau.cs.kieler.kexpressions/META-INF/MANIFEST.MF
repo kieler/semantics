@@ -11,10 +11,7 @@ Export-Package: de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.extensions,
  de.cau.cs.kieler.kexpressions.formatting,
  de.cau.cs.kieler.kexpressions.impl,
- de.cau.cs.kieler.kexpressions.keffects;
-  uses:="org.eclipse.xtext,
-   org.eclipse.xtext.service,
-   com.google.inject",
+ de.cau.cs.kieler.kexpressions.keffects; uses:="org.eclipse.xtext,  org.eclipse.xtext.service,  com.google.inject",
  de.cau.cs.kieler.kexpressions.keffects.extensions,
  de.cau.cs.kieler.kexpressions.keffects.formatting,
  de.cau.cs.kieler.kexpressions.keffects.impl,
@@ -54,6 +51,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.antlr.runtime,
  de.cau.cs.kieler.annotations;visibility:=reexport,
  de.cau.cs.kieler.kexpressions;visibility:=reexport,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ org.eclipse.xtext.xbase.lib
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="1.2.15"

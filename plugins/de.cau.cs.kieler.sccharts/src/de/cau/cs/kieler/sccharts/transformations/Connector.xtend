@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.features.SCChartsFeatureimport de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Connector Transformation.
@@ -78,12 +78,17 @@ class Connector extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformConnector(State state, State targetRootState) {
-        if (state.type == StateType::CONNECTOR) {
+        if (state.isConnector) {
             state.setTypeNormal
             for (transition : state.outgoingTransitions) {
                 transition.setImmediate(true)
             }
         }
+    }
+
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

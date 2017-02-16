@@ -31,7 +31,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
     
     override getModelName(EObject model) {
+<<<<<<< HEAD
         if (model instanceof ProgramImpl) {
+=======
+        if(model instanceof ProgramImpl){ 
+>>>>>>> ssm/dataflow
             val modules = model.modules
             if(!modules.isNullOrEmpty)
                 return modules.get(0).name

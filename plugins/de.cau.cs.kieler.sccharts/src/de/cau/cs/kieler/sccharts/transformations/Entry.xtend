@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Entry Transformation.
@@ -150,6 +151,10 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 state.localActions.remove(entryAction)
             }
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

@@ -15,9 +15,15 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -27,16 +33,6 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import java.util.ArrayList
 
 /**
  * SCCharts Termination Transformation.
@@ -258,9 +254,9 @@ class Termination extends AbstractExpansionTransformation implements Traceable {
         }
 
     }
-    
-    
 
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
     
-
 }

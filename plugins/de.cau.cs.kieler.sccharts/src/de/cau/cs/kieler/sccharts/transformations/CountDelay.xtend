@@ -28,6 +28,8 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*import 
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
+
 
 /**
  * SCCharts CountDelay Transformation.
@@ -132,6 +134,10 @@ class CountDelay extends AbstractExpansionTransformation implements Traceable {
             transition.setTrigger(trigger)
             transition.setDelay(1)
         }
+    }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

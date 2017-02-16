@@ -15,6 +15,7 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -57,6 +58,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * @generated
      */
     private EClass hostcodeEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass referenceCallEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -195,6 +203,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getAssignment_SubReference() {
+        return (EReference)assignmentEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getEmission() {
         return emissionEClass;
     }
@@ -224,6 +241,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      */
     public EClass getHostcodeEffect() {
         return hostcodeEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getReferenceCallEffect() {
+        return referenceCallEffectEClass;
     }
 
     /**
@@ -279,12 +305,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
         createEReference(assignmentEClass, ASSIGNMENT__INDICES);
         createEAttribute(assignmentEClass, ASSIGNMENT__OPERATOR);
+        createEReference(assignmentEClass, ASSIGNMENT__SUB_REFERENCE);
 
         emissionEClass = createEClass(EMISSION);
         createEReference(emissionEClass, EMISSION__VALUED_OBJECT);
         createEReference(emissionEClass, EMISSION__NEW_VALUE);
 
         hostcodeEffectEClass = createEClass(HOSTCODE_EFFECT);
+
+        referenceCallEffectEClass = createEClass(REFERENCE_CALL_EFFECT);
 
         functionCallEffectEClass = createEClass(FUNCTION_CALL_EFFECT);
 
@@ -329,6 +358,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         emissionEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(this.getEffect());
         hostcodeEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
+        referenceCallEffectEClass.getESuperTypes().add(this.getEffect());
+        referenceCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceCall());
         functionCallEffectEClass.getESuperTypes().add(this.getEffect());
         functionCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getFunctionCall());
 
@@ -340,12 +371,15 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Indices(), theKExpressionsPackage.getExpression(), null, "indices", null, 0, -1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAssignment_Operator(), this.getAssignOperator(), "operator", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_SubReference(), theKExpressionsPackage.getValuedObjectReference(), null, "subReference", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEmission_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEmission_NewValue(), theKExpressionsPackage.getExpression(), null, "newValue", null, 0, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hostcodeEffectEClass, HostcodeEffect.class, "HostcodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(referenceCallEffectEClass, ReferenceCallEffect.class, "ReferenceCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -356,6 +390,10 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNSUB);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMUL);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNDIV);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNMOD);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNAND);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNOR);
+        addEEnumLiteral(assignOperatorEEnum, AssignOperator.ASSIGNXOR);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXADD);
         addEEnumLiteral(assignOperatorEEnum, AssignOperator.POSTFIXSUB);
 

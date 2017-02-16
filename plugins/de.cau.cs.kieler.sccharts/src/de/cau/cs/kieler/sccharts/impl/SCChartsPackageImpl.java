@@ -16,34 +16,33 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
-import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.FinalAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
+import de.cau.cs.kieler.sccharts.InitAction;
 import de.cau.cs.kieler.sccharts.IterateAction;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -59,12 +58,12 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -132,20 +131,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass equationEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass bindingEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass transitionEClass = null;
 
     /**
@@ -199,12 +184,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum stateTypeEEnum = null;
+	private EClass initActionEClass = null;
 
-    /**
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass finalActionEClass = null;
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass scChartsEClass = null;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -217,13 +216,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EEnum historyTypeEEnum = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType parsableEDataType = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -272,7 +264,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         isInited = true;
 
         // Initialize simple dependencies
-        KEffectsPackage.eINSTANCE.eClass();
+        KExtPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
@@ -357,15 +349,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getState_Type() {
-        return (EAttribute)stateEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getState_Regions() {
         return (EReference)stateEClass.getEStructuralFeatures().get(1);
     }
@@ -376,7 +359,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getState_ParentRegion() {
-        return (EReference)stateEClass.getEStructuralFeatures().get(2);
+        return (EReference)stateEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -385,7 +368,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EAttribute getState_Initial() {
-        return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)stateEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -394,7 +377,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EAttribute getState_Final() {
-        return (EAttribute)stateEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -402,8 +385,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getState_Violation() {
+        return (EAttribute)stateEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EAttribute getState_Connector() {
+        return (EAttribute)stateEClass.getEStructuralFeatures().get(5);
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getState_OutgoingTransitions() {
-        return (EReference)stateEClass.getEStructuralFeatures().get(5);
+        return (EReference)stateEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -412,7 +413,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getState_IncomingTransitions() {
-        return (EReference)stateEClass.getEStructuralFeatures().get(6);
+        return (EReference)stateEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -466,7 +467,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getDataflowRegion_Nodes() {
-        return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(0);
+        return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -475,7 +476,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getDataflowRegion_Equations() {
-        return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(1);
+        return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -618,69 +619,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getEquation() {
-        return equationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getEquation_Expression() {
-        return (EReference)equationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getEquation_Node() {
-        return (EReference)equationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getEquation_ValuedObject() {
-        return (EReference)equationEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getBinding() {
-        return bindingEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBinding_Formal() {
-        return (EReference)bindingEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getBinding_Actual() {
-        return (EReference)bindingEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getTransition() {
         return transitionEClass;
     }
@@ -753,7 +691,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getScope_Id() {
+    public EAttribute getScope_Label() {
         return (EAttribute)scopeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -762,17 +700,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getScope_Label() {
-        return (EAttribute)scopeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getScope_LocalActions() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
+        return (EReference)scopeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -781,25 +710,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EReference getScope_ReferencedScope() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getScope_Parameters() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getScope_Bindings() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getScope_Declarations() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -867,14 +787,41 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getStateType() {
-        return stateTypeEEnum;
+	public EClass getInitAction() {
+        return initActionEClass;
     }
 
-    /**
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EClass getFinalAction() {
+        return finalActionEClass;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EClass getSCCharts() {
+        return scChartsEClass;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCCharts_RootStates() {
+        return (EReference)scChartsEClass.getEStructuralFeatures().get(0);
+    }
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -890,15 +837,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      */
     public EEnum getHistoryType() {
         return historyTypeEEnum;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EDataType getParsable() {
-        return parsableEDataType;
     }
 
     /**
@@ -937,11 +875,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(actionEClass, ACTION__IMMEDIATE);
 
         stateEClass = createEClass(STATE);
-        createEAttribute(stateEClass, STATE__TYPE);
-        createEReference(stateEClass, STATE__REGIONS);
         createEReference(stateEClass, STATE__PARENT_REGION);
+        createEReference(stateEClass, STATE__REGIONS);
         createEAttribute(stateEClass, STATE__INITIAL);
         createEAttribute(stateEClass, STATE__FINAL);
+        createEAttribute(stateEClass, STATE__VIOLATION);
+        createEAttribute(stateEClass, STATE__CONNECTOR);
         createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
         createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
 
@@ -952,8 +891,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(controlflowRegionEClass, CONTROLFLOW_REGION__STATES);
 
         dataflowRegionEClass = createEClass(DATAFLOW_REGION);
-        createEReference(dataflowRegionEClass, DATAFLOW_REGION__NODES);
         createEReference(dataflowRegionEClass, DATAFLOW_REGION__EQUATIONS);
+        createEReference(dataflowRegionEClass, DATAFLOW_REGION__NODES);
 
         nodeEClass = createEClass(NODE);
         createEAttribute(nodeEClass, NODE__ID);
@@ -974,15 +913,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(defineNodeEClass, DEFINE_NODE__EXPRESSIONS);
         createEReference(defineNodeEClass, DEFINE_NODE__STATES);
 
-        equationEClass = createEClass(EQUATION);
-        createEReference(equationEClass, EQUATION__EXPRESSION);
-        createEReference(equationEClass, EQUATION__NODE);
-        createEReference(equationEClass, EQUATION__VALUED_OBJECT);
-
-        bindingEClass = createEClass(BINDING);
-        createEReference(bindingEClass, BINDING__FORMAL);
-        createEReference(bindingEClass, BINDING__ACTUAL);
-
         transitionEClass = createEClass(TRANSITION);
         createEAttribute(transitionEClass, TRANSITION__PRIORITY);
         createEAttribute(transitionEClass, TRANSITION__TYPE);
@@ -992,12 +922,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
 
         scopeEClass = createEClass(SCOPE);
-        createEAttribute(scopeEClass, SCOPE__ID);
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__LOCAL_ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCED_SCOPE);
-        createEReference(scopeEClass, SCOPE__BINDINGS);
-        createEReference(scopeEClass, SCOPE__DECLARATIONS);
+        createEReference(scopeEClass, SCOPE__PARAMETERS);
 
         localActionEClass = createEClass(LOCAL_ACTION);
 
@@ -1012,13 +940,16 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         iterateActionEClass = createEClass(ITERATE_ACTION);
 
+        initActionEClass = createEClass(INIT_ACTION);
+
+        finalActionEClass = createEClass(FINAL_ACTION);
+
+        scChartsEClass = createEClass(SC_CHARTS);
+        createEReference(scChartsEClass, SC_CHARTS__ROOT_STATES);
+
         // Create enums
-        stateTypeEEnum = createEEnum(STATE_TYPE);
         transitionTypeEEnum = createEEnum(TRANSITION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
-
-        // Create data types
-        parsableEDataType = createEDataType(PARSABLE);
     }
 
     /**
@@ -1048,6 +979,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+        KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1063,15 +995,19 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         referenceNodeEClass.getESuperTypes().add(this.getNode());
         callNodeEClass.getESuperTypes().add(this.getNode());
         defineNodeEClass.getESuperTypes().add(this.getNode());
-        bindingEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
+        scopeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         localActionEClass.getESuperTypes().add(this.getAction());
         entryActionEClass.getESuperTypes().add(this.getLocalAction());
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
         exitActionEClass.getESuperTypes().add(this.getLocalAction());
         suspendActionEClass.getESuperTypes().add(this.getLocalAction());
         iterateActionEClass.getESuperTypes().add(this.getLocalAction());
+        initActionEClass.getESuperTypes().add(this.getLocalAction());
+        finalActionEClass.getESuperTypes().add(this.getLocalAction());
+        scChartsEClass.getESuperTypes().add(this.getScope());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1082,11 +1018,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getAction_Immediate(), ecorePackage.getEBoolean(), "immediate", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getState_Type(), this.getStateType(), "type", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getState_Regions(), this.getRegion(), this.getRegion_ParentState(), "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_ParentRegion(), this.getControlflowRegion(), this.getControlflowRegion_States(), "parentRegion", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getState_Regions(), this.getRegion(), this.getRegion_ParentState(), "regions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getState_Initial(), ecorePackage.getEBoolean(), "initial", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getState_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getState_Violation(), ecorePackage.getEBoolean(), "violation", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getState_Connector(), ecorePackage.getEBoolean(), "connector", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_OutgoingTransitions(), this.getTransition(), this.getTransition_SourceState(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getState_IncomingTransitions(), this.getTransition(), this.getTransition_TargetState(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1097,8 +1034,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getControlflowRegion_States(), this.getState(), this.getState_ParentRegion(), "states", null, 0, -1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataflowRegionEClass, DataflowRegion.class, "DataflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDataflowRegion_Nodes(), this.getNode(), null, "nodes", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataflowRegion_Equations(), this.getEquation(), null, "equations", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataflowRegion_Equations(), theKEffectsPackage.getAssignment(), null, "equations", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataflowRegion_Nodes(), this.getNode(), null, "nodes", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNode_Id(), ecorePackage.getEString(), "id", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1119,17 +1056,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getDefineNode_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, DefineNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDefineNode_States(), this.getState(), null, "states", null, 0, -1, DefineNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(equationEClass, Equation.class, "Equation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getEquation_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getEquation_Node(), this.getNode(), null, "node", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getEquation_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(bindingEClass, Binding.class, "Binding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBinding_Formal(), theKExpressionsPackage.getValuedObject(), null, "formal", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBinding_Actual(), theKExpressionsPackage.getValuedObject(), null, "actual", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_Deferred(), ecorePackage.getEBoolean(), "deferred", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_History(), this.getHistoryType(), "history", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1137,12 +1065,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getTransition_SourceState(), this.getState(), this.getState_OutgoingTransitions(), "sourceState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getScope_Id(), ecorePackage.getEString(), "id", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_LocalActions(), this.getLocalAction(), null, "localActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Bindings(), this.getBinding(), null, "bindings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Parameters(), theKExpressionsPackage.getParameter(), null, "parameters", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1157,13 +1083,14 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(iterateActionEClass, IterateAction.class, "IterateAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        // Initialize enums and add enum literals
-        initEEnum(stateTypeEEnum, StateType.class, "StateType");
-        addEEnumLiteral(stateTypeEEnum, StateType.NORMAL);
-        addEEnumLiteral(stateTypeEEnum, StateType.CONNECTOR);
-        addEEnumLiteral(stateTypeEEnum, StateType.REFERENCE);
-        addEEnumLiteral(stateTypeEEnum, StateType.TEXTUAL);
+        initEClass(initActionEClass, InitAction.class, "InitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(finalActionEClass, FinalAction.class, "FinalAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSCCharts_RootStates(), this.getState(), null, "rootStates", null, 0, -1, SCCharts.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        // Initialize enums and add enum literals
         initEEnum(transitionTypeEEnum, TransitionType.class, "TransitionType");
         addEEnumLiteral(transitionTypeEEnum, TransitionType.WEAKABORT);
         addEEnumLiteral(transitionTypeEEnum, TransitionType.STRONGABORT);
@@ -1173,9 +1100,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         addEEnumLiteral(historyTypeEEnum, HistoryType.RESET);
         addEEnumLiteral(historyTypeEEnum, HistoryType.SHALLOW);
         addEEnumLiteral(historyTypeEEnum, HistoryType.DEEP);
-
-        // Initialize data types
-        initEDataType(parsableEDataType, String.class, "Parsable", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

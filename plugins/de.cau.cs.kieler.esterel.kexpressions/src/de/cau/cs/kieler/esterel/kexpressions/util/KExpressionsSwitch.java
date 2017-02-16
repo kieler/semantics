@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions.util;
 
@@ -10,11 +6,9 @@ import de.cau.cs.kieler.annotations.Annotatable;
 
 import de.cau.cs.kieler.esterel.kexpressions.*;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
 
 /**
@@ -650,7 +644,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseAnnotatable(de.cau.cs.kieler.annotations.Annotatable object) {
+    public T caseAnnotatable(Annotatable object) {
         return null;
     }
 

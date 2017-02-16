@@ -30,12 +30,11 @@ import de.cau.cs.kieler.kexpressions.Parameter;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl#getFunctionName <em>Function Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.FunctionCallImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
+public class FunctionCallImpl extends CallImpl implements FunctionCall {
     /**
      * The default value of the '{@link #getFunctionName() <em>Function Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -55,16 +54,6 @@ public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
      * @ordered
      */
     protected String functionName = FUNCTION_NAME_EDEFAULT;
-
-    /**
-     * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParameters()
-     * @generated
-     * @ordered
-     */
-    protected EList<Parameter> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -111,39 +100,11 @@ public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Parameter> getParameters() {
-        if (parameters == null) {
-            parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.FUNCTION_CALL__PARAMETERS);
-        }
-        return parameters;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
-                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 return getFunctionName();
-            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
-                return getParameters();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -160,10 +121,6 @@ public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 setFunctionName((String)newValue);
                 return;
-            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
-                getParameters().clear();
-                getParameters().addAll((Collection<? extends Parameter>)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -179,9 +136,6 @@ public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 setFunctionName(FUNCTION_NAME_EDEFAULT);
                 return;
-            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
-                getParameters().clear();
-                return;
         }
         super.eUnset(featureID);
     }
@@ -196,8 +150,6 @@ public class FunctionCallImpl extends ExpressionImpl implements FunctionCall {
         switch (featureID) {
             case KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME:
                 return FUNCTION_NAME_EDEFAULT == null ? functionName != null : !FUNCTION_NAME_EDEFAULT.equals(functionName);
-            case KExpressionsPackage.FUNCTION_CALL__PARAMETERS:
-                return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }

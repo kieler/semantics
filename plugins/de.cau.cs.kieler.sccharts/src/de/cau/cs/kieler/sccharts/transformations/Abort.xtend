@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
@@ -148,7 +149,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     targetState.transformTermination(targetRootState)
                 }
 
-                targetState.transformAbortNoWTO_NEW(targetRootState)
+               targetState.transformAbortNoWTO_NEW(targetRootState)
             }
 
         // done = true;
@@ -316,7 +317,7 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
                     // Inside every region create an _Aborted
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").
                         uniqueNameCached(nameCache)
-                    for (innerState : region.states.filter[!final && type != StateType::CONNECTOR]) {
+                    for (innerState : region.states.filter[!final && !isConnector]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
@@ -496,4 +497,9 @@ class Abort extends AbstractExpansionTransformation implements Traceable {
         return !(list2.nullOrEmpty)
     }
 
+
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
 }

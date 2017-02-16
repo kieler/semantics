@@ -8,6 +8,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.annotations.CommentAnnotation
 import java.util.List
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation
+import java.util.Set
 
 /**
  * Annotations extensions
@@ -23,7 +25,14 @@ class AnnotationsExtensions {
     def public Iterable<Annotation> getAnnotations(Annotatable annotatable, String name) {
         annotatable.getAllAnnotations(name)
     } 
-	
+    
+    def public Annotation getPragma(Annotatable annotatable, String name) {
+        annotatable.getPragmas(name)?.head
+    } 
+
+    def public getPragmas(Annotatable annotatable, String name) {
+        annotatable.getAllAnnotations(name).filter(PragmaStringAnnotation).toList
+    }     
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val annotation = annotatable.getAnnotation(name)
@@ -43,16 +52,34 @@ class AnnotationsExtensions {
 			it.values += value
 		]
 	}
+	
+	def public Annotation createTypedStringAnnotation(String name, String type, String value) {
+        AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
+            it.name = name
+            it.values += value
+            it.type = type
+        ]
+	}
 		
 	def public void copyAnnotations(Annotatable source, Annotatable target) {
 	    source.annotations.forEach[
 	        target.annotations += it.copy
 	    ]
 	}
+
+    def public void copyAnnotations(Annotatable source, Annotatable target, Set<String> filter) {
+        source.annotations.filter[ filter.contains(it.name) ].forEach[
+            target.annotations += it.copy
+        ]
+    }
 	
 	def public boolean hasAnnotation(Annotatable annotatable, String name) {
 		!annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter[ it.name == name].empty
 	}
+
+    def public boolean hasPragma(Annotatable annotatable, String name) {
+        !annotatable.annotations.nullOrEmpty && !annotatable.annotations.filter(PragmaStringAnnotation).filter[ it.name == name ].empty
+    }
 	
     def public void removeAnnotations(Annotatable annotatable, String name) {
         if (!annotatable.annotations.nullOrEmpty) {

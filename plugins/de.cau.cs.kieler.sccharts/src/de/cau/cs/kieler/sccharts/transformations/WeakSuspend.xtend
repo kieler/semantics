@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
@@ -180,6 +181,10 @@ class WeakSuspend extends AbstractExpansionTransformation implements Traceable {
             }
             
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

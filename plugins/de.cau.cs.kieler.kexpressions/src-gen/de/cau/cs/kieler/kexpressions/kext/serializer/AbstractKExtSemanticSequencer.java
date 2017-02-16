@@ -6,30 +6,33 @@ package de.cau.cs.kieler.kexpressions.kext.serializer;
 import com.google.inject.Inject;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.FloatAnnotation;
-import de.cau.cs.kieler.annotations.IntAnnotation;
+import de.cau.cs.kieler.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.kexpressions.BoolValue;
-import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Emission;
 import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.serializer.KEffectsSemanticSequencer;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KEXTScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
@@ -59,17 +62,14 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case AnnotationsPackage.ANNOTATION:
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.BOOLEAN_ANNOTATION:
-				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.FLOAT_ANNOTATION:
-				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_ANNOTATION:
+				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.INT_ANNOTATION:
-				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
+				sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
@@ -78,16 +78,26 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getRestrictedAnnotationRule()
+				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if (rule == grammarAccess.getRestrictedAnnotationRule()
+				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAnnotationRule()
@@ -113,6 +123,10 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSubReferenceAssignmentRule()) {
+					sequence_SubReferenceAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
 				else break;
 			case KEffectsPackage.EMISSION:
 				sequence_Emission(context, (Emission) semanticObject); 
@@ -123,14 +137,14 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KEffectsPackage.HOSTCODE_EFFECT:
 				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
 				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
+				return; 
 			}
 		else if (epackage == KExpressionsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.BOOL_VALUE:
 				sequence_BoolValue(context, (BoolValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.DECLARATION:
-				sequence_Declaration(context, (Declaration) semanticObject); 
 				return; 
 			case KExpressionsPackage.FLOAT_VALUE:
 				sequence_FloatValue(context, (FloatValue) semanticObject); 
@@ -182,6 +196,21 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
 				return; 
@@ -194,12 +223,34 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == KExtPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KExtPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KExtPackage.KEXT_SCOPE:
+				if (rule == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KEXTScope) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
@@ -225,35 +276,62 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Declaration returns Declaration
+	 *     Kext returns Kext
 	 *
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         const?='const'? 
-	 *         extern?='extern'? 
-	 *         volatile?='volatile'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
-	 *     )
+	 *     scopes+=RootScope
 	 */
-	protected void sequence_Declaration(ISerializationContext context, Declaration semanticObject) {
+	protected void sequence_Kext(ISerializationContext context, Kext semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Kext returns Kext
+	 *     DeclarationWOSemicolon returns ReferenceDeclaration
+	 *     ReferenceDeclarationWOSemicolon returns ReferenceDeclaration
 	 *
 	 * Constraint:
-	 *     ((declarations+=Declaration+ entities+=TestEntity+) | entities+=TestEntity+)?
+	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
 	 */
-	protected void sequence_Kext(ISerializationContext context, Kext semanticObject) {
+	protected void sequence_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns ReferenceDeclaration
+	 *     ReferenceDeclaration returns ReferenceDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* (reference=[Identifiable|NamespaceID] | extern=STRING) valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 */
+	protected void sequence_ReferenceDeclaration(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     RootScope returns KEXTScope
+	 *
+	 * Constraint:
+	 *     (declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
+	 */
+	protected void sequence_RootScope(ISerializationContext context, KEXTScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Scope returns KEXTScope
+	 *
+	 * Constraint:
+	 *     (id=ID? declarations+=Declaration* entities+=TestEntity* scopes+=Scope*)
+	 */
+	protected void sequence_Scope(ISerializationContext context, KEXTScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -275,9 +353,53 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     ValuedObject returns ValuedObject
 	 *
 	 * Constraint:
-	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(ISerializationContext context, ValuedObject semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeclarationWOSemicolon returns VariableDeclaration
+	 *     VariableDeclarationWOSemicolon returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_VariableDeclarationWOSemicolon(ISerializationContext context, VariableDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns VariableDeclaration
+	 *     VariableDeclaration returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_VariableDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

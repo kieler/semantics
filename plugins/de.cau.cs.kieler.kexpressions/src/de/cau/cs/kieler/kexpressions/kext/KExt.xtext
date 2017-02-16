@@ -39,22 +39,33 @@ import "http://kieler.cs.cau.de/kext/0.1.0" as kext
 // The KEXT lagnuages starts with an optional declaration part. Then, an arbitrary number of 
 // test entities may follow.
 Kext returns kext::Kext:
-    (declarations += Declaration)*
-    (entities += TestEntity)*;
+	scopes+=RootScope;
+	
+RootScope returns kext::KEXTScope:
+	{kext::KEXTScope} 
+    declarations+=Declaration*
+    entities+=TestEntity* 
+	('scope' scopes+=Scope)*;
 
+Scope returns kext::KEXTScope:
+	{kext::KEXTScope} 
+	(id=ID)? '{'
+    declarations+=Declaration*
+    entities+=TestEntity* 
+	('scope' scopes+=Scope)* '}';
+	
 // Test Entity Rule
 // A test entity is either an annotation expression or an effect.
 TestEntity returns kext::TestEntity:
-    (expression = AnnotatedExpression) |
-    (effect = Effect);
+    expression=AnnotatedExpression | effect=Effect;
 
 // Annotated Expression Rule
 // An annotated expression is declared with the keyword "expression". It may be preceded by a list
 // of annotations. The expression itself follows the keyword.
 AnnotatedExpression  returns kext::AnnotatedExpression:
-    (annotations+=Annotation)*
+    annotations+=Annotation*
     'expression'
-    (expression = Expression);
+    expression=Expression;
 
 // Declaration Rule
 // A declaration follows the general KIELER pattern for variable declaration. More specific:
@@ -63,26 +74,86 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-	(const?='const')?
-	(extern?='extern')?
-	(volatile?='volatile')?
-    (input?='input')? 
-    (output?='output')?
-    (static?='static')?
-    (((signal?='signal')? type = ValueType) | (signal?='signal')) 
+    VariableDeclaration | ReferenceDeclaration;
+
+DeclarationWOSemicolon returns kexpressions::Declaration:
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon;
+
+
+VariableDeclaration returns kexpressions::VariableDeclaration:
+    annotations+=Annotation*
+	const?='const'?
+    input?='input'? 
+    output?='output'?
+    static?='static'?
+    ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    
+VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
+    annotations+=Annotation*
+	const?='const'?
+    input?='input'? 
+    output?='output'?
+    static?='static'?
+    ((signal?='signal'? type = ValueType) | signal?='signal') 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
+    
+NamespaceID returns ecore::EString:
+  ID (':' PrimeID)*;    
+    
+ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+    annotations+=Annotation*
+    ((
+        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+    ) | (
+        'extern' extern = STRING
+    ))
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
+    
+ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+    annotations+=Annotation*
+    ((
+        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+    ) | (
+        'extern' extern = STRING
+    ))
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
+    
+//ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
+//    annotations+=Annotation*
+//    (
+//        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+//        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+//        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+//        ';'
+//    ) | (
+//        'extern' extern = STRING
+//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+//    );
+//    
+//ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
+//    annotations+=Annotation*
+//    (
+//        'ref' reference = [kexpressions::Identifiable|NamespaceID]
+//        valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?
+//        (',' valuedObjects+=ValuedObject (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')?)* 
+//    ) | (
+//        'extern' extern = STRING
+//        valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
+//    );
+    
 
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 
 // expression may follow. Additionally, the declaration of the object may be finished by a combine part. 
 // Examples: array[10], initial = false, z = 0 combine max
 ValuedObject returns kexpressions::ValuedObject:
-    name=ID
+	annotations+=QuotedStringAnnotation*
+    name=PrimeID
     ('[' cardinalities+=INT ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )?;
-    
+      
     

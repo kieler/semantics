@@ -33,6 +33,13 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.core.model.PluginLog
 import de.cau.cs.kieler.core.model.Log
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -46,6 +53,18 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     @Inject 
     extension KNodeExtensions
+    
+    @Inject
+    extension KRenderingExtensions
+    
+    @Inject 
+    extension SCChartsExtension 
+    
+    @Inject
+    extension SCChartsSerializeHRExtension
+    
+    @Inject
+    extension AnnotationsExtensions
     
     // -------------------------------------------------------------------------
     // SubSyntheses
@@ -65,7 +84,21 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Hooks
     @Inject
     SynthesisHooks hooks  
+
+    // -------------------------------------------------------------------------
+    // Constants
+    public static val PRAGMA_SYMBOLS = "symbols"       
+    public static val PRAGMA_SYMBOL = "symbol"       
+    public static val PRAGMA_SYMBOLS_GREEK = "greek"
+    public static val PRAGMA_SYMBOLS_SUBSCRIPT = "subscript"       
+    public static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
+    public static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
+    public static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
+    public static val PRAGMA_FONT = "font"        
     
+    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE);    
+
     // -------------------------------------------------------------------------
     // Fields
     public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
@@ -76,8 +109,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         
+        
         // Add general options
         options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
+        options.add(SHOW_ALL_SCCHARTS)
         
         // Add options of subsyntheses
         options.addAll(stateSynthesis.displayedSynthesisOptions);
@@ -113,8 +148,29 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
         usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
+        
+        val scc = root.getSCCharts
+        clearSymbols
+        for(symbolTable : scc.getPragmas(PRAGMA_SYMBOLS)) {  
+            var prefix = ""
+            if (symbolTable.values.size > 1) prefix = symbolTable.values.get(1)
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_GREEK)) { defineGreekSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_SUBSCRIPT)) { defineSubscriptSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_SCRIPT)) { defineMathScriptSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_FRAKTUR)) { defineMathFrakturSymbols(prefix) }
+            if (symbolTable.values.head.equals(PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK)) { defineMathDoubleStruckSymbols(prefix) }
+        }             
+        for(symbol : scc.getPragmas(PRAGMA_SYMBOL)) {
+            symbol.values.head.defineSymbol(symbol.values.get(1))
+        }
 
-        if (root instanceof State) {
+        if (root instanceof SCCharts) {
+            if (SHOW_ALL_SCCHARTS.booleanValue) {
+                rootNode.children += root.rootStates.map[ stateSynthesis.transform(it); ]
+            } else {
+                rootNode.children += stateSynthesis.transform(root.rootStates.head) 
+            }
+        } else if (root instanceof State) {
             rootNode.children += stateSynthesis.transform(root);
         } else if (root instanceof ControlflowRegion) {
             //Adding all children to the root node will hide the graphical representation of the region itself.
@@ -126,6 +182,11 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         rootNode.setLayoutOption(SCChartsDiagramProperties::MODEL_TRACKER, trackingAdapter);
         // Since the root node will node use to display the diagram (SimpleUpdateStrategy) the tracker must be set on the children.
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
+        
+        val pragmaFont = scc.getPragmas(PRAGMA_FONT).last
+        if (pragmaFont != null) {
+            rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
+        }
         
         hooks.invokeFinish(root, rootNode);
 

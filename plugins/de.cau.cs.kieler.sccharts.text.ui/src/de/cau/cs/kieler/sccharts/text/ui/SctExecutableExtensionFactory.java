@@ -8,7 +8,7 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.sccharts.text.sct.ui.internal.SctActivator;
+import de.cau.cs.kieler.sccharts.text.ui.internal.SCTActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -18,12 +18,12 @@ public class SctExecutableExtensionFactory extends AbstractGuiceAwareExecutableE
 
 	@Override
 	protected Bundle getBundle() {
-		return SctActivator.getInstance().getBundle();
+		return SCTActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return SctActivator.getInstance().getInjector(SctActivator.DE_CAU_CS_KIELER_SCCHARTS_TEXT_SCT_SCT);
+		return SCTActivator.getInstance().getInjector(SCTActivator.DE_CAU_CS_KIELER_SCCHARTS_TEXT_SCT);
 	}
 	
 }

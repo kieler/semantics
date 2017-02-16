@@ -6,10 +6,9 @@ package de.cau.cs.kieler.kexpressions.serializer;
 import com.google.inject.Inject;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.FloatAnnotation;
-import de.cau.cs.kieler.annotations.IntAnnotation;
+import de.cau.cs.kieler.annotations.PragmaAnnotation;
+import de.cau.cs.kieler.annotations.PragmaStringAnnotation;
 import de.cau.cs.kieler.annotations.StringAnnotation;
 import de.cau.cs.kieler.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.annotations.serializer.AnnotationsSemanticSequencer;
@@ -19,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IntValue;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
@@ -50,17 +50,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 			case AnnotationsPackage.ANNOTATION:
 				sequence_TagAnnotation(context, (Annotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.BOOLEAN_ANNOTATION:
-				sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
-				return; 
 			case AnnotationsPackage.COMMENT_ANNOTATION:
 				sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.FLOAT_ANNOTATION:
-				sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_ANNOTATION:
+				sequence_PragmaTagAnnotation(context, (PragmaAnnotation) semanticObject); 
 				return; 
-			case AnnotationsPackage.INT_ANNOTATION:
-				sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
+			case AnnotationsPackage.PRAGMA_STRING_ANNOTATION:
+				sequence_PramgaKeyStringValueAnnotation(context, (PragmaStringAnnotation) semanticObject); 
 				return; 
 			case AnnotationsPackage.STRING_ANNOTATION:
 				if (rule == grammarAccess.getAnnotationRule()
@@ -69,16 +66,26 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getRestrictedAnnotationRule()
+				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
 					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if (rule == grammarAccess.getRestrictedAnnotationRule()
+				if (rule == grammarAccess.getQuotedStringAnnotationRule()
 						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
 					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getAnnotationRule()
@@ -143,6 +150,9 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			case KExpressionsPackage.PARAMETER:
 				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
 				return; 
 			case KExpressionsPackage.STRING_VALUE:
 				sequence_StringValue(context, (StringValue) semanticObject); 
@@ -340,7 +350,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     FunctionCall returns FunctionCall
 	 *
 	 * Constraint:
-	 *     (functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
+	 *     ((functionName=ID (parameters+=Parameter parameters+=Parameter*)?) | (functionName=ID (parameters+=Parameter parameters+=Parameter*)?))
 	 */
 	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -402,6 +412,47 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression)
 	 */
 	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Root returns ReferenceCall
+	 *     Expression returns ReferenceCall
+	 *     BoolExpression returns ReferenceCall
+	 *     LogicalOrExpression returns ReferenceCall
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     LogicalAndExpression returns ReferenceCall
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     BitwiseOrExpression returns ReferenceCall
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     BitwiseAndExpression returns ReferenceCall
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     CompareOperation returns ReferenceCall
+	 *     CompareOperation.OperatorExpression_1_0 returns ReferenceCall
+	 *     NotOrValuedExpression returns ReferenceCall
+	 *     NotExpression returns ReferenceCall
+	 *     ValuedExpression returns ReferenceCall
+	 *     AddExpression returns ReferenceCall
+	 *     AddExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     SubExpression returns ReferenceCall
+	 *     SubExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     MultExpression returns ReferenceCall
+	 *     MultExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     DivExpression returns ReferenceCall
+	 *     DivExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     ModExpression returns ReferenceCall
+	 *     ModExpression.OperatorExpression_1_0 returns ReferenceCall
+	 *     NegExpression returns ReferenceCall
+	 *     AtomicExpression returns ReferenceCall
+	 *     AtomicValuedExpression returns ReferenceCall
+	 *     ReferenceCall returns ReferenceCall
+	 *
+	 * Constraint:
+	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -535,7 +586,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ValuedObjectReference returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] indices+=Expression*)
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference?)
 	 */
 	protected void sequence_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

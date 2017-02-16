@@ -20,7 +20,6 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -39,6 +38,11 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -85,28 +89,22 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     // -- Injections 
     // -------------------------------------------------------------------------
        
-    @Inject
-    extension SCGCoreExtensions
+    @Inject extension SCGCoreExtensions
+    @Inject extension SCGThreadExtensions
+    @Inject extension SCGDependencyExtensions
+    @Inject extension SCGDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension AnnotationsExtensions    
     
-    @Inject
-    extension SCGThreadExtensions
-
-    @Inject
-    extension SCGDependencyExtensions
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions
-    
-    @Inject
-    extension AnnotationsExtensions    
-    
-    @Inject
-    extension KEffectsExtensions
-
 
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
+    
+    protected val parameterMapping = <String, List<ValuedObject>> newHashMap
+    protected val HashMultimap<Assignment, ValuedObject> writerObjectCache = HashMultimap.create 
+    protected val HashMultimap<Node, ValuedObject> readerObjectCache = HashMultimap.create 
+    
     
     /**
      * transformSCGToSCGDEP executes the transformation from a standard SCG to 
@@ -129,6 +127,17 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 		val writer = HashMultimap.create
 		val relativeWriter = <Assignment> newHashSet
 		val reader = HashMultimap.create
+		parameterMapping.clear
+		writerObjectCache.clear
+		readerObjectCache.clear
+
+        for(entry : scg.nodes.filter(Entry)) {
+            val parameterList = <ValuedObject> newArrayList
+            for(tsa : scg.annotations.filter(TypedStringAnnotation).filter[ name.equals("voLink") && values.head.equals(entry.id)]) {
+                parameterList += scg.findValuedObjectByName(tsa.type)
+            }
+            parameterMapping.put(entry.id, parameterList)
+        }
 
 		nodeMapping.createNodeCaches(assignments, conditionals, writer, relativeWriter, reader)
 
@@ -154,6 +163,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				if (node.valuedObject != null) {
 					assignments += node
 					writer.put(node.valuedObject, node)
+					writerObjectCache.put(node, node.valuedObject)
 					node.expression.getAllReferences.forEach[
 						reader.put(it.valuedObject, node)
 						if (it.valuedObject.equals(node.valuedObject)) {
@@ -163,11 +173,35 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 					if (node.operator != AssignOperator::ASSIGN) {
 						relativeWriter += node
 					}
+				} else {
+				    val expression = node.expression
+				    if (expression instanceof ReferenceCall) {
+				        assignments += node
+				        val refName = expression.valuedObject.declaration.asReferenceDeclaration.extern
+				        val refList = parameterMapping.get(refName)
+				        for(var i = 0; i < refList.size; i++) {
+				            val pex = expression.parameters.get(i).expression
+				            if (pex instanceof ValuedObjectReference) {
+				                val vo = pex.valuedObject
+				                val refVODeclaration = refList.get(i).declaration
+				                if (refVODeclaration instanceof VariableDeclaration) {
+				                    if (refVODeclaration.input) {
+				                        reader.put(vo, node)
+				                        readerObjectCache.put(node, vo)
+				                    } else {
+				                        writer.put(vo, node)
+                                        writerObjectCache.put(node, vo)
+				                    }
+				                }
+				            }  
+				        }
+				    }
 				}
 			} else if (node instanceof Conditional) {
 				conditionals += node
 				node.condition.getAllReferences.forEach[
 					reader.put(it.valuedObject, node)
+					readerObjectCache.put(node, it.valuedObject)
 				]
 			}
 		}
@@ -197,8 +231,4 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     	}	
     }
     
-
-    
-
- 
 }

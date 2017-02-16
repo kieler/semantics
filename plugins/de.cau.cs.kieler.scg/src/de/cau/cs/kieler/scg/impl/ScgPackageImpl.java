@@ -1046,6 +1046,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Add supertypes to classes
         scGraphEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        nodeEClass.getESuperTypes().add(theKExpressionsPackage.getIdentifiable());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());

@@ -7,11 +7,7 @@ bool A;
 int I;
 int I1[5];
 
-@check assignment.valuedObject
-A = A
-
-@check assignment.array
-I1[0] = 0
+/////////////////// SIMPLE ASSIGNMENTS ///////////////////
 
 @check "assignment.literal.true"
 A = true
@@ -19,14 +15,42 @@ A = true
 @check "assignment.literal.false"
 A = false
 
-@check assignment.assign.add
-I += 1
+@check assignment.reference
+A = A
 
-@check assignment.assign.sub
-I -= 1
+@check assignment.operator.unary.reference
+@strict
+A = pre(A)
 
-@check assignment.assign.mul
-I *= 2
+@check assignment.operator.binary.reference
+A = A & A
 
-@check assignment.assign.div
-I /= 2
+
+
+/////////////////// ARRAY ASSIGNMENTS ///////////////////
+
+@check assignment.array.literal
+I1[0] = 0
+
+@check assignment.array.reference
+I1[0] = I
+
+@check assignment.array.operator.unary.reference
+@strict
+I1[0] = pre(I)
+
+@check assignment.array.operator.binary.reference
+I1[0] = I + I
+
+@check assignment.array.dynamic.literal
+I1[I] = 1
+
+@check assignment.array.dynamic.reference
+I1[I] = I
+
+@check assignment.array.dynamic.operator.unary.reference
+@strict
+I1[I] = pre(I)
+
+@check assignment.array.dynamic.operator.binary.reference
+I1[I] = I + I

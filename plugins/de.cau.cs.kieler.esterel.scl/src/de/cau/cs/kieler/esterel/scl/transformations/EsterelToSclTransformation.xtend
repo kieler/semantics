@@ -92,11 +92,12 @@ import java.util.HashMap
 import java.util.LinkedList
 import java.util.Set
 import java.util.Stack
-import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import java.util.List
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -269,7 +270,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         }
 
         val rootParallelStatement = createParallel
-        rootParallelStatement.threads.add(handleOutputs(targetSclProgram.declarations, f_term, terminates))
+        rootParallelStatement.threads.add(handleOutputs(targetSclProgram.variableDeclarations, f_term, terminates))
         rootParallelStatement.threads.add(
             createThread => [
                 statements.addAll(sclStatementSequence.statements)
@@ -318,7 +319,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
      * @param terminates Indicates if the Esterel program may terminate or not
      * @return Thread setting all output variables to false by absolute write
      */
-    def Thread handleOutputs(EList<Declaration> declarations, ValuedObject f_term, boolean terminates) {
+    def Thread handleOutputs(List<VariableDeclaration> declarations, ValuedObject f_term, boolean terminates) {
         val resetSignalVariablesThread = createThread
         val resetThreadStartLabel = createNewUniqueLabel
 
@@ -1729,7 +1730,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         val newDeclarations = new LinkedList<Declaration>
 
         // Signal declared in run module have to be copied, but only if not already done
-        moduleDeclarations.declarations.forEach [
+        moduleDeclarations.variableDeclarations.forEach [
             if (!(alreadyDefined(it.valuedObjects.head.name))) {
                 if (!it.valuedObjects.head.name.endsWith("_val")) {
                     if (!it.const) {

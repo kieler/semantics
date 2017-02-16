@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.circuit.Linkable#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.circuit.Linkable#getOutgoingLinks <em>Outgoing Links</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable()
  * @model abstract="true"
@@ -35,39 +35,39 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Linkable extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Incoming Links</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Incoming Links</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getTarget <em>Target</em>}'.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Incoming Links</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Incoming Links</em>' reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable_IncomingLinks()
-	 * @see de.cau.cs.kieler.circuit.Link#getTarget
-	 * @model opposite="target"
-	 * @generated
-	 */
+     * @return the value of the '<em>Incoming Links</em>' reference list.
+     * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable_IncomingLinks()
+     * @see de.cau.cs.kieler.circuit.Link#getTarget
+     * @model opposite="target"
+     * @generated
+     */
 	EList<Link> getIncomingLinks();
 
 	/**
-	 * Returns the value of the '<em><b>Outgoing Links</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Outgoing Links</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.circuit.Link}.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.circuit.Link#getSource <em>Source</em>}'.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Outgoing Links</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Outgoing Links</em>' reference list.
-	 * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable_OutgoingLinks()
-	 * @see de.cau.cs.kieler.circuit.Link#getSource
-	 * @model opposite="source"
-	 * @generated
-	 */
+     * @return the value of the '<em>Outgoing Links</em>' reference list.
+     * @see de.cau.cs.kieler.circuit.CircuitPackage#getLinkable_OutgoingLinks()
+     * @see de.cau.cs.kieler.circuit.Link#getSource
+     * @model opposite="source"
+     * @generated
+     */
 	EList<Link> getOutgoingLinks();
 
 } // Linkable

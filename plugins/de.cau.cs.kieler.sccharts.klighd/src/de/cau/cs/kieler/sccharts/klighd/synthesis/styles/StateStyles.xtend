@@ -143,6 +143,15 @@ class StateStyles {
             setGridPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
         ]
     }
+    
+    /**
+     * Sets the style of an existing figure to violation.
+     */
+    def setViolationStyle(KNode node) {
+        node.getKContainerRendering => [
+            setBackgroundGradient(STATE_VIOLATION_BACKGROUND_GRADIENT_1.color, STATE_VIOLATION_BACKGROUND_GRADIENT_2.color, 90);
+        ]
+    }    
 
     /**
      * Sets the style of an existing figure to referenced.

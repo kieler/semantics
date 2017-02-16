@@ -29,6 +29,11 @@ public interface Statement extends EObject {
      * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
      * <!-- begin-user-doc -->
+=======
+     * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.annotations.Annotation}.
+     * <!-- begin-user-doc -->
+>>>>>>> ssm/scg
      * <p>
      * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
      * there really should be more of a description here...

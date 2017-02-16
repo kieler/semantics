@@ -21,7 +21,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.layout.SidebarOverrideLayoutConfig
@@ -35,6 +34,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -52,6 +52,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     @Inject
     extension SCChartsSerializeHRExtension
@@ -78,7 +81,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 //        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
 
         //pre-evaluate type
-        val isConnector = state.type == StateType::CONNECTOR
+        val isConnector = state.isConnector
 
         // Basic state style
         switch state {
@@ -103,6 +106,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (state.isFinal) {
             node.setFinalStyle
         }
+        if (state.isViolation) {
+            node.setViolationStyle
+        }
 
         // Shadow
         if (!isConnector) {
@@ -116,12 +122,12 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
-                            associateWith(state)
+                            state.serializeHR + " @ " + ((state.referencedScope as State).serializeHR ?: "UnresolvedReference") +
+                            state.parameters.serializeHRParameters).associateWith(state)
                     case state.isMacroState:
-                        node.addMacroStateLabel(state.label).associateWith(state)
+                        node.addMacroStateLabel(state.serializeHR.toString).associateWith(state)
                     default:
-                        node.addSimpleStateLabel(state.label).associateWith(state)
+                        node.addSimpleStateLabel(state.serializeHR.toString).associateWith(state)
                 }
             } else {
                 node.addEmptyStateLabel
@@ -134,7 +140,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     associateWith(declaration);
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)];
                 ]
-            }
+            }           
 
             // Add actions
             for (action : state.localActions) {

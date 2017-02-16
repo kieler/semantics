@@ -31,6 +31,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*im
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts History Transformation.
@@ -161,6 +162,10 @@ class History extends AbstractExpansionTransformation implements Traceable {
             }
 
         }
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

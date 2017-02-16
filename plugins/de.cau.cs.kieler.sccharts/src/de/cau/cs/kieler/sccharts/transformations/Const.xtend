@@ -29,6 +29,7 @@ import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Const Transformation.
@@ -122,6 +123,10 @@ class Const extends AbstractExpansionTransformation implements Traceable {
             const.deleteAndCleanup
         }
 
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

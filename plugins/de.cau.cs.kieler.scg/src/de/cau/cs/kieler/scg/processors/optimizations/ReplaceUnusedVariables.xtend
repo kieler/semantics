@@ -27,6 +27,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.transformation.Processor
 import de.cau.cs.kieler.scg.processors.SCGProcessors
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Replaces only initialized but never rewritten variables by constants
@@ -39,6 +41,9 @@ import de.cau.cs.kieler.scg.processors.SCGProcessors
  *
  */
 class ReplaceUnusedVariables extends Processor implements Traceable {
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions       
 
     override getId() {
         return SCGProcessors::REPLACEUNUSEDVARIABLES_ID
@@ -49,7 +54,7 @@ class ReplaceUnusedVariables extends Processor implements Traceable {
         val scg = eObject as SCGraph
 
         // TODO maybe others...
-        scg.declarations.filter[input != true && output != true].forEach [
+        scg.variableDeclarations.filter[input != true && output != true].forEach [
             for (valObj : it.valuedObjects) {
                 System.out.println("1" + valObj.initialValue)
                 if (valObj.neverAssigned(scg)) {

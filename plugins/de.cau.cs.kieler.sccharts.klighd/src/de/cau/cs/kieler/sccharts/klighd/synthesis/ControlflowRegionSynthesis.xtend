@@ -36,6 +36,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -56,6 +57,9 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
     @Inject
     extension SCChartsSerializeHRExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension StateSynthesis
@@ -84,7 +88,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
 
         if (!region.states.empty) {
 
-            val label = if(region.label.nullOrEmpty) "" else " " + region.label;
+            val label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString;
 
             // Expanded
             node.addRegionFigure => [
@@ -95,7 +99,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 } else {
                     addStatesAndDeclarationsArea();
                     // Add declarations
-                    for (declaration : region.declarations) {
+                    for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(declaration);

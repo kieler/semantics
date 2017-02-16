@@ -116,6 +116,24 @@ public interface KExpressionsFactory extends EFactory {
     Declaration createDeclaration();
 
     /**
+     * Returns a new object of class '<em>Variable Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Variable Declaration</em>'.
+     * @generated
+     */
+    VariableDeclaration createVariableDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Reference Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Declaration</em>'.
+     * @generated
+     */
+    ReferenceDeclaration createReferenceDeclaration();
+
+    /**
      * Returns a new object of class '<em>Function Call</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -123,6 +141,24 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     FunctionCall createFunctionCall();
+
+    /**
+     * Returns a new object of class '<em>Referenceable</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Referenceable</em>'.
+     * @generated
+     */
+    Referenceable createReferenceable();
+
+    /**
+     * Returns a new object of class '<em>Identifiable</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Identifiable</em>'.
+     * @generated
+     */
+    Identifiable createIdentifiable();
 
     /**
      * Returns a new object of class '<em>Parameter</em>'.
@@ -141,6 +177,24 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     StringValue createStringValue();
+
+    /**
+     * Returns a new object of class '<em>Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Call</em>'.
+     * @generated
+     */
+    Call createCall();
+
+    /**
+     * Returns a new object of class '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Call</em>'.
+     * @generated
+     */
+    ReferenceCall createReferenceCall();
 
     /**
      * Returns the package supported by this factory.

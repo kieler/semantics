@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts ExposeLocalValuedObject Transformation.
@@ -75,6 +76,10 @@ class ExposeLocalValuedObject extends AbstractExpansionTransformation implements
         }
         
         targetRootState;
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

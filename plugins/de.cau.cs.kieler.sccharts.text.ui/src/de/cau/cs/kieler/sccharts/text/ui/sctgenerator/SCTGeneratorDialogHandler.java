@@ -23,8 +23,8 @@ import org.eclipse.ui.PlatformUI;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
-import de.cau.cs.kieler.sccharts.text.sct.sctgenerator.SCTGenerator;
+import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator;
 
 /**
  * Handler class for the SCT Generator menu command.
@@ -40,7 +40,7 @@ public class SCTGeneratorDialogHandler extends AbstractHandler {
 
     /** The SCT injector */
     private static Injector injector =
-            new SctStandaloneSetup().createInjectorAndDoEMFRegistration();
+            new SCTStandaloneSetup().createInjectorAndDoEMFRegistration();
 
     /**
      * {@inheritDoc}

@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.kexpressions.extensions
 
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.FunctionCall
@@ -27,6 +26,11 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import java.util.Iterator
+import java.util.List
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.Parameter
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.CombineOperator
 
 /**
  * Serialization of KExpressions.
@@ -296,26 +300,34 @@ class KExpressionsSerializeExtensions {
         if(expression.value == true) return "true"
         return "false"
     }
+    
+    def dispatch CharSequence serialize(ReferenceCall referenceCall) {
+        return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+    }
 
     def dispatch CharSequence serialize(FunctionCall functionCall) {
-        var funcCall = functionCall.functionName + "("
-
+        return "<" + functionCall.functionName + functionCall.parameters.serializeParameters + ">"
+    }
+    
+    def protected CharSequence serializeParameters(List<Parameter> parameters) {
+        val sb = new StringBuilder
+        sb.append("(")
         var cnt = 0
-        for (par : functionCall.parameters) {
+        for (par : parameters) {
             if (cnt > 0) {
-                funcCall = funcCall + ", "
+                sb.append(", ")
             }
             if (par.pureOutput) {
-                funcCall = funcCall + "!"
+                sb.append("!")
             }
             if (par.callByReference) {
-                funcCall = funcCall + "&"
+                sb.append("&")
             }
-            funcCall = funcCall + par.expression.serialize
+            sb.append(par.expression.serialize)
             cnt = cnt + 1
         }
-        funcCall = funcCall + ")"
-        return "<" + funcCall + ">"
+        sb.append(")") 
+        return sb.toString      
     }
 
     def dispatch CharSequence serialize(String s) {
@@ -325,5 +337,46 @@ class KExpressionsSerializeExtensions {
     def dispatch CharSequence serialize(Void x) {
     }
 
+
+   def Pair<List<String>, List<String>> serializeComponents(VariableDeclaration declaration) {
+        val keywords = newLinkedList;
+        val content = newLinkedList;
+
+        //Modifiers
+        if (declaration.isExtern) {
+            keywords += "extern";
+        }
+        if (declaration.isStatic) {
+            keywords += "static ";
+        }
+        if (declaration.isConst) {
+            keywords += "const";
+        }
+        if (declaration.isInput) {
+            keywords += "input";
+        }
+        if (declaration.isOutput) {
+            keywords += "output"
+        }
+        if (declaration.isSignal) {
+            keywords += "signal";
+        }
+
+        //Type
+        keywords += declaration.type.serialize as String
+
+        //Content
+        for (valuedObject : declaration.valuedObjects) {
+            content += valuedObject.serialize + ",";
+        }
+        // Remove last comma
+        if (!content.empty) {
+            content.removeLast;
+            content += declaration.valuedObjects.last.serialize as String;
+        }
+
+        return new Pair(keywords, content);
+    }
+  
   
 }

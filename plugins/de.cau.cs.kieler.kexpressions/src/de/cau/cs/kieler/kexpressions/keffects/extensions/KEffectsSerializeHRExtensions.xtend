@@ -19,6 +19,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Serialization of KEffects in human readable form.
@@ -40,8 +41,8 @@ class KEffectsSerializeHRExtensions extends KEffectsSerializeExtensions {
     
     def dispatch CharSequence serializeHR(Emission emission) {
         val objectContainer = emission.valuedObject.eContainer
-        if (objectContainer instanceof Declaration) {
-            if ((objectContainer as Declaration).type != ValueType::PURE) {
+        if (objectContainer instanceof VariableDeclaration) {
+            if (objectContainer.type != ValueType::PURE) {
                 return (emission.valuedObject.name + "(" + emission.newValue.serializeHR + ")")             
             } else {
                 return emission.valuedObject.name

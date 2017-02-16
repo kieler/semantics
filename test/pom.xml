@@ -21,9 +21,15 @@
   <modules>
     <module>de.cau.cs.kieler.semantics.test.common</module>
     <!-- responsible: ssm  --><module>de.cau.cs.kieler.core.kexpressions.text.test</module>
+<<<<<<< HEAD
     <module>de.cau.cs.kieler.sccharts.test</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
     <module>de.cau.cs.kieler.sccharts.sim.c.test</module>
+=======
+    <!-- <module>de.cau.cs.kieler.sccharts.test</module> -->
+    <!-- <module>de.cau.cs.kieler.sim.kiem.test</module>
+    <module>de.cau.cs.kieler.sccharts.sim.c.test</module> -->
+>>>>>>> ssm/dataflow
     
     <!--  ESTEREL IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.esterel.cec.sim.test</module> -->
     <!--  SIM S IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.s.sim.sc.test</module> -->

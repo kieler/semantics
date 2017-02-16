@@ -21,7 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts InputOutputVariable Transformation.
@@ -78,6 +78,10 @@ class InputOutputVariable extends AbstractExpansionTransformation implements Tra
     def void transformInputOutputVariable(State state, State targetRootState) {
         state.setDefaultTrace
         //TODO: Implement this transformation
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

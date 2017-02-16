@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -57,6 +58,7 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.StringInputStream;
 
@@ -76,6 +78,7 @@ import de.cau.cs.kieler.klighd.KlighdPreferences;
 import de.cau.cs.kieler.klighd.ui.view.DiagramView;
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController;
 import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController;
+import de.cau.cs.kieler.klighd.ui.view.controllers.EditorUtil;
 import de.cau.cs.kieler.klighd.ui.view.model.ErrorModel;
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
@@ -733,7 +736,7 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
             // Get model if necessary
             if (do_get_model) {
-                sourceModel = readModel(recentEditor);
+                sourceModel = readModel_NON_STATIC(recentEditor);
                 if (sourceModel != null && sourceModel.eResource() != null) {
                     Resource eResource = sourceModel.eResource();
                     sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty();
@@ -1081,4 +1084,21 @@ public class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         });
     }
 
+    /**
+     * Reads the model from given EdtorPart if it supports ecore models.
+     * 
+     * @param editor
+     *            IEditorPart containing model
+     * @return EObject model
+     */
+    protected  EObject readModel_NON_STATIC(final IEditorPart editor) {
+        EObject model = null;
+        if (editor instanceof XtextEditor) { // Get model from XTextEditor
+            return EditorUtil.readModelFromXtextEditor((XtextEditor) editor);
+        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
+            return EditorUtil.readModelFromEMFEditor((IEditingDomainProvider) editor);
+        }
+        return model;
+    }
+    
 }

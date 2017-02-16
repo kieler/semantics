@@ -132,6 +132,24 @@ public interface AnnotationsFactory extends EFactory {
     CommentAnnotation createCommentAnnotation();
 
     /**
+     * Returns a new object of class '<em>Pragma Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Pragma Annotation</em>'.
+     * @generated
+     */
+    PragmaAnnotation createPragmaAnnotation();
+
+    /**
+     * Returns a new object of class '<em>Pragma String Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Pragma String Annotation</em>'.
+     * @generated
+     */
+    PragmaStringAnnotation createPragmaStringAnnotation();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -17,6 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts InputOutput Feature.
@@ -41,16 +43,26 @@ class InputOutput extends Feature {
     //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
         val allStates = model.allStates.toList
         for (state : allStates) {
-            if (state.declarations.filter[it.input && it.output].size > 0) {
+            if (state.variableDeclarations.filter[it.input && it.output].size > 0) {
                 return true
             }
         }
         return false
     }
+
+    def isContained(SCCharts sccharts) {
+        for(s:sccharts.rootStates) {
+            if (s.isContained) return true
+        }
+        false
+    }     
 
 }

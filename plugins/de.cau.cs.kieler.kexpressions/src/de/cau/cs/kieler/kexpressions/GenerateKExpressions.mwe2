@@ -66,7 +66,9 @@ Workflow {
             }
             
 			// scoping and exporting API
-			fragment = scoping.ImportURIScopingFragment {}
+			fragment = scoping.ImportURIScopingFragment {
+				generateXtendStub = true
+			}
             // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished
 			
 			// scoping and exporting API 

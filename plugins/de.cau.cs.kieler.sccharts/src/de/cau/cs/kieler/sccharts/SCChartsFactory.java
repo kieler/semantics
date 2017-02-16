@@ -26,12 +26,11 @@ import org.eclipse.emf.ecore.EFactory;
 public interface SCChartsFactory extends EFactory {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
-
-    /**
+	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
+				/**
      * The singleton instance of the factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -121,24 +120,6 @@ public interface SCChartsFactory extends EFactory {
     DefineNode createDefineNode();
 
     /**
-     * Returns a new object of class '<em>Equation</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Equation</em>'.
-     * @generated
-     */
-    Equation createEquation();
-
-    /**
-     * Returns a new object of class '<em>Binding</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Binding</em>'.
-     * @generated
-     */
-    Binding createBinding();
-
-    /**
      * Returns a new object of class '<em>Transition</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -193,6 +174,33 @@ public interface SCChartsFactory extends EFactory {
     IterateAction createIterateAction();
 
     /**
+     * Returns a new object of class '<em>Init Action</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Init Action</em>'.
+     * @generated
+     */
+	InitAction createInitAction();
+
+				/**
+     * Returns a new object of class '<em>Final Action</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Final Action</em>'.
+     * @generated
+     */
+	FinalAction createFinalAction();
+
+				/**
+     * Returns a new object of class '<em>SC Charts</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>SC Charts</em>'.
+     * @generated
+     */
+	SCCharts createSCCharts();
+
+				/**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

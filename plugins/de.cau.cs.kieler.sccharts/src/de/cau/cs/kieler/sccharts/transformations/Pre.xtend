@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Pre Transformation.
@@ -222,6 +223,10 @@ class Pre extends AbstractExpansionTransformation implements Traceable {
 
         }
 
+    }
+
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 }

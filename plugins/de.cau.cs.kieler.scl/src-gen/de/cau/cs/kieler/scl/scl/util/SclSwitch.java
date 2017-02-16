@@ -3,7 +3,9 @@
 package de.cau.cs.kieler.scl.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;

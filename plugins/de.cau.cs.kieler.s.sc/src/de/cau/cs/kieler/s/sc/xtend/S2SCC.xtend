@@ -44,6 +44,7 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -59,6 +60,9 @@ class S2SCC {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension SExtension    
@@ -252,7 +256,7 @@ class S2SCC {
    
    // Generate variables.
    def sVariablesOLD(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.variableDeclarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»

@@ -21,6 +21,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 
 /**
@@ -58,6 +60,9 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     // -------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
+    
+    @Inject
+    extension KExpressionsDeclarationExtensions    
 
     @Inject
     extension ValuedObjectRise
@@ -87,7 +92,7 @@ class Static extends AbstractExpansionTransformation implements Traceable {
     }
 
     def void transformStatic(State state, State targetRootState) {
-        val staticDeclarations = state.declarations.filter[isStatic]
+        val staticDeclarations = state.variableDeclarations.filter[isStatic]
         for (staticDeclaration : staticDeclarations.toList) {
             for (staticValuedObject : staticDeclaration.valuedObjects) {
                 staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX +
@@ -97,5 +102,10 @@ class Static extends AbstractExpansionTransformation implements Traceable {
             targetRootState.declarations += staticDeclaration
         }
     }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+    
 
 }

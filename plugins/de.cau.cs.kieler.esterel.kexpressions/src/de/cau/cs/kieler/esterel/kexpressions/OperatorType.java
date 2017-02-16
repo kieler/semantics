@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.esterel.kexpressions;
 
@@ -585,5 +581,5 @@ public enum OperatorType implements Enumerator {
     public String toString() {
         return literal;
     }
-
+    
 } //OperatorType

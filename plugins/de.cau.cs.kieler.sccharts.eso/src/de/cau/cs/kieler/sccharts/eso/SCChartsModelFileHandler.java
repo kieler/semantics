@@ -11,9 +11,10 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -39,7 +40,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.STransformation";
 
     /** Create an injector to load the transformation via guice. */
-    private static Injector injector = new SctStandaloneSetup()
+    private static Injector injector = new SCTStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
     // -------------------------------------------------------------------------
@@ -83,43 +84,46 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             builder.append("! reset;\n");
             for (int tick = 0; tick < ticks; tick++) {
 
-                for (Declaration declaration : state.getDeclarations()) {
-                    if (declaration.isInput()) {
-                        String type = declaration.getType().getLiteral();
+				for (Declaration declaration : state.getDeclarations()) {
+					if (declaration instanceof VariableDeclaration) {
+						VariableDeclaration variableDeclaration = (VariableDeclaration) declaration;
+						if (variableDeclaration.isInput()) {
+							String type = variableDeclaration.getType().getLiteral();
 
-                        String value = null;
-                        // get random value
-                        if (type.equals("int")) {
-                            value = ((int)(1000 - (Math.random() * 2000))) + "";
-                        } else if (type.equals("bool")) {
-                            if (Math.random()*2 > 1) {
-                                value =  "true";
-                            } else {
-                                value =  "false";
-                            }
-                        } else if (type.equals("pure")) {
-                            if (Math.random()*2 > 1) {
-                                value =  "PRESENT";
-                            } 
-                        } else if (type.equals("double")) {
-                            value = (1000 - (Math.random() * 2000)) + "";
-                        }
+							String value = null;
+							// get random value
+							if (type.equals("int")) {
+								value = ((int) (1000 - (Math.random() * 2000))) + "";
+							} else if (type.equals("bool")) {
+								if (Math.random() * 2 > 1) {
+									value = "true";
+								} else {
+									value = "false";
+								}
+							} else if (type.equals("pure")) {
+								if (Math.random() * 2 > 1) {
+									value = "PRESENT";
+								}
+							} else if (type.equals("double")) {
+								value = (1000 - (Math.random() * 2000)) + "";
+							}
 
-                        for (ValuedObject valuedObject : declaration.getValuedObjects()) {
-                            String name = valuedObject.getName();
+							for (ValuedObject valuedObject : declaration.getValuedObjects()) {
+								String name = valuedObject.getName();
 
-                            if (!declaration.isSignal() || (!type.equals("pure"))) {
-                                // variables
-                                builder.append(name + "(" + value + ") ");
-                            } else {
-                                // signals
-                                if (value != null) {
-                                    builder.append(name + " ");
-                                }
-                            }
-                        }
-                    }// input
-                }// declaration
+								if (!variableDeclaration.isSignal() || (!type.equals("pure"))) {
+									// variables
+									builder.append(name + "(" + value + ") ");
+								} else {
+									// signals
+									if (value != null) {
+										builder.append(name + " ");
+									}
+								}
+							}
+						} // input
+					}
+				} // declaration
                 builder.append("\n% Output: \n;\n");
 
             }// tick

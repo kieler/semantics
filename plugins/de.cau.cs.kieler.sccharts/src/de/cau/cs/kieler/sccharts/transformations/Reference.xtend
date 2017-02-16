@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
@@ -27,7 +26,6 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -42,6 +40,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.sccharts.SCCharts
 
 /**
  * SCCharts Reference Transformation.
@@ -83,9 +82,6 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     extension KExpressionsValuedObjectExtensions   
 
     @Inject
-    extension AnnotationsExtensions
-
-    @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -93,6 +89,9 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
     static private final String PROPAGATE_ANNOTATION = "propagate"
+    
+    static private final val CALLVO_NAME = GENERATED_PREFIX + "call" 
+    private var callCounter = 0
 
     private val propagatedBindings = <String, Binding>newHashMap
 
@@ -101,6 +100,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
+        callCounter = 0
+        
         val targetRootState = rootState.fixAllPriorities;
         // Transform dataflows first
 		targetRootState.transformDataflows
@@ -111,8 +112,32 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         
         targetRootState;
     }
+    
+    def void transformReference(State state, State rootState) {
+        val referenceDeclaration = createReferenceDeclaration => [
+            rootState.declarations += it
+            reference = state.referencedScope
+        ]
+        val rVO = createValuedObject(CALLVO_NAME + callCounter).attachTo(referenceDeclaration)
+        callCounter++
+        
+        val callRegion = state.createControlflowRegion("")
+        val crInitial = callRegion.createInitialState(GENERATED_PREFIX + "init")
+        val crFinal = callRegion.createState(GENERATED_PREFIX + "do")
+        val crTransition = crInitial.createImmediateTransitionTo(crFinal)
+        crFinal.createTransitionTo(crInitial) 
+        
+        val crAction = KEffectsFactory.eINSTANCE.createReferenceCallEffect 
+        crAction.valuedObject = rVO
+        state.parameters.forEach[ crAction.parameters += it.copy ]
+        
+        crTransition.addEffect(crAction)       
+        
+        state.referencedScope = null    
+        state.parameters.removeIf[true] 
+    }
 
-    def void transformReference(State state, State targetRootState) {        
+    def void transformReference2(State state, State targetRootState) {        
         state.setDefaultTrace
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
@@ -122,7 +147,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             label = state.label
         ]
 
-        var newStateIterator = newState.eAllContents
+/*        var newStateIterator = newState.eAllContents
         while (newStateIterator.hasNext) {
             val eObject = newStateIterator.next
             if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference ||
@@ -174,7 +199,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             ]
         ]
 
-        newState.declarations.immutableCopy.forEach [ declaration |
+        newState.variableDeclarations.immutableCopy.forEach [ declaration |
             if (declaration.isInput || declaration.isOutput) {
                 declaration.valuedObjects.forEach [
                     val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
@@ -206,6 +231,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
         newState.allContainedStates.filter[referencedState].toList.immutableCopy.forEach [
             transformReference(newState)
         ]
+        * */
     }
 
     
@@ -237,9 +263,10 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 // bind inputs
                 var exprCounter = 0
                 val refedInputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.input].forEach[
+                refNode.referencedScope.variableDeclarations.filter[it.input].forEach[
                     refedInputs += valuedObjects
                 ]
+                /* 
                 for (expr: refNode.parameters) {
                     val newBinding = SCChartsFactory.eINSTANCE.createBinding
                     newBinding.actual = (expr as ValuedObjectReference).valuedObject
@@ -251,7 +278,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                 // bind outputs
                 exprCounter = 0
                 val refedOutputs = <ValuedObject>newArrayList
-                refNode.referencedScope.declarations.filter[it.output].forEach[
+                refNode.referencedScope.variableDeclarations.filter[it.output].forEach[
                     refedOutputs += valuedObjects
                 ]
                 for (eq: dataflow.equations) {
@@ -268,6 +295,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         }
                     }
                 }
+                */
                 (newState.referencedScope as State).transform
             }
 			// transform all call nodes
@@ -328,8 +356,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     // replace outputs: get all dataflow equations which have a reference
                     // to the current call node
                     for (eq: dataflow.equations) {
-                        if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
+//                        if (eq.node != null) {
+//                            if (eq.node.equals(callNode)) {
                                 val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
                                 val vo = eq.valuedObject
                                 // check if output variable is already substituted
@@ -364,8 +392,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                                     oldAssignment.valuedObject = vo
                                     voMapping.put(key, vo)
                                 }
-                            }
-                        }
+//                            }
+//                        }
                     }
                     // increment counters
                     regionCounter = regionCounter + 1
@@ -462,8 +490,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     // deal with multiple use of outputs
                     // first get all equations which refer to the current call node
                     for (eq: dataflow.equations) {
-                        if (eq.node != null) {
-                            if (eq.node.equals(callNode)) {
+//                        if (eq.node != null) {
+//                            if (eq.node.equals(callNode)) {
                                 val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
                                 val vo = eq.valuedObject
                                 val voRef = (eq.expression as ValuedObjectReference).valuedObject
@@ -496,8 +524,8 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                                             }
                                         }
                                     }
-                                }
-                            }
+//                                }
+//                            }
                         }
                     }
                     
@@ -512,11 +540,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 			// transform all dataflow equations which do not refer to a node
 			val assignmentList = <Assignment> newArrayList			
 			for (eq: dataflow.equations) {
-			    if (eq.node == null) {
+//			    if (eq.node == null) {
                     // Equation: eq.node == null
                     // and create new assignment as transition effect
                     assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
-                }
+//                }
             }
             /*
              * create just one new region for all dataflow equations
@@ -587,6 +615,11 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
     		}
     	}
    	}
+   	
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
+    }
+   	
    	
    	// helper methods
    	private def Assignment createNewAssignment(ValuedObject vo, Expression expression) {

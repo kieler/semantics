@@ -107,7 +107,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRING(6, "STRING", "string");
+    STRING(6, "STRING", "string"), /**
+     * The '<em><b>REFERENCE</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #REFERENCE_VALUE
+     * @generated
+     * @ordered
+     */
+    REFERENCE(8, "REFERENCE", "reference");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -232,6 +240,21 @@ public enum ValueType implements Enumerator {
     public static final int STRING_VALUE = 6;
 
     /**
+     * The '<em><b>REFERENCE</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>REFERENCE</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #REFERENCE
+     * @model literal="reference"
+     * @generated
+     * @ordered
+     */
+    public static final int REFERENCE_VALUE = 8;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -247,6 +270,7 @@ public enum ValueType implements Enumerator {
             HOST,
             DOUBLE,
             STRING,
+            REFERENCE,
         };
 
     /**
@@ -311,6 +335,7 @@ public enum ValueType implements Enumerator {
             case HOST_VALUE: return HOST;
             case DOUBLE_VALUE: return DOUBLE;
             case STRING_VALUE: return STRING;
+            case REFERENCE_VALUE: return REFERENCE;
         }
         return null;
     }

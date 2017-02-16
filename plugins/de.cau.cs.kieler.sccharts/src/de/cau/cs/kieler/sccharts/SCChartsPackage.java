@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -40,12 +39,12 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 public interface SCChartsPackage extends EPackage {
     /**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Kiel University\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+	String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
-    /**
+				/**
      * The package name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -59,7 +58,7 @@ public interface SCChartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/sccharts/0.1.0";
+    String eNS_URI = "http://kieler.cs.cau.de/sccharts/0.3.0";
 
     /**
      * The package namespace name.
@@ -158,7 +157,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 12;
+    int SCOPE = 10;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -170,13 +169,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -185,7 +193,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
@@ -194,7 +202,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -203,25 +211,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__REFERENCED_SCOPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__REFERENCED_SCOPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__BINDINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__PARAMETERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -250,6 +249,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int STATE__ANNOTATIONS = SCOPE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -288,49 +296,31 @@ public interface SCChartsPackage extends EPackage {
     int STATE__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__BINDINGS = SCOPE__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__TYPE = SCOPE_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Regions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__REGIONS = SCOPE_FEATURE_COUNT + 1;
+    int STATE__PARAMETERS = SCOPE__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+    * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__PARENT_REGION = SCOPE_FEATURE_COUNT + 2;
+   int STATE__PARENT_REGION = SCOPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Regions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+   int STATE__REGIONS = SCOPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Initial</b></em>' attribute.
@@ -339,7 +329,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STATE__INITIAL = SCOPE_FEATURE_COUNT + 3;
+    int STATE__INITIAL = SCOPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Final</b></em>' attribute.
@@ -348,16 +338,34 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STATE__FINAL = SCOPE_FEATURE_COUNT + 4;
+    int STATE__FINAL = SCOPE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+     * The feature id for the '<em><b>Violation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__OUTGOING_TRANSITIONS = SCOPE_FEATURE_COUNT + 5;
+    int STATE__VIOLATION = SCOPE_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Connector</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int STATE__CONNECTOR = SCOPE_FEATURE_COUNT + 5;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+   int STATE__OUTGOING_TRANSITIONS = SCOPE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
@@ -366,7 +374,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 6;
+    int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 7;
 
     /**
      * The number of structural features of the '<em>State</em>' class.
@@ -375,7 +383,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
+    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -395,6 +403,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -433,22 +450,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__BINDINGS = SCOPE__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
+    int REGION__PARAMETERS = SCOPE__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -488,6 +496,15 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -524,22 +541,13 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__REFERENCED_SCOPE = REGION__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONTROLFLOW_REGION__BINDINGS = REGION__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROLFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+    int CONTROLFLOW_REGION__PARAMETERS = REGION__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -588,6 +596,15 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__ANNOTATIONS = REGION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+
+    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -624,22 +641,13 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__REFERENCED_SCOPE = REGION__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_REGION__BINDINGS = REGION__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__DECLARATIONS = REGION__DECLARATIONS;
+    int DATAFLOW_REGION__PARAMETERS = REGION__PARAMETERS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -651,22 +659,22 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__PARENT_STATE = REGION__PARENT_STATE;
 
     /**
-     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__NODES = REGION_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Equations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_REGION__EQUATIONS = REGION_FEATURE_COUNT + 1;
+    int DATAFLOW_REGION__EQUATIONS = REGION_FEATURE_COUNT + 0;
+
+				/**
+     * The feature id for the '<em><b>Nodes</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__NODES = REGION_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Dataflow Region</em>' class.
@@ -943,98 +951,6 @@ public interface SCChartsPackage extends EPackage {
     int DEFINE_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
-     * @generated
-     */
-    int EQUATION = 9;
-
-    /**
-     * The feature id for the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__EXPRESSION = 0;
-
-    /**
-     * The feature id for the '<em><b>Node</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__NODE = 1;
-
-    /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION__VALUED_OBJECT = 2;
-
-    /**
-     * The number of structural features of the '<em>Equation</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EQUATION_FEATURE_COUNT = 3;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.BindingImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
-     * @generated
-     */
-    int BINDING = 10;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Formal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING__FORMAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Actual</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING__ACTUAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Binding</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1042,7 +958,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
      * @generated
      */
-    int TRANSITION = 11;
+    int TRANSITION = 9;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1169,7 +1085,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
      * @generated
      */
-    int LOCAL_ACTION = 13;
+    int LOCAL_ACTION = 11;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1242,7 +1158,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
      * @generated
      */
-    int ENTRY_ACTION = 14;
+    int ENTRY_ACTION = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1315,7 +1231,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
      * @generated
      */
-    int DURING_ACTION = 15;
+    int DURING_ACTION = 13;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1388,7 +1304,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
      * @generated
      */
-    int EXIT_ACTION = 16;
+    int EXIT_ACTION = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1461,7 +1377,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
      * @generated
      */
-    int SUSPEND_ACTION = 17;
+    int SUSPEND_ACTION = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1543,7 +1459,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getIterateAction()
      * @generated
      */
-    int ITERATE_ACTION = 18;
+    int ITERATE_ACTION = 16;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1609,16 +1525,243 @@ public interface SCChartsPackage extends EPackage {
     int ITERATE_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.InitActionImpl <em>Init Action</em>}' class.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.StateType
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.InitActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getInitAction()
      * @generated
      */
-    int STATE_TYPE = 19;
+	int INIT_ACTION = 17;
 
-    /**
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+				/**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+				/**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+				/**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+				/**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+				/**
+     * The number of structural features of the '<em>Init Action</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int INIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+				/**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.FinalActionImpl <em>Final Action</em>}' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.FinalActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFinalAction()
+     * @generated
+     */
+	int FINAL_ACTION = 18;
+
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+				/**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+				/**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+				/**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+				/**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+				/**
+     * The number of structural features of the '<em>Final Action</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int FINAL_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+				/**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl <em>SC Charts</em>}' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSCCharts()
+     * @generated
+     */
+	int SC_CHARTS = 19;
+
+				/**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__ANNOTATIONS = SCOPE__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__DECLARATIONS = SCOPE__DECLARATIONS;
+
+                /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__ID = SCOPE__ID;
+
+                /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__LABEL = SCOPE__LABEL;
+
+                /**
+     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
+
+                /**
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
+
+                /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_CHARTS__PARAMETERS = SCOPE__PARAMETERS;
+
+                /**
+     * The feature id for the '<em><b>Root States</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS__ROOT_STATES = SCOPE_FEATURE_COUNT + 0;
+
+				/**
+     * The number of structural features of the '<em>SC Charts</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_CHARTS_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 1;
+
+				/**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1637,17 +1780,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     int HISTORY_TYPE = 21;
-
-    /**
-     * The meta object id for the '<em>Parsable</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see java.lang.String
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
-     * @generated
-     */
-    int PARSABLE = 22;
-
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -1725,17 +1857,6 @@ public interface SCChartsPackage extends EPackage {
     EClass getState();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getType()
-     * @see #getState()
-     * @generated
-     */
-    EAttribute getState_Type();
-
-    /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1780,6 +1901,28 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getState_Final();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isViolation <em>Violation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Violation</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isViolation()
+     * @see #getState()
+     * @generated
+     */
+    EAttribute getState_Violation();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isConnector <em>Connector</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Connector</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isConnector()
+     * @see #getState()
+     * @generated
+     */
+	EAttribute getState_Connector();
+
+				/**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1854,10 +1997,10 @@ public interface SCChartsPackage extends EPackage {
     EClass getDataflowRegion();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getNodes <em>Nodes</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getNodes <em>Nodes</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Nodes</em>'.
+     * @return the meta object for the reference list '<em>Nodes</em>'.
      * @see de.cau.cs.kieler.sccharts.DataflowRegion#getNodes()
      * @see #getDataflowRegion()
      * @generated
@@ -2037,81 +2180,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getDefineNode_States();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Equation <em>Equation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Equation</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation
-     * @generated
-     */
-    EClass getEquation();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Equation#getExpression <em>Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getExpression()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_Expression();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Node</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getNode()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_Node();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.Equation#getValuedObject()
-     * @see #getEquation()
-     * @generated
-     */
-    EReference getEquation_ValuedObject();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Binding</em>'.
-     * @see de.cau.cs.kieler.sccharts.Binding
-     * @generated
-     */
-    EClass getBinding();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Formal</em>'.
-     * @see de.cau.cs.kieler.sccharts.Binding#getFormal()
-     * @see #getBinding()
-     * @generated
-     */
-    EReference getBinding_Formal();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Actual</em>'.
-     * @see de.cau.cs.kieler.sccharts.Binding#getActual()
-     * @see #getBinding()
-     * @generated
-     */
-    EReference getBinding_Actual();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2198,17 +2266,6 @@ public interface SCChartsPackage extends EPackage {
     EClass getScope();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getId()
-     * @see #getScope()
-     * @generated
-     */
-    EAttribute getScope_Id();
-
-    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2242,26 +2299,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_ReferencedScope();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getParameters <em>Parameters</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Bindings</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBindings()
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getParameters()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_Bindings();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Declarations</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getDeclarations()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Declarations();
+    EReference getScope_Parameters();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
@@ -2335,16 +2381,47 @@ public interface SCChartsPackage extends EPackage {
     EClass getIterateAction();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.InitAction <em>Init Action</em>}'.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>State Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.StateType
+	 * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Init Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.InitAction
      * @generated
      */
-    EEnum getStateType();
+	EClass getInitAction();
 
-    /**
+				/**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.FinalAction <em>Final Action</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Final Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.FinalAction
+     * @generated
+     */
+	EClass getFinalAction();
+
+				/**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SCCharts <em>SC Charts</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SC Charts</em>'.
+     * @see de.cau.cs.kieler.sccharts.SCCharts
+     * @generated
+     */
+	EClass getSCCharts();
+
+				/**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.SCCharts#getRootStates <em>Root States</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Root States</em>'.
+     * @see de.cau.cs.kieler.sccharts.SCCharts#getRootStates()
+     * @see #getSCCharts()
+     * @generated
+     */
+	EReference getSCCharts_RootStates();
+
+				/**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2363,17 +2440,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getHistoryType();
-
-    /**
-     * Returns the meta object for data type '{@link java.lang.String <em>Parsable</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Parsable</em>'.
-     * @see java.lang.String
-     * @model instanceClass="java.lang.String"
-     * @generated
-     */
-    EDataType getParsable();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -2458,14 +2524,6 @@ public interface SCChartsPackage extends EPackage {
         EClass STATE = eINSTANCE.getState();
 
         /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute STATE__TYPE = eINSTANCE.getState_Type();
-
-        /**
          * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2498,6 +2556,22 @@ public interface SCChartsPackage extends EPackage {
         EAttribute STATE__FINAL = eINSTANCE.getState_Final();
 
         /**
+         * The meta object literal for the '<em><b>Violation</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STATE__VIOLATION = eINSTANCE.getState_Violation();
+
+        /**
+         * The meta object literal for the '<em><b>Connector</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute STATE__CONNECTOR = eINSTANCE.getState_Connector();
+
+								/**
          * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2560,7 +2634,7 @@ public interface SCChartsPackage extends EPackage {
         EClass DATAFLOW_REGION = eINSTANCE.getDataflowRegion();
 
         /**
-         * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Nodes</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -2704,66 +2778,6 @@ public interface SCChartsPackage extends EPackage {
         EReference DEFINE_NODE__STATES = eINSTANCE.getDefineNode_States();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
-         * @generated
-         */
-        EClass EQUATION = eINSTANCE.getEquation();
-
-        /**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__EXPRESSION = eINSTANCE.getEquation_Expression();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__NODE = eINSTANCE.getEquation_Node();
-
-        /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference EQUATION__VALUED_OBJECT = eINSTANCE.getEquation_ValuedObject();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.BindingImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
-         * @generated
-         */
-        EClass BINDING = eINSTANCE.getBinding();
-
-        /**
-         * The meta object literal for the '<em><b>Formal</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference BINDING__FORMAL = eINSTANCE.getBinding_Formal();
-
-        /**
-         * The meta object literal for the '<em><b>Actual</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference BINDING__ACTUAL = eINSTANCE.getBinding_Actual();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2832,14 +2846,6 @@ public interface SCChartsPackage extends EPackage {
         EClass SCOPE = eINSTANCE.getScope();
 
         /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SCOPE__ID = eINSTANCE.getScope_Id();
-
-        /**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2864,20 +2870,12 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__REFERENCED_SCOPE = eINSTANCE.getScope_ReferencedScope();
 
         /**
-         * The meta object literal for the '<em><b>Bindings</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__BINDINGS = eINSTANCE.getScope_Bindings();
-
-        /**
-         * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__DECLARATIONS = eINSTANCE.getScope_Declarations();
+        EReference SCOPE__PARAMETERS = eINSTANCE.getScope_Parameters();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -2948,16 +2946,44 @@ public interface SCChartsPackage extends EPackage {
         EClass ITERATE_ACTION = eINSTANCE.getIterateAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.InitActionImpl <em>Init Action</em>}' class.
          * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.StateType
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
+		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.InitActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getInitAction()
          * @generated
          */
-        EEnum STATE_TYPE = eINSTANCE.getStateType();
+		EClass INIT_ACTION = eINSTANCE.getInitAction();
 
-        /**
+								/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.FinalActionImpl <em>Final Action</em>}' class.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.FinalActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFinalAction()
+         * @generated
+         */
+		EClass FINAL_ACTION = eINSTANCE.getFinalAction();
+
+								/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SCChartsImpl <em>SC Charts</em>}' class.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSCCharts()
+         * @generated
+         */
+		EClass SC_CHARTS = eINSTANCE.getSCCharts();
+
+								/**
+         * The meta object literal for the '<em><b>Root States</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference SC_CHARTS__ROOT_STATES = eINSTANCE.getSCCharts_RootStates();
+
+								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2976,16 +3002,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum HISTORY_TYPE = eINSTANCE.getHistoryType();
-
-        /**
-         * The meta object literal for the '<em>Parsable</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see java.lang.String
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
-         * @generated
-         */
-        EDataType PARSABLE = eINSTANCE.getParsable();
 
     }
 
