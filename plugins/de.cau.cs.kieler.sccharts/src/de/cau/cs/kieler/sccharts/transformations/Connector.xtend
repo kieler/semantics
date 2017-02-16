@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.sccharts.transformations
-
+ 
 import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
