@@ -14,7 +14,7 @@ import de.cau.cs.kieler.sccharts.text.ui.internal.SCTActivator;
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
-public class SCTExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
+public class SCTExecutableExtensionFactory2 extends AbstractGuiceAwareExecutableExtensionFactory {
 
 	@Override
 	protected Bundle getBundle() {

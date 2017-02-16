@@ -5,7 +5,7 @@ Bundle-Vendor: Kiel University
 Bundle-Version: 0.3.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
+Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
@@ -24,11 +24,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.core.model;visibility:=reexport,
  org.eclipse.xtext.xbase,
  org.eclipse.xtext.builder,
- org.eclipse.xtext,
- org.eclipse.xtext.util,
  org.antlr.runtime,
- org.eclipse.emf.ecore,
- org.eclipse.emf.common
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.sccharts.text.formatting,
