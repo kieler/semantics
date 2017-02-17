@@ -28,6 +28,7 @@ class ToolbarSystemCombo extends ControlContribution {
     var private Combo combo
     var Composite parent;
     val items = <String>newArrayList
+    public var String selectedText
 
     protected new(String id) {
         super(id)
@@ -51,6 +52,7 @@ class ToolbarSystemCombo extends ControlContribution {
         items.forEach[combo.add(it)]
         combo.setTextLimit(26 + 10);
         combo.select(defaultIndex);
+        selectedText = items.get(defaultIndex);
         combo.layout();
         combo.redraw();
         combo.update();
@@ -58,6 +60,7 @@ class ToolbarSystemCombo extends ControlContribution {
         combo.addSelectionListener(new SelectionListener() {
 
             public override void widgetSelected(SelectionEvent e) {
+                selectedText = e.text
             }
 
             public override void widgetDefaultSelected(SelectionEvent e) {

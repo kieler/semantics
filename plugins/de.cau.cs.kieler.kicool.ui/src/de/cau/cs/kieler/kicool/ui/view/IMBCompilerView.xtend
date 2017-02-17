@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kicool.ui.view
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling
-import java.util.List
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.widgets.Composite
@@ -100,8 +99,11 @@ class IMBCompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
                 
+        val String location = combo.selectedText            
+        val systemModel = KiCoolRegistration.getProcessorSystemModel(location)
         
-//        updateDiagram(systemModel, properties);
+        updateDiagram(systemModel, properties)
+
 //        updateSelectionTransformationVisualization(activeEditorID);
 //        notifySelectionChangeEventListener();
     }

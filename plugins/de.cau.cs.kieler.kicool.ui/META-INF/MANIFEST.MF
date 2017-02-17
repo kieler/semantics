@@ -18,9 +18,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.klighd,
- de.cau.cs.kieler.core.krendering.extensions,
- de.cau.cs.kieler.klay.layered,
- de.cau.cs.kieler.klighd.ui
+ de.cau.cs.kieler.klighd.krendering.extensions,
+ org.eclipse.elk.alg.layered,
+ de.cau.cs.kieler.klighd.ui,
+ org.eclipse.elk.core,
+ de.cau.cs.kieler.kico.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui.contentassist,

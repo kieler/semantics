@@ -25,6 +25,10 @@ import org.osgi.framework.Bundle
 import java.net.URL
 import de.cau.cs.kieler.kicool.KiCoolActivator
 import org.eclipse.core.runtime.FileLocator
+import java.util.Map
+import java.util.HashMap
+import java.util.List
+import de.cau.cs.kieler.kicool.System
 
 /**
  * @author ssm
@@ -33,17 +37,25 @@ import org.eclipse.core.runtime.FileLocator
 class KiCoolRegistration {
     
     private static val EXTENSION_POINT_SYSTEM = "de.cau.cs.kieler.kicool.system"
-    private static val systemsModels = loadRegisteredSystemModels
+    
+    private static val Map<String, System> modelsMap = new HashMap<String, System>();
+    private static val List<EObject> systemsModels = loadRegisteredSystemModels
     
     public static def getSystemModels() {
-        systemModels
+        systemsModels
+    }
+    
+    public static def System getProcessorSystemModel(String locationString) {
+        modelsMap.get(locationString) as System
     }
     
     public static def loadRegisteredSystemModels() {
         val systems = getRegisteredSystems
         val modelList = <EObject> newArrayList
         for(system : systems) {
-            modelList += loadEObjectFromResourceLocation(system)
+            val model = loadEObjectFromResourceLocation(system)
+            modelList += model
+            modelsMap.put(system, model as System) 
         }
         modelList
     }

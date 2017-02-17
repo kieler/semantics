@@ -1,300 +1,248 @@
 knode processor {
-	size: width = 50 height = 50
-	properties:
-//		de.cau.cs.kieler.noLayout = true
-//		de.cau.cs.kieler.edgeRouting = ORTHOGONAL	
-		de.cau.cs.kieler.borderSpacing = 1
-	
-		krectangle {
-//			styles: invisible = true
-			styles: lineStyle = dot
-			foreground = 200r,200g,200b
-			invisible = true
-		}	
-	
-	knode active {
-		size: width = 8 height = 8
-		pos: x = 1 y = 1
-		properties:de.cau.cs.kieler.noLayout = true	
-		kellipse {
-			styles:
-				foreground = 200r,200g,200b 
-				background = 0r,255g,0b,255a -> 0r,128g,0b,255a (45)
-		}
-	}
-	
-	knode name {
-		size: width = 50 height = 10
-		pos: x = 10 y = 1
-		properties:
-			de.cau.cs.kieler.noLayout = true
-			de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
-		
-		krectangle {
-			styles: invisible = true
-		}
-		
-		klabel "Trigger/Effect"  
-		{
-			ktext{
-			styles:
-				fontName = "Verdana"
-				fontSize = 5pt
-				}				
-		}
-	}
+    size: width = 40 height = 17.5 
 
-	knode status {
-		size: width = 48 height = 4
-		pos: x = 1 y = 27
-		properties:de.cau.cs.kieler.noLayout = true	
-		krectangle {
-			styles:
-				foreground = 255r,255g,255b 
-				background = 250r,0g,0b,255a -> 128r,0g,0b,255a (45)
-		}
-	}
-	
-	knode info {
-		size: width = 48 height = 10
-		pos: y = 29.5 x = 2
-		properties:
-			de.cau.cs.kieler.noLayout = true
-			de.cau.cs.kieler.nodeLabelPlacement = H_RIGHT
-		
-		krectangle {
-			styles: invisible = true
-		}
-		
-		klabel "PT: 34, MM: 1.24"  
-		{
-			ktext{
-			styles:
-				fontName = "Arial"
-				fontSize = 3pt
-				}				
-		}
-	}
-	
-	knode intermediate {
-		size: width = 48 height = 10
-		pos: x = 1 y = 34.5
-		properties:de.cau.cs.kieler.noLayout = true	
-		
-		krectangle {
-			styles: invisible = true
-		}		
-		
-		knode i1 {
-			size: width = 10 height = 10
-			properties:de.cau.cs.kieler.noLayout = true	
-			krectangle {
-				styles:
-					foreground = 255r,255g,255b 
-					background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
-			}
-		}
-		knode i2 {
-			size: width = 10 height = 10
-			pos: x = 10
-			properties:de.cau.cs.kieler.noLayout = true	
-			krectangle {
-				styles:
-					foreground = 255r,255g,255b 
-					background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
-			}
-		}
-	}
-	
-	knode type {
-		size: width = 50 height = 20
-		pos: y = 8
-		properties:de.cau.cs.kieler.noLayout = true	
-		krectangle {
-			styles:
-				invisible = true
-				foreground = 200r,200g,200b 
-				background = 0r,255g,0b,255a -> 0r,128g,0b,255a (45)
-		}
-		
-		knode model {
-			size: width = 16 height = 16
-			pos: x = 2 y = 2
-			properties:de.cau.cs.kieler.noLayout = true	
+    properties:
+//        org.eclipse.elk.noLayout = true
+        
+        krectangle {
+            styles: lineStyle = solid
+            foreground = 100r
+            invisible = true            
+        }           
+        
+    knode processorbody {
+        size: width = 40 height = 17.5 
+    
+        properties:
+            org.eclipse.elk.noLayout = true
+            org.eclipse.elk.spacing.border = 1
+            
+        
+        kroundedRectangle (2.5,2.5) {
+            styles: lineStyle = solid
+            foreground = 100r,100g,200b
+            background = 222r,222g,255b,255a -> 177r,177g,222b,255a (90)
+        }   
+            
+        knode name {
+            size: width = 50 height = 10
+            pos: x = 2 y = 1
+            properties:
+                org.eclipse.elk.noLayout = true
+                de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
+            
+            krectangle {
+                styles: invisible = true
+            }
+            
+            klabel "Trigger/Effect"  
+            {
+                ktext{
+                styles:
+                    fontName = "Arial"
+                    fontSize = 2pt
+                    }               
+            }
+        }
+        
+        knode type {
+            size: width = 10 height = 10
+            pos: x = 36 y = 1
+            properties:
+                org.eclipse.elk.noLayout = true
+                de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
+            
+            krectangle {
+                styles: invisible = true
+            }
+            
+            klabel "T"  
+            {
+                ktext{
+                styles:
+                    fontName = "Arial"
+                    fontSize = 2pt
+                    bold = true
+                    }               
+            }
+        }   
+                
+    
+        knode activity {
+            size: width = 38 height = 4
+            pos: x = 1 y = 4.5
+            properties:
+                org.eclipse.elk.noLayout = true
+                
+            krectangle {
+                styles: invisible = true
+            }
+            
+            knode active {
+                size: width = 14 height = 4
+                pos: x = 1 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 0r,255g,0b,255a -> 0r,128g,0b,255a (45)
+                }
+            }
+            knode seperator {
+                size: width = 1.5 height = 3
+                pos: x = 0.5 y = 0.5
+                krectangle {
+                    styles:
+                        foreground = 150r,150g,150b,255a 
+                }
+            }       
+            
+            knode status {
+                size: width = 14 height = 4
+                pos: x = 24 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 0r,255g,0b,255a -> 0r,128g,0b,255a (45)
+                }
+            }
+            knode seperator {
+                size: width = 1.5 height = 3
+                pos: x = 23.5 y = 0.5
+                krectangle {
+                    styles:
+                        foreground = 150r,150g,150b,255a 
+                }
+            }
+            
+        }
+    
+        knode progress {
+            size: width = 48 height = 4
+            pos: x = 1 y = 8.5
+            properties:
+                org.eclipse.elk.noLayout = true
+                
+            krectangle {
+                styles: invisible = true
+            }
+            
+            knode p1 {
+                size: width = 7 height = 2.5
+                pos: x = 0 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 120r,120g,200b,255a 
+                }
+            }
+            
+            knode p2 {
+                size: width = 7 height = 2.5
+                pos: x = 7.5 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 120r,120g,200b,255a 
+                }
+            }
+    
+            knode p3 {
+                size: width = 7 height = 2.5
+                pos: x = 15.25 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 120r,120g,200b,255a 
+                }
+            }
+    
+            knode p4 {
+                size: width = 7 height = 2.5
+                pos: x = 23.25 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 120r,120g,200b,255a 
+                }
+            }
+    
+            knode p5 {
+                size: width = 7 height = 2.5
+                pos: x = 31 y = 0
+                krectangle {
+                    styles:
+                        foreground = 200r,200g,200b,0a 
+                        background = 120r,120g,200b,255a 
+                }
+            }
+            
+            
+        }
+        
+        
+        knode intermediate {
+            size: width = 5 height = 5
+            pos: x = 1 y = 11 
+            properties:
+                org.eclipse.elk.noLayout = true 
+            
+            krectangle {
+                styles: invisible = true
+            }       
+            
+            knode i1 {
+                size: width = 5 height = 5
+                properties:de.cau.cs.kieler.noLayout = true 
+                krectangle {
+                    styles:
+                        foreground = 255r,255g,255b,0a 
+                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
+                }
+            }
+            knode i2 {
+                size: width = 5 height = 5
+                pos: x = 5 y = 0
+                properties:de.cau.cs.kieler.noLayout = true 
+                krectangle {
+                    styles:
+                        foreground = 255r,255g,255b,0a 
+                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
+                }
+            }
+            knode i3 {
+                size: width = 5 height = 5
+                pos: x = 10 y = 0
+                properties:de.cau.cs.kieler.noLayout = true 
+                krectangle {
+                    styles:
+                        foreground = 255r,255g,255b,0a 
+                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
+                }
+            }
+    
+        }       
+        
+    }
 
-			krectangle {
-//				styles: invisible = true
-			}		
+    knode environment {
+        size: width = 50 height = 10
+        pos: x = 1 y = 18
+        properties:
+            org.eclipse.elk.noLayout = true
+            de.cau.cs.kieler.nodeLabelPlacement = H_LEFT
+            
+        krectangle {
+            styles: invisible = true
+        }
+            
+        klabel "pTime: 34ms\nmMetric: 1.24\n"  
+        {
+            ktext{
+            styles:
+                fontName = "Courier New"
+                fontSize = 1pt
+                }               
+        }
+    }
 
-			knode d1 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 2
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode d2 {
-				size: width = 3 height = 3
-				pos: x = 9 y = 2
-				properties:
-					de.cau.cs.kieler.noLayout = true
-					
-				kellipse {}
-			}
-			knode d3 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 6.5
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode d4 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 11
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode d5 {
-				size: width = 3 height = 3
-				pos: x = 9 y = 11
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode e1 {
-				size: width = 5 height = 1
-				pos: x = 5 y = 3
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e2 {
-				size: width = 1 height = 4
-				pos: x = 4 y = 4
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e3 {
-				size: width = 1 height = 4
-				pos: x = 4 y = 8
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e4 {
-				size: width = 6 height = 5
-				pos: x = 5 y = 3
-				properties:de.cau.cs.kieler.noLayout = true	
-				kpolygon{
-					points: left 0, bottom 0; right 1, top 1
-				} 
-			}
-			knode e5 {
-				size: width = 5 height = 1
-				pos: x = 5 y = 12
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-		}
-		
-		knode model2 {
-			size: width = 16 height = 16
-			pos: x = 32 y = 2
-			properties:de.cau.cs.kieler.noLayout = true	
-
-			krectangle {
-//				styles: invisible = true
-			}		
-
-			knode d21 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 2
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode d22 {
-				size: width = 3 height = 3
-				pos: x = 9 y = 6.5
-				properties:
-					de.cau.cs.kieler.noLayout = true
-					
-				kellipse {}
-			}
-			knode d23 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 6.5
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode d24 {
-				size: width = 3 height = 3
-				pos: x = 3 y = 11
-				properties:de.cau.cs.kieler.noLayout = true	
-				kellipse 
-			}
-			knode e21 {
-				size: width = 5 height = 1
-				pos: x = 5 y = 7.5
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e22 {
-				size: width = 1 height = 4
-				pos: x = 4 y = 4
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e23 {
-				size: width = 1 height = 4
-				pos: x = 4 y = 8
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode e24 {
-				size: width = 6 height = 5
-				pos: x = 4.5 y = 3
-				properties:de.cau.cs.kieler.noLayout = true	
-				kpolygon{
-					points: left 1, top 1; right 0.5, bottom 0.5
-				} 
-			}
-			knode e25 {
-				size: width = 6 height = 5
-				pos: x = 5 y = 7.5
-				properties:de.cau.cs.kieler.noLayout = true	
-				kpolygon{
-					points: left 0, bottom 0; right 1, top 1
-				} 
-			}
-		}
-		
-		knode model3 {
-			size: width = 12 height = 8
-			pos: x = 19 y = 6
-			properties:de.cau.cs.kieler.noLayout = true	
-
-			knode d31 {
-				size: width = 11 height = 1
-				pos: x = 0 y = 3.4
-				properties:de.cau.cs.kieler.noLayout = true	
-				krectangle
-			}
-			knode d32 {
-				size: width = 4 height = 4
-				pos: x = 7 y = 0.1
-				kpolygon{
-					points: left 0, top 1; right 0, bottom 0
-				} 
-			}
-			knode d33 {
-				size: width = 4 height = 4
-				pos: x = 7 y = 3.9
-				kpolygon{
-					points: left 0, bottom 1; right 0, top 0
-				} 
-			}
-			krectangle {
-				styles: invisible = true
-			}			
-			
-			
-		}
-	}
-	
-	
 }

@@ -13,19 +13,19 @@
 package de.cau.cs.kieler.kicool.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.kicool.System
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -52,14 +52,17 @@ class KiCoolSynthesis extends AbstractDiagramSynthesis<System> {
     override transform(System model) {
         val rootNode = model.createNode
         
-        rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
-        rootNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF);
-        rootNode.setLayoutOption(LayoutOptions::SPACING, 20f);
-        rootNode.setLayoutOption(LayoutOptions::BORDER_SPACING, 8f);
+        rootNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        rootNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        rootNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
+        rootNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
+        rootNode.setLayoutOption(CoreOptions::SPACING_NODE, 20f);
+        rootNode.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
         
-        rootNode.children += model.processors.transform
+        
+        val nodes = model.processors.transform
+
+        rootNode.children += nodes 
         
         rootNode
     }

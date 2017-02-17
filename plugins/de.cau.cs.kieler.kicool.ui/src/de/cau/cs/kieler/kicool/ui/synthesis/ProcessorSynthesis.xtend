@@ -11,37 +11,33 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
+
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
-import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.Processor
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorSystem
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.osgi.framework.Bundle
-import org.eclipse.core.runtime.Platform
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import java.net.URL
-import org.eclipse.emf.common.util.URI
-import org.eclipse.xtext.resource.XtextResourceSet
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.core.runtime.FileLocator
-import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.kiml.options.EdgeRouting
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
-import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.kiml.klayoutdata.KIdentifier
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import java.util.List
+import org.eclipse.core.runtime.FileLocator
+import org.eclipse.core.runtime.Platform
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.klayoutdata.KIdentifier
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
+import org.eclipse.elk.core.options.EdgeRouting
+import org.eclipse.elk.graph.KNode
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.resource.IResourceServiceProvider
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.osgi.framework.Bundle
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -77,6 +73,7 @@ class ProcessorSynthesis {
         try {
             res.load(newResourceSet.loadOptions)
             val node = (res.getContents().get(0) as KNode).children.head
+//            val node = res.getContents().get(0) as KNode
             return node
         } catch (Exception e) {
             // 
@@ -94,12 +91,12 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(ProcessorGroup processorGroup) {
         val groupNode = processorGroup.createNode.addProcessorGroupFigure
         
-        groupNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        groupNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        groupNode.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT);
-        groupNode.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF);
-        groupNode.addLayoutParam(LayoutOptions::SPACING, 20f);
-        groupNode.addLayoutParam(LayoutOptions::BORDER_SPACING, 8f);        
+        groupNode.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
+        groupNode.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        groupNode.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
+        groupNode.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
+        groupNode.addLayoutParam(CoreOptions::SPACING_NODE, 20f);
+        groupNode.addLayoutParam(CoreOptions::SPACING_BORDER, 8f);        
         
         var List<KNode> lastNodes = newArrayList()
         for(it : processorGroup.processors) {
