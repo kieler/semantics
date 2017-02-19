@@ -39,14 +39,11 @@ This extension point allowes the contribution of a compiler transformation to th
 
    <element name="Processor">
       <complexType>
-         <attribute name="processor" type="string" use="required">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kicool.compilation.Processor:"/>
-               </appinfo>
             </annotation>
          </attribute>
       </complexType>

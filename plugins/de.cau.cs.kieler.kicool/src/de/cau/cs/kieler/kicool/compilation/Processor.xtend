@@ -36,7 +36,7 @@ abstract class Processor {
         return environments.value
     }
     
-    abstract public def String getID()
+    abstract public def String getId()
     
     abstract public def String getName()
     

@@ -20,15 +20,15 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class eObjectCount extends Metric {
+class EObjectCount extends Metric {
     
     static val ENVIRONMENT_METRIC_KEY = "eObjectCount"
     
-    override getID() {
+    override getId() {
         "de.cau.cs.kieler.kicool.processors.metrics.eObjectCount"
     }
     
-    override getName() {
+    override getName() { 
         "EObject Count Metric"
     }
     

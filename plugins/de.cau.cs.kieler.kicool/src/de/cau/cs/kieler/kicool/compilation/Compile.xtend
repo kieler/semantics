@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kicool.System
 
 import static extension de.cau.cs.kieler.kicool.compilation.internal.ContextPopulation.*
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * @author ssm
@@ -35,4 +36,10 @@ class Compile {
         cc
     }
     
+    static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
+        //TODO: chanche system paths to id!
+        val system = KiCoolRegistration.getSystem(systemID)
+        
+        createCompilationContext(system, sourceModel)
+    }
 }

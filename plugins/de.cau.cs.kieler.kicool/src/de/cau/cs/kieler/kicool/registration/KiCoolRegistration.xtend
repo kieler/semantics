@@ -59,6 +59,10 @@ class KiCoolRegistration {
         systemsModels
     }
     
+    static def getSystem(String id) {
+        modelsMap.get(id)
+    }
+    
     static def System getProcessorSystemModel(String locationString) {
         modelsMap.get(locationString) as System
     }
@@ -105,7 +109,7 @@ class KiCoolRegistration {
         processorMap.clear
         for(processor : processors) {
             val instance = getInstance(processor) as Processor
-            processorMap.put(instance.name, processor)
+            processorMap.put(instance.getId, processor)
         }
         processors
     }
@@ -115,7 +119,10 @@ class KiCoolRegistration {
         val processors = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_PROCESSOR);
         for(processor : processors) {
             try {
-                resourceList += Class.forName(processor.name) as Class<? extends Processor>
+                val instance = processor.createExecutableExtension("class")
+                val clazz = instance.getClass
+                resourceList += clazz as Class<? extends Processor> 
+                //Class.forName(processor.name) as Class<? extends Processor>
             } catch(Exception e) {
                 java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
             }
@@ -132,6 +139,7 @@ class KiCoolRegistration {
     }
     
     static def getProcessorInstance(String id) {
-        getInstance(processorMap.get(id)) as Processor
+        val clazz = processorMap.get(id)
+        getInstance(clazz) as Processor
     }
 }

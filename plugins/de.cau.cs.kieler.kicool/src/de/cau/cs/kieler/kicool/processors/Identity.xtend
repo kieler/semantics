@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
  */
 class Identity extends Processor {
     
-    override getID() {
+    override getId() {
         "de.cau.cs.kieler.kicool.processors.identity"
     }
     

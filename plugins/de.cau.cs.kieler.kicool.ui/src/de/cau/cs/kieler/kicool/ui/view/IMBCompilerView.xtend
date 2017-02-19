@@ -38,6 +38,7 @@ import org.eclipse.jface.action.Separator
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.jface.resource.ImageDescriptor
+import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
 
 /**
  * @author ssm
@@ -46,11 +47,7 @@ import org.eclipse.jface.resource.ImageDescriptor
  */
 class IMBCompilerView extends DiagramViewPart {
     
-    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
-    
-    /** The action for compiling systems. */
-    private Action compileAction;
+
     
     /** The action for toggling the smart system select. */
     private Action smartSystemSelectionToggleAction;
@@ -126,16 +123,8 @@ class IMBCompilerView extends DiagramViewPart {
     public def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
         
         // Compile
-        compileAction = new Action("Compile", IAction.AS_PUSH_BUTTON) {
-            override void run() {
-                // Implement me!
-            }
-        }
-        compileAction.setId("compileAction")
-        compileAction.setText("Compile")
-        compileAction.setToolTipText("Invocates a compilation process.")
-        compileAction.imageDescriptor = ICON_GO 
-        toolBar.add(compileAction)        
+
+        toolBar.add(new CompilationAction().compileAction)        
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
