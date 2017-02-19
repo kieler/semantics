@@ -28,7 +28,7 @@ abstract class Processor {
        setEnvironment(environment, environmentPrime)
     }
     
-    protected def setEnvironment(Environment environment, Environment environmentPrime) {
+    public def setEnvironment(Environment environment, Environment environmentPrime) {
         this.environments = new Pair<Environment, Environment>(environment, environmentPrime)
     }
     

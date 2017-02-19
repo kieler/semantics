@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.compilation
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
+import java.util.HashMap
 
 /**
  * @author ssm
@@ -26,7 +27,11 @@ class Environment {
     public static val MODEL = "model"
     
     @Accessors
-    Map<String, Object>data    
+    Map<String, Object>data
+    
+    new() {
+        data = new HashMap<String, Object>()
+    }    
     
     def getModel() {
         data.get(MODEL)
@@ -34,5 +39,9 @@ class Environment {
     
     def getEModel() {
         data.get(MODEL) as EObject
+    }
+    
+    def setModel(Object model) {
+        data.put(MODEL, model)
     }
 }

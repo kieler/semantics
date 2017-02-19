@@ -43,9 +43,13 @@ class KiCoolRegistration {
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val List<EObject> systemsModels = loadRegisteredSystemModels
     
-    private static val Map<String, Processor> processorMap = new HashMap<String, Processor>()
-    private static val List<Processor> processorList = loadRegisteredProcessors
+    private static val Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>()
+    private static val List<Class<? extends Processor>> processorList = loadRegisteredProcessors
     
+    
+    static def getInstance(Class<?> clazz) {
+        injector.getInstance(clazz);
+    }
     
     static def getInstance(Object object) {
         injector.getInstance(object.getClass());
@@ -100,17 +104,18 @@ class KiCoolRegistration {
         val processors = getRegisteredProcessors
         processorMap.clear
         for(processor : processors) {
-            processorMap.put(processor.name, processor)
+            val instance = getInstance(processor) as Processor
+            processorMap.put(instance.name, processor)
         }
         processors
     }
     
     static def getRegisteredProcessors() {
-        val resourceList = <Processor> newArrayList
+        val resourceList = <Class<? extends Processor>> newArrayList
         val processors = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_PROCESSOR);
         for(processor : processors) {
             try {
-                resourceList += processor.createExecutableExtension("class") as Processor
+                resourceList += Class.forName(processor.name) as Class<? extends Processor>
             } catch(Exception e) {
                 java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
             }
@@ -118,11 +123,15 @@ class KiCoolRegistration {
         resourceList       
     }    
     
-    static def getProcessor(String id) {
+    static def getProcessorClass(String id) {
         processorMap.get(id)
     }
     
-    static def getProcessors() {
+    static def getProcessorClasses() {
         processorList
+    }
+    
+    static def getProcessorInstance(String id) {
+        getInstance(processorMap.get(id)) as Processor
     }
 }
