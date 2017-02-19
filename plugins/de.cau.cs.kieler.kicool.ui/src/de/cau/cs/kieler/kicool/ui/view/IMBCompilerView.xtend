@@ -31,6 +31,13 @@ import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.ViewContext
 import org.eclipse.core.runtime.IProgressMonitor
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import org.eclipse.jface.action.IAction
+import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IMenuManager
+import org.eclipse.jface.action.Separator
+import org.eclipse.jface.action.IToolBarManager
+import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.jface.resource.ImageDescriptor
 
 /**
  * @author ssm
@@ -39,8 +46,24 @@ import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
  */
 class IMBCompilerView extends DiagramViewPart {
     
+    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+    
+    /** The action for compiling systems. */
+    private Action compileAction;
+    
+    /** The action for toggling the smart system select. */
+    private Action smartSystemSelectionToggleAction;
+    private static final boolean SMART_SYSTEM_SELECTION_TOGGLE_ACTION_DEFAULT = true;
+    
+    /** The action for toggling the debug mode. */
+    private Action debugToggleAction;
+    private static final boolean DEBUG_TOGGLE_ACTION_DEFAULT = true;
+    
+    
     private ToolbarSystemCombo combo
     
+    private var addButtonsDelay = true
     
     /**
      * {@inheritDoc}
@@ -50,11 +73,9 @@ class IMBCompilerView extends DiagramViewPart {
 
         val bars = getViewSite.getActionBars
         val toolBarManager = bars.getToolBarManager
-        combo = new ToolbarSystemCombo("System Combo")
-        toolBarManager.add(combo)
-        combo.items.clear
-        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
-        combo.update(0)
+        val menuManager = getViewSite().getActionBars().getMenuManager();
+        addContributions(toolBarManager, menuManager);
+        addButtons();
 
         // Create an IPartListener2
         val pl = new IPartListener2() {
@@ -88,8 +109,72 @@ class IMBCompilerView extends DiagramViewPart {
                 page.removePartListener(pl);
             }
         });
-
+        
     }
+    
+    protected override addButtons() {
+        if (addButtonsDelay) {
+            addButtonsDelay = false
+        } else {
+            super.addButtons();
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
+        
+        // Compile
+        compileAction = new Action("Compile", IAction.AS_PUSH_BUTTON) {
+            override void run() {
+                // Implement me!
+            }
+        }
+        compileAction.setId("compileAction")
+        compileAction.setText("Compile")
+        compileAction.setToolTipText("Invocates a compilation process.")
+        compileAction.imageDescriptor = ICON_GO 
+        toolBar.add(compileAction)        
+       
+        combo = new ToolbarSystemCombo("System Combo")
+        toolBar.add(combo)
+        combo.items.clear
+        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
+        combo.update(0)
+        
+        toolBar.add(new Separator())
+        // The standard klighd view part buttons will be inserted after this separator. 
+
+        menu.add(new Separator())
+        
+        // Smart System Selection
+        smartSystemSelectionToggleAction = new Action("Smart System Selection", IAction.AS_CHECK_BOX) {
+            override void run() {
+                // Implement me!
+            }
+        }
+        smartSystemSelectionToggleAction.setId("smartSystemSelectionToggleAction")
+        smartSystemSelectionToggleAction.setText("Smart System Toggle")
+        smartSystemSelectionToggleAction.setToolTipText("Selects the appropriate system automatically depending on " + 
+            "the pragma, the filename, and the selected system.")
+        smartSystemSelectionToggleAction.setChecked(SMART_SYSTEM_SELECTION_TOGGLE_ACTION_DEFAULT)
+        menu.add(smartSystemSelectionToggleAction)
+        
+        // Smart System Selection
+        debugToggleAction = new Action("Debug Mode", IAction.AS_CHECK_BOX) {
+            override void run() {
+                // Implement me!
+            }
+        }
+        debugToggleAction.setId("debugToggleAction")
+        debugToggleAction.setText("Debug Mode")
+        debugToggleAction.setToolTipText("Sets the system to debug mode meaning that each processor step and each " + 
+            "intermediate result will be saved during processing.")
+        debugToggleAction.setChecked(DEBUG_TOGGLE_ACTION_DEFAULT)
+        menu.add(debugToggleAction)
+        
+    }    
     
 
     private def void updateView() {
