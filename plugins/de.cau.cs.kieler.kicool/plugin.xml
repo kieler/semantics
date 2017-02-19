@@ -6,6 +6,7 @@
 
 <plugin>
    <extension-point id="de.cau.cs.kieler.kicool.system" name="KIELER Compiler Transformation System" schema="schema/de.cau.cs.kieler.kicool.system.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kicool.process" name="KIELER Compiler Processor" schema="schema/de.cau.cs.kieler.kicool.processor.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KiCool -->
@@ -20,6 +21,18 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.kicool.identity.kico">
+      </TransformationSystem>
    </extension>
-
+   <extension
+         point="de.cau.cs.kieler.kicool.process">
+      <Processor
+            processor="de.cau.cs.kieler.kicool.processors.Identity">
+      </Processor>
+      <Processor
+            processor="de.cau.cs.kieler.kicool.processors.metrics.eObjectCount">
+      </Processor>
+   </extension>
+   
 </plugin>

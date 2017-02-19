@@ -13,8 +13,6 @@
 package de.cau.cs.kieler.kicool.registration
 
 import org.eclipse.core.runtime.Platform
-import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.IPath
 import org.eclipse.emf.ecore.resource.Resource
 import java.io.IOException
 import org.eclipse.emf.ecore.EObject
@@ -24,11 +22,12 @@ import org.eclipse.emf.common.util.URI
 import org.osgi.framework.Bundle
 import java.net.URL
 import de.cau.cs.kieler.kicool.KiCoolActivator
-import org.eclipse.core.runtime.FileLocator
 import java.util.Map
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.Processor
+import com.google.inject.Guice
 
 /**
  * @author ssm
@@ -36,22 +35,34 @@ import de.cau.cs.kieler.kicool.System
  */
 class KiCoolRegistration {
     
-    private static val EXTENSION_POINT_SYSTEM = "de.cau.cs.kieler.kicool.system"
+    public static val EXTENSION_POINT_SYSTEM = "de.cau.cs.kieler.kicool.system"
+    public static val EXTENSION_POINT_PROCESSOR = "de.cau.cs.kieler.kicool.processor"
     
-    private static val Map<String, System> modelsMap = new HashMap<String, System>();
+    private static val injector = Guice.createInjector
+    
+    private static val Map<String, System> modelsMap = new HashMap<String, System>()
     private static val List<EObject> systemsModels = loadRegisteredSystemModels
     
-    public static def getSystemModels() {
+    private static val Map<String, Processor> processorMap = new HashMap<String, Processor>()
+    private static val List<Processor> processorList = loadRegisteredProcessors
+    
+    
+    static def getInstance(Object object) {
+        injector.getInstance(object.getClass());
+    }
+    
+    static def getSystemModels() {
         systemsModels
     }
     
-    public static def System getProcessorSystemModel(String locationString) {
+    static def System getProcessorSystemModel(String locationString) {
         modelsMap.get(locationString) as System
     }
     
-    public static def loadRegisteredSystemModels() {
+    static def loadRegisteredSystemModels() {
         val systems = getRegisteredSystems
         val modelList = <EObject> newArrayList
+        modelsMap.clear
         for(system : systems) {
             val model = loadEObjectFromResourceLocation(system)
             modelList += model
@@ -60,7 +71,7 @@ class KiCoolRegistration {
         modelList
     }
 
-    public static def getRegisteredSystems() {
+    static def getRegisteredSystems() {
         val resourceList = <String> newArrayList
         val systems = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_SYSTEM);
         for(system : systems) {
@@ -69,7 +80,7 @@ class KiCoolRegistration {
         resourceList       
     }
     
-    public static def EObject loadEObjectFromResourceLocation(String resourceLocation) throws IOException {
+    static def EObject loadEObjectFromResourceLocation(String resourceLocation) throws IOException {
         
         val Bundle bundle = Platform.getBundle(KiCoolActivator.PLUGIN_ID);
         val URL bundleFileUrl = bundle.getEntry(resourceLocation.toString()); 
@@ -82,5 +93,36 @@ class KiCoolRegistration {
             return eobject
         }
         throw new IOException("Could not load resource '" + resourceLocation + "'!");
+    }
+    
+    
+    static def loadRegisteredProcessors() {
+        val processors = getRegisteredProcessors
+        processorMap.clear
+        for(processor : processors) {
+            processorMap.put(processor.name, processor)
+        }
+        processors
+    }
+    
+    static def getRegisteredProcessors() {
+        val resourceList = <Processor> newArrayList
+        val processors = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_PROCESSOR);
+        for(processor : processors) {
+            try {
+                resourceList += processor.createExecutableExtension("class") as Processor
+            } catch(Exception e) {
+                java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
+            }
+        }
+        resourceList       
     }    
+    
+    static def getProcessor(String id) {
+        processorMap.get(id)
+    }
+    
+    static def getProcessors() {
+        processorList
+    }
 }
