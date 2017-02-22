@@ -48,7 +48,7 @@ class CompilationAction {
     }
     
     protected def invokeCompile() {
-        //TODO: chanche system paths to id!
+        //TODO: change system paths to id!
         val model = "String program! :)"
         
         val cc = Compile.createCompilationContext("system/de.cau.cs.kieler.kicool.identity.kico", model)
