@@ -5,18 +5,18 @@ package de.cau.cs.kieler.sccharts.text;
 
 import org.eclipse.xtext.linking.ILinker;
 
-import de.cau.cs.kieler.sccharts.text.formatting.SCTXValueConverter;
 import de.cau.cs.kieler.sccharts.text.formatting.SCTXIndentionInformation;
+import de.cau.cs.kieler.sccharts.text.formatting.SCTXValueConverter;
 import de.cau.cs.kieler.sccharts.text.scoping.SCTXQualifiedNameProvider;
 import de.cau.cs.kieler.sccharts.text.validation.SCTXValidatorX;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  * 
- * @author ssm
+ * @author ssm 
  */
-public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCTXRuntimeModule {
-
+public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCTXRuntimeModule {
+    
     @org.eclipse.xtext.service.SingletonBinding(eager=true) 
     public Class<? extends SCTXValidatorX> bindSctJavaValidator() {
         return SCTXValidatorX.class;
@@ -44,5 +44,5 @@ public class SCTRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSCT
     
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return SCTXValueConverter.class;
-    }    
+    }   
 }

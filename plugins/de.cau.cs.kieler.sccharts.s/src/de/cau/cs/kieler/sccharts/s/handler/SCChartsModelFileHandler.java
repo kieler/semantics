@@ -11,7 +11,7 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.s.SPlugin;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
-import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -27,7 +27,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.sccharts.commands.STransformation";
 
     /** Create an injector to load the transformation via guice. */
-    private static Injector injector = new SCTStandaloneSetup()
+    private static Injector injector = new SCTXStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
     // -------------------------------------------------------------------------
