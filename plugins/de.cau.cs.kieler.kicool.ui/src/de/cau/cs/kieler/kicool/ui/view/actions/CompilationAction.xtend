@@ -12,16 +12,13 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
+import de.cau.cs.kieler.kicool.compilation.Compile
+import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
-import org.eclipse.jface.action.IAction
-import org.eclipse.jface.action.Action
-import org.eclipse.jface.action.IMenuManager
-import org.eclipse.jface.action.Separator
-import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.view.IMBCompilerView
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm
@@ -36,7 +33,7 @@ class CompilationAction {
     /** The action for compiling systems. */
     @Accessors private Action compileAction;
     
-    new(IMBCompilerView view) {  
+    new(CompilerView view) {  
           
         compileAction = new Action("Compile", IAction.AS_PUSH_BUTTON) {
             override void run() {
@@ -49,7 +46,7 @@ class CompilationAction {
         compileAction.imageDescriptor = ICON_GO     
     }
     
-    protected def invokeCompile(IMBCompilerView view) {
+    protected def invokeCompile(CompilerView view) {
         //TODO: change system paths to id!
         val model = "String program! :)"
         

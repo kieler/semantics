@@ -325,9 +325,9 @@
        <extension
              point="org.eclipse.ui.views">
           <view
-                class="de.cau.cs.kieler.kicool.ui.view.IMBCompilerView"
+                class="de.cau.cs.kieler.kicool.ui.view.CompilerView"
                 icon="icons/IMBC_gear.png"
-                id="de.cau.cs.kieler.kicool.ui.view.IMBCompiler"
+                id="de.cau.cs.kieler.kicool.ui.view.compiler"
                 name="IMB Compiler"
                 restorable="true">
           </view>

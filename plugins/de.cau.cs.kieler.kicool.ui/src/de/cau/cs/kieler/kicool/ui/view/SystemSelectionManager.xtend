@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ui.view
 
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.System
+import java.util.HashMap
 
 /**
  * @author ssm
@@ -22,17 +23,30 @@ import de.cau.cs.kieler.kicool.System
  */
 class SystemSelectionManager {
     
-    private var IMBCompilerView view
+    private val indexMap = new HashMap<Integer, String>
     
-    new(IMBCompilerView view) {
+    private var CompilerView view
+    
+    new(CompilerView view) {
         this.view = view
         
+        createSystemComboList()        
+    }
+    
+    def createSystemComboList() {
         view.combo.items.clear
-        KiCoolRegistration.getSystemModels.filter(System).forEach[
-            val name = if (label.nullOrEmpty) id else label
+        indexMap.clear
+        var int i = 0
+        for(system : KiCoolRegistration.getSystemModels.filter(System)) {
+            val name = if (system.label.nullOrEmpty) system.id else system.label
             view.combo.items.add(name)
-        ]
+            indexMap.put(i++, system.id)
+        }
         view.combo.update(0)
+    }
+    
+    def String getSelectedSystemId() {
+        indexMap.get(view.combo.selectedIndex)
     }
     
 }

@@ -14,7 +14,7 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 
 import java.util.Observer
 import java.util.Observable
-import de.cau.cs.kieler.kicool.ui.view.IMBCompilerView
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm
@@ -23,9 +23,9 @@ import de.cau.cs.kieler.kicool.ui.view.IMBCompilerView
  */
 class CompilationUpdate implements Observer {
     
-    private IMBCompilerView view
+    private CompilerView view
     
-    new(IMBCompilerView view) {
+    new(CompilerView view) {
         this.view = view
     }
     

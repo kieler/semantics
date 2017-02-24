@@ -18,6 +18,7 @@ import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
 import org.eclipse.swt.widgets.Combo
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -28,17 +29,19 @@ class ToolbarSystemCombo extends ControlContribution {
     var private Combo combo
     var Composite parent;
     val items = <String>newArrayList
-    public var String selectedText
+    
+    @Accessors var String selectedText
+    @Accessors var int selectedIndex
 
     protected new(String id) {
         super(id)
     }
 
     override protected createControl(Composite parent) {
-        this.parent = parent;
-        combo = new Combo(parent, SWT.NONE + SWT.DROP_DOWN + SWT.READ_ONLY);
-        update(0);
-        return combo;
+        this.parent = parent
+        combo = new Combo(parent, SWT.NONE + SWT.DROP_DOWN + SWT.READ_ONLY)
+        update(0)
+        return combo
     }
 
     def getItems() {
@@ -48,18 +51,20 @@ class ToolbarSystemCombo extends ControlContribution {
     public def void update(int defaultIndex) {
         if (combo == null) return;
         
-        combo.removeAll();
-        items.forEach[combo.add(it)]
-        combo.setTextLimit(26 + 10);
-        combo.select(defaultIndex);
-        selectedText = items.get(defaultIndex);
-        combo.layout();
-        combo.redraw();
-        combo.update();
+        combo.removeAll()
+        items.forEach[ combo.add(it) ]
+        combo.setTextLimit(26 + 10)
+        combo.select(defaultIndex)
+        selectedText = items.get(defaultIndex)
+        selectedIndex = 0
+        combo.layout()
+        combo.redraw()
+        combo.update()
 
         combo.addSelectionListener(new SelectionListener() {
 
             public override void widgetSelected(SelectionEvent e) {
+                selectedIndex = combo.selectionIndex
                 selectedText = e.text
             }
 
