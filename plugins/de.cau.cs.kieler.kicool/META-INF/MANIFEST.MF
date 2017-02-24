@@ -21,6 +21,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.kicool.compilation,
  de.cau.cs.kieler.kicool.compilation.internal,
+ de.cau.cs.kieler.kicool.compilation.observer,
  de.cau.cs.kieler.kicool.formatting,
  de.cau.cs.kieler.kicool.impl,
  de.cau.cs.kieler.kicool.parser.antlr,

@@ -124,7 +124,7 @@ class IMBCompilerView extends DiagramViewPart {
         
         // Compile
 
-        toolBar.add(new CompilationAction().compileAction)        
+        toolBar.add(new CompilationAction(this).compileAction)        
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)

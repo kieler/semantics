@@ -21,6 +21,7 @@ import org.eclipse.jface.action.Separator
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ui.view.IMBCompilerView
 
 /**
  * @author ssm
@@ -34,11 +35,12 @@ class CompilationAction {
     
     /** The action for compiling systems. */
     @Accessors private Action compileAction;
-
-    new() {    
+    
+    new(IMBCompilerView view) {  
+          
         compileAction = new Action("Compile", IAction.AS_PUSH_BUTTON) {
             override void run() {
-                invokeCompile();
+                invokeCompile(view);
             }
         }
         compileAction.setId("compileAction")
@@ -47,11 +49,14 @@ class CompilationAction {
         compileAction.imageDescriptor = ICON_GO     
     }
     
-    protected def invokeCompile() {
+    protected def invokeCompile(IMBCompilerView view) {
         //TODO: change system paths to id!
         val model = "String program! :)"
         
         val cc = Compile.createCompilationContext("system/de.cau.cs.kieler.kicool.identity.kico", model)
+        
+        val updateObserver = new CompilationUpdate(view)
+        cc.addObserver(updateObserver)
         
         cc.compile
     }

@@ -19,6 +19,10 @@ import java.util.Map
 import java.util.HashMap
 
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentManager.*
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationStart
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 
 /**
  * @author ssm
@@ -48,7 +52,9 @@ class CompilationContext extends Observable {
         
         environment.inplaceCompilation = false
         
+        notifyObservers(new CompilationStart())
         processorEntry.compileEntry(environment)
+        notifyObservers(new CompilationFinished())        
     }
     
     
@@ -58,8 +64,12 @@ class CompilationContext extends Observable {
         
         compilationUnit.setEnvironment(environment, environmentPrime)
         
+        
+        notifyObservers(new ProcessorStart(processor, compilationUnit))
         compilationUnit.process
         // Add Metric code
+        
+        notifyObservers(new ProcessorFinished(processor, compilationUnit))
         
         environmentPrime
     }
