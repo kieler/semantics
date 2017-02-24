@@ -30,7 +30,7 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.internal.SCTActivator
+Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.internal.SCTXActivator
 Export-Package: de.cau.cs.kieler.sccharts.text.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.ui.quickfix,
  de.cau.cs.kieler.sccharts.text.ui.contentassist.antlr,
