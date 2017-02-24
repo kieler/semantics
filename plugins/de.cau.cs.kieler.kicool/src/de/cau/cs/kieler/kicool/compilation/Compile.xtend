@@ -33,6 +33,8 @@ class Compile {
         
         cc.populateContext
         
+        RuntimeSystems.add(cc.getSystem, cc)
+        
         cc
     }
     
