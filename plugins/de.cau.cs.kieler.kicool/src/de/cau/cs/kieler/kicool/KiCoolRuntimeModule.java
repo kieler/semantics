@@ -3,9 +3,19 @@
  */
 package de.cau.cs.kieler.kicool;
 
+import de.cau.cs.kieler.kicool.formatting.KiCoolValueConverter;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * 
+ * @author ssm
+ * @kieler.design 2017-02-24 proposed
+ * @kieler.rating 2017-02-24 proposed yellow  
  */
 public class KiCoolRuntimeModule extends de.cau.cs.kieler.kicool.AbstractKiCoolRuntimeModule {
 
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return KiCoolValueConverter.class;
+    }       
+    
 }

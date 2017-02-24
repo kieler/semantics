@@ -41,6 +41,7 @@ class KiCoolRegistration {
     private static val injector = Guice.createInjector
     
     private static val Map<String, System> modelsMap = new HashMap<String, System>()
+    private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
     private static val List<EObject> systemsModels = loadRegisteredSystemModels
     
     private static val Map<String, Class<? extends Processor>> processorMap = new HashMap<String, Class<? extends Processor>>()
@@ -59,8 +60,12 @@ class KiCoolRegistration {
         systemsModels
     }
     
-    static def getSystem(String id) {
-        modelsMap.get(id)
+    static def getSystemByResource(String res) {
+        modelsMap.get(res)
+    }
+    
+    static def getSystemById(String id) {
+        modelsIdMap.get(id)
     }
     
     static def System getProcessorSystemModel(String locationString) {
@@ -71,10 +76,12 @@ class KiCoolRegistration {
         val systems = getRegisteredSystems
         val modelList = <EObject> newArrayList
         modelsMap.clear
+        modelsIdMap.clear
         for(system : systems) {
             val model = loadEObjectFromResourceLocation(system)
             modelList += model
             modelsMap.put(system, model as System) 
+            modelsIdMap.put((model as System).id, model as System)
         }
         modelList
     }

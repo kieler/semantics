@@ -39,6 +39,7 @@ import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.jface.resource.ImageDescriptor
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -58,9 +59,12 @@ class IMBCompilerView extends DiagramViewPart {
     private static final boolean DEBUG_TOGGLE_ACTION_DEFAULT = true;
     
     
-    private ToolbarSystemCombo combo
+    @Accessors private ToolbarSystemCombo combo
+    
     
     private var addButtonsDelay = true
+    
+    private var SystemSelectionManager systemSelectionManager 
     
     /**
      * {@inheritDoc}
@@ -128,9 +132,7 @@ class IMBCompilerView extends DiagramViewPart {
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
-        combo.items.clear
-        KiCoolRegistration.getRegisteredSystems.forEach[combo.items.add(it)]
-        combo.update(0)
+        systemSelectionManager = new SystemSelectionManager(this)
         
         toolBar.add(new Separator())
         // The standard klighd view part buttons will be inserted after this separator. 

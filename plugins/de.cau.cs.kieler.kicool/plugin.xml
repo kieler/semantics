@@ -19,9 +19,6 @@
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
-            system="system/de.cau.cs.kieler.sccharts.netlist.kico">
-      </TransformationSystem>
-      <TransformationSystem
             system="system/de.cau.cs.kieler.kicool.identity.kico">
       </TransformationSystem>
    </extension>

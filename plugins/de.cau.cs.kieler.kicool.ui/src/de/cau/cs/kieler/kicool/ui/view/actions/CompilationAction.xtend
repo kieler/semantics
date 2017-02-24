@@ -53,7 +53,7 @@ class CompilationAction {
         //TODO: change system paths to id!
         val model = "String program! :)"
         
-        val cc = Compile.createCompilationContext("system/de.cau.cs.kieler.kicool.identity.kico", model)
+        val cc = Compile.createCompilationContext("de.cau.cs.kieler.kicool.identity", model)
         
         val updateObserver = new CompilationUpdate(view)
         cc.addObserver(updateObserver)

@@ -39,8 +39,7 @@ class Compile {
     }
     
     static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
-        //TODO: change system paths to id!
-        val system = KiCoolRegistration.getSystem(systemID)
+        val system = KiCoolRegistration.getSystemById(systemID)
         
         createCompilationContext(system, sourceModel)
     }
