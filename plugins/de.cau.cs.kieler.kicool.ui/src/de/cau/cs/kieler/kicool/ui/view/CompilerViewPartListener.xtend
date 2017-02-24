@@ -19,6 +19,8 @@ import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.ui.part.EditorPart
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import org.eclipse.ui.IEditorPart
+import org.eclipse.ui.PlatformUI
 
 /**
  * @author ssm
@@ -90,5 +92,9 @@ class CompilerViewPartListener implements IPartListener2 {
     
     override partVisible(IWorkbenchPartReference partRef) {
     }
+    
+    public static def IEditorPart getActiveEditor() {
+        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
+    }       
     
 }

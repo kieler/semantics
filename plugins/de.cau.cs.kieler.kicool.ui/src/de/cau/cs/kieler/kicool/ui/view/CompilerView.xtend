@@ -16,8 +16,6 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.PlatformUI
 import org.eclipse.core.runtime.IStatus
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import org.eclipse.ui.progress.UIJob
@@ -94,9 +92,6 @@ class CompilerView extends DiagramViewPart {
         // The standard kligd view part menu entries will be inserted after this separator.    
     }    
     
-    public static def IEditorPart getActiveEditor() {
-        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
-    }    
     
     def void updateView() {
         if (activeSystem == null) return
@@ -110,18 +105,6 @@ class CompilerView extends DiagramViewPart {
         updateDiagram(activeSystem, properties)
     }
 
-
-    /**
-     * Update view on close clears the cache for registered Editors to ensure that if you open the
-     * model again no strange behavior occurs.
-     * 
-     * @param ref
-     *            the ref
-     */
-    def void updateViewOnClose() {
-    }
-    
-    
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             val instance = this
