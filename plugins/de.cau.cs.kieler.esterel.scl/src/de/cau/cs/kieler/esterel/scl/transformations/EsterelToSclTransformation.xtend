@@ -1237,7 +1237,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             (abort.body as AbortInstance).statement.transformStatement(statementScope)
             statementScope.addLabel(l_doNothing)
         }
-        targetStatementSequence.add(statementScope)
+        targetStatementSequence.add(createStatement(statementScope))
 
         targetStatementSequence
     }
@@ -1275,10 +1275,11 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             // Increment counter if delay expression is set
             if (delayExpression) {
                 seq.add(
-                    createConditional => [
+                    createStatement(
+                        createConditional => [
                         expression = transformExpression(abortExpr)
                         statements += incrementInt(counter)
-                    ])
+                    ]))
             }
             val f_wa_ref = f_wa.createValuedObjectReference
             // Insert directly before pause
@@ -1328,10 +1329,11 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // If flag is set gotoj l_exit after join
         joinTransformation.push [ StatementSequence seq |
             seq.add(
-                createConditional => [
-                    expression = f_wa.createValuedObjectReference
-                    statements.add(createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap))
-                ])
+                createStatement(
+                    createConditional => [
+                        expression = f_wa.createValuedObjectReference
+                        statements.add(createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap))
+                ]))
         ]
 
         transformStatement(abort.statement, statementScope)
@@ -1374,36 +1376,40 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // If abort is immediate directly check for abort condition
         if ((abort.body as AbortInstance).delay.isImmediate) {
             statementScope.add(
-                createConditional => [
-                    expression = transformExpression(abortExpr)
-                    statements += createStatement(createAssignment(f_a, createBoolValue(true)))
-                    statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
-                ])
+                createStatement(
+                    createConditional => [
+                        expression = transformExpression(abortExpr)
+                        statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
+                ]))
         }
 
         val pause = [ StatementSequence seq |
             // If delay expression increment counter when abort expression is true
             if ((abort.body as AbortInstance).delay.expr != null) {
                 seq.add(
-                    createConditional => [
-                        expression = transformExpression(abortExpr)
-                        statements += incrementInt(counter)
-                    ])
+                    createStatement(
+                        createConditional => [
+                            expression = transformExpression(abortExpr)
+                            statements += incrementInt(counter)
+                    ]))
                 seq.add(
-                    createConditional => [
-                        expression = EcoreUtil.copy(counterExpression)
-                        statements += createStatement(createAssignment(f_a, createBoolValue(true)))
-                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
-                    ])
+                    createStatement(
+                        createConditional => [
+                            expression = EcoreUtil.copy(counterExpression)
+                            statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                            statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
+                    ]))
 
             // No delay expression; just check abort condition, set flag and gotoj l
             } else {
                 seq.add(
-                    createConditional => [
-                        expression = transformExpression(abortExpr)
-                        statements += createStatement(createAssignment(f_a, createBoolValue(true)))
-                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
-                    ])
+                    createStatement(
+                        createConditional => [
+                            expression = transformExpression(abortExpr)
+                            statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                            statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
+                    ]))
             }
             seq
         ]
@@ -1411,10 +1417,11 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // If abort flag is set goto l_exit after join
         val join = [ StatementSequence seq |
             seq.add(
-                createConditional => [
-                    expression = f_a.createValuedObjectReference
-                    statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
-                ])
+                createStatement(
+                    createConditional => [
+                        expression = f_a.createValuedObjectReference
+                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
+                ]))
             seq
         ]
 
@@ -1507,12 +1514,14 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             val l = createNewUniqueLabel
             targetStatementSequence.addLabel(l)
             targetStatementSequence.add(
-                createConditional => [
-                    if (delayExpression) {
-                        expression = EcoreUtil.copy(countExpression)
-                    } else {
-                        expression = transformExpression(suspend.delay.event.expr)
-                    } statements.addAll(createSclPause.statements) statements.add(createGotoStatement(l))])
+                createStatement(
+                    createConditional => [
+                        if (delayExpression) {
+                            expression = EcoreUtil.copy(countExpression)
+                        } else {
+                            expression = transformExpression(suspend.delay.event.expr)
+                        } statements.addAll(createSclPause.statements) statements.add(createGotoStatement(l))
+                ]))
         }
 
         // Check whether suspension is triggered on pause statements
@@ -1521,10 +1530,11 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             seq.statements.add(0, createEmptyStatement(pauseLabel))
             if (delayExpression) {
                 seq.add(
-                    createConditional => [
-                        expression = transformExpression(suspend.delay.event.expr)
-                        statements += incrementInt(counter)
-                    ])
+                    createStatement(
+                        createConditional => [
+                            expression = transformExpression(suspend.delay.event.expr)
+                            statements += incrementInt(counter)
+                    ]))
                 seq.add(newIfThenGoto(EcoreUtil.copy(countExpression), pauseLabel, true))
             } else {
                 seq.add(newIfThenGoto(transformExpression(suspend.delay.event.expr), pauseLabel, true))
@@ -1664,7 +1674,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         currentThreadEndLabel = oldThreadsEndLabel
         if (!trapHandlers.threads.nullOrEmpty)
             statementScope.add(trapHandlers)
-        targetStatementSequence.add(statementScope)
+        targetStatementSequence.add(createStatement(statementScope))
 
         targetStatementSequence
     }

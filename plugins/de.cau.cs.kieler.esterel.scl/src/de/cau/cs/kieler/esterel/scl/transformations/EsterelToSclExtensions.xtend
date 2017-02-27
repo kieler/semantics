@@ -15,12 +15,6 @@ package de.cau.cs.kieler.esterel.scl.transformations
 
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.Block
@@ -38,6 +32,15 @@ import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.EmptyStatement
@@ -53,9 +56,6 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * Collection of methods and shortcuts to ease the Esterel to SCL transformation. Besides methds to
@@ -222,10 +222,10 @@ class EsterelToSclExtensions {
     def String uniqueName(String designatedName) {
 
         // The variable should not be on the current signalMap
-        if (signalToVariableMap.filter[ key == designatedName ].nullOrEmpty) {
-            return designatedName
-        } else {
+        if (signalToVariableMap.contains(designatedName)) {
             return uniqueName(designatedName + "_")
+        } else {
+            return designatedName
         }
     }
 
@@ -755,6 +755,15 @@ class EsterelToSclExtensions {
         SclFactory::eINSTANCE.createConditional
     }
 
+    /**
+     * Creates an SCL instruction statement
+     * 
+     * @reutrn An SCL instruction statement
+     */
+    def createInstructionStatement() {
+        SclFactory::eINSTANCE.createInstructionStatement
+    }
+    
     /**
      * Adds an instruction to a StatementSeqeuence by wrapping it in an InstructionStatement
      * 
