@@ -47,7 +47,6 @@ class CompilationAction {
     }
     
     protected def invokeCompile(CompilerView view) {
-        //TODO: change system paths to id!
         val model = "String program! :)"
         
         val cc = Compile.createCompilationContext("de.cau.cs.kieler.kicool.identity", model)

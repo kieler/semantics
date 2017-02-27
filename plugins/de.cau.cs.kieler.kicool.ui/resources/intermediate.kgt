@@ -1,0 +1,9 @@
+knode i1 {
+    size: width = 4 height = 4
+    properties:de.cau.cs.kieler.noLayout = true 
+    krectangle {
+        styles:
+            foreground = 255r,255g,255b,0a 
+            background = 100r,100g,255b,255a -> 128r,128g,255b,255a (45)
+    }
+}

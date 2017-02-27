@@ -147,6 +147,7 @@ class KiCoolRegistration {
     
     static def getProcessorInstance(String id) {
         val clazz = processorMap.get(id)
+        if (clazz == null) return null;
         getInstance(clazz) as Processor
     }
 }

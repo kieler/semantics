@@ -40,6 +40,15 @@ class CompilationContext extends Observable {
         processorMap = new HashMap<de.cau.cs.kieler.kicool.ProcessorEntry, de.cau.cs.kieler.kicool.compilation.Processor>()
     }
     
+    def de.cau.cs.kieler.kicool.compilation.Processor getCompilationUnit(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
+        processorMap.get(entry)
+    }
+    
+    def notify(Object arg) {
+        setChanged
+        notifyObservers(arg)
+    }
+    
     
     def void compile() {
         val processorEntry = system.processors
@@ -52,9 +61,9 @@ class CompilationContext extends Observable {
         
         environment.inplaceCompilation = false
         
-        notifyObservers(new CompilationStart())
+        notify(new CompilationStart())
         processorEntry.compileEntry(environment)
-        notifyObservers(new CompilationFinished())        
+        notify(new CompilationFinished())        
     }
     
     
@@ -64,12 +73,11 @@ class CompilationContext extends Observable {
         
         compilationUnit.setEnvironment(environment, environmentPrime)
         
-        
-        notifyObservers(new ProcessorStart(processor, compilationUnit))
+        notify(new ProcessorStart(processor, compilationUnit))
         compilationUnit.process
         // Add Metric code
         
-        notifyObservers(new ProcessorFinished(processor, compilationUnit))
+        notify(new ProcessorFinished(processor, compilationUnit))
         
         environmentPrime
     }

@@ -30,7 +30,6 @@ class CompilationUpdate implements Observer {
     }
     
     override update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
 }

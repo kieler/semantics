@@ -14,6 +14,8 @@ package de.cau.cs.kieler.kicool.compilation
 
 import java.util.HashMap
 import de.cau.cs.kieler.kicool.System
+import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * @author ssm
@@ -33,5 +35,16 @@ class RuntimeSystems {
     
     static def remove(System system) {
         systems.remove(system)
+    }
+    
+    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorInstance(de.cau.cs.kieler.kicool.Processor processor) {
+        val system = processor.getSystem
+        val cc = systems.get(system)
+        if (cc == null) {
+            // There is no running instance of this processor, return a new instance
+            return KiCoolRegistration.getProcessorInstance(processor.id)
+        } else {
+            return cc.getCompilationUnit(processor)    
+        }
     }
 }

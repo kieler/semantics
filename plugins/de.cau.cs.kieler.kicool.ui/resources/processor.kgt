@@ -11,7 +11,7 @@ knode processor {
         }           
         
     knode processorbody {
-        size: width = 40 height = 17.5 
+        size: width = 40 height = 16.5 
     
         properties:
             org.eclipse.elk.noLayout = true
@@ -181,7 +181,7 @@ knode processor {
         
         
         knode intermediate {
-            size: width = 5 height = 5
+            size: width = 5 height = 4
             pos: x = 1 y = 11 
             properties:
                 org.eclipse.elk.noLayout = true 
@@ -190,35 +190,15 @@ knode processor {
                 styles: invisible = true
             }       
             
-            knode i1 {
-                size: width = 5 height = 5
-                properties:de.cau.cs.kieler.noLayout = true 
-                krectangle {
-                    styles:
-                        foreground = 255r,255g,255b,0a 
-                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
-                }
-            }
-            knode i2 {
-                size: width = 5 height = 5
-                pos: x = 5 y = 0
-                properties:de.cau.cs.kieler.noLayout = true 
-                krectangle {
-                    styles:
-                        foreground = 255r,255g,255b,0a 
-                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
-                }
-            }
-            knode i3 {
-                size: width = 5 height = 5
-                pos: x = 10 y = 0
-                properties:de.cau.cs.kieler.noLayout = true 
-                krectangle {
-                    styles:
-                        foreground = 255r,255g,255b,0a 
-                        background = 255r,200g,0b,255a -> 128r,128g,0b,255a (45)
-                }
-            }
+//            knode i1 {
+//                size: width = 4 height = 4
+//                properties:de.cau.cs.kieler.noLayout = true 
+//                krectangle {
+//                    styles:
+//                        foreground = 255r,255g,255b,0a 
+//                        background = 100r,100g,255b,255a -> 128r,128g,255b,255a (45)
+//                }
+//            }
     
         }       
         
@@ -226,7 +206,7 @@ knode processor {
 
     knode environment {
         size: width = 50 height = 10
-        pos: x = 1 y = 18
+        pos: x = 1 y = 16.5
         properties:
             org.eclipse.elk.noLayout = true
             de.cau.cs.kieler.nodeLabelPlacement = H_LEFT

@@ -38,6 +38,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.osgi.framework.Bundle
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.*
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -84,6 +85,7 @@ class ProcessorSynthesis {
     dispatch def List<KNode> transform(Processor processor) {
         val processorNode = getProcessorKGT
         processorNode.setID(processor.id)
+        processor.populateProcessorData(processorNode)
         
         newArrayList(processorNode)
     }
@@ -155,5 +157,6 @@ class ProcessorSynthesis {
         }
         return newArrayList(createNode)
     }
+    
     
 }

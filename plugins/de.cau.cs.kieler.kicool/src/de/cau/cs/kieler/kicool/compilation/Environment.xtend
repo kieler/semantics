@@ -26,8 +26,7 @@ class Environment {
     
     public static val MODEL = "model"
     
-    @Accessors
-    Map<String, Object>data
+    @Accessors Map<String, Object> data
     
     new() {
         data = new HashMap<String, Object>()
