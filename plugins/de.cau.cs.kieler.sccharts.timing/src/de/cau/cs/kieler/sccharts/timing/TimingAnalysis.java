@@ -194,7 +194,7 @@ public class TimingAnalysis extends Job {
 //				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
 //						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
 		context.setProperty(Tracing.ACTIVE_TRACING, true);
-		context.setProperty(SCGTransformation.ENABLE_SFR, false);
+		context.setProperty(SCGTransformation.ENABLE_SFR, true);
 		context.setAdvancedSelect(true);
 		CompilationResult compilationResult = KielerCompiler.compile(context);
 
