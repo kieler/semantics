@@ -141,7 +141,10 @@ public class TimingAnalysis extends Job {
 	private State scchart;
 	private HashMultimap<Region, WeakReference<KText>> timingLabels;
 	private HashMap<Region, String> timingResults;
+	
+	//TODO: The TPPTransformation uses another instance of the dummy region, consolidate
 	private Region scchartDummyRegion;
+	
 	private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
 	private ArrayList<Region> wcpRegions = new ArrayList<Region>();
 	private TimingValueRepresentation rep;
@@ -158,7 +161,11 @@ public class TimingAnalysis extends Job {
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
 		this.timingResults = new HashMap<Region, String>();
+		
+		
 		this.scchartDummyRegion = scchartDummyRegion;
+		
+		
 		this.resource = resource;
 		this.regionRectangles = regionRectangles;
 		this.highlight = highlight;
@@ -645,6 +652,8 @@ public class TimingAnalysis extends Job {
 			}
 		}
 		calculateDeepTimingValues(rootState, flatValues, deepValues);
+		//TODO: In the timingLabelList, the dummy region has a null key, iterate something else
+		// here?
 		Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
 		while (regionIterator.hasNext()) {
 			Region currentRegion = regionIterator.next();
