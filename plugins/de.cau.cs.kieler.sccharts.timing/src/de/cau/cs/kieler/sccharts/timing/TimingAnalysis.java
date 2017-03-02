@@ -187,9 +187,6 @@ public class TimingAnalysis extends Job {
                 "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
                 + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
                 + "*T_scg.scheduling, T_scg.tpp", scchart);
-//		KielerCompilerContext context = new KielerCompilerContext(
-//				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
-//						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
 		context.setProperty(Tracing.ACTIVE_TRACING, true);
 		context.setProperty(SCGTransformation.ENABLE_SFR, true);
 		context.setAdvancedSelect(true);
@@ -409,17 +406,8 @@ public class TimingAnalysis extends Job {
 
 				// get overallWCET
 				BigInteger overallWCET = new BigInteger("0");
-				//TODO: The following two are equal in case of the imp. robot model - check!
-				String scchartTiming = timingResults.get(scchartDummyRegion);
 				String timingResultChart = timingResults.get(null);
-				if (scchartTiming != null) {
-					BigInteger timingResultChartBI = new BigInteger(timingResultChart);
-					BigInteger scchartTimingBI = new BigInteger(scchartTiming);
-					BigInteger timingResultSum = timingResultChartBI.add(scchartTimingBI);
-					overallWCET = timingResultSum;
-				} else {
-					overallWCET = new BigInteger(timingResultChart);
-				}
+				overallWCET = new BigInteger(timingResultChart);
 
 				for (Region region : timingLabels.keySet()) {
 					String timingResult = timingResults.get(region);

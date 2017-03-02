@@ -188,6 +188,7 @@ class TPPTransformation extends AbstractProductionTransformation
                         var HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
                         val Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
                         scchartDummyRegion.setId("SCChartDummyRegion");
+                        scchartDummyRegion.label = "SCChartDummyRegion";
 
                         // insert timing program points
                         val int highestInsertedTPPNumber = insertTPP(scg, nodeRegionMapping,
@@ -241,6 +242,7 @@ class TPPTransformation extends AbstractProductionTransformation
                         val Region firstSourceRegion = getSourceRegion(firstEdge, nodeRegionMapping,
                             scchartDummyRegion);
                         tppRegionMap.put("entry", firstSourceRegion);
+                        var Region targetRegion = null;
                         while (edgeListIterator.hasNext())
                         {
                             if (tppCounter == 13)
@@ -252,7 +254,7 @@ class TPPTransformation extends AbstractProductionTransformation
                             val ControlFlow currentEdge = edgeListIterator.next();
                             val Node edgeTarget = currentEdge.getTarget();
                             // get the region the target node of the edge stems from
-                            var Region targetRegion = nodeRegionMapping.get(edgeTarget);
+                            targetRegion = nodeRegionMapping.get(edgeTarget);
                             if (targetRegion == null)
                             {
                                 // It is normal that nodes of the SCG get mapped to null, if they are considered to
@@ -312,6 +314,10 @@ class TPPTransformation extends AbstractProductionTransformation
                         }
                         // Add a TPP after the last node, as code generation will add register 
                         // updates, which are to be attributed to the SCChart in general
+                        // This TPP is not needed, if the general SCChart dummy region was the 
+                        // target region for the previous tpp (no switch)
+                        var previousTPP = tppCounter - 1;
+                        if (tppRegionMap.get(previousTPP) != scchartDummyRegion){
                         val ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
                         redirectedEdges.add(newEdge);
                         // create new tpp node
@@ -332,15 +338,12 @@ class TPPTransformation extends AbstractProductionTransformation
                                 if (lastNode instanceof Join) {
                                     (lastNode as Join).setNext(newEdge);
                                 }
-                                else {
-                                    System.out.println("Last node of SCG neither Assignment nor "+
-                                        "Exit nor Join");
-                                }
                             }
                         }                        
                         // register tpp in the tpp region mapping for the dummy region
                         // that represents the SCChart on the whole (as only register updates follow)
                         tppRegionMap.put((tppCounter).toString(), scchartDummyRegion);
+                        }
                         // no need to subtract 1, as we have inserted a last tpp without counting
                         return tppCounter;
                     }
