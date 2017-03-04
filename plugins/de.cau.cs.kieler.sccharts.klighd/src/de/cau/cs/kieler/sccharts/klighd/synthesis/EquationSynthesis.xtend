@@ -46,6 +46,9 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.options.PortAlignment
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
 
 /**
  * @author ssm
@@ -154,6 +157,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (reference.subReference != null) {
                 edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
             } 
+        } else {
+            edge.sourcePort = reference.valuedObject.getPort("out")
         }
         
         edge        
@@ -287,7 +292,19 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     val node = vo.createNode => [ addInputNodeFigure ]
                     node.associateWith(vo)
                     node.addNodeLabel(vo.serializeHR.toString);
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                    node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
+                    node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     result += node
+                    
+                    val port = vo.createPort("out") => [
+                        addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
+//                        setPortSize(3, 3)
+//                        addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+//                        createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                        node.ports += it
+                    ]          
+                    port.associateWith(vo)                        
                 } else {
                     result += (vo as ValuedObject).performReferenceNodeTransformation
                 }
@@ -309,6 +326,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
             val node = vo.createNode => [ addOutputNodeFigure ]
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             node.associateWith(vo)
             node.addNodeLabel(vo.serializeHR.toString);
             result += node
