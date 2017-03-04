@@ -474,10 +474,10 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     (
 	 *         (name='version' values+=SCXVersions) | 
 	 *         (name='director' values+=SCXDirectors) | 
-	 *         (name='import' values+=STRING) | 
-	 *         (name='symbols' values+=STRING values+=PrimeID?) | 
-	 *         (name='symbol' values+=PrimeID values+=STRING) | 
-	 *         (name='font' values+=STRING)
+	 *         (name='import' values+=EString) | 
+	 *         (name='symbols' values+=EString values+=EString?) | 
+	 *         (name='symbol' values+=EString values+=EString) | 
+	 *         (name='font' values+=EString)
 	 *     )
 	 */
 	protected void sequence_Pragmas(ISerializationContext context, PragmaStringAnnotation semanticObject) {
@@ -509,7 +509,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SCCharts returns SCCharts
 	 *
 	 * Constraint:
-	 *     ((annotations+=PragmaAnnotation+ rootStates+=RootState+) | rootStates+=RootState+)?
+	 *     (((annotations+=Pragmas | annotations+=PragmaAnnotation)+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

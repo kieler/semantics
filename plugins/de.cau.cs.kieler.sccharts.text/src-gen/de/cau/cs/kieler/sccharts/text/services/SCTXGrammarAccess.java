@@ -26,7 +26,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SCCharts");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsPragmaAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Alternatives cAnnotationsAlternatives_0_0 = (Alternatives)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsPragmasParserRuleCall_0_0_0 = (RuleCall)cAnnotationsAlternatives_0_0.eContents().get(0);
+		private final RuleCall cAnnotationsPragmaAnnotationParserRuleCall_0_0_1 = (RuleCall)cAnnotationsAlternatives_0_0.eContents().get(1);
 		private final Assignment cRootStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cRootStatesRootStateParserRuleCall_1_0 = (RuleCall)cRootStatesAssignment_1.eContents().get(0);
 		
@@ -35,18 +37,24 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		////  SCCharts Rules  // 
 		//// ---------------- //
 		//SCCharts sccharts::SCCharts:
-		//	annotations+=PragmaAnnotation*
+		//	annotations+=(Pragmas | PragmaAnnotation)*
 		//	rootStates+=RootState*
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=PragmaAnnotation* rootStates+=RootState*
+		//annotations+=(Pragmas | PragmaAnnotation)* rootStates+=RootState*
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=PragmaAnnotation*
+		//annotations+=(Pragmas | PragmaAnnotation)*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
+		//(Pragmas | PragmaAnnotation)
+		public Alternatives getAnnotationsAlternatives_0_0() { return cAnnotationsAlternatives_0_0; }
+
+		//Pragmas
+		public RuleCall getAnnotationsPragmasParserRuleCall_0_0_0() { return cAnnotationsPragmasParserRuleCall_0_0_0; }
+
 		//PragmaAnnotation
-		public RuleCall getAnnotationsPragmaAnnotationParserRuleCall_0_0() { return cAnnotationsPragmaAnnotationParserRuleCall_0_0; }
+		public RuleCall getAnnotationsPragmaAnnotationParserRuleCall_0_0_1() { return cAnnotationsPragmaAnnotationParserRuleCall_0_0_1; }
 
 		//rootStates+=RootState*
 		public Assignment getRootStatesAssignment_1() { return cRootStatesAssignment_1; }
@@ -75,45 +83,45 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final Keyword cNameImportKeyword_2_1_0 = (Keyword)cNameAssignment_2_1.eContents().get(0);
 		private final Assignment cValuesAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cValuesSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cValuesAssignment_2_2.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_2_2_0 = (RuleCall)cValuesAssignment_2_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Keyword cNumberSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cNameAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final Keyword cNameSymbolsKeyword_3_1_0 = (Keyword)cNameAssignment_3_1.eContents().get(0);
 		private final Assignment cValuesAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
-		private final RuleCall cValuesSTRINGTerminalRuleCall_3_2_0 = (RuleCall)cValuesAssignment_3_2.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_3_2_0 = (RuleCall)cValuesAssignment_3_2.eContents().get(0);
 		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
 		private final Keyword cCommaKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
 		private final Assignment cValuesAssignment_3_3_1 = (Assignment)cGroup_3_3.eContents().get(1);
-		private final RuleCall cValuesPrimeIDParserRuleCall_3_3_1_0 = (RuleCall)cValuesAssignment_3_3_1.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_3_3_1_0 = (RuleCall)cValuesAssignment_3_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
 		private final Keyword cNumberSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cNameAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final Keyword cNameSymbolKeyword_4_1_0 = (Keyword)cNameAssignment_4_1.eContents().get(0);
 		private final Assignment cValuesAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cValuesPrimeIDParserRuleCall_4_2_0 = (RuleCall)cValuesAssignment_4_2.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_4_2_0 = (RuleCall)cValuesAssignment_4_2.eContents().get(0);
 		private final Keyword cCommaKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		private final Assignment cValuesAssignment_4_4 = (Assignment)cGroup_4.eContents().get(4);
-		private final RuleCall cValuesSTRINGTerminalRuleCall_4_4_0 = (RuleCall)cValuesAssignment_4_4.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_4_4_0 = (RuleCall)cValuesAssignment_4_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Keyword cNumberSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cNameAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final Keyword cNameFontKeyword_5_1_0 = (Keyword)cNameAssignment_5_1.eContents().get(0);
 		private final Assignment cValuesAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cValuesSTRINGTerminalRuleCall_5_2_0 = (RuleCall)cValuesAssignment_5_2.eContents().get(0);
+		private final RuleCall cValuesEStringParserRuleCall_5_2_0 = (RuleCall)cValuesAssignment_5_2.eContents().get(0);
 		
 		//Pragmas annotations::PragmaStringAnnotation:
 		//	'#' name='version' values+=SCXVersions |
 		//	'#' name='director' values+=SCXDirectors |
-		//	'#' name='import' values+=STRING |
-		//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
-		//	'#' name='symbol' values+=PrimeID ',' values+=STRING |
-		//	'#' name='font' values+=STRING
+		//	'#' name='import' values+=EString |
+		//	'#' name='symbols' values+=EString (',' values+=EString)? |
+		//	'#' name='symbol' values+=EString ',' values+=EString |
+		//	'#' name='font' values+=EString
 		@Override public ParserRule getRule() { return rule; }
 
-		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors | '#' name='import' values+=STRING |
-		//'#' name='symbols' values+=STRING (',' values+=PrimeID)? | '#' name='symbol' values+=PrimeID ',' values+=STRING | '#'
-		//name='font' values+=STRING
+		//'#' name='version' values+=SCXVersions | '#' name='director' values+=SCXDirectors | '#' name='import' values+=EString |
+		//'#' name='symbols' values+=EString (',' values+=EString)? | '#' name='symbol' values+=EString ',' values+=EString |
+		//'#' name='font' values+=EString
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//'#' name='version' values+=SCXVersions
@@ -152,7 +160,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//SCXDirectors
 		public RuleCall getValuesSCXDirectorsParserRuleCall_1_2_0() { return cValuesSCXDirectorsParserRuleCall_1_2_0; }
 
-		//'#' name='import' values+=STRING
+		//'#' name='import' values+=EString
 		public Group getGroup_2() { return cGroup_2; }
 
 		//'#'
@@ -164,13 +172,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'import'
 		public Keyword getNameImportKeyword_2_1_0() { return cNameImportKeyword_2_1_0; }
 
-		//values+=STRING
+		//values+=EString
 		public Assignment getValuesAssignment_2_2() { return cValuesAssignment_2_2; }
 
-		//STRING
-		public RuleCall getValuesSTRINGTerminalRuleCall_2_2_0() { return cValuesSTRINGTerminalRuleCall_2_2_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_2_2_0() { return cValuesEStringParserRuleCall_2_2_0; }
 
-		//'#' name='symbols' values+=STRING (',' values+=PrimeID)?
+		//'#' name='symbols' values+=EString (',' values+=EString)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//'#'
@@ -182,25 +190,25 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'symbols'
 		public Keyword getNameSymbolsKeyword_3_1_0() { return cNameSymbolsKeyword_3_1_0; }
 
-		//values+=STRING
+		//values+=EString
 		public Assignment getValuesAssignment_3_2() { return cValuesAssignment_3_2; }
 
-		//STRING
-		public RuleCall getValuesSTRINGTerminalRuleCall_3_2_0() { return cValuesSTRINGTerminalRuleCall_3_2_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_3_2_0() { return cValuesEStringParserRuleCall_3_2_0; }
 
-		//(',' values+=PrimeID)?
+		//(',' values+=EString)?
 		public Group getGroup_3_3() { return cGroup_3_3; }
 
 		//','
 		public Keyword getCommaKeyword_3_3_0() { return cCommaKeyword_3_3_0; }
 
-		//values+=PrimeID
+		//values+=EString
 		public Assignment getValuesAssignment_3_3_1() { return cValuesAssignment_3_3_1; }
 
-		//PrimeID
-		public RuleCall getValuesPrimeIDParserRuleCall_3_3_1_0() { return cValuesPrimeIDParserRuleCall_3_3_1_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_3_3_1_0() { return cValuesEStringParserRuleCall_3_3_1_0; }
 
-		//'#' name='symbol' values+=PrimeID ',' values+=STRING
+		//'#' name='symbol' values+=EString ',' values+=EString
 		public Group getGroup_4() { return cGroup_4; }
 
 		//'#'
@@ -212,22 +220,22 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'symbol'
 		public Keyword getNameSymbolKeyword_4_1_0() { return cNameSymbolKeyword_4_1_0; }
 
-		//values+=PrimeID
+		//values+=EString
 		public Assignment getValuesAssignment_4_2() { return cValuesAssignment_4_2; }
 
-		//PrimeID
-		public RuleCall getValuesPrimeIDParserRuleCall_4_2_0() { return cValuesPrimeIDParserRuleCall_4_2_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_4_2_0() { return cValuesEStringParserRuleCall_4_2_0; }
 
 		//','
 		public Keyword getCommaKeyword_4_3() { return cCommaKeyword_4_3; }
 
-		//values+=STRING
+		//values+=EString
 		public Assignment getValuesAssignment_4_4() { return cValuesAssignment_4_4; }
 
-		//STRING
-		public RuleCall getValuesSTRINGTerminalRuleCall_4_4_0() { return cValuesSTRINGTerminalRuleCall_4_4_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_4_4_0() { return cValuesEStringParserRuleCall_4_4_0; }
 
-		//'#' name='font' values+=STRING
+		//'#' name='font' values+=EString
 		public Group getGroup_5() { return cGroup_5; }
 
 		//'#'
@@ -239,28 +247,28 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'font'
 		public Keyword getNameFontKeyword_5_1_0() { return cNameFontKeyword_5_1_0; }
 
-		//values+=STRING
+		//values+=EString
 		public Assignment getValuesAssignment_5_2() { return cValuesAssignment_5_2; }
 
-		//STRING
-		public RuleCall getValuesSTRINGTerminalRuleCall_5_2_0() { return cValuesSTRINGTerminalRuleCall_5_2_0; }
+		//EString
+		public RuleCall getValuesEStringParserRuleCall_5_2_0() { return cValuesEStringParserRuleCall_5_2_0; }
 	}
 
 	public class SCXVersionsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.SCXVersions");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cSCXKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cSCTXKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cSCTKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
 		//SCXVersions:
-		//	'SCX' | 'SCT';
+		//	'SCTX' | 'SCT';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'SCX' | 'SCT'
+		//'SCTX' | 'SCT'
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//'SCX'
-		public Keyword getSCXKeyword_0() { return cSCXKeyword_0; }
+		//'SCTX'
+		public Keyword getSCTXKeyword_0() { return cSCTXKeyword_0; }
 
 		//'SCT'
 		public Keyword getSCTKeyword_1() { return cSCTKeyword_1; }
@@ -1771,7 +1779,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	////  SCCharts Rules  // 
 	//// ---------------- //
 	//SCCharts sccharts::SCCharts:
-	//	annotations+=PragmaAnnotation*
+	//	annotations+=(Pragmas | PragmaAnnotation)*
 	//	rootStates+=RootState*
 	public SCChartsElements getSCChartsAccess() {
 		return pSCCharts;
@@ -1784,10 +1792,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Pragmas annotations::PragmaStringAnnotation:
 	//	'#' name='version' values+=SCXVersions |
 	//	'#' name='director' values+=SCXDirectors |
-	//	'#' name='import' values+=STRING |
-	//	'#' name='symbols' values+=STRING (',' values+=PrimeID)? |
-	//	'#' name='symbol' values+=PrimeID ',' values+=STRING |
-	//	'#' name='font' values+=STRING
+	//	'#' name='import' values+=EString |
+	//	'#' name='symbols' values+=EString (',' values+=EString)? |
+	//	'#' name='symbol' values+=EString ',' values+=EString |
+	//	'#' name='font' values+=EString
 	public PragmasElements getPragmasAccess() {
 		return pPragmas;
 	}
@@ -1797,7 +1805,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SCXVersions:
-	//	'SCX' | 'SCT';
+	//	'SCTX' | 'SCT';
 	public SCXVersionsElements getSCXVersionsAccess() {
 		return pSCXVersions;
 	}

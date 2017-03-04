@@ -4,6 +4,8 @@
 package de.cau.cs.kieler.sccharts.text;
 
 import org.eclipse.xtext.linking.ILinker;
+import org.eclipse.xtext.resource.IContainer;
+import org.eclipse.xtext.resource.containers.StateBasedContainerManager;
 
 import de.cau.cs.kieler.sccharts.text.formatting.SCTXIndentionInformation;
 import de.cau.cs.kieler.sccharts.text.formatting.SCTXValueConverter;
@@ -26,9 +28,9 @@ public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSC
         return SCTXQualifiedNameProvider.class;
     }    
     
-//    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
-//        return SctResource.class;
-//    }  
+    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+        return SCTXResource.class;
+    }  
     
     public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
         return SCTXTransientValueService.class;
@@ -44,5 +46,33 @@ public class SCTXRuntimeModule extends de.cau.cs.kieler.sccharts.text.AbstractSC
     
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return SCTXValueConverter.class;
-    }   
+    } 
+    
+//    public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
+//        return org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider.class;
+//    }
+
+//    public void configureIgnoreCaseLinking(com.google.inject.Binder binder) {
+//        binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
+//    }
+
+//    public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+//        return org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider.class;
+//    }
+
+//    public Class<? extends org.eclipse.xtext.resource.IContainer.Manager> bindIContainer$Manager() {
+//        return org.eclipse.xtext.resource.containers.StateBasedContainerManager.class;
+//    }
+
+//    public Class<? extends org.eclipse.xtext.resource.containers.IAllContainersState.Provider> bindIAllContainersState$Provider() {
+//        return org.eclipse.xtext.resource.containers.ResourceSetBasedAllContainersStateProvider.class;
+//    }
+
+//    public void configureIResourceDescriptions(com.google.inject.Binder binder) {
+//        binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+//    }
+//
+//    public void configureIResourceDescriptionsPersisted(com.google.inject.Binder binder) {
+//        binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+//    }    
 }

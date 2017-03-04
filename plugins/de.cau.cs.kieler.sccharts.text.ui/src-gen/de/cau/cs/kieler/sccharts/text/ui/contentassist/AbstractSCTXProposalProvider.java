@@ -17,7 +17,8 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 public class AbstractSCTXProposalProvider extends de.cau.cs.kieler.kexpressions.kext.ui.contentassist.KExtProposalProvider {
 		
 	public void completeSCCharts_Annotations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+		completeRuleCall(((RuleCall)((Alternatives)assignment.getTerminal()).getElements().get(0)), context, acceptor);
+		completeRuleCall(((RuleCall)((Alternatives)assignment.getTerminal()).getElements().get(1)), context, acceptor);
 	}
 	public void completeSCCharts_RootStates(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

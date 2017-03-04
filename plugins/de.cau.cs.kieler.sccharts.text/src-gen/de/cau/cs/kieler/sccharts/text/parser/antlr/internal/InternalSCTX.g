@@ -86,20 +86,38 @@ ruleSCCharts returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
+(
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartsAccess().getAnnotationsPragmaAnnotationParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getSCChartsAccess().getAnnotationsPragmasParserRuleCall_0_0_0()); 
 	    }
-		lv_annotations_0_0=rulePragmaAnnotation		{
+		lv_annotations_0_1=rulePragmas		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartsRule());
 	        }
        		add(
        			$current, 
        			"annotations",
-        		lv_annotations_0_0, 
+        		lv_annotations_0_1, 
+        		"de.cau.cs.kieler.sccharts.text.SCTX.Pragmas");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getSCChartsAccess().getAnnotationsPragmaAnnotationParserRuleCall_0_0_1()); 
+	    }
+		lv_annotations_0_2=rulePragmaAnnotation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSCChartsRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_2, 
         		"de.cau.cs.kieler.annotations.Annotations.PragmaAnnotation");
 	        afterParserOrEnumRuleCall();
 	    }
+
+)
 
 )
 )*(
@@ -127,6 +145,296 @@ ruleSCCharts returns [EObject current=null]
 
 
 
+// Entry rule entryRulePragmas
+entryRulePragmas returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getPragmasRule()); }
+	 iv_rulePragmas=rulePragmas 
+	 { $current=$iv_rulePragmas.current; } 
+	 EOF 
+;
+
+// Rule Pragmas
+rulePragmas returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((	otherlv_0='#' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getPragmasAccess().getNumberSignKeyword_0_0());
+    }
+(
+(
+		lv_name_1_0=	'version' 
+    {
+        newLeafNode(lv_name_1_0, grammarAccess.getPragmasAccess().getNameVersionKeyword_0_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_1_0, "version");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesSCXVersionsParserRuleCall_0_2_0()); 
+	    }
+		lv_values_2_0=ruleSCXVersions		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_2_0, 
+        		"de.cau.cs.kieler.sccharts.text.SCTX.SCXVersions");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |(	otherlv_3='#' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getPragmasAccess().getNumberSignKeyword_1_0());
+    }
+(
+(
+		lv_name_4_0=	'director' 
+    {
+        newLeafNode(lv_name_4_0, grammarAccess.getPragmasAccess().getNameDirectorKeyword_1_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_4_0, "director");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesSCXDirectorsParserRuleCall_1_2_0()); 
+	    }
+		lv_values_5_0=ruleSCXDirectors		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_5_0, 
+        		"de.cau.cs.kieler.sccharts.text.SCTX.SCXDirectors");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |(	otherlv_6='#' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getPragmasAccess().getNumberSignKeyword_2_0());
+    }
+(
+(
+		lv_name_7_0=	'import' 
+    {
+        newLeafNode(lv_name_7_0, grammarAccess.getPragmasAccess().getNameImportKeyword_2_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_7_0, "import");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_2_2_0()); 
+	    }
+		lv_values_8_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_8_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |(	otherlv_9='#' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getPragmasAccess().getNumberSignKeyword_3_0());
+    }
+(
+(
+		lv_name_10_0=	'symbols' 
+    {
+        newLeafNode(lv_name_10_0, grammarAccess.getPragmasAccess().getNameSymbolsKeyword_3_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_10_0, "symbols");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_3_2_0()); 
+	    }
+		lv_values_11_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_11_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_12=',' 
+    {
+    	newLeafNode(otherlv_12, grammarAccess.getPragmasAccess().getCommaKeyword_3_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_3_3_1_0()); 
+	    }
+		lv_values_13_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_13_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))?)
+    |(	otherlv_14='#' 
+    {
+    	newLeafNode(otherlv_14, grammarAccess.getPragmasAccess().getNumberSignKeyword_4_0());
+    }
+(
+(
+		lv_name_15_0=	'symbol' 
+    {
+        newLeafNode(lv_name_15_0, grammarAccess.getPragmasAccess().getNameSymbolKeyword_4_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_15_0, "symbol");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_4_2_0()); 
+	    }
+		lv_values_16_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_16_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_17=',' 
+    {
+    	newLeafNode(otherlv_17, grammarAccess.getPragmasAccess().getCommaKeyword_4_3());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_4_4_0()); 
+	    }
+		lv_values_18_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_18_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))
+    |(	otherlv_19='#' 
+    {
+    	newLeafNode(otherlv_19, grammarAccess.getPragmasAccess().getNumberSignKeyword_5_0());
+    }
+(
+(
+		lv_name_20_0=	'font' 
+    {
+        newLeafNode(lv_name_20_0, grammarAccess.getPragmasAccess().getNameFontKeyword_5_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getPragmasRule());
+	        }
+       		setWithLastConsumed($current, "name", lv_name_20_0, "font");
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getPragmasAccess().getValuesEStringParserRuleCall_5_2_0()); 
+	    }
+		lv_values_21_0=ruleEString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPragmasRule());
+	        }
+       		add(
+       			$current, 
+       			"values",
+        		lv_values_21_0, 
+        		"de.cau.cs.kieler.annotations.Annotations.EString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)))
+;
+
+
+
 
 
 // Entry rule entryRuleSCXVersions
@@ -144,10 +452,10 @@ ruleSCXVersions returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTok
     }
     @after { leaveRule(); }:
 (
-	kw='SCX' 
+	kw='SCTX' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getSCXVersionsAccess().getSCXKeyword_0()); 
+        newLeafNode(kw, grammarAccess.getSCXVersionsAccess().getSCTXKeyword_0()); 
     }
 
     |
@@ -7414,6 +7722,44 @@ ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null]
 ;
 
 
+
+
+
+// Entry rule entryRuleEString
+entryRuleEString returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEStringRule()); } 
+	 iv_ruleEString=ruleEString 
+	 { $current=$iv_ruleEString.current.getText(); }  
+	 EOF 
+;
+
+// Rule EString
+ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(    this_STRING_0=RULE_STRING    {
+		$current.merge(this_STRING_0);
+    }
+
+    { 
+    newLeafNode(this_STRING_0, grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0()); 
+    }
+
+    |
+    { 
+        newCompositeNode(grammarAccess.getEStringAccess().getExtendedIDParserRuleCall_1()); 
+    }
+    this_ExtendedID_1=ruleExtendedID    {
+		$current.merge(this_ExtendedID_1);
+    }
+
+    { 
+        afterParserOrEnumRuleCall();
+    }
+)
+    ;
 
 
 

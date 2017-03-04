@@ -14,19 +14,19 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    annotations+=PragmaAnnotation*
+    annotations+=(Pragmas | PragmaAnnotation)*
     rootStates+=RootState*;
     
 Pragmas returns annotations::PragmaStringAnnotation:
     '#' name = 'version' values += SCXVersions |
     '#' name = 'director' values += SCXDirectors |
-    '#' name = 'import' values += STRING |
-    '#' name = 'symbols' values += STRING (',' values += PrimeID)? |
-    '#' name = 'symbol' values += PrimeID ',' values += STRING |
-    '#' name = 'font' values += STRING;
+    '#' name = 'import' values += EString |
+    '#' name = 'symbols' values += EString (',' values += EString)? |
+    '#' name = 'symbol' values += EString ',' values += EString |
+    '#' name = 'font' values += EString;
 
 SCXVersions returns ecore::EString:
-    'SCX' | 'SCT';
+    'SCTX' | 'SCT';
     
 SCXDirectors returns ecore::EString:
     'SCCharts' | 'Enforcer';

@@ -37,6 +37,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getSCChartsAccess().getAnnotationsAlternatives_0_0(), "rule__SCCharts__AnnotationsAlternatives_0_0");
 					put(grammarAccess.getPragmasAccess().getAlternatives(), "rule__Pragmas__Alternatives");
 					put(grammarAccess.getSCXVersionsAccess().getAlternatives(), "rule__SCXVersions__Alternatives");
 					put(grammarAccess.getSCXDirectorsAccess().getAlternatives(), "rule__SCXDirectors__Alternatives");

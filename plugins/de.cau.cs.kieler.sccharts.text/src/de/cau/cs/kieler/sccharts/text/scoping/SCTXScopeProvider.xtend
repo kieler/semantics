@@ -26,6 +26,8 @@ import de.cau.cs.kieler.annotations.PragmaStringAnnotation
 class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider {
     
     @Inject extension SCChartsExtension
+    
+    @Inject SCTXQualifiedNameProvider nameProvider
 
     override getScope(EObject context, EReference reference) {
 //        println(context + "\n  " + reference)
@@ -54,13 +56,15 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
             
             val declaration = context
             if (declaration instanceof ReferenceDeclaration) {
-                val root = context. root.asSCCharts
+                val superScope = super.getScope(context.eContainer, reference)
+                val root = context.root.asSCCharts
                 candidates += root.rootStates
                 val imports = root.annotations.filter(PragmaStringAnnotation).filter[ name.equals("import") ].toList
                 
                 val res = context.eResource      
                 if (res != null) {
                     val resSet = res.resourceSet
+                    
                     if (resSet != null) {
                         val resSetFilter = resSet.resources.filter[ 
                             val uri = it.URI.toPlatformString(true)
@@ -73,7 +77,7 @@ class SCTXScopeProvider extends de.cau.cs.kieler.kexpressions.kext.scoping.KExtS
                     }
                 }      
                 
-                return SCTScopes.scopeFor(candidates)
+                return SCTScopes.scopeFor(candidates, nameProvider, superScope)
             }
         }
         return context.getScopeHierarchical(reference)

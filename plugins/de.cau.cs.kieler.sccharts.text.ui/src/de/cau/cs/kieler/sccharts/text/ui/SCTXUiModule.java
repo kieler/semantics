@@ -4,6 +4,9 @@
 package de.cau.cs.kieler.sccharts.text.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.resource.containers.IAllContainersState;
+
+import com.google.inject.Provider;
 
 import de.cau.cs.kieler.sccharts.text.ui.quickfix.SCTXQuickfixProviderX;
 
@@ -14,7 +17,7 @@ public class SCTXUiModule extends de.cau.cs.kieler.sccharts.text.ui.AbstractSCTX
 	public SCTXUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
-	
+
 	public Class<? extends  org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
 	    return SCTXQuickfixProviderX.class;
 	}
