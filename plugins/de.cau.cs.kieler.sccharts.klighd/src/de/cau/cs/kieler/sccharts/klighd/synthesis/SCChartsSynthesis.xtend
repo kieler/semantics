@@ -37,6 +37,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -48,42 +49,18 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 @ViewSynthesisShared
 class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 
-    @Inject 
-    extension KNodeExtensions
-    
-    @Inject
-    extension KRenderingExtensions
-    
-    @Inject 
-    extension SCChartsExtension 
-    
-    @Inject
-    extension SCChartsSerializeHRExtension
-    
-    @Inject
-    extension AnnotationsExtensions
-    
-    // -------------------------------------------------------------------------
-    // SubSyntheses
-    @Inject
-    StateSynthesis stateSynthesis
-    
-    @Inject
-    ControlflowRegionSynthesis controlflowSynthesis    
-    
-    @Inject
-    DataflowRegionSynthesis dataflowSynthesis  
-      
-    @Inject
-    TransitionSynthesis transitionSynthesis
+    @Inject extension KNodeExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension SCChartsExtension 
+    @Inject extension SCChartsSerializeHRExtension
+    @Inject extension AnnotationsExtensions
+    @Inject StateSynthesis stateSynthesis
+    @Inject ControlflowRegionSynthesis controlflowSynthesis    
+    @Inject DataflowRegionSynthesis dataflowSynthesis  
+    @Inject TransitionSynthesis transitionSynthesis
         
-    // -------------------------------------------------------------------------
-    // Hooks
-    @Inject
-    SynthesisHooks hooks  
+    @Inject SynthesisHooks hooks  
 
-    // -------------------------------------------------------------------------
-    // Constants
     public static val PRAGMA_SYMBOLS = "symbols"       
     public static val PRAGMA_SYMBOL = "symbol"       
     public static val PRAGMA_SYMBOLS_GREEK = "greek"
@@ -92,17 +69,15 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
     public static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
     public static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
     public static val PRAGMA_FONT = "font"        
+    public static val PRAGMA_SKINPATH = "skinpath"
     
     public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
         setCategory(GeneralSynthesisOptions::APPEARANCE);    
 
-    // -------------------------------------------------------------------------
-    // Fields
     public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
+    
+    @Accessors private var String skinPath = ""
        
-    // -------------------------------------------------------------------------
-    // Sidebar Options
-
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet();
         
@@ -133,8 +108,6 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 //        );
 //    }
            
-    // -------------------------------------------------------------------------
-    // The main entry transform function   
     override transform(Scope root) {
         val startTime = System.currentTimeMillis;
         
@@ -160,6 +133,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         for(symbol : scc.getPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }
+        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getPragmas(PRAGMA_SKINPATH).head.values.head
 
         if (root instanceof SCCharts) {
             if (SHOW_ALL_SCCHARTS.booleanValue) {

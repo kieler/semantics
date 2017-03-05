@@ -57,35 +57,17 @@ import org.eclipse.elk.alg.layered.properties.LayerConstraint
 @ViewSynthesisShared
 class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
-    @Inject
-    extension KNodeExtensionsReplacement
-
-    @Inject
-    extension KEdgeExtensions
-    
-    @Inject
-    extension KPortExtensionsReplacement
-    
-    @Inject
-    extension KLabelExtensions
-    
-    @Inject
-    extension KExpressionsValueExtensions
-    
-    @Inject
-    extension AnnotationsExtensions
-    
-    @Inject
-    extension SCChartsSerializeHRExtension    
-    
-    @Inject
-    extension EquationStyles
-    
-    @Inject
-    extension DataflowRegionSynthesis
-    
-    @Inject
-    IResourceServiceProvider.Registry regXtext;    
+    @Inject extension KNodeExtensionsReplacement
+    @Inject extension KEdgeExtensions
+    @Inject extension KPortExtensionsReplacement
+    @Inject extension KLabelExtensions
+    @Inject extension KExpressionsValueExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension SCChartsSerializeHRExtension    
+    @Inject extension EquationStyles
+    @Inject extension DataflowRegionSynthesis
+    @Inject extension SCChartsSynthesis
+    @Inject IResourceServiceProvider.Registry regXtext;    
     
     
     private val dataSources = <EObject> newHashSet
@@ -145,6 +127,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val edge = createEdge.associateWith(value)
         edge.addWireFigure
         edge.source = value.getNode
+        edge.sourcePort = value.getPort("out")
         edge
     }
     
@@ -186,7 +169,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val reference = (vo.eContainer as ReferenceDeclaration).reference as State
         if (reference.hasAnnotation("actor")) {
-            val kgt = reference.getStringAnnotationValue("actor")
+            val path = getSkinPath 
+            val kgt = path + if (!path.endsWith("/")) "/" + reference.getStringAnnotationValue("actor") 
             println(vo.eResource.URI)
             val sl = vo.eResource.URI.segmentsList
             val nsl = sl.take(sl.length - 1).drop(1)

@@ -80,6 +80,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100);
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
+        node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
 
         node.setLayoutOption(KlighdProperties::EXPAND, true);
 

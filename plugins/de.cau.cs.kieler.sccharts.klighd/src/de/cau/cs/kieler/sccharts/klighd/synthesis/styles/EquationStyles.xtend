@@ -163,7 +163,7 @@ class EquationStyles {
 
     def KEdge addWireFigure(KEdge edge) {
         edge.addRoundedBendsPolyline(4, 1) => [
-            it.addHeadArrowDecorator
+//            it.addHeadArrowDecorator
             it.addJunctionPointDecorator
         ]
         return edge
