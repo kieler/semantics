@@ -1088,7 +1088,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             hasTerminated.expression = createNot(f_term.createValuedObjectReference)
             hasTerminated.statements += createStatement(SclFactory::eINSTANCE.createPause)
             hasTerminated.statements += createGotoStatement(threadStart)
-            resetLocalSignalsThread.add(hasTerminated)
+            resetLocalSignalsThread.add(createStatement(hasTerminated))
         } else if (optimizeTransformation) {
             resetLocalSignalsThread.add(SclFactory::eINSTANCE.createPause)
             resetLocalSignalsThread.addGoto(threadStart)
@@ -1535,9 +1535,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                             expression = transformExpression(suspend.delay.event.expr)
                             statements += incrementInt(counter)
                     ]))
-                seq.add(newIfThenGoto(EcoreUtil.copy(countExpression), pauseLabel, true))
+                seq.add(createStatement(newIfThenGoto(EcoreUtil.copy(countExpression), pauseLabel, true)))
             } else {
-                seq.add(newIfThenGoto(transformExpression(suspend.delay.event.expr), pauseLabel, true))
+                seq.add(createStatement(newIfThenGoto(transformExpression(suspend.delay.event.expr), pauseLabel, true)))
             }
             seq
         ]

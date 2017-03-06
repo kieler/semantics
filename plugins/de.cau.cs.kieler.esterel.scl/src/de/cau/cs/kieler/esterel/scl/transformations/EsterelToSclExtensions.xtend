@@ -222,10 +222,10 @@ class EsterelToSclExtensions {
     def String uniqueName(String designatedName) {
 
         // The variable should not be on the current signalMap
-        if (signalToVariableMap.contains(designatedName)) {
-            return uniqueName(designatedName + "_")
-        } else {
+        if (signalToVariableMap.filter[ key == designatedName ].nullOrEmpty) {
             return designatedName
+        } else {
+            return uniqueName(designatedName + "_")
         }
     }
 
