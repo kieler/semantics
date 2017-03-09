@@ -31,31 +31,31 @@ public interface SclFactory extends EFactory {
     SCLProgram createSCLProgram();
 
     /**
-     * Returns a new object of class '<em>Statement</em>'.
+     * Returns a new object of class '<em>Pause</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Statement</em>'.
+     * @return a new object of class '<em>Pause</em>'.
      * @generated
      */
-    Statement createStatement();
+    Pause createPause();
 
     /**
-     * Returns a new object of class '<em>Empty Statement</em>'.
+     * Returns a new object of class '<em>Label</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Empty Statement</em>'.
+     * @return a new object of class '<em>Label</em>'.
      * @generated
      */
-    EmptyStatement createEmptyStatement();
+    Label createLabel();
 
     /**
-     * Returns a new object of class '<em>Instruction Statement</em>'.
+     * Returns a new object of class '<em>Goto</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Instruction Statement</em>'.
+     * @return a new object of class '<em>Goto</em>'.
      * @generated
      */
-    InstructionStatement createInstructionStatement();
+    Goto createGoto();
 
     /**
      * Returns a new object of class '<em>Assignment</em>'.
@@ -76,22 +76,13 @@ public interface SclFactory extends EFactory {
     Conditional createConditional();
 
     /**
-     * Returns a new object of class '<em>Goto</em>'.
+     * Returns a new object of class '<em>Parallel</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Goto</em>'.
+     * @return a new object of class '<em>Parallel</em>'.
      * @generated
      */
-    Goto createGoto();
-
-    /**
-     * Returns a new object of class '<em>Statement Sequence</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Statement Sequence</em>'.
-     * @generated
-     */
-    StatementSequence createStatementSequence();
+    Parallel createParallel();
 
     /**
      * Returns a new object of class '<em>Thread</em>'.
@@ -103,31 +94,22 @@ public interface SclFactory extends EFactory {
     Thread createThread();
 
     /**
-     * Returns a new object of class '<em>Parallel</em>'.
+     * Returns a new object of class '<em>Scope Statement</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Parallel</em>'.
+     * @return a new object of class '<em>Scope Statement</em>'.
      * @generated
      */
-    Parallel createParallel();
+    ScopeStatement createScopeStatement();
 
     /**
-     * Returns a new object of class '<em>Pause</em>'.
+     * Returns a new object of class '<em>Else Scope</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Pause</em>'.
+     * @return a new object of class '<em>Else Scope</em>'.
      * @generated
      */
-    Pause createPause();
-
-    /**
-     * Returns a new object of class '<em>Statement Scope</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Statement Scope</em>'.
-     * @generated
-     */
-    StatementScope createStatementScope();
+    ElseScope createElseScope();
 
     /**
      * Returns the package supported by this factory.

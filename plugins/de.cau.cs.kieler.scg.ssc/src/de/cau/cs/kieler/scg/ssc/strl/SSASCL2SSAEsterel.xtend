@@ -27,18 +27,19 @@ import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.scg.ssc.features.DualRailFeature
 import de.cau.cs.kieler.scg.ssc.features.SSAEstFeature
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
@@ -47,9 +48,6 @@ import java.util.Map
 import org.eclipse.emf.common.util.EList
 
 import static com.google.common.collect.Lists.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
-import de.cau.cs.kieler.scg.ssc.features.DualRailFeature
-import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * @author als
@@ -96,7 +94,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     // -------------------------------------------------------------------------
     
     val Map<ValuedObject, ISignal> voSigMap = newHashMap
-    val Map<String, TrapDecl> labelsMap = newHashMap
+    val Map<Label, TrapDecl> labelsMap = newHashMap
     var Pair<ValuedObject, ISignal> error
     var Pair<ValuedObject, ISignal> term
     
@@ -146,7 +144,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         
         // Local variables in nested signal declarations
         var StatementContainer signalNestingHead = null
-        for (decl : scl.declarations.filter[!(input || output) && type == de.cau.cs.kieler.kexpressions.ValueType.BOOL]) {
+        for (decl : scl.declarations.filter[!(input || output) && type == ValueType.BOOL]) {
             val sigDecl = createLocalSignalDecl
             sigDecl.optEnd = "signal"
             val sigs = createLocalSignal
@@ -213,12 +211,8 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         return prog
     }
 
-    private dispatch def Statement translate(EmptyStatement empty) {
-        throw new IllegalArgumentException("Failed to translate label: " + empty.label)
-    }
-
-    private dispatch def Statement translate(InstructionStatement stm) {
-        return stm.instruction.translate
+    private dispatch def Statement translate(Label label) {
+        throw new IllegalArgumentException("Failed to translate label: " + label.name)
     }
 
     private dispatch def Statement translate(Assignment asm) {
@@ -233,7 +227,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     }
 
     private dispatch def Statement translate(Conditional cond) {
-        if (!cond.statements.nullOrEmpty || !cond.elseStatements.nullOrEmpty) {
+        if (!cond.statements.nullOrEmpty || !cond.^else.statements.nullOrEmpty) {
             return createPresent => [
                 body = createPresentEventBody => [
                     event = createPresentEvent => [
@@ -245,9 +239,9 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
                         ]
                     }
                 ]
-                if (!cond.elseStatements.nullOrEmpty) {
+                if (!cond.^else.statements.nullOrEmpty) {
                     elsePart = createElsePart => [
-                        statement = cond.elseStatements.translateStatements
+                        statement = cond.^else.statements.translateStatements
                     ]
                 }
             ]
@@ -260,7 +254,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         return createBlock => [
             statement = createParallel => [
                 for (th : fork.threads) {
-                    if (term != null && th.statements.filter(InstructionStatement).map[instruction].filter(Conditional).map[expression].filter(ValuedObjectReference).exists[valuedObject == term.key]) {
+                    if (term != null && th.statements.filter(Conditional).map[expression].filter(ValuedObjectReference).exists[valuedObject == term.key]) {
                         list.add(translatePreseverThread(th.statements))
                     } else {
                         list += th.statements.translateStatements
@@ -272,7 +266,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     
     private dispatch def Statement translate(Goto goto) {
         return createExit => [
-            trap = goto.targetLabel.trapSignal
+            trap = goto.target.trapSignal
         ]
     }
 
@@ -348,17 +342,15 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
     
     private def Statement translateStatements(List<de.cau.cs.kieler.scl.scl.Statement> stms) {
         val translated = <Statement>newArrayListWithCapacity(stms.size)
-        val labels = <String, Integer>newHashMap()
-        val gotos = HashMultimap.<String, Integer>create
+        val labels = <Label, Integer>newHashMap()
+        val gotos = HashMultimap.<Label, Integer>create
         // Find labels and references
         for (stmIdx : stms.indexed) {
             val stm = stmIdx.value
-            if (stm instanceof EmptyStatement) {
-                if (!stm.label.nullOrEmpty) {
-                    labels.put(stm.label, stmIdx.key)
-                }
+            if (stm instanceof Label) {
+                labels.put(stm, stmIdx.key)
             } else {
-                stm.eAllContents.filter(Goto).forEach[gotos.put(it.targetLabel, stmIdx.key)]
+                stm.eAllContents.filter(Goto).forEach[gotos.put(it.target, stmIdx.key)]
             }
         }
         val nestingHead = newLinkedList
@@ -366,7 +358,7 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
             val stm = stmIdx.value
             val idx = stmIdx.key
             if (labels.containsValue(idx)) {
-                val label = (stm as EmptyStatement).label
+                val label = stm as Label
                 val forward = gotos.get(label).forall[it < idx]
                 val backward = gotos.get(label).forall[it > idx]
                 
@@ -557,9 +549,9 @@ class SSASCL2SSAEsterel extends AbstractProductionTransformation {
         }
     } 
     
-    private def TrapDecl getTrapSignal(String label) {
+    private def TrapDecl getTrapSignal(Label label) {
         if (!labelsMap.containsKey(label)) {
-            labelsMap.put(label, createTrapDecl => [name = label])
+            labelsMap.put(label, createTrapDecl => [name = label.name])
         }
         return labelsMap.get(label)
     }

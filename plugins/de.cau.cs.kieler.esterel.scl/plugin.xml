@@ -74,7 +74,7 @@
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <productionTransformationClass
-            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation">
+            class="de.cau.cs.kieler.esterel.scl.transformations.SCEstToSignalSclTransformation">
       </productionTransformationClass>
    </extension>
 

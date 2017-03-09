@@ -25,19 +25,10 @@
             class="de.cau.cs.kieler.scg.ssc.ssa.SCSSATransformation">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.RegularSSATransformation">
+            class="de.cau.cs.kieler.scg.ssc.strl.SSAWeakUnemitEsterelReconstruction">
       </productionTransformationClass>
       <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.ssa.CSSATransformation">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.scl.SSASCG2SSASCL">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.strl.SSASCL2SSAEsterel">
-      </productionTransformationClass>
-      <productionTransformationClass
-            class="de.cau.cs.kieler.scg.ssc.scl.DualRailEncoding">
+            class="de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation">
       </productionTransformationClass>
    </extension>
    <extension

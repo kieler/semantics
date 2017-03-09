@@ -35,10 +35,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 
+import static de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension java.lang.Character.*
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * @author als
@@ -141,18 +143,17 @@ class SSACoreExtensions {
         
     def createSSADeclarations(SCGraph scg) {
         val ssaDecl = HashBiMap.create(scg.declarations.size)
-        val newDecl = newArrayList // Preserve Order
-        for (decl : scg.declarations) {
+        for (decl : scg.declarations.filter[!hasAnnotation("ignore")].toList) {
             for (vo : decl.valuedObjects) {
                 ssaDecl.put(vo, createDeclaration => [
+                    scg.declarations += it
+                    trace(it, decl, vo)
                     markSSADecl(vo)
                     type = decl.type
                     valuedObjects += vo.copy
-                    newDecl.add(it)
                 ])
             }
         }
-        scg.declarations.addAll(newDecl)
         return ssaDecl
     }
     
@@ -176,7 +177,7 @@ class SSACoreExtensions {
         return asm.eAllContents.filter(ValuedObjectReference).exists[valuedObject == asm.valuedObject]
     }
     
-        /**
+    /**
      * Remove unused ssa versions.
      */
     def removeUnusedSSAVersions(SCGraph scg) {
@@ -188,10 +189,34 @@ class SSACoreExtensions {
         scg.removeUnusedSSADeclarations 
     }
     
+    /**
+     * Remove unused ssa versions.
+     */
+    def removeSingleSSAVersions(SCGraph scg) {
+        val uses = scg.uses
+        val defs = scg.allDefs
+        for (decl : scg.declarations.filter[isSSA && valuedObjects.size == 1]) {
+            val vo = decl.valuedObjects.head
+            val origVO = decl.ssaOrigVO
+            uses.get(vo).forEach[eContents.filter(Expression).head.allReferences.filter[valuedObject == vo].forEach[valuedObject = origVO]]
+            defs.get(vo).forEach[valuedObject = origVO]
+            decl.valuedObjects.clear
+        }
+        scg.removeUnusedSSADeclarations 
+    }
+    
     def removeUnusedSSADeclarations(SCGraph scg) {
         scg.declarations.removeIf[input == false && output == false && it.valuedObjects.empty]
     }
-   
+    
+    def getAllDefs(SCGraph scg) {
+        val def = HashMultimap.<ValuedObject, Assignment>create
+        // Analyse graph for defs
+        for (node : scg.nodes.filter(Assignment)) {
+            def.put(node.valuedObject, node)
+        }
+        return def;
+    }
    
     def getDefs(SCGraph scg) {
         if (!scg.hasAnnotation(SSAFeature.ID)) {

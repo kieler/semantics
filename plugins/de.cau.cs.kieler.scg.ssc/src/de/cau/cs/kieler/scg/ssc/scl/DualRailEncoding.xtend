@@ -33,13 +33,12 @@ import de.cau.cs.kieler.scg.ssc.features.SSASCLFeature
 import de.cau.cs.kieler.scg.ssc.ssa.SSAFunction
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Statement
 import java.util.Iterator
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.Instruction
 
 /**
  * @author als
@@ -102,15 +101,15 @@ class DualRailEncoding extends AbstractProductionTransformation {
 
         val assignmentInstructions = newHashSet
         val conditionalInstructions = newHashSet
-        for (instr : scl.eAllContents.filter(InstructionStatement).toIterable) {
-            if (instr.instruction instanceof Assignment) {
-                val asm = instr.instruction as Assignment
+        for (instr : scl.eAllContents.filter(Statement).toIterable) {
+            if (instr instanceof Assignment) {
+                val asm = instr as Assignment
                 if (asm.valuedObject.declaration.type == ValueType.BOOL && asm.expression.allReferences.forall[valuedObject.declaration.type == ValueType.BOOL]) {
                     assignmentInstructions.add(instr)
                 }
             }
-            if (instr.instruction instanceof Conditional) {
-                val cond = instr.instruction as Conditional
+            if (instr instanceof Conditional) {
+                val cond = instr as Conditional
                 if (cond.expression.allReferences.forall[valuedObject.declaration.type == ValueType.BOOL]) {
                     conditionalInstructions.add(instr)
                 }
@@ -119,7 +118,7 @@ class DualRailEncoding extends AbstractProductionTransformation {
 
         // Convert Assignments     
         for (instr : assignmentInstructions) {
-            val asm = instr.instruction as Assignment
+            val asm = instr as Assignment
             // Constants
             if (asm.expression instanceof BoolValue) {
                 if (!(asm.expression as BoolValue).value) {
@@ -129,109 +128,95 @@ class DualRailEncoding extends AbstractProductionTransformation {
             } else {
                 val setter = createParallel => [
                     threads += createThread => [
-                        statements += createInstructionStatement => [
-                            instruction = createConditional => [
-                                expression = asm.expression.valExpression
-                                // then
-                                it.statements += createInstructionStatement => [
-                                    instruction = createAssignment => [
-                                        valuedObject = asm.valuedObject
-                                        expression = createBoolValue(true)
-                                    ]
-                                ]
+                        statements += createConditional => [
+                            expression = asm.expression.valExpression
+                            // then
+                            it.statements += createAssignment => [
+                                valuedObject = asm.valuedObject
+                                expression = createBoolValue(true)
                             ]
 
                         ]
                     ]
                     threads += createThread => [
-                        statements += createInstructionStatement => [
-                            instruction = createConditional => [
-                                expression = asm.expression.notvalExpression
-                                // then
-                                it.statements += createInstructionStatement => [
-                                    instruction = createAssignment => [
-                                        valuedObject = duals.get(asm.valuedObject)
-                                        expression = createBoolValue(true)
-                                    ]
-                                ]
+                        statements += createConditional => [
+                            expression = asm.expression.notvalExpression
+                            // then
+                            it.statements += createAssignment => [
+                                valuedObject = duals.get(asm.valuedObject)
+                                expression = createBoolValue(true)
                             ]
                         ]
 
                     ]
                 ]
                 if (!asm.expression.concFunctions.empty) {
-                    instr.instruction = createConditional => [
+                    instr.replace(createConditional => [
                         expression = asm.expression.errorExpression
                         // then
-                        it.statements += createInstructionStatement => [
-                            instruction = createAssignment => [
-                                valuedObject = error
-                                expression = createBoolValue(true)
-                            ]
+                        it.statements += createAssignment => [
+                            valuedObject = error
+                            expression = createBoolValue(true)
                         ]
                         // else
-                        it.elseStatements += createInstructionStatement => [
-                            instruction = setter
-                        ]
-                    ]
+                        it.^else.statements += setter
+                    ])
                 } else {
-                    instr.instruction = setter
+                    instr.replace(setter)
                 }
             }
         }
 
         // Convert Conditionals     
         for (instr : conditionalInstructions) {
-            val cond = instr.instruction as Conditional
-            val Instruction thenBranch = if (!cond.statements.nullOrEmpty) {
-                createConditional => [
-                    expression = cond.expression.valExpression
-                    it.statements.addAll(cond.statements)
-                ]
-            }
-            val Instruction elseBranch = if (!cond.elseStatements.nullOrEmpty) {
-                createConditional => [
-                    expression = cond.expression.notvalExpression
-                    it.statements.addAll(cond.elseStatements)
-                ]
-            }            
-            val Instruction test = if (thenBranch != null && elseBranch != null) {
-                createParallel => [
-                    threads += createThread => [
-                        statements += createInstructionStatement => [
-                            instruction = thenBranch
-                        ]
-                    ]
-                    threads += createThread => [
-                        statements += createInstructionStatement => [
-                            instruction = elseBranch
-                        ]
-                    ]
-                ]
-            } else if (thenBranch != null) {
-                thenBranch
-            } else if (elseBranch != null) {
-                elseBranch
-            }
-            
-            if (!cond.expression.concFunctions.empty) {
-                instr.instruction = createConditional => [
-                    expression = cond.expression.errorExpression
-                    // then
-                    it.statements += createInstructionStatement => [
-                        instruction = createAssignment => [
-                            valuedObject = error
-                            expression = createBoolValue(true)
-                        ]
-                    ]
-                    // else
-                    it.elseStatements += createInstructionStatement => [
-                        instruction = test
-                    ]
-                ]
-            } else {
-                instr.instruction = test
-            }
+// BROKEN
+//            val cond = instr as Conditional
+//            val thenBranch = if (!cond.statements.nullOrEmpty) {
+//                createConditional => [
+//                    expression = cond.expression.valExpression
+//                    it.statements.addAll(cond.statements)
+//                ]
+//            }
+//            val Instruction elseBranch = if (!cond.^else.statements.nullOrEmpty) {
+//                createConditional => [
+//                    expression = cond.expression.notvalExpression
+//                    it.statements.addAll(cond.^else.statements)
+//                ]
+//            }            
+//            val Instruction test = if (thenBranch != null && elseBranch != null) {
+//                createParallel => [
+//                    threads += createThread => [
+//                        statements += createInstructionStatement => [
+//                            instruction = thenBranch
+//                        ]
+//                    ]
+//                    threads += createThread => [
+//                        statements += createInstructionStatement => [
+//                            instruction = elseBranch
+//                        ]
+//                    ]
+//                ]
+//            } else if (thenBranch != null) {
+//                thenBranch
+//            } else if (elseBranch != null) {
+//                elseBranch
+//            }
+//            
+//            if (!cond.expression.concFunctions.empty) {
+//                instr.instruction = createConditional => [
+//                    expression = cond.expression.errorExpression
+//                    // then
+//                    it.statements += createAssignment => [
+//                        valuedObject = error
+//                        expression = createBoolValue(true)
+//                    ]
+//                    // else
+//                    it.^else.statements += test
+//                    ]
+//                ]
+//            } else {
+//                instr = test
+//            }
         }
 
         return scl

@@ -25,6 +25,7 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -55,6 +56,9 @@ class SCGThreadExtensions {
     @Inject
     extension SCGControlFlowExtensions
     
+    @Inject
+    extension AnnotationsExtensions
+        
     // -------------------------------------------------------------------------
     // -- Thread management
     // -------------------------------------------------------------------------
@@ -248,12 +252,13 @@ class SCGThreadExtensions {
             nextNode.allNext.filter[ 
             	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
-                (!it.target.equals(exit)) ] 
+                (!it.target.equals(exit)) &&
+                (!it.hasAnnotation("ignore")) ]
                 	=> [ controlFlows.addAll(it) ]
         }
         
         // Reverse search outgoing from the exit node
-        controlFlows.addAll(exit.allPrevious)
+        controlFlows.addAll(exit.allPrevious.filter[!hasAnnotation("ignore")])
         while(!controlFlows.empty) {
             var nextNode = controlFlows.head.eContainer as Node
             controlFlows.remove(0)
@@ -277,7 +282,8 @@ class SCGThreadExtensions {
        	    if (nextNode != null && nextNode != exit.entry) {
 	            nextNode.allPrevious.filter[ 
 	                (!nodeSet.contains(it.eContainer)) && 
-	                (!controlFlows.contains(it)) ] 
+	                (!controlFlows.contains(it)) &&
+	                (!hasAnnotation("ignore")) ] 
 	                    => [ controlFlows.addAll(it) ]
             }
         }

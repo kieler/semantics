@@ -2,9 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import org.eclipse.emf.common.util.EList;
-
-import de.cau.cs.kieler.kexpressions.Declaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,14 +13,13 @@ import de.cau.cs.kieler.kexpressions.Declaration;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.SCLProgram#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.SCLProgram#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram()
  * @model
  * @generated
  */
-public interface SCLProgram extends StatementSequence {
+public interface SCLProgram extends Scope {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -49,21 +45,5 @@ public interface SCLProgram extends StatementSequence {
      * @generated
      */
     void setName(String value);
-
-    /**
-     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Declaration}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Declarations</em>' containment reference list.
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Declarations()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Declaration> getDeclarations();
 
 } // SCLProgram

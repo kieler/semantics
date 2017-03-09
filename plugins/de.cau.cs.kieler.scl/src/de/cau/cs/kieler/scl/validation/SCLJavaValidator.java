@@ -5,24 +5,13 @@ package de.cau.cs.kieler.scl.validation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scl.scl.Conditional;
-import de.cau.cs.kieler.scl.scl.EmptyStatement;
-import de.cau.cs.kieler.scl.scl.Goto;
-import de.cau.cs.kieler.scl.scl.Instruction;
-import de.cau.cs.kieler.scl.scl.InstructionStatement;
-import de.cau.cs.kieler.scl.scl.SCLProgram;
-import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementScope;
-import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.Thread;
+import de.cau.cs.kieler.scl.scl.Scope;
 
 /**
  * Custom validation rules.
@@ -38,20 +27,10 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     /*
      * Checks if within one declaration block variable names are unique
      */
-//    @Check
-//    public void checkUniqueNamesInProgram(SCLProgram program) {
-//        if (hasDuplicateDeclaration(program.getDeclarations())) {
-//            for (Declaration decl : program.getDeclarations()) {
-//                error("Duplicate variable declaration", decl, null, -1);
-//            }
-//        }
-//
-//    }
-
     @Check
-    public void checkUniqueNamesInScope(StatementScope sScope) {
-        if (hasDuplicateDeclaration(sScope.getDeclarations())) {
-            for (Declaration decl : sScope.getDeclarations()) {
+    public void checkUniqueNamesInScope(Scope scope) {
+        if (hasDuplicateDeclaration(scope.getDeclarations())) {
+            for (Declaration decl : scope.getDeclarations()) {
                 error("Duplicate variable declaration", decl, null, -1);
             }
         }
@@ -71,59 +50,4 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
         return false;
     }
 
-    /*
-     * Checks if empty statements (labels) are unique
-     */
-    @Check
-    public void checkUniqueLabel(StatementSequence sSeq) {
-        collectLabels(sSeq.getStatements(), new LinkedList<String>());
-    }
-
-    private LinkedList<String> collectLabels(EList<Statement> sSeq, LinkedList<String> labels) {
-        for (Statement stm : sSeq) {
-            if (stm instanceof EmptyStatement) {
-                if (labels.contains(((EmptyStatement) stm).getLabel()))
-                    error("Duplicate label", stm, null, -1);
-                else
-                    labels.add(((EmptyStatement) stm).getLabel());
-            } else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof Conditional) {
-                Conditional cond = (Conditional) ((InstructionStatement) stm).getInstruction();
-                labels.addAll(collectLabels(cond.getStatements(), labels));
-                labels.addAll(collectLabels(cond.getElseStatements(), labels));
-            }
-        }
-        return labels;
-    }
-
-    /*
-     * Checks if goto target label is in scope
-     */
-    @Check
-    public void checkLabelExisting(Goto gotoStatement) {
-        EObject parent = gotoStatement.eContainer();
-        while (!(parent instanceof Thread) && !(parent instanceof SCLProgram)) {
-            parent = parent.eContainer();
-        }
-        if (!labelExisting(((StatementSequence) parent).getStatements(), gotoStatement.getTargetLabel())) {
-            error("Label not in scope", gotoStatement, null, -1);
-        }
-    }
-    
-    private boolean labelExisting(EList<Statement> stms, String l) {
-        boolean exists = false;
-        for (Statement stm : stms) {
-            if ((stm instanceof EmptyStatement) && (((EmptyStatement) stm).getLabel().equals(l))) {
-                return true;
-            }
-            else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof Conditional) {
-                exists = exists || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getStatements(), l)
-                        || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getElseStatements(), l);
-            }
-            else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof StatementSequence) {
-            	exists = exists || labelExisting(((StatementScope) ((InstructionStatement) stm).getInstruction()).getStatements(), l);
-            }
-        }
-        
-        return exists;
-    }
 }

@@ -3,6 +3,7 @@ package de.cau.cs.kieler.scl.transformations
 import de.cau.cs.kieler.scg.Node
 import java.util.List
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scl.scl.Label
 
 class SCLContinuation {
 	
@@ -13,5 +14,5 @@ class SCLContinuation {
 	List<ControlFlow> controlFlows = <ControlFlow> newArrayList
 	
 	@Property
-	String Label = ""
+	Label Label
 }

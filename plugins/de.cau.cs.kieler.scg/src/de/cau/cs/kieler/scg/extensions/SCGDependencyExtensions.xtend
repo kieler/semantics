@@ -134,22 +134,31 @@ class SCGDependencyExtensions {
         val targetExpression = targetAssignment.expression
         if (sourceExpression instanceof OperatorExpression) {
             if (targetExpression instanceof OperatorExpression) {
-                if (sourceExpression.operator == OperatorType.LOGICAL_OR &&
-                    targetExpression.operator == OperatorType.LOGICAL_OR) {
-                    if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
-                        // Assume there is only one VO and one literal per OE.
-                        val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
-                        val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
-                        if (sourceRelativeVOR != null && targetRelativeVOR != null) {
-                            if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
-                                targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
-                                val sourceValue = sourceExpression.subExpressions.filter(Value).head
-                                val targetValue = targetExpression.subExpressions.filter(Value).head
-                                if (sourceValue.isSameValue(targetValue)) {
-                                    return true
+                // is relative write
+                if (sourceAssignment.valuedObject == targetAssignment.valuedObject &&
+                    sourceExpression.eAllContents.filter(ValuedObjectReference).filter[valuedObject == sourceAssignment.valuedObject].size == 1 &&
+                    targetExpression.eAllContents.filter(ValuedObjectReference).filter[valuedObject == targetAssignment.valuedObject].size == 1 &&
+                    sourceExpression.subExpressions.filter(ValuedObjectReference).exists[valuedObject == sourceAssignment.valuedObject] &&
+                    targetExpression.subExpressions.filter(ValuedObjectReference).exists[valuedObject == targetAssignment.valuedObject]) {
+                    if (sourceExpression.operator == OperatorType.LOGICAL_OR &&
+                        targetExpression.operator == OperatorType.LOGICAL_OR) {
+                        if (sourceExpression.subExpressions.size == 2 && targetExpression.subExpressions.size == 2) {
+                            // Assume there is only one VO and one literal per OE.
+                            val sourceRelativeVOR = sourceExpression.subExpressions.filter(ValuedObjectReference).head
+                            val targetRelativeVOR = targetExpression.subExpressions.filter(ValuedObjectReference).head
+                            if (sourceRelativeVOR != null && targetRelativeVOR != null) {
+                                if (sourceAssignment.valuedObject == sourceRelativeVOR.valuedObject &&
+                                    targetAssignment.valuedObject == targetRelativeVOR.valuedObject) {
+                                    val sourceValue = sourceExpression.subExpressions.filter(Value).head
+                                    val targetValue = targetExpression.subExpressions.filter(Value).head
+                                    if (sourceValue.isSameValue(targetValue)) {
+                                        return true
+                                    }
                                 }
                             }
                         }
+                    } else if (sourceExpression.operator == targetExpression.operator) {
+                        return true
                     }
                 }
             }

@@ -1,0 +1,120 @@
+grammar de.cau.cs.kieler.scl.SCL with de.cau.cs.kieler.kexpressions.kext.KExt
+  
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/scl/0.2.0"
+
+SCLProgram returns SCLProgram:
+    (annotations += Annotation)*
+    'module' name = ID ':'?
+    (
+        (declarations+=Declaration)*
+        ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)? 
+//        (
+//            '{'
+//                (declarations+=Declaration)*
+//                ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+//            '}'
+//        ) | (
+//            (declarations+=Declaration)*
+//            '{'
+//                ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+//            '}'
+//        ) | (
+//            ':'
+//            (declarations+=Declaration)*
+//            ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?      
+//        )
+    )
+;
+
+Statement returns Statement:
+    InstructionStatement | MetaStatement
+;
+
+InstructionStatement returns Statement:
+	Assignment | Conditional | Goto | Parallel | Pause
+;
+
+MetaStatement returns Statement:
+    Label | ScopeStatement
+;
+
+Pause returns Pause:
+    {Pause}
+    (annotations += Annotation)*
+    'pause'
+;
+
+Label returns Label:
+    (annotations += Annotation)*
+    (name = ID ':')
+;
+
+Goto returns Goto:
+    'goto' target = [Label]
+;
+
+Assignment returns Assignment:    
+    (annotations += Annotation)*
+    valuedObject = [kexpressions::ValuedObject] ('[' indices += Expression ']')* "=" expression = Expression;
+
+Conditional returns Conditional: 
+    (annotations += Annotation)*
+    'if' expression = Expression
+    (
+        'then'? '{'
+        (declarations+=Declaration)*
+        ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+        '}'
+    )
+    (else = ElseScope)?
+;
+
+ElseScope returns ElseScope:
+    {ElseScope}
+    (annotations += Annotation)*
+    'else' '{'
+    (declarations+=Declaration)*
+    ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?        
+    '}'
+;
+
+Thread returns Thread:
+    {Thread}
+    (
+        (
+            (annotations += Annotation)*
+            '{'
+            (declarations+=Declaration)*
+            ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+            '}'
+        ) | (
+            ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+        )
+    )
+;
+
+Parallel returns Parallel:
+    'fork'
+    (
+        threads += Thread
+        (
+            'par'
+            threads += Thread
+        )*
+    )
+    'join'
+;
+
+ScopeStatement returns ScopeStatement:
+    {ScopeStatement}
+    (annotations += Annotation)*
+    '{'
+        (declarations+=Declaration)*
+        ((statements += InstructionStatement';')|(statements += MetaStatement))* (statements += Statement)?
+    '}'    
+;

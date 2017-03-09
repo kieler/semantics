@@ -134,51 +134,41 @@ class RegularSSATransformation extends AbstractProductionTransformation {
      */
     protected def Collection<Assignment> placePhi(SCGraph scg, DominatorTree dt) {
         val placedAssignment = newLinkedHashSet
-        val hasPhi = newHashMap
-        val work = newHashMap
-        val workStack = <BasicBlock>newLinkedList
+        val hasPhi = HashMultimap.create
+        val work = newLinkedList
         val defsite = scg.defSite
-        var iterCount = 0
-        // Init with bb and 0
-        hasPhi.putAll(scg.basicBlocks.toInvertedMap[0])
-        work.putAll(hasPhi)
 
         for (vo : scg.declarations.allValuedObjectsOrdered.reverseView) {
-            iterCount++
-            for (n : defsite.get(vo)) {
-                work.put(n, iterCount)
-                workStack.push(n)
-                while (!workStack.empty) {
-                    workStack.pop
-                    for (m : dt.getDominanceFrontiers(n)) {
-                        // insert phi
-                        if (hasPhi.get(m) < iterCount) {
-                            var bbHead = m.firstNode
-                            // Create Phi assignment
-                            val asm = createAssignment
-                            val bbHeadSB = bbHead.schedulingBlock
-                            bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
-                            scg.nodes.add(scg.nodes.indexOf(bbHead), asm)
-                            placedAssignment.add(asm)
-                            asm.valuedObject = vo
-                            asm.markSSA(PHI)
-                            asm.expression = PHI.createFunction
-                            if (bbHead instanceof Join) {
-                                // Insert after
-                                val cf = bbHead.allNext.head
-                                asm.createControlFlow.target = cf.target
-                                cf.target = asm
-                            } else {
-                                // Insert before
-                                bbHead.allPrevious.toList.forEach[target = asm]
-                                asm.createControlFlow.target = bbHead
-                            }
-                            // Add to work
-                            hasPhi.put(m, iterCount)
-                            if (work.get(m) < iterCount) {
-                                work.put(m, iterCount)
-                                workStack.add(m)
-                            }
+            work.addAll(defsite.get(vo))
+            while (!work.empty) {
+                val workBlock = work.pop
+                for (frontierBlock : dt.getDominanceFrontiers(workBlock)) {
+                    // insert phi
+                    if (!hasPhi.containsEntry(vo, frontierBlock)) {
+                        var bbHead = frontierBlock.firstNode
+                        // Create Phi assignment
+                        val asm = createAssignment
+                        val bbHeadSB = bbHead.schedulingBlock
+                        bbHeadSB.nodes.add(bbHeadSB.nodes.indexOf(bbHead), asm)
+                        scg.nodes.add(scg.nodes.indexOf(bbHead), asm)
+                        placedAssignment.add(asm)
+                        asm.valuedObject = vo
+                        asm.markSSA(PHI)
+                        asm.expression = PHI.createFunction
+                        if (bbHead instanceof Join) {
+                            // Insert after
+                            val cf = bbHead.allNext.head
+                            asm.createControlFlow.target = cf.target
+                            cf.target = asm
+                        } else {
+                            // Insert before
+                            bbHead.allPrevious.toList.forEach[target = asm]
+                            asm.createControlFlow.target = bbHead
+                        }
+                        // Add to work
+                        hasPhi.put(vo, frontierBlock)
+                        if (!defsite.get(vo).contains(frontierBlock)) {
+                            work.add(frontierBlock)
                         }
                     }
                 }

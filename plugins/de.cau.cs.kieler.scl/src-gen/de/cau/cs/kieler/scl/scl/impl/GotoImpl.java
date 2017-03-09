@@ -3,14 +3,15 @@
 package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,31 +21,21 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getTargetLabel <em>Target Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getTarget <em>Target</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
+public class GotoImpl extends StatementImpl implements Goto {
     /**
-     * The default value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
+     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTargetLabel()
+     * @see #getTarget()
      * @generated
      * @ordered
      */
-    protected static final String TARGET_LABEL_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getTargetLabel() <em>Target Label</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTargetLabel()
-     * @generated
-     * @ordered
-     */
-    protected String targetLabel = TARGET_LABEL_EDEFAULT;
+    protected Label target;
 
     /**
      * <!-- begin-user-doc -->
@@ -70,8 +61,16 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getTargetLabel() {
-        return targetLabel;
+    public Label getTarget() {
+        if (target != null && target.eIsProxy()) {
+            InternalEObject oldTarget = (InternalEObject)target;
+            target = (Label)eResolveProxy(oldTarget);
+            if (target != oldTarget) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SclPackage.GOTO__TARGET, oldTarget, target));
+            }
+        }
+        return target;
     }
 
     /**
@@ -79,11 +78,20 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setTargetLabel(String newTargetLabel) {
-        String oldTargetLabel = targetLabel;
-        targetLabel = newTargetLabel;
+    public Label basicGetTarget() {
+        return target;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTarget(Label newTarget) {
+        Label oldTarget = target;
+        target = newTarget;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET_LABEL, oldTargetLabel, targetLabel));
+            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.GOTO__TARGET, oldTarget, target));
     }
 
     /**
@@ -94,8 +102,9 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.GOTO__TARGET_LABEL:
-                return getTargetLabel();
+            case SclPackage.GOTO__TARGET:
+                if (resolve) return getTarget();
+                return basicGetTarget();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -108,8 +117,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.GOTO__TARGET_LABEL:
-                setTargetLabel((String)newValue);
+            case SclPackage.GOTO__TARGET:
+                setTarget((Label)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -123,8 +132,8 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.GOTO__TARGET_LABEL:
-                setTargetLabel(TARGET_LABEL_EDEFAULT);
+            case SclPackage.GOTO__TARGET:
+                setTarget((Label)null);
                 return;
         }
         super.eUnset(featureID);
@@ -138,26 +147,10 @@ public class GotoImpl extends MinimalEObjectImpl.Container implements Goto {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.GOTO__TARGET_LABEL:
-                return TARGET_LABEL_EDEFAULT == null ? targetLabel != null : !TARGET_LABEL_EDEFAULT.equals(targetLabel);
+            case SclPackage.GOTO__TARGET:
+                return target != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (targetLabel: ");
-        result.append(targetLabel);
-        result.append(')');
-        return result.toString();
     }
 
 } //GotoImpl

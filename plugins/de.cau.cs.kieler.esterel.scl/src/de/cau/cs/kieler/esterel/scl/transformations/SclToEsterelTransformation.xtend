@@ -22,7 +22,6 @@ import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.esterel.esterel.Sequence
@@ -37,8 +36,7 @@ import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.Scope
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.inject.Inject
 import de.cau.cs.kieler.scl.scl.SclFactory
@@ -57,6 +55,10 @@ class SclToEsterelTransformation {
 
     @Inject
     extension EsterelToSclExtensions
+    
+//    extension SclFactory = SclFactory.eINSTANCE
+    
+    extension EsterelFactory = EsterelFactory.eINSTANCE
 
     var LinkedList<ISignal> allSignals
     var LinkedList<TrapDecl> allTraps
@@ -111,24 +113,24 @@ class SclToEsterelTransformation {
     /*
      * "normalizes" the SCL program.
      */
-    def normalize(StatementSequence sSeq) {
-        sSeq.optimizeAll
+    def normalize(Scope scope) {
+        scope.optimizeAll
 
-        //        sSeq.eliminateElseBranches
-        //        sSeq.eliminateNestedConditionals
-        sSeq
+        //        scope.eliminateElseBranches
+        //        scope.eliminateNestedConditionals
+        scope
     }
 
     /*
       * Eliminates else branches
       * TODO may be needed to use only sseq.statements
       */
-    def eliminateElseBranches(StatementSequence sSeq) {
-        for (cond : sSeq.eAllContents.toList.filter(typeof(Conditional))) {
-            if (!cond.elseStatements.nullOrEmpty) {
-                val parent = cond.eContainer.eContainer as StatementSequence
+    def eliminateElseBranches(Scope scope) {
+        for (cond : scope.eAllContents.toList.filter(typeof(Conditional))) {
+            if (!cond.^else.statements.nullOrEmpty) {
+                val parent = cond.eContainer.eContainer as Scope
                 val index = parent.statements.indexOf(cond.eContainer)
-                val elseStms = cond.elseStatements
+                val elseStms = cond.^else.statements
 
                 val elseCond = createConditional
                 elseCond.expression = createNot(EcoreUtil.copy(cond.expression))
@@ -137,28 +139,28 @@ class SclToEsterelTransformation {
             }
         }
 
-        sSeq
+        scope
     }
 
     /*
      * Removes forward jumps by producing redundancy...
      */
-    def removeForwardJumps(StatementSequence sSeq) {
-        for (th : sSeq.eAllContents.toList.filter(typeof(de.cau.cs.kieler.scl.scl.Thread))) {
+    def removeForwardJumps(Scope scope) {
+        for (th : scope.eAllContents.toList.filter(typeof(de.cau.cs.kieler.scl.scl.Thread))) {
             val l_exit = ("l_exit" + TRAP_SUFFIX)
             TRAP_SUFFIX = TRAP_SUFFIX +"_"
             allTraps += EsterelFactory::eINSTANCE.createTrapDecl => [
                                         name = l_exit
                                     ]
-            (th as de.cau.cs.kieler.scl.scl.Thread).statements.add(SclFactory::eINSTANCE.createEmptyStatement => [label = l_exit])
+            (th as de.cau.cs.kieler.scl.scl.Thread).statements.add(createEmptyStatement => [label = l_exit])
         }
-        sSeq.addLabel("seq_exit")
+        scope.addLabel("seq_exit")
         
-        var StatementSequence oldSseq
+        var Scope oldSseq
         do {
-            oldSseq = EcoreUtil.copy(sSeq)
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var parent = goto.eContainer.eContainer as StatementSequence
+            oldSseq = EcoreUtil.copy(scope)
+        for (goto : scope.eAllContents.toList.filter(typeof(Goto))) {
+            var parent = goto.eContainer.eContainer as Scope
             var index = parent.statements.indexOf(goto.eContainer) + 1
             var gotoIndex = index - 1
             var foundTarget = false
@@ -168,7 +170,7 @@ class SclToEsterelTransformation {
             while (!foundTarget && !notFound) {
                 if (index == parent.statements.length && parent instanceof Conditional) {
                     val oldParent = parent
-                    parent = parent.eContainer.eContainer as StatementSequence
+                    parent = parent.eContainer.eContainer as Scope
                     index = parent.statements.indexOf(oldParent.eContainer)
                 } else if (index == parent.statements.length) {
                     notFound = true
@@ -183,21 +185,21 @@ class SclToEsterelTransformation {
             // Remove goto and replace by label contents
             if (foundTarget) {
                 System.out.println("foundit")
-                val gotoParent = goto.eContainer.eContainer as StatementSequence
-                val copyStms = createStatementSequence
+                val gotoParent = goto.eContainer.eContainer as Scope
+                val copyStms = createScope
                 var gotoStm = false
                 while (index < parent.statements.length && !gotoStm) {
                     copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index)))
                     if (parent.statements.get(index) instanceof InstructionStatement &&
                         (parent.statements.get(index) as InstructionStatement ).instruction instanceof Conditional) {
                         val cond = (parent.statements.get(index) as InstructionStatement ).instruction as Conditional
-                        parent = cond.eContainer.eContainer as StatementSequence
+                        parent = cond.eContainer.eContainer as Scope
                         index = parent.statements.indexOf(cond.eContainer)
                     }
                     index = index + 1
                 }
                 
-                // Remove copied StatementSequence endlabel
+                // Remove copied Scope endlabel
                 copyStms.statements.remove(copyStms.statements.length-1)
 
                 // End of Thread/Program reached
@@ -207,7 +209,7 @@ class SclToEsterelTransformation {
                     
                 // Loop was copied
                 if (gotoStm && goto.targetLabel == ((copyStms.statements.last as InstructionStatement).instruction as Goto).targetLabel) {
-                    copyStms.statements.add(0, SclFactory::eINSTANCE.createEmptyStatement => [ label = "l" + LABEL_SUFFIX ])
+                    copyStms.statements.add(0, createEmptyStatement => [ label = "l" + LABEL_SUFFIX ])
                     copyStms.statements.remove(copyStms.statements.length - 1)
                     copyStms.addGoto("l" + LABEL_SUFFIX)
                     LABEL_SUFFIX = LABEL_SUFFIX + "_"
@@ -225,7 +227,7 @@ class SclToEsterelTransformation {
                 LABEL_SUFFIX = LABEL_SUFFIX + "_"
                 
                 // Add a goto to end of Thread/Program
-                copyStms.addGoto(((seq as StatementSequence).statements.last as EmptyStatement).label)
+                copyStms.addGoto(((seq as Scope).statements.last as EmptyStatement).label)
                 
                 gotoParent.statements.remove(gotoIndex)
                 gotoParent.statements.addAll(gotoIndex, copyStms.statements)
@@ -233,11 +235,11 @@ class SclToEsterelTransformation {
             }
         }
         
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
+        } while (!EcoreUtil.equals(oldSseq, scope))
         
         
 
-        sSeq
+        scope
     }
 
     /*

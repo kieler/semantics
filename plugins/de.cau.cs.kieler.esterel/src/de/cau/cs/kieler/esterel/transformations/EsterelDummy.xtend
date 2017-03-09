@@ -17,6 +17,7 @@ import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.kitt.tracing.Traceable
 
 /**
  * This class handles the default NO simulation visualization
@@ -25,7 +26,7 @@ import de.cau.cs.kieler.esterel.esterel.Program
  * @kieler.design 2014-07-23 proposed cmot
  * @kieler.rating 2014-07-23 proposed yellow
  */
-class EsterelDummy extends AbstractExpansionTransformation {
+class EsterelDummy extends AbstractExpansionTransformation implements Traceable {
     
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

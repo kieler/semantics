@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
@@ -46,7 +47,7 @@ import static com.google.common.collect.Lists.*
 import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.base.Predicates.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * The SSA transformation for SCGs
@@ -55,7 +56,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCSSATransformation extends AbstractProductionTransformation {
+class SCSSATransformation extends AbstractProductionTransformation implements Traceable {
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -158,6 +159,11 @@ class SCSSATransformation extends AbstractProductionTransformation {
         // 10. Update SSA VO version numbering
         // ---------------   
         scg.updateSSAVersions
+        
+        // ---------------
+        // 11. Update IO preservation
+        // ---------------     
+        scg.optimizeIO
 
         
         scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)

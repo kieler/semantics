@@ -228,14 +228,14 @@ class TracingChain {
                 mapping.putAll(chain.head.internalMapping);
             }
             val keys = mapping.keySet.immutableCopy
-            chain.drop(1).forEach [
+            for (chainMap : chain.drop(1)) {
                 val map = if (reverse) {
-                        it.internalReverseMapping;
+                        chainMap.internalReverseMapping;
                     } else {
-                        it.internalMapping;
+                        chainMap.internalMapping;
                     }
                 //Replace all values by new values of additional joined (next) mapping
-                keys.forEach [ key |
+                for (key : keys) {
                     //resolve elementTransformation for all values and replace value
                     val values = mapping.get(key).map [
                         map.get(it)
@@ -244,9 +244,9 @@ class TracingChain {
                         first; //return first as container of next folding
                     ];
                     mapping.replaceValues(key, values);
-                ];
-            ];
-            return mapping;
+                }
+            }
+            return mapping
         }
     }
 

@@ -3,9 +3,12 @@
 package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+
+import de.cau.cs.kieler.kexpressions.Declaration;
+
 import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Scope;
 import de.cau.cs.kieler.scl.scl.Statement;
-import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 import java.util.Collection;
 
@@ -21,18 +24,29 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Statement Sequence</b></em>'.
+ * An implementation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ScopeImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StatementSequenceImpl extends AnnotatableImpl implements StatementSequence {
+public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
+    /**
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDeclarations()
+     * @generated
+     * @ordered
+     */
+    protected EList<Declaration> declarations;
+
     /**
      * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -48,7 +62,7 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
      * <!-- end-user-doc -->
      * @generated
      */
-    protected StatementSequenceImpl() {
+    protected ScopeImpl() {
         super();
     }
 
@@ -59,7 +73,19 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
      */
     @Override
     protected EClass eStaticClass() {
-        return SclPackage.Literals.STATEMENT_SEQUENCE;
+        return SclPackage.Literals.SCOPE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Declaration> getDeclarations() {
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.SCOPE__DECLARATIONS);
+        }
+        return declarations;
     }
 
     /**
@@ -69,7 +95,7 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
      */
     public EList<Statement> getStatements() {
         if (statements == null) {
-            statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.STATEMENT_SEQUENCE__STATEMENTS);
+            statements = new EObjectContainmentEList<Statement>(Statement.class, this, SclPackage.SCOPE__STATEMENTS);
         }
         return statements;
     }
@@ -82,7 +108,9 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+            case SclPackage.SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
+            case SclPackage.SCOPE__STATEMENTS:
                 return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -96,7 +124,9 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+            case SclPackage.SCOPE__DECLARATIONS:
+                return getDeclarations();
+            case SclPackage.SCOPE__STATEMENTS:
                 return getStatements();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -111,7 +141,11 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+            case SclPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
+                return;
+            case SclPackage.SCOPE__STATEMENTS:
                 getStatements().clear();
                 getStatements().addAll((Collection<? extends Statement>)newValue);
                 return;
@@ -127,7 +161,10 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+            case SclPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                return;
+            case SclPackage.SCOPE__STATEMENTS:
                 getStatements().clear();
                 return;
         }
@@ -142,10 +179,12 @@ public class StatementSequenceImpl extends AnnotatableImpl implements StatementS
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.STATEMENT_SEQUENCE__STATEMENTS:
+            case SclPackage.SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
+            case SclPackage.SCOPE__STATEMENTS:
                 return statements != null && !statements.isEmpty();
         }
         return super.eIsSet(featureID);
     }
 
-} //StatementSequenceImpl
+} //ScopeImpl
