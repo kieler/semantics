@@ -15,12 +15,6 @@ package de.cau.cs.kieler.esterel.scl.transformations
 
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.Block
@@ -38,24 +32,28 @@ import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Scope
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.StatementScope
-import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.scl.scl.ScopeStatement
+import de.cau.cs.kieler.scl.scl.Label
 
 /**
  * Collection of methods and shortcuts to ease the Esterel to SCL transformation. Besides methds to
@@ -78,6 +76,8 @@ class EsterelToSclExtensions {
 
     @Inject
     extension EsterelToSclTransformation
+    
+    extension SclFactory = SclFactory.eINSTANCE
 
     // Current labelSuffix ensures the creation of fresh labels, i.e. labels are numbered (l1, l2,...)
     var static labelSuffix = 0;
@@ -189,9 +189,9 @@ class EsterelToSclExtensions {
      * @param designatedName The type of the variable
      * @return A new ValuedObject with an unused name
      */
-    def ValuedObject createFreshVar(StatementScope statementScope, String designatedName, ValueType valueType) {
+    def ValuedObject createFreshVar(Scope scope, String designatedName, ValueType valueType) {
         val newUniqueVariable = createValuedObject(uniqueName(designatedName))
-        statementScope.declarations += createDeclaration => [
+        scope.declarations += createDeclaration => [
             valuedObjects += newUniqueVariable
             type = valueType
         ]
@@ -199,18 +199,6 @@ class EsterelToSclExtensions {
         signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
 
         newUniqueVariable
-    }
-
-    /**
-     * Creates an EmptyStatement
-     * 
-     * @param label The label of the EmptyStatement
-     * @return The created EmptyStatement
-     */
-    def createEmptyStatement(String label) {
-        SclFactory::eINSTANCE.createEmptyStatement => [
-            it.label = label
-        ]
     }
 
     /**
@@ -251,13 +239,11 @@ class EsterelToSclExtensions {
      * @return A statement which increments valObj
      */
     def Statement incrementInt(ValuedObject valuedObjectToIncrement) {
-        createStatement(
-            createAssignment(valuedObjectToIncrement,
-                KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                    operator = OperatorType::ADD
-                    subExpressions += createValuedObjectReference(valuedObjectToIncrement)
-                    subExpressions += createIntValue(1)
-                ]))
+       return createAssignment(valuedObjectToIncrement, KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::ADD
+            subExpressions += createValuedObjectReference(valuedObjectToIncrement)
+            subExpressions += createIntValue(1)
+        ])
     }
 
     /**
@@ -316,52 +302,48 @@ class EsterelToSclExtensions {
       * Removes possibly instantaneous reachable gotos. Used for the transformation of traps and
       * delayed weak abort to avoid unnecessary potentially instantaneous loops.
       * 
-      * @param statementSequence The list of statements to process
+      * @param scope The list of statements to process
       * @param label The label to remove all instantaneous gotos to
       * @param exitObject The ValuedObject triggering the trap
       * @return True if list has an instantaneous path
       */
-    def boolean removeInstantaneousGotos(EList<Statement> statementSequence, String label, LinkedList<ValuedObject> exitObjects) {
+    def boolean removeInstantaneousGotos(EList<Statement> scope, Label label, LinkedList<ValuedObject> exitObjects) {
+        if (scope == null)
+            return true
         var index = 0
         var continue = true
-        while (index < statementSequence.length && continue) {
-            if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof Pause) {
+        while (index < scope.length && continue) {
+            if (scope.get(index) instanceof Pause) {
                 continue = false
-            } else if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof Goto &&
-                ((statementSequence.get(index) as InstructionStatement).instruction as Goto).targetLabel == label) {
-                statementSequence.remove(index)
-            } else if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof Conditional) {
-                val conditional = (statementSequence.get(index) as InstructionStatement).instruction as Conditional
+            } else if (scope.get(index) instanceof Goto &&
+                (scope.get(index) as Goto).target == label) {
+                scope.remove(index)
+            } else if (scope.get(index) instanceof Conditional) {
+                val conditional = scope.get(index) as Conditional
                 continue = conditional.statements.removeInstantaneousGotos(label, exitObjects)
-                continue = conditional.elseStatements.removeInstantaneousGotos(label, exitObjects) && continue
+                continue = conditional.^else?.statements.removeInstantaneousGotos(label, exitObjects) && continue
                 index++
-            } else if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof StatementScope) {
-                continue = ((statementSequence.get(index) as InstructionStatement).instruction as StatementScope).statements.
+            } else if (scope.get(index) instanceof ScopeStatement) {
+                continue = (scope.get(index) as ScopeStatement).statements.
                     removeInstantaneousGotos(label, exitObjects)
                 index++
-            } else if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-                    for (thread : ((statementSequence.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+            } else if (scope.get(index) instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+                    for (thread : (scope.get(index) as de.cau.cs.kieler.scl.scl.Parallel).threads) {
                         for (exitObject : exitObjects) {
                             if (isAssignedInInitialTick(thread.statements, exitObject))
                                 continue = false
                         }
                     }
                     if (continue) {
-                        for (thread : ((statementSequence.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+                        for (thread : (scope.get(index) as de.cau.cs.kieler.scl.scl.Parallel).threads) {
                             if (thread.getSequenceEndLabel != null) {
                                 continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObjects) && continue
                             }
                     }
                     }
                     index++
-            } else if (statementSequence.get(index) instanceof InstructionStatement &&
-                (statementSequence.get(index) as InstructionStatement).instruction instanceof Assignment &&
-                exitObjects.contains(((statementSequence.get(index) as InstructionStatement).instruction as Assignment).valuedObject)) {
+            } else if (scope.get(index) instanceof Assignment &&
+                exitObjects.contains((scope.get(index) as Assignment).valuedObject)) {
                 continue = false
             } 
             else {         
@@ -383,26 +365,21 @@ class EsterelToSclExtensions {
         var index = 0
         var boolean wasAssigned = false
         while (index < statementList.length && !wasAssigned) {
-            if (statementList.get(index) instanceof InstructionStatement &&
-                (statementList.get(index) as InstructionStatement).instruction instanceof Assignment &&
-                ((statementList.get(index) as InstructionStatement).instruction as Assignment).valuedObject == valuedObject) {
+            if (statementList.get(index) instanceof Assignment &&
+                (statementList.get(index) as Assignment).valuedObject == valuedObject) {
                 return true
-            } else if (statementList.get(index) instanceof InstructionStatement &&
-                (statementList.get(index) as InstructionStatement).instruction instanceof Pause) {
+            } else if (statementList.get(index) instanceof Pause) {
                 return false
-            } else if (statementList.get(index) instanceof InstructionStatement &&
-                (statementList.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-                for (thread : ((statementList.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).
+            } else if (statementList.get(index) instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+                for (thread : (statementList.get(index) as de.cau.cs.kieler.scl.scl.Parallel).
                     threads)
                     wasAssigned = wasAssigned || thread.statements.isAssignedInInitialTick(valuedObject)
-            } else if (statementList.get(index) instanceof InstructionStatement &&
-                (statementList.get(index) as InstructionStatement).instruction instanceof Conditional) {
-                val cond = (statementList.get(index) as InstructionStatement).instruction as Conditional
-                wasAssigned = cond.elseStatements.isAssignedInInitialTick(valuedObject) ||
+            } else if (statementList.get(index) instanceof Conditional) {
+                val cond = statementList.get(index) as Conditional
+                wasAssigned = cond.^else?.statements.isAssignedInInitialTick(valuedObject) ||
                     cond.statements.isAssignedInInitialTick(valuedObject)
-            } else if (statementList.get(index) instanceof InstructionStatement &&
-                (statementList.get(index) as InstructionStatement).instruction instanceof StatementScope) {
-                val sScope = (statementList.get(index) as InstructionStatement).instruction as StatementScope
+            } else if (statementList.get(index) instanceof ScopeStatement) {
+                val sScope = statementList.get(index) as ScopeStatement
                 wasAssigned = sScope.statements.isAssignedInInitialTick(valuedObject)
             }
             index++
@@ -413,15 +390,15 @@ class EsterelToSclExtensions {
     }
     
     /**
-     * Returns the label at the end of a StatementSequence if there is one
+     * Returns the label at the end of a Scope if there is one
      * 
      * @param thread The thread
-     * @return       The label at the end of the given StatementSequence
+     * @return       The label at the end of the given Scope
      */
-     def getSequenceEndLabel(StatementSequence sSeq) {
-         val endLabel = sSeq.statements.findLast[ it instanceof EmptyStatement ]
+     def getSequenceEndLabel(Scope sSeq) {
+         val endLabel = sSeq.statements.findLast[ it instanceof Label ]
          if (endLabel != null)
-            return (endLabel as EmptyStatement).label
+            return (endLabel as Label)
             
          null
      }
@@ -554,50 +531,36 @@ class EsterelToSclExtensions {
       * @param targetLabel The targetlabel
       * @param isImmediate When false a pause statement is added prior to the jump
       */
-    def Conditional newIfThenGoto(Expression condition, String targetLabel, boolean isImmediate) {
-        SclFactory::eINSTANCE.createConditional => [
+    def Conditional newIfThenGoto(Expression condition, Label targetLabel, boolean isImmediate) {
+        createConditional => [
             expression = condition
             if (!isImmediate) {
                 statements.addAll(createSclPause.statements)
             }
             statements.add(
-                createStatement(
-                    SclFactory::eINSTANCE.createGoto => [
-                        it.targetLabel = targetLabel
-                    ]))
+                createGoto => [
+                    it.target = targetLabel
+                ])
         ]
     }
 
     /**
-     * Adds a new empty statement to a StatementSequence
+     * Adds a new goto instruction to a Scope
      * 
-     * @param statementSequence The StatementSequence to add the empty statement
-     * @param label The label
-     */
-    def addLabel(StatementSequence statementSequence, String label) {
-        statementSequence.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                it.label = label
-            ])
-    }
-
-    /**
-     * Adds a new goto instruction to a StatementSequence
-     * 
-     * @param statementSequence The StatementSequence to add the empty statement
+     * @param scope The Scope to add the empty statement
      * @param label The target label 
      */
-    def addGoto(StatementSequence statementSequence, String label) {
-        statementSequence.add(createGotoStatement(label))
+    def addGoto(Scope scope, Label label) {
+        scope.add(createGotoStatement(label))
     }
 
     /**
-     * Adds a new goto instruction to a StatementSequence
+     * Adds a new goto instruction to a Scope
      * 
      * @param statementList The Statement EList to add the empty statement
      * @param label The target label 
      */
-    def addGoto(EList<Statement> statementList, String label) {
+    def addGoto(EList<Statement> statementList, Label label) {
         statementList.add(createGotoStatement(label))
     }
 
@@ -609,7 +572,7 @@ class EsterelToSclExtensions {
      * @param currentThreadEndLabel Label at the end of the currently transformed thread
      * @param labelToThreadMap Map of which label is in which thread
          */
-    def createGotoj(String label, String currentThreadEndLabel, Multimap<String, String> labelToThreadMap) {
+    def createGotoj(Label label, Label currentThreadEndLabel, Multimap<Label, Label> labelToThreadMap) {
         if (labelToThreadMap.get(currentThreadEndLabel).contains(label)) {
             return createGotoStatement(label)
         } else {
@@ -621,13 +584,13 @@ class EsterelToSclExtensions {
      * Adds a gotoj l: Jumps to l if l is in the current thread and to the end of the
      * thread otherwise
      * 
-     * @param statementSeqeuence The StatementSequence to add the gotoj
+     * @param statementSeqeuence The Scope to add the gotoj
      * @paramt targetLabel The target label
      * @param currentThreadEndLabel Label at the end of the current thread
      * @param labelToThreadMap Map of which label is in which thread
      */
-    def addGotoj(StatementSequence statementSeqeuence, String targetLabel, String currentThreadEndLabel, 
-        Multimap<String, String> labelToThreadMap
+    def addGotoj(Scope statementSeqeuence, Label targetLabel, Label currentThreadEndLabel, 
+        Multimap<Label, Label> labelToThreadMap
     ) {
         if (labelToThreadMap.get(currentThreadEndLabel).contains(targetLabel)) {
             statementSeqeuence.addGoto(targetLabel)
@@ -643,11 +606,10 @@ class EsterelToSclExtensions {
     * 
     * @param targetLabel The target label 
     */
-    def createGotoStatement(String targetLabel) {
-        createStatement(
-            SclFactory::eINSTANCE.createGoto => [
-                it.targetLabel = targetLabel
-            ])
+    def createGotoStatement(Label targetLabel) {
+        return createGoto => [
+            it.target = targetLabel
+        ]
     }
 
     /**
@@ -747,50 +709,29 @@ class EsterelToSclExtensions {
     }
 
     /**
-     * Creates an SCL conditional
+     * Adds a Statement to a Scope
      * 
-     * @reutrn An SCL conditional
-     */
-    def createConditional() {
-        SclFactory::eINSTANCE.createConditional
-    }
-
-    /**
-     * Adds an instruction to a StatementSeqeuence by wrapping it in an InstructionStatement
-     * 
-     * @param statementSequence The StatementSequence to add the Instruction to
-     * @return The StatementSequence with added Instruction
-     */
-    def dispatch add(StatementSequence statementSequence, Instruction instruction) {
-        statementSequence.statements.add(createStatement(instruction))
-
-        statementSequence
-    }
-
-    /**
-     * Adds a Statement to a StatementSequence
-     * 
-     * @param statementSequence The StatementSequence to add the statement to
+     * @param scope The Scope to add the statement to
      * @param statement The statement to add
-     * @return The StatementSequence with added statement
+     * @return The Scope with added statement
      */
-    def dispatch add(StatementSequence statementSequence, Statement statement) {
-        statementSequence.statements.add(statement)
+    def dispatch add(Scope scope, Statement statement) {
+        scope.statements.add(statement)
 
-        statementSequence
+        scope
     }
 
     /**
-     * Adds all statements of a StatementSequence to another StatementSequence
+     * Adds all statements of a Scope to another Scope
      * 
-     * @param statementSequence The StatementSequence to add the other to
-     * @param statementSequenceToAdd The StatementSequence which should be added to the other one
-     * @return The StatementSequence with the statements of the other one added
+     * @param scope The Scope to add the other to
+     * @param scopeToAdd The Scope which should be added to the other one
+     * @return The Scope with the statements of the other one added
      */
-    def dispatch add(StatementSequence statementSequence, StatementSequence statementSequenceToAdd) {
-        statementSequence.statements.addAll(statementSequenceToAdd.statements)
+    def dispatch add(Scope scope, Scope scopeToAdd) {
+        scope.statements.addAll(scopeToAdd.statements)
 
-        statementSequence
+        scope
     }
 
     /**
@@ -801,73 +742,10 @@ class EsterelToSclExtensions {
      * @return An assignment instruction
      */
     def createAssignment(ValuedObject objectToAssign, Expression expression) {
-        SclFactory::eINSTANCE.createAssignment => [
+        createAssignment => [
             valuedObject = objectToAssign
             it.expression = expression
         ]
-    }
-
-    /**
-     * Creates a Statement from an Instruction, i.e., wrapps it into an InstructionStatement
-     * 
-     * @param instruction The instruction to wrap into an InstructionStatement
-     * @return The InstructionStatement with the instruction wrapped in it
-     */
-    def createStatement(Instruction instruction) {
-        SclFactory::eINSTANCE.createInstructionStatement => [
-            it.instruction = instruction
-        ]
-    }
-
-    /**
-     * Creates a StatementSequene containing the given statement
-     * 
-     * @param statement The statement to wrap into a StatementSequence
-     * @return The StatementSequence with the given statement wrapped into it
-     */
-    def createStatementSequence(Statement statement) {
-        SclFactory::eINSTANCE.createStatementSequence => [
-            statements.add(statement)
-        ]
-    }
-
-    /**
-     * Wrapps an Instruction into a StatementSequence
-     * 
-     * @param instruction The Instruciton to wrap into a StatementSequence
-     * @return A StatementSequence containing the given Instruction
-     */
-    def createStatementSequence(Instruction instruction) {
-        SclFactory::eINSTANCE.createStatementSequence => [
-            statements.add(createStatement(instruction))
-        ]
-    }
-
-    /**
-     * Creates a new SCL StatementSequence
-     * 
-     * @return The newly created StatementSequence
-     */
-    def createStatementSequence() {
-        SclFactory::eINSTANCE.createStatementSequence
-    }
-
-    /**
-     * Creates a new SCL StatementScope
-     * 
-     * @return The newly created SCL StatementScope
-     */
-    def createStatementScope() {
-        SclFactory::eINSTANCE.createStatementScope
-    }
-
-    /**
-     * Creates a new SCL Thread
-     * 
-     * @return The newly created SCL Thread
-     */
-    def createThread() {
-        SclFactory::eINSTANCE.createThread
     }
 
     /**
@@ -875,18 +753,9 @@ class EsterelToSclExtensions {
      * 
      * @return The newly created SCL Instruction
      */
-    def createThread(Instruction instruction) {
-        SclFactory::eINSTANCE.createThread => [
-            statements += createStatement(instruction)
+    def createThread(Statement statement) {
+        createThread => [
+            statements += statement
         ]
-    }
-
-    /**
-     * Creates a new SCL Parallel
-     * 
-     * @return The newly created SCL Parallel
-     */
-    def createParallel() {
-        SclFactory::eINSTANCE.createParallel
     }
 }
