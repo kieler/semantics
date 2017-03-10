@@ -18,7 +18,6 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 
 import de.cau.cs.kieler.kexpressions.ui.KExpressionsSemanticHighlightingCalculator;
-import de.cau.cs.kieler.scl.scl.EmptyStatement;
 
 /**
  * @author krat

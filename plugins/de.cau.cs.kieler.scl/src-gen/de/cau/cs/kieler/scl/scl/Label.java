@@ -5,21 +5,21 @@ package de.cau.cs.kieler.scl.scl;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>SCL Program</b></em>'.
+ * A representation of the model object '<em><b>Label</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.SCLProgram#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Label#getName <em>Name</em>}</li>
  * </ul>
  *
- * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram()
+ * @see de.cau.cs.kieler.scl.scl.SclPackage#getLabel()
  * @model
  * @generated
  */
-public interface SCLProgram extends Scope {
+public interface Label extends Statement {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -30,14 +30,14 @@ public interface SCLProgram extends Scope {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see de.cau.cs.kieler.scl.scl.SclPackage#getSCLProgram_Name()
-     * @model
+     * @see de.cau.cs.kieler.scl.scl.SclPackage#getLabel_Name()
+     * @model id="true" required="true"
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.SCLProgram#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scl.scl.Label#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
@@ -46,4 +46,4 @@ public interface SCLProgram extends Scope {
      */
     void setName(String value);
 
-} // SCLProgram
+} // Label

@@ -11,64 +11,50 @@ import org.eclipse.xtext.util.Pair;
 /**
  * This class contains custom formatting description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation.html#formatting
- * on how and when to use it 
+ * see : http://www.eclipse.org/Xtext/documentation.html#formatting on how and when to use it
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
 public class SCLFormatter extends AbstractDeclarativeFormatter {
-	
-	@Override
-	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.scl.services.SCLGrammarAccess f = (de.cau.cs.kieler.scl.services.SCLGrammarAccess) getGrammarAccess();
-		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
-			c.setIndentation(pair.getFirst(), pair.getSecond());
-			c.setLinewrap(1).after(pair.getFirst());
-			c.setLinewrap(1).before(pair.getSecond());
-			c.setLinewrap(1).after(pair.getSecond());
-		}
-		for(Keyword comma: f.findKeywords(",")) {
-			c.setNoLinewrap().before(comma);
-			c.setNoSpace().before(comma);
-//			c.setLinewrap().after(comma);
-		}
-		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
-		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
-		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
 
-//		c.setLinewrap().before(f.getSCLProgramAccess().getDeclarationsAssignment_3());
-		
-		for(Keyword semicolon: f.findKeywords(";")) {
-		    c.setNoSpace().before(semicolon);
-		    c.setLinewrap().after(semicolon);
-		}
-
-		for(Keyword semicolon: f.findKeywords(":")) {
-                    c.setNoSpace().before(semicolon);
-                    c.setLinewrap().after(semicolon);
-                }
-		
-	        c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
-	        c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
-	        c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
-	        c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
-	        c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
-	        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
-	                         f.getParallelAccess().getParKeyword_1_1_0());
-	        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
-	                         f.getParallelAccess().getJoinKeyword_2());
-	        
-	        // Indent then and else statements
-	        c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
-                c.setLinewrap(1).after(f.getConditionalAccess().getElseKeyword_5_0());
-                c.setLinewrap(1).after(f.getConditionalAccess().getEndKeyword_6());
-                c.setLinewrap(1).before(f.getConditionalAccess().getElseKeyword_5_0());
-                c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_6());
-                c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
-                                 f.getConditionalAccess().getElseKeyword_5_0());
-                c.setIndentation(f.getConditionalAccess().getElseKeyword_5_0(), 
-                                 f.getConditionalAccess().getEndKeyword_6());
-                
-//	        c.setNoSpace().before(f.getEmptyStatementAccess().getLabelAssignment_1_0());
+    @Override
+    protected void configureFormatting(FormattingConfig c) {
+        de.cau.cs.kieler.scl.services.SCLGrammarAccess f = (de.cau.cs.kieler.scl.services.SCLGrammarAccess) getGrammarAccess();
+        
+//        c.setLinewrap(1).before(f.getSCLProgramAccess().getLeftCurlyBracketKeyword_3_0_0());
+//        c.setLinewrap(1).before(f.getSCLProgramAccess().getLeftCurlyBracketKeyword_3_1_1());
+//        c.setLinewrap(1).before(f.getSCLProgramAccess().getDeclarationsAssignment_3_1_0());        
+        
+        for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {
+            c.setIndentation(pair.getFirst(), pair.getSecond());
+            c.setLinewrap(1).after(pair.getFirst());
+            c.setLinewrap(1).before(pair.getSecond());
+            c.setLinewrap(1).after(pair.getSecond());
         }
+        for (Keyword comma : f.findKeywords(",")) {
+            c.setNoLinewrap().before(comma);
+            c.setNoSpace().before(comma);
+        }
+        c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
+        c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
+        c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
+
+        for (Keyword semicolon : f.findKeywords(";")) {
+            c.setNoSpace().before(semicolon);
+            c.setLinewrap().after(semicolon);
+        }
+
+        for (Keyword semicolon : f.findKeywords(":")) {
+            c.setNoSpace().before(semicolon);
+            c.setLinewrap().after(semicolon);
+        }
+        
+        c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
+        c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
+        c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
+        c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
+        c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
+        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), f.getParallelAccess().getParKeyword_1_1_0());
+        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), f.getParallelAccess().getJoinKeyword_2());
+    }
 }

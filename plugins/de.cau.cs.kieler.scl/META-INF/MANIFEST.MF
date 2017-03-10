@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.sccharts.text.ui,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.kico
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.kitt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,

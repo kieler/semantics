@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.EmptyStatement;
+import de.cau.cs.kieler.scl.scl.Label;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -13,44 +13,44 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Empty Statement</b></em>'.
+ * An implementation of the model object '<em><b>Label</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.LabelImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class EmptyStatementImpl extends StatementImpl implements EmptyStatement {
+public class LabelImpl extends StatementImpl implements Label {
     /**
-     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected static final String LABEL_EDEFAULT = null;
+    protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
+     * @see #getName()
      * @generated
      * @ordered
      */
-    protected String label = LABEL_EDEFAULT;
+    protected String name = NAME_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected EmptyStatementImpl() {
+    protected LabelImpl() {
         super();
     }
 
@@ -61,7 +61,7 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
      */
     @Override
     protected EClass eStaticClass() {
-        return SclPackage.Literals.EMPTY_STATEMENT;
+        return SclPackage.Literals.LABEL;
     }
 
     /**
@@ -69,8 +69,8 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getLabel() {
-        return label;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -78,11 +78,11 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.EMPTY_STATEMENT__LABEL, oldLabel, label));
+            eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.LABEL__NAME, oldName, name));
     }
 
     /**
@@ -93,8 +93,8 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SclPackage.EMPTY_STATEMENT__LABEL:
-                return getLabel();
+            case SclPackage.LABEL__NAME:
+                return getName();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -107,8 +107,8 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SclPackage.EMPTY_STATEMENT__LABEL:
-                setLabel((String)newValue);
+            case SclPackage.LABEL__NAME:
+                setName((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -122,8 +122,8 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SclPackage.EMPTY_STATEMENT__LABEL:
-                setLabel(LABEL_EDEFAULT);
+            case SclPackage.LABEL__NAME:
+                setName(NAME_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -137,8 +137,8 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SclPackage.EMPTY_STATEMENT__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+            case SclPackage.LABEL__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         }
         return super.eIsSet(featureID);
     }
@@ -153,10 +153,10 @@ public class EmptyStatementImpl extends StatementImpl implements EmptyStatement 
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (label: ");
-        result.append(label);
+        result.append(" (name: ");
+        result.append(name);
         result.append(')');
         return result.toString();
     }
 
-} //EmptyStatementImpl
+} //LabelImpl

@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class ThreadImpl extends StatementSequenceImpl implements de.cau.cs.kieler.scl.scl.Thread {
+public class ThreadImpl extends ScopeImpl implements de.cau.cs.kieler.scl.scl.Thread {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
