@@ -35,7 +35,8 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
 import javax.inject.Inject
-
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 /**
  * The SSA transformation for SCGs
  * 
@@ -166,6 +167,23 @@ class IOPreserverExtensions {
         }
     }
     
+    def optimizeIO(SCGraph scg) {
+        // Find self assignment
+        val rems = scg.nodes.filter(Assignment).filter[isOutputPreserver].filter[
+            if (expression instanceof ValuedObjectReference) {
+                return valuedObject == (expression as ValuedObjectReference).valuedObject
+            }
+            return false
+        ].toList
+        // Fix controlflow
+//        for (rem : rems) {
+//            rem.incoming.toList.forEach[target = rem.next.target]
+//            rem.next.remove
+//        }
+        // Remove
+//        scg.nodes.removeAll(rems)
+    }
+    
     def createPreservingAssignments(SCGraph scg, DominatorTree dt, Multimap<Assignment, Parameter> ssaReferences, BiMap<ValuedObject, Declaration> ssaDecl) {
         val map = LinkedHashMultimap.create
         if (scg.isDelayed) {
@@ -209,10 +227,6 @@ class IOPreserverExtensions {
         return map
     }
     
-    def isOutputPreserver(Node node) {
-        return node.hasAnnotation(OUTPUT_PRESERVER)
-    }
-    
     private def preserveOutput(Node node, SCGraph scg) {
         if(!node.basicBlock.deadBlock) {
             for (decl : scg.declarations.reverseView.filter[output]) {
@@ -232,6 +246,10 @@ class IOPreserverExtensions {
                 }
             }
         }
+    }
+    
+    def isOutputPreserver(Node node) {
+        return node.hasAnnotation(OUTPUT_PRESERVER)
     }
     
     private def markOutputPreserver(Assignment asm) {

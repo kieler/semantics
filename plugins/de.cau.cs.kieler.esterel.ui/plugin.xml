@@ -183,10 +183,10 @@
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
-            editor="de.cau.cs.kieler.esterel.EsterelINVALID"
-            features="scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target"
+            editor="de.cau.cs.kieler.esterel.Esterel"
+            features="esterel.sigscl, scl.scg, scl.basic, scg, scg.basic, scg.dependency, scg.basicblock, scg.guard, scg.scheduling, scg.sequentialize, codegeneration, s, s.target, ssc, T_scg.ssa.scssa, T_scg.ssa.wunemit, T_strl2ssascg2ssastrl"
             label="Esterel-SCL-Compilation"
-            preferred="s.c, scl.scg, ESTERELNOSIMULATIONVISUALIZATION"
+            preferred="s.c, scl.scg, ESTERELNOSIMULATIONVISUALIZATION, strl2ssascg2ssastrl, scg.ssa.wunemit"
             priority="100">
       </editor>
       <editor

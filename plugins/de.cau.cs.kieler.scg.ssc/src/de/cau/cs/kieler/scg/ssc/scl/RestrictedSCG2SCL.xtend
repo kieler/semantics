@@ -33,13 +33,13 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.StatementSequence
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.scl.Label
+import de.cau.cs.kieler.scl.scl.Scope
 
 /**
  * @author als
@@ -56,7 +56,7 @@ class RestrictedSCG2SCL {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCLExtensions
 
-    val labels = <Node, EmptyStatement>newLinkedHashMap
+    val labels = <Node, Label>newLinkedHashMap
     val gotos = <Goto, Node>newLinkedHashMap
     val voMapping = <ValuedObject, ValuedObject>newHashMap
     val visited = newHashSet
@@ -86,148 +86,137 @@ class RestrictedSCG2SCL {
         scg.transform(scl)
         
         for (labelIdx : labels.values.indexed) {
-            labelIdx.value.label = labelIdx.value.label + labelIdx.key
+            labelIdx.value.name = labelIdx.value.name + labelIdx.key
         }
-        for (goto : gotos.keySet) {
-            goto.targetLabel = labels.get(gotos.get(goto)).label
-        }
+//        for (goto : gotos.keySet) {
+//            goto.targetLabel = labels.get(gotos.get(goto)).label
+//        }
 
         scl.optimizeAll
 
         return scl
     }
 
-    def dispatch StatementSequence transform(SCGraph scg, StatementSequence sSeq) {
-       if (scg.nodes.size == 0) return sSeq
-       scg.nodes.head.transform(sSeq)
-       sSeq
+    def dispatch Scope transform(SCGraph scg, Scope scope) {
+       if (scg.nodes.size == 0) return scope
+       scg.nodes.head.transform(scope)
+       scope
     }
        
-    def dispatch StatementSequence transform(Entry entry, StatementSequence sSeq) {
-        if (entry.visited) return sSeq
+    def dispatch Scope transform(Entry entry, Scope scope) {
+        if (entry.visited) return scope
         entry.markVisted
-        entry.next.target.transform(sSeq)
-        return sSeq
+        entry.next.target.transform(scope)
+        return scope
     }
 
-    def dispatch StatementSequence transform(Exit exit, StatementSequence sSeq) {
-        if (exit.visited) return sSeq
+    def dispatch Scope transform(Exit exit, Scope scope) {
+        if (exit.visited) return scope
         exit.markVisted
         if (exit.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(exit)) {
-            sSeq.createLabel(exit)
+            scope.createLabel(exit)
         }
-        return sSeq
+        return scope
     }
     
-    def dispatch StatementSequence transform(Surface surface, StatementSequence sSeq) {
-        if (surface.visited) return sSeq
+    def dispatch Scope transform(Surface surface, Scope scope) {
+        if (surface.visited) return scope
         if (surface.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(surface)) {
-            sSeq.createLabel(surface)
+            scope.createLabel(surface)
         }
         surface.markVisted
-        val statement = createInstructionStatement
-        statement.instruction = createPause;
-        sSeq.statements.add(statement)
-        surface.depth.transform(sSeq)
-        sSeq
+        val statement = createPause;
+        scope.statements.add(statement)
+        surface.depth.transform(scope)
+        scope
     }
     
-    def dispatch StatementSequence transform(Depth depth, StatementSequence sSeq) {
-        if (depth.visited) return sSeq
+    def dispatch Scope transform(Depth depth, Scope scope) {
+        if (depth.visited) return scope
         depth.markVisted
         val next = depth.next?.target
         if (next != null) {
             if (next != null && next.visited) {
                 if (labels.containsKey(next)) {
-                    sSeq.statements += createInstructionStatement => [
-                        instruction = createGoto => [
-                            gotos.put(it, next)
-                        ]
+                    scope.statements += createGoto => [
+                        gotos.put(it, next)
                     ]
                 }
             } else {
-                next.transform(sSeq)
+                next.transform(scope)
             }
         }
-        return sSeq
+        return scope
     }
 
-    def dispatch StatementSequence transform(Fork fork, StatementSequence sSeq) {
-        if (fork.visited) return sSeq
+    def dispatch Scope transform(Fork fork, Scope scope) {
+        if (fork.visited) return scope
         if (fork.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(fork)) {
-            sSeq.createLabel(fork)
+            scope.createLabel(fork)
         }
         fork.markVisted
-        val statement = createInstructionStatement => [
-            instruction = createParallel => [
-                for(next : fork.getAllNext) {
-                    threads += createThread => [
-                        (next.target as Entry).getThreadNodes.head.transform(it)
-                    ]
-                }
-            ]
+        val statement = createParallel => [
+            for(next : fork.getAllNext) {
+                threads += createThread => [
+                    (next.target as Entry).getThreadNodes.head.transform(it)
+                ]
+            }
         ]
-        sSeq.statements.add(statement)
-        fork.join.transform(sSeq)
-        sSeq
+        scope.statements.add(statement)
+        fork.join.transform(scope)
+        scope
     }
 
-    def dispatch StatementSequence transform(Join join, StatementSequence sSeq) {
-        if (join.visited) return sSeq
+    def dispatch Scope transform(Join join, Scope scope) {
+        if (join.visited) return scope
         join.markVisted
         val next = join.next?.target
         if (next != null) {
             if (next != null && next.visited) {
                 if (labels.containsKey(next)){
-                    sSeq.statements += createInstructionStatement => [
-                        instruction = createGoto => [
-                            gotos.put(it, next)
-                        ]
+                    scope.statements += createGoto => [
+                        gotos.put(it, next)
                     ]
                 }
             } else {
-                next.transform(sSeq)
+                next.transform(scope)
             }
         }
-        return sSeq
+        return scope
     }
     
-    def dispatch StatementSequence transform(Assignment assignment, StatementSequence sSeq) {
-        if (assignment.visited) return sSeq
+    def dispatch Scope transform(Assignment assignment, Scope scope) {
+        if (assignment.visited) return scope
         assignment.markVisted
         if (assignment.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(assignment)) {
-            sSeq.createLabel(assignment)
+            scope.createLabel(assignment)
         }
         val next = assignment.next?.target
-        val statement = createInstructionStatement => [
-            instruction = createAssignment => [
-                valuedObject = assignment.valuedObject.copyValuedObject
-                expression = assignment.expression.copyExpression
-            ]
+        val statement = createAssignment => [
+            valuedObject = assignment.valuedObject.copyValuedObject
+            expression = assignment.expression.copyExpression
         ]
-        sSeq.statements.add(statement)
+        scope.statements.add(statement)
         if (next != null) {
             if (next.visited) {
                 if (labels.containsKey(next)) {
-                    sSeq.statements += createInstructionStatement => [
-                        instruction = createGoto => [
-                            gotos.put(it, next)
-                        ]
+                    scope.statements += createGoto => [
+                        gotos.put(it, next)
                     ]
                 }
             } else {
-                next.transform(sSeq)
+                next.transform(scope)
             }
         }
-        return sSeq
+        return scope
     }
 
     // ASSUMES no jumps into/between branches
-    def dispatch StatementSequence transform(Conditional conditional, StatementSequence sSeq) {
-        if (conditional.visited) return sSeq
+    def dispatch Scope transform(Conditional conditional, Scope scope) {
+        if (conditional.visited) return scope
         conditional.markVisted
         if (conditional.incoming.filter(ControlFlow).size > 1 && !labels.containsKey(conditional)) {
-            sSeq.createLabel(conditional)
+            scope.createLabel(conditional)
         }
 
         // Then Path
@@ -301,67 +290,61 @@ class RestrictedSCG2SCL {
                 } else {
                     elsePath
                 }
-            val statement = createInstructionStatement
-            sSeq.statements.add(statement)
-            statement.instruction = createConditional => [
+            var statement = createConditional
+            scope.statements.add(statement)
+            statement => [
                 it.expression = conditional.condition.copyExpression
                 if (loopPath == thenPath) {
                     if (loopPath.size > 1) {
                         val stmContainer = createConditional
-                        loopPath.head.transform(stmContainer as StatementSequence)
+                        loopPath.head.transform(stmContainer as Scope)
                         it.statements.addAll(stmContainer.statements)
                     } else {
-                        it.statements += createInstructionStatement => [
-                            instruction = createGoto => [
-                                gotos.put(it, loopPath.last)
-                            ]
+                        it.statements += createGoto => [
+                            gotos.put(it, loopPath.last)
                         ]
                     }   
                 } else {
                     if (loopPath.size > 1) {
                         val stmContainer = createConditional
-                        loopPath.head.transform(stmContainer as StatementSequence)
-                        it.elseStatements.addAll(stmContainer.statements)
+                        loopPath.head.transform(stmContainer as Scope)
+                        it.^else.statements.addAll(stmContainer.statements)
                     } else {
-                        it.elseStatements += createInstructionStatement => [
-                            instruction = createGoto => [
-                                gotos.put(it, loopPath.last)
-                            ]
+                        it.^else.statements += createGoto => [
+                            gotos.put(it, loopPath.last)
                         ]
                     }
                 }
             ]
             if (thenLoop) {
-                conditional.^else.target.transform(sSeq)
+                conditional.^else.target.transform(scope)
             } else {
-                conditional.then.target.transform(sSeq)
+                conditional.then.target.transform(scope)
             }
         } else {
-            val statement = createInstructionStatement
-            sSeq.statements.add(statement)
+            val statement = createConditional
+            scope.statements.add(statement)
             val joinVisted = join.isVisited
             if (join != null) {
-                join.transform(sSeq)
+                join.transform(scope)
             }
-            statement.instruction = createConditional => [
+            statement => [
                 it.expression = conditional.condition.copyExpression
-                conditional.then.target.transform(it as StatementSequence)
+                conditional.then.target.transform(it as Scope)
                 val stmContainer = createConditional
-                conditional.getElse.target.transform(stmContainer as StatementSequence)
-                it.elseStatements.addAll(stmContainer.statements)
+                conditional.getElse.target.transform(stmContainer as Scope)
+                it.^else.statements.addAll(stmContainer.statements)
             ]
             if (joinVisted) {
-                val c = (statement.instruction as de.cau.cs.kieler.scl.scl.Conditional)
-//                (c as StatementSequence).statements.remove((c as StatementSequence).statements.size -1)
-//                c.elseStatements.remove(c.elseStatements.size -1)
-                sSeq.statements += createInstructionStatement => [
-                    instruction = createGoto => [
-                        gotos.put(it, join)
-                    ]
+                val c = statement
+//                (c as Scope).statements.remove((c as Scope).statements.size -1)
+//                c.^else.statements.remove(c.^else.statements.size -1)
+                scope.statements += createGoto => [
+                    gotos.put(it, join)
                 ]
             }
         }
-        sSeq
+        scope
     }
 
     private def isVisited(Node n) {
@@ -372,12 +355,12 @@ class RestrictedSCG2SCL {
         visited.add(n)
     }
     
-    private def void createLabel(StatementSequence sSeq, Node node) {
-        val label = createEmptyStatement => [
-            label = "label"
+    private def void createLabel(Scope scope, Node node) {
+        val label = createLabel => [
+            name = "L"
         ]
         labels.put(node, label)
-        sSeq.statements.add(label)
+        scope.statements.add(label)
     }
     
     // Valued objects must be set according to the mapping!
