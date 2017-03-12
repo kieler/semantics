@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getFB <em>FB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getEB <em>EB</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentEvent()
@@ -104,31 +103,5 @@ public interface PresentEvent extends EObject
    * @generated
    */
   void setEB(String value);
-
-  /**
-   * Returns the value of the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tick</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' attribute.
-   * @see #setTick(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentEvent_Tick()
-   * @model
-   * @generated
-   */
-  String getTick();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' attribute.
-   * @see #getTick()
-   * @generated
-   */
-  void setTick(String value);
 
 } // PresentEvent

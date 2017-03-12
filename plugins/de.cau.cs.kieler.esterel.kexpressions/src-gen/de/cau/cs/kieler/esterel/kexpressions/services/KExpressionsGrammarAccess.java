@@ -135,8 +135,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Example: A and B, not C and 42 <= ?D
 		//AndExpression Expression:
-		//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
-		//	subExpressions+=CompareOperation)*
+		//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
 		@Override public ParserRule getRule() { return rule; }
 
 		//CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
@@ -712,23 +711,35 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.esterel.kexpressions.KExpressions.ValuedObjectReference");
-		private final Assignment cValuedObjectAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0.eContents().get(1);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Assignment cTickAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final Keyword cTickTickKeyword_1_0 = (Keyword)cTickAssignment_1.eContents().get(0);
 		
 		//// Example: A, varB
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject];
+		//	valuedObject=[ValuedObject] | tick?="tick";
 		@Override public ParserRule getRule() { return rule; }
 
+		//valuedObject=[ValuedObject] | tick?="tick"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
 		//valuedObject=[ValuedObject]
-		public Assignment getValuedObjectAssignment() { return cValuedObjectAssignment; }
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
 		//[ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0() { return cValuedObjectValuedObjectCrossReference_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
 		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+
+		//tick?="tick"
+		public Assignment getTickAssignment_1() { return cTickAssignment_1; }
+
+		//"tick"
+		public Keyword getTickTickKeyword_1_0() { return cTickTickKeyword_1_0; }
 	}
 
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
@@ -1928,8 +1939,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A and B, not C and 42 <= ?D
 	//AndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//	subExpressions+=CompareOperation)*
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
 	public AndExpressionElements getAndExpressionAccess() {
 		return pAndExpression;
 	}
@@ -2099,7 +2109,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] | tick?="tick";
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return pValuedObjectReference;
 	}
@@ -2436,8 +2446,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// (If you are looking for an example, the keffects grammar uses this rule for their emission
 	//// rule and to avoid grammar ambiguities.)  
 	//RestrictedAnnotation Annotation:
-	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-	//	| KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
+	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation | TagAnnotation
 	public AnnotationsGrammarAccess.RestrictedAnnotationElements getRestrictedAnnotationAccess() {
 		return gaAnnotations.getRestrictedAnnotationAccess();
 	}

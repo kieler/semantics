@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectReferenceImpl#isTick <em>Tick</em>}</li>
  * </ul>
  *
  * @generated
@@ -40,6 +41,25 @@ public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements 
      * @ordered
      */
     protected ValuedObject valuedObject;
+
+    /**
+     * The default value of the '{@link #isTick() <em>Tick</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isTick()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean TICK_EDEFAULT = false;
+    /**
+     * The cached value of the '{@link #isTick() <em>Tick</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isTick()
+     * @generated
+     * @ordered
+     */
+    protected boolean tick = TICK_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -103,12 +123,35 @@ public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isTick() {
+        return tick;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTick(boolean newTick) {
+        boolean oldTick = tick;
+        tick = newTick;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK, oldTick, tick));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK:
+                return isTick();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -123,6 +166,9 @@ public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements 
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK:
+                setTick((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -139,6 +185,9 @@ public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements 
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK:
+                setTick(TICK_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -153,8 +202,26 @@ public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements 
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 return valuedObject != null;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK:
+                return tick != TICK_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (tick: ");
+        result.append(tick);
+        result.append(')');
+        return result.toString();
     }
 
 } //ValuedObjectReferenceImpl

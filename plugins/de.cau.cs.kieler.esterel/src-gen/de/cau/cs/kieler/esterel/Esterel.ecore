@@ -203,17 +203,14 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Emit" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnEmit" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Reset" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
@@ -293,7 +290,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Repeat" eSuperTypes="#//StatementContainer #//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="positive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -356,7 +352,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sustain" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
@@ -395,7 +390,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImmediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DelayEvent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fB" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

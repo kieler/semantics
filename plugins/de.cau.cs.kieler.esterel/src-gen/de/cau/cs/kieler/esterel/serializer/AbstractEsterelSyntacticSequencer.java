@@ -98,6 +98,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) '('* (ambiguity) function=[Function|ID]
 	 *     (rule start) '('* (ambiguity) operator=PreOperator
 	 *     (rule start) '('* (ambiguity) operator=ValueTestOperator
+	 *     (rule start) '('* (ambiguity) tick?='tick'
 	 *     (rule start) '('* (ambiguity) value=BOOLEAN
 	 *     (rule start) '('* (ambiguity) value=ConstantAtom
 	 *     (rule start) '('* (ambiguity) valuedObject=[ValuedObject|ID]
@@ -108,6 +109,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValueTestOperator
+	 *     (rule start) (ambiguity) tick?='tick'
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=ConstantAtom
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
@@ -142,6 +144,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     (rule start) (ambiguity) '('* function=[Function|ID]
 	 *     (rule start) (ambiguity) '('* operator=PreOperator
 	 *     (rule start) (ambiguity) '('* operator=ValueTestOperator
+	 *     (rule start) (ambiguity) '('* tick?='tick'
 	 *     (rule start) (ambiguity) '('* value=BOOLEAN
 	 *     (rule start) (ambiguity) '('* value=ConstantAtom
 	 *     (rule start) (ambiguity) '('* valuedObject=[ValuedObject|ID]
@@ -173,9 +176,11 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     ';'?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'emit' 'tick' (ambiguity) (rule start)
 	 *     (rule start) 'halt' (ambiguity) (rule start)
 	 *     (rule start) 'nothing' (ambiguity) (rule start)
 	 *     (rule start) 'pause' (ambiguity) (rule start)
+	 *     (rule start) 'sustain' 'tick' (ambiguity) (rule start)
 	 *     body=AbortBody (ambiguity) (rule end)
 	 *     body=AwaitBody (ambiguity) (rule end)
 	 *     body=PresentBody 'end' (ambiguity) (rule end)
@@ -210,7 +215,6 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     statement=Statement ']' (ambiguity) (rule end)
 	 *     statement=Statement 'end' (ambiguity) (rule end)
 	 *     thenPart=ThenPart 'end' (ambiguity) (rule end)
-	 *     tick=Tick (ambiguity) (rule end)
 	 *     trap=[TrapDecl|ID] (ambiguity) (rule end)
 	 *     trapHandler+=TrapHandler 'end' (ambiguity) (rule end)
 	 *     varList+=[IVariable|ID] ')' '(' ')' (ambiguity) (rule end)
@@ -226,6 +230,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
+	 *     (rule start) (ambiguity) tick?='tick'
 	 *     (rule start) (ambiguity) valuedObject=[ISignal|ID]
 	 *     (rule start) (ambiguity) valuedObject=[TrapDecl|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}

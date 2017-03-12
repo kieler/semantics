@@ -194,7 +194,7 @@ public class EsterelFormatterOLD extends AbstractDeclarativeFormatter {
          // c.setIndentation(f.getDoWatchingEndAccess().getTimeoutKeyword_0(), f
          // .getDoWatchingEndAccess().getEndKeyword_2());
 //         // ==> Emit <==
-         c.setLinewrap().before(f.getEmitAccess().getEmitKeyword_0());
+         c.setLinewrap().before(f.getEmitAccess().getEmitKeyword_1());
 //         // ==> EveryDo <==
          c.setLinewrap().before(f.getEveryDoAccess().getEveryKeyword_0());
          // c.setIndentation(f.getEveryDoAccess().getDoKeyword_2(), f
@@ -251,7 +251,7 @@ public class EsterelFormatterOLD extends AbstractDeclarativeFormatter {
          c.setIndentation(f.getSuspendAccess().getSuspendKeyword_0(), f
          .getSuspendAccess().getWhenKeyword_2());
 //         // ==> Sustain <==
-         c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_0());
+         c.setLinewrap().before(f.getSustainAccess().getSustainKeyword_1());
 //         // ==> Trap <==
          c.setLinewrap().before(f.getTrapAccess().getTrapKeyword_0());
          c.setLinewrap().before(f.getTrapAccess().getInKeyword_2());

@@ -83,12 +83,14 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	 *     (rule start) '('* (ambiguity) code=HOSTCODE
 	 *     (rule start) '('* (ambiguity) operator=PreOperator
 	 *     (rule start) '('* (ambiguity) operator=ValueTestOperator
+	 *     (rule start) '('* (ambiguity) tick?='tick'
 	 *     (rule start) '('* (ambiguity) value=BOOLEAN
 	 *     (rule start) '('* (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) code=HOSTCODE
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=ValueTestOperator
+	 *     (rule start) (ambiguity) tick?='tick'
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
@@ -119,6 +121,7 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	 *     (rule start) (ambiguity) '('* code=HOSTCODE
 	 *     (rule start) (ambiguity) '('* operator=PreOperator
 	 *     (rule start) (ambiguity) '('* operator=ValueTestOperator
+	 *     (rule start) (ambiguity) '('* tick?='tick'
 	 *     (rule start) (ambiguity) '('* value=BOOLEAN
 	 *     (rule start) (ambiguity) '('* valuedObject=[ValuedObject|ID]
 	 *     (rule start) (ambiguity) '('+ operator=NotOperator

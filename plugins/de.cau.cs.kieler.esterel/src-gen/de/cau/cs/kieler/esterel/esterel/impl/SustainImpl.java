@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SustainImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -42,26 +41,6 @@ public class SustainImpl extends StatementImpl implements Sustain
    * @ordered
    */
   protected ISignal signal;
-
-  /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected static final String TICK_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected String tick = TICK_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -142,29 +121,6 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__TICK, oldTick, tick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getExpression()
   {
     return expression;
@@ -237,8 +193,6 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case EsterelPackage.SUSTAIN__TICK:
-        return getTick();
       case EsterelPackage.SUSTAIN__EXPRESSION:
         return getExpression();
     }
@@ -257,9 +211,6 @@ public class SustainImpl extends StatementImpl implements Sustain
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
         setSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.SUSTAIN__TICK:
-        setTick((String)newValue);
         return;
       case EsterelPackage.SUSTAIN__EXPRESSION:
         setExpression((Expression)newValue);
@@ -281,9 +232,6 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case EsterelPackage.SUSTAIN__TICK:
-        setTick(TICK_EDEFAULT);
-        return;
       case EsterelPackage.SUSTAIN__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -303,29 +251,10 @@ public class SustainImpl extends StatementImpl implements Sustain
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
         return signal != null;
-      case EsterelPackage.SUSTAIN__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
       case EsterelPackage.SUSTAIN__EXPRESSION:
         return expression != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
-    result.append(')');
-    return result.toString();
   }
 
 } //SustainImpl

@@ -261,19 +261,20 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 // !-(emit)2 -------------------------------------
 Emit:
-	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
+    {Emit}
+	"emit" ((signal=[kexpressions::ISignal|ID]) | "tick") ("("expr=Expression")")?;
 	// -!
 
 // --> SCEst only! unemit: Signal UnEmission <--
 // !-(unemit)2 -------------------------------------
 UnEmit:
-    "unemit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick);
+    "unemit" ((signal=[kexpressions::ISignal|ID]));
     // -!
 
 // --> SCEst only! reset: Signal value reset (absolute write) <--
 // !-(emit)2 -------------------------------------
 Reset:
-    "reset" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")");
+    "reset" ((signal=[kexpressions::ISignal|ID])) ("("expr=Expression")");
     // -!
 
 
@@ -353,7 +354,7 @@ PresentCase:
 	"case" event=PresentEvent ("do" statement=Statement)?;
 
 PresentEvent:
-	expression=SignalExpression | fB="[" expression=SignalExpression eB="]" | tick=Tick;
+	expression=SignalExpression | fB="[" expression=SignalExpression eB="]";
 	// -!
 
 // --> B.4.18 repeat: Iterate a Fixed Number of Times
@@ -419,7 +420,8 @@ WeakSuspend:
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 // !-(sustain) -------------------------------------
 Sustain:
-	"sustain" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expression=Expression ")")?;
+    {Sustain}
+	"sustain" ((signal=[kexpressions::ISignal|ID]) | "tick") ("(" expression=Expression ")")?;
 	// -!
 // --> B.4.23 trap: TrapDeclaration and Handling
 // !-(trap)-------------------------------------
@@ -507,7 +509,8 @@ SignalAtomicExpression returns kexpressions::Expression:
 ;
 
 SignalReferenceExpr returns kexpressions::ValuedObjectReference:
-	valuedObject=[kexpressions::ISignal|ID];
+    {kexpressions::ValuedObjectReference}
+	(valuedObject=[kexpressions::ISignal|ID] | tick?="tick");
 
 SignalPreExpr returns kexpressions::Expression:
 	{kexpressions::OperatorExpression} operator=PreOperator '(' subExpressions+=SignalReferenceExpr ')';
@@ -521,7 +524,7 @@ DelayExpr:
 	(expr=Expression event=DelayEvent) | event=DelayEvent | (isImmediate?="immediate" event=DelayEvent);
 
 DelayEvent:
-	tick=Tick | expr=SignalReferenceExpr | fB="[" expr=SignalExpression eB="]";
+	expr=SignalReferenceExpr | fB="[" expr=SignalExpression eB="]";
 
 	// --> Exec
 // -------------------------------------
@@ -539,8 +542,6 @@ ExecCase:
 	// ==============================================
 // === B.2 Namespaces and Predefined Objects  ===
 // ==============================================
-Tick:
-	"tick";
 
 terminal ESTEREL_SL_COMMENT:
 	'%' !('\n' |

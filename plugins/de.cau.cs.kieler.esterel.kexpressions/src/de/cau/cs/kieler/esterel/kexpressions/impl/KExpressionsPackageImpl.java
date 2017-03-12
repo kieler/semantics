@@ -297,7 +297,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         isInited = true;
 
         // Initialize simple dependencies
-        de.cau.cs.kieler.annotations.AnnotationsPackage.eINSTANCE.eClass();
+        AnnotationsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theKExpressionsPackage.createPackageContents();
@@ -492,6 +492,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     public EReference getValuedObjectReference_ValuedObject() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getValuedObjectReference_Tick() {
+        return (EAttribute)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -872,6 +881,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
+        createEAttribute(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__TICK);
 
         valueEClass = createEClass(VALUE);
 
@@ -954,7 +964,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        de.cau.cs.kieler.annotations.AnnotationsPackage theAnnotationsPackage = (de.cau.cs.kieler.annotations.AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(de.cau.cs.kieler.annotations.AnnotationsPackage.eNS_URI);
+        AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1008,7 +1018,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getVariable_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 0, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObjectReference_Tick(), ecorePackage.getEBoolean(), "tick", null, 0, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

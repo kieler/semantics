@@ -15,12 +15,13 @@ package de.cau.cs.kieler.scg.ssc.ssa
 import com.google.common.base.Function
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -62,9 +63,6 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
-import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.annotations.ReferenceAnnotation
 
 /**
  * The SSA transformation for SCGs
@@ -146,13 +144,16 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         scg.addConcurrentWritersToReaders
         
         // TODO: Comment!
-//        scg.removeAbsentReads  
+        scg.removeAbsentReads  
               
         // TODO: Comment!
         scg.removePhiWritesWithoutRead
         
         // TODO: Comment!
         scg.removeImplicitEvironmentAssignments
+        
+        // merge versions
+//        scg.mergeSSAVersions
         
         // ---------------
         // 3. Remove unused ssa versions
@@ -315,7 +316,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
     }
 
     def void addConcurrentWritersToReaders(SCGraph scg) {
-        for (node : scg.uses.values.filter[!isSSA]) {
+        for (node : scg.uses.values.filter[!isSSA].toSet) {
             for (declDepPair : node.incoming.filter(DataDependency).filter[concurrent].groupBy[(eContainer as Assignment).valuedObject.declaration].entrySet) {
                 if (!declDepPair.key.hasAnnotation("ignore")) {
                     val refs = node.eContents.filter(Expression).head.allReferences.filter[valuedObject.declaration == declDepPair.key].toList
@@ -398,43 +399,42 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
     }
     
     def Expression parEval(Expression e) {
-        // TODO
-        return e
+        if (e instanceof OperatorExpression) {
+            e.subExpressions.immutableCopy.forEach[it.replace(it.parEval)]
+            switch (e.operator) {
+                case BITWISE_AND: {
+                    if (e.subExpressions.filter(BoolValue).exists[!value]) {
+                        return createBoolValue(false)
+                    } else {
+                        e.subExpressions.removeIf[it instanceof BoolValue && (it as BoolValue).value]
+                        switch (e.subExpressions.size) {
+                            case 0: return createBoolValue(true)
+                            case 1: e.subExpressions.head
+                            default: return e
+                        }
+                    }
+                }
+                case BITWISE_OR: {
+                    e.subExpressions.removeIf[it instanceof BoolValue && !(it as BoolValue).value]
+                    switch (e.subExpressions.size) {
+                        case 0: return createBoolValue(false)
+                        case 1: e.subExpressions.head
+                        default: return e
+                    }
+                }
+                case NOT: {
+                    if (e.subExpressions.head instanceof BoolValue) {
+                        return (e.subExpressions.head as BoolValue) => [value = !value]
+                    } else {
+                        return e
+                    }
+                }
+                default: throw new UnsupportedOperationException("Cannot handle operator type: "+e.operator)
+            }
+        } else {
+            return e
+        }
     }
-    
-//                            var container = ref.eContainer
-//                            ref.remove
-//                            while (container != null) {
-//                                switch (container) {
-//                                    Conditional: {
-//                                        if (container.condition == null) {
-//                                            container.condition = createBoolValue(false)
-//                                        }
-//                                        container = null 
-//                                    }
-//                                    Assignment: {
-//                                        if (container.expression == null) {
-//                                            container.expression = createBoolValue(false)
-//                                        }
-//                                        container = null 
-//                                    }
-//                                    OperatorExpression: {
-//                                        val opex = container
-//                                        if (opex.subExpressions.empty) {
-//                                            val c = opex.eContainer
-//                                            container.remove
-//                                            container = c
-//                                        } else if (opex.subExpressions.size == 1) {
-//                                            val exp = opex.subExpressions.head
-//                                            opex.replace(exp)
-//                                            container = exp.eContainer
-//                                        } else {
-//                                            container = null
-//                                        }
-//                                    }
-//                                    default: container = null 
-//                                }
-//                            }
     
     private def void removePhiWritesWithoutRead(SCGraph scg) {
         var continue = true
@@ -605,19 +605,14 @@ static val ATTACH_ANNOTATION = "attach"
                     phiNodes.remove(n)
                 } else if (refDef.size == 1) {
                     n.expression = defs.get(ref.valuedObject).head.expression.copy
-//                    // TODO NOT SURE IF CORRECT!!!
-//                    if (defs.get(ref.valuedObject).head.hasAnnotation(implicit)) {
-//                        annotations += createStringAnnotation(implicit, implicit)
-//                    }
                     phiNodes.remove(n)
-                } else if (refDef.forall[it.expression instanceof BoolValue] && refDef.groupBy[(it.expression instanceof BooleanValue).booleanValue].size == 1) {
+                } else if (refDef.forall[it.expression instanceof BoolValue] && refDef.groupBy[(it.expression instanceof BoolValue).booleanValue].size == 1) {
                     n.expression = defs.get(ref.valuedObject).head.expression.copy
                     phiNodes.remove(n)
                 }
             }
             if (s == phiNodes.size) {
                 continue = false
-//                throw new IllegalStateException("Infinite Loop")
             }
         }
     }

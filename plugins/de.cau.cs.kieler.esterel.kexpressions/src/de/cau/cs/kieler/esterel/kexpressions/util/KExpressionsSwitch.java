@@ -650,7 +650,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseAnnotatable(de.cau.cs.kieler.annotations.Annotatable object) {
+    public T caseAnnotatable(Annotatable object) {
         return null;
     }
 

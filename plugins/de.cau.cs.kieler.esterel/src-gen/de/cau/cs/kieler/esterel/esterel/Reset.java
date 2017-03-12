@@ -15,7 +15,6 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Reset#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Reset#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Reset#getExpr <em>Expr</em>}</li>
  * </ul>
  *
@@ -50,32 +49,6 @@ public interface Reset extends Statement
    * @generated
    */
   void setSignal(ISignal value);
-
-  /**
-   * Returns the value of the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tick</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' attribute.
-   * @see #setTick(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getReset_Tick()
-   * @model
-   * @generated
-   */
-  String getTick();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Reset#getTick <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' attribute.
-   * @see #getTick()
-   * @generated
-   */
-  void setTick(String value);
 
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.

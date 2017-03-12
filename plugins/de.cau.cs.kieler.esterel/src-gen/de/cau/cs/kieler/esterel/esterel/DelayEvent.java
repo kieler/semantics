@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getFB <em>FB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getEB <em>EB</em>}</li>
@@ -27,32 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface DelayEvent extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Tick</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Tick</em>' attribute.
-   * @see #setTick(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayEvent_Tick()
-   * @model
-   * @generated
-   */
-  String getTick();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getTick <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Tick</em>' attribute.
-   * @see #getTick()
-   * @generated
-   */
-  void setTick(String value);
-
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->

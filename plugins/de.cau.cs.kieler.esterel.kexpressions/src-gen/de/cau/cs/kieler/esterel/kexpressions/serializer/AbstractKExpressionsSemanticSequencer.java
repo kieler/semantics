@@ -552,16 +552,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ValuedObjectReference returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     valuedObject=[ValuedObject|ID]
+	 *     (valuedObject=[ValuedObject|ID] | tick?='tick')
 	 */
 	protected void sequence_ValuedObjectReference(ISerializationContext context, ValuedObjectReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1(), semanticObject.getValuedObject());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

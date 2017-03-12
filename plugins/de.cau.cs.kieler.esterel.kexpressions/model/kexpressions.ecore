@@ -203,8 +203,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A ValuedObjectReference has a reference to a ValuedObject and is a ComplexExpression.&#xA;Therefore such reference may have subExpressions. Those can be used to &#xA;address a specific value. E.g. the ValuedObject could carry an array&#xA;value and a subExpression could be an IntValue that points to a special entry in &#xA;that array. &#xA;&lt;p>&#xA;The distinction between a Variable and a VariableReference is mainly due to containment&#xA;relations. A Variable is usually defined exactly once and therefore contained by some &#xA;scope element. A reference to that Variable may be required multiple times where&#xA;such reference need to be contained at the places where the reference is used.&#xA;Hence we need this distinction."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
-        eType="#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

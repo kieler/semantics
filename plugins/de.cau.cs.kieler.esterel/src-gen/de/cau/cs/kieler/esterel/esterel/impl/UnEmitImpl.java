@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl#getTick <em>Tick</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,26 +38,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * @ordered
    */
   protected ISignal signal;
-
-  /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected static final String TICK_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected String tick = TICK_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,29 +108,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.UN_EMIT__TICK, oldTick, tick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -160,8 +116,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
       case EsterelPackage.UN_EMIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case EsterelPackage.UN_EMIT__TICK:
-        return getTick();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -178,9 +132,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
     {
       case EsterelPackage.UN_EMIT__SIGNAL:
         setSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.UN_EMIT__TICK:
-        setTick((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -199,9 +150,6 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
       case EsterelPackage.UN_EMIT__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case EsterelPackage.UN_EMIT__TICK:
-        setTick(TICK_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -218,27 +166,8 @@ public class UnEmitImpl extends StatementImpl implements UnEmit
     {
       case EsterelPackage.UN_EMIT__SIGNAL:
         return signal != null;
-      case EsterelPackage.UN_EMIT__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
-    result.append(')');
-    return result.toString();
   }
 
 } //UnEmitImpl

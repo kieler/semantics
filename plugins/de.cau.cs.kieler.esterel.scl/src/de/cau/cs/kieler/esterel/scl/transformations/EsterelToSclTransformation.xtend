@@ -537,7 +537,6 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         val emit = EsterelFactory::eINSTANCE.createEmit => [
             signal = sustain.signal
             expr = sustain.expression
-            tick = sustain.tick
         ]
         transformStatement(emit, targetScope)
         targetScope.createSclPause

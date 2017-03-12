@@ -921,7 +921,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     DelayEvent returns DelayEvent
 	 *
 	 * Constraint:
-	 *     (tick=Tick | expr=SignalReferenceExpr | (fB='[' expr=SignalExpression eB=']'))
+	 *     (expr=SignalReferenceExpr | (fB='[' expr=SignalExpression eB=']'))
 	 */
 	protected void sequence_DelayEvent(ISerializationContext context, DelayEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1042,7 +1042,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     Emit returns Emit
 	 *
 	 * Constraint:
-	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression?)
+	 *     (signal=[ISignal|ID]? expr=Expression?)
 	 */
 	protected void sequence_Emit(ISerializationContext context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1559,7 +1559,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     PresentEvent returns PresentEvent
 	 *
 	 * Constraint:
-	 *     (expression=SignalExpression | (fB='[' expression=SignalExpression eB=']') | tick=Tick)
+	 *     (expression=SignalExpression | (fB='[' expression=SignalExpression eB=']'))
 	 */
 	protected void sequence_PresentEvent(ISerializationContext context, PresentEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1766,10 +1766,19 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     Reset returns Reset
 	 *
 	 * Constraint:
-	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression)
+	 *     (signal=[ISignal|ID] expr=Expression)
 	 */
 	protected void sequence_Reset(ISerializationContext context, Reset semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RESET__SIGNAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RESET__SIGNAL));
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.RESET__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.RESET__EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getResetAccess().getSignalISignalIDTerminalRuleCall_1_0_1(), semanticObject.getSignal());
+		feeder.accept(grammarAccess.getResetAccess().getExprExpressionParserRuleCall_2_1_0(), semanticObject.getExpr());
+		feeder.finish();
 	}
 	
 	
@@ -1893,16 +1902,10 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     SignalReferenceExpr returns ValuedObjectReference
 	 *
 	 * Constraint:
-	 *     valuedObject=[ISignal|ID]
+	 *     (valuedObject=[ISignal|ID] | tick?='tick')
 	 */
 	protected void sequence_SignalReferenceExpr(ISerializationContext context, ValuedObjectReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSignalReferenceExprAccess().getValuedObjectISignalIDTerminalRuleCall_0_1(), semanticObject.getValuedObject());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1985,7 +1988,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     Sustain returns Sustain
 	 *
 	 * Constraint:
-	 *     ((signal=[ISignal|ID] | tick=Tick) expression=Expression?)
+	 *     (signal=[ISignal|ID]? expression=Expression?)
 	 */
 	protected void sequence_Sustain(ISerializationContext context, Sustain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2270,10 +2273,16 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     UnEmit returns UnEmit
 	 *
 	 * Constraint:
-	 *     (signal=[ISignal|ID] | tick=Tick)
+	 *     signal=[ISignal|ID]
 	 */
 	protected void sequence_UnEmit(ISerializationContext context, UnEmit semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.UN_EMIT__SIGNAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.UN_EMIT__SIGNAL));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getUnEmitAccess().getSignalISignalIDTerminalRuleCall_1_0_1(), semanticObject.getSignal());
+		feeder.finish();
 	}
 	
 	

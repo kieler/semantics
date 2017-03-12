@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayEventImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayEventImpl#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayEventImpl#getFB <em>FB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DelayEventImpl#getEB <em>EB</em>}</li>
@@ -34,26 +33,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class DelayEventImpl extends MinimalEObjectImpl.Container implements DelayEvent
 {
-  /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected static final String TICK_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected String tick = TICK_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -123,29 +102,6 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.DELAY_EVENT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EVENT__TICK, oldTick, tick));
   }
 
   /**
@@ -268,8 +224,6 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EVENT__TICK:
-        return getTick();
       case EsterelPackage.DELAY_EVENT__EXPR:
         return getExpr();
       case EsterelPackage.DELAY_EVENT__FB:
@@ -290,9 +244,6 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EVENT__TICK:
-        setTick((String)newValue);
-        return;
       case EsterelPackage.DELAY_EVENT__EXPR:
         setExpr((Expression)newValue);
         return;
@@ -316,9 +267,6 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EVENT__TICK:
-        setTick(TICK_EDEFAULT);
-        return;
       case EsterelPackage.DELAY_EVENT__EXPR:
         setExpr((Expression)null);
         return;
@@ -342,8 +290,6 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
   {
     switch (featureID)
     {
-      case EsterelPackage.DELAY_EVENT__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
       case EsterelPackage.DELAY_EVENT__EXPR:
         return expr != null;
       case EsterelPackage.DELAY_EVENT__FB:
@@ -365,9 +311,7 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
-    result.append(", fB: ");
+    result.append(" (fB: ");
     result.append(fB);
     result.append(", eB: ");
     result.append(eB);

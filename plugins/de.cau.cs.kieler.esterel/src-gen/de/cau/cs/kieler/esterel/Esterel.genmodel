@@ -159,16 +159,13 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Emit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Emit/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/expr"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//UnEmit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//UnEmit/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//UnEmit/tick"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Reset">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Reset/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Reset/expr"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EveryDo">
@@ -228,7 +225,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentEvent/expression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/fB"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/eB"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/tick"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Repeat">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Repeat/positive"/>
@@ -284,7 +280,6 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Sustain">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Sustain/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/expression"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Trap">
@@ -314,7 +309,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DelayEvent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/tick"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayEvent/expr"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/fB"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/eB"/>

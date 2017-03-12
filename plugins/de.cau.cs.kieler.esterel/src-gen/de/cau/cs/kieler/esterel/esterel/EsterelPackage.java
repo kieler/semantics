@@ -1699,22 +1699,13 @@ public interface EsterelPackage extends EPackage
   int EMIT__SIGNAL = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EMIT__TICK = STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMIT__EXPR = STATEMENT_FEATURE_COUNT + 2;
+  int EMIT__EXPR = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Emit</em>' class.
@@ -1723,7 +1714,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
+  int EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.UnEmitImpl <em>Un Emit</em>}' class.
@@ -1745,22 +1736,13 @@ public interface EsterelPackage extends EPackage
   int UN_EMIT__SIGNAL = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int UN_EMIT__TICK = STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Un Emit</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UN_EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+  int UN_EMIT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ResetImpl <em>Reset</em>}' class.
@@ -1782,22 +1764,13 @@ public interface EsterelPackage extends EPackage
   int RESET__SIGNAL = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RESET__TICK = STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RESET__EXPR = STATEMENT_FEATURE_COUNT + 2;
+  int RESET__EXPR = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Reset</em>' class.
@@ -1806,7 +1779,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int RESET_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
+  int RESET_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.EveryDoImpl <em>Every Do</em>}' class.
@@ -2459,22 +2432,13 @@ public interface EsterelPackage extends EPackage
   int PRESENT_EVENT__EB = 2;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRESENT_EVENT__TICK = 3;
-
-  /**
    * The number of structural features of the '<em>Present Event</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT_EVENT_FEATURE_COUNT = 4;
+  int PRESENT_EVENT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl <em>Repeat</em>}' class.
@@ -3004,22 +2968,13 @@ public interface EsterelPackage extends EPackage
   int SUSTAIN__SIGNAL = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSTAIN__TICK = STATEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SUSTAIN__EXPRESSION = STATEMENT_FEATURE_COUNT + 2;
+  int SUSTAIN__EXPRESSION = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Sustain</em>' class.
@@ -3028,7 +2983,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUSTAIN_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
+  int SUSTAIN_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.TrapImpl <em>Trap</em>}' class.
@@ -3309,22 +3264,13 @@ public interface EsterelPackage extends EPackage
   int DELAY_EVENT = 90;
 
   /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DELAY_EVENT__TICK = 0;
-
-  /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY_EVENT__EXPR = 1;
+  int DELAY_EVENT__EXPR = 0;
 
   /**
    * The feature id for the '<em><b>FB</b></em>' attribute.
@@ -3333,7 +3279,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EVENT__FB = 2;
+  int DELAY_EVENT__FB = 1;
 
   /**
    * The feature id for the '<em><b>EB</b></em>' attribute.
@@ -3342,7 +3288,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EVENT__EB = 3;
+  int DELAY_EVENT__EB = 2;
 
   /**
    * The number of structural features of the '<em>Delay Event</em>' class.
@@ -3351,7 +3297,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EVENT_FEATURE_COUNT = 4;
+  int DELAY_EVENT_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ExecImpl <em>Exec</em>}' class.
@@ -4180,6 +4126,15 @@ public interface EsterelPackage extends EPackage
    * @ordered
    */
   int TRAP_REFERENCE_EXPR__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRAP_REFERENCE_EXPR__TICK = KExpressionsPackage.VALUED_OBJECT_REFERENCE__TICK;
 
   /**
    * The number of structural features of the '<em>Trap Reference Expr</em>' class.
@@ -5399,17 +5354,6 @@ public interface EsterelPackage extends EPackage
   EReference getEmit_Signal();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.Emit#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Emit#getTick()
-   * @see #getEmit()
-   * @generated
-   */
-  EAttribute getEmit_Tick();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Emit#getExpr <em>Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5442,17 +5386,6 @@ public interface EsterelPackage extends EPackage
   EReference getUnEmit_Signal();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.UnEmit#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.UnEmit#getTick()
-   * @see #getUnEmit()
-   * @generated
-   */
-  EAttribute getUnEmit_Tick();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Reset <em>Reset</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5472,17 +5405,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getReset_Signal();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.Reset#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Reset#getTick()
-   * @see #getReset()
-   * @generated
-   */
-  EAttribute getReset_Tick();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Reset#getExpr <em>Expr</em>}'.
@@ -5982,17 +5904,6 @@ public interface EsterelPackage extends EPackage
   EAttribute getPresentEvent_EB();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick()
-   * @see #getPresentEvent()
-   * @generated
-   */
-  EAttribute getPresentEvent_Tick();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Repeat <em>Repeat</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6430,17 +6341,6 @@ public interface EsterelPackage extends EPackage
   EReference getSustain_Signal();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Sustain#getTick()
-   * @see #getSustain()
-   * @generated
-   */
-  EAttribute getSustain_Tick();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6662,17 +6562,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EClass getDelayEvent();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getTick <em>Tick</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Tick</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.DelayEvent#getTick()
-   * @see #getDelayEvent()
-   * @generated
-   */
-  EAttribute getDelayEvent_Tick();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getExpr <em>Expr</em>}'.
@@ -8170,14 +8059,6 @@ public interface EsterelPackage extends EPackage
     EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EMIT__TICK = eINSTANCE.getEmit_Tick();
-
-    /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -8204,14 +8085,6 @@ public interface EsterelPackage extends EPackage
     EReference UN_EMIT__SIGNAL = eINSTANCE.getUnEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute UN_EMIT__TICK = eINSTANCE.getUnEmit_Tick();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ResetImpl <em>Reset</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -8228,14 +8101,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference RESET__SIGNAL = eINSTANCE.getReset_Signal();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute RESET__TICK = eINSTANCE.getReset_Tick();
 
     /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
@@ -8654,14 +8519,6 @@ public interface EsterelPackage extends EPackage
     EAttribute PRESENT_EVENT__EB = eINSTANCE.getPresentEvent_EB();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PRESENT_EVENT__TICK = eINSTANCE.getPresentEvent_Tick();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl <em>Repeat</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -9018,14 +8875,6 @@ public interface EsterelPackage extends EPackage
     EReference SUSTAIN__SIGNAL = eINSTANCE.getSustain_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SUSTAIN__TICK = eINSTANCE.getSustain_Tick();
-
-    /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -9208,14 +9057,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EClass DELAY_EVENT = eINSTANCE.getDelayEvent();
-
-    /**
-     * The meta object literal for the '<em><b>Tick</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute DELAY_EVENT__TICK = eINSTANCE.getDelayEvent_Tick();
 
     /**
      * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.

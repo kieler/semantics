@@ -142,7 +142,7 @@ ValuedObjectTestExpression returns Expression:
 
 // Example: A, varB
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID];
+	(valuedObject=[ValuedObject|ID]|tick?="tick");
 
 
 // Example: 'printf(...)'(C)

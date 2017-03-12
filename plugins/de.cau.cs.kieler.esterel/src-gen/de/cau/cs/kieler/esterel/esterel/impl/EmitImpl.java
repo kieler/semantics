@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.EmitImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  *
@@ -42,26 +41,6 @@ public class EmitImpl extends StatementImpl implements Emit
    * @ordered
    */
   protected ISignal signal;
-
-  /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected static final String TICK_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected String tick = TICK_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
@@ -142,29 +121,6 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__TICK, oldTick, tick));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Expression getExpr()
   {
     return expr;
@@ -237,8 +193,6 @@ public class EmitImpl extends StatementImpl implements Emit
       case EsterelPackage.EMIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
-      case EsterelPackage.EMIT__TICK:
-        return getTick();
       case EsterelPackage.EMIT__EXPR:
         return getExpr();
     }
@@ -257,9 +211,6 @@ public class EmitImpl extends StatementImpl implements Emit
     {
       case EsterelPackage.EMIT__SIGNAL:
         setSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.EMIT__TICK:
-        setTick((String)newValue);
         return;
       case EsterelPackage.EMIT__EXPR:
         setExpr((Expression)newValue);
@@ -281,9 +232,6 @@ public class EmitImpl extends StatementImpl implements Emit
       case EsterelPackage.EMIT__SIGNAL:
         setSignal((ISignal)null);
         return;
-      case EsterelPackage.EMIT__TICK:
-        setTick(TICK_EDEFAULT);
-        return;
       case EsterelPackage.EMIT__EXPR:
         setExpr((Expression)null);
         return;
@@ -303,29 +251,10 @@ public class EmitImpl extends StatementImpl implements Emit
     {
       case EsterelPackage.EMIT__SIGNAL:
         return signal != null;
-      case EsterelPackage.EMIT__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
       case EsterelPackage.EMIT__EXPR:
         return expr != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
-    result.append(')');
-    return result.toString();
   }
 
 } //EmitImpl

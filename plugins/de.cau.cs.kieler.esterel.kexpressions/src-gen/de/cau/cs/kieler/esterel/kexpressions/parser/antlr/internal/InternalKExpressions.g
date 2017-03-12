@@ -1251,7 +1251,7 @@ ruleValuedObjectReference returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+((
 (
 		{
 			if ($current==null) {
@@ -1260,11 +1260,27 @@ ruleValuedObjectReference returns [EObject current=null]
         }
 	otherlv_0=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0()); 
+		newLeafNode(otherlv_0, grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
 	}
 
 )
 )
+    |(
+(
+		lv_tick_1_0=	'tick' 
+    {
+        newLeafNode(lv_tick_1_0, grammarAccess.getValuedObjectReferenceAccess().getTickTickKeyword_1_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getValuedObjectReferenceRule());
+	        }
+       		setWithLastConsumed($current, "tick", true, "tick");
+	    }
+
+)
+))
 ;
 
 

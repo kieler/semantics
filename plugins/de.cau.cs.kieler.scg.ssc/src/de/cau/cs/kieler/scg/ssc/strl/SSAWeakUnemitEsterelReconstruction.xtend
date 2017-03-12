@@ -453,8 +453,14 @@ class SSAWeakUnemitEsterelReconstruction extends AbstractProductionTransformatio
     }
     
     private def dispatch Expression translateExpr(BoolValue b) {
-        // TODO tick
-        throw new UnsupportedOperationException("Unsupported expression: " + b)
+        if (b.value) {
+            return createValuedObjectReference => [tick=true]
+        } else {
+            return createOperatorExpression => [
+                operator = OperatorType.NOT
+                subExpressions += createValuedObjectReference => [tick=true]
+            ]
+        }
     }
     
     private def dispatch Expression translateExpr(Expression expression) {
