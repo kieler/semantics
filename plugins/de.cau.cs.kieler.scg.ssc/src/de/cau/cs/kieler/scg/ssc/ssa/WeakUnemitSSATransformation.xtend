@@ -63,6 +63,7 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import java.util.BitSet
 
 /**
  * The SSA transformation for SCGs
@@ -104,12 +105,13 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
     @Inject extension AnnotationsExtensions
     @Inject extension SSACoreExtensions
     
-    val implicit = "scg.ssa.implicit"
-    val bla = <Parameter, BasicBlock>newHashMap
+    static val IMPLICIT_ANNOTAION = "scg.ssa.implicit"
+    static val ATTACH_ANNOTATION = "attach"
+    val bbVersion = <Parameter, BasicBlock>newHashMap
 
     // -------------------------------------------------------------------------
     def SCGraph transform(SCGraph scg, KielerCompilerContext context) {
-        bla.clear
+        bbVersion.clear
         // It is expected that this node is an entry node.
         val entryNode = scg.nodes.head
         if (!(entryNode instanceof Entry) || scg.basicBlocks.head.schedulingBlocks.head.nodes.head != entryNode) {
@@ -118,7 +120,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         }
         val entryBB = scg.basicBlocks.head
         
-        // TODO: Comment!
+        // Add implicit assignments at the entry and after each pause 
         scg.addImplicitEvironmentAssignments(entryBB)
         
         // Create new declarations for SSA versions
@@ -136,29 +138,32 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         scg.rename(dt, entryBB, ssaDecl)
         scg.createStringAnnotation(SSAFeature.ID, SSAFeature.ID)
         
-        // TODO: Comment!
-        // transform phi
+        // Transform phi node into assignments in each branch
         scg.transformPhi(dt)
+        // Reduce introduced assignments using constant propagation
         scg.propagatePhiAsm
-        // TODO: Comment!
+        
+        // Adds reads to concurrent writers
         scg.addConcurrentWritersToReaders
         
-        // TODO: Comment!
+        // Removes all references to signals that are never emitted
         scg.removeAbsentReads  
               
-        // TODO: Comment!
+        // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
         
-        // TODO: Comment!
+        // Removes the introduced implicit writers
         scg.removeImplicitEvironmentAssignments
-        
-        // merge versions
-//        scg.mergeSSAVersions
-        
+                
         // ---------------
         // 3. Remove unused ssa versions
         // ---------------
+        
+        // Removes all ssa versions which are not read
         scg.removeUnusedSSAVersions
+        // Merges ssa version which are always used together (in OR expressions)
+        scg.mergeIneffectiveSSAVersions
+        // Removes version index is only one version exits
         scg.removeSingleSSAVersions
 
         // ---------------
@@ -267,7 +272,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
                     }
                     (asm.expression as FunctionCall).parameters += createParameter => [
                         expression = ssaDecl.get(vo).valuedObjects.get(stack.get(vo).peek).reference
-                        bla.put(it, block)
+                        bbVersion.put(it, block)
                     ]
                 }
             }
@@ -340,7 +345,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
             for (d: scg.declarations.filter[type == ValueType.PURE && !input && !hasAnnotation("ignore")]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
                     scg.nodes += createAssignment => [
-                        annotations += createStringAnnotation(implicit, implicit)
+                        annotations += createStringAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
                         next = createControlFlow => [
@@ -355,7 +360,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
     }
     
     private def void removeImplicitEvironmentAssignments(SCGraph scg) {
-        for (n : scg.nodes.filter(Assignment).filter[hasAnnotation(implicit)].toList) {
+        for (n : scg.nodes.filter(Assignment).filter[hasAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)].toList) {
             scg.schedulingBlocks.findFirst[nodes.contains(n)].nodes.remove(n)
             val incoming = n.incoming.immutableCopy
             for (in : incoming) {
@@ -436,6 +441,38 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         }
     }
     
+    private def mergeIneffectiveSSAVersions(SCGraph scg) {
+        val uses = scg.uses
+        val defs = scg.allDefs
+        for (decl : scg.declarations.filter[isSSA].filter[valuedObjects.size > 1]) {
+            val reads = newArrayList(decl.valuedObjects.map[uses.get(it)].fold(newHashSet)[set, e |
+                set.addAll(e)
+                set
+            ])
+            for (versions : decl.valuedObjects.groupBy[
+                val use = uses.get(it)
+                val id = new BitSet
+                for (r : reads.indexed) {
+                    if (use.contains(r.value)) {
+                        id.set(r.key)
+                    }
+                }
+                return id
+            ].values.filter[size > 1].toList) {
+                val effective = versions.head
+                for (v : versions.drop(1)) {
+                    defs.get(v).forEach[valuedObject = effective]
+                    for (u : uses.get(v)) {
+                        val expr = u.eContents.filter(Expression).head
+                        expr.allReferences.filter[valuedObject == v].toList.forEach[it.replace(createBoolValue(false))]
+                        expr.replace(expr.parEval)
+                    }
+                    v.remove
+                }
+            }
+        }
+    }
+    
     private def void removePhiWritesWithoutRead(SCGraph scg) {
         var continue = true
         while (continue) {
@@ -455,7 +492,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
             }
         }
     }
-static val ATTACH_ANNOTATION = "attach"
+    
     private def void transformPhi(SCGraph scg, DominatorTree dt) {
         val phiNodes = scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList
         // Find exit join phis
@@ -499,14 +536,14 @@ static val ATTACH_ANNOTATION = "attach"
         while (phiNode != null) {
             val node = phiNode
             val versions = (phiNode.expression as FunctionCall).parameters.toMap[
-                bla.get(it)
+                bbVersion.get(it)
             ]
             for (in : node.incoming.immutableCopy) {
                 scg.nodes += createAssignment => [
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
                     var cf = in
-                    while (attachPoint != null && (attachPoint.isSSA || attachPoint.hasAnnotation(implicit))) {
+                    while (attachPoint != null && (attachPoint.isSSA || attachPoint.hasAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
                         cf = attachPoint.incoming.filter(ControlFlow).head
                         attachPoint = cf.eContainer as Node
                     }
@@ -546,7 +583,7 @@ static val ATTACH_ANNOTATION = "attach"
                             node.basicBlock.predecessors.removeIf[basicBlock == bb]
                             b.createPredecessor(node.basicBlock)
                             bb.createPredecessor(b)
-                            bla.entrySet.filter[value == bb].forEach[value = b]
+                            bbVersion.entrySet.filter[value == bb].forEach[value = b]
                         ]
                     } else {
                         newBBs.get(bb).schedulingBlocks.head.nodes += it
