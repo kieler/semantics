@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.Emit
 import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.LocalSignal
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.Nothing
@@ -42,24 +43,23 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scl.features.SCLFeatures
 import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Label
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Scope
+import de.cau.cs.kieler.scl.scl.Thread
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.esterel.esterel.LocalSignal
 
 /**
  * This class contains methods to transform an Esterel program to SCL using signal notation.
@@ -99,21 +99,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
 
     @Inject
     extension KExpressionsCreateExtensions
-
-    @Inject
-    extension KExpressionsComplexCreateExtensions
-
-//    @Inject
-//    extension EsterelToSclExtensions
-//
-//    @Inject
-//    extension EsterelDeclarationsTransformation
-//
-//    @Inject
-//    extension TransformExpression
-    @Inject
-    extension SCLExtensions
-
+    
     extension SclFactory = SclFactory.eINSTANCE
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
@@ -206,11 +192,11 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
             val threadHierarchy = newLinkedList()
             var parent = exit.key.eContainer
             while (parent != null) {
-                if (parent instanceof de.cau.cs.kieler.scl.scl.Thread) {
+                if (parent instanceof Thread) {
                     if (parent.eAllContents.exists[it == endTrap]) {
                         parent = null
                     } else {
-                        threadHierarchy.add(parent as de.cau.cs.kieler.scl.scl.Thread)
+                        threadHierarchy.add(parent as Thread)
                         parent = parent.eContainer
                     }
                 } else {
@@ -244,7 +230,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                             statements += createGoto => [
                                 target = join_label
                                 annotations += createStringAnnotation => [
-                                    name = "ignore"
+                                    name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                                 ]
                             ]
                         ])
@@ -254,7 +240,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                         statements += createGoto => [
                             target = join_label
                             annotations += createStringAnnotation => [
-                                name = "ignore"
+                                name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
                             ]
                         ]
                     ])
@@ -438,7 +424,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
         val goto = createGoto.trace(exit) => [
             target = trapLabel.get(exit.trap)
             annotations += createStringAnnotation => [
-                name = "ignore"
+                name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
             ]
         ]
         exits.put(goto, exitAsm)

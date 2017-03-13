@@ -52,6 +52,7 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.features.SCGFeatures
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.ssa.domtree.DominatorTree
+import java.util.BitSet
 import java.util.Collection
 import java.util.Deque
 import java.util.LinkedList
@@ -63,7 +64,6 @@ import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
-import java.util.BitSet
 
 /**
  * The SSA transformation for SCGs
@@ -345,7 +345,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
             for (d: scg.declarations.filter[type == ValueType.PURE && !input && !hasAnnotation("ignore")]) {//FIXME ignored input
                 for (vo : d.valuedObjects) {
                     scg.nodes += createAssignment => [
-                        annotations += createStringAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
+                        annotations += createStringAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION, WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)
                         valuedObject = vo
                         expression = if (d.input) {vo.reference} else {createBoolValue(false)}
                         next = createControlFlow => [
@@ -360,7 +360,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
     }
     
     private def void removeImplicitEvironmentAssignments(SCGraph scg) {
-        for (n : scg.nodes.filter(Assignment).filter[hasAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)].toList) {
+        for (n : scg.nodes.filter(Assignment).filter[hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)].toList) {
             scg.schedulingBlocks.findFirst[nodes.contains(n)].nodes.remove(n)
             val incoming = n.incoming.immutableCopy
             for (in : incoming) {
@@ -543,7 +543,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
                     val prev = (in.eContainer as Node)
                     var attachPoint = prev
                     var cf = in
-                    while (attachPoint != null && (attachPoint.isSSA || attachPoint.hasAnnotation(de.cau.cs.kieler.scg.ssc.ssa.WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
+                    while (attachPoint != null && (attachPoint.isSSA || attachPoint.hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION))) {
                         cf = attachPoint.incoming.filter(ControlFlow).head
                         attachPoint = cf.eContainer as Node
                     }

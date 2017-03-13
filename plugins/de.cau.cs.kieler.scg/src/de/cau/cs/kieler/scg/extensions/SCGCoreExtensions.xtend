@@ -100,6 +100,7 @@ class SCGCoreExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
+        if (scg == null) return null
         var SchedulingBlock myBlock = null
         for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }

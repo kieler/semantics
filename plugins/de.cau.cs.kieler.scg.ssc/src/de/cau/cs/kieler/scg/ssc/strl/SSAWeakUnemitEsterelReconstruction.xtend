@@ -13,15 +13,20 @@
 package de.cau.cs.kieler.scg.ssc.strl
 
 import com.google.common.collect.HashBiMap
+import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.ReferenceAnnotation
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.esterel.esterel.Block
 import de.cau.cs.kieler.esterel.esterel.Emit
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.LocalSignal
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.ModuleBody
 import de.cau.cs.kieler.esterel.esterel.Nothing
 import de.cau.cs.kieler.esterel.esterel.Parallel
 import de.cau.cs.kieler.esterel.esterel.Pause
@@ -30,6 +35,7 @@ import de.cau.cs.kieler.esterel.esterel.PresentEventBody
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.Statement
+import de.cau.cs.kieler.esterel.esterel.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.UnEmit
@@ -37,6 +43,7 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -49,28 +56,19 @@ import de.cau.cs.kieler.kitt.tracing.Traceable
 import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ssc.features.SSAEstFeature
 import de.cau.cs.kieler.scg.ssc.features.SSAFeature
 import de.cau.cs.kieler.scg.ssc.ssa.SSACoreExtensions
 import java.util.HashSet
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.collect.Lists.*
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static de.cau.cs.kieler.scg.ssc.ssa.SSAFunction.*
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.annotations.ReferenceAnnotation
-import de.cau.cs.kieler.annotations.StringAnnotation
-import com.google.common.collect.HashMultimap
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.esterel.esterel.StatementContainer
-import de.cau.cs.kieler.esterel.esterel.ModuleBody
-import de.cau.cs.kieler.esterel.esterel.LocalSignal
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * @author als
@@ -103,8 +101,6 @@ class SSAWeakUnemitEsterelReconstruction extends AbstractProductionTransformatio
     // -------------------------------------------------------------------------
     @Inject
     extension SSACoreExtensions
-    @Inject
-    extension KExpressionsSerializeHRExtensions
     @Inject
     extension KExpressionsValuedObjectExtensions
     @Inject

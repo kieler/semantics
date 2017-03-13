@@ -25,6 +25,7 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -55,6 +56,11 @@ class SCGThreadExtensions {
     @Inject
     extension SCGControlFlowExtensions
     
+    @Inject
+    extension AnnotationsExtensions
+    
+    public static val IGNORE_INTER_THREAD_CF_ANNOTATION = "ignore_interthread_cf"
+        
     // -------------------------------------------------------------------------
     // -- Thread management
     // -------------------------------------------------------------------------
@@ -120,7 +126,8 @@ class SCGThreadExtensions {
             nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
-                (!it.target.equals(exit)) ] 
+                (!it.target.equals(exit)) &&
+                (!it.hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ]
                 	=> [ controlFlows.addAll(it) ]
         }
         
@@ -138,7 +145,8 @@ class SCGThreadExtensions {
                 if (nextNode != null)
                 nextNode.allPrevious.filter[ 
                     (!returnList.contains(it.eContainer)) && 
-                    (!controlFlows.contains(it)) ] 
+                    (!controlFlows.contains(it)) &&
+                    (!it.hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ] 
                         => [ controlFlows.addAll(it) ]
             }
             // Add the exit node.
@@ -248,12 +256,13 @@ class SCGThreadExtensions {
             nextNode.allNext.filter[ 
             	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
-                (!it.target.equals(exit)) ] 
+                (!it.target.equals(exit)) &&
+                (!it.hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ]
                 	=> [ controlFlows.addAll(it) ]
         }
         
         // Reverse search outgoing from the exit node
-        controlFlows.addAll(exit.allPrevious)
+        controlFlows.addAll(exit.allPrevious.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)])
         while(!controlFlows.empty) {
             var nextNode = controlFlows.head.eContainer as Node
             controlFlows.remove(0)
@@ -277,7 +286,8 @@ class SCGThreadExtensions {
        	    if (nextNode != null && nextNode != exit.entry) {
 	            nextNode.allPrevious.filter[ 
 	                (!nodeSet.contains(it.eContainer)) && 
-	                (!controlFlows.contains(it)) ] 
+	                (!controlFlows.contains(it)) &&
+	                (!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ] 
 	                    => [ controlFlows.addAll(it) ]
             }
         }
@@ -344,7 +354,8 @@ class SCGThreadExtensions {
             nextNode.allNext.filter[ 
             	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
-                (!it.target.equals(exit)) ] 
+                (!it.target.equals(exit)) &&
+                (!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ] 
                 	=> [ controlFlows.addAll(it) ]
         }
         
@@ -368,7 +379,8 @@ class SCGThreadExtensions {
             if (nextNode != null && nextNode != exit.entry)
             nextNode.allPrevious.filter[ 
                 (!nodeSet.contains(it.eContainer)) && 
-                (!controlFlows.contains(it)) ] 
+                (!controlFlows.contains(it)) &&
+                (!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)) ] 
                     => [ controlFlows.addAll(it) ]
         }
         
@@ -540,7 +552,7 @@ class SCGThreadExtensions {
         
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
-        val nextFlows = next.target.allNext
+        val nextFlows = next.target.allNext.filter[!hasAnnotation(de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION)]
         if (next.target instanceof Fork) {
        		val fork = next.target as Fork
         	var newType = type
