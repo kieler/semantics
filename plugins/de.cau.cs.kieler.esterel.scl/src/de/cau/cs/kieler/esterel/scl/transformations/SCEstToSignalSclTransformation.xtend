@@ -60,6 +60,9 @@ import de.cau.cs.kieler.scl.scl.Thread
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import com.google.common.collect.HashBiMap
+import com.google.common.collect.HashMultimap
+import java.util.List
 
 /**
  * This class contains methods to transform an Esterel program to SCL using signal notation.
@@ -105,9 +108,12 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
 
     val signalVOMapping = <ISignal, ValuedObject>newHashMap()
     val trapLabel = <ISignal, Label>newHashMap()
+    val exits = HashBiMap.<Goto, Assignment>create
+    val trapHirarchy = <Label>newLinkedList
+    val outerTraps = <Goto, List<Label>>newHashMap()
+    val parallelExits = HashMultimap.<Assignment, Pair<Label, Assignment>>create
     var Declaration suspendDecl = null
     var Declaration exitDecl = null
-    val exits = <Goto, Assignment>newHashMap
 
     /**
      * Generic transformation method for KiCo.
@@ -126,6 +132,9 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
         signalVOMapping.clear
         trapLabel.clear
         exits.clear
+        trapHirarchy.clear
+        outerTraps.clear
+        parallelExits.clear
 
         // Check if naming conventions are satisfied
 //        sourceEsterelProgram.validateNames
@@ -235,6 +244,9 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                             ]
                         ])
                     }
+                    for (pexit : t.eAllContents.filter(Goto).filter[target != exit.key.target && exits.containsKey(it) && !outerTraps.get(exit.key).contains(it.target)].toList) {
+                        parallelExits.put(exits.get(pexit), new Pair(join_label, join_asm))
+                    }
                     t.statements.add(createConditional => [
                         expression = join_asm.valuedObject.reference
                         statements += createGoto => [
@@ -246,6 +258,19 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                     ])
                 }
             }
+        }
+        // Apply trap hierarchy to exits
+        for (exit : parallelExits.entries) {
+            val scope = exit.key.eContainer as Scope
+            scope.statements.add(scope.statements.indexOf(exit.key)+1, createConditional => [
+                expression = exit.value.value.valuedObject.reference
+                statements += createGoto => [
+                    target = exit.value.key
+                    annotations += createStringAnnotation => [
+                        name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+                    ]
+                ]
+            ])
         }
 
         // Make unique labels
@@ -407,7 +432,9 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
         trap.trapDeclList.trapDecls.forEach [
             trapLabel.put(it, label)
         ]
+        trapHirarchy.push(label)
         trap.statement.translate(scope)
+        trapHirarchy.pop
         scope.statements += label
 
         return scope
@@ -428,6 +455,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
             ]
         ]
         exits.put(goto, exitAsm)
+        outerTraps.put(goto, newArrayList(trapHirarchy.drop(1)))
         scope.statements += exitAsm
         scope.statements += goto
         return scope
