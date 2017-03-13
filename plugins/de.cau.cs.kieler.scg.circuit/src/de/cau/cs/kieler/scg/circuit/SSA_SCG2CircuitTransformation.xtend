@@ -87,8 +87,10 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
     val LinkedList<Actor> createdActors = new LinkedList<Actor>
 
     val voExpressions = new HashMap<String, ValuedObject>
-    
-    protected static boolean SINGLE_FIGURE_REGIONS = true
+
+////////////------------------- option for synthesis --------------------////////////////
+
+    protected static boolean USE_GUARD_REGIONS = true
 
     // -------------------------------------------------------------------------
     // --                          Transformation Start                       --
@@ -145,9 +147,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         // create actors of the circuit. chose entry node of SCG as starting point.
         val entry = scg.eAllContents.filter(Entry).head
         transformNodesToActors(entry.next.target, logicRegion)
-        
-//        deleteSingeFigureRegions(logicRegion)
 
+//        deleteSingeFigureRegions(logicRegion)
         // -------------------------------------------------------
         // --              Create Links                         --
         // -------------------------------------------------------
@@ -158,22 +159,23 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         linkCreator.initRegion(initializationRegian)
 
         deleteUnusedGates(logicRegion, notGates)
+        println(logicRegion.innerActors)
         // return the circuit
         newCircuit
 
     }
-    
-    def deleteSingeFigureRegions(Actor logic) {
+
+    def deleteSingleFigureRegions(Actor logic) {
         val regions = logic.innerActors.filter[innerActors.length > 0]
         var removeRegions = new LinkedList<Actor>
-        for(region : regions){
+        for (region : regions) {
             println(region)
-            if(region.innerActors.length < 2){
+            if (region.innerActors.length < 2) {
                 removeRegions.add(region)
-                
+
             }
         }
-        for(region : removeRegions){
+        for (region : removeRegions) {
             println("remove " + region.name)
             logic.innerActors.remove(region)
             logic.innerActors += region.innerActors.head
@@ -215,6 +217,7 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 
         return notActorList
     }
+
     /**
      * Follow the control flow of the SSA SCG and check the type of the nodes.
      * 
@@ -253,8 +256,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
             } else if (thenNode instanceof Assignment) {
 
                 // --           Create new MUX           --
-                val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source, thenNode,elseNode, thenNode.valuedObject,
-                    thenNode.assignment)
+                val newMUX = CircuitFactory::eINSTANCE.createActor.trace(source, thenNode, elseNode,
+                    thenNode.valuedObject, thenNode.assignment)
                 newMUX.type = "MUX"
                 newMUX.name = thenNode.valuedObject.name
 
@@ -332,11 +335,12 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
      * 
      */
     def transformAssignment(Assignment assignment, Actor logic) {
-        
 
         // Get the right side of assignment. 
         val expr = assignment.assignment
-
+        
+        println("create Actor for Guard: " + expr.serialize.toString)
+        
         // specify which type of logical gate the actor should be
         if (expr instanceof OperatorExpression) {
 
@@ -366,54 +370,76 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                     System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
                 }
             }
-            
 
-            // create regions for guards
-            val actorRegion = CircuitFactory::eINSTANCE.createActor.trace(assignment)
-            actorRegion.innerActors += actor
-            actorRegion.name = guardname
-            logic.innerActors += actorRegion
+            if (USE_GUARD_REGIONS) {
 
-            // collect all ports which shall be assigned to the red regions
-            val Set<String> redRegionPorts = new HashSet<String>
-            val regionPort = CircuitFactory::eINSTANCE.createPort
-            regionPort.name = guardname
-            regionPort.type = "redOut"
-            actorRegion.ports.add(regionPort)
+                // create regions for guards
+                val actorRegion = CircuitFactory::eINSTANCE.createActor.trace(assignment)
+                actorRegion.innerActors += actor
+                actorRegion.name = guardname
+                logic.innerActors += actorRegion
 
-            // if a register is in the region, the regions needs additional tick and reset inputs
-            if (actor.type == "REG") {
+                // collect all ports which shall be assigned to the red regions
+                val Set<String> redRegionPorts = new HashSet<String>
+                val regionPort = CircuitFactory::eINSTANCE.createPort
+                regionPort.name = guardname
+                regionPort.type = "redOut"
+                actorRegion.ports.add(regionPort)
 
-                // add Both inputPorts to regionPortList
-                redRegionPorts.add("Tick")
-                redRegionPorts.add("Reset_pre")
+                // if a register is in the region, the regions needs additional tick and reset inputs
+                if (actor.type == "REG") {
 
-            }
-            // the created actor gate gX gets an input port for each subExpression
-            // and each subExpression is transformed into gates with method transformExpressions
-            for (Expression subexpr : expr.subExpressions) {
-                val inputPort = CircuitFactory::eINSTANCE.createPort.trace(subexpr)
-                actor.ports += inputPort
-                inputPort.type = "In"
+                    // add Both inputPorts to regionPortList
+                    redRegionPorts.add("Tick")
+                    redRegionPorts.add("Reset_pre")
+
+                }
+                // the created actor gate gX gets an input port for each subExpression
+                // and each subExpression is transformed into gates with method transformExpressions
+                for (Expression subexpr : expr.subExpressions) {
+                    val inputPort = CircuitFactory::eINSTANCE.createPort.trace(subexpr)
+                    actor.ports += inputPort
+                    inputPort.type = "In"
                     checkForVOassignments(subexpr) // this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
-                redRegionPorts.add(subexpr.serialize.toString)
+                    redRegionPorts.add(subexpr.serialize.toString)
 
-                if (!(expr.operator.getName == "PRE")) {
-                    
-                    transformExpressions(subexpr, actorRegion, redRegionPorts, assignment)
+                    if (!(expr.operator.getName == "PRE")) {
+
+                        transformExpressions(subexpr, actorRegion, redRegionPorts, assignment)
+                    }
+
+                    inputPort.name = subexpr.serialize.toString
+
                 }
 
+                for (portName : redRegionPorts) {
+                    val redInputPort = CircuitFactory::eINSTANCE.createPort
+                    actorRegion.ports += redInputPort
+                    redInputPort.type = "redIn"
+                    redInputPort.name = portName
+
+                }
+
+            } else {//In case you don't want gates to be grouped 
+                for (Expression subexpr : expr.subExpressions) {
+                val inputPort = CircuitFactory::eINSTANCE.createPort
+                actor.ports += inputPort
+                inputPort.type = "In"
+
+                if (!(expr.operator.getName == "PRE")) {
+                    checkForVOassignments(subexpr) //this replaces all variables with different names but same meanings (e.g. g0 and _GO) by the same variable
+                    transformExpressionsSimple(subexpr, logic, assignment) 
+                } 
+                else { 
+                                  logic.innerActors += actor
+                              }
                 inputPort.name = subexpr.serialize.toString
-
+                println("created port: " + inputPort.name)
+                logic.innerActors += actor
             }
-
-            for (portName : redRegionPorts) {
-                val redInputPort = CircuitFactory::eINSTANCE.createPort
-                actorRegion.ports += redInputPort
-                redInputPort.type = "redIn"
-                redInputPort.name = portName
-
+                
             }
+            println("NEW Actor: " + actor.type +" with ports " + actor.ports.toString)
         }
 
 
@@ -441,42 +467,13 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
         }
 
     }
-
-    /**
-     * Replaces all variables which have different names but the same meaning with the same variable name.
-     * This is necessary because the ports need to have the same names to create links.
-     */
-    def checkForVOassignments(Expression expr) {
-        if (expr instanceof ValuedObjectReference) {
-            val name = expr.valuedObject.name
-            if (voExpressions.containsKey(name)) {
-                expr.valuedObject = voExpressions.get(name)
-
-            }
-        } else {
-            val vos = expr.eAllContents.filter(ValuedObjectReference).toList
-
-            for (vo : vos) {
-                val name2 = vo.valuedObject.name
-                if (voExpressions.containsKey(name2)) {
-                    vo.valuedObject = voExpressions.get(name2)
-                }
-            }
-        }
-    }
-
-    /**
-     * Transforms right sides of assignment nodes.
-     * 
-     */
-    def void transformExpressions(Expression expr, Actor containingRegion, Set<String> redRegionPorts,
-        Assignment originalAssignmentNode) {
-        
-      
+    
+    def transformExpressionsSimple(Expression expr, Actor region, Assignment originalAssignmentNode) {{
+        println("expression is transformed: " + expr.serialize.toString)
         // has to be checked due to recursion
-        if (expr instanceof OperatorExpression) {
-            
-            
+        
+        
+         if (expr instanceof OperatorExpression) {
 
             // check if this actor already exists
             if (createdActors.filter[name == expr.serialize.toString].empty) {
@@ -485,18 +482,8 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
                 actor.name = expr.serialize.toString
 
                 createdActors.add(actor)
-                containingRegion.innerActors += actor
-                
+                region.innerActors += actor
 
-                // add and remove ports from region port list
-                if (redRegionPorts != null) {
-                    if (redRegionPorts.contains(actor.name)) {
-                        redRegionPorts.remove(actor.name)
-                    } else {
-                        redRegionPorts.add(actor.name)
-                    }
-                }
-              
                 // create output port for actor
                 val p = CircuitFactory::eINSTANCE.createPort
                 p.type = "Out"
@@ -532,8 +519,134 @@ class SSA_SCG2CircuitTransformation extends AbstractProductionTransformation imp
 //                } else {
 //                    containingRegion.innerActors += actor
 //                }
+                // if Actor is a register, tick and reset input ports need to be added to guard region
+               
 
+                // the created actor needs an input port for each subexpression
+                // and the subexpressions are transformed, too.
+                for (Expression subExpr : expr.subExpressions) {
+                    val port = CircuitFactory::eINSTANCE.createPort
+                    actor.ports += port
+                    port.type = "In"
+                    port.name = subExpr.serialize.toString
+                    
 
+                    if (subExpr instanceof OperatorExpression) {
+                        transformExpressionsSimple(subExpr, region, originalAssignmentNode)
+                    } else if (subExpr instanceof BoolValue) {
+                        
+                        switch (subExpr.value.toString) {
+                            case "true": {
+                                port.name = "const1_" + expr.serialize.toString
+                                circuitInitialization.createConstantOne(region, port.name,
+                                    originalAssignmentNode)
+                            }
+                            case "false": {
+                                port.name = "const0_" + expr.serialize.toString
+                                circuitInitialization.createConstantZero(region, port.name,
+                                    originalAssignmentNode)
+                            }
+                        }
+                    }
+                }
+            } else {
+                // TODO: klappt das überhaupt, dass man die tracing info erweitert? wenn nicht.... grr
+                // If this actor already exists, add additional tracing info.
+                val thisActor = createdActors.filter[name == expr.serialize.toString].head
+                thisActor.trace(originalAssignmentNode)
+            }
+        }
+       
+        
+    }
+    }
+
+    /**
+     * Replaces all variables which have different names but the same meaning with the same variable name.
+     * This is necessary because the ports need to have the same names to create links.
+     */
+    def checkForVOassignments(Expression expr) {
+        if (expr instanceof ValuedObjectReference) {
+            val name = expr.valuedObject.name
+            if (voExpressions.containsKey(name)) {
+                expr.valuedObject = voExpressions.get(name)
+
+            }
+        } else {
+            val vos = expr.eAllContents.filter(ValuedObjectReference).toList
+
+            for (vo : vos) {
+                val name2 = vo.valuedObject.name
+                if (voExpressions.containsKey(name2)) {
+                    vo.valuedObject = voExpressions.get(name2)
+                }
+            }
+        }
+    }
+
+    /**
+     * Transforms right sides of assignment nodes.
+     * 
+     */
+    def void transformExpressions(Expression expr, Actor containingRegion, Set<String> redRegionPorts,
+        Assignment originalAssignmentNode) {
+
+        // has to be checked due to recursion
+        if (expr instanceof OperatorExpression) {
+
+            // check if this actor already exists
+            if (createdActors.filter[name == expr.serialize.toString].empty) {
+                // create actor for expression
+                val actor = CircuitFactory::eINSTANCE.createActor.trace(originalAssignmentNode)
+                actor.name = expr.serialize.toString
+
+                createdActors.add(actor)
+                containingRegion.innerActors += actor
+
+                // add and remove ports from region port list
+                if (redRegionPorts != null) {
+                    if (redRegionPorts.contains(actor.name)) {
+                        redRegionPorts.remove(actor.name)
+                    } else {
+                        redRegionPorts.add(actor.name)
+                    }
+                }
+
+                // create output port for actor
+                val p = CircuitFactory::eINSTANCE.createPort
+                p.type = "Out"
+                p.name = expr.serialize.toString
+                actor.ports += p
+
+                // specify actor type
+                switch (expr.operator) {
+                    case LOGICAL_AND:
+                        actor.type = "AND"
+                    case LOGICAL_OR:
+                        actor.type = "OR"
+                    case NOT:
+                        actor.type = "NOT"
+                    case PRE: {
+                        actor.type = "REG"
+                        addRegisterPorts(actor, "Reset_pre")
+                    }
+                    default: {
+                        actor.type = expr.getOperator.getName
+                        System.out.println("found unknown SCG OperatorExpression: " + expr.getOperator.getName)
+                    }
+                }
+
+                // since !X may be used in multiple expressions, 
+                // the not gates shall be placed in logic region and not in actor regions.
+//                if (actor.type == "NOT") {
+//                    if (containingRegion.eContainer != null) {
+//                        val outerRegion = containingRegion.eContainer as Actor
+//                        outerRegion.innerActors += actor
+//                        
+//                    }
+//                } else {
+//                    containingRegion.innerActors += actor
+//                }
                 // if Actor is a register, tick and reset input ports need to be added to guard region
                 if (actor.type == "REG") {
                     if (redRegionPorts != null && !redRegionPorts.contains("Tick")) {
