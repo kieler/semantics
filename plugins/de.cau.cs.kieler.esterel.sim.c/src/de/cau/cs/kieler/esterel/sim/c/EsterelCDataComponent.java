@@ -498,14 +498,15 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             }
 
             // Possibly add #include for a header file
-            cSimulation = copyPossibleHeaderFile(input, cSimulation);
-
+//            cSimulation = copyPossibleHeaderFile(input, cSimulation);
+            cModelCCode = copyPossibleHeaderFile(input, cModelCCode);
+            
             // Set a random output folder for the compiled files
             String outputFolder = ModelUtil.generateRandomTempOutputFolder();
 
-            String fileNameSCChart = "model.c";
-            String outputFileSCChart = outputFolder + fileNameSCChart;
-            writeOutputModel(outputFileSCChart, cModelCCode.getBytes());
+            String modelFileName = "model.c";
+            String modelFilePath = outputFolder + modelFileName;
+            writeOutputModel(modelFilePath, cModelCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
@@ -521,7 +522,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             if (myModel instanceof Program) {
                 modelName = ((Program) myModel).getModules().get(0).getName();
             }
-            cExecution.compile(generatedSCFiles, modelName, outputFileSCChart);
+            cExecution.compile(generatedSCFiles, modelName, modelFilePath);
 
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
