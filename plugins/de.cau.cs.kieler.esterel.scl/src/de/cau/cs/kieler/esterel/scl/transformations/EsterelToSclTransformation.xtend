@@ -679,7 +679,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 awaitCondition.add(transformStatement(singleCase.statement, createStatementSequence))
             awaitCondition.add(createGotoStatement(awaitEndLabel))
             if (singleCase.delay.isImmediate) {
-                targetStatementSequence.add(EcoreUtil.copy(awaitCondition))
+                targetStatementSequence.add(createStatement(EcoreUtil.copy(awaitCondition)))
                 targetStatementSequence.addLabel(caseEnd)
                 val caseEndAfterPause = createNewUniqueLabel
                 collectAwaits.add(awaitCondition -> caseEndAfterPause)
@@ -689,7 +689,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         }
         targetStatementSequence.addLabel(awaitStartLabel)
         targetStatementSequence.createSclPause
-        collectAwaits.forEach[targetStatementSequence.add(key); targetStatementSequence.addLabel(value)]
+        collectAwaits.forEach[targetStatementSequence.add(createStatement(key)); targetStatementSequence.addLabel(value)]
 
         targetStatementSequence.addGoto(awaitStartLabel)
         targetStatementSequence.addLabel(awaitEndLabel)

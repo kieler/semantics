@@ -1,0 +1,14 @@
+module M:
+
+input A,B,C;
+output X,Y,Z,O;
+
+await
+  case A do emit X;
+  case immediate B do emit Y;
+  case 2 C do emit Z;
+end;
+
+emit O;
+
+end module
