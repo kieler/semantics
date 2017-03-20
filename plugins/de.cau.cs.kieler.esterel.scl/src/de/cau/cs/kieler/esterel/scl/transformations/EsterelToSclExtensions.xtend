@@ -173,7 +173,7 @@ class EsterelToSclExtensions {
      * @param name The desired name, "_" will be appended until it is unqiue
      * @return A new ValuedObject with an unused name
      */
-    def ValuedObject createNewUniqueVariable(String designatedName, ValueType valueType) {
+    def ValuedObject createNewUniqueVariable(String designatedName) {
         val newUniqueVariable = createValuedObject(uniqueName(designatedName))
         signalToVariableMap.add(name -> newUniqueVariable)
         signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
