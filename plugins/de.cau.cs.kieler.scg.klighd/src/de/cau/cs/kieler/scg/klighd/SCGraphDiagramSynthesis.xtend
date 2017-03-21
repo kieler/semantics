@@ -454,8 +454,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
-                // TODO WrappingStrategy currently not exported
-//                knode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
             }
             
@@ -463,8 +462,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
                 node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH);
-                // TODO WrappingStrategy currently not exported
-//                knode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
+                node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
             }
     
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
