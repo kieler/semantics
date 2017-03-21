@@ -34,6 +34,7 @@ import org.eclipse.elk.core.options.CoreOptions
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -77,9 +78,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
-        node.setLayoutOption(CoreOptions::SPACING_COMPONENT_COMPONENT, 2.0);
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0);
-//        node.setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
 
         //pre-evaluate type
         val isConnector = state.type == StateType::CONNECTOR

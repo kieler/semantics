@@ -60,7 +60,6 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
 
-        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0);
         } else {
