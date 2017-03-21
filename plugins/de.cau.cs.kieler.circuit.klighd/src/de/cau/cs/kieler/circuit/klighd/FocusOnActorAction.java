@@ -14,12 +14,12 @@
 package de.cau.cs.kieler.circuit.klighd;
 
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.KlighdOptions;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement;
 import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.kgraph.KPort;
-import de.cau.cs.kieler.klighd.labels.KlighdLabelProperties;
 
 public class FocusOnActorAction implements IAction {
 	/** This action's ID as registered with KLighD. */
@@ -84,7 +84,7 @@ public class FocusOnActorAction implements IAction {
      *            whether the element is now focussed or not.
      */
     private void focusGraphElement(final KGraphElement element, final boolean focus) {
-        element.setProperty(KlighdLabelProperties.ELEMENT_IN_FOCUS, focus);
+        element.setProperty(KlighdOptions.LABELS_ELEMENT_IN_FOCUS, focus);
     }
     
     /**

@@ -13,13 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
+import org.eclipse.elk.graph.ElkLabel;
 import org.eclipse.swt.graphics.FontData;
 
-import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 import de.cau.cs.kieler.klighd.labels.LabelManagementUtil;
 import de.cau.cs.kieler.klighd.labels.SoftWrappingLabelManager;
-import de.cau.cs.kieler.klighd.microlayout.PlacementUtil;
 
 /**
  * Semantically wraps transition labels, taking the trigger and effect part into account separately.
@@ -32,14 +31,14 @@ public final class SemanticalWrappingTransitionLabelManager extends AbstractKlig
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(KLabel label, double targetWidth) {
+    public String resizeLabel(ElkLabel label, double targetWidth) {
         SoftWrappingLabelManager softWrappingLabelManager = new SoftWrappingLabelManager();
         softWrappingLabelManager.fixTargetWidth(targetWidth);
         
         String[] triggerEffect = label.getText().split("/");
         String[] words = label.getText().split(" ");
 
-        final FontData font = PlacementUtil.fontDataFor(label);
+        final FontData font = LabelManagementUtil.fontDataFor(label);
 
         double biggestWordSize = LabelManagementUtil.getWidthOfBiggestWord(font, words);
         biggestWordSize = Math.max(biggestWordSize, targetWidth / 2.0);
