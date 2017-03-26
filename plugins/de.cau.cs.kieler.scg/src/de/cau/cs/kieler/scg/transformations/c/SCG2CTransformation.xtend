@@ -205,32 +205,52 @@ class SCG2CTransformation extends AbstractProductionTransformation {
                     
                     val calleeTick = entryMapping.get(VOCalleeMap.get(expression.valuedObject))
                     val calleePL = parameterMapping.get(VOCalleeMap.get(expression.valuedObject))
-                    for(var i = 0; i< calleePL.size; i++) {
-                        val vo = scg.findValuedObjectByName(calleePL.get(i))
-                        val declaration = vo.declaration
-                        if (declaration instanceof VariableDeclaration) {
-                            if (declaration.input) {
-                                var binding = calleeDataStructName + "." + vo.name + " = " + 
-                                    expression.parameters.get(i).expression.serializeHR
-                                tickLogicFunction.append(indent).append(binding).append(";\n")
-                            }                            
+                    if (calleePL == null) {
+
+                        tickLogicFunction.append(indent) //.append(TICK_FUNCTION_NAME)
+                            .append(expression.valuedObject.referenceDeclaration.extern).append("(")
+                        for(parameter : expression.parameters) {
+                            val pex = parameter.expression
+                            if (pex instanceof ValuedObjectReference) {
+                                if (parameter.callByReference) {
+                                    tickLogicFunction.append("&")
+                                }
+                                var binding = parameter.expression.serializeHR
+                                tickLogicFunction.append(binding)
+                                if (parameter != expression.parameters.last) {
+                                    tickLogicFunction.append(",\n")
+                                }
+                            }
+                        }                        
+                        tickLogicFunction.append(");\n")
+                    } else {
+                        for(var i = 0; i< calleePL.size; i++) {
+                            val vo = scg.findValuedObjectByName(calleePL.get(i))
+                            val declaration = vo.declaration
+                            if (declaration instanceof VariableDeclaration) {
+                                if (declaration.input) {
+                                    var binding = calleeDataStructName + "." + vo.name + " = " + 
+                                        expression.parameters.get(i).expression.serializeHR
+                                    tickLogicFunction.append(indent).append(binding).append(";\n")
+                                }                            
+                            }
                         }
-                    }
                     
-                    tickLogicFunction.append(indent).append(TICK_FUNCTION_NAME).append(calleeTick).append("(&")
-                    tickLogicFunction.append(calleeDataStructName)
-                    tickLogicFunction.append(");\n")
+                        tickLogicFunction.append(indent).append(TICK_FUNCTION_NAME).append(calleeTick).append("(&")
+                        tickLogicFunction.append(calleeDataStructName)
+                        tickLogicFunction.append(");\n")
                     
-                    for(var i = 0; i< calleePL.size; i++) {
-                        val vo = scg.findValuedObjectByName(calleePL.get(i))
-                        val declaration = vo.declaration
-                        if (declaration instanceof VariableDeclaration) {
-                            if (declaration.output) {
-                                var binding = expression.parameters.get(i).expression.serializeHR
-                                    + " = " + 
-                                    calleeDataStructName + "." + vo.name                                 
-                                tickLogicFunction.append(indent).append(binding).append(";\n")
-                            }                            
+                        for(var i = 0; i< calleePL.size; i++) {
+                            val vo = scg.findValuedObjectByName(calleePL.get(i))
+                            val declaration = vo.declaration
+                            if (declaration instanceof VariableDeclaration) {
+                                if (declaration.output) {
+                                    var binding = expression.parameters.get(i).expression.serializeHR
+                                        + " = " + 
+                                        calleeDataStructName + "." + vo.name                                 
+                                    tickLogicFunction.append(indent).append(binding).append(";\n")
+                                }                            
+                            }
                         }
                     }                    
                 } else {       
@@ -261,19 +281,25 @@ class SCG2CTransformation extends AbstractProductionTransformation {
             
             for(vo : VOs.filter[ !VOSet.contains(it) ]) {
                 valuedObjectPrefix = ""
-                tickStruct.append(DEFAULT_INDENTATION)
                 if (vo.declaration instanceof ReferenceDeclaration) {
-                    val calleeTick = entryMapping.get(VOCalleeMap.get(vo))
-                    tickStruct.append(TICK_STRUCT_NAME + calleeTick)
+                    var calleeTick = entryMapping.get(VOCalleeMap.get(vo))
+                    if (calleeTick != null) {
+                        tickStruct.append(DEFAULT_INDENTATION)
+                        tickStruct.append(TICK_STRUCT_NAME + calleeTick)
                     
-                    resetCallee.append(DEFAULT_INDENTATION)
-                    resetCallee.append(RESET_FUNCTION_NAME).append(calleeTick).append("(&")
-                    resetCallee.append(TICK_LOCAL_DATA_NAME + "->").append(vo.serializeHR)
-                    resetCallee.append(");\n")
+                        resetCallee.append(DEFAULT_INDENTATION)
+                        resetCallee.append(RESET_FUNCTION_NAME).append(calleeTick).append("(&")
+                        resetCallee.append(TICK_LOCAL_DATA_NAME + "->").append(vo.serializeHR)
+                        resetCallee.append(");\n")
+                        
+                        tickStruct.append(" ").append(vo.serializeHR).append(";\n")
+                    }
                 } else {
+                    tickStruct.append(DEFAULT_INDENTATION)
                     tickStruct.append(GUARD_TYPE)
+                    
+                    tickStruct.append(" ").append(vo.serializeHR).append(";\n")
                 }
-                tickStruct.append(" ").append(vo.serializeHR).append(";\n")
                 VOSet += vo
             }
             

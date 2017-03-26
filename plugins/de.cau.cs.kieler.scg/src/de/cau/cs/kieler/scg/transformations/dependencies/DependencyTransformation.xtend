@@ -165,38 +165,69 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
-					writer.put(node.valuedObject, node)
-					writerObjectCache.put(node, node.valuedObject)
-					node.expression.getAllReferences.forEach[
-						reader.put(it.valuedObject, node)
-						if (it.valuedObject.equals(node.valuedObject)) {
-							relativeWriter += node
-						}
-					]
-					if (node.operator != AssignOperator::ASSIGN) {
-						relativeWriter += node
+					val dependencyAnnotation = node.getStringAnnotationValue("dependency")
+					if (dependencyAnnotation.equals("ignore")) {
+					} else if (dependencyAnnotation.equals("reader")) {
+                        reader.put(node.valuedObject, node)
+                        readerObjectCache.put(node, node.valuedObject)
+					} else {
+    					writer.put(node.valuedObject, node)
+    					writerObjectCache.put(node, node.valuedObject)
+    					node.expression.getAllReferences.forEach[
+    						reader.put(it.valuedObject, node)
+    						if (it.valuedObject.equals(node.valuedObject)) {
+    							relativeWriter += node
+    						}
+    					]
+    					if (node.operator != AssignOperator::ASSIGN) {
+    						relativeWriter += node
+    					}
 					}
 				} else {
 				    val expression = node.expression
 				    if (expression instanceof ReferenceCall) {
 				        assignments += node
+				        
 				        val refName = expression.valuedObject.declaration.asReferenceDeclaration.extern
 				        val refList = parameterMapping.get(refName)
-				        for(var i = 0; i < refList.size; i++) {
-				            val pex = expression.parameters.get(i).expression
-				            if (pex instanceof ValuedObjectReference) {
-				                val vo = pex.valuedObject
-				                val refVODeclaration = refList.get(i).declaration
-				                if (refVODeclaration instanceof VariableDeclaration) {
-				                    if (refVODeclaration.input) {
-				                        reader.put(vo, node)
-				                        readerObjectCache.put(node, vo)
-				                    } else {
-				                        writer.put(vo, node)
-                                        writerObjectCache.put(node, vo)
-				                    }
-				                }
-				            }  
+				        
+				        if (refList == null) {
+                            for(parameter : expression.parameters) {
+                                val pex = parameter.expression
+                                if (pex instanceof ValuedObjectReference) {
+                                    if (parameter.callByReference) {
+                                        writer.put(pex.valuedObject, node)
+                                        writerObjectCache.put(node, pex.valuedObject)
+                                        if (!parameter.pureOutput) {
+                                            reader.put(pex.valuedObject, node)
+                                            readerObjectCache.put(node, pex.valuedObject)
+                                        }
+                                    } else {
+                                        reader.put(pex.valuedObject, node)
+                                        readerObjectCache.put(node, pex.valuedObject)
+                                    }
+                                }
+                            }
+				        } else {
+                	        for(var i = 0; i < expression.parameters.size; i++) {
+                	            val pex = expression.parameters.get(i).expression
+                	            if (pex instanceof ValuedObjectReference) {
+                	                val vo = pex.valuedObject
+                	                var VariableDeclaration refVODeclaration = null
+                	                if (refList != null) {
+                	                    refVODeclaration = refList.get(i).variableDeclaration
+                	                }
+                	                if (refVODeclaration instanceof VariableDeclaration) {
+                	                    if (refVODeclaration.input) {
+                	                        reader.put(vo, node)
+                	                        readerObjectCache.put(node, vo)
+                	                    } else {
+                	                        writer.put(vo, node)
+                                            writerObjectCache.put(node, vo)
+                	                    }
+                	                }
+                	            }  
+    				        }
 				        }
 				    }
 				}
