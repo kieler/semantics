@@ -42,7 +42,7 @@ import de.cau.cs.kieler.annotations.TypedStringAnnotation
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
  * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
@@ -180,8 +180,14 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 				    val expression = node.expression
 				    if (expression instanceof ReferenceCall) {
 				        assignments += node
-				        val refName = expression.valuedObject.declaration.asReferenceDeclaration.extern
-				        val refList = parameterMapping.get(refName)
+				        val refDecl = expression.valuedObject.declaration.asReferenceDeclaration
+				        var List<ValuedObject> refList
+				        if (refDecl.reference == null) {
+				            refList = (expression as ReferenceCall).eAllContents.filter(ValuedObjectReference).map[ valuedObject ].toList
+				        } else {
+    				        val refName = refDecl.extern
+    				        refList = parameterMapping.get(refName)
+    				    }
 				        for(var i = 0; i < refList.size; i++) {
 				            val pex = expression.parameters.get(i).expression
 				            if (pex instanceof ValuedObjectReference) {
@@ -196,7 +202,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
                                         writerObjectCache.put(node, vo)
 				                    }
 				                }
-				            }  
+				            }
 				        }
 				    }
 				}

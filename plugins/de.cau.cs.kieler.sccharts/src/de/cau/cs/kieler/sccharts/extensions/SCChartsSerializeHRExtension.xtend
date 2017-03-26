@@ -233,7 +233,9 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         val content = newLinkedList;
         
         keywords += "ref"
-        if (declaration.reference instanceof Identifiable) {
+        if (declaration.reference == null) {
+            keywords += declaration.extern  
+        } else if (declaration.reference instanceof Identifiable) {
             keywords += (declaration.reference as Identifiable).id
         } else {
             keywords += declaration.reference.class.name

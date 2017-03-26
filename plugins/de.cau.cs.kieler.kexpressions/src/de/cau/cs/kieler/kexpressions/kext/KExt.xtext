@@ -86,6 +86,7 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     input?='input'? 
     output?='output'?
     static?='static'?
+    extern?='extern'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
@@ -95,6 +96,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     input?='input'? 
     output?='output'?
     static?='static'?
+    extern?='extern'?
     ((signal?='signal'? type = ValueType) | signal?='signal') 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;  
     
@@ -106,7 +108,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     ((
         'ref' reference = [kexpressions::Identifiable|NamespaceID]
     ) | (
-        'extern' extern = STRING
+        'ref' extern = STRING
     ))
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';';
     
@@ -115,7 +117,7 @@ ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     ((
         'ref' reference = [kexpressions::Identifiable|NamespaceID]
     ) | (
-        'extern' extern = STRING
+        'ref' extern = STRING
     ))
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*;
     

@@ -87,8 +87,8 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
      */    
     def State transform(State rootState) {
         // Create new sets for inputs and outputs and fill them appropriately.
-        val inputs = <ValuedObject> newHashSet
-        val outputs = <ValuedObject> newHashSet  
+        val inputs = <ValuedObject> newLinkedHashSet
+        val outputs = <ValuedObject> newLinkedHashSet  
         for(declaration : rootState.declarations.filter(VariableDeclaration)) {
             if (declaration.input) inputs += declaration.valuedObjects
             if (declaration.output) outputs += declaration.valuedObjects
@@ -160,7 +160,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             // Look at all variable references. If no output is present, then this case should already be dealt with
             // in the input region. 
             val references = vt.trigger.getAllReferences
-            if (references.map[ valuedObject ].exists[ outputs.contains(it) ]) {
+            if (!references.map[ valuedObject ].forall[ inputs.contains(it) ]) {
                 // Output is present, apply edit_o here
                 vt.applyEditO(inputs, outputs)
             } else {
@@ -185,6 +185,7 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         transition.targetState = transition.sourceState
         val inputRefs = transition.trigger.getAllReferences.map[ valuedObject ]
         for(input : inputRefs) {
+            if (inputs.contains(input)) 
             KEffectsFactory.eINSTANCE.createAssignment => [
                 valuedObject = input
                 expression = FALSE
@@ -202,12 +203,24 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
             
         // EXAMPLE
         // Set all trigger to false
-        transition.targetState = transition.sourceState
-        val outputRefs = transition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+//        transition.targetState = transition.sourceState
+//        val outputRefs = transition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+//        for(output : outputRefs) {
+//            KEffectsFactory.eINSTANCE.createAssignment => [
+//                valuedObject = output
+//                expression = FALSE
+//                transition.effects += it
+//            ]
+//        }
+
+        // This transition points to the violation state
+        val okTransition = transition.eContainer.asState.outgoingTransitions.filter[ it.targetState != transition.targetState].head
+        transition.targetState = okTransition.targetState
+        val outputRefs = okTransition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
         for(output : outputRefs) {
             KEffectsFactory.eINSTANCE.createAssignment => [
                 valuedObject = output
-                expression = FALSE
+                expression = TRUE
                 transition.effects += it
             ]
         }
