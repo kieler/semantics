@@ -51,7 +51,7 @@
 'entry'=44
 'exit'=46
 'expression'=56
-'extern'=63
+'extern'=61
 'final'=32
 'float'=110
 'font'=23
@@ -74,13 +74,13 @@
 'pre'=97
 'preceding'=50
 'pure'=106
-'ref'=62
+'ref'=63
 'region'=52
 'reset'=80
 'scchart'=28
 'scope'=55
 'shallow history'=81
-'signal'=61
+'signal'=62
 'state'=35
 'static'=60
 'string'=111

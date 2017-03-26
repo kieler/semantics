@@ -21,7 +21,7 @@
 '.'=53
 '/'=78
 '/='=62
-':'=45
+':'=46
 ';'=21
 '<'=50
 '<='=70
@@ -41,7 +41,7 @@
 'const'=41
 'emit'=35
 'expression'=40
-'extern'=47
+'extern'=45
 'float'=86
 'fork'=29
 'halt'=33
@@ -58,7 +58,7 @@
 'pre'=73
 'prio'=26
 'pure'=82
-'ref'=46
+'ref'=47
 'scope'=39
 'signal'=34
 'state'=19

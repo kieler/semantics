@@ -372,6 +372,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
+	 *         extern?='extern'? 
 	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
@@ -394,6 +395,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
+	 *         extern?='extern'? 
 	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*

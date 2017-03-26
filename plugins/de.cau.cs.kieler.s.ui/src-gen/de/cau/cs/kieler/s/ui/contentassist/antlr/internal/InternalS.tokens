@@ -37,11 +37,11 @@
 'abort'=75
 'await'=77
 'bool'=47
-'combine'=83
+'combine'=82
 'const'=88
 'emit'=74
 'expression'=79
-'extern'=82
+'extern'=83
 'float'=50
 'fork'=68
 'halt'=72

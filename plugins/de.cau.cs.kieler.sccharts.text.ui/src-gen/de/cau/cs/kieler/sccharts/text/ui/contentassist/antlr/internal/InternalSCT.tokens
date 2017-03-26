@@ -18,7 +18,7 @@
 '-'=21
 '--'=49
 '-='=41
-'.'=95
+'.'=94
 '/'=24
 '/='=43
 ':'=86
@@ -34,13 +34,13 @@
 'SCCharts'=30
 'SCT'=29
 'SCX'=28
-'['=92
+'['=91
 '\''=96
-']'=93
+']'=92
 '^='=47
 'abort to'=34
 'bool'=57
-'combine'=94
+'combine'=93
 'connector'=107
 'const'=111
 'dataflow'=87
@@ -51,7 +51,7 @@
 'entry'=78
 'exit'=80
 'expression'=89
-'extern'=91
+'extern'=95
 'final'=105
 'float'=60
 'font'=103
