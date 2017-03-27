@@ -607,6 +607,7 @@ class SCGTransformation extends AbstractProductionTransformation implements Trac
 
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
+                sCChartAssignment.copyAnnotations(assignment)
                 if (sCChartAssignment.valuedObject != null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }

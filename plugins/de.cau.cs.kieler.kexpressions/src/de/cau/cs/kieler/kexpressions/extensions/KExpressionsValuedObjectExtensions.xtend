@@ -49,7 +49,14 @@ class KExpressionsValuedObjectExtensions {
             valuedObject.eContainer as VariableDeclaration
         else
             null
-    }     
+    }    
+    
+    def ReferenceDeclaration referenceDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof ReferenceDeclaration)
+            valuedObject.eContainer as ReferenceDeclaration
+        else
+            null
+    }  
     
     def asVariableDeclaration(EObject eObject) {
         eObject as VariableDeclaration

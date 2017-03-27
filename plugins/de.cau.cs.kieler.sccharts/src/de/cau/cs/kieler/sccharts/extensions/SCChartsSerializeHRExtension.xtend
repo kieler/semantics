@@ -238,7 +238,11 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
         } else if (declaration.reference instanceof Identifiable) {
             keywords += (declaration.reference as Identifiable).id
         } else {
-            keywords += declaration.reference.class.name
+            if (declaration.reference != null) {
+                keywords += declaration.reference.class.name
+            } else {
+                keywords += "\"" + declaration.extern + "\""                
+            }
         }
 
         //Content
@@ -309,7 +313,7 @@ class SCChartsSerializeHRExtension extends KEffectsSerializeHRExtensions {
             if (name.contains(suffix)) {
                 val sepPos = name.indexOf(suffix)
                 val prefix = name.substring(0, sepPos)
-                val toProcess = name.substring(sepPos + 1)
+                val toProcess = name.substring(sepPos + suffix.length)
                 val subS = nameSymbolSuffixProcessor.get(suffix).apply(toProcess)
                 return prefix + subS
             }            

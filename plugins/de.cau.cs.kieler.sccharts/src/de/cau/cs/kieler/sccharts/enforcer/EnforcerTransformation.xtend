@@ -114,8 +114,17 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
         outputRegion.annotations += createTypedStringAnnotation("layout", "priority", "1")
                 
         // Optimize the regions... some states are superfluous.
-        inputRegion.optimizeRegion(inputs, outputs)
-        outputRegion.optimizeRegion(inputs, outputs)
+//        inputRegion.optimizeRegion(inputs, outputs)
+//        outputRegion.optimizeRegion(inputs, outputs)
+        
+        if (rootState.id.endsWith("SA")) {
+            rootState.id = 
+                rootState.id.substring(0, rootState.id.length-2) + "Enf"
+        }
+        if (rootState.label.endsWith("SA")) {
+            rootState.label = 
+                rootState.label.substring(0, rootState.label.length-2) + "Enf"
+        }
         
         // Return the root state.
         rootState

@@ -165,16 +165,23 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 			if (node instanceof Assignment) {
 				if (node.valuedObject != null) {
 					assignments += node
-					writer.put(node.valuedObject, node)
-					writerObjectCache.put(node, node.valuedObject)
-					node.expression.getAllReferences.forEach[
-						reader.put(it.valuedObject, node)
-						if (it.valuedObject.equals(node.valuedObject)) {
-							relativeWriter += node
-						}
-					]
-					if (node.operator != AssignOperator::ASSIGN) {
-						relativeWriter += node
+					val dependencyAnnotation = node.getStringAnnotationValue("dependency")
+					if (dependencyAnnotation.equals("ignore")) {
+					} else if (dependencyAnnotation.equals("reader")) {
+                        reader.put(node.valuedObject, node)
+                        readerObjectCache.put(node, node.valuedObject)
+					} else {
+    					writer.put(node.valuedObject, node)
+    					writerObjectCache.put(node, node.valuedObject)
+    					node.expression.getAllReferences.forEach[
+    						reader.put(it.valuedObject, node)
+    						if (it.valuedObject.equals(node.valuedObject)) {
+    							relativeWriter += node
+    						}
+    					]
+    					if (node.operator != AssignOperator::ASSIGN) {
+    						relativeWriter += node
+    					}
 					}
 				} else {
 				    val expression = node.expression
