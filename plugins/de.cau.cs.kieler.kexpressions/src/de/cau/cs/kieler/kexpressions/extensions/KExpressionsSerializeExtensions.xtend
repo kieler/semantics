@@ -379,4 +379,13 @@ class KExpressionsSerializeExtensions {
     }
   
   
+    val static final CARDINALITY_CHAR = new Character('[')
+  
+    def CharSequence removeCardinalities(CharSequence cs) {
+        for(var i = 0; i < cs.length; i++)  {
+            if (CARDINALITY_CHAR.equals(new Character(cs.charAt(i)))) return cs.subSequence(0, i)
+        }
+        return cs
+    }
+  
 }

@@ -285,7 +285,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 if (!isReference) {
                     val node = vo.createNode => [ addInputNodeFigure ]
                     node.associateWith(vo)
-                    node.addNodeLabel(vo.serializeHR.toString);
+                    node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
                     node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
                     node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
@@ -322,7 +322,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             val node = vo.createNode => [ addOutputNodeFigure ]
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             node.associateWith(vo)
-            node.addNodeLabel(vo.serializeHR.toString);
+            node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
             result += node
         }
         result 
