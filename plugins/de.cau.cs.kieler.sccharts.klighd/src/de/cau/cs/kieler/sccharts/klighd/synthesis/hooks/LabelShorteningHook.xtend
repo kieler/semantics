@@ -59,10 +59,10 @@ class LabelShorteningHook extends SynthesisActionHook {
     /** The listener for handling label focusing */
     private static val LabelFocusSelectionListener labelFocusSelectionListener = new LabelFocusSelectionListener();
 
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(LABEL_MANAGEMENT_CATEGORY, SHORTEN_LABEL_STRATEGY, SHORTEN_LABEL_WIDTH);
-        // HIDE_LABELS currently disabled because label shortening is better
-    }
+//    override getDisplayedSynthesisOptions() {
+//        return newLinkedList(LABEL_MANAGEMENT_CATEGORY, SHORTEN_LABEL_STRATEGY, SHORTEN_LABEL_WIDTH);
+//        // HIDE_LABELS currently disabled because label shortening is better
+//    }
 
     override start(Scope scope, KNode node) {
         // activate label focusing

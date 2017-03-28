@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.elk.graph.ElkLabel;
-
+import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**
@@ -38,7 +37,7 @@ public class ShortenToSignalsLabelManager extends AbstractKlighdLabelManager {
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(ElkLabel label, double targetWidth) {
+    public String resizeLabel(KLabel label, double targetWidth) {
         LinkedList<String> deleteEntriesList = new LinkedList<String>();
         String resultText = label.getText();
 

@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 
 
-import org.eclipse.elk.graph.ElkLabel;
-
+import de.cau.cs.kieler.klighd.kgraph.KLabel;
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
 /**
@@ -33,7 +32,7 @@ public class HostCodeTransitionLabelManager extends AbstractKlighdLabelManager {
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(ElkLabel label, double targetWidth) {
+    public String resizeLabel(KLabel label, double targetWidth) {
         String text = label.getText();
         int bracketOpen = 0;
         int bracketClose = 0;
