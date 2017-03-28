@@ -288,7 +288,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     val node = vo.createNode => [ addInputNodeFigure ]
                     node.associateWith(vo)
                     node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
-                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
                     node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     result += node
@@ -328,10 +328,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
             val node = vo.createNode => [ addOutputNodeFigure ]
-            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
             node.associateWith(vo)
             node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
             result += node
+            
+            // Order inputs accoring to declarations.
+            if (vo instanceof ValuedObject) {
+                val prio = vo.getNodePriorityBasedOnDeclaration
+                node.setLayoutOption(CoreOptions.POSITION, new KVector(prio, prio))
+            }                      
+            
         }
         result 
     }
