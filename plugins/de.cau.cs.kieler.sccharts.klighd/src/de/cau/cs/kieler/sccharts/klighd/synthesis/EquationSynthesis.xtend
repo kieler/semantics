@@ -50,6 +50,8 @@ import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KPolyline
 
 /**
  * @author ssm
@@ -135,19 +137,21 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     private def dispatch KEdge performWireTransformation(ValuedObjectReference reference) {
         val edge = createEdge.associateWith(reference)
-        if (reference.valuedObject.isArray) {
-            edge.addWireBusFigure            
-        } else {
-            edge.addWireFigure
-        }
         edge.source = reference.valuedObject.getNode
+        var isArray = reference.valuedObject.isArray
         
         if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (reference.subReference != null) {
                 edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
+                isArray = reference.subReference.valuedObject.isArray
             } 
         } else {
             edge.sourcePort = reference.valuedObject.getPort("out")
+        }
+        if (isArray) {
+            edge.addWireBusFigure            
+        } else {
+            edge.addWireFigure
         }
         
         edge        
