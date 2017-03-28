@@ -35,11 +35,11 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
 /**
  * @author ssm
  *
-=======
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -49,7 +49,6 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2015-08-13 proposed
  * @kieler.rating 2015-08-13 proposed yellow
  * 
->>>>>>> ssm/srtg
  */
 @ViewSynthesisShared
 class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
@@ -73,18 +72,20 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     extension EquationSynthesis    
     
     override performTranformation(DataflowRegion region) {
-        val node = region.createNode().associateWith(region);
+        val node = region.createNode().associateWith(region)
 
-        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT);
-        node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100);
-        node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF);
+        node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
+        node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+        node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
+        node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
+        node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
+        node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
+        node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH, GreedySwitchType::OFF)
 
-        node.setLayoutOption(KlighdProperties::EXPAND, true);
+        node.setLayoutOption(KlighdProperties::EXPAND, true)
 
-        val label = if(region.label.nullOrEmpty) "" else " " + region.label;
+        val label = if(region.label.nullOrEmpty) "" else " " + region.label
 
         // Expanded
         node.addRegionFigure => [

@@ -52,6 +52,8 @@ import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KPolyline
+import de.cau.cs.kieler.sccharts.Scope
+import org.eclipse.elk.core.math.KVector
 
 /**
  * @author ssm
@@ -81,10 +83,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     override performTranformation(Assignment equation) {
         val nodes = <KNode> newLinkedList
         
-        nodes += equation.performDataSourceTransformation;
-        nodes += equation.performDataSinkTransformation;
+        nodes += equation.performDataSourceTransformation
+        nodes += equation.performDataSinkTransformation
         
-        val equationNodes = equation.expression.performEquationTransformation;
+        val equationNodes = equation.expression.performEquationTransformation
         
         val node = equation.valuedObject.createNode
 //        node.addNodeLabel(equation.serializeAssignmentRoot.toString)
@@ -298,7 +300,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //                        createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
                         node.ports += it
                     ]          
-                    port.associateWith(vo)                        
+                    port.associateWith(vo)
+                    
+                    // Order inputs accoring to declarations.
+                    if (vo instanceof ValuedObject) {
+                        val prio = vo.getNodePriorityBasedOnDeclaration
+                        node.setLayoutOption(CoreOptions.POSITION, new KVector(prio, prio))
+                    }                      
                 } else {
                     result += (vo as ValuedObject).performReferenceNodeTransformation
                 }
@@ -338,6 +346,25 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 filter[ !(eContainer instanceof ValuedObjectReference) ].toList
             }
         ]  
+    }
+
+    private def getNodePriorityBasedOnDeclaration(ValuedObject vo) {
+        var prio = 0
+        val declaration = vo.variableDeclaration
+        val declarationParent = declaration.eContainer
+        if (declarationParent instanceof Scope) {
+            var count = true
+            for(d : declarationParent.declarations) {
+                if (d == declaration) count = false
+                if (count) prio += d.valuedObjects.size
+            }
+        }
+        for(v : declaration.valuedObjects) {
+            if (v == vo) return prio + 1
+            prio++
+        }
+        
+        return 0            
     }
     
 }
