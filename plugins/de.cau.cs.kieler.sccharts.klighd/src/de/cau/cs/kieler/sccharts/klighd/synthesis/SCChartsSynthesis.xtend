@@ -61,44 +61,39 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         
     @Inject SynthesisHooks hooks  
 
-    public static val PRAGMA_SYMBOLS = "symbols"       
-    public static val PRAGMA_SYMBOL = "symbol"       
-    public static val PRAGMA_SYMBOLS_GREEK = "greek"
-    public static val PRAGMA_SYMBOLS_SUBSCRIPT = "subscript"       
-    public static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
-    public static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
-    public static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
-    public static val PRAGMA_FONT = "font"        
-    public static val PRAGMA_SKINPATH = "skinpath"
+    static val PRAGMA_SYMBOLS = "symbols"       
+    static val PRAGMA_SYMBOL = "symbol"       
+    static val PRAGMA_SYMBOLS_GREEK = "greek"
+    static val PRAGMA_SYMBOLS_SUBSCRIPT = "subscript"       
+    static val PRAGMA_SYMBOLS_MATH_SCRIPT = "math script"       
+    static val PRAGMA_SYMBOLS_MATH_FRAKTUR = "math fraktur"       
+    static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
+    static val PRAGMA_FONT = "font"        
+    static val PRAGMA_SKINPATH = "skinpath"
     
-    public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
-        setCategory(GeneralSynthesisOptions::APPEARANCE);    
+    static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
+        setCategory(GeneralSynthesisOptions::APPEARANCE)    
+    static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
 
-    public val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
+    val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
     
     @Accessors private var String skinPath = ""
        
     override getDisplayedSynthesisOptions() {
-        val options = new LinkedHashSet();
-        
-        
-        // Add general options
-        options.addAll(USE_KLAY);//USE_ADAPTIVEZOOM
-        options.add(SHOW_ALL_SCCHARTS)
-        
-        // Add options of subsyntheses
-//        options.addAll(stateSynthesis.displayedSynthesisOptions);
-//        options.addAll(transitionSynthesis.displayedSynthesisOptions);
-//        options.addAll(controlflowSynthesis.displayedSynthesisOptions);
-//        options.addAll(dataflowSynthesis.displayedSynthesisOptions);
-        
-        // Add options of hooks
-        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
+        val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, DEBUGGING)
+        options.addAll(APPEARANCE, LAYOUT, DEBUGGING)
+        options.add(SHOW_ALL_SCCHARTS)
+        options.add(AUTOMATIC_INLINE);
+        options.add(USE_KLAY)
         
-        return options.toList;
+        // Add options of hooks
+        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
+        options.add(DATAFLOW)
+        
+        return options.toList
     }
 
 //    override getDisplayedLayoutOptions() {
@@ -109,15 +104,15 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
 //    }
            
     override transform(Scope root) {
-        val startTime = System.currentTimeMillis;
+        val startTime = System.currentTimeMillis
         
-        val rootNode = createNode();
+        val rootNode = createNode
                 
         //START
-        hooks.invokeStart(root, rootNode);
+        hooks.invokeStart(root, rootNode)
         
         // If dot is used draw edges first to prevent overlapping with states when layout is bad
-        usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue);
+        usedContext.setProperty(KlighdProperties.EDGES_FIRST, !USE_KLAY.booleanValue)
         
         val scc = root.getSCCharts
         clearSymbols
@@ -159,14 +154,14 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
             rootNode.eAllContents.filter(KText).forEach[ fontName = pragmaFont.values.head ]
         }
         
-        hooks.invokeFinish(root, rootNode);
+        hooks.invokeFinish(root, rootNode)
 
         // Log elapsed time
         Log.log(
             "SCCharts synthesis transformed model " + (root.label ?: root.id) + " in " +
-                ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
+                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
-        return rootNode;
+        return rootNode
     }
    
 }
