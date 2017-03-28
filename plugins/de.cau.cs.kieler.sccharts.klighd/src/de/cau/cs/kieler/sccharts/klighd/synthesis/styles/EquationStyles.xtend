@@ -26,16 +26,17 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.sccharts.State
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.krendering.KPolygon
 import org.eclipse.elk.graph.KEdge
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
+import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Styles for {@link Equations}.
@@ -47,6 +48,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
  */
 @ViewSynthesisShared
 class EquationStyles {
+
+    extension KRenderingFactory = KRenderingFactory::eINSTANCE
 
     @Inject
     extension KNodeExtensions
@@ -62,7 +65,7 @@ class EquationStyles {
 
     @Inject
     extension KContainerRenderingExtensions
-
+    
     @Inject
     extension ColorStore
     
@@ -163,8 +166,29 @@ class EquationStyles {
 
     def KEdge addWireFigure(KEdge edge) {
         edge.addRoundedBendsPolyline(4, 1) => [
-//            it.addHeadArrowDecorator
             it.addJunctionPointDecorator
+        ]
+        return edge
+    }
+
+
+    def KEdge addWireBusFigure(KEdge edge) {
+        edge.addRoundedBendsPolyline(4, 1) => [
+            it.addJunctionPointDecorator
+            
+            addPolyline => [
+                points += createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::BOTTOM, 0, 0);
+                points += createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::TOP, 0, 0);
+                lineWidth = 1.5f
+                placementData = createKDecoratorPlacementData => [
+                    rotateWithLine = true
+                    relative = 0.5f
+                    width = 6
+                    height = 10
+                    setXOffset = -2
+                    setYOffset = -5
+                ]              
+            ]
         ]
         return edge
     }

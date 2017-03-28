@@ -49,6 +49,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 
 /**
  * @author ssm
@@ -62,6 +63,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension KPortExtensionsReplacement
     @Inject extension KLabelExtensions
     @Inject extension KExpressionsValueExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SCChartsSerializeHRExtension    
     @Inject extension EquationStyles
@@ -133,7 +135,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     private def dispatch KEdge performWireTransformation(ValuedObjectReference reference) {
         val edge = createEdge.associateWith(reference)
-        edge.addWireFigure
+        if (reference.valuedObject.isArray) {
+            edge.addWireBusFigure            
+        } else {
+            edge.addWireFigure
+        }
         edge.source = reference.valuedObject.getNode
         
         if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
