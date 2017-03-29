@@ -50,10 +50,13 @@ import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.LayerConstraint
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.klighd.krendering.KRendering
-import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.sccharts.Scope
 import org.eclipse.elk.core.math.KVector
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*;
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 
 /**
  * @author ssm
@@ -89,13 +92,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val equationNodes = equation.expression.performEquationTransformation
         
         val node = equation.valuedObject.createNode
-//        node.addNodeLabel(equation.serializeAssignmentRoot.toString)
         
         val edge = equation.expression.performWireTransformation
         edge.target = node
         if (equation.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (equation.subReference != null) {
-                edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
+                if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                    println("Searching port " + equation.valuedObject + " / " + equation.subReference.valuedObject)
+                    edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
+                } else {
+                    edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
+                }
             } 
         }        
         
@@ -103,6 +110,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         nodes += node
         
         nodes
+    }
+    
+    private def KPort getPortFromReference(ValuedObject referenceVO, ValuedObject correspondingVO) {
+        val reference = (referenceVO.eContainer as ReferenceDeclaration).reference as Scope
+        
+        for(d : reference.declarations) {
+            for(vo : d.valuedObjects) {
+                if (correspondingVO.name.equals(vo.name)) {
+                    return referenceVO.getPort(vo)            
+                }
+            }
+        }
+        
+        return null   
     }
     
     private def dispatch Set<KNode> performEquationTransformation(Value value) {
@@ -144,7 +165,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (reference.subReference != null) {
-                edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
+                if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                    edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
+                } else {
+                    edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
+                }
                 isArray = reference.subReference.valuedObject.isArray
             } 
         } else {
@@ -214,7 +239,91 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             } catch (Exception e) {
                 // Display default reference actor
             }            
-        }      
+        }     
+        
+        if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+            
+            if (vo instanceof ValuedObject) {
+                val declaration = vo.eContainer
+                if (declaration instanceof ReferenceDeclaration) {
+                    // Due to the fact that we're calling the same synthesis again
+                    // and Klighd will drop the context afterwards,
+                    // we have to save the context and set it again after the 
+                    // synthesis finsihed.
+                    val myViewContext = usedContext
+                    val diagramVC = LightDiagramServices.translateModel2(
+                        reference, usedContext)
+                    use(myViewContext)
+                    
+                    val rootNode = if (diagramVC.viewModel.children.head.children.nullOrEmpty) 
+                        diagramVC.viewModel.children.head else
+                        diagramVC.viewModel.children.head.children.head 
+                    
+                    rootNode.addToNodeMap(vo)
+                    rootNode.data.removeIf[it instanceof KRendering]
+                    rootNode.addInlindedReferenceNodeFigure
+                    rootNode.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
+                    val SMTA = rootNode.eAdapters.findFirst[it instanceof SourceModelTrackingAdapter] as SourceModelTrackingAdapter
+                    
+                    
+                    for(input : reference.declarations.filter(VariableDeclaration).filter[ input ]) {
+                        for(v : input.valuedObjects.reverseView) {
+                            
+                            println("Creating  port " + vo + " / " + v)
+                            val port = vo.createPort(v) => [
+                                if (v.hasAnnotation("hidden")) {
+                                    addLayoutParam(CoreOptions::PORT_SIDE, PortSide.SOUTH)
+                                } else {
+                                    addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
+                                }
+                                setPortSize(3, 3)
+                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                                rootNode.ports += it
+                            ]          
+                            port.associateWith(v)
+                            
+                            val sourceNode = SMTA.getTargetElements(v).filter(KNode).head
+                            if (sourceNode != null) {
+                                sourceNode.outgoingEdges.immutableCopy.forEach[
+                                    source = rootNode
+                                    sourcePort = port
+                                ]    
+                                sourceNode.remove
+                            }        
+                        }
+                    }        
+                    
+                    for(output : reference.declarations.filter(VariableDeclaration).filter[ output ]) {
+                        for(v : output.valuedObjects) {
+                            val port = vo.createPort(v) => [
+                                addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
+                                setPortSize(3, 3)
+                                addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                                rootNode.ports += it
+                            ]          
+                            port.associateWith(v)              
+
+                            val targetNode = SMTA.getTargetElements(v).filter(KNode).head
+                            if (targetNode != null) {
+                                targetNode.incomingEdges.immutableCopy.forEach[
+                                    target = rootNode
+                                    targetPort = port
+                                ]    
+                                targetNode.remove
+                            }  
+                        }
+                    }
+                                
+                    
+                    
+                    result += rootNode
+                }
+            }
+            
+            return result
+        } 
         
         val node = vo.createNode => [ 
             addLayoutParam(CoreOptions::ALGORITHM, "de.cau.cs.kieler.box");
@@ -288,7 +397,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     val node = vo.createNode => [ addInputNodeFigure ]
                     node.associateWith(vo)
                     node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
-                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
                     node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     result += node
@@ -328,7 +437,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
             val node = vo.createNode => [ addOutputNodeFigure ]
-            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST_SEPARATE)
+            node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             node.associateWith(vo)
             node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
             result += node

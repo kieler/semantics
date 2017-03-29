@@ -125,6 +125,10 @@ class KNodeExtensionsReplacement {
      */
     def boolean nodeExists(Object o1, Object o2, Object o3, Object o4) {
         getInternalNodeMap().containsKey(newArrayList(newArrayList(o1, o2, o3, o4)))
+    }
+    
+    def void addToNodeMap(KNode node, Object o1) {
+        getInternalNodeMap().put(newArrayList(newArrayList(o1)), node)
     }      
 
     /**

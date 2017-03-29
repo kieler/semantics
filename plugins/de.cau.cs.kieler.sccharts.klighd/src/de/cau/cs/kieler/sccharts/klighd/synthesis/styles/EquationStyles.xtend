@@ -208,6 +208,17 @@ class EquationStyles {
         ]
     }    
     
+    /**
+     * Adds a macro state figure.
+     */
+    def KRoundedRectangle addInlindedReferenceNodeFigure(KNode node) {
+        node.setMinimalNodeSize(34, 68); // same as default figure
+        node.addRoundedRectangle(1, 1, baseLineWidth) => [
+            // Mark this figure as container for further content
+            setProperty(IS_CONTENT_CONTAINER, true);
+            setGridPlacement(1);
+        ]
+    }    
     
     
     

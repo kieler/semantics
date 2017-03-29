@@ -71,9 +71,9 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
     
-    static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
+    public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
         setCategory(GeneralSynthesisOptions::APPEARANCE)    
-    static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
+    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
