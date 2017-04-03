@@ -124,10 +124,11 @@ class SCLPTransformation extends AbstractProductionTransformation{
         currentIndentation = ""
         forkJoinSb = new StringBuilder
         generatedForks.clear
+        generatedJoins.clear
         previousNode.clear
         
         
-        program.addHeader;
+        program.addHeader(scg);
         program.addGlobalHostcodeAnnotations(scg);
         sb.addProgram(scg);
         program.append(forkJoinSb)
@@ -208,7 +209,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
      *              The StringBuilder the program writes the header into
      * 
      */
-    protected def void addHeader(StringBuilder sb) {
+    protected def void addHeader(StringBuilder sb, SCGraph scg) {
+        
+        val maxPID = (scg.getAnnotation("maxPrioID") as IntAnnotation).value
+        
         sb.append(
             "/*\n" 
             + " * Automatically generated C code by\n" 
@@ -224,6 +228,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             + "#include \"sc-generic.h\"\n\n"
             + "#define true 1\n"
             + "#define false 0\n"
+            + "#define SC_SIG_MAX " + maxPID + "\n\n" 
             + "void reset() {}"
             + "\n")
     }
@@ -450,7 +455,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
         joinPrioList.add(((nodeHead as Entry).exit.getAnnotation("optPrioIDs") as IntAnnotation).value)
         joinPrioList.addAll(endPrioList)
         joinPrioList.remove(joinPrioList.min())
-        
+        println(joinPrioList.size)
         sb.generateJoinn(joinPrioList.size, joinPrioList)
         
         //Joins all the threads together again
@@ -639,16 +644,22 @@ class SCLPTransformation extends AbstractProductionTransformation{
             var s2 = ""
             for(var i = 0; i < n; i++) {
                 s1 = s1.concat("sib" + i)
-                s2 = s2.concat("  join1(sib" + i + "); ")
+                //s2 = s2.concat("  join1(sib" + i + "); ")
+                s2 = s2.concat("isEnabledAnyOf(u2b(sib" + i + "))")
                 if(i != n - 1) {
                     s1 = s1.concat(", ")
-                    s2 = s2.concat("\\")
+                   // s2 = s2.concat("\\")
+                   s2 = s2.concat(" | ")
                 }
-                s2 = s2.concat("\n")
+                //s2 = s2.concat("\n")
             }
             forkJoinSb.append(s1 + ") \\ \n")
+            forkJoinSb.append("  _case __LABEL__: if (")
             forkJoinSb.append(s2)
-            forkJoinSb.append("\n")
+            
+            forkJoinSb.append(") {\\ \n")
+            forkJoinSb.append("    PAUSEG_(__LABEL__); }")
+            forkJoinSb.append("\n\n")
             
             generatedJoins.add(n)
         }

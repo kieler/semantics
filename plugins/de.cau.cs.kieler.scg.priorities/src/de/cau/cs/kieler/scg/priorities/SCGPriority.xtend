@@ -94,6 +94,7 @@ class SCGPriority extends AbstractProductionTransformation{
             
             //Optimize the PrioIDs
             val optPrioIDs = calcOptimizedPrioIDs(prioIDs, nodes)
+            val max = getMaxPID
             
             //Create Annotations to pass the information to the klighd synthesis 
             for(node : nodes) {
@@ -112,6 +113,11 @@ class SCGPriority extends AbstractProductionTransformation{
                     }
                 ]
             }
+            
+            scg.annotations += createIntAnnotation => [
+                name = PriorityAuxiliaryData.MAX_PRIO_ID
+                value = max
+            ]
             
             context.compilationResult.addAuxiliaryData(auxData)
             

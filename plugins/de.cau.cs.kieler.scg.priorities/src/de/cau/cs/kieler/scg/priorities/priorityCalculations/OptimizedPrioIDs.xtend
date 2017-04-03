@@ -24,6 +24,12 @@ import java.util.List
  */
 class OptimizedPrioIDs {
     
+    private static int maxPID;
+    
+    
+    public def getMaxPID() {
+        return maxPID
+    }
     
     /**
      * Calculates the optimized priority IDs of every node of the SCG using the prioIDs. This is done to remove 
@@ -42,6 +48,8 @@ class OptimizedPrioIDs {
         var LinkedList<Integer> ids = <Integer> newLinkedList
         var List<Integer> sortedIds
         
+        maxPID = 0
+        
         for(node : nodes) {
             val id = prioIDs.get(node)
             if(id != null && !ids.contains(id)) {
@@ -50,14 +58,20 @@ class OptimizedPrioIDs {
         }
         sortedIds = ids.sort
         
+//        var max = 0;
+        
         var HashMap<Node, Integer> optPrioIDs = <Node, Integer> newHashMap
         for(node : nodes) {
             val pID = prioIDs.get(node)
             if(pID != null) {
                 optPrioIDs.put(node, 1 + sortedIds.indexOf(pID))
-                
+//                if(max < pID) {
+//                    max = pID
+//                }
             }
         }
+        
+        maxPID = sortedIds.size - 1
         
         return optPrioIDs
         

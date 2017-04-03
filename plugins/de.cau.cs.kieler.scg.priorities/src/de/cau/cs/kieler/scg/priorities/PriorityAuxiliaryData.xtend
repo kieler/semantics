@@ -28,6 +28,7 @@ class PriorityAuxiliaryData extends AbstractKielerCompilerAuxiliaryData {
     public static final String OPTIMIZED_NODE_PRIORITIES_ANNOTATION = "optPrioIDs"
     public static final String NODE_PRIORITIES_ANNOTATION = "nodePrios"
     public static final String THREAD_SEGMENT_ANNOTATION = "threadSegmentIDs"
+    public static final String MAX_PRIO_ID = "maxPrioID"
     
     private LinkedList<LinkedList<Node>> stronglyConnectedComponents
     
