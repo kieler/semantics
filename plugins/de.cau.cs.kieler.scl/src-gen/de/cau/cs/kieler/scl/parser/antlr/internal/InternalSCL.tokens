@@ -14,7 +14,7 @@
 '+'=73
 '++'=65
 '+='=57
-','=41
+','=42
 '-'=56
 '--'=66
 '-='=58
@@ -40,7 +40,7 @@
 'else'=26
 'end'=27
 'expression'=35
-'extern'=43
+'extern'=40
 'float'=84
 'fork'=30
 'goto'=28
@@ -58,9 +58,9 @@
 'pause'=33
 'pre'=71
 'pure'=80
-'ref'=42
+'ref'=43
 'scope'=34
-'signal'=40
+'signal'=41
 'static'=39
 'string'=85
 'then'=25
