@@ -11,13 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.sim.c.xtend
+package de.cau.cs.kieler.esterel.sim.c
 
 import com.google.common.collect.Sets
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
-import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
+import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 
 /**
  * This class handles the default NO simulation visualization

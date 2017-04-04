@@ -14,36 +14,25 @@
 package de.cau.cs.kieler.esterel.scl.test;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
-import de.cau.cs.kieler.esterel.cec.*;
-import de.cau.cs.kieler.esterel.scl.*;
-import de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclExtensions;
 
 /**
  * The test plugin for regression testing the Esterel to SCL transformation.
@@ -97,13 +86,11 @@ public class OptimizationsTests extends KiemAutomatedJUnitTest {
                 Program esterelProgram = (Program) resource.getContents().get(0);
 
                 // Transform to SCL and to SCG
-                SCLProgram sclProgram =
-                        (SCLProgram) KielerCompiler.compile("ESTERELTOSCL", esterelProgram,
-                                false, false).getEObject();
-                SCLProgram sclProgramOpt =
-                        (SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT", esterelProgram,
-                                false, false).getEObject();
-
+                KielerCompilerContext contextSCL = new KielerCompilerContext("ESTERELTOSCL", esterelProgram);
+                SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile(contextSCL).getEObject();
+                
+                KielerCompilerContext contextOpt = new KielerCompilerContext("ESTERELTOSCL_OPT", esterelProgram);
+                SCLProgram sclProgramOpt = (SCLProgram) KielerCompiler.compile(contextOpt).getEObject();
 
             outputString += esterelProgram.getModules().get(0).getName() + ",";
             outputString += (new EsterelToSclExtensions()).countStatements(sclProgram) + ",";

@@ -1,0 +1,51 @@
+! reset;
+
+% Output: X 
+;
+
+% Output: Y 
+;
+
+% Output: Z 
+;
+
+% Output: W 
+;
+
+% Output: 
+;
+! reset;
+A 
+% Output: X 
+;
+A 
+% Output: Y 
+;
+A 
+% Output: U 
+;
+A 
+% Output: V W 
+;
+A 
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: X 
+;
+A 
+% Output: Y 
+;
+
+% Output: Z 
+;
+
+% Output: W 
+;
+
+% Output: 
+;

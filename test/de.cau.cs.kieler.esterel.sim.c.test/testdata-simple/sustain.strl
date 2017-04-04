@@ -1,0 +1,6 @@
+module M:
+output O;
+
+sustain O;
+
+end module

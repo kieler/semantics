@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.sim.c.xtend
+package de.cau.cs.kieler.esterel.sim.c
 
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.esterel.esterel.Abort
@@ -43,7 +43,6 @@ import de.cau.cs.kieler.esterel.esterel.Sustain
 import de.cau.cs.kieler.esterel.features.EsterelFeature
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.sim.c.EsterelCSimulationPlugin
 import de.cau.cs.kieler.esterel.transformations.EsterelTransformation
 import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 

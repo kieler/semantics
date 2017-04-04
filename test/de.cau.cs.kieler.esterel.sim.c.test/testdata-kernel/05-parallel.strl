@@ -1,0 +1,17 @@
+module M:
+output O1;
+output O2;
+output O3;
+
+[
+	emit O1;
+	pause;
+	||
+	present O1 then
+		emit O2;
+	end
+];
+
+emit O3;
+
+end module
