@@ -34,6 +34,9 @@ import java.util.Set
 
 //import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Enforcer Transformation.
@@ -189,17 +192,19 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
     protected def Transition applyEditI(Transition transition,
         Set<ValuedObject> inputs, Set<ValuedObject> outputs) {
             
-        // EXAMPLE
-        // Set all trigger to false
         transition.targetState = transition.sourceState
-        val inputRefs = transition.trigger.getAllReferences.map[ valuedObject ]
-        for(input : inputRefs) {
-            if (inputs.contains(input)) 
-            KEffectsFactory.eINSTANCE.createAssignment => [
-                valuedObject = input
-                expression = FALSE
-                transition.effects += it
-            ]
+        val inputRefs = transition.trigger.getAllReferences.map[ valuedObject ].filter[ inputs.contains(it) ]
+        if (inputRefs.size > 0) {
+            for(input : inputRefs) {
+                if (inputs.contains(input)) 
+                KEffectsFactory.eINSTANCE.createAssignment => [
+                    valuedObject = input
+                    expression = FALSE
+                    transition.effects += it
+                ]
+            }
+        } else {
+            transition.remove
         }
         transition
     }
@@ -223,13 +228,37 @@ class EnforcerTransformation extends AbstractExpansionTransformation implements 
 //        }
 
         // This transition points to the violation state
-        val okTransition = transition.eContainer.asState.outgoingTransitions.filter[ it.targetState != transition.targetState].head
-        transition.targetState = okTransition.targetState
-        val outputRefs = okTransition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+        val okTransition = transition.eContainer.asState.outgoingTransitions.
+            filter[ it.targetState != transition.targetState].
+            filter[
+                trigger.getAllReferences.map[ valuedObject ].exists[ inputs.contains(it) || outputs.contains(it) ]
+            ].head
+        var Iterable<ValuedObject> outputRefs = null
+        var setToTrue = true
+        
+        if (okTransition == null) {
+            transition.targetState = transition.sourceState
+            outputRefs = transition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+            
+            val trigger = transition.trigger     
+            if (trigger instanceof OperatorExpression) {
+                if (trigger.operator == OperatorType.LOGICAL_AND) {
+                    outputRefs = trigger.subExpressions.last.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+                    setToTrue = false        
+                }
+            } else if (trigger instanceof ValuedObjectReference) {
+                setToTrue = false
+            }       
+        } else {
+            transition.targetState = okTransition.targetState
+            outputRefs = okTransition.trigger.getAllReferences.map[ valuedObject ].filter[ outputs.contains(it) ]
+        }
+        
         for(output : outputRefs) {
+            val set = if (setToTrue) TRUE else FALSE
             KEffectsFactory.eINSTANCE.createAssignment => [
                 valuedObject = output
-                expression = TRUE
+                expression = set
                 transition.effects += it
             ]
         }

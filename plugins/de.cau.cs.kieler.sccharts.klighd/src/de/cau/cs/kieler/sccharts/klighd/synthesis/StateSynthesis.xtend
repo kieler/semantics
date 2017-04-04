@@ -34,6 +34,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -69,6 +70,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension StateStyles
+    
+    @Inject
+    extension AnnotationsExtensions
 
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
@@ -109,6 +113,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val isHaltState = state.outgoingTransitions.size == 0 
                 || !state.outgoingTransitions.exists[ targetState != state ]
             node.setViolationStyle(isHaltState)
+        } else {
+            if (state.hasAnnotation("nonaccepting")) {
+                node.setViolationStyle(false)
+            }
         }
 
         // Shadow
