@@ -72,9 +72,7 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
     static val PRAGMA_SKINPATH = "skinpath"
     
     public static val SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("Show all SCCharts", false).
-        setCategory(GeneralSynthesisOptions::APPEARANCE)    
-    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        setCategory(GeneralSynthesisOptions::APPEARANCE)
 
     val ID = "de.cau.cs.kieler.sccharts.klighd.synthesis.SCChartsSynthesis"
     
@@ -84,14 +82,13 @@ class SCChartsSynthesis extends AbstractSCChartsSynthesis<Scope> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, LAYOUT, DEBUGGING)
+        options.addAll(APPEARANCE, DATAFLOW, LAYOUT, DEBUGGING)
         options.add(SHOW_ALL_SCCHARTS)
-        options.add(AUTOMATIC_INLINE);
         options.add(USE_KLAY)
+        options.addAll(dataflowSynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
-        options.add(DATAFLOW)
         
         return options.toList
     }

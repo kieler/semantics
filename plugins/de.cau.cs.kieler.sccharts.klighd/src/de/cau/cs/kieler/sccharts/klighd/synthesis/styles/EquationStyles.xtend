@@ -15,28 +15,32 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.common.base.Joiner
 import com.google.inject.Inject
-import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KPointPlacementData
 import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import java.util.List
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.core.util.nodespacing.Spacing.Margins
+import org.eclipse.elk.graph.KEdge
+import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.graph.KEdge
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceX
-import de.cau.cs.kieler.klighd.krendering.extensions.PositionReferenceY
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 
 /**
  * Styles for {@link Equations}.
@@ -84,6 +88,12 @@ class EquationStyles {
 
     private var baseLineWidth = 1;
     
+    def addInvisibleNodeFigure(KNode node) {
+        node.addRectangle => [
+            invisible = true;
+            setProperty(IS_CONTENT_CONTAINER, true);
+        ]
+    }
     
     def addInputNodeFigure(KNode node) {
         node.addPolygon => [
@@ -135,9 +145,9 @@ class EquationStyles {
      */
     def KText addNodeLabel(KNode node, String text) {
         node.contentContainer.addText(text) => [
-            fontSize = 8;
+            fontSize = 10;
             // Add surrounding space
-            setGridPlacementData().from(LEFT, 4, 0, TOP, 1, 0).to(RIGHT, 4, 0, BOTTOM, 1, 0);
+            setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
         ]
     }
 
@@ -173,27 +183,35 @@ class EquationStyles {
 
 
     def KEdge addWireBusFigure(KEdge edge) {
-        edge.addRoundedBendsPolyline(4, 1) => [
-            it.addJunctionPointDecorator
-            
-            addPolyline => [
-                points += createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::BOTTOM, 0, 0);
-                points += createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::TOP, 0, 0);
-                lineWidth = 1.5f
-                placementData = createKDecoratorPlacementData => [
-                    rotateWithLine = true
-                    relative = 0.5f
-                    width = 6
-                    height = 10
-                    setXOffset = -2
-                    setYOffset = -5
-                ]              
+        edge.addLayoutParam(CoreOptions.EDGE_THICKNESS, 4f)
+        edge.addRoundedBendsPolyline(4, 2.5f) => [
+            foreground = Colors.GRAY_25
+            it.addJunctionPointDecorator => [
+                background = Colors.GRAY_25
+                foreground = Colors.GRAY_25
+                it.placementData as KPointPlacementData => [
+                    it.minWidth = 6;
+                    it.minHeight = 6;
+                ]
             ]
+            
+//            addPolyline => [
+//                points += createKPosition(PositionReferenceX::LEFT, 0, 0, PositionReferenceY::BOTTOM, 0, 0);
+//                points += createKPosition(PositionReferenceX::RIGHT, 0, 0, PositionReferenceY::TOP, 0, 0);
+//                lineWidth = 1.5f
+//                placementData = createKDecoratorPlacementData => [
+//                    rotateWithLine = true
+//                    relative = 0.5f
+//                    width = 6
+//                    height = 10
+//                    setXOffset = -2
+//                    setYOffset = -5
+//                ]              
+//            ]
         ]
         return edge
     }
     
-
     /**
      * Adds a macro state figure.
      */
@@ -208,6 +226,19 @@ class EquationStyles {
         ]
     }    
     
+
+    def KRectangle addCircuitReferenceNodeFigure(KNode node) {
+        node.setMinimalNodeSize(45, 100);
+        node.addLayoutParam(CoreOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.minimumSize)
+        node.addLayoutParam(CoreOptions.SPACING_PORT_SURROUNDING, new Margins(16,0,6,0))
+
+        node.addRectangle => [
+            // Mark this figure as container for further content
+            setProperty(IS_CONTENT_CONTAINER, true);
+            setGridPlacement(1);
+        ]    
+    }  
+    
     /**
      * Adds a macro state figure.
      */
@@ -217,6 +248,7 @@ class EquationStyles {
             // Mark this figure as container for further content
             setProperty(IS_CONTENT_CONTAINER, true);
             setGridPlacement(1);
+            lineStyle = LineStyle.DOT
         ]
     }    
     

@@ -22,20 +22,33 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.EquationStyles
+import java.util.EnumSet
 import java.util.List
 import java.util.Set
+import org.eclipse.elk.alg.layered.properties.LayerConstraint
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.klayoutdata.KIdentifier
+import org.eclipse.elk.core.math.KVector
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.KEdge
 import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.KPort
@@ -46,17 +59,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import org.eclipse.elk.core.options.PortAlignment
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.properties.LayerConstraint
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.Scope
-import org.eclipse.elk.core.math.KVector
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.klighd.krendering.KRendering
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*;
-import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * @author ssm
@@ -76,12 +79,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationStyles
     @Inject extension DataflowRegionSynthesis
     @Inject extension SCChartsSynthesis
+    @Inject extension KRenderingExtensions
     @Inject IResourceServiceProvider.Registry regXtext;    
     
     
     private val dataSources = <EObject> newHashSet
     private val dataSinks = <ValuedObject> newHashSet
     private val dataRefs = <ValuedObject> newHashSet
+    
+    val PORT_LABEL_FONT_SIZE = 7
     
     override performTranformation(Assignment equation) {
         val nodes = <KNode> newLinkedList
@@ -97,7 +103,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         edge.target = node
         if (equation.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (equation.subReference != null) {
-                if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
                     println("Searching port " + equation.valuedObject + " / " + equation.subReference.valuedObject)
                     edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
                 } else {
@@ -137,7 +143,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     private def dispatch Set<KNode> performEquationTransformation(OperatorExpression expression) {
         val result = <KNode> newHashSet
         val node = expression.createNode.associateWith(expression) => [ addOperatorNodeFigure ]
-        node.addOperatorNodeLabel(expression.operator.serializeHR.toString)
+        node.addOperatorNodeLabel(expression.operator.serializeHR.removeCardinalities.toString)
         
         result += node
         
@@ -163,9 +169,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         edge.source = reference.valuedObject.getNode
         var isArray = reference.valuedObject.isArray
         
+        edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (reference.subReference != null) {
-                if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
                     edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
                 } else {
                     edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
@@ -241,7 +248,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }            
         }     
         
-        if (SCChartsSynthesis.AUTOMATIC_INLINE.booleanValue) {
+        if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
             
             if (vo instanceof ValuedObject) {
                 val declaration = vo.eContainer
@@ -262,9 +269,16 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     rootNode.addToNodeMap(vo)
                     rootNode.data.removeIf[it instanceof KRendering]
                     rootNode.addInlindedReferenceNodeFigure
-                    rootNode.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-                    val SMTA = rootNode.eAdapters.findFirst[it instanceof SourceModelTrackingAdapter] as SourceModelTrackingAdapter
+                    rootNode.addInsideTopLeftNodeLabel(reference.label, PORT_LABEL_FONT_SIZE) => [
+                        eAllContents.filter(KText).head.fontItalic = true
+                    ]
                     
+                    rootNode.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE) 
+                    rootNode.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.NODE_LABELS)) 
+                    rootNode.setLayoutOption(CoreOptions::PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+                    rootNode.setLayoutOption(CoreOptions::INSIDE_SELF_LOOPS_ACTIVATE, true) 
+                    
+                    val SMTA = rootNode.eAdapters.findFirst[it instanceof SourceModelTrackingAdapter] as SourceModelTrackingAdapter
                     
                     for(input : reference.declarations.filter(VariableDeclaration).filter[ input ]) {
                         for(v : input.valuedObjects.reverseView) {
@@ -276,9 +290,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 } else {
                                     addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
                                 }
-                                setPortSize(3, 3)
+                                setPortSize(0, 0)
                                 addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
-                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                                createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                                 rootNode.ports += it
                             ]          
                             port.associateWith(v)
@@ -298,9 +312,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         for(v : output.valuedObjects) {
                             val port = vo.createPort(v) => [
                                 addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
-                                setPortSize(3, 3)
+                                setPortSize(0, 0)
                                 addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
-                                createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                                createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                                 rootNode.ports += it
                             ]          
                             port.associateWith(v)              
@@ -332,22 +346,39 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //            setLayoutOption(SidebarOverrideLayoutConfig::FIXED_SPACING, 1f);
             setLayoutOption(CoreOptions::EXPAND_NODES, true);         
             setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-            setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE)     
-            addReferenceNodeFigure
+            setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE)   
+             
+            if (DataflowRegionSynthesis.CIRCUIT.booleanValue) {
+                addCircuitReferenceNodeFigure
+            } else {  
+                addReferenceNodeFigure
+            }
         ]
         node.associateWith(vo)
-        node.addNodeLabel((vo as ValuedObject).serializeHR.toString)
+        node.addNodeLabel((vo as ValuedObject).serializeHR.removeCardinalities.toString)
         node.addRegionsArea
         
+        if (DataflowRegionSynthesis.CIRCUIT.booleanValue) {
+            // SPACE HOLDERS            
+            node.ports += createPort => [
+                addLayoutParam(CoreOptions::PORT_SIDE, PortSide.SOUTH)
+                setPortSize(0, 2)
+            ]
+            node.ports += createPort => [
+                addLayoutParam(CoreOptions::PORT_SIDE, PortSide.NORTH)
+                setPortSize(0, 2)
+            ]
+        }
+                
         node.children += (vo as ValuedObject).createReferenceDataflowRegion
         
         for(output : reference.declarations.filter(VariableDeclaration).filter[ output ]) {
             for(v : output.valuedObjects) {
                 val port = vo.createPort(v) => [
                     addLayoutParam(CoreOptions::PORT_SIDE, PortSide.EAST)
-                    setPortSize(3, 3)
+                    setPortSize(0, 0)
                     addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
-                    createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                    createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                     node.ports += it
                 ]          
                 port.associateWith(v)              
@@ -361,9 +392,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     } else {
                         addLayoutParam(CoreOptions::PORT_SIDE, PortSide.WEST)
                     }
-                    setPortSize(3, 3)
+                    setPortSize(0, 0)
                     addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
-                    createLabel().configureInsidePortLabel(v.serializeHR.toString, 5)
+                    createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                     node.ports += it
                 ]          
                 port.associateWith(v)              
@@ -394,10 +425,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 
                 dataSources += vo
                 if (!isReference) {
-                    val node = vo.createNode => [ addInputNodeFigure ]
+                    val node = vo.createNode => [ 
+                        if (DataflowRegionSynthesis.CIRCUIT.booleanValue) {
+                            addInvisibleNodeFigure
+                        } else {
+                            addInputNodeFigure
+                        }
+                    ]
                     node.associateWith(vo)
                     node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);
-                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                    if (vo instanceof ValuedObjectReference || vo instanceof ValuedObject) {
+                        node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                    }
                     node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment.CENTER)
                     node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
                     result += node
@@ -436,7 +475,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (!dataSinks.contains(vo)) {
             dataSinks += vo
-            val node = vo.createNode => [ addOutputNodeFigure ]
+            val node = vo.createNode => [  
+                if (DataflowRegionSynthesis.CIRCUIT.booleanValue) {
+                    addInvisibleNodeFigure
+                } else {
+                    addOutputNodeFigure
+                }
+            ]
             node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
             node.associateWith(vo)
             node.addNodeLabel(vo.serializeHR.removeCardinalities.toString);

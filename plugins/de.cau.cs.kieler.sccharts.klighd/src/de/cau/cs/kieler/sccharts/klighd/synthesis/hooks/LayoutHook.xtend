@@ -35,6 +35,8 @@ import org.eclipse.elk.graph.properties.Property
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.options.CoreOptions
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Sets the default layout on the diagram and evaluates layout option annotations in the model.
@@ -112,6 +114,13 @@ class LayoutHook extends SynthesisHook {
             } else { // Alternating
                 node.setDepthDirection(region, true, 0)
             }
+        } else {
+            node.eAllContents.filter(KEdge).forEach[
+                val source = it.getData(KLayoutData).getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
+                if (source != null && source.eContainer instanceof Annotatable) {
+                    it.processLayoutOptionAnnotations(source.eContainer as Annotatable)
+                }
+            ]
         }
         // HV/VH Layout via annotation
         node.processAlternatingLayoutAnnotation(region)
