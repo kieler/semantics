@@ -58,6 +58,8 @@ import de.cau.cs.kieler.scl.scl.Scope
 import de.cau.cs.kieler.kitt.tracing.Traceable
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+
 /** 
  * SCL to SCG Transformation 
  * 
@@ -90,6 +92,7 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
     extension SCLExtensions
     
     extension ScgFactory = ScgFactory::eINSTANCE
+    extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
 
     override getProducedFeatureId() {
         return SCGFeatures::BASIC_ID
@@ -267,18 +270,34 @@ class SCLToSCGTransformation extends AbstractProductionTransformation implements
 
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Assignment assignment, SCGraph scg,
         List<ControlFlow> incoming) {
-        new SCLContinuation => [
-            node = createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
-                scg.nodes += it
-                it.expression = assignment.expression.copyExpression
-                it.valuedObject = assignment.valuedObject.copyValuedObject
-                it.controlFlowTarget(incoming)
-                for(annotation : assignment.annotations) {
-                    it.annotations += annotation.copy
-                }
+        if (assignment.hasAnnotation("IS_JOIN")) {
+            new SCLContinuation => [ cont |
+                val join = createJoin.trace(assignment).createNodeList(assignment) as Join => [
+                    scg.nodes += it
+                    it.controlFlowTarget(incoming)
+                    it.incoming.forEach[
+                        annotations += createAnnotation => [
+                            name = SCGThreadExtensions.IGNORE_INTER_THREAD_CF_ANNOTATION
+                        ]
+                    ]
+                ]
+                cont.node = join
+                cont.controlFlows += join.createControlFlow
+            ]    
+        } else {
+            new SCLContinuation => [
+                node = createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
+                    scg.nodes += it
+                    it.expression = assignment.expression.copyExpression
+                    it.valuedObject = assignment.valuedObject.copyValuedObject
+                    it.controlFlowTarget(incoming)
+                    for(annotation : assignment.annotations) {
+                        it.annotations += annotation.copy
+                    }
+                ]
+                controlFlows += node.createControlFlow
             ]
-            controlFlows += node.createControlFlow
-        ]
+        }
     }
 
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Conditional conditional, SCGraph scg,

@@ -237,6 +237,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                         exitDecl.valuedObjects += it
                     ]
                     expression = createBoolValue(true)
+                    annotations += createAnnotation => [name = "IS_JOIN"]
                 ]
                 val join_label = createLabel.trace(exit.key) => [
                     name = "join_" + exit.value.valuedObject.name.substring(5)
