@@ -173,19 +173,31 @@ class NodePriorities {
         //Get the node priorities of the predecessors and compare them to the node priority of the current node
         } else {
             var min = Integer.MAX_VALUE
+            var depthPred = newLinkedList
             for(incControlFlow : currentNode.incoming) {
                 if(!(incControlFlow instanceof DataDependency)) {
                     val pred = incControlFlow.eContainer as Node
                     if(!visitedNodes.containsKey(pred) || !visitedNodes.get(pred)) {
                         val curr = propagateUpwards(pred)
-                        min = Math.min(curr, min)
+                        //TODO: THINK ABOUT THIS
+                        //TODO: Seems more like a quick hack and less like a real solution!
+                        //A Depth node can be ignored since there can't be any incoming dependencies into it.
+                        if(!(pred instanceof Depth)) {
+                            min = Math.min(curr, min)   
+                        //If a Depth node has been encountered, its node priority can be raised                         
+                        } else {
+                            depthPred.add(pred)
+                        }
                     } else if(visitedNodes.containsKey(pred) && visitedNodes.get(pred)) {
                         min = Math.min(nodePrio.get(pred), min)
                     }                   
                 }
             }
             if(nodePrio.get(currentNode) < min && min != Integer.MAX_VALUE) {
-                nodePrio.put(currentNode, min)                
+                nodePrio.put(currentNode, min)       
+                for(depth : depthPred) {
+                    nodePrio.put(depth, min)
+                }         
             }
             return nodePrio.get(currentNode)
         }
@@ -194,7 +206,7 @@ class NodePriorities {
     /**
      *  Fixes the Priorities of threads where the thread with the highest entry priority
      *  also has the lowest exit priority. The SCL macros would not be able to properly schedule such
-     *  programs and therefore these occurences need to be removed.
+     *  programs and therefore these occurrences need to be removed.
      * 
      * 
      */

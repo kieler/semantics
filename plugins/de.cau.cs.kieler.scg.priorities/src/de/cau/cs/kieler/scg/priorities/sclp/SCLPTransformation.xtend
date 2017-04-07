@@ -222,15 +222,16 @@ class SCLPTransformation extends AbstractProductionTransformation{
             + " */\n"
             + "\n"
             + "#define _SC_NO_SIGNALS2VARS\n"
+            + "#define _SC_NOTRACE\n"
+            + "#define SC_SIG_MAX " + maxPID + "\n\n" 
             + "#include \"scl.h\"\n"
             + "#include \"sc.h\"\n"
             + "#include \"sc.c\"\n"
             + "#include \"sc-generic.h\"\n\n"
             + "#define true 1\n"
-            + "#define false 0\n"
-            + "#define SC_SIG_MAX " + maxPID + "\n\n" 
+            + "#define false 0\n\n"
             + "void reset() {}"
-            + "\n")
+            + "\n\n")
     }
  
  //----------------------------------------------------------------------------------------------------------------

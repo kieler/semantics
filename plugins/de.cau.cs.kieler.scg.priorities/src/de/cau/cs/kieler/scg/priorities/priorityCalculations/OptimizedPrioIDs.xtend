@@ -24,6 +24,10 @@ import java.util.List
  */
 class OptimizedPrioIDs {
     
+    /**
+     * The maximum priority ID that exists.
+     * 
+     */
     private static int maxPID;
     
     
@@ -58,20 +62,16 @@ class OptimizedPrioIDs {
         }
         sortedIds = ids.sort
         
-//        var max = 0;
         
         var HashMap<Node, Integer> optPrioIDs = <Node, Integer> newHashMap
         for(node : nodes) {
             val pID = prioIDs.get(node)
             if(pID != null) {
                 optPrioIDs.put(node, 1 + sortedIds.indexOf(pID))
-//                if(max < pID) {
-//                    max = pID
-//                }
             }
         }
         
-        maxPID = sortedIds.size - 1
+        maxPID = sortedIds.size
         
         return optPrioIDs
         
