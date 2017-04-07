@@ -141,7 +141,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         // Transform phi node into assignments in each branch
         scg.transformPhi(dt)
         // Reduce introduced assignments using constant propagation
-        scg.propagatePhiAsm
+        scg.propagatePhi(PHI_ASM)
         
         // Adds reads to concurrent writers
         scg.addConcurrentWritersToReaders
@@ -151,6 +151,8 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
               
         // Removes assignments to signals which are never read
         scg.removePhiWritesWithoutRead
+        // DONT ACTIVATE: trap-par-example wrong semantics for B
+        // scg.propagatePhi(PHI)
         
         // Removes the introduced implicit writers
         scg.removeImplicitEvironmentAssignments
@@ -190,7 +192,7 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
                 val workBlock = work.pop
                 for (frontierBlock : dt.getDominanceFrontiers(workBlock)) {
                     // insert phi
-                    if (!hasPhi.containsEntry(vo, frontierBlock)) {
+                    if (!hasPhi.containsEntry(vo, frontierBlock) && !frontierBlock.deadBlock) {
                         var bbHead = frontierBlock.firstNode
                         // Create Phi assignment
                         val asm = createAssignment
@@ -200,13 +202,19 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
                         placedAssignment.add(asm)
                         asm.valuedObject = vo
                         asm.markSSA(PHI)
-                        asm.expression = PHI.createFunction
                         if (bbHead instanceof Join) {
+                            asm.expression = PSI.createFunction
                             // Insert after
                             val cf = bbHead.allNext.head
                             asm.createControlFlow.target = cf.target
                             cf.target = asm
                         } else {
+                            if (bbHead instanceof Assignment && ((bbHead as Assignment).valuedObject.name.startsWith("join_") ||
+                                (bbHead as Assignment).eAllContents.filter(FunctionCall).exists[functionName == PSI.symbol])) {
+                                asm.expression = PSI.createFunction
+                            } else {
+                                asm.expression = PHI.createFunction
+                            }
                             // Insert before
                             bbHead.allPrevious.toList.forEach[target = asm]
                             asm.createControlFlow.target = bbHead
@@ -614,9 +622,9 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         }
     }    
     
-    def void propagatePhiAsm(SCGraph scg) {
+    def void propagatePhi(SCGraph scg, SSAFunction ssaF) {
         // Optimize Assignments
-        val phiNodes = scg.nodes.filter(Assignment).filter[isSSA(PHI_ASM)].toList
+        val phiNodes = scg.nodes.filter(Assignment).filter[isSSA(ssaF)].toList
         val defs = HashMultimap.<ValuedObject, Assignment>create
         for (asm : scg.nodes.filter(Assignment)) {
             defs.put(asm.valuedObject, asm)
@@ -626,26 +634,38 @@ class WeakUnemitSSATransformation extends AbstractProductionTransformation imple
         while (continue && !phiNodes.empty) {
             val s = phiNodes.size
             for (n : phiNodes.immutableCopy) {
-                val ref = n.expression as ValuedObjectReference
-                val bb = n.basicBlock
-                val refDef = defs.get(ref.valuedObject)
-                if (bb != null && refDef.exists[bb == it.basicBlock]) {
-                    val asm = refDef.findFirst[bb == it.basicBlock]
-                    asm.valuedObject = n.valuedObject
-                    defs.remove(ref.valuedObject, asm)
-                    defs.put(n.valuedObject, asm)
-                    defs.remove(n.valuedObject, n)
-                    for (in : n.incoming.immutableCopy) {
-                        in.target = n.next.target
+                if (n.expression instanceof ValuedObjectReference && (ssaF != PHI || !defs.get(n.valuedObject).filter[it != n].exists[it.hasAnnotation(WeakUnemitSSATransformation.IMPLICIT_ANNOTAION)])) {
+                    val ref = n.expression as ValuedObjectReference
+                    val bb = n.basicBlock
+                    val refDef = defs.get(ref.valuedObject).immutableCopy
+                    if (bb != null && refDef.exists[bb == it.basicBlock]) {
+                        val asm = refDef.findFirst[bb == it.basicBlock]
+                        asm.valuedObject = n.valuedObject
+                        defs.remove(ref.valuedObject, asm)
+                        defs.put(n.valuedObject, asm)
+                        defs.remove(n.valuedObject, n)
+                        for (in : n.incoming.immutableCopy) {
+                            in.target = n.next.target
+                        }
+                        n.remove
+                        phiNodes.remove(n)
+                    } else if (ssaF == PHI) {
+                        refDef.forEach[it.valuedObject = n.valuedObject]
+                        defs.removeAll(ref.valuedObject)
+                        defs.putAll(n.valuedObject, refDef)
+                        defs.remove(n.valuedObject, n)
+                        for (in : n.incoming.immutableCopy) {
+                            in.target = n.next.target
+                        }
+                        n.remove
+                        phiNodes.remove(n)
+                    } else if (refDef.size == 1) {
+                        n.expression = defs.get(ref.valuedObject).head.expression.copy
+                        phiNodes.remove(n)
+                    } else if (refDef.forall[it.expression instanceof BoolValue] && refDef.groupBy[(it.expression instanceof BoolValue).booleanValue].size == 1) {
+                        n.expression = defs.get(ref.valuedObject).head.expression.copy
+                        phiNodes.remove(n)
                     }
-                    n.remove
-                    phiNodes.remove(n)
-                } else if (refDef.size == 1) {
-                    n.expression = defs.get(ref.valuedObject).head.expression.copy
-                    phiNodes.remove(n)
-                } else if (refDef.forall[it.expression instanceof BoolValue] && refDef.groupBy[(it.expression instanceof BoolValue).booleanValue].size == 1) {
-                    n.expression = defs.get(ref.valuedObject).head.expression.copy
-                    phiNodes.remove(n)
                 }
             }
             if (s == phiNodes.size) {

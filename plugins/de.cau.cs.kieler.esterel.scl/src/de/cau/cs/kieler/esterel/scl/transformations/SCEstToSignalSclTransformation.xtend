@@ -194,6 +194,23 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
 
         // Translate program
         module.body.statements.forEach[translate(targetSclProgram)]
+        
+        // Add or skip suspend decl
+        if (!suspendDecl.valuedObjects.empty) {
+            targetSclProgram.declarations += suspendDecl
+            suspendDecl.valuedObjects.forEach [ vo, i |
+                vo.name = vo.name + i
+            ]
+        }
+        // Add or skip exit decl
+        if (!exitDecl.valuedObjects.empty) {
+            targetSclProgram.declarations += exitDecl
+            exitDecl.valuedObjects.groupBy[name].values.filter[size > 1].forEach [
+                forEach[ vo, i |
+                    vo.name = vo.name + i
+                ]
+            ]
+        }
 
         // Added join jumps for concurrent exits 
         for (exit : exits.entrySet) {
@@ -216,13 +233,13 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
             if (!threadHierarchy.empty) {
                 val join_asm = createAssignment.trace(exit.key) => [
                     valuedObject = createValuedObject => [
-                        name = "join_on_" + exit.value.valuedObject.name
+                        name = "join_" + exit.value.valuedObject.name.substring(5)
                         exitDecl.valuedObjects += it
                     ]
                     expression = createBoolValue(true)
                 ]
                 val join_label = createLabel.trace(exit.key) => [
-                    name = "join_on_" + exit.value.valuedObject.name
+                    name = "join_" + exit.value.valuedObject.name.substring(5)
                 ]
                 val exit_scope = exit.key.eContainer as Scope
                 exit_scope.statements.add(exit_scope.statements.indexOf(exit.key), join_label)
@@ -235,7 +252,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                     for (pause : t.eAllContents.filter(de.cau.cs.kieler.scl.scl.Pause).toList) {
                         val scope = pause.eContainer as Scope
                         scope.statements.add(scope.statements.indexOf(pause), createConditional => [
-                            expression = join_asm.valuedObject.reference
+                            expression = exit.value.valuedObject.reference
                             statements += createGoto => [
                                 target = join_label
                                 annotations += createStringAnnotation => [
@@ -248,7 +265,7 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                         parallelExits.put(exits.get(pexit), new Pair(join_label, join_asm))
                     }
                     t.statements.add(createConditional => [
-                        expression = join_asm.valuedObject.reference
+                        expression = exit.value.valuedObject.reference
                         statements += createGoto => [
                             target = join_label
                             annotations += createStringAnnotation => [
@@ -279,23 +296,6 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                 label.name = label.name + idx
             ]
         ]
-
-        // Add or skip suspend decl
-        if (!suspendDecl.valuedObjects.empty) {
-            targetSclProgram.declarations += suspendDecl
-            suspendDecl.valuedObjects.forEach [ vo, i |
-                vo.name = vo.name + i
-            ]
-        }
-        // Add or skip exit decl
-        if (!exitDecl.valuedObjects.empty) {
-            targetSclProgram.declarations += exitDecl
-            exitDecl.valuedObjects.groupBy[name].values.filter[size > 1].forEach [
-                forEach[ vo, i |
-                    vo.name = vo.name + i
-                ]
-            ]
-        }
 
         return targetSclProgram
     }
@@ -365,6 +365,12 @@ class SCEstToSignalSclTransformation extends AbstractProductionTransformation im
                         it.trace(localSignal)
                         it.name = localSignal.name
                         signalVOMapping.put(localSignal, it)
+                        // implicit reset
+                        scope.statements += createAssignment => [ asm |
+                            asm.trace(lsig)
+                            asm.valuedObject = it
+                            asm.expression = createBoolValue(false)
+                        ]
                     ]
                 }
             ]

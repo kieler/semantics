@@ -21,8 +21,8 @@ public enum SSAFunction {
     
 	PHI("de.cau.cs.kieler.scg.ssc.ssa.phi", "\u03A6"),
 	PHI_ASM("de.cau.cs.kieler.scg.ssc.ssa.phi.assignment", "\u03A6"),
-	PSI("de.cau.cs.kieler.scg.ssc.ssa.psi", "\u03A0"),
-	PI("de.cau.cs.kieler.scg.ssc.ssa.pi", "\u03A8"),
+	PSI("de.cau.cs.kieler.scg.ssc.ssa.psi", "\u03A8"),
+	PI("de.cau.cs.kieler.scg.ssc.ssa.pi", "\u03A0"),
 	SEQ("de.cau.cs.kieler.scg.ssc.ssa.seq", "seq"),
 	CONC("de.cau.cs.kieler.scg.ssc.ssa.conc", "conc"),
 	COMBINE("de.cau.cs.kieler.scg.ssc.ssa.combine", "combine");
