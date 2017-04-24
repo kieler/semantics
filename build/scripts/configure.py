@@ -23,6 +23,8 @@ from lxml import etree
 from os.path import join, isdir, isfile, normpath, dirname, abspath
 from reuse import *
 
+
+compositeUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/'
 releaseUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-%s/'
 nightlyUpdatesite = 'http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/'
 
@@ -77,7 +79,7 @@ def main(args):
     else:
         setArtifactName(product, args)
 
-    print '\n- Setting product updatesite -'
+    print '\n- Setting product build updatesite -'
     # check main pom file
     pom = join(args.path, 'build/pom.xml')
     if not isfile(pom):
@@ -208,9 +210,9 @@ def setProductUpdateSite(pom, args):
 
 def setProductUpdateSites(p2inf, targetplatform, args):
     """Create p2.inf for product configuring all updatesites registered in the product"""
-    updatesites = targetplatform
+    updatesites = [] # targetplatform
     if args.release:
-        updatesites.append(releaseUpdatesite % args.release)
+        updatesites.append(compositeUpdatesite)
     else:
         updatesites.append(nightlyUpdatesite)
     print 'Registered Updatesites:'
