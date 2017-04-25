@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="de.cau.cs.kieler.sccharts.feature"
-      label="KIELER SCCharts"
-      version="0.1.2.qualifier"
-      provider-name="Kiel University"
-      plugin="de.cau.cs.kieler.sccharts">
+<feature id="de.cau.cs.kieler.sccharts.feature" label="KIELER SCCharts" version="0.12.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.sccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is provided.
@@ -215,7 +210,7 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
+      <update label="KIELER Release 0.12.0" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/"/>
    </url>
 
    <requires>
@@ -231,565 +226,168 @@ litigation.
       <import feature="de.cau.cs.kieler.klighd.view.feature" version="0.3.1.201610170203"/>
    </requires>
 
-   <plugin
-         id="de.cau.cs.kieler.circuit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.circuit.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.circuit.klighd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.annotations"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.annotations.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kexpressions"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kexpressions.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.perspectives"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kev"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kex"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kex.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kico"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kico.klighd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kico.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kitt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kitt.klighd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kico.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kico.server.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.klighd.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.klighd.server.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.prom"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sim"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sim.sc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sim.sj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sim.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sjl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem.config"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem.toolbar"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-
-   <plugin
-         id="de.cau.cs.kieler.sim.instructions"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kart"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kart.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.benchmark"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui.datacomponent"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.syncsignalreset"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.table"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.examples"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.klighd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.preferences"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.prom"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.sim.c"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.sim.java"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.scg"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.text"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.text.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sccharts.timing"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg.circuit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg.klighd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scl.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.scl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui.launching"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.eso"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.eso.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.kexpressions"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.kexpressions.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.examples"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <plugin id="de.cau.cs.kieler.circuit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.circuit.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.circuit.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.annotations" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.annotations.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kexpressions.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.core.model" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.core.perspectives" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kev" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kex" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kex.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kico" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kico.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kico.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kitt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kitt.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kico.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.kico.server.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.klighd.server" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.klighd.server.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.prom" download-size="0" install-size="0" version="0.0.0"/>
+
+   <plugin id="de.cau.cs.kieler.s" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sim" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sim.sc" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sim.sj" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sc" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sj" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.s.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sc" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sjl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sj" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem.config" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem.toolbar" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+
+   <plugin id="de.cau.cs.kieler.sim.instructions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kart" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kart.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.benchmark" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem.ui.datacomponent" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.syncsignalreset" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.table" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.examples" download-size="0" install-size="0" version="0.0.0"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.preferences" download-size="0" install-size="0" version="0.0.0"/>
+
+
+   <plugin id="de.cau.cs.kieler.sccharts.prom" download-size="0" install-size="0" version="0.0.0"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.s" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.sim.c" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.sim.java" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.text" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.text.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sccharts.timing" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scg.circuit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scg.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scg.klighd" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scg.s" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.scl.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.scl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="org.json" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.kiem.ui.launching" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.eso" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.sim.eso.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.kexpressions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.kexpressions.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.esterel.examples" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
          
-  <plugin
-         id="de.cau.cs.kieler.esterel.sim.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>          
+  <plugin id="de.cau.cs.kieler.esterel.sim.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>          
 
-   <plugin
-         id="de.cau.cs.kieler.sim.signals"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="de.cau.cs.kieler.sim.signals" download-size="0" install-size="0" version="0.0.0"/>
 
-   <plugin
-         id="de.cau.cs.kieler.sim.signals.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="de.cau.cs.kieler.sim.signals.ui" download-size="0" install-size="0" version="0.0.0"/>
 
-   <plugin
-         id="de.cau.cs.kieler.synccharts"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="de.cau.cs.kieler.synccharts" download-size="0" install-size="0" version="0.0.0"/>
 
-   <plugin
-         id="org.freemarker"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="org.freemarker" download-size="0" install-size="0" version="0.0.0"/>
 
 </feature>

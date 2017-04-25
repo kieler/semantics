@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>parent</artifactId>
@@ -10,30 +9,25 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>0.21.0</tycho-version>
+    <tycho-version>0.26.0</tycho-version>
     <xtend-version>2.9.2</xtend-version>
     <targetJdk>1.8</targetJdk>
-	
-
-    <!-- chsch: copied from https://eclipse.googlesource.com/recommenders/org.eclipse.recommenders/+/3dae4575d3370da2da25a1cbce3dfcff198f0611/features/pom.xml -->
+  
     <!-- Non-breakable space, as normal spaces are trimmed. -->
     <sourceFeatureLabelSuffix>&#xA0;(Sources)</sourceFeatureLabelSuffix>
 
-    <!-- guarantee that we use utf8 for compilation, this is especially required
-         due to xtend's template symbols («) when running maven on windows. -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-		
-    <kieler.semantics.nightly>
-      http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/
-    </kieler.semantics.nightly>		
+    <!-- guarantee that we use utf8 for compilation, this is especially required due to xtend's template symbols («) when running maven on windows. -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    
+    <!-- Updatesite for product build -->
+    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/</kieler.semantics.updatesite>
   </properties>
 
 
   <!-- Define one profile for each output target we have. -->
   <profiles>
-  
     <!-- The Semantics updatesite. -->
     <profile>
       <id>semantics</id>
@@ -48,31 +42,32 @@
         <module>de.cau.cs.kieler.semantics.repository</module>
       </modules>
     </profile>
-	
+  
+
     <!-- The Semantics product. -->
     <profile>
       <id>semantics.product</id>
-	  
-	  <repositories>
+    
+      <repositories>
         <repository>
           <id>p2.kieler-semantics</id>
           <layout>p2</layout>
-          <url>${kieler.semantics.nightly}</url>
+          <url>${kieler.semantics.updatesite}</url>
         </repository>
-	  </repositories>
+      </repositories>
       
       <modules>
-		<module>de.cau.cs.kieler.semantics.targetplatform</module>	  
+        <module>de.cau.cs.kieler.semantics.targetplatform</module>    
         <module>../plugins/de.cau.cs.kieler.core.product</module>
         <module>../features/de.cau.cs.kieler.dependencies.feature</module>
         <module>de.cau.cs.kieler.semantics.product.repository</module>
       </modules>
-    </profile>	
-	
+    </profile>  
+  
   </profiles>
 
 
-<!-- maven plugin repositories -->
+  <!-- maven plugin repositories -->
   <pluginRepositories>
     <pluginRepository>
       <id>central</id>
@@ -83,14 +78,6 @@
       <id>xtend</id>
       <layout>default</layout>
       <url>http://build.eclipse.org/common/xtend/maven</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>jboss-releases</id>
-      <name>JBoss Releases Maven Repository</name>
-      <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-<!--      <releases>
-        <enabled>true</enabled>
-      </releases> -->
     </pluginRepository>
   </pluginRepositories>
 
@@ -129,46 +116,6 @@
           <argLine>-ea</argLine>
         </configuration>
       </plugin>      
-      <!--
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.9.1</version>
-        <configuration>
-          <configLocation>checks.xml</configLocation>
-          <sourceDirectory>src</sourceDirectory>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.7.1</version>
-        <configuration>
-          <targetJdk>1.5</targetJdk>
-          <format>xml</format>
-          <!- <aggregate>true</aggregate> ->
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.4.0</version>
-        <configuration>
-          <xmlOutput>true</xmlOutput>
-          <failOnError>false</failOnError>
-          <maxHeap>1024</maxHeap>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
--->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -185,8 +132,8 @@
           <additionalJOption>-p semantics -d ./rating</additionalJOption>
           <excludedocfilessubdir>xtend-gen</excludedocfilessubdir>
         </configuration>
-
-        <!--        <executions>
+        <!--
+        <executions>
           <execution>
             <id>aggregate</id>
             <goals>
@@ -194,7 +141,8 @@
             </goals>
             <phase>integration-test</phase>
           </execution>
-        </executions> -->
+        </executions>
+        -->
       </plugin>
 
 
@@ -203,24 +151,15 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
-        <configuration>
-          <!-- <target>
-            <artifact>
-              <groupId>de.cau.cs.kieler</groupId>
-              <artifactId>de.cau.cs.kieler.target</artifactId>
-              <version>0.0.1-SNAPSHOT</version>
-              <classifier>indigo</classifier>
-            </artifact>
-          </target> -->
-		  
+        <configuration>      
           <target>
             <artifact>
               <groupId>de.cau.cs.kieler</groupId>
               <artifactId>de.cau.cs.kieler.semantics.targetplatform</artifactId>
               <version>0.1.0-SNAPSHOT</version>
             </artifact>
-          </target>		  
-		  
+          </target>     
+      
           <environments>
             <environment>
               <os>linux</os>
@@ -251,7 +190,7 @@
         </configuration>
       </plugin>
     </plugins>
-	
+  
     <pluginManagement>
       <plugins>
         <!-- maven xtend plugin to tell maven how to compile xtend code -->

@@ -21,6 +21,8 @@ import com.google.inject.Scopes
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.circuit.Link
 import de.cau.cs.kieler.circuit.Port
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KBackground
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
@@ -42,8 +44,6 @@ import java.util.List
 import java.util.Set
 import org.eclipse.elk.core.util.Maybe
 import org.eclipse.elk.core.util.Pair
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.IEditorPart

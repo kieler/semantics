@@ -25,6 +25,9 @@ import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -40,15 +43,12 @@ import java.util.HashSet
 import java.util.Iterator
 import java.util.List
 import java.util.Map
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KGraphElement
-import org.eclipse.elk.graph.KNode
-import org.eclipse.emf.ecore.EObject
 import org.eclipse.elk.core.util.Pair
+import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+
 /**
  * Adds tracing edges from mappings to a diagram.
  * 
@@ -86,7 +86,7 @@ class TracingVisualizer {
             //If model is a wrapper around a traced model marked as TRACED_MODEL_ROOT_NODE
             return diagram.KNodeIterator.
                 filter [
-                    it.getData(KLayoutData)?.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)
+                    it.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)
                 ].exists[viewContext.tracing != null || model instanceof ModelWrapper];
         }
     }
@@ -239,7 +239,7 @@ class TracingVisualizer {
                 if (visibleEdgesModelOrigin.empty) {
                     view.hide(it);
                 } else {
-                    val origin = it.getData(KLayoutData).getProperty(InternalTracingProperties.TRACING_EDGE);
+                    val origin = it.getProperty(InternalTracingProperties.TRACING_EDGE);
                     if (visibleEdgesModelOrigin.contains(origin.first) &&
                         visibleEdgesModelOrigin.contains(origin.second)) {
                         view.show(it);
@@ -257,7 +257,7 @@ class TracingVisualizer {
         if (tracing != null) {
             return diagram.KNodeIterator.filter [
                 val node = it as KNode;
-                node.getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE) &&
+                node.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE) &&
                     viewContext.viewer.isExpanded(node);
             ].map[it as KNode].fold(newHashMap()) [ map, node |
                 val model = viewContext.getSourceElement(node);
@@ -363,10 +363,10 @@ class TracingVisualizer {
             var Map<EObjectWrapper, EObject> _targetInstanceMap = null;
             val sourceModelRootNode = viewContext.getTargetElements(source).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
-                    (it as KNode).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+                    (it as KNode).getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
             if (!source.transient && sourceModelRootNode != null && source.rootObject.EObject != null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
             }
@@ -400,7 +400,7 @@ class TracingVisualizer {
         var predicateConstuct = Predicates.or(viewContext.getProperty(TracingVisualizationProperties.VISUALIZATION_PREDICATE),
             [
                 if (it instanceof KGraphElement) {
-                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingVisualizationProperties.TRACING_NODE);
+                    return (it as KGraphElement).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else if (it instanceof KRendering) {
                     return (it as KRendering).getProperty(TracingVisualizationProperties.TRACING_NODE);
                 } else {
@@ -445,8 +445,8 @@ class TracingVisualizer {
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
         if (source != null && target != null && origin != null && attachNode != null) {
             val edge = createEdge;
-            edge.getData(KLayoutData).setProperty(CoreOptions.NO_LAYOUT, true);
-            edge.getData(KLayoutData).setProperty(InternalTracingProperties.TRACING_EDGE, origin);
+            edge.setProperty(CoreOptions.NO_LAYOUT, true);
+            edge.setProperty(InternalTracingProperties.TRACING_EDGE, origin);
             edge.initiallyHide;
             edge.data += createKCustomRendering => [
                 it.figureObject = new TracingEdgeNode(source, target, attachNode);
@@ -474,6 +474,6 @@ class TracingVisualizer {
 
     /** Checks if given edge is a tracing edge */
     private def isTracingEdge(KEdge edge) {
-        return edge.getData(KLayoutData)?.getProperty(InternalTracingProperties.TRACING_EDGE) != null;
+        return edge.getProperty(InternalTracingProperties.TRACING_EDGE) != null;
     }
 }

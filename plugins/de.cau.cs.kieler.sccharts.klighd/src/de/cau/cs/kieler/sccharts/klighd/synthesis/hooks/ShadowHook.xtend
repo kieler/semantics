@@ -15,12 +15,12 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
-import org.eclipse.elk.graph.KNode
 
 /**
  * Removes shadows.

@@ -17,6 +17,8 @@ import de.cau.cs.kieler.kico.features.Feature
 import de.cau.cs.kieler.kico.features.FeatureGroup
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -31,9 +33,8 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import javax.inject.Inject
-import org.eclipse.elk.graph.KNode
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * Common parts for KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).

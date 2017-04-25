@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Esterel Extern Compilers/Simulators
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.sim;singleton:=true
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.sim.EsterelSimPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,

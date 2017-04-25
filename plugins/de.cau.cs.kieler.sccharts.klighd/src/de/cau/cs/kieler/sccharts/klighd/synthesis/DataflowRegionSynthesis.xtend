@@ -25,6 +25,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
@@ -46,22 +50,18 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import java.util.Properties
+import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.NodeLabelPlacement
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.KPort
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.p4nodes.NodePlacementStrategy
 
 /**
  * Transforms {@link DataflowRegion} into {@link KNode} diagram elements.
@@ -112,6 +112,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
      
     override performTranformation(DataflowRegion region) {
         val node = region.createNode().associateWith(region);
+
+        // Set KIdentifier for use with incremental update
+        if (!region.id.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.id]
+        }
 
         node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
@@ -170,7 +175,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 it.addDefaultLayoutParameter
                 //add Port
                 it.addPort(vo.reference, PortSide::WEST) => [
-                    it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                    it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                 ]
                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                     vo.reference.serialize as String,
@@ -266,7 +271,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                                 it.addDefaultLayoutParameter
                                 it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
-                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                                     subVo.serialize as String,
                                     LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -314,7 +319,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                                 it.addDefaultLayoutParameter
                                 it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
-                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                  .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
                                     subVo.serialize as String,
                                     LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -383,7 +388,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                         it.addDefaultLayoutParameter
                         it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                         it.addPort(vo, PortSide::EAST)
-                            .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                            .addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                         it.createLabel(it).configureInsideTopCenteredNodeLabel(
                             vo.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                         it.createEdge(vo) => [
@@ -561,7 +566,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
-            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
         ]
         n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String, LABELFONTSIZE,
                                                              KlighdConstants::DEFAULT_FONT_NAME)
@@ -590,7 +595,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
-            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+            addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
         ]
         n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String, LABELFONTSIZE,
                                                              KlighdConstants::DEFAULT_FONT_NAME)
@@ -651,7 +656,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
-                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                             ]
                             inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
                                 LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -687,7 +692,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 //create input and output ports for callReference
                 ref.inputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::WEST) => [
-                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0f)
+                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
                             PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -695,7 +700,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 ]]
                 ref.outputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::EAST) => [
-                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0f)
+                        it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -3.0)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
                             PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
@@ -736,7 +741,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
-                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0f)
+                                it.addLayoutParam(CoreOptions.PORT_BORDER_OFFSET, -2.0)
                             ]
                             inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
                                 LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
