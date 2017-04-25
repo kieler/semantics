@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-  <description name="KIELER Semantics (Release 0.12.0)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release-semantics-0.12.0/">Update site for the KIELER Semantics release 0.12.0.</description>
+  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">Update site for the KIELER Semantics project nightly builds.</description>
   <!-- CATEGORY DEFINITIONS -->
   <category-def name="kieler-sem" label="KIELER Semantics">
     <description>
