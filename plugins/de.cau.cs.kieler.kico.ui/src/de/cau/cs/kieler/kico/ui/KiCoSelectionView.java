@@ -143,7 +143,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean allExpanded = ALL_EXPANDED_DEFAULT;
 
     /** The flag for selecting or deselecting all transformations. */
-    public static boolean allSelected = false;
+    public static boolean allSelected = true;
 
     /** The advanced mode auto selects required transformations. */
     public static int compileMode = 0;
@@ -1035,29 +1035,13 @@ public class KiCoSelectionView extends DiagramViewPart {
                     return;
                 }
                 // ACTION SELECT ALL / NONE
-                allSelected = !allSelected;
-                if (allSelected) {
-                    actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
-                    actionSelectAllToggle.setToolTipText("Deselect all transformations.");
-                } else {
-                    actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
-                    actionSelectAllToggle.setToolTipText("Select all transformations.");
-                }
                 int activeEditorID = getActiveEditorID();
                 KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
                 selectionModel.getContext().getSelection().getDisabledProcessorOptionIds().clear();
                 selectionModel.getContext().getSelection().getEnabledProcessorOptionIds().clear();
                 selectionModel.getContext().getSelection().getDisabledTransformationIds().clear();
-                if (allSelected) {
-                    Set<Feature> visibleFeatures = selectionModel.getVisibleFeatures();
-                    for (Feature feature : visibleFeatures) {
-                        KielerCompilerSelection.add(feature.getId(), selectionModel.getContext()
-                                .getSelection().getSelectedFeatureAndTransformationIds(), false);
-                    }
-                } else {
-                    selectionModel.getContext().getSelection()
-                            .getSelectedFeatureAndTransformationIds().clear();
-                }
+                // De-select all
+                selectionModel.getContext().getSelection().getSelectedFeatureAndTransformationIds().clear();
                 // KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
                 updateSelectionTransformationVisualization(activeEditorID);
 
@@ -1068,9 +1052,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 possiblyUpdateModel();
             }
         };
-        actionSelectAllToggle.setText("Select/Deselect All");
-        actionSelectAllToggle.setToolTipText("Select all transformations.");
-        actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+        actionSelectAllToggle.setText("Deselect All");
+        actionSelectAllToggle.setToolTipText("Deselect all transformations.");
+        actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
         return actionSelectAllToggle;
     }
 
