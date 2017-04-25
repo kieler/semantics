@@ -707,6 +707,11 @@ class SCChartsExtension {
         transition
     }
 
+    def Transition addEffectBefore(Transition transition, Effect effect) {
+        transition.effects.add(0, effect)
+        transition
+    }
+    
     def Transition clearEffects(Transition transition) {
         transition.effects.clear
         transition
