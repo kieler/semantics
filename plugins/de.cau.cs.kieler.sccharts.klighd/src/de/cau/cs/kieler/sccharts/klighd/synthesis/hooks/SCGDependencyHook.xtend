@@ -25,6 +25,10 @@ import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KLayoutData
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KCustomRendering
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
@@ -33,6 +37,7 @@ import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
@@ -49,6 +54,7 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGDependencyHook.DepTyp
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.DataDependency
+import de.cau.cs.kieler.scg.DataDependencyType
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
@@ -56,11 +62,7 @@ import java.util.HashMap
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
-import org.eclipse.elk.core.klayoutdata.KLayoutData
 import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KLabel
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
@@ -70,7 +72,6 @@ import org.eclipse.ui.progress.UIJob
 
 import static extension com.google.common.base.Predicates.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.scg.DataDependencyType
 
 /**
  * Adds the SCG dependencies into the SCChart.
@@ -104,15 +105,22 @@ class SCGDependencyHook extends SynthesisActionHook {
 	public static final String JOB_NAME = "Calculating SCG Dependencies";
 	/** The related synthesis option */
 	public static final SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption.createCheckOption(
-		"Show SCG Dependencies", false).setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(
-		SCGDependencyHook.ID); // Add this action as updater
+		"Show SCG Dependencies", false).setCategory(GeneralSynthesisOptions::DEBUGGING)
+		.setUpdateStrategy(SimpleUpdateStrategy.ID)
+		// Deactivated to force Simple Update Strategy
+		//.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** The related synthesis option for regions */
 	public static final SynthesisOption SCG_DEPENDENCY_TYPES= SynthesisOption.createChoiceOption(
-		"Dependency Types", newArrayList(DepType.Elements, DepType.Regions), DepType.Elements).setCategory(
-		GeneralSynthesisOptions::DEBUGGING).setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
+		"Dependency Types", newArrayList(DepType.Elements, DepType.Regions), DepType.Elements)
+		.setCategory(GeneralSynthesisOptions::DEBUGGING)
+        .setUpdateStrategy(SimpleUpdateStrategy.ID)
+        // Deactivated to force Simple Update Strategy
+        //.setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
+    /** Option to show only dependencies of selected elements */
 	public static final SynthesisOption SHOW_SELECTED_DEPENDENCIES = SynthesisOption.createCheckOption(
-		"Show only Dependencies of selected Elements", false).setCategory(GeneralSynthesisOptions::DEBUGGING).setUpdateAction(
-		SCGDependencyHook.ID); // Add this action as updater
+		"Show only Dependencies of selected Elements", false)
+		.setCategory(GeneralSynthesisOptions::DEBUGGING)
+        .setUpdateAction(SCGDependencyHook.ID); // Add this action as updater
 	/** Property to store analysis results */
 	private static final IProperty<HashMultimap<DepType, KEdge>> DEPENDENCY_EDGES = new Property<HashMultimap<DepType, KEdge>>(
 		"de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.dependency.edges", null);
@@ -161,7 +169,7 @@ class SCGDependencyHook extends SynthesisActionHook {
 	}
 	
 	override getDisplayedSynthesisOptions() {
-		return newLinkedList(SHOW_SCG_DEPENDENCIES, SHOW_SELECTED_DEPENDENCIES, SCG_DEPENDENCY_TYPES);
+		return newLinkedList(SHOW_SCG_DEPENDENCIES, SCG_DEPENDENCY_TYPES); // SHOW_SELECTED_DEPENDENCIES
 	}
 
 	override finish(Scope model, KNode rootNode) {
@@ -205,15 +213,10 @@ class SCGDependencyHook extends SynthesisActionHook {
 		}
 		val scc = model as State;
 		val context = usedContext;
-		val propertyHolder = rootNode.data.filter(KLayoutData).head;
-		if (propertyHolder == null) {
-			throw new IllegalArgumentException("Missing property holder on root element");
-		}
-
-		val edges = propertyHolder.getProperty(DEPENDENCY_EDGES);
+		val edges = rootNode.getProperty(DEPENDENCY_EDGES);
 		// If not already created
 		if (edges == null) {
-			val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
+			val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
 			if (tracker == null) {
 				throw new IllegalArgumentException("Missing source model tracker");
 			}
@@ -232,8 +235,8 @@ class SCGDependencyHook extends SynthesisActionHook {
 					new UIJob(JOB_NAME) {
 
 						override runInUIThread(IProgressMonitor monitor) {
-							if (propertyHolder.getProperty(DEPENDENCY_EDGES) == null) {
-								propertyHolder.setProperty(DEPENDENCY_EDGES, newLoopElements);
+							if (rootNode.getProperty(DEPENDENCY_EDGES) == null) {
+								rootNode.setProperty(DEPENDENCY_EDGES, newLoopElements);
 								val type = context.getOptionValue(SCG_DEPENDENCY_TYPES) as DepType;
 								val viewer = context.viewer;
 								newLoopElements.entries.forEach [
@@ -398,7 +401,7 @@ class SCGDependencyHook extends SynthesisActionHook {
 			// Create edge
 			edge = createEdge(source, target);
 			edges.put(sourceTargetPair, edge);
-			edge.getData(KLayoutData).setProperty(CoreOptions.NO_LAYOUT, true);
+			edge.setProperty(CoreOptions.NO_LAYOUT, true);
 			edge.data += createKCustomRendering => [
 				val edgeNode = new TracingEdgeNode(source, target, attachNode);
 				edgeNode.setIgnoreFirstCollapsibleParent(ignoreFirstCollapsibleParent, ignoreFirstCollapsibleParent)

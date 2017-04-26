@@ -89,7 +89,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<Scope> {
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)];
         
         // Add categories options
-        options.addAll(APPEARANCE, DEBUGGING)
+        options.addAll(APPEARANCE, DEBUGGING, LAYOUT)
         
         return options.toList;
     }

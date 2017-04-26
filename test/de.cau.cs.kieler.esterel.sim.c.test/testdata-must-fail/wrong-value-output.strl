@@ -1,0 +1,10 @@
+module M:
+input A;
+output O:integer;
+
+loop
+	await A;
+	emit O(1);
+end 
+
+end module

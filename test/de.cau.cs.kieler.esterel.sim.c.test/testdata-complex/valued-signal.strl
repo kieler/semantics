@@ -1,0 +1,10 @@
+module M:
+output O1: integer;
+output O2: combine integer with +;
+
+emit O1(2);
+
+emit O2(3);
+emit O2(7);
+
+end module

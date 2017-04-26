@@ -1,0 +1,12 @@
+module M:
+input A;
+output O;
+
+loop
+	present A then
+		emit O;
+	end;
+	pause; 
+end
+
+end module

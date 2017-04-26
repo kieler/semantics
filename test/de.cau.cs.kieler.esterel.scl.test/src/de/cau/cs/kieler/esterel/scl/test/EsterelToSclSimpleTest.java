@@ -31,6 +31,7 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
@@ -83,15 +84,13 @@ public class EsterelToSclSimpleTest extends KiemAutomatedJUnitTest {
             Program esterelProgram = (Program) resource.getContents().get(0);
 
             // Transform to SCL and to SCG
-            SCLProgram sclProgram =
-                    (SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT",
-                            esterelProgram, false, false).getEObject();
+            KielerCompilerContext contextSCL = new KielerCompilerContext("ESTERELTOSCL_OPT", esterelProgram);
+            SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile(contextSCL).getEObject();
             
             assert(sclProgram instanceof SCLProgram);
             
-            SCGraph scg =
-                    (SCGraph) KielerCompiler.compile("SCLTOSCG", sclProgram, false, false)
-                            .getEObject();
+            KielerCompilerContext contextSCG = new KielerCompilerContext("SCLTOSCG", sclProgram);
+            SCGraph scg = (SCGraph) KielerCompiler.compile(contextSCG).getEObject();
             
             assert(scg instanceof SCGraph);
 

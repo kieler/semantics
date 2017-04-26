@@ -13,12 +13,12 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import org.eclipse.elk.graph.KNode;
 
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.features.Feature;
 import de.cau.cs.kieler.kico.features.FeatureGroup;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 
 /**
  * This action realizes the disabled selection if transformation IDs.

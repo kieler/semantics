@@ -62,11 +62,17 @@ public final class XtextModelingUtil {
             IUnitOfWork<IParseResult, XtextResource> work
                     = new IUnitOfWork<IParseResult, XtextResource>() {
                 public IParseResult exec(final XtextResource xtextResource) throws Exception {
-                    return xtextResource.getParseResult();
+                    if (xtextResource != null) {
+                        return xtextResource.getParseResult();
+                    }
+                    return null;
                 }
             };
             result = xtextDocument.readOnly(work);
-            return result.getRootASTElement();
+            if (result != null) {
+                return result.getRootASTElement();
+            }
+            return null;
         }
         return null;
     }

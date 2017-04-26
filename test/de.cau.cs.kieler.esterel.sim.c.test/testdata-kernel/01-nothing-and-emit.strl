@@ -1,0 +1,9 @@
+module M:
+output O1;
+output O2;
+
+emit O1;
+nothing;
+emit O2;
+
+end module

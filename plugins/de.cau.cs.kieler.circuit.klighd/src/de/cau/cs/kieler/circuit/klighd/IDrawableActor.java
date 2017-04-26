@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.circuit.klighd;
 
-import org.eclipse.elk.graph.KNode;
 
 import de.cau.cs.kieler.circuit.Actor;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 
 /**
  * @author fry

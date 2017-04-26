@@ -1,14 +1,12 @@
-// This model is compiled non ASC schedulable.
-// See also tickets KISEMA-987, 1074, 970
+// Not ASC-Schedulable because there is a a potentially instantateous loop.
+// However one transition is deferred.
+// But this is only visible in the variable values and not recognized by the compiler.
+// See KISEMA-1130
 @Transformation WEAKSUSPEND
 scchart WeakSuspension {
   input bool WS;
   input bool I;
   weak suspend WS;
   
-  initial state A
-  --> B immediate with I;
-  
-  state B
-  --> A with !I;
+  initial state A;
 }

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -25,7 +26,6 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.TransitionStyles
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KEdge
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
@@ -60,11 +60,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
 
-        edge.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         if (USE_KLAY.booleanValue) {
-            edge.setLayoutOption(LayeredOptions::SPACING_LABEL, 3.0f);
+            edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0);
         } else {
-            edge.setLayoutOption(CoreOptions::SPACING_LABEL, 2.0f);
+            edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }
         
         // Connect with states

@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Esterel Test
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.sim.c.test;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Kiel University
+Require-Bundle: org.eclipse.core.runtime,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.sim.kiem.test,
+ de.cau.cs.kieler.semantics.test.common,
+ de.cau.cs.kieler.sim.eso,
+ de.cau.cs.kieler.esterel,
+ de.cau.cs.kieler.esterel.kexpressions,
+ de.cau.cs.kieler.esterel.sim.c,
+ de.cau.cs.kieler.esterel.scl
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+

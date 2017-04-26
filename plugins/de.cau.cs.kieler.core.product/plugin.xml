@@ -2,118 +2,68 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.ui.ide.workbench"
-            description="%productDescription"
-            name="KIELER">
-         <property
-               name="aboutText"
-               value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#x0A;A research project on enhancing the model-based design of complex systems&#x0A;&#x0A;&#x0A;For more information, visit our website:&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2016 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group">
+   <extension id="product" point="org.eclipse.core.runtime.products">
+      <product application="org.eclipse.ui.ide.workbench" description="%productDescription" name="KIELER">
+         <property name="aboutText" value="KIELER - Kiel Integrated Environment for Layout (Eclipse Rich Client)&#10;A research project on enhancing the model-based design of complex systems&#10;&#10;&#10;For more information, visit our website:&#10;http://www.informatik.uni-kiel.de/rtsys/kieler/&#10;&#10;Copyright 2016 by Kiel University, Department of Computer Science, Real-Time and Embedded Systems Group">
          </property>
-         <property
-               name="aboutImage"
-               value="images/about.png">
+         <property name="aboutImage" value="images/about.png">
          </property>
-         <property
-               name="appName"
-               value="KIELER">
+         <property name="appName" value="KIELER">
          </property>
-         <property
-               name="introTitle"
-               value="KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client">
+         <property name="introTitle" value="KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client">
          </property>
-         <property
-               name="startupProgressRect"
-               value="19,301,207,15">
+         <property name="startupProgressRect" value="19,301,207,15">
          </property>
-         <property
-               name="version"
-               value="0.11.0">
+         <property name="version" value="0.12.0">
          </property>
-         <property
-               name="windowImages"
-               value="icons/foerde-logo-16.gif,icons/foerde-logo-32.gif,icons/foerde-logo-48.gif,icons/foerde-logo-64.gif,icons/foerde-logo-128.gif">
+         <property name="windowImages" value="icons/foerde-logo-16.gif,icons/foerde-logo-32.gif,icons/foerde-logo-48.gif,icons/foerde-logo-64.gif,icons/foerde-logo-128.gif">
          </property>
-         <property
-               name="introBrandingImage"
-               value="product:icons/kieler_64.gif">
+         <property name="introBrandingImage" value="product:icons/kieler_64.gif">
          </property>
-         <property
-               name="introBrandingImageText"
-               value="KIELER by Kiel University">
+         <property name="introBrandingImageText" value="KIELER by Kiel University">
          </property>
-          <property
-                name="cssTheme"
-                value="org.eclipse.e4.ui.css.theme.e4_default">
+          <property name="cssTheme" value="org.eclipse.e4.ui.css.theme.e4_default">
           </property>
-          <property
-                name="applicationCSSResources"
-                value="platform:/plugin/org.eclipse.platform/images/">
+          <property name="applicationCSSResources" value="platform:/plugin/org.eclipse.platform/images/">
           </property>
-          <property
-                name="startupForegroundColor"
-                value="FFFFFF">
+          <property name="startupForegroundColor" value="FFFFFF">
           </property>
-          <property
-                name="startupMessageRect"
-                value="10,200,0,0">
+          <property name="startupMessageRect" value="10,200,0,0">
           </property>
-          <property
-                name="preferenceCustomization"
-                value="plugin_customization.ini">
+          <property name="preferenceCustomization" value="plugin_customization.ini">
           </property>
       </product>
    </extension>
-   <extension
-         point="org.eclipse.help.toc">
-      <toc
-            file="help/toc.xml"
-            primary="true">
+   <extension point="org.eclipse.help.toc">
+      <toc file="help/toc.xml" primary="true">
       </toc>
    </extension>
-   <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
-      <commonWizard
-            type="new"
-            wizardId="org.eclipse.ui.wizards.new.project">
+   <extension point="org.eclipse.ui.navigator.navigatorContent">
+      <commonWizard type="new" wizardId="org.eclipse.ui.wizards.new.project">
          <enablement>
             <not>
                <or>
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
+                  <adapt type="org.eclipse.core.resources.IFile">
                   </adapt>
-                  <adapt
-                        type="org.eclipse.core.resources.IFolder">
+                  <adapt type="org.eclipse.core.resources.IFolder">
                   </adapt>
-                  <adapt
-                        type="org.eclipse.core.resources.IProject">
+                  <adapt type="org.eclipse.core.resources.IProject">
                   </adapt>
                </or>
             </not>
          </enablement>
       </commonWizard>
    </extension>
-  <extension
-         point="org.eclipse.ui.intro">
-     <introProductBinding
-            introId="org.eclipse.ui.intro.universal"
-            productId="de.cau.cs.kieler.core.product.product">
+  <extension point="org.eclipse.ui.intro">
+     <introProductBinding introId="org.eclipse.ui.intro.universal" productId="de.cau.cs.kieler.core.product.product">
      </introProductBinding>
   </extension>
-  <extension
-         point="org.eclipse.ui.intro.configExtension">
-     <configExtension
-            configId="org.eclipse.ui.intro.universalConfig"
-            content="intro/introContent.xml">
+  <extension point="org.eclipse.ui.intro.configExtension">
+     <configExtension configId="org.eclipse.ui.intro.universalConfig" content="intro/introContent.xml">
      </configExtension>
   </extension>
-  <extension
-        point="org.eclipse.core.runtime.preferences">
-     <initializer
-           class="de.cau.cs.kieler.core.product.KLighDPreferenceInitializer">
+  <extension point="org.eclipse.core.runtime.preferences">
+     <initializer class="de.cau.cs.kieler.core.product.KLighDPreferenceInitializer">
      </initializer>
   </extension>
   
