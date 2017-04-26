@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.core.resources.IContainer
 
 /** 
  * Auxilary class to load an EObject from a fully qualified file path.
@@ -81,14 +82,31 @@ class ModelImporter {
      * @param modelFileLocation Fully qualified path to a model file
      * @param resourceSet The ResourceSet to which possible references should be added
      */
-    private static def collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
+    private static def void collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
         val modelFile = getFile(modelFileLocation)
         if(modelFile != null && modelFile.exists) {
             val fileExtensionOfModelFiles = modelFile.fileExtension
-            // Search in project for other files with the model file extension
-            // and add them to the resource set.
             val project = modelFile.project
-            for(IResource res : project.members) {
+            collectPossiblyReferencedResources(modelFileLocation, resourceSet, fileExtensionOfModelFiles, project.members)
+        }
+    }
+    
+    /**
+     * Searches recursively in the resources for files with the same file extension.
+     * All findings are added to the resource set, such that they can be resolved when loading the model file.
+     * 
+     * @param modelFileLocation Fully qualified path to a model file
+     * @param resourceSet The ResourceSet to which possible references should be added
+     * @param fileExtensionOfModelFiles The file extension of the model file
+     * @param resources The resources in which the search takes place
+     */
+    private static def void collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet,
+        String fileExtensionOfModelFiles, IResource[] resources) {
+
+        for(IResource res : resources) {
+            if (res instanceof IContainer) {
+                collectPossiblyReferencedResources(modelFileLocation, resourceSet, fileExtensionOfModelFiles, res.members);
+            } else if (res instanceof IFile) {
                 val fileExtension = res.fileExtension
                 if(fileExtension != null && fileExtension.equals(fileExtensionOfModelFiles) ){
                     val location = res.location.toOSString
