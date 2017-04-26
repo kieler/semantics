@@ -16,9 +16,9 @@ package de.cau.cs.kieler.kico.klighd.internal.model
 import de.cau.cs.kieler.kico.KiCoPlugin
 import de.cau.cs.kieler.kico.internal.KiCoUtil
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
-import org.eclipse.elk.graph.KNode
 import org.eclipse.emf.ecore.EObject
 
 /**

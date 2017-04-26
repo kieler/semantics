@@ -50,7 +50,6 @@ import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.klighd.krendering.KRectangle;
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
@@ -61,7 +60,6 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.timing.transformation.TPPInformation;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.features.SCGFeatures;
 import de.cau.cs.kieler.scg.s.features.CodeGenerationFeatures;
 import de.cau.cs.kieler.scg.s.transformations.CodeGenerationTransformations;
 
@@ -141,7 +139,7 @@ public class TimingAnalysis extends Job {
 	private State scchart;
 	private HashMultimap<Region, WeakReference<KText>> timingLabels;
 	private HashMap<Region, String> timingResults;
-	private Region scchartDummyRegion;
+    private Region scchartDummyRegion = null;
 	private HashMultimap<Region, WeakReference<KRectangle>> regionRectangles;
 	private ArrayList<Region> wcpRegions = new ArrayList<Region>();
 	private TimingValueRepresentation rep;
@@ -158,7 +156,6 @@ public class TimingAnalysis extends Job {
 		this.scchart = rootState;
 		this.timingLabels = regionLabels;
 		this.timingResults = new HashMap<Region, String>();
-		this.scchartDummyRegion = scchartDummyRegion;
 		this.resource = resource;
 		this.regionRectangles = regionRectangles;
 		this.highlight = highlight;
@@ -186,12 +183,12 @@ public class TimingAnalysis extends Job {
 			// Stop as soon as possible when job canceled
 			return Status.CANCEL_STATUS;
 		}
-
-		KielerCompilerContext context = new KielerCompilerContext(
-				SCGFeatures.SEQUENTIALIZE_ID + ",*T_ABORT,*T_scg.basicblock.sc,"
-						+ "*T_NOSIMULATIONVISUALIZATION,T_scg.tpp",scchart);
+        KielerCompilerContext context = new KielerCompilerContext(
+                "*T_ABORT, *T_INITIALIZATION, *T_scg.basicblock.sc, *T_s.c, "
+                + "*T_sccharts.scg, *T_NOSIMULATIONVISUALIZATION, *T_scg.guards, "
+                + "*T_scg.scheduling, T_scg.tpp", scchart);
 		context.setProperty(Tracing.ACTIVE_TRACING, true);
-		context.setProperty(SCGTransformation.ENABLE_SFR, false);
+		context.setProperty(SCGTransformation.ENABLE_SFR, true);
 		context.setAdvancedSelect(true);
 		CompilationResult compilationResult = KielerCompiler.compile(context);
 
@@ -218,6 +215,19 @@ public class TimingAnalysis extends Job {
 					"Error in the TPP placement phase of the interactive timing analysis. "
 					+ "No auxiliary data was produced.");
 		}
+		// get the dummy region for the whole SCChart
+		Iterator<Region> regionIterator = tppRegionMap.values().iterator();
+        while (regionIterator.hasNext()) {
+            Region currentRegion = regionIterator.next();
+            String currentRegionLabel = currentRegion.getLabel();
+            if (currentRegionLabel != null) {
+                if (currentRegionLabel.equals("SCChartDummyRegion")) {
+                    scchartDummyRegion = currentRegion;
+                    break;
+                }
+            }
+        }
+		
 		
         ////////////////////////////////////////////////////////////////////////////////////////////////
 		// Step 3: Generate Code from the Sequentialized SCG with TPP
@@ -396,16 +406,8 @@ public class TimingAnalysis extends Job {
 
 				// get overallWCET
 				BigInteger overallWCET = new BigInteger("0");
-				String scchartTiming = timingResults.get(scchartDummyRegion);
 				String timingResultChart = timingResults.get(null);
-				if (scchartTiming != null) {
-					BigInteger timingResultChartBI = new BigInteger(timingResultChart);
-					BigInteger scchartTimingBI = new BigInteger(scchartTiming);
-					BigInteger timingResultSum = timingResultChartBI.add(scchartTimingBI);
-					overallWCET = timingResultSum;
-				} else {
-					overallWCET = new BigInteger(timingResultChart);
-				}
+				overallWCET = new BigInteger(timingResultChart);
 
 				for (Region region : timingLabels.keySet()) {
 					String timingResult = timingResults.get(region);

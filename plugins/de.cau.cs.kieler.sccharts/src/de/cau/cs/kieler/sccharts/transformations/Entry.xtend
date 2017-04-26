@@ -55,7 +55,7 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeatureGroup::EXPANSION_ID)
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeatureGroup::EXPANSION_ID, SCChartsFeature.EXIT_ID, SCChartsFeature.DURING_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -99,11 +99,12 @@ class Entry extends AbstractExpansionTransformation implements Traceable {
                 }
                 firstState = connector
                 lastState = state
-            } else if (!state.hasInnerStatesOrControlflowRegions) {
+            } else if (!state.hasInnerStatesOrControlflowRegions) { // other inner behavior is already expanded
                 state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createControlflowRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
-                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+                lastState = region.createState(GENERATED_PREFIX + "Done")
+                lastState.final = state.outgoingTransitions.exists[!isTypeTermination]
                 val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
                 for (transition : state.outgoingTransitions.immutableCopy) {
                     exitState.outgoingTransitions.add(transition)

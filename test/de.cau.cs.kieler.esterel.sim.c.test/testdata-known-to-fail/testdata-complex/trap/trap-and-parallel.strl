@@ -1,0 +1,27 @@
+% Model does compile correctly to scl and scg,
+% but simulation does not reach end of trap somehow
+module test_3vsim3:
+input A,B,C;
+output V,W,X,Y,Z;
+ 
+loop
+  trap T in
+    present A then
+      emit X;
+    end
+    ||
+    present B then
+      emit Y;
+      exit T;
+    end;
+    emit V;
+    ||
+    present C then
+      exit T;
+    end;
+    emit W;
+  end trap;
+  pause;
+end
+
+end module

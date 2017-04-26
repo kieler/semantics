@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: C Simulation for STRL
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.sim.c;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.sim.c.EsterelCSimulationPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.s,
  de.cau.cs.kieler.sc,
  de.cau.cs.kieler.sim.benchmark,
- de.cau.cs.kieler.sim.signals, 
+ de.cau.cs.kieler.sim.signals,
  com.google.inject,
  org.eclipse.xtend.lib,
  com.google.guava,
@@ -23,8 +23,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.kexpressions,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ de.cau.cs.kieler.scg.s,
+ de.cau.cs.kieler.sim.syncsignalreset
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.esterel.sim.c,
- de.cau.cs.kieler.esterel.sim.c.xtend
+Export-Package: de.cau.cs.kieler.esterel.sim.c

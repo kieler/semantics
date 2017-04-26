@@ -41,9 +41,10 @@
     <module>de.cau.cs.kieler.esterel.kexpressions</module>
     <module>de.cau.cs.kieler.esterel.prom</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
-    <module>de.cau.cs.kieler.esterel.ui</module>
+    <module>de.cau.cs.kieler.esterel.sim.c</module>
     <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.scl</module>
+    <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kex</module>
@@ -67,6 +68,7 @@
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sccharts</module>
+    <module>de.cau.cs.kieler.sccharts.debug</module>
     <module>de.cau.cs.kieler.sccharts.examples</module>
     <module>de.cau.cs.kieler.sccharts.kivi</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>

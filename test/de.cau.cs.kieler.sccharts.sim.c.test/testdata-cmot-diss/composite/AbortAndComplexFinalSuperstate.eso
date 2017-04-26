@@ -1,0 +1,46 @@
+! reset;
+R 
+% Output: O(3) 
+;
+
+% Output: O(2) _microtick(1) 
+;
+R 
+% Output: O(1) _microtick(3) 
+;
+
+% Output: O(2) _microtick(4) 
+;
+
+% Output: O(1) _microtick(5) 
+;
+
+% Output: _microtick(7) 
+;
+
+% Output: _microtick(7) 
+;
+
+% Output: _microtick(7) 
+;
+R 
+% Output: O(3) _microtick(8) 
+;
+
+% Output: O(2) _microtick(9) 
+;
+
+% Output: O(1) _microtick(10) 
+;
+R 
+% Output: O(3) _microtick(12) 
+;
+
+% Output: O(2) _microtick(13) 
+;
+
+% Output: O(1) _microtick(14) 
+;
+
+% Output: _microtick(16) 
+;

@@ -1,0 +1,46 @@
+! reset;
+A 
+% Output: 
+;
+
+% Output: 
+;
+A 
+% Output: X O 
+;
+A 
+% Output: 
+;
+! reset;
+B 
+% Output: Y O 
+;
+
+% Output: 
+;
+! reset;
+C 
+% Output: 
+;
+C 
+% Output: 
+;
+C 
+% Output: Z O 
+;
+C 
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+A B 
+% Output: X O 
+;
+
+% Output: 
+;

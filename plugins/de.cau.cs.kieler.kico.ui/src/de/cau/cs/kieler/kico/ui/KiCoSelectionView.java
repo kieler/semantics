@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.kico.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.elk.core.util.Pair;
-import org.eclipse.elk.graph.KNode;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 import org.eclipse.emf.ecore.EObject;
@@ -52,6 +50,7 @@ import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.ui.view.KlighdViewPlugin;
@@ -90,10 +89,10 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/expandall.gif");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui", "icons/full/elcl16/expandall.png");
 
     public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/collapseall.gif");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui", "icons/full/elcl16/collapseall.png");
 
     public static final ImageDescriptor ICON_SELECTALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
@@ -144,7 +143,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean allExpanded = ALL_EXPANDED_DEFAULT;
 
     /** The flag for selecting or deselecting all transformations. */
-    public static boolean allSelected = false;
+    public static boolean allSelected = true;
 
     /** The advanced mode auto selects required transformations. */
     public static int compileMode = 0;
@@ -754,6 +753,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis");
         }
 
+       // NO incremental update possible due to the fact that KiCo.UI currently
+       // has its own mapping to concrete instances.
+       // TODO: do not use such a mapping and better use rendering annotations instead in
+       // the future
+       properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
+              "de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy");
+
+        
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
@@ -1028,29 +1035,13 @@ public class KiCoSelectionView extends DiagramViewPart {
                     return;
                 }
                 // ACTION SELECT ALL / NONE
-                allSelected = !allSelected;
-                if (allSelected) {
-                    actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
-                    actionSelectAllToggle.setToolTipText("Deselect all transformations.");
-                } else {
-                    actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
-                    actionSelectAllToggle.setToolTipText("Select all transformations.");
-                }
                 int activeEditorID = getActiveEditorID();
                 KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
                 selectionModel.getContext().getSelection().getDisabledProcessorOptionIds().clear();
                 selectionModel.getContext().getSelection().getEnabledProcessorOptionIds().clear();
                 selectionModel.getContext().getSelection().getDisabledTransformationIds().clear();
-                if (allSelected) {
-                    Set<Feature> visibleFeatures = selectionModel.getVisibleFeatures();
-                    for (Feature feature : visibleFeatures) {
-                        KielerCompilerSelection.add(feature.getId(), selectionModel.getContext()
-                                .getSelection().getSelectedFeatureAndTransformationIds(), false);
-                    }
-                } else {
-                    selectionModel.getContext().getSelection()
-                            .getSelectedFeatureAndTransformationIds().clear();
-                }
+                // De-select all
+                selectionModel.getContext().getSelection().getSelectedFeatureAndTransformationIds().clear();
                 // KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
                 updateSelectionTransformationVisualization(activeEditorID);
 
@@ -1061,9 +1052,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 possiblyUpdateModel();
             }
         };
-        actionSelectAllToggle.setText("Select/Deselect All");
-        actionSelectAllToggle.setToolTipText("Select all transformations.");
-        actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+        actionSelectAllToggle.setText("Deselect All");
+        actionSelectAllToggle.setToolTipText("Deselect all transformations.");
+        actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
         return actionSelectAllToggle;
     }
 

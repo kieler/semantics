@@ -94,8 +94,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.scl.scl.Scope
-import de.cau.cs.kieler.scl.scl.Label
+import de.cau.cs.kieler.esterel.esterel.WeakSuspend
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -166,7 +165,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     var HashMap<String, ValuedObject> counterToEventMap
 
     // Local declared variables which are not in a StatementScope (should be added to global declarations)
-    var LinkedList<ValuedObject> localDeclarations
+    var LinkedList<ValuedObject> localBoolDeclarations
+    var LinkedList<ValuedObject> localIntDeclarations
 
     // The tick; i.e., tick is true all the time
     var protected ValuedObject synchronousTick;
@@ -231,7 +231,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         signalToValueMap = <ValuedObject, ValuedObject>newHashMap
         signalToNeutralMap = <ValuedObject, ValuedObject>newHashMap
         counterToEventMap = <String, ValuedObject>newHashMap
-        localDeclarations = <ValuedObject>newLinkedList
+        localBoolDeclarations = <ValuedObject>newLinkedList
+        localIntDeclarations = <ValuedObject>newLinkedList
         synchronousTick = createValuedObject("synchronousTick")
         pauseTransformation = new Stack<(Scope)=>Scope>
         joinTransformation = new Stack<(Scope)=>Scope>
@@ -283,11 +284,17 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             ])
         targetSclProgram.add(rootParallelStatement)
 
-        // Add declarations for flags created during transformation
-        if (!localDeclarations.nullOrEmpty) {
+        // Add declarations for flags and integers created during transformation
+        if (!localBoolDeclarations.nullOrEmpty) {
             targetSclProgram.declarations += createDeclaration => [
                 type = ValueType::BOOL
-                valuedObjects += localDeclarations
+                valuedObjects += localBoolDeclarations
+            ]
+        }
+        if (!localIntDeclarations.nullOrEmpty) {
+            targetSclProgram.declarations += createDeclaration => [
+                type = ValueType::INT
+                valuedObjects += localIntDeclarations
             ]
         }
 
@@ -647,9 +654,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             if (singleCase.delay.expr != null) {
 
                 // delayExpressionCounter counts occurrences of the signal
-                val delayExpressionCounter = createNewUniqueVariable("i", ValueType::INT)
+                val delayExpressionCounter = createNewUniqueVariable("i")
                 counterToEventMap.put(delayExpressionCounter.name, delayExpressionCounter)
-                localDeclarations += delayExpressionCounter
+                localBoolDeclarations += delayExpressionCounter
                 delayExpressionCounter.initialValue = 0.createIntValue
 
                 // Increment counter if guard holds
@@ -671,17 +678,17 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 awaitCondition.add(transformStatement(singleCase.statement, createScopeStatement))
             awaitCondition.add(createGotoStatement(awaitEndLabel.label))
             if (singleCase.delay.isImmediate) {
-                targetScope.add(EcoreUtil.copy(awaitCondition))
-                targetScope.addLabel(caseEnd)
+                targetStatementSequence.add(EcoreUtil.copy(awaitCondition))
+                targetStatementSequence.addLabel(caseEnd)
                 val caseEndAfterPause = createNewUniqueLabel
                 collectAwaits.add(awaitCondition -> caseEndAfterPause)
             } else {
                 collectAwaits.add(awaitCondition -> caseEnd)
             }
         }
-        targetScope.addLabel(awaitStartLabel)
-        targetScope.createSclPause
-        collectAwaits.forEach[targetScope.add(key); targetScope.addLabel(value)]
+        targetStatementSequence.addLabel(awaitStartLabel)
+        targetStatementSequence.createSclPause
+        collectAwaits.forEach[targetStatementSequence.add(key); targetStatementSequence.addLabel(value)]
 
         targetScope.addGoto(awaitStartLabel.label)
         targetScope.addLabel(awaitEndLabel)
@@ -731,9 +738,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // Wait several times, e.g. await 5 s
         // i counts
         if (await.delay.expr != null) {
-            delayExpressionCounter = createNewUniqueVariable("i", ValueType::INT)
+            delayExpressionCounter = createNewUniqueVariable("i")
             counterToEventMap.put(delayExpressionCounter.name, delayExpressionCounter)
-            localDeclarations += delayExpressionCounter
+            localIntDeclarations += delayExpressionCounter
             delayExpressionCounter.initialValue = createIntValue(0)
 
             // if s present increment counter
@@ -742,7 +749,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 val condTimes = createConditional
                 condTimes.expression = transformExpression(await.delay.event.expr)
                 condTimes.statements.add(incrementInt(delayExpressionCounter))
-                targetScope.add(condTimes)
+                targetStatementSequence.add(condTimes)
             } else {
                 targetScope.add(incrementInt(delayExpressionCounter))
                 val cond = createConditional
@@ -752,7 +759,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 }
                 cond.statements.add(createGotoStatement(awaitStartLabel.label))
 
-                targetScope.add(cond)
+                targetStatementSequence.add(cond)
                 if (await.delay.expr != null)
                     targetScope.add(createAssignment(delayExpressionCounter, createIntValue(0)))
             }
@@ -777,7 +784,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             }
             awaitConditional.statements.add(createGotoStatement(awaitStartLabel.label))
 
-            targetScope.add(awaitConditional)
+            targetStatementSequence.add(awaitConditional)
             if (await.delay.expr != null)
                 targetScope.add(createAssignment(delayExpressionCounter, createIntValue(0)))
         }
@@ -969,7 +976,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                     transformStatement(present.elsePart.statement, ^else)
                 }
             ]
-            targetScope.add(cond)
+            targetStatementSequence.add(cond)
 
             return targetScope
         }
@@ -1184,9 +1191,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // Add a counting variable, if delay.expr is set; 
         var ValuedObject counterVar
         if (delayExpression) {
-            counterVar = createNewUniqueVariable("i", ValueType::INT)
+            counterVar = createNewUniqueVariable("i")
             targetScope.add(createAssignment(counterVar, createIntValue(0)))
-            localDeclarations += counterVar
+            localIntDeclarations += counterVar
             if ((abort.body as AbortInstance).delay.event.expr != null) {
                 counterToEventMap.put(
                     ((abort.body as AbortInstance).delay.event.expr as ValuedObjectReference).valuedObject.name,
@@ -1229,7 +1236,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             (abort.body as AbortInstance).statement.transformStatement(statementScope)
             statementScope.addLabel(l_doNothing)
         }
-        targetScope.add(statementScope)
+        targetStatementSequence.add(statementScope)
 
         targetScope
     }
@@ -1319,7 +1326,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             seq.add(
                 createConditional => [
                     expression = f_wa.createValuedObjectReference
-                    statements.add(createGotoj(abortEndLabel.label, currentThreadEndLabel.label, labelToThreadMap))
+                    statements.add(createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap))
                 ])
         ]
 
@@ -1365,8 +1372,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             statementScope.add(
                 createConditional => [
                     expression = transformExpression(abortExpr)
-                    statements += createAssignment(f_a, createBoolValue(true))
-                    statements += createGotoj(abortEndLabel.label, currentThreadEndLabel.label, labelToThreadMap)
+                    statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                    statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
                 ])
         }
 
@@ -1381,8 +1388,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 seq.add(
                     createConditional => [
                         expression = EcoreUtil.copy(counterExpression)
-                        statements += createAssignment(f_a, createBoolValue(true))
-                        statements += createGotoj(abortEndLabel.label, currentThreadEndLabel.label, labelToThreadMap)
+                        statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
                     ])
 
             // No delay expression; just check abort condition, set flag and gotoj l
@@ -1390,8 +1397,8 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                 seq.add(
                     createConditional => [
                         expression = transformExpression(abortExpr)
-                        statements += createAssignment(f_a, createBoolValue(true))
-                        statements += createGotoj(abortEndLabel.label, currentThreadEndLabel.label, labelToThreadMap)
+                        statements += createStatement(createAssignment(f_a, createBoolValue(true)))
+                        statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
                     ])
             }
             seq
@@ -1402,7 +1409,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             seq.add(
                 createConditional => [
                     expression = f_a.createValuedObjectReference
-                    statements += createGotoj(abortEndLabel.label, currentThreadEndLabel.label, labelToThreadMap)
+                    statements += createGotoj(abortEndLabel, currentThreadEndLabel, labelToThreadMap)
                 ])
             seq
         ]
@@ -1455,6 +1462,18 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
     }
 
     /**
+     * weak suspend p when (immediate)? (n)? s
+     * -> UNIMPLEMENTED
+     * 
+     * @param susp The Weak-Suspend-statement
+     * @param targetStatementSequence  The StatementSequence which should contain the transformed statements
+     * @return The transformed statement
+     */
+    def dispatch StatementSequence transformStatement(WeakSuspend suspend, StatementSequence targetStatementSequence) {
+        throw new IllegalArgumentException("Weak suspend is not implemented yet.");
+    }
+    
+    /**
      * suspend p when (immediate)? (n)? s
      * -> (l: if s { pause; goto l };)? p [ pause -> l: pause; if s goto l ]
      * 
@@ -1470,10 +1489,10 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         // Add a counting variable, if delay.expr is set
         var ValuedObject counterVar
         if (delayExpression) {
-            counterVar = createNewUniqueVariable("i", ValueType::INT)
+            counterVar = createNewUniqueVariable("i")
             counterToEventMap.put(counterVar.name, counterVar)
-            localDeclarations += counterVar
-            targetScope.add(createAssignment(counterVar, 0.createIntValue))
+            localIntDeclarations += counterVar
+            targetStatementSequence.add(createAssignment(counterVar, 0.createIntValue))
         }
         val counter = counterVar
 
@@ -1501,7 +1520,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                         expression = EcoreUtil.copy(countExpression)
                     } else {
                         expression = transformExpression(suspend.delay.event.expr)
-                    } statements.addAll(createSclPause.statements) statements.add(createGotoStatement(l.label))])
+                    } statements.addAll(createSclPause.statements) statements.add(createGotoStatement(l))])
         }
 
         // Check whether suspension is triggered on pause statements
@@ -1514,9 +1533,9 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
                         expression = transformExpression(suspend.delay.event.expr)
                         statements += incrementInt(counter)
                     ])
-                seq.add(newIfThenGoto(EcoreUtil.copy(countExpression), pauseLabel.label, true))
+                seq.add(newIfThenGoto(EcoreUtil.copy(countExpression), pauseLabel, true))
             } else {
-                seq.add(newIfThenGoto(transformExpression(suspend.delay.event.expr), pauseLabel.label, true))
+                seq.add(newIfThenGoto(transformExpression(suspend.delay.event.expr), pauseLabel, true))
             }
             seq
         ]
@@ -1558,7 +1577,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
             signalToVariableMap.removeLast
             if (it.channelDescr != null) {
                 if (it.channelDescr.type.type.getName() == "PURE") {
-                    singleExit_val = createNewUniqueVariable(it.name + "_val", ValueType::HOST)
+                    singleExit_val = createNewUniqueVariable(it.name + "_val")
                     signalToVariableMap.removeLast //Remove from map as they are no signals
                     signalToVariableMap.removeLast
                     val hostType = it.channelDescr.type.typeID
@@ -1651,7 +1670,7 @@ class EsterelToSclTransformation extends AbstractProductionTransformation implem
         currentThreadEndLabel = oldThreadsEndLabel
         if (!trapHandlers.threads.nullOrEmpty)
             statementScope.add(trapHandlers)
-        targetScope.add(statementScope)
+        targetStatementSequence.add(statementScope)
 
         targetScope
     }

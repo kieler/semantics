@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.labels;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.elk.graph.KLabel;
+import org.eclipse.elk.graph.ElkLabel;
 
 import de.cau.cs.kieler.klighd.labels.AbstractKlighdLabelManager;
 
@@ -32,7 +32,7 @@ public class TransitionPriorityLabelManager extends AbstractKlighdLabelManager {
      * {@inheritDoc}
      */
     @Override
-    public String resizeLabel(KLabel label, double targetWidth) {
+    public String resizeLabel(ElkLabel label, double targetWidth) {
         // Regular expression matches "<priority>: <stuff>" and extracts the <priority>" part
         Pattern pattern = Pattern.compile("(\\d+):.*");
         Matcher matcher = pattern.matcher(label.getText().trim());

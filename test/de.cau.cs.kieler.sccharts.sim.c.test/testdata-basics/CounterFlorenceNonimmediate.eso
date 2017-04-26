@@ -1,0 +1,40 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+a start 
+% Output: 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(1) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(1) c(1) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(1) 
+;
+a 
+% Output: 
+;
+a 
+% Output: b(1) c(1) end(1) 
+;
+a 
+% Output: end(1) 
+;

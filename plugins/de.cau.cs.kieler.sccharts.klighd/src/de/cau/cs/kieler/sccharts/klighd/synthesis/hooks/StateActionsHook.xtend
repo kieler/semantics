@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -23,7 +24,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisActionHook
 import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.StateStyles
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -60,7 +60,7 @@ class StateActionsHook extends SynthesisActionHook {
     }
 
     override processState(State state, KNode node) {
-        if (!state.declarations.empty && !SHOW_STATE_ACTIONS.booleanValue) {
+        if (!state.localActions.empty && !SHOW_STATE_ACTIONS.booleanValue) {
             val container = node.contentContainer;
             val actions = container?.getProperty(StateStyles::ACTIONS_CONTAINER);
 
@@ -83,7 +83,7 @@ class StateActionsHook extends SynthesisActionHook {
 
                 // Show or hide actions
                 if (actions != null) {
-                    if (SHOW_STATE_ACTIONS.booleanValue && !state.declarations.empty) {
+                    if (SHOW_STATE_ACTIONS.booleanValue && !state.localActions.empty) {
                         // Insert actions in correct position
                         val pos = actions.getProperty(INDEX);
                         container.children.remove(pos);

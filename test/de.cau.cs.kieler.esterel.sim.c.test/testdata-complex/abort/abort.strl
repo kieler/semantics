@@ -1,0 +1,15 @@
+module M:
+input I;
+output O1;
+output O2;
+
+abort 
+	loop
+		emit O1;
+		pause;
+	end
+when I;
+
+emit O2;
+
+end module

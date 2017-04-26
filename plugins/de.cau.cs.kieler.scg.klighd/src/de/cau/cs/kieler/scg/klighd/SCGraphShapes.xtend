@@ -13,16 +13,15 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import javax.inject.Inject
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
-import org.eclipse.elk.core.util.ElkUtil
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.kgraph.util.KGraphUtil
 
 /**
  * KRendering Utility class for KLighD visualization.
@@ -57,9 +56,8 @@ class SCGraphShapes {
 	
 	def KNode createRoundedRectangulareNode(Object o, int height, int width) {
 		val node = o.createRoundedRectangulareNode;
-		val shapeLayout = node.getData(typeof(KShapeLayout));
-		shapeLayout.height = height;
-		shapeLayout.width = width;
+		node.height = height;
+		node.width = width;
 		return node;
 	}
 	
@@ -72,9 +70,8 @@ class SCGraphShapes {
     
     def KNode createRectangulareNode(Object o, int height, int width) {
         val node = o.createRectangulareNode;
-        val shapeLayout = node.getData(typeof(KShapeLayout));
-        shapeLayout.height = height;
-        shapeLayout.width = width;
+        node.height = height;
+        node.width = width;
         return node;
     }
 
@@ -87,9 +84,8 @@ class SCGraphShapes {
     
     def KNode createEllipseNode(Object o, int height, int width) {
         val node = o.createEllipseNode;
-        val shapeLayout = node.getData(typeof(KShapeLayout));
-        shapeLayout.height = height;
-        shapeLayout.width = width;
+        node.height = height;
+        node.width = width;
         return node;
     }
     
@@ -193,7 +189,7 @@ class SCGraphShapes {
     }   
 
 	
-	def KEdge create node: ElkUtil::createInitializedEdge getEdge(Object o) {
+	def KEdge create node: KGraphUtil::createInitializedEdge getEdge(Object o) {
 	}
 	
 	def KEdge createPolyLineEdge(Object o) {

@@ -49,6 +49,7 @@ import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.Join
 
 /**
  * Transform a sequentialized SCG to a sequentialized SCG with timing program points.
@@ -187,6 +188,7 @@ class TPPTransformation extends AbstractProductionTransformation
                         var HashMap<String, Region> tppRegionMap = new HashMap<String, Region>();
                         val Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
                         scchartDummyRegion.setId("SCChartDummyRegion");
+                        scchartDummyRegion.label = "SCChartDummyRegion";
 
                         // insert timing program points
                         val int highestInsertedTPPNumber = insertTPP(scg, nodeRegionMapping,
@@ -235,9 +237,12 @@ class TPPTransformation extends AbstractProductionTransformation
                         var Integer tppCounter = 1;
                         // Preprocessing step: Assign the first Region to the entry TPP
                         val ControlFlow firstEdge = edgeList.getFirst();
+                        val ControlFlow lastEdge= edgeList.getLast();
+                        val lastNode = lastEdge.target;
                         val Region firstSourceRegion = getSourceRegion(firstEdge, nodeRegionMapping,
                             scchartDummyRegion);
                         tppRegionMap.put("entry", firstSourceRegion);
+                        var Region targetRegion = null;
                         while (edgeListIterator.hasNext())
                         {
                             if (tppCounter == 13)
@@ -249,15 +254,14 @@ class TPPTransformation extends AbstractProductionTransformation
                             val ControlFlow currentEdge = edgeListIterator.next();
                             val Node edgeTarget = currentEdge.getTarget();
                             // get the region the target node of the edge stems from
-                            var Region targetRegion = nodeRegionMapping.get(edgeTarget);
+                            targetRegion = nodeRegionMapping.get(edgeTarget);
                             if (targetRegion == null)
                             {
                                 // It is normal that nodes of the SCG get mapped to null, if they are considered to
                                 // belong to the scchart but not to one of its regions, for the timing analysis,
                                 // they are attributed to a dummy region representing all parts of the scchart that
                                 // does not belong to a region (thus enabling us to keep track of the timing for
-                                // those
-                                // parts
+                                // those parts
                                 targetRegion = scchartDummyRegion;
                             }
                             val Region sourceRegion = getSourceRegion(currentEdge, nodeRegionMapping,
@@ -308,7 +312,40 @@ class TPPTransformation extends AbstractProductionTransformation
                                     "A mapping for at least one node of an edge cannot be found.");
                             }
                         }
-                        return tppCounter - 1;
+                        // Add a TPP after the last node, as code generation will add register 
+                        // updates, which are to be attributed to the SCChart in general
+                        // This TPP is not needed, if the general SCChart dummy region was the 
+                        // target region for the previous tpp (no switch)
+                        var previousTPP = tppCounter - 1;
+                        if (tppRegionMap.get(previousTPP) != scchartDummyRegion){
+                        val ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
+                        redirectedEdges.add(newEdge);
+                        // create new tpp node
+                        val Assignment tpp = ScgFactory.eINSTANCE.createAssignment();
+                        val TextExpression tppText = KExpressionsFactory.eINSTANCE.
+                            createTextExpression();
+                        tppText.setText("TPP(" + tppCounter + ")");
+                        tpp.setExpression(tppText);
+                        scg.getNodes().add(tpp);
+                        // connect new tpp node to the last scg node
+                        newEdge.setTarget(tpp);
+                        if (lastNode instanceof Assignment){
+                            (lastNode as Assignment).setNext(newEdge);
+                        } else {
+                            if (lastNode instanceof Exit) {
+                                (lastNode as Exit).setNext(newEdge);
+                            } else {
+                                if (lastNode instanceof Join) {
+                                    (lastNode as Join).setNext(newEdge);
+                                }
+                            }
+                        }                        
+                        // register tpp in the tpp region mapping for the dummy region
+                        // that represents the SCChart on the whole (as only register updates follow)
+                        tppRegionMap.put((tppCounter).toString(), scchartDummyRegion);
+                        }
+                        // no need to subtract 1, as we have inserted a last tpp without counting
+                        return tppCounter;
                     }
 
                     /**
@@ -323,8 +360,19 @@ class TPPTransformation extends AbstractProductionTransformation
                     def private LinkedList<ControlFlow> getEdgesInFixedTraversingOrder(SCGraph scg)
                     {
                         val LinkedList<ControlFlow> edgeList = new LinkedList<ControlFlow>();
+                        val scgNodes = scg.nodes;
+                        System.out.println(scgNodes.toString());
                         // Find start entry node
-                        val Iterator<Entry> entryIter = Iterators.filter(
+                        // Assuming only one entry node exists in a sequentialized SCG; 
+        // Make it the starting point of the SSA transformation
+        val entry = scg.nodes.filter(Entry).head
+        
+        // If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
+        val firstAssignment = if (entry == null)  
+          scg.nodes.filter(Assignment).filter[ it.incoming.filter(ControlFlow).empty ].head
+          else (entry.next.target as Assignment)
+                        
+                        /*val Iterator<Entry> entryIter = Iterators.filter(
                             ModelingUtil.eAllContentsOfType2(scg, Node), Entry);
                         var Node entry = null;
                         while (entryIter.hasNext())
@@ -334,16 +382,17 @@ class TPPTransformation extends AbstractProductionTransformation
                             {
                                 entry = currentEntry as Node;
                             }
-                        }
-                        traverseSequentialGraphEdges(entry, edgeList);
+                        }*/
+                        traverseSequentialGraphEdges(firstAssignment, edgeList);
                         return edgeList;
                     }
 
                     /**
                      * Recursive method to collect the edges of a sequential SCG in the traversing order top to
-                     * bottom, then branch first. The method relies on the special structure of the sequential SCG:
+                     * bottom, then branch first. The method relies on a special structure of the sequential SCG:
                      * there are no nested conditionals and only the then branches of a conditional have content.
-                     * Assumes that there are no empty then branches.
+                     * Assumes that there are no empty then branches. Also assumes that there is exactly one entry 
+                     * node and one exit node. Not to be used with the new SCG structure.
                      * 
                      * @param currentNode
                      *            The sequential SCG entry node, else the currentNode
@@ -351,6 +400,79 @@ class TPPTransformation extends AbstractProductionTransformation
                      *            The list to add the edges in traversing order, empty in initial call
                      */
                     def private void traverseSequentialGraphEdges(Node currentNode,
+                        LinkedList<ControlFlow> edgeList)
+                    {
+                        // There is only one Entry node in a sequential SCG, this is the start call
+                        if (currentNode instanceof Entry)
+                        {
+                            var ControlFlow outgoingEdge = (currentNode as Entry).getNext();
+                            edgeList.add(outgoingEdge);
+                            traverseSequentialGraphEdges(outgoingEdge.getTarget(), edgeList);
+                        }
+                        else
+                        {
+                            // There is only one Exit node in a sequential SCG, if we reach it, we are finished.
+                            if (currentNode instanceof Exit)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                if (currentNode instanceof Conditional)
+                                {
+                                    // We do then branch first order
+                                    val ControlFlow thenEdge = (currentNode as Conditional).getThen();
+                                    edgeList.add(thenEdge);
+                                    traverseSequentialGraphEdges(thenEdge.getTarget(), edgeList);
+                                }
+                                else
+                                {
+                                    if (currentNode instanceof Assignment)
+                                    {
+                                        val ControlFlow outgoingEdge = (currentNode as Assignment).
+                                            getNext();
+                                        if (outgoingEdge == null) {
+                                            // we have reached the end of the SCG (case: no exit node in SCG)
+                                            return;
+                                        }
+                                        edgeList.add(outgoingEdge);
+                                        // check whether this node ends a then branch, if so, add the else edge to
+                                        // the list also
+                                        val target = outgoingEdge.getTarget();
+                                        val EList<Link> targetIncomingList = target.getIncoming();
+                                        if (targetIncomingList.size() > 1)
+                                        {
+                                            val Iterator<Link> incomingEdgeIterator = targetIncomingList.
+                                                iterator();
+                                            while (incomingEdgeIterator.hasNext())
+                                            {
+                                                var Link currentLink = incomingEdgeIterator.next();
+                                                if (!(currentLink == outgoingEdge))
+                                                {
+                                                    edgeList.add(currentLink as ControlFlow);
+                                                }
+                                            }
+                                        }
+                                        traverseSequentialGraphEdges(target, edgeList);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    /**
+                     * Recursive method to collect the edges of a sequential SCG in the traversing order top to
+                     * bottom, then branch first. The method relies on a special structure of the sequential SCG:
+                     * there are no nested conditionals and only the then branches of a conditional have content.
+                     * Assumes that there are no empty then branches. Adapted to the new sequential SCG structure: 
+                     * Does not rely on the existence of exactly one entry and exit node each.
+                     * 
+                     * @param currentNode
+                     *            The sequentially first SCG node on first call, else the currentNode
+                     * @param edgeList
+                     *            The list to add the edges in traversing order, empty in initial call
+                     */
+                    def private void traverseSequentialGraphEdgesNewSCG(Node currentNode,
                         LinkedList<ControlFlow> edgeList)
                     {
                         // There is only one Entry node in a sequential SCG, this is the start call
@@ -419,7 +541,7 @@ class TPPTransformation extends AbstractProductionTransformation
                      *            attributed to regions of the SCChart and are then attributed to the SCChart, resp.
                      *            its dummy region)
                      * @param controlFlow
-                     *            The edge for which the start node region ist to be determined
+                     *            The edge for which the start node region is to be determined
                      * @return Returns the Region the source node of the controlFlow edge belongs to. Returns null,
                      *         if the edge container is no Node.
                      */

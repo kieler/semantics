@@ -15,6 +15,9 @@ package de.cau.cs.kieler.kico.ui.klighd
 
 import de.cau.cs.kieler.kico.internal.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
+import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
@@ -22,18 +25,14 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.Properties
 import javax.inject.Inject
+import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.elk.alg.layered.properties.LayeredOptions
-import org.eclipse.elk.alg.layered.p2layers.LayeringStrategy
-import de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -98,11 +97,12 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
 
         knode.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
-        knode.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+        knode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
         knode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
         knode.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
         knode.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
-        knode.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
+        // TODO WrappingStrategy currently not exported
+//        knode.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
         knode.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
 
         var Transformation lastNode = null;
