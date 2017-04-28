@@ -62,7 +62,7 @@ class ModelsRepositoryTestRunner extends Suite {
     /**
      * Traverses the models repository and creates an index.
      */
-    def initModelsRepositoryIndex() {
+    static def initModelsRepositoryIndex() {
         if (testModels.empty) {
             // Find models repository
             val repository = System.getenv("bamboo_models_repository")
@@ -74,11 +74,6 @@ class ModelsRepositoryTestRunner extends Suite {
             println("=============================================================================================")
         }
     }
-    
-    @Test
-    def testInitModelsRepositoryIndex() {
-      initModelsRepositoryIndex
-   }
 }
 
 @Data
