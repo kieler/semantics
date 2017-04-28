@@ -91,5 +91,31 @@
          </newWizardShortcut>
       </perspectiveExtension>
    </extension>
+   <extension
+         id="KiCoBuilder"
+         name="KiCoBuilder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            callOnEmptyDelta="false"
+            hasNature="true"
+            isConfigurable="true">
+         <run
+               class="de.cau.cs.kieler.prom.builder.KiCoBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="KiCoNature"
+         name="KiCoNature"
+         point="org.eclipse.core.resources.natures">
+      <builder
+            id="de.cau.cs.kieler.prom.KiCoBuilder">
+      </builder>
+      <runtime>
+         <run
+               class="de.cau.cs.kieler.prom.builder.KiCoNature">
+         </run>
+      </runtime>
+   </extension>
 
 </plugin>

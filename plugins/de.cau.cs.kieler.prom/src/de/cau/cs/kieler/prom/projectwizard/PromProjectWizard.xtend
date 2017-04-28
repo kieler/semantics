@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.prom.builder.KiCoNature
 
 /**op
  * Wizard implementation wich creates a project
@@ -428,6 +429,8 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // Add Xtext nature to project (e.g. for SCCharts with cross-references)
         newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
+        // Add KiCo nature to project (e.g. for builder)
+        newlyCreatedProject.addNature(KiCoNature.NATURE_ID)
         
         return true
     }
