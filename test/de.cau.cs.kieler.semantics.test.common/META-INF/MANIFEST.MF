@@ -9,5 +9,9 @@ Require-Bundle: org.junit,
  com.google.guava,
  org.eclipse.core.runtime,
  org.eclipse.emf.common,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro
 Export-Package: de.cau.cs.kieler.semantics.test.common.runners
+
