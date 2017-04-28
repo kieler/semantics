@@ -10,7 +10,7 @@
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.semantics.test.common</artifactId>
   <version>0.1.1-SNAPSHOT</version>
-  <packaging>eclipse-plugin</packaging>
+  <packaging>eclipse-test-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
