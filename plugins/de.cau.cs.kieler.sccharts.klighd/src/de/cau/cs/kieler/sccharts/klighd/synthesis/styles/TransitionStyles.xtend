@@ -30,6 +30,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
+import de.cau.cs.kieler.klighd.krendering.Colors
 
 /**
  * Styles for {@link Transition}.
@@ -206,6 +207,21 @@ class TransitionStyles {
         ]
         return label;
     }
+    
+    /** Add an edge label */
+    def KLabel addLabel(KEdge edge, String text, boolean bold, int size, Colors colorFG, Colors colorBG) {
+        val label = edge.createLabel;
+        label.configureCenterEdgeLabel(text); // Add text
+        label.getKRendering => [ // Configure text
+            fontSize = size;
+            fontBold = bold;
+            foreground = colorFG;
+            background = colorBG;
+            configureColor(TRANSITION_DEFERRED_DECORATOR, Colors.GRAY);
+        ]
+        return label;
+    }
+
 
     /** 
      * Returns the polyline rending of the edge.
