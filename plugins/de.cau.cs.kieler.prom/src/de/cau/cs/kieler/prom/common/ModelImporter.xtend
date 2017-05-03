@@ -87,34 +87,14 @@ class ModelImporter {
         if(modelFile != null && modelFile.exists) {
             val fileExtensionOfModelFiles = modelFile.fileExtension
             val project = modelFile.project
-            collectPossiblyReferencedResources(modelFileLocation, resourceSet, fileExtensionOfModelFiles, project.members)
-        }
-    }
-    
-    /**
-     * Searches recursively in the resources for files with the same file extension.
-     * All findings are added to the resource set, such that they can be resolved when loading the model file.
-     * 
-     * @param modelFileLocation Fully qualified path to a model file
-     * @param resourceSet The ResourceSet to which possible references should be added
-     * @param fileExtensionOfModelFiles The file extension of the model file
-     * @param resources The resources in which the search takes place
-     */
-    private static def void collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet,
-        String fileExtensionOfModelFiles, IResource[] resources) {
-
-        for(IResource res : resources) {
-            if (res instanceof IContainer) {
-                collectPossiblyReferencedResources(modelFileLocation, resourceSet, fileExtensionOfModelFiles, res.members);
-            } else if (res instanceof IFile) {
-                val fileExtension = res.fileExtension
-                if(fileExtension != null && fileExtension.equals(fileExtensionOfModelFiles) ){
-                    val location = res.location.toOSString
-                    // Don't add resource of model file itself
-                    if(!modelFileLocation.equals(location)) {
-                        val uri = URI.createFileURI(res.location.toOSString)
-                        resourceSet.getResource(uri, true)
-                    }
+            
+            val files = PromPlugin.findFiles(project.members, fileExtensionOfModelFiles)
+            for(f : files) {
+                val location = f.location.toOSString
+                // Don't add resource of model file itself
+                if(!modelFileLocation.equals(location)) {
+                    val uri = URI.createFileURI(location)
+                    resourceSet.getResource(uri, true)
                 }
             }
         }

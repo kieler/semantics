@@ -117,5 +117,22 @@
          </run>
       </runtime>
    </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="de.cau.cs.kieler.prom.builder.ui.PromProjectProperties"
+            id="de.cau.cs.kieler.prom.projectProperties"
+            name="KiCo Build">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+               <test
+                     property="org.eclipse.core.resources.projectNature"
+                     value="de.cau.cs.kieler.prom.KiCoNature">
+               </test>
+            </adapt>
+         </enabledWhen>
+      </page>
+   </extension>
 
 </plugin>
