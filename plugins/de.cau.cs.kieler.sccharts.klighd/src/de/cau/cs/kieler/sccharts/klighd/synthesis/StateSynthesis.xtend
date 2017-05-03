@@ -35,6 +35,7 @@ import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.core.math.ElkPadding
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.CommentHook
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -67,6 +68,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
     @Inject
     extension StateStyles
+
+    @Inject
+    extension CommentHook    
 
     override performTranformation(State state) {
         val node = state.createNode().associateWith(state);
@@ -115,17 +119,21 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
 
         // Add content
         if (!isConnector) {
+            
+            // Process annotation semantic comments
+            val hasComment = state.processComments(node)
+            
             // Add label
             if (!state.label.nullOrEmpty) {
                 switch state {
                     case state.isReferencedState:
                         node.addMacroStateLabel(
-                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference").
+                            state.label + " @ " + (state.referencedScope as State).label ?: "UnresolvedReference", hasComment).
                             associateWith(state)
                     case state.isMacroState:
-                        node.addMacroStateLabel(state.label).associateWith(state)
+                        node.addMacroStateLabel(state.label, hasComment).associateWith(state)
                     default:
-                        node.addSimpleStateLabel(state.label).associateWith(state)
+                        node.addSimpleStateLabel(state.label, hasComment).associateWith(state)
                 }
             } else {
                 node.addEmptyStateLabel

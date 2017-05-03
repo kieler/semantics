@@ -33,6 +33,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.klighd.krendering.Colors
+import de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.CommentHook
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -59,6 +60,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     @Inject
     extension TransitionStyles
+
+    @Inject
+    extension CommentHook
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
@@ -108,36 +112,8 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             label.insert(0, ": ");
             label.insert(0, transition.sourceState.outgoingTransitions.indexOf(transition) + 1);
         }
-        if (transition.annotations.size > 0) {
-            var comment = ""
-            for (e : transition.annotations) {
-                if (e instanceof StringAnnotation) {
-                    val name = (e as StringAnnotation).name
-                    var value = ""
-                    for (v : (e as StringAnnotation).values) {
-                        if (value.length > 0) {
-                            value = value + ", "
-                        }
-                        value = value + v
-                    }
-                    if (comment.length > 0) {
-                        comment = comment + "\n"
-                    }
-                    comment = comment + value
-                }
-                if (e instanceof IntAnnotation) {
-                    val name = (e as IntAnnotation).name
-                    var value = (e as IntAnnotation).value
-                    if (comment.length > 0) {
-                        comment = comment + "\n"
-                    }
-                    comment = comment + value
-                }
-            }
-            // Now add the annotations to the diagram
-            //label.insert(0, "[" + comment + "]\n");
-            edge.addLabel("[" + comment + "]", false, 9, Colors.ORANGE, Colors.YELLOW).associateWith(transition);
-        }
+        // Process annotation semantic comments
+        transition.processComments(edge)
         if (label.length != 0) {
             edge.addLabel(label.toString).associateWith(transition);
         }

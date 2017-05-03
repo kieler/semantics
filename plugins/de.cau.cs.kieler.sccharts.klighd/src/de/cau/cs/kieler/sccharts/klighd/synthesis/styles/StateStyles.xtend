@@ -31,6 +31,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.krendering.Colors
 
 /**
  * Styles for {@link State}.
@@ -165,8 +166,8 @@ class StateStyles {
     /**
      * Adds a title label to a simple state figure.
      */
-    def KText addSimpleStateLabel(KNode node, String text) {
-        node.addMacroStateLabel(text) => [
+    def KText addSimpleStateLabel(KNode node, String text, boolean hasComment) {
+        node.addMacroStateLabel(text, hasComment) => [
             fontBold = true;
         ]
     }
@@ -174,13 +175,33 @@ class StateStyles {
     /**
      * Adds a title label to a macro state figure.
      */
-    def KText addMacroStateLabel(KNode node, String text) {
+    def KText addMacroStateLabel(KNode node, String text, boolean hasComment) {
         node.contentContainer.addText(text) => [
             fontSize = 11;
             // Add surrounding space
-            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
+            if(!hasComment) {
+                setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
+            } else {
+                setGridPlacementData().from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
+            }
         ]
     }
+    
+    /**
+     * Adds a title label to a state figure.
+     */
+    def KText addStateLabel(KNode node, String text,  boolean bold, int size, Colors colorFG, Colors colorBG,  int surrounding, int offset) {
+        node.contentContainer.addText(text) => [
+            fontSize = size;
+            fontBold = bold;
+            foreground = colorFG;
+            background = colorBG;
+            if (surrounding > 0) {
+                // Add surrounding space
+                setGridPlacementData().from(LEFT, 2+surrounding, 0, TOP, surrounding + offset, 0).to(RIGHT, 2+surrounding, 0, BOTTOM, surrounding, 0);
+            }
+        ]
+    }    
     
     /**
      * Adds an empty label placeholder to a state figure to fix surrounding space for following elements.

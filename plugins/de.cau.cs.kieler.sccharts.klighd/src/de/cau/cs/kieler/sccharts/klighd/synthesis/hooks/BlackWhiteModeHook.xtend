@@ -55,6 +55,7 @@ class BlackWhiteModeHook extends SynthesisHook {
     /** The related synthesis option */
     public static final SynthesisOption PAPER_BW = SynthesisOption.createCheckOption("Paper (Black/White)", false).
     	setCategory(GeneralSynthesisOptions::APPEARANCE);
+    	
 
     override getDisplayedSynthesisOptions() {
         return newLinkedList(PAPER_BW);

@@ -217,7 +217,6 @@ class TransitionStyles {
             fontBold = bold;
             foreground = colorFG;
             background = colorBG;
-            configureColor(TRANSITION_DEFERRED_DECORATOR, Colors.GRAY);
         ]
         return label;
     }

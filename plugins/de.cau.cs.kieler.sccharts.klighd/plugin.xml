@@ -52,6 +52,9 @@
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.BlackWhiteModeHook">
       </hook>
       <hook
+            class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.CommentHook">
+      </hook>
+      <hook
             class="de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.ShadowHook">
       </hook>
       <hook
