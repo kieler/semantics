@@ -25,12 +25,12 @@ public class SCTXFormatter extends AbstractDeclarativeFormatter {
 			c.setIndentation(pair.getFirst(), pair.getSecond());
 			c.setLinewrap(1).after(pair.getFirst());
             c.setLinewrap(1).before(pair.getSecond());
-			c.setLinewrap(2).after(pair.getSecond());
+			c.setLinewrap(1).after(pair.getSecond());
 		}
 		for(Keyword comma: f.findKeywords(",")) {
 			c.setNoLinewrap().before(comma);
 			c.setNoSpace().before(comma);
-			c.setLinewrap().after(comma);
+//			c.setLinewrap().after(comma);
 		}
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
@@ -41,6 +41,21 @@ public class SCTXFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap().after(f.getPragmasAccess().getValuesSCXVersionsParserRuleCall_0_2_0());
         c.setLinewrap().after(f.getPragmasAccess().getValuesSCXDirectorsParserRuleCall_1_2_0());
        
-        c.setLinewrap().before(f.getStateRule());
+        c.setLinewrap(2).before(f.getStateRule());
+        
+        c.setLinewrap().after(f.getAnnotationRule());
+        c.setNoSpace().after(f.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_2());
+        c.setNoSpace().after(f.getAnnotationAccess().getTagAnnotationParserRuleCall_3());
+        
+        c.setLinewrap().before(f.getRegionAccess().getControlflowRegionParserRuleCall_0());
+        c.setLinewrap().before(f.getRegionAccess().getDataflowRegionParserRuleCall_1());
+        
+        c.setLinewrap().before(f.getSCChartsAccess().getRootStatesRootStateParserRuleCall_1_0());
+//        c.setLinewrap().before(f.getRootRule());
+        
+        c.setLinewrap().after(f.getDeclarationRule());
+        
+        c.setLinewrap().before(f.getTransitionRule());
+//        c.setIndentation(f.getTransitionAccess().getGroup(), f.getTransitionAccess().getGroup());
 	}
 }
