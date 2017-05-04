@@ -50,6 +50,7 @@ import org.eclipse.jdt.core.JavaCore
 import de.cau.cs.kieler.sccharts.State
 import org.freemarker.FreeMarkerPlugin
 import java.io.StringWriter
+import org.eclipse.debug.core.DebugPlugin
 
 /**
  * @author aas
@@ -94,7 +95,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             delta.accept(new IResourceDeltaVisitor() {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
-                    if(res.type == IResource.FILE) {
+                    if(res.type == IResource.FILE && res.fileExtension != null) {
                         switch(res.fileExtension.toLowerCase) {
                             case "sct",
                             case "strl",
@@ -261,7 +262,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void generateSimulationCode(IFile res) {
         //TODO: Hardcoded stuff
         val simTemplate = "sim/Simulation.ftl";
-        val simTargetLocation = project.location.toOSString + "/sim/Simulation"+res.fullPath.removeFileExtension.lastSegment+".c";
+        val simTargetLocation = project.location.toOSString + "/sim/Simulation"+Files.getNameWithoutExtension(res.name)+".c";
         
         if(project.findMember(simTemplate) == null) {
             println("No simulation template found.")
@@ -300,6 +301,34 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // Save the result as simulation for this model
 //        System.err.println(simulationCode)
         Files.write(simulationCode, new File(simTargetLocation), Charsets.UTF_8)
+        
+        // Compile to executable
+        compileSimulationCode(simTargetLocation);
+    }
+    
+    private def void compileSimulationCode(String simLocation) {
+        if(!new File(simLocation).exists) {
+            System.err.println("Simulation file does not exist:"+simLocation)
+            return   
+        }
+        
+        // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
+        val fileName = new Path(simLocation).lastSegment
+        val executableName = Files.getNameWithoutExtension(fileName)
+        val directory = new Path(simLocation).removeLastSegments(1)
+        
+        // Delete old executable
+        new File(directory.toOSString + File.separator + executableName).delete
+        
+        // Run gcc on simulation code
+        val pBuilder = new ProcessBuilder(#["gcc",fileName,"-o",executableName])
+        pBuilder.directory(directory.toFile)
+        val p = pBuilder.start()
+        // Wait until the process finished
+        val errorCode = p.waitFor()
+        if(errorCode != 0) {
+            System.err.println("GCC has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+        }
     }
     
     private def void getWrapperCodeAnnotations(IFile modelFile, boolean overwrite) {

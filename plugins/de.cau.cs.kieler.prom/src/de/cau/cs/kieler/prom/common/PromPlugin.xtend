@@ -225,7 +225,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             if (res instanceof IContainer) {
                 findings.addAll(findFiles(res.members, fileExtension));
             } else if (res instanceof IFile) {
-                if(fileExtension == null || fileExtension.contains(res.fileExtension.toLowerCase) ){
+                if(fileExtension == null || res.fileExtension != null && fileExtension.contains(res.fileExtension.toLowerCase) ){
                     findings.add(res)
                 }
             }
