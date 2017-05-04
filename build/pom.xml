@@ -22,7 +22,8 @@
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     
     <!-- Updatesite for product build -->
-    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/</kieler.semantics.updatesite>
+    <!--  <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/</kieler.semantics.updatesite> -->
+    <kieler.semantics.updatesite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/phtsccharts/</kieler.semantics.updatesite>
   </properties>
 
 
