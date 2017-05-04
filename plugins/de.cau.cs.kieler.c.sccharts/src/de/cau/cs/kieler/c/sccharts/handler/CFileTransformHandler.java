@@ -26,7 +26,7 @@ import de.cau.cs.kieler.c.sccharts.CDTProcessor;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.text.SCTStandaloneSetup;
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
 //import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 
 public class CFileTransformHandler extends AbstractConvertModelHandler {
@@ -35,7 +35,7 @@ public class CFileTransformHandler extends AbstractConvertModelHandler {
             "de.cau.cs.kieler.c.sccharts.commands.TransformC";
 
     // Create an injector to load the transformation via guice.
-    private static Injector injector = new SCTStandaloneSetup()
+    private static Injector injector = new SCTXStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
     // -------------------------------------------------------------------------

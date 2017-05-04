@@ -14,10 +14,10 @@ package de.cau.cs.kieler.c.sccharts.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import org.eclipse.elk.graph.KNode
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
