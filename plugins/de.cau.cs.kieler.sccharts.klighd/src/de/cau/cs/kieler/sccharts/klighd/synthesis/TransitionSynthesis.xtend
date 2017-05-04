@@ -73,7 +73,6 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             edge.setLayoutOption(CoreOptions::SPACING_EDGE_LABEL, 2.0);
         }
         
-       
         
         // Connect with states
         edge.source = transition.sourceState.node;
