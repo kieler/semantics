@@ -87,6 +87,17 @@ class TransitionStyles {
         ]
     }
 
+
+    /**
+     * Sets the style of the line to gray.
+     */
+    def setGrayStyle(KEdge edge) {
+        edge.line => [
+            foreground = Colors.GRAY_50
+        ]
+    }
+
+
     /**
      * Adds a history head arrow decorator.<br>
      * Incompatible with {@link addDeepHistoryDecorator}.
