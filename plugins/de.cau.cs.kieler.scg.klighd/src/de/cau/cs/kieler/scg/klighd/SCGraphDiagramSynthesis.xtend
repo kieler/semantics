@@ -766,8 +766,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
                 port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f)
             }
-            // Removed as suggested by uru (mail to cmot, 11.11.2016)            
-            //            port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
+            // Removed as suggested by uru (mail to cmot, 11.11.2016)  
+            if (!SCGraph.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID))          
+                port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
            
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
             port.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.NETWORK_SIMPLEX);
@@ -908,9 +909,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             
             // Add ports for control-flow routing.
-//<<<<<<< HEAD
-//            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-//=======
             if (isGuardSCG) {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
             } else {
@@ -918,7 +916,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10f)
-//>>>>>>> ssm/dataflow
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -954,9 +951,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             // Add ports for control-flow routing.
-//<<<<<<< HEAD
-//            node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
-//=======
             if (isGuardSCG) {
                 node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
             } else {
@@ -964,7 +958,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
             node.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 10f)
-//>>>>>>> ssm/dataflow
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
@@ -1297,6 +1290,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	                		polyline.foreground.propagateToChildren = true
 	            		]
             		}
+            		sourceNode.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             	} else {
                 	edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 	edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)

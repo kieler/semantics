@@ -14,6 +14,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.SCGPlugin
 import java.util.logging.Level
+import de.cau.cs.kieler.scg.Assignment
 
 /** 
  * @author ssm
@@ -98,6 +99,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     		SCGPlugin.log("*** NEW SCHEDULE ***", Level.FINE)
 	    	for(var i = 0; i < schedule.size-1; i++) {
     			schedule.get(i).createScheduleDependency(schedule.get(i+1))
+    			if (schedule.get(i) instanceof Assignment && schedule.get(i+1) instanceof Assignment) 
     			SCGPlugin.log("Scheduling dependency from " + 
     				schedule.get(i).asAssignment.valuedObject.name + " to " + 
     				schedule.get(i+1).asAssignment.valuedObject.name, Level.FINE

@@ -222,23 +222,17 @@ class SimpleGuardTransformation extends AbstractGuardTransformation implements T
         val AAMap = <Assignment, Assignment> newHashMap
 		for(schedulingBlock : scg.schedulingBlocks) {
 			for(assignment : schedulingBlock.nodes.filter(Assignment)) {
-				val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
 				val guardAssignment = VAMap.get(valuedObjectMap.get(schedulingBlock.guards.head.valuedObject))
 
-//<<<<<<< HEAD
-				newSCG.nodes += newAssignment
-				val guardDependency = guardAssignment.createGuardDependency(newAssignment)
-				AAMap.put(assignment, newAssignment)
-				
-                newAssignment.trace(assignment)
-                guardDependency.trace(guardAssignment)                				
-//=======
 				if (guardAssignment != null) {
+				    val newAssignment = assignment.copySCGAssignment(valuedObjectMap)
 		  		    newSCG.nodes += newAssignment
-	   			    guardAssignment.createGuardDependency(newAssignment)
     				AAMap.put(assignment, newAssignment)
+                    newAssignment.trace(assignment)
+    				
+	   			    val guardDependency = guardAssignment.createGuardDependency(newAssignment)
+                    guardDependency.trace(guardAssignment)                				
 				}
-//>>>>>>> ssm/dataflow
 			}		
 		}
 		
