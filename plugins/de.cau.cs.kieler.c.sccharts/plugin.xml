@@ -50,9 +50,6 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.sccharts.klighd.hooks">
-      <hook
-            class="de.cau.cs.kieler.c.sccharts.synthesis.HideEntryKeywordHook">
-      </hook>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">

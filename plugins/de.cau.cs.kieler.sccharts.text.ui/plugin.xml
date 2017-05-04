@@ -18,13 +18,13 @@
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
-            editor="de.cau.cs.kieler.sccharts.text.SCT"
+            editor="de.cau.cs.kieler.sccharts.text.SCTX"
             label="Netlist Compilation"
             priority="100"
             features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg, scg.basic, scg.dependency, scg.basicblock, scg.guards, scg.scheduling, scg.sequentialize, codegeneration, s, s.target, scg.c"
             preferred="ABORT, INITIALIZATION, scg.basicblock.sc, s.c, sccharts.scg, scg.guards, scg.scheduling, NOSIMULATIONVISUALIZATION"></editor>
       <editor
-            editor="de.cau.cs.kieler.sccharts.text.SCT"
+            editor="de.cau.cs.kieler.sccharts.text.SCTX"
             label="All Transformations"
             priority="80"
             features="ALL"

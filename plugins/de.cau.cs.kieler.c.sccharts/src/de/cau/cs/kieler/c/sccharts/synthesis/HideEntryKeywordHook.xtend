@@ -69,8 +69,8 @@ class HideEntryKeywordHook extends SynthesisHook {
                         if (actionLabel != null) {
                             val componentContainer = actionLabel.children.head as KContainerRendering
                             componentContainer.children.remove(componentContainer.children.head)
-                            val text = componentContainer.children.head as KText
-                            if (text.text.startsWith("/")) {
+                            val text = componentContainer.children.head as KText                           
+                            if (text != null && text.text.startsWith("/")) {
                                 text.text = text.text.substring(1)
                             }
                         }
