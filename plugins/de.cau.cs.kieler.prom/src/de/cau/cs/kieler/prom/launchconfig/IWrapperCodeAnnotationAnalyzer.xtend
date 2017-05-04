@@ -15,6 +15,7 @@ package de.cau.cs.kieler.prom.launchconfig
 
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /**
  * @author aas

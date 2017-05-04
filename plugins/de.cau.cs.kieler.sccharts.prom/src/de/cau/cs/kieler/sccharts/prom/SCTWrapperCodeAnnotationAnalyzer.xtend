@@ -21,7 +21,7 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
-import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.sccharts.State
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject

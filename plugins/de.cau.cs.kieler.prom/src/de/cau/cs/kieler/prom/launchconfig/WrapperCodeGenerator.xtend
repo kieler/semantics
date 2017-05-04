@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /**
  * This class generates wrapper code for models.
@@ -141,7 +142,7 @@ class WrapperCodeGenerator {
         // Check consistency of path
         if (!templatePath.isNullOrEmpty()) {
             val templateWithMacroCalls = getTemplateWithMacroCalls(templatePath, additionalMappings, annotationDatas)
-
+            
             // Debug log macro calls
 //            System.err.println(templateWithMacroCalls)
 

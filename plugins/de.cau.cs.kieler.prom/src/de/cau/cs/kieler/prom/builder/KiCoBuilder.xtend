@@ -23,7 +23,7 @@ import de.cau.cs.kieler.prom.common.EnvironmentData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
-import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator
 import java.io.File
 import java.io.IOException
@@ -47,6 +47,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
+import de.cau.cs.kieler.sccharts.State
+import org.freemarker.FreeMarkerPlugin
+import java.io.StringWriter
 
 /**
  * @author aas
@@ -124,7 +127,12 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 if(!monitor.isCanceled) {
                     switch(res.fileExtension.toLowerCase) {
                         case "sct",
-                        case "strl" : compile(res)
+                        case "strl" : {
+                            compile(res)
+                            if(!monitor.isCanceled) {
+                                generateSimulationCode(res)
+                            }
+                        }
                     }
                 }
             }
@@ -248,6 +256,50 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             val template = project.findMember(resolvedWrapperCodeTemplate)
             refreshOutput(template as IFile)
         }
+    }
+    
+    private def void generateSimulationCode(IFile res) {
+        //TODO: Hardcoded stuff
+        val simTemplate = "sim/Simulation.ftl";
+        val simTargetLocation = project.location.toOSString + "/sim/Simulation"+res.fullPath.removeFileExtension.lastSegment+".c";
+        
+        if(project.findMember(simTemplate) == null) {
+            println("No simulation template found.")
+            return;
+        }
+        
+        // Get variables in model
+        // TODO: more generic implementation
+        val List<WrapperCodeAnnotationData> variables = newArrayList()
+        val model = ModelImporter.load(res.location.toOSString, true)
+        if (model instanceof State) {
+            for(decl : model.declarations) {
+                for(valuedObject : decl.valuedObjects) {
+                    val data = new WrapperCodeAnnotationData();
+                    data.arguments.add(String.valueOf(decl.input))
+                    data.arguments.add(String.valueOf(decl.output))
+                    data.arguments.add(String.valueOf(decl.signal))
+                    
+                    data.input = true
+                    data.output = true
+                    data.name = "Simulate"
+                    data.varType = decl.type.literal
+                    data.varName = valuedObject.name
+                    
+                    variables.add(data)
+                }
+            }
+        }
+        
+        // Get simulation code
+        val generator = new WrapperCodeGenerator(project, launchData)
+        val simulationCode = generator.generateWrapperCode(simTemplate,
+            #{"compiled_model_loc" -> computeTargetPath(res.projectRelativePath.toOSString, false)},
+            variables)
+        
+        // Save the result as simulation for this model
+//        System.err.println(simulationCode)
+        Files.write(simulationCode, new File(simTargetLocation), Charsets.UTF_8)
     }
     
     private def void getWrapperCodeAnnotations(IFile modelFile, boolean overwrite) {

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.prom.launchconfig
+package de.cau.cs.kieler.prom.common
 
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -40,7 +40,7 @@ class WrapperCodeAnnotationData {
      * e.g. 'Clock' for an annotation '@Clock 500'.
      */
     @Accessors
-    private String name
+    private String name = ""
     
     /**
      * A list with the arguments for this annotation.
@@ -54,14 +54,14 @@ class WrapperCodeAnnotationData {
      * e.g. 'clock' for an 'input int clock'.
      */
     @Accessors
-    private String varName
+    private String varName = ""
     
     /**
      * Variable's type of this annotation.
      * e.g. 'int' for an 'input int clock'.
      */
     @Accessors
-    private String varType
+    private String varType = ""
     
     /**
      * Specifies if the template engine should throw an error or ignore it
@@ -79,6 +79,9 @@ class WrapperCodeAnnotationData {
      * @param obj The other object
      */
     override boolean equals(Object obj){
+        if(obj == null)
+            return false;
+            
         if(obj instanceof WrapperCodeAnnotationData){
             val o = obj as WrapperCodeAnnotationData
             return o.name.equals(name) && o.arguments.equals(arguments)
