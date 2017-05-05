@@ -235,7 +235,9 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
  */
 //#define u2b(u)                       ((unsigned long) 1 << (u))
 // simplified for scl:
-#define u2b(u)                       (1 << u)
+
+#define u2b(u)											 (1UL << u)
+
 
 
 // ===================================================================

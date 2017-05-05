@@ -121,28 +121,60 @@ typedef int bool;
   _END_SWITCH2
 
 // Fork off sibling threads
-#define fork1(label, p)			\
-  initPC(p, label); enable(p);
+#define fork1(label1, label2, p)			\
+  initPC(_cid, label1); \
+  initPC(p, label2); enable(p); \
+  dispatch_;
 
-#define fork2(label1, p1, label2, p2)	\
+#define fork2(label0, label1, p1, label2, p2)	\
+  initPC(_cid, label0); \
   initPC(p1, label1); enable(p1);	\
-  initPC(p2, label2); enable(p2);
+  initPC(p2, label2); enable(p2); \
+  dispatch_;
 
-#define fork3(label1, p1, label2, p2, label3, p3)	\
+#define fork3(label0, label1, p1, label2, p2, label3, p3)	\
+  initPC(_cid, label0); \
   initPC(p1, label1); enable(p1);	\
   initPC(p2, label2); enable(p2);	\
-  initPC(p3, label3); enable(p3);
+  initPC(p3, label3); enable(p3); \
+  dispatch_;
+  
+#define fork4(label0, label1, p1, label2, p2, label3, p3, label4, l4) \
+  initPC(_cid, label0); \
+  initPC(p1, label1); enable(p1);	\
+  initPC(p2, label2); enable(p2);	\
+  initPC(p3, label3); enable(p3); \
+  initPC(p4, label4); enable(p4); \
+  dispatch_;
 
 // Join sibling threads
 // Note: when joining siblings, one must cover all sibling prioIDs.
 // Eg, if we join just one sibling thread with a fixed priority, we must use join1;
 // if that sibling has 2 possible priority, must use join2, etc.
+#ifdef _idsetSize
 #define join1(sib1)			\
   _case __LABEL__: if (isEnabled(sib1)) {	\
     PAUSEG_(__LABEL__); }
 
 #define join2(sib1, sib2)					\
-  _case __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2))) {	\
+  _case __LABEL__: if (isEnabled(sib1) | isEnabled(sib2)) {	\
+    PAUSEG_(__LABEL__); }
+
+#define join3(sib1, sib2, sib3)						\
+  _case __LABEL__: if (isEnabled(sib1) | isEnabled(sib2) | isEnabled(sib3)) {	\
+    PAUSEG_(__LABEL__); }
+
+#define join4(sib1, sib2, sib3, sib4)					\
+  _case __LABEL__: if (isEnabled(sib1) | isEnabled(sib2) | isEnabled(sib3) | isEnabled(sib4)) { \
+    PAUSEG_(__LABEL__); }
+
+#else
+#define join1(sib1)			\
+  _case __LABEL__: if (isEnabled(sib1)) {	\
+    PAUSEG_(__LABEL__); }
+
+#define join2(sib1, sib2)					\
+  _case __LABEL__: if (isEnabledAnyOf((u2b(sib1) | u2b(sib2)))) {	\
     PAUSEG_(__LABEL__); }
 
 #define join3(sib1, sib2, sib3)						\
@@ -152,6 +184,8 @@ typedef int bool;
 #define join4(sib1, sib2, sib3, sib4)					\
   _case __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3) | u2b(sib4))) { \
     PAUSEG_(__LABEL__); }
+#endif
+
 
 // Terminate the thread leading up to "par"
 #define par TERM_;

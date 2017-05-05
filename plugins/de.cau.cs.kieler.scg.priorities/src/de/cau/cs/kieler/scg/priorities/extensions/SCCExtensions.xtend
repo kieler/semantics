@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import java.util.HashMap
 import java.util.LinkedList
+import de.cau.cs.kieler.scg.ControlFlow
 
 /**
  * A class with extensions for the calculation of Strongly Connected Components
@@ -112,6 +113,29 @@ class SCCExtensions {
     }
     
     /**
+     * Finds the predecessors of the node n.
+     * 
+     * @param n
+     *          The node for which to find the predecessors
+     * 
+     * @return
+     *          A list of nodes whose neighbors contain the node n
+     */
+    public def LinkedList<Node> getPredecessors(Node n) {
+        var pred = <Node> newLinkedList
+        if(!(n instanceof Depth)) {
+            for(inc : n.incoming) {
+                if(inc instanceof ControlFlow) {
+                    pred.add(inc.eContainer as Node)
+                }
+            }            
+        }
+        pred
+    }
+    
+    
+    
+    /**
      * Finds the following neighbor(s) of the node, even 
      * Surface --> Depth connections
      * 
@@ -157,6 +181,28 @@ class SCCExtensions {
     }
     
     /**
+     * Finds the incoming concurrent dependencies of a node
+     * 
+     * @param n
+     *          The node for which the incoming dependencies are to be found
+     * 
+     * @return
+     *          The nodes that are the origins for the incoming dependencies of n
+     */
+    public def LinkedList<Node> getIncomingDependencies(Node n) {
+        var deps = <Node> newLinkedList
+        for(inc : n.incoming) {
+            if(inc instanceof DataDependency) {
+                if(inc.concurrent && ! inc.confluent) {
+                    deps.add(inc.eContainer as Node)
+                }
+            }
+        }
+        deps
+    }
+    
+    
+    /**
      * Finds the following neighbor(s) of the node with the 
      * exception of Surface --> Depth connections as well as 
      * their dependencies 
@@ -176,13 +222,13 @@ class SCCExtensions {
     
     
     /**
-     * Finds all (non-delayed) neighboring SCCs of the given SCC
+     * Finds all (non-delayed) neighboring nodes of the given SCC
      * 
      * @param scc
      *          The SCC for whom to find the neighbors
      * 
      * @return
-     *          The neighboring SCCs of scc
+     *          The neighboring nodes of scc
      */
     public def LinkedList<Node> findNeighborsOfSCC(LinkedList<Node> scc) {
         var neighbors = <Node> newLinkedList
@@ -196,14 +242,36 @@ class SCCExtensions {
         neighbors
     }
     
+    
     /**
-     * Finds all SCCs that are dependent from the given SCC
+     * Finds all (non-delayed) nodes whose neighbors are in the given SCC
      * 
      * @param scc
-     *          The SCC for whom to find the dependent SCCs
+     *          The SCC for whom to find the predecessors
      * 
      * @return
-     *          The dependent SCCs
+     *          The predecessors of scc
+     */
+    public def LinkedList<Node> findPredecessorsOfSCC(LinkedList<Node> scc) {
+        var pred = <Node> newLinkedList
+        for(node : scc) {
+            for(predecessor : node.predecessors) {
+                if(!scc.contains(predecessor) && !pred.contains(predecessor)) {
+                    pred.add(predecessor)
+                }
+            }
+        }
+        pred
+    }
+    
+    /**
+     * Finds all nodes that are dependent from the given SCC
+     * 
+     * @param scc
+     *          The SCC for whom to find the dependent nodes
+     * 
+     * @return
+     *          The dependent nodes
      */
     public def LinkedList<Node> findAllDependenciesOfScc(LinkedList<Node> scc) {
         var dependencies = <Node> newLinkedList
@@ -216,5 +284,26 @@ class SCCExtensions {
         }
         dependencies
         
+    }
+    
+    /**
+     * Finds all incoming dependencies of the given SCC
+     * 
+     * @param scc
+     *          The SCC for whom to find the incoming dependent nodes
+     * 
+     * @return
+     *          The nodes that have outgoing dependencies on the nodes in the given SCC
+     */
+    public def LinkedList<Node> findAllIncomingDependenciesOfScc(LinkedList<Node> scc) {
+        var incDep = <Node> newLinkedList
+        for(node : scc) {
+            for(inc : node.incomingDependencies) {
+                if(!scc.contains(inc) && !incDep.contains(inc)) {
+                    incDep.add(inc)
+                }
+            }
+        }
+        incDep
     }
 }
