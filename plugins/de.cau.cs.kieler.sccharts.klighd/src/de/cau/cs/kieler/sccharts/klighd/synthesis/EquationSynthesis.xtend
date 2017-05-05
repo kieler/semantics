@@ -87,6 +87,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     private val dataSinks = <ValuedObject> newHashSet
     private val dataRefs = <ValuedObject> newHashSet
     
+    private val valuePortMap = <KPort, ValuedObject> newHashMap 
+    
     val PORT_LABEL_FONT_SIZE = 7
     
     override performTranformation(Assignment equation) {
@@ -108,6 +110,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
                 } else {
                     edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
+                    
+                    // add bus if target expects a bus
+                    if (equation.expression instanceof Value) {
+                        val port = equation.valuedObject.getPort(equation.subReference.valuedObject)
+                        if (port != null && valuePortMap.get(port) != null) {
+                            if (valuePortMap.get(port).isArray) {                            
+                                edge.addWireBusFigure                        
+                            }
+                        }
+                    }
+                    
                 }
             } 
         }        
@@ -158,9 +171,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     private def dispatch KEdge performWireTransformation(Value value) {
         val edge = createEdge.associateWith(value)
-        edge.addWireFigure
         edge.source = value.getNode
         edge.sourcePort = value.getPort("out")
+        edge.addWireFigure
         edge
     }
     
@@ -240,6 +253,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     val obj = vos.filter[ it.name.equals(id.id) ].head
                 
                     vo.addPort(obj, p)
+                    valuePortMap.put(p, obj)
                 }
 
                 return result

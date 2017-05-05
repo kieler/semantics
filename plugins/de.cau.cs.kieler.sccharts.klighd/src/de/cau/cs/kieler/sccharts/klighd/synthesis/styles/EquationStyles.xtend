@@ -41,6 +41,7 @@ import org.eclipse.elk.graph.properties.Property
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.krendering.KRoundedBendsPolyline
 
 /**
  * Styles for {@link Equations}.
@@ -184,6 +185,7 @@ class EquationStyles {
 
     def KEdge addWireBusFigure(KEdge edge) {
         edge.addLayoutParam(CoreOptions.EDGE_THICKNESS, 4f)
+        edge.getData.removeIf[it instanceof KRoundedBendsPolyline]
         edge.addRoundedBendsPolyline(4, 2.5f) => [
             foreground = Colors.GRAY_25
             it.addJunctionPointDecorator => [
