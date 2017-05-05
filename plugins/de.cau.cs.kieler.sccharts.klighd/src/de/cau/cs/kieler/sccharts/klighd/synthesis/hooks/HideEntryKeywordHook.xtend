@@ -52,7 +52,7 @@ class HideEntryKeywordHook extends SynthesisHook {
     override getDisplayedSynthesisOptions() {
         return newLinkedList(HIDE_ENTRY);
     }
-    
+ 
     override processState(State state, KNode node) {
         
         if (HIDE_ENTRY.booleanValue) { // && state.getRootState.hasHideAnnotation) {
@@ -71,7 +71,7 @@ class HideEntryKeywordHook extends SynthesisHook {
                             componentContainer.children.remove(componentContainer.children.head)
                             val text = componentContainer.children.head as KText
                             if (text != null && text.text.startsWith("/")) {
-                                text.text = text.text.substring(1)
+                                text.text = text.text.substring(2)
                             }
                         }
                     }
