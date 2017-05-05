@@ -263,7 +263,8 @@ class StateStyles {
                 while (entries.hasNext) {
                 	val entry = entries.next
                 	if (builder.length > 0 && keyword != entry.value) {
-		                ktext = it.addText(builder.append(" ").toString)
+                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+		                ktext = it.addText(builder.append(possibleSpace).toString)
 		                if (keyword) {
 		                	ktext.highlightKeyword
 		                }                		
@@ -271,7 +272,8 @@ class StateStyles {
                 		parts++
                 	}
                 	if (builder.length > 0) {
-                		builder.append(" ")
+                	    val possibleSpace = if (entry.key.equals(",")) "" else " "
+                		builder.append(possibleSpace)
                 	}
                 	builder.append(entry.key)
                 	keyword = entry.value

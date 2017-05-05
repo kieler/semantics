@@ -34,6 +34,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.graph.KNode
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import org.eclipse.elk.alg.layered.properties.GreedySwitchType
 
 /**
  * @author ssm
@@ -85,18 +86,18 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         node.addLayoutParam(CoreOptions::DIRECTION, Direction::RIGHT)
         node.addLayoutParam(LayeredOptions::THOROUGHNESS, 100)
-        node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::BRANDES_KOEPF)
+        node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false)
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
-//          node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH, GreedySwitchType::OFF)
+          node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_GREEDY_SWITCH, GreedySwitchType::TWO_SIDED)
             
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 8f); //10.5
+            node.setLayoutOption(CoreOptions::SPACING_NODE, 10f); //10.5 // 8f
             node.setLayoutOption(CoreOptions::SPACING_BORDER, 4f);
-            node.setLayoutOption(LayeredOptions::SPACING_EDGE_SPACING_FACTOR, 0.7f);
-            node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_SPACING_FACTOR, 0.5f); //1
-            node.setLayoutOption(LayeredOptions::SPACING_IN_LAYER_SPACING_FACTOR, 0.5f); //0.2
+            node.setLayoutOption(LayeredOptions::SPACING_EDGE_SPACING_FACTOR, 0.8f); // 0.7
+            node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_SPACING_FACTOR, 0.75f); //1 //0.5
+            node.setLayoutOption(LayeredOptions::SPACING_IN_LAYER_SPACING_FACTOR, 0.25f); //0.2 // 0.5
         }
             
         node.setLayoutOption(KlighdProperties::EXPAND, true)
