@@ -427,7 +427,7 @@ class CDTProcessor {
 
         // Switch statement state.
         val switchState = scc.createState => [
-            id = trC + SWITCHID
+            id = "_S" + trC + SWITCHID
             label = SWITCHLABEL
             state.parentRegion.states += it
         ]
@@ -440,7 +440,7 @@ class CDTProcessor {
         ]
 
         val condState = scc.createState => [
-            id = trC.toString + CONDLABEL
+            id = "_S" + trC.toString + CONDLABEL
             label = ""
             initial = true
             switchStateRegion.states += it
@@ -605,7 +605,7 @@ class CDTProcessor {
         ]
 
         val condState = scc.createState => [ s |
-            s.id = trC.toString + CONDLABEL
+            s.id = "_S" + trC.toString + CONDLABEL
             s.label = ""
             s.initial = true
             whileStateRegion.states += s
@@ -632,7 +632,7 @@ class CDTProcessor {
 
         // final state of loop. It is reached when loop condition is not met anymore
         val falseState = scc.createState => [s |
-            s.id = trC + FINALSTATELABEL
+            s.id = "_S" + trC + FINALSTATELABEL
             s.label = ""
             s.final = true
             whileStateRegion.states += s
@@ -660,7 +660,7 @@ class CDTProcessor {
 
         // do-while loop state
         val doWhileState = scc.createState => [ s |
-            s.id = trC + DOWHILEID
+            s.id = "_S" + trC + DOWHILEID
             s.label = DOWHILELABEL
             state.parentRegion.states += s
         ]
@@ -1081,7 +1081,7 @@ class CDTProcessor {
         
         // Region of forState. It contains all states of the for loop                 
         val forStateRegion = scc.createControlflowRegion => [ region |
-                region.id = forState.id + REGIONLABEL
+                region.id = "_S" + forState.id + REGIONLABEL
                 region.label = ""
                 forState.regions += region
         ]
