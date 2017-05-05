@@ -159,6 +159,7 @@ class ThreadSegmentIDs {
 
         var tsID = 0
         if(!visited.get(unvisitedNode)) {
+            visited.put(unvisitedNode, true)
             if(unvisitedNode instanceof Exit) {
                 val entry = (unvisitedNode as Exit).entry
                 if(threadSegmentIDs.containsKey(entry)) {
@@ -177,10 +178,13 @@ class ThreadSegmentIDs {
                 }
             }
             threadSegmentIDs.put(unvisitedNode, tsID)
-            visited.put(unvisitedNode, true)
             return tsID             
         } else {
-            return threadSegmentIDs.get(unvisitedNode)
+            if(threadSegmentIDs.containsKey(unvisitedNode)) {
+                return threadSegmentIDs.get(unvisitedNode)                
+            } else {
+                return 1
+            }
         }
     }
     
