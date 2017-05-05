@@ -17,6 +17,10 @@ package de.cau.cs.kieler.sim.signals.ui.views;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -371,7 +375,10 @@ public class SignalsView extends ViewPart {
                 if (shell != null) {
                     SaveAsDialog dlg = new SaveAsDialog(shell);
                     dlg.setBlockOnOpen(true);
-                    dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName() + ".txt");
+                    IFile file = KiemPlugin.getDefault().getActiveEditorFile();
+                    IProject project = file.getProject();
+                    IFile txtFile = project.getFile(file.getProjectRelativePath().removeFileExtension() + ".txt");
+                    dlg.setOriginalFile(txtFile);
                     if (dlg.open() == SaveAsDialog.OK) {
                         try {
                             if (drawMode == 0) {
@@ -420,7 +427,7 @@ public class SignalsView extends ViewPart {
                     // first ask the user to select input signals
                     SelectInputOutputSignalDialog signalsDialog = new SelectInputOutputSignalDialog(
                             shell);
-
+                    
                     signalsDialog.setSignalList(signalList);
                     if (signalsDialog.open() == 0) {
                         List<Signal> inputSignalList = signalsDialog.getInputSignals();
@@ -429,8 +436,10 @@ public class SignalsView extends ViewPart {
                             // do the export and ask the user where to write the file to
                             SaveAsDialog dlg = new SaveAsDialog(shell);
                             dlg.setBlockOnOpen(true);
-                            dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName()
-                                    + ".eso");
+                            IFile file = KiemPlugin.getDefault().getActiveEditorFile();
+                            IProject project = file.getProject();
+                            IFile esoFile = project.getFile(file.getProjectRelativePath().removeFileExtension() + ".eso");
+                            dlg.setOriginalFile(esoFile);
                             int answer = dlg.open();
                             if (answer != SaveAsDialog.CANCEL) {
                                 boolean append = true; // this is the default

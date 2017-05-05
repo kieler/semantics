@@ -13,15 +13,13 @@
  */
 package de.cau.cs.kieler.kico.klighd.internal.model.action;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutDataFactory;
-import org.eclipse.elk.graph.KEdge;
-import org.eclipse.elk.graph.KGraphFactory;
-import org.eclipse.elk.graph.KNode;
-
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.kico.klighd.internal.model.ModelChain;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.kgraph.KEdge;
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering;
 import de.cau.cs.kieler.klighd.krendering.KPolyline;
 import de.cau.cs.kieler.klighd.krendering.KRendering;
@@ -69,7 +67,6 @@ public class RemovedCollapsedDiagramsAction implements IAction {
 				}
 				edge = KGraphFactory.eINSTANCE.createKEdge();
 				edge.setSource(node);
-				edge.getData().add(KLayoutDataFactory.eINSTANCE.createKEdgeLayout());
 				KPolyline line = KRenderingFactory.eINSTANCE.createKPolyline();
 				rendering.setInvisible(line, true);
 				edge.getData().add(line);

@@ -41,9 +41,10 @@
     <module>de.cau.cs.kieler.esterel.kexpressions</module>
     <module>de.cau.cs.kieler.esterel.prom</module>
     <module>de.cau.cs.kieler.esterel.sim</module>
-    <module>de.cau.cs.kieler.esterel.ui</module>
+    <module>de.cau.cs.kieler.esterel.sim.c</module>
     <module>de.cau.cs.kieler.esterel.sim.kivi</module>
     <module>de.cau.cs.kieler.esterel.scl</module>
+    <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.kex</module>

@@ -1,8 +1,0 @@
-<associateSites>
-	<associateSite label="Mars" url="http://download.eclipse.org/releases/neon" />
-    <associateSite label="The Eclipse Project Updates" url="http://download.eclipse.org/eclipse/updates/4.6" />
-    <associateSite label="Google Guava Libraries" url="http://guava-osgi.googlecode.com/svn/trunk/repository/" />
-    <associateSite label="Itemis" url="http://download.itemis.com/updates/releases" />
-    <associateSite label="KIELER Pragmatics Repository" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2016-07/" />
-    <associateSite label="KIELER Ptolemy Libraries" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy" />
-</associateSites>

@@ -1,0 +1,16 @@
+! reset;
+A 
+% Output: V Y 
+;
+
+% Output: Y 
+;
+B 
+% Output: W 
+;
+B C 
+% Output: W 
+;
+C 
+% Output: X 
+;

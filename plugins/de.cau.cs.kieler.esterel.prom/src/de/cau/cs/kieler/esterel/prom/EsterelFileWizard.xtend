@@ -16,15 +16,15 @@ package de.cau.cs.kieler.esterel.prom
 import de.cau.cs.kieler.prom.filewizard.AdvancedNewFileCreationPage
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.wizard.Wizard
+import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
-import org.eclipse.ui.IWorkbenchWizard
 
 /**
- * Implementation of a newWizard which contains a page to create an esterel file. 
+ * Implementation of a newWizard which contains a page to create an esterel (strl) file. 
  * 
  * @author aas
  */
-class EsterelFileWizard extends Wizard implements IWorkbenchWizard {
+class EsterelFileWizard extends Wizard implements INewWizard {
     
     /**
      * The workbench from the init(...) method.

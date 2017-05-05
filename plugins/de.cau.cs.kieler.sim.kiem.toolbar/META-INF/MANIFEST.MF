@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIEM Toolbar Buttons
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.toolbar;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.12.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.toolbar.KiemToolbarPlugin
 Bundle-Vendor: Kiel University
 Require-Bundle: org.eclipse.ui,

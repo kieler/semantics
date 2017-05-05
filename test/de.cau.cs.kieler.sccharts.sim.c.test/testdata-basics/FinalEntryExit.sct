@@ -1,0 +1,8 @@
+scchart EntryExit {
+  output int O;
+
+  initial final state A {
+    entry / O = 1;
+    exit / O = 2;
+  };
+}

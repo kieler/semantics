@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
@@ -26,17 +27,21 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtension
 import de.cau.cs.kieler.sccharts.klighd.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ControlflowRegionStyles
-import java.util.Properties
+import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
+import org.eclipse.elk.alg.layered.properties.FixedAlignment
+import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.alg.layered.properties.EdgeLabelSideSelection
 import org.eclipse.elk.alg.layered.properties.FixedAlignment
 import org.eclipse.elk.alg.layered.properties.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.EdgeRouting
-import org.eclipse.elk.graph.KNode
+
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+
+import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -67,15 +72,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
 
+        // Set KIdentifier for use with incremental update
+        if (!region.id.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = region.id]
+        }
+        
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 18f);
-            node.setLayoutOption(CoreOptions::SPACING_LABEL, 5f);
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
             node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_BK_FIXED_ALIGNMENT, FixedAlignment::BALANCED);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
         node.addLayoutParam(LayeredOptions::EDGE_LABEL_SIDE_SELECTION, EdgeLabelSideSelection.DIRECTION_UP);
@@ -137,14 +144,14 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3f);
-            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8f);
+//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3);
+//            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-        node.setLayoutOption(CoreOptions::SPACING_NODE, 40f);
+//        node.setLayoutOption(CoreOptions::SPACING_NODE, 40);
 
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);

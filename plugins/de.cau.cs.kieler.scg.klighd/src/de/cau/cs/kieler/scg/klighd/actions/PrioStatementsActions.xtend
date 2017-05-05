@@ -17,11 +17,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import org.eclipse.elk.core.klayoutdata.KShapeLayout
-import org.eclipse.elk.graph.KPort
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -51,7 +50,7 @@ class PrioStatementsActions implements IAction {
             if(port.KContainerRendering != null 
                 && port.KContainerRendering.getProperty(SCGraphDiagramSynthesis.PRIO_STATEMENTS_PROPERTY)) {
               if(SHOW_PRIO_STATEMENTS.booleanValue(viewContext)) {
-                  port.getData(typeof(KShapeLayout)).setSize(50,20)
+                  port.setSize(50,20)
                   for(child : port.KContainerRendering.children) {
                       if(child instanceof KRoundedRectangle) {
                           var a = child as KRoundedRectangle
@@ -61,7 +60,7 @@ class PrioStatementsActions implements IAction {
                       }
                   }
               } else {
-                  port.getData(typeof(KShapeLayout)).setSize(0,0)
+                  port.setSize(0,0)
                   for(child : port.KContainerRendering.children) {
                       if(child instanceof KRoundedRectangle) {
                           var a = child as KRoundedRectangle

@@ -1,0 +1,19 @@
+module M:
+output O1;
+output O2;
+output O3;
+output O4;
+input I;
+
+suspend
+	emit O1;
+	pause;
+	emit O2;
+	pause;
+	emit O3;
+	pause;
+	emit O4;
+	pause;
+when immediate I;
+
+end module

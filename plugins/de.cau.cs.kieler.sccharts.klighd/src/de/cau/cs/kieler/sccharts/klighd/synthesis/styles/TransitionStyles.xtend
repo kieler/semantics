@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.sccharts.klighd.synthesis.styles
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.krendering.KDecoratorPlacementData
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KSpline
@@ -26,8 +28,6 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KLabel
 
 import static de.cau.cs.kieler.sccharts.klighd.synthesis.styles.ColorStore.Color.*
 

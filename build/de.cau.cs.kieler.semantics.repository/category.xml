@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site associateSitesURL="associateSites.xml">
-   
-   <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
-      Update site for the KIELER Semantics project nightly builds.
-   </description>
-   
-   <!-- CATEGORY DEFINITIONS -->
-
-   <category-def name="kieler-sem" label="KIELER Semantics">
-      <description>
-         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components, Nightly Build
+<site>
+  <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">Update site for the KIELER Semantics project nightly builds.</description>
+  <!-- CATEGORY DEFINITIONS -->
+  <category-def name="kieler-sem" label="KIELER Semantics">
+    <description>
+         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components
       </description>
-   </category-def>
-   <category-def name="kieler-sources" label="KIELER Sources">
-      <description>
+  </category-def>
+  <category-def name="kieler-sources" label="KIELER Sources">
+    <description>
          Source features for features of all other categories.
       </description>
-   </category-def>
-
-
-   <!-- KIELER SEMANTICS -->
-
-   <feature url="features/de.cau.cs.kieler.esterel_0.3.2.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.3.2.qualifier">
-      <category name="kieler-sem"/>
-   </feature>
-   <feature url="features/de.cau.cs.kieler.esterel.source_0.3.2.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.3.2.qualifier">
-      <category name="kieler-sources"/>
-   </feature>
-
-   <feature url="features/de.cau.cs.kieler.sccharts_0.1.2.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.1.2.qualifier">
-      <category name="kieler-sem"/>
-   </feature>
-   <feature url="features/de.cau.cs.kieler.sccharts.source_0.1.2.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.1.2.qualifier">
-      <category name="kieler-sources"/>
-   </feature>
-
-   <!--
-   <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
-      <category name="kieler-sem"/>
-   </feature>
-   <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
-      <category name="kieler-sources"/>
-   </feature>
-   -->
-
+  </category-def>
+  <!-- KIELER SEMANTICS -->
+  <feature url="features/de.cau.cs.kieler.esterel.feature_0.12.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.12.0.qualifier">
+    <category name="kieler-sem"/>
+  </feature>
+  <feature url="features/de.cau.cs.kieler.esterel.feature.source_0.12.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.12.0.qualifier">
+    <category name="kieler-sources"/>
+  </feature>
+  <feature url="features/de.cau.cs.kieler.sccharts.feature_0.12.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.12.0.qualifier">
+    <category name="kieler-sem"/>
+  </feature>
+  <feature url="features/de.cau.cs.kieler.sccharts.feature.source_0.12.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.12.0.qualifier">
+    <category name="kieler-sources"/>
+  </feature>
+  <!-- Repository references to associated sites -->
+  <repository-reference location="http://download.eclipse.org/releases/neon" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" enabled="true"/>
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/" enabled="true"/>
+  <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.2.1/" enabled="true"/>
+  <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
 </site>

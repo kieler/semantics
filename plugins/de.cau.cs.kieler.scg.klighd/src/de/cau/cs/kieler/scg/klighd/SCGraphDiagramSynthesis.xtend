@@ -21,6 +21,9 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KiCoProperties
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KEdge
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KPolygon
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
@@ -87,9 +90,6 @@ import org.eclipse.elk.core.options.EdgeRouting
 import org.eclipse.elk.core.options.PortAlignment
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
-import org.eclipse.elk.graph.KEdge
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.KPort
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
@@ -332,7 +332,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
-            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 255)),
+            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 255)),
             specifyLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::values)
         );
     }
@@ -505,22 +505,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.setLayoutOption(CoreOptions::DIRECTION, Direction::DOWN)
             else
                 node.setLayoutOption(CoreOptions::DIRECTION, Direction::RIGHT)
-            node.setLayoutOption(CoreOptions::SPACING_NODE, 25f);
+            node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 25.0);
             node.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
             node.setLayoutOption(LayeredOptions::THOROUGHNESS, 100)
             node.setLayoutOption(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, false);
 
             if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
-                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
                 node.setLayoutOption(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
+                // Future pragmatics releases wont have sausage folding option but wrapping strategy
+                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
+                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
             }
             
             
             // Sausage folding on/off
             if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(SCGFeatures::SEQUENTIALIZE_ID)) {
-                node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH);
-                node.addLayoutParam(LayeredOptions::SAUSAGE_FOLDING, true);
+                node.addLayoutParam(LayeredOptions::LAYERING_STRATEGY, LayeringStrategy::LONGEST_PATH)
+                // Future pragmatics releases wont have sausage folding option but wrapping strategy
+                // node.setLayoutOption(LayeredOptions::WRAPPING_STRATEGY, WrappingStrategy.PATH_LIKE)
+                node.setLayoutOption(LayeredOptions::SAUSAGE_FOLDING, true)
             }
     
             // Added as suggested by uru (mail to cmot, 11.11.2016)            
@@ -742,7 +746,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
-            node.addLayoutParam(CoreOptions::SPACING_PORT, 10f)
+            node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             if (!isGuardSCG) {            
                 if (topdown()) {
                     node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)                
@@ -841,7 +845,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER)
             node.addLayoutParam(CoreOptions::PORT_ALIGNMENT_BASIC, PortAlignment::CENTER)
-            node.addLayoutParam(CoreOptions::SPACING_PORT, 10f)
+            node.addLayoutParam(CoreOptions::SPACING_PORT_PORT, 10.0)
             var KPort port
             if (topdown) {
                 node.addPort("dummyN", 27, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
@@ -855,7 +859,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH).setLayoutOption(CoreOptions::PORT_INDEX, 0)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5)
             } else {
                 node.addPort("dummyW", 27, 0, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
@@ -873,7 +877,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.0)
             }
             // Removed as suggested by uru (mail to cmot, 11.11.2016)            
             //            port.addLayoutParam(LayeredOptions.NORTH_OR_SOUTH_PORT, Boolean.TRUE);
@@ -951,11 +955,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
             //Draw the node priorities
@@ -1030,11 +1034,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
             //Draw the node priorities
@@ -1243,10 +1247,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0.5)
             }
             
             //Draw the node priorities
@@ -1323,10 +1327,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             if (topdown) {
                 val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5)
             } else {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
-                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5f)
+                port.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -0.5)
             }
             
             //Draw the node priorities
@@ -1416,7 +1420,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::EAST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
-                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3f)
+                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3.0)
                     sourceObj.node.ports += it
                 ]
             } else {
@@ -1440,7 +1444,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         it.addLayoutParam(CoreOptions::PORT_SIDE, PortSide::WEST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
-                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5f)
+                    it.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -1.5)
                     targetObj.node.ports += it
                 ]
             } else {

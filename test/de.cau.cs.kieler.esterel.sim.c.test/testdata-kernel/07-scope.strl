@@ -1,0 +1,16 @@
+module scope:
+output O1;
+output O2;
+
+signal S in
+[
+	emit O1;
+	emit S;
+	|| 
+	present S then
+		emit O2;
+	end
+]
+end
+
+end module

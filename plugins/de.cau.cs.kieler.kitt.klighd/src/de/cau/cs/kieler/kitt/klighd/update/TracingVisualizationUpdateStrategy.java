@@ -19,10 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import org.eclipse.elk.core.klayoutdata.KLayoutData;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KLabel;
-import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -42,11 +38,14 @@ import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 import de.cau.cs.kieler.klighd.IUpdateStrategy;
 import de.cau.cs.kieler.klighd.IViewChangeListener;
+import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.SynthesisOption;
 import de.cau.cs.kieler.klighd.ViewChangeType;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KLabel;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.KText;
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.klighd.viewers.ContextViewer;
 
@@ -106,8 +105,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
 
         public void viewChanged(ViewChange change) {
             KGraphElement affectedElement = change.getAffectedElement();
-            if (affectedElement instanceof KNode && affectedElement.getData(KLayoutData.class)
-                    .getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
+            if (affectedElement instanceof KNode && affectedElement.getProperty(TracingVisualizationProperties.TRACED_MODEL_ROOT_NODE)) {
                 ViewContext viewContext = change.getViewContext();
                 Set<Object> tracedModels =
                         viewContext.getProperty(InternalTracingProperties.VISIBLE_TRACED_MODELS);
@@ -127,7 +125,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     };
 
     /** Delegate update strategy to perform normal behavior. */
-    private SimpleUpdateStrategy simpleDelegate = new SimpleUpdateStrategy();
+    private IUpdateStrategy delegate;
 
     /** The last input model of the ViewContext */
     private final WeakHashMap<ViewContext, Object> lastInputModel =
@@ -160,7 +158,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             }
         } else {
             lastInputModel.put(viewContext, viewContext.getInputModel());
-            return simpleDelegate.requiresDiagramSynthesisReRun(viewContext);
+            return getDelegate().requiresDiagramSynthesisReRun(viewContext);
         }
     }
 
@@ -171,7 +169,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         // Normal behavior
         if (baseModel != newModel) {
             // Assumption: KGraphElement References stay valid (no copy)
-            simpleDelegate.update(baseModel, newModel, viewContext);
+            getDelegate().update(baseModel, newModel, viewContext);
         }
 
         if (baseModel != null && !baseModel.getChildren().isEmpty()) {
@@ -263,5 +261,18 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
                 throw new IllegalArgumentException("Illegal tracing mode: " + mode);
             }
         }
+    }
+    
+    /**
+     * @return the delegate update strategy.
+     */
+    private IUpdateStrategy getDelegate() {
+        if (delegate == null) {
+            delegate = KlighdDataManager.getInstance().getHighestPriorityUpdateStrategy();
+            if (delegate == this) {
+                delegate = KlighdDataManager.getInstance().getNextPrioritizedUpdateStrategy(this);
+            }
+        }
+        return delegate;
     }
 }

@@ -1,0 +1,15 @@
+% Weak suspend to SCL is not yet implemented
+module M:
+output X,Y,Z;
+input I;
+
+weak suspend
+	emit X;
+	pause;
+	emit Y;
+    pause;
+    emit Z;
+    pause;
+when I;
+
+end module

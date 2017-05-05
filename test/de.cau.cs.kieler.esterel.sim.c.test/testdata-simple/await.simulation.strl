@@ -1,0 +1,37 @@
+module M:
+input I ;
+output O ; output oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180 ;
+output oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181 ;
+[
+    [
+        signal AP573440964
+        in
+        [
+            await I;
+            emit AP573440964
+            ||
+            emit oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180;
+            abort
+                sustain
+                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180
+            when immediate AP573440964
+        ]
+        end
+    ];
+    [
+        signal AP2021184110
+        in
+        [
+            emit O;
+            emit AP2021184110
+            ||
+            emit oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181;
+            abort
+                sustain
+                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181
+            when immediate AP2021184110
+        ]
+        end
+    ]
+]
+end module

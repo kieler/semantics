@@ -20,8 +20,8 @@ import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import org.eclipse.elk.graph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.kgraph.KNode
 
 /**
  * Action class to display the node priority in the SCG.

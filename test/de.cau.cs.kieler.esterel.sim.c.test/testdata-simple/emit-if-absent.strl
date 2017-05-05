@@ -1,0 +1,10 @@
+module M:
+
+output O;
+
+present O else
+    emit O;
+end;
+    
+
+end module

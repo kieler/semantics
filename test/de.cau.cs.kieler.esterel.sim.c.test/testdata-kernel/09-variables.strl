@@ -1,0 +1,19 @@
+module M:
+output O1;
+output O2;
+
+var v := 2 : integer in
+	if v = 2 then
+		emit O1;
+	end;
+	
+	pause;
+	
+	v := 1;
+	v := 3;
+	if v = 3 then
+		emit O2;
+	end
+end
+
+end module

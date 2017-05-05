@@ -16,11 +16,11 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.circuit.Actor
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import org.eclipse.elk.graph.KNode
 
 /**
  * @author fry

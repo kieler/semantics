@@ -1,0 +1,15 @@
+module M:
+output O1;
+output O2;
+
+trap T in
+	[
+		emit O1;
+		||
+		exit T;
+		emit O2;		
+	]
+end
+
+
+end module
