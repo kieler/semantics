@@ -27,15 +27,17 @@ class Redirect implements DataHandler {
     override write(DataPool pool) {
         val fromModel = pool.models.findFirst[it.name == from]
         val outputs = fromModel.variables.filter[it.isOutput]
-
-        val toModel = pool.models.findFirst[it.name == to]
-        val inputs = toModel.variables.filter[it.isOutput]
         
+        val toModel = pool.models.findFirst[it.name == to]
+        val inputs = toModel.variables.filter[it.isInput]
+            
         // Set value of inputs of destination to value of outputs of source 
         for(o : outputs) {
             val i = inputs.findFirst[it.name == o.name]
             if(i != null) {
                 i.value = o.value
+            } else {
+                System.err.println("WARNING: No input in " + to + " for redirected output " + o.name + " in "+from)
             }
         }
     }

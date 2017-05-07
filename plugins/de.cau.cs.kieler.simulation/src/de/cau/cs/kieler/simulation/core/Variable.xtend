@@ -26,7 +26,6 @@ class Variable {
     @Accessors
     private String name
     
-    @Accessors
     private VariableType type
     
     @Accessors
@@ -40,4 +39,45 @@ class Variable {
  
     @Accessors
     private boolean isSignal
+    
+    new() {
+        
+    }
+    
+    new(String name) {
+        this.name = name
+    }
+    
+    new(String name, Object value) {
+        this.name = name
+        this.value = value
+    }
+    
+    public def void setValue(Object value) {
+        this.value = value
+        if(value instanceof String) {
+            type = VariableType.STRING
+        } else if (value instanceof Boolean) {
+            type = VariableType.BOOL
+        } else if (value instanceof Integer) {
+            type = VariableType.INT
+        } else if (value instanceof Float) {
+            type = VariableType.FLOAT
+        }
+    }
+    
+    public def VariableType getType() {
+        return type
+    }
+    
+    override Variable clone() {
+        val v = new Variable()
+        v.name = this.name
+        v.type = this.type
+        v.value = this.value
+        v.isInput = this.isInput
+        v.isOutput = this.isOutput
+        v.isSignal = this.isSignal
+        return v
+    }
 }

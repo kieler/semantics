@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="de.cau.cs.kieler.simulation.ui.SimulationLaunchShortcut"
+            icon="icons/foerde-logo-16.png"
+            id="de.cau.cs.kieler.simulation.ui.simulationLaunchShortcut"
+            label="KIELER Simulation"
+            modes="run, debug"
+            path="/kieler">
+         <contextualLaunch>
+            <enablement></enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.simulation.ui.StepSimulation"
+            commandId="de.cau.cs.kieler.simulation.ui.stepSimulation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.simulation.ui.StopSimulation"
+            commandId="de.cau.cs.kieler.simulation.ui.stopSimulation">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         
+         <menu
+               id="de.cau.cs.kieler.simulation.ui.menus.simulationMenu"
+               label="Simulation">
+            <command
+                  commandId="de.cau.cs.kieler.simulation.ui.stepSimulation"
+                  id="de.cau.cs.kieler.simulation.ui.menus.stepSimulation"
+                  label="Step Simulation"
+                  style="push">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.simulation.ui.stopSimulation"
+                  id="de.cau.cs.kieler.simulation.ui.menus.stopSimulation"
+                  label="Stop Simulation"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
