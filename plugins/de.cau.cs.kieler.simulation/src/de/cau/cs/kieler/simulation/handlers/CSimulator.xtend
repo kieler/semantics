@@ -23,6 +23,9 @@ import java.io.PrintStream
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.json.JSONObject
+import com.google.common.util.concurrent.SimpleTimeLimiter
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.Callable
 
 /**
  * @author aas
@@ -96,14 +99,20 @@ class CSimulator implements Simulator {
     private def String waitForJSONOutput(BufferedReader br) {
         // Wait until output has been generated
         var String line
-        val time = System.currentTimeMillis
+        val timeLimiter = new SimpleTimeLimiter();
         do {
-            line = br.readLine()
-            
-            // Error exit on timeout
-            if((System.currentTimeMillis - time) > 1000) {
-                throw new IOException("Process of simulation "+executable.location.toOSString +" is not responding")
+            // Call readLine with a timeout of 1 second
+            val callable = new Callable<String>(){ 
+                override call() throws Exception {
+                    br.readLine
+                }
             }
+            try {
+                line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
+            } catch(Exception e) {
+                throw new IOException("Process of simulation "+executable.location.toOSString +" is not responding", e)
+            }
+            
             Thread.sleep(1);
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         return line

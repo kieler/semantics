@@ -21,12 +21,12 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
  * @author aas
  *
  */
-class StepSimulation extends AbstractHandler {
+class PlaySimulation extends AbstractHandler {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        println("Step Single")
+        println("Play")
         if(SimulationManager.instance != null) {
-            SimulationManager.instance.stepSingle()
+            SimulationManager.instance.play()
         }
         return null
     }

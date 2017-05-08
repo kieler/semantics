@@ -21,12 +21,12 @@ import de.cau.cs.kieler.simulation.core.SimulationManager
  * @author aas
  *
  */
-class StepSimulation extends AbstractHandler {
+class StepSimulationMacroTick extends AbstractHandler {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        println("Step Single")
+        println("Step Macro Tick")
         if(SimulationManager.instance != null) {
-            SimulationManager.instance.stepSingle()
+            SimulationManager.instance.stepMacroTick()
         }
         return null
     }

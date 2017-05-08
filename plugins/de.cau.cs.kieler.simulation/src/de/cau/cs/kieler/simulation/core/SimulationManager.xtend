@@ -71,7 +71,7 @@ class SimulationManager {
         println("New pool:"+pool)
     }
     
-    public def void stepAll() {
+    public def void stepMacroTick() {
         // TODO: implement
         System.err.println("Not yet implemented")
     }
@@ -86,7 +86,7 @@ class SimulationManager {
         System.err.println("Not yet implemented")
     }
     
-    public def void plause() {
+    public def void pause() {
         // TODO: implement
         System.err.println("Not yet implemented")
     }
