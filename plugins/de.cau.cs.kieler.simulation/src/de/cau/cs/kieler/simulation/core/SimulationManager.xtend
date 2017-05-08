@@ -56,6 +56,7 @@ class SimulationManager {
         states.add(currentState)
         
         println("Initilized simulation")
+        updateHandlersAfterStep()
     }
     
     public def void stepSingle() {
@@ -73,6 +74,7 @@ class SimulationManager {
         states.add(currentState)
         
         println("Stepped simulation")
+        updateHandlersAfterStep()
     }
     
     public def void stepMacroTick() {
@@ -99,6 +101,7 @@ class SimulationManager {
         states.add(currentState)
         
         println("Stepped simulation macro tick")
+        updateHandlersAfterStep()
     }
     
     public def void stepBack() {
@@ -145,9 +148,7 @@ class SimulationManager {
         isStopped = true
         isPlaying = false
         for(handler : dataHandlers) {
-            if(handler instanceof Simulator) {
-                handler.stop()
-            }
+            handler.stop()
         }
     }
     
@@ -162,5 +163,13 @@ class SimulationManager {
     public def StepAction getActionStep(int index) {
         val relativeActionIndex = index % actions.size()
         return actions.get(relativeActionIndex)
+    }
+    
+    private def void updateHandlersAfterStep() {
+        for(d : dataHandlers) {
+            if(d.updateEachStep) {
+                d.read(currentPool)
+            }
+        }
     }
 }

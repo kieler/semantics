@@ -29,6 +29,14 @@ class DataPool {
         return pool
     }
     
+    public def List<Variable> getAllVariables() {
+        val List<Variable> allVariables = newArrayList()
+        for(m : models) {
+            allVariables.addAll(m.variables)
+        }
+        return allVariables
+    }
+    
     override String toString() {
         var String txt = "{  "
         val modelCount = models.size

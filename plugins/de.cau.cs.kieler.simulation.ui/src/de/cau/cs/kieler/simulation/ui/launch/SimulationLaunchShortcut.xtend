@@ -10,8 +10,13 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui
+package de.cau.cs.kieler.simulation.ui.launch
 
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.core.StepAction
+import de.cau.cs.kieler.simulation.handlers.CSimulator
+import de.cau.cs.kieler.simulation.handlers.Redirect
+import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -20,10 +25,7 @@ import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.ide.ResourceUtil
-import de.cau.cs.kieler.simulation.core.SimulationManager
-import de.cau.cs.kieler.simulation.core.StepAction
-import de.cau.cs.kieler.simulation.handlers.CSimulator
-import de.cau.cs.kieler.simulation.handlers.Redirect
+import de.cau.cs.kieler.simulation.ui.handlers.DataPoolHandler
 
 /**
  * @author aas
@@ -80,9 +82,14 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
         // TODO: Hard coded stuff
         val simMan = new SimulationManager()
         if(files.size == 1) {
+            
             val simulator = new CSimulator()
             simulator.executable = files.get(0)
             simMan.dataHandlers.add(simulator)
+            
+            val dataPool = new DataPoolHandler()
+            simMan.dataHandlers.add(dataPool)
+            
             val simAction = new StepAction(StepAction.Method.WRITE, simulator)
             simMan.actions.add(simAction)
             
@@ -97,20 +104,31 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             simulatorEnv.executable = files.get(1)
             simMan.dataHandlers.add(simulatorEnv)
             
-            val redirect = new Redirect()
-            redirect.from = simulatorEnv.modelName
-            redirect.to = simulatorModel.modelName
+            val redirectEnvToModel = new Redirect()
+            redirectEnvToModel.from = simulatorEnv.modelName
+            redirectEnvToModel.to = simulatorModel.modelName
+            simMan.dataHandlers.add(redirectEnvToModel)
+            
+            val redirectModelToEnv = new Redirect()
+            redirectModelToEnv.from = simulatorModel.modelName
+            redirectModelToEnv.to = simulatorEnv.modelName
+            simMan.dataHandlers.add(redirectModelToEnv)
+            
+            val dataPool = new DataPoolHandler()
+            simMan.dataHandlers.add(dataPool)
             
             val simAction1 = new StepAction(StepAction.Method.WRITE, simulatorEnv)
             simMan.actions.add(simAction1)
-            val simAction2 = new StepAction(StepAction.Method.WRITE, redirect)
+            val simAction2 = new StepAction(StepAction.Method.WRITE, redirectEnvToModel)
             simMan.actions.add(simAction2)
             val simAction3 = new StepAction(StepAction.Method.WRITE, simulatorModel)
             simMan.actions.add(simAction3)
+            val simAction4 = new StepAction(StepAction.Method.WRITE, redirectModelToEnv)
+            simMan.actions.add(simAction4)
             
             simMan.initialize()
         }
-        SimulationConsole.writeToConsole("\nNew simulation")
+        SimulationConsole.writeToConsole("\n\nNew simulation")
         SimulationConsole.writeToConsole("Initial pool:"+simMan.currentPool)
     }
 }

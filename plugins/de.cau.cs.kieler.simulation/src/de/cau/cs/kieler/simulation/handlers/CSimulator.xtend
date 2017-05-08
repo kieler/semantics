@@ -12,26 +12,27 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
+import com.google.common.util.concurrent.SimpleTimeLimiter
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
-import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintStream
+import java.util.concurrent.Callable
+import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.json.JSONObject
-import com.google.common.util.concurrent.SimpleTimeLimiter
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.Callable
+import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
  * @author aas
  *
  */
-class CSimulator implements Simulator {
+class CSimulator extends DefaultDataHandler implements Simulator {
     
     @Accessors
     private var IFile executable

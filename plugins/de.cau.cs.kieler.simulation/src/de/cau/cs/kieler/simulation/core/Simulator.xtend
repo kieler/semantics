@@ -20,5 +20,4 @@ interface Simulator extends DataHandler {
     
     public def void initialize(DataPool pool)
     public def void apply(DataPool pool)
-    public def void stop()
 }

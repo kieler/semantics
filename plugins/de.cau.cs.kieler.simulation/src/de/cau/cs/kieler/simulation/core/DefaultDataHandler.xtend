@@ -13,13 +13,24 @@
 package de.cau.cs.kieler.simulation.core
 
 /**
+ * Default implementation for a data handler
+ * 
  * @author aas
  *
  */
-interface DataHandler {
-    public def void read(DataPool pool)
-    public def void write(DataPool pool)
+class DefaultDataHandler implements DataHandler {
     
-    public def void stop()
-    public def boolean updateEachStep()
+    override read(DataPool pool) {
+    }
+    
+    override write(DataPool pool) {
+    }
+    
+    override updateEachStep() {
+        return false
+    }
+    
+    override stop() {
+    }
+    
 }

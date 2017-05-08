@@ -12,14 +12,14 @@
  */
 package de.cau.cs.kieler.simulation.handlers
 
-import de.cau.cs.kieler.simulation.core.DataHandler
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 
 /**
  * @author aas
  *
  */
-class Redirect implements DataHandler {
+class Redirect extends DefaultDataHandler {
     
     public String from
     public String to
@@ -40,9 +40,5 @@ class Redirect implements DataHandler {
                 System.err.println("WARNING: No input in " + to + " for redirected output " + o.name + " in "+from)
             }
         }
-    }
-    
-    override read(DataPool pool) {
-        // Nothing to do here
     }
 }

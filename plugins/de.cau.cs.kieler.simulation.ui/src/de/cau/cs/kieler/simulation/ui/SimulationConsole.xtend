@@ -44,8 +44,8 @@ class SimulationConsole {
         consoleStream.println(message)
         
         // Bring console to front
-        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-        consoleManager.showConsoleView(console)
+//        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+//        consoleManager.showConsoleView(console)
     }
 
     /**

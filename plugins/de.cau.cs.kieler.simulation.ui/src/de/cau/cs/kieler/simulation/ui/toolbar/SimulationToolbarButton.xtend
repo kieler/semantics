@@ -10,9 +10,10 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui
+package de.cau.cs.kieler.simulation.ui.toolbar
 
 import de.cau.cs.kieler.simulation.core.SimulationManager
+import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException

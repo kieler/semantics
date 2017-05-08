@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.simulation.ui.SimulationLaunchShortcut"
+            class="de.cau.cs.kieler.simulation.ui.launch.SimulationLaunchShortcut"
             icon="icons/foerde-logo-16.png"
             id="de.cau.cs.kieler.simulation.ui.simulationLaunchShortcut"
             label="KIELER Simulation"
@@ -18,23 +18,23 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.simulation.ui.StepSimulation"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulation"
             commandId="de.cau.cs.kieler.simulation.ui.step">
       </handler>
       <handler
-            class="de.cau.cs.kieler.simulation.ui.StopSimulation"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StopSimulation"
             commandId="de.cau.cs.kieler.simulation.ui.stop">
       </handler>
       <handler
-            class="de.cau.cs.kieler.simulation.ui.StepSimulationMacroTick"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationMacroTick"
             commandId="de.cau.cs.kieler.simulation.ui.stepMacroTick">
       </handler>
       <handler
-            class="de.cau.cs.kieler.simulation.ui.PlaySimulation"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.PlaySimulation"
             commandId="de.cau.cs.kieler.simulation.ui.play">
       </handler>
       <handler
-            class="de.cau.cs.kieler.simulation.ui.PauseSimulation"
+            class="de.cau.cs.kieler.simulation.ui.toolbar.PauseSimulation"
             commandId="de.cau.cs.kieler.simulation.ui.pause">
       </handler>
    </extension>
@@ -134,4 +134,15 @@
          </toolbar>
       </menuContribution>
       </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.simulation.ui.views.DataPoolView"
+            icon="icons/tableIcon.png"
+            id="de.cau.cs.kieler.simulation.ui.dataPoolView"
+            name="Data Pool"
+            restorable="true">
+      </view>
+   </extension>
 </plugin>

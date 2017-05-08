@@ -10,8 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui
+package de.cau.cs.kieler.simulation.ui.toolbar
 
+import de.cau.cs.kieler.simulation.ui.SimulationConsole
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -19,13 +20,14 @@ import org.eclipse.core.commands.ExecutionException
  * @author aas
  *
  */
-class PauseSimulation extends SimulationToolbarButton {
+class StepSimulationMacroTick extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
         super.execute(event)
         if(simulation != null) {
-            SimulationConsole.writeToConsole("Pause")
-            simulation.pause()
+            SimulationConsole.writeToConsole("Step macro tick")
+            simulation.stepMacroTick()
+            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
     }
