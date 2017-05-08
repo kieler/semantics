@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.core
 
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
@@ -21,6 +22,11 @@ import java.util.List
 class SimulationManager {
     
     public static var SimulationManager instance
+    
+    @Accessors
+    private var boolean isPlaying
+    @Accessors
+    private var boolean isStopped
     
     // TODO: make private
     public val List<DataHandler> dataHandlers = newArrayList()
@@ -31,9 +37,9 @@ class SimulationManager {
     private var StepState currentState
     
     new() {
-        if(instance != null)
+        if(instance != null) {
             instance.stop()
-            
+        }
         instance = this
     }
     
@@ -53,6 +59,11 @@ class SimulationManager {
     }
     
     public def void stepSingle() {
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        
         // Create following state
         val DataPool pool = currentState.pool.clone()   
         // Perform action on this new state
@@ -72,26 +83,58 @@ class SimulationManager {
     }
     
     public def void stepMacroTick() {
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        
         // TODO: implement
         System.err.println("Not yet implemented")
     }
     
     public def void stepBack() {
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        
         // TODO: implement
         System.err.println("Not yet implemented")
     }
         
     public def void play() {
-        // TODO: implement
-        System.err.println("Not yet implemented")
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        if(!isPlaying) {
+            isPlaying = true
+            
+            // TODO: implement
+            System.err.println("Not yet implemented")
+        }
     }
     
     public def void pause() {
-        // TODO: implement
-        System.err.println("Not yet implemented")
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        if(isPlaying) {
+            isPlaying = false        
+            // TODO: implement
+            System.err.println("Not yet implemented")
+        }
     }
     
     public def void stop() {
+        if(isStopped) {
+            System.err.println("Simulation was stopped")
+            return
+        }
+        
+        isStopped = true
+        isPlaying = false
         for(handler : dataHandlers) {
             if(handler instanceof Simulator) {
                 handler.stop()

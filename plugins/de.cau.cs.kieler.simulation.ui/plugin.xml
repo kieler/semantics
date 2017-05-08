@@ -47,62 +47,91 @@
                id="de.cau.cs.kieler.simulation.ui.simulationToolbar"
                label="KIELER Simulation">
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.stepSimulation"
+                  commandId="de.cau.cs.kieler.simulation.ui.step"
                   disabledIcon="icons/stepIconDisabled.png"
                   icon="icons/stepIcon.png"
-                  id="de.cau.cs.icons/stopIconDisabled.pngkieler.simulation.ui.menus.step"
+                  id="de.cau.cs.kieler.simulation.ui.menus.step"
                   label="Step Simulation"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
+               </visibleWhen>
             </command>
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.stepSimulationMacroTick"
+                  commandId="de.cau.cs.kieler.simulation.ui.stepMacroTick"
                   disabledIcon="icons/macroStepIconDisabled.png"
                   icon="icons/macroStepIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stepMacroTick"
                   label="Step Macro Tick"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
+               </visibleWhen>
             </command>
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.stopSimulation"
+                  commandId="de.cau.cs.kieler.simulation.ui.stop"
                   disabledIcon="icons/stopIconDisabled.png"
                   icon="icons/stopIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.stop"
                   label="Stop Simulation"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
+               </visibleWhen>
             </command>
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.playSimulation"
+                  commandId="de.cau.cs.kieler.simulation.ui.play"
                   disabledIcon="icons/runIconDisabled.png"
                   icon="icons/runIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.play"
                   label="Play Simulation"
                   style="push">
                <visibleWhen
-                     checkEnabled="true">
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
                </visibleWhen>
             </command>
             <command
-                  commandId="de.cau.cs.kieler.simulation.ui.pauseSimulation"
+                  commandId="de.cau.cs.kieler.simulation.ui.pause"
                   disabledIcon="icons/pauseIconDisabled.png"
                   icon="icons/pauseIcon.png"
                   id="de.cau.cs.kieler.simulation.ui.menus.pause"
                   label="Pause Simulation"
                   style="push">
                <visibleWhen
-                     checkEnabled="true">
+                     checkEnabled="false">
+                  <with
+                        variable="activeWorkbenchWindow.activePerspective">
+                     <equals
+                           value="de.cau.cs.kieler.simulation">
+                     </equals>
+                  </with>
                </visibleWhen>
             </command>
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeWorkbenchWindow.activePerspective">
-                  <equals
-                        value="de.cau.cs.kieler.simulation">
-                  </equals>
-               </with>
-            </visibleWhen>
          </toolbar>
       </menuContribution>
-   </extension>
-
+      </extension>
 </plugin>

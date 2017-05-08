@@ -30,4 +30,8 @@ class StopSimulation extends AbstractHandler {
         }
         return null
     }
+    
+    override isEnabled() {
+        return (SimulationManager.instance != null) && (!SimulationManager.instance.isStopped)
+    }
 }
