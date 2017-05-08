@@ -243,7 +243,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             for(annotationDatas : annotations.values) {
                 allAnnotationDatas.addAll(annotationDatas)
             }
-        
+            
             // resolve template path
             val resolvedWrapperCodeTemplate = PromPlugin.variableManager.performStringSubstitution(launchData.wrapperCodeTemplate)
             // Create wrapper code

@@ -78,9 +78,8 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
     
     private def void launch() {
         // TODO: Hard coded stuff
+        val simMan = new SimulationManager()
         if(files.size == 1) {
-            val simMan = new SimulationManager()
-            
             val simulator = new CSimulator()
             simulator.executable = files.get(0)
             simMan.dataHandlers.add(simulator)
@@ -89,7 +88,6 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             
             simMan.initialize()
         } else if(files.size == 2) {
-            val simMan = new SimulationManager()
             
             val simulatorModel = new CSimulator()
             simulatorModel.executable = files.get(0)
@@ -112,5 +110,7 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
             
             simMan.initialize()
         }
+        SimulationConsole.writeToConsole("\nNew simulation")
+        SimulationConsole.writeToConsole("Initial pool:"+simMan.currentPool)
     }
 }

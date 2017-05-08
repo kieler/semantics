@@ -32,4 +32,12 @@ class StepAction {
         this.method = method
         this.handler = handler
     }
+    
+    public def void apply(DataPool pool) {
+        println("Performing "+method + " on "+handler)
+        switch(method) {
+            case StepAction.Method.READ : handler.read(pool)
+            case StepAction.Method.WRITE : handler.write(pool)    
+        }
+    }
 }

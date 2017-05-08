@@ -12,21 +12,21 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import org.eclipse.core.commands.AbstractHandler
+import de.cau.cs.kieler.simulation.core.SimulationManager
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
-import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * @author aas
  *
  */
-class PlaySimulation extends AbstractHandler {
+class PlaySimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        println("Play")
+        super.execute(event)
         if(SimulationManager.instance != null) {
-            SimulationManager.instance.play()
+            SimulationConsole.writeToConsole("Play")
+            simulation.play()
         }
         return null
     }

@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
+import de.cau.cs.kieler.simulation.core.SimulationManager
+import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 
@@ -19,15 +21,20 @@ import org.eclipse.core.commands.ExecutionException
  * @author aas
  *
  */
-class StepSimulationMacroTick extends SimulationToolbarButton {
+class SimulationToolbarButton extends AbstractHandler {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        super.execute(event)
-        if(simulation != null) {
-            SimulationConsole.writeToConsole("Step macro tick")
-            simulation.stepMacroTick()
-            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
+        if(simulation == null || simulation.isStopped) {
+            SimulationConsole.writeToConsole("No simulation running")
         }
         return null
+    }
+    
+    override isEnabled() {
+        return (simulation != null) && (!simulation.isStopped)
+    }
+
+    public def SimulationManager getSimulation() {
+        return SimulationManager.instance
     }
 }

@@ -55,7 +55,7 @@ class SimulationManager {
         currentState = new StepState(pool, 0)
         states.add(currentState)
         
-        println("Initial pool:"+pool)
+        println("Initilized simulation")
     }
     
     public def void stepSingle() {
@@ -67,19 +67,12 @@ class SimulationManager {
         // Create following state
         val DataPool pool = currentState.pool.clone()   
         // Perform action on this new state
-        val relativeActionIndex = currentState.actionIndex % actions.size()
-        val action = actions.get(relativeActionIndex)
-        println("Performing " + action.method + " on " + action.handler)
-        switch(action.method) {
-            case StepAction.Method.READ : action.handler.read(pool)
-            case StepAction.Method.WRITE : action.handler.write(pool)
-        }
-        
+        currentAction.apply(pool)
         // Save new state
-        currentState = new StepState(pool, currentState.actionIndex +1)
+        currentState = new StepState(pool, currentState.actionIndex + 1)
         states.add(currentState)
         
-        println("New pool:"+pool)
+        println("Stepped simulation")
     }
     
     public def void stepMacroTick() {
@@ -88,8 +81,24 @@ class SimulationManager {
             return
         }
         
-        // TODO: implement
-        System.err.println("Not yet implemented")
+        // Create following state
+        val DataPool pool = currentState.pool.clone()  
+        
+        // Perform action on this new state
+        // Round action index up to next fully done macro tick
+        val macroTickActionCount = actions.size()
+        val currentActionIndex = currentState.actionIndex
+        val nextActionIndex = ((currentActionIndex + macroTickActionCount) / macroTickActionCount) * macroTickActionCount
+        for(var i = currentActionIndex; i < nextActionIndex; i++) {
+            // Apply all data handlers up to next fully done macro tick
+            getActionStep(i).apply(pool)
+        }
+        
+        // Save new state
+        currentState = new StepState(pool, nextActionIndex)
+        states.add(currentState)
+        
+        println("Stepped simulation macro tick")
     }
     
     public def void stepBack() {
@@ -140,5 +149,18 @@ class SimulationManager {
                 handler.stop()
             }
         }
+    }
+    
+    public def DataPool getCurrentPool() {
+        return currentState.pool
+    }
+    
+    public def StepAction getCurrentAction() {
+        return getActionStep(currentState.actionIndex)
+    }
+    
+    public def StepAction getActionStep(int index) {
+        val relativeActionIndex = index % actions.size()
+        return actions.get(relativeActionIndex)
     }
 }

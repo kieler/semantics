@@ -12,26 +12,21 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
-import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * @author aas
  *
  */
-class StopSimulation extends AbstractHandler {
+class StopSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        println("Halt")
-        if(SimulationManager.instance != null) {
-            SimulationManager.instance.stop()
+        super.execute(event)
+        if(simulation != null) {
+            SimulationConsole.writeToConsole("Halt")
+            simulation.stop()
         }
         return null
-    }
-    
-    override isEnabled() {
-        return (SimulationManager.instance != null) && (!SimulationManager.instance.isStopped)
     }
 }

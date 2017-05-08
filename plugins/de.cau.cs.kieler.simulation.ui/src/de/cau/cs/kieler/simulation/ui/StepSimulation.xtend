@@ -12,26 +12,23 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
-import de.cau.cs.kieler.simulation.core.SimulationManager
 
 /**
  * @author aas
  *
  */
-class StepSimulation extends AbstractHandler {
+class StepSimulation extends SimulationToolbarButton {
     
     override execute(ExecutionEvent event) throws ExecutionException {
-        println("Step Single")
-        if(SimulationManager.instance != null) {
-            SimulationManager.instance.stepSingle()
+        super.execute(event)
+        if(simulation != null) {
+            SimulationConsole.writeToConsole("Step single (performing "
+                + simulation.currentAction.method + " on " + simulation.currentAction.handler + ")")
+            simulation.stepSingle()
+            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
-    }
-    
-    override isEnabled() {
-        return (SimulationManager.instance != null) && (!SimulationManager.instance.isStopped)
     }
 }
