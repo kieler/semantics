@@ -173,7 +173,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             closeProjectForResolvingVariables(project)
         }
         createdTemporaryFile = project.getFile("tmp.txt")
-        createResource(createdTemporaryFile, null)
+        PromPlugin.createResource(createdTemporaryFile, null)
         UIUtil.openFileInEditor(createdTemporaryFile)
     }
     
@@ -226,7 +226,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             
             // Create file
             val fileHandle = newlyCreatedProject.getFile(modelFilePathWithoutExtension + modelFileExtension)
-            createResource(fileHandle, initialContentStream)
+            PromPlugin.createResource(fileHandle, initialContentStream)
             UIUtil.openFileInEditor(fileHandle)
 
             return true
@@ -336,11 +336,11 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val resource = newlyCreatedProject.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
-           createResource(resource, null)
+           PromPlugin.createResource(resource, null)
        } else {
            // Create file with initial content from origin
            val initialContentStream = PromPlugin.getInputStream(origin, null)
-           createResource(resource, initialContentStream)
+           PromPlugin.createResource(resource, initialContentStream)
        }
     }
 
@@ -358,7 +358,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             // Create empty directory
             val newFolder = newlyCreatedProject.getFolder(projectRelativePath)
-            createResource(newFolder, null);
+            PromPlugin.createResource(newFolder, null);
         }
     }
 
@@ -460,40 +460,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * Creates a resource and all needed parent folders in a project.
-     * The created resource is initialized with the inputs of the stream.
-     * 
-     * @param resource The resource handle to be created
-     * @param stream Input stream with initial content for the resource
-     */
-    protected def void createResource(IResource resource, InputStream stream) throws CoreException {
-        if (resource == null || resource.exists())
-            return;
-
-        if (!resource.getParent().exists())
-            createResource(resource.getParent(), stream);
-
-        switch(resource.getType()){
-            case IResource.FILE : {
-                if(stream != null) {
-                    (resource as IFile).create(stream, true, null)
-                    stream.close()
-                } else {
-                    val stringStream = new StringInputStream("")
-                    (resource as IFile).create(stringStream, true, null)
-                    stringStream.close()
-                }
-            }
-            case IResource.FOLDER :
-                (resource as IFolder).create(IResource.NONE, true, null)
-            case IResource.PROJECT : {
-                (resource as IProject).create(null)
-                (resource as IProject).open(null)
-            }
-        }
-    }
-
-    /**
      * Copies the contents of the resources from the platform url
      * to the folder of the newly created project.
      * 
@@ -535,7 +501,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                         // Create file in project with content of file from url
                         val stream = fileUrl.openStream()
                         val file = newFolder.getFile(relativePath)
-                        createResource(file, stream)
+                        PromPlugin.createResource(file, stream)
                         stream.close()
                     }
                 } else {

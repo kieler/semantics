@@ -16,27 +16,27 @@
 cJSON* output = 0;
 
 void receiveVariables() {
-	char buffer[10000];
-	int i = 0;
-	char c;
-	// read next line
-	for (i = 0; (c = getchar()) != '\n'; i++) {
-		buffer[i] = c;
-	}
-	buffer[i] = 0;
+    char buffer[10000];
+    int i = 0;
+    char c;
+    // read next line
+    for (i = 0; (c = getchar()) != '\n'; i++) {
+        buffer[i] = c;
+    }
+    buffer[i] = 0;
 
-	cJSON * root = cJSON_Parse(buffer);
+    cJSON * root = cJSON_Parse(buffer);
     cJSON* variable = 0;
     
 ${inputs}
 
-	cJSON_Delete(root);
+    cJSON_Delete(root);
 }
 
 void sendVariables() {
-	cJSON* root = cJSON_CreateObject();
-	cJSON* variable = 0;
-	
+    cJSON* root = cJSON_CreateObject();
+    cJSON* variable = 0;
+    
 ${outputs}
     
     char* outString = cJSON_Print(root);
@@ -49,17 +49,17 @@ ${outputs}
 
 int main(int argc, const char* argv[]) {
     // Initialize 
-	reset();
-	sendVariables();
-	
-	while (1) {
-	   // Receive variables
-	   receiveVariables();
-	   
-	   // Reaction of model
-	   tick();
-	   
-	   // Send variables
-	   sendVariables();
-	}
+    reset();
+    sendVariables();
+    
+    while (1) {
+       // Receive variables
+       receiveVariables();
+       
+       // Reaction of model
+       tick();
+       
+       // Send variables
+       sendVariables();
+    }
 }

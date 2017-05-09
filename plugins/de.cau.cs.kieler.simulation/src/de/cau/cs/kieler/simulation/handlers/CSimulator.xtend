@@ -48,7 +48,7 @@ class CSimulator extends DefaultDataHandler implements Simulator {
         
         val model = new Model()
         model.name = modelName
-        pool.models.add(model)
+        pool.addModel(model)
         
         // Get reader and writer for process
         val isr = new InputStreamReader(process.inputStream)

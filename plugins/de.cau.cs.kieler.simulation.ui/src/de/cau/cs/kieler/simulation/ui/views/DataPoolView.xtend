@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.ui.views
 
 import de.cau.cs.kieler.simulation.core.DataPool
+import de.cau.cs.kieler.simulation.core.Model
 import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
 import org.eclipse.jface.action.Action
@@ -26,7 +27,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
-import de.cau.cs.kieler.simulation.core.Model
 
 /**
  * @author aas
@@ -37,7 +37,12 @@ class DataPoolView extends ViewPart {
     public static var DataPoolView instance
     
     var TableViewer viewer
-    var Action dummyAction
+    
+    var TableViewerColumn variableColumn
+    var TableViewerColumn valueColumn
+    var TableViewerColumn historyColumn
+    var TableViewerColumn inputColumn
+    var TableViewerColumn outputColumn
     
     /**
      * @see IWorkbenchPart#createPartControl(Composite)
@@ -50,7 +55,6 @@ class DataPoolView extends ViewPart {
         viewer = createDataPoolTable(parent);
 
         // Create menu and toolbars.
-        createActions();
         createMenu();
         createToolbar();
     }
@@ -74,22 +78,13 @@ class DataPoolView extends ViewPart {
     }
     
     /**
-     * Create the actions of toolbars and menus.
-     */
-    public def void createActions() {
-        dummyAction = new Action("Dummy Action") {
-            override run() {
-                println("dummy action")
-            }
-        }
-    }
-    
-    /**
      * Create menu.
      */
     private def void createMenu() {
         val mgr = getViewSite().getActionBars().getMenuManager();
-        mgr.add(dummyAction);
+        mgr.add(new ToggleColumnVisibleAction(historyColumn));
+        mgr.add(new ToggleColumnVisibleAction(inputColumn));
+        mgr.add(new ToggleColumnVisibleAction(outputColumn));
     }
     
     /**
@@ -97,21 +92,25 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(dummyAction);
+        mgr.add(new Action("Dummy Action"){
+            override run(){
+                println("Dummy action")
+            }
+        });
     }
     
     private def TableViewer createDataPoolTable(Composite parent) {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-        table.setLayoutData(new GridData(GridData.FILL_BOTH));
+//        table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
         // Create viewer
         val viewer = new TableViewer(table)
         
         // Create columns
-        val checkColumn = createTableColumn(viewer, "Variable", 120)
-        checkColumn.labelProvider = new ColumnLabelProvider() {
+        variableColumn = createTableColumn(viewer, "Variable", 120, true)
+        variableColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return element.name
@@ -119,8 +118,8 @@ class DataPoolView extends ViewPart {
                     return "-----" + element.name + "-----"
             }
         };
-        val nameColumn = createTableColumn(viewer, "Value", 80)
-        nameColumn.labelProvider = new ColumnLabelProvider() {
+        valueColumn = createTableColumn(viewer, "Value", 80, true)
+        valueColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return element.value.toString
@@ -128,7 +127,30 @@ class DataPoolView extends ViewPart {
                     return "----------"
             }
         };
-        val inputColumn = createTableColumn(viewer, "Input", 80)
+        historyColumn = createTableColumn(viewer, "History", 80, true)
+        historyColumn.labelProvider = new ColumnLabelProvider() {
+            override String getText(Object element) {
+                if(element instanceof Variable) {
+                    val history = element.history
+                    var txt = ""
+                    var size = history.size()
+                    val max = 6
+                    if(size > max) {
+                        txt += "..."
+                    }
+                    for(var i = size - Math.min(size, max); i < size-1; i++) {
+                        val v = history.get(i)
+                        txt += v.value
+                        if(i < history.size()-2)
+                            txt += ", "
+                    }
+                    return txt
+                } else if(element instanceof Model) { 
+                    return "----------"    
+                }
+            }
+        };
+        inputColumn = createTableColumn(viewer, "Is Input", 80, false)
         inputColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
@@ -137,7 +159,7 @@ class DataPoolView extends ViewPart {
                     return "----------"
             }
         };
-        val outputColumn = createTableColumn(viewer, "Output", 80)
+        outputColumn = createTableColumn(viewer, "Is Output", 80, false)
         outputColumn.labelProvider = new ColumnLabelProvider() {
             override String getText(Object element) {
                 if(element instanceof Variable)
@@ -162,14 +184,19 @@ class DataPoolView extends ViewPart {
      * @param width The width of this column
      * @return the created column.
      */
-    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width) {
+    private static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
         val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
         val column = viewerColumn.getColumn()
         column.setText(title);
-        column.setWidth(width);
-        column.setResizable(true);
-        column.setMoveable(false);
+        column.setMoveable(true);
+        
+        if(visible) {
+            column.width = width
+            column.resizable = true
+        } else {
+            column.width = 0
+            column.resizable = false
+        }
         return viewerColumn
     }
-    
 }

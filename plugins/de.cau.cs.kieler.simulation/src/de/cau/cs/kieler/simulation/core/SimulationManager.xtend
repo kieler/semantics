@@ -66,7 +66,8 @@ class SimulationManager {
         }
         
         // Create following state
-        val DataPool pool = currentState.pool.clone()   
+        val DataPool pool = currentState.pool.clone()
+        pool.previousPool = currentPool
         // Perform action on this new state
         currentAction.apply(pool)
         // Save new state
@@ -85,7 +86,7 @@ class SimulationManager {
         
         // Create following state
         val DataPool pool = currentState.pool.clone()  
-        
+        pool.previousPool = currentPool
         // Perform action on this new state
         // Round action index up to next fully done macro tick
         val macroTickActionCount = actions.size()

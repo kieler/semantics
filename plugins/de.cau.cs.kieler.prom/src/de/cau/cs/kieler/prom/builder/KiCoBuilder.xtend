@@ -261,8 +261,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void generateSimulationCode(IFile res) {
         //TODO: Hardcoded stuff
-        val simTemplate = "sim/Simulation.ftl";
-        val simTargetLocation = project.location.toOSString + "/sim/Simulation"+Files.getNameWithoutExtension(res.name)+".c";
+        val simTemplate = "Simulation.ftl";
+        val simTarget = "sim/Simulation"+Files.getNameWithoutExtension(res.name)+".c"
+        val simTargetLocation = computeTargetPath(simTarget, false)
+        val simTargetPath = computeTargetPath(simTarget, true)
+        val simTargetPathDirectory = new Path(simTargetPath).removeLastSegments(1)
         
         if(project.findMember(simTemplate) == null) {
             println("No simulation template found.")
@@ -300,10 +303,24 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         
         // Save the result as simulation for this model
 //        System.err.println(simulationCode)
+        createDirectories(simTargetLocation)
         Files.write(simulationCode, new File(simTargetLocation), Charsets.UTF_8)
+        
+        // Copy cJSON.c and cJSON.h to output directory of simulation
+        createCJSONLibrary(simTargetPathDirectory.toOSString)
         
         // Compile to executable
         compileSimulationCode(simTargetLocation);
+    }
+    
+    private def void createCJSONLibrary(String projectRelativePath) {
+        val cJSON_c = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.c", null)
+        val cJSON_h = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.h", null)
+        
+        val cFile = project.getFile(projectRelativePath+"/"+"cJSON.c")
+        val hFile = project.getFile(projectRelativePath+"/"+"cJSON.h")
+        PromPlugin.createResource(cFile, cJSON_c)
+        PromPlugin.createResource(hFile, cJSON_h)
     }
     
     private def void compileSimulationCode(String simLocation) {

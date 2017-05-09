@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -40,8 +41,10 @@ class Variable {
     @Accessors
     private boolean isSignal
     
+    @Accessors
+    private Model model
+    
     new() {
-        
     }
     
     new(String name) {
@@ -49,7 +52,7 @@ class Variable {
     }
     
     new(String name, Object value) {
-        this.name = name
+        this( name)
         this.value = value
     }
     
@@ -68,6 +71,19 @@ class Variable {
     
     public def VariableType getType() {
         return type
+    }
+    
+    public def List<Variable> getHistory() {
+        val List<Variable> history = newArrayList()
+        val models = model.history
+        for(m : models) {
+            for(v : m.variables) {
+                if(name != null && name.equals(v.name)) {
+                    history.add(v)
+                }
+            }
+        }
+        return history
     }
     
     override Variable clone() {

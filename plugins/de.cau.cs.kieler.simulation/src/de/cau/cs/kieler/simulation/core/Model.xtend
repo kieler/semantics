@@ -24,10 +24,12 @@ class Model {
     
     @Accessors
     private String name
- 
-    @Accessors
-    private List<Variable> variables = newArrayList()
     
+    @Accessors
+    private DataPool pool
+    
+    private List<Variable> variables = newArrayList()
+
     public def JSONObject toJSONObject() {
         val json = new JSONObject()
         for(v : variables) {
@@ -53,15 +55,45 @@ class Model {
             variable.isInput = jsonVariable.optBoolean("input")
             variable.isOutput = jsonVariable.optBoolean("output")
             variable.isSignal = jsonVariable.optBoolean("signal")
-            variables.add(variable)
+            addVariable(variable)
+        }
+    }
+    
+    public def List<Model> getHistory() {
+        val List<Model> history = newArrayList()
+        val pools = pool.history
+        for(p : pools) {
+            for(m : p.models) {
+                if(name != null && name.equals(m.name)) {
+                    history.add(m)
+                }
+            }
+        }
+        return history
+    }
+    
+    public def List<Variable> getVariables() {
+        return variables
+    }
+
+    public def void addVariable(Variable v) {
+        // Remove in old model
+        if(v.model != null) {
+            v.model.variables.remove(v)
+        }
+        // Set new model
+        v.model = this
+        if(!variables.contains(v)) {
+            variables.add(v)
         }
     }
     
     override Model clone() {
         val m = new Model()
         m.name = this.name
-        for(v : this.variables)
-            m.variables.add(v.clone())
+        for(v : this.variables){
+            m.addVariable(v.clone())   
+        }
         return m
     }
 }

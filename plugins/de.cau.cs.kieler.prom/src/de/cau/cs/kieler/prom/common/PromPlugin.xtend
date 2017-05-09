@@ -15,30 +15,32 @@ package de.cau.cs.kieler.prom.common
 
 import com.google.common.base.Charsets
 import com.google.common.io.CharStreams
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
+import java.util.ArrayList
+import java.util.List
 import java.util.Map
+import org.eclipse.core.resources.IContainer
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.variables.IStringVariableManager
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
-import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.IContainer
-import java.util.List
-import org.eclipse.core.resources.IFile
-import java.util.ArrayList
-import org.eclipse.core.variables.VariablesPlugin
-import org.eclipse.core.runtime.Path
-import java.io.File
-import org.eclipse.core.variables.IStringVariableManager
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -335,5 +337,39 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
             varManager = VariablesPlugin.getDefault.stringVariableManager
         }
         return varManager
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders in a project.
+     * The created resource is initialized with the inputs of the stream.
+     * 
+     * @param resource The resource handle to be created
+     * @param stream Input stream with initial content for the resource
+     */
+    public static def void createResource(IResource resource, InputStream stream) throws CoreException {
+        if (resource == null || resource.exists())
+            return;
+
+        if (!resource.getParent().exists())
+            createResource(resource.getParent(), stream);
+
+        switch(resource.getType()){
+            case IResource.FILE : {
+                if(stream != null) {
+                    (resource as IFile).create(stream, true, null)
+                    stream.close()
+                } else {
+                    val stringStream = new StringInputStream("")
+                    (resource as IFile).create(stringStream, true, null)
+                    stringStream.close()
+                }
+            }
+            case IResource.FOLDER :
+                (resource as IFolder).create(IResource.NONE, true, null)
+            case IResource.PROJECT : {
+                (resource as IProject).create(null)
+                (resource as IProject).open(null)
+            }
+        }
     }
 }
