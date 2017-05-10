@@ -167,13 +167,17 @@ class WrapperCodeGenerator {
         val map = getMacroCalls(annotationDatas)
         
         // Add name of model 
-        val modelName = modelNames.values.get(0)
-        map.put(MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
-       
+        if(!map.containsKey(MODEL_NAME_VARIABLE)) {
+            val modelName = modelNames.values.get(0)
+            map.put(MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
+        }
+        
         // Add name of output file 
-        val fileName = new File(templatePath).name
-        val fileNameWithoutExtension = new Path(fileName).removeFileExtension.toOSString
-        map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
+        if(!map.containsKey(FILE_NAME_VARIABLE)) {
+            val fileName = new File(templatePath).name
+            val fileNameWithoutExtension = Files.getNameWithoutExtension(fileName)
+            map.put(FILE_NAME_VARIABLE, fileNameWithoutExtension)
+        }
         
         // Add additional mappings
         map.putAll(additionalMappings)

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.prom.common.ModelImporter
 import de.cau.cs.kieler.prom.common.PromPlugin
 import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator
+import de.cau.cs.kieler.sccharts.State
 import java.io.File
 import java.io.IOException
 import java.util.ArrayList
@@ -47,10 +48,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
-import de.cau.cs.kieler.sccharts.State
-import org.freemarker.FreeMarkerPlugin
-import java.io.StringWriter
-import org.eclipse.debug.core.DebugPlugin
+import org.eclipse.xtext.util.StringInputStream
 
 /**
  * @author aas
@@ -261,15 +259,16 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void generateSimulationCode(IFile res) {
         //TODO: Hardcoded stuff
-        val simTemplate = "Simulation.ftl";
-        val simTarget = "sim/Simulation"+Files.getNameWithoutExtension(res.name)+".c"
-        val simTargetLocation = computeTargetPath(simTarget, false)
-        val simTargetPath = computeTargetPath(simTarget, true)
-        val simTargetPathDirectory = new Path(simTargetPath).removeLastSegments(1)
-        
+        val simTargetPathDirectory = new Path(computeTargetPath(res.projectRelativePath.toOSString, true)).removeLastSegments(1)
+        var simTemplate = "Simulation.ftl";
+        var simTargetPath = simTargetPathDirectory + File.separator + "Simulation" + Files.getNameWithoutExtension(res.name)+".c"
         if(project.findMember(simTemplate) == null) {
-            println("No simulation template found.")
-            return;
+            simTemplate = "src/JavaSimulation.ftl"
+            simTargetPath = simTargetPathDirectory + File.separator + "JavaSimulation" + Files.getNameWithoutExtension(res.name)+".java"
+            if(project.findMember(simTemplate) == null) {
+                println("No simulation template found.")
+                return;                
+            }
         }
         
         // Get variables in model
@@ -298,53 +297,104 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // Get simulation code
         val generator = new WrapperCodeGenerator(project, launchData)
         val simulationCode = generator.generateWrapperCode(simTemplate,
-            #{"compiled_model_loc" -> computeTargetPath(res.projectRelativePath.toOSString, false)},
+            #{"compiled_model_loc" -> computeTargetPath(res.projectRelativePath.toOSString, false),
+              "file_name" -> Files.getNameWithoutExtension(simTargetPath) },
             variables)
         
         // Save the result as simulation for this model
 //        System.err.println(simulationCode)
-        createDirectories(simTargetLocation)
-        Files.write(simulationCode, new File(simTargetLocation), Charsets.UTF_8)
+        val targetFile = project.getFile(simTargetPath)
+        if(targetFile.exists())
+            targetFile.delete(true, null)
+        PromPlugin.createResource(targetFile, new StringInputStream(simulationCode))
         
         // Copy cJSON.c and cJSON.h to output directory of simulation
-        createCJSONLibrary(simTargetPathDirectory.toOSString)
+        if(new Path(simTargetPath).fileExtension.equals("c"))
+            createCJSONLibrary(simTargetPathDirectory.toOSString)
         
         // Compile to executable
-        compileSimulationCode(simTargetLocation);
+        compileSimulationCode(simTargetPath);
     }
     
-    private def void createCJSONLibrary(String projectRelativePath) {
+    private def void createCJSONLibrary(String projectRelativeDirectory) {
         val cJSON_c = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.c", null)
         val cJSON_h = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.h", null)
         
-        val cFile = project.getFile(projectRelativePath+"/"+"cJSON.c")
-        val hFile = project.getFile(projectRelativePath+"/"+"cJSON.h")
+        val cFile = project.getFile(projectRelativeDirectory+"/"+"cJSON.c")
+        val hFile = project.getFile(projectRelativeDirectory+"/"+"cJSON.h")
         PromPlugin.createResource(cFile, cJSON_c)
         PromPlugin.createResource(hFile, cJSON_h)
     }
     
-    private def void compileSimulationCode(String simLocation) {
-        if(!new File(simLocation).exists) {
-            System.err.println("Simulation file does not exist:"+simLocation)
+    private def void compileSimulationCode(String simPath) {
+        if(!project.getFile(simPath).exists) {
+            System.err.println("Simulation file '" + simPath + "'does not exist in project "+project.name)
             return   
         }
-        
-        // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
-        val fileName = new Path(simLocation).lastSegment
-        val executableName = Files.getNameWithoutExtension(fileName)
-        val directory = new Path(simLocation).removeLastSegments(1)
+    
+        val fileExtension = new Path(simPath).fileExtension.toLowerCase
+        if(fileExtension.equals("c"))
+            createExecutableFromCCode(simPath)
+        else if(fileExtension.equals("java"))
+            createExecutableFromJavaCode(simPath)
+    }
+    
+    private def void createExecutableFromCCode(String simPath) {
+         // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
+        val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
+        val fileName = new Path(simPath).lastSegment
+        val executableName = Files.getNameWithoutExtension(fileName) + if(isWindows) ".exe" else ""
+        val directory = new Path(simPath).removeLastSegments(1)
         
         // Delete old executable
-        new File(directory.toOSString + File.separator + executableName).delete
+        val executableFile = project.getFile(directory.toOSString + File.separator + executableName)
+        if(executableFile.exists)
+            executableFile.delete(true, null)
         
         // Run gcc on simulation code
-        val pBuilder = new ProcessBuilder(#["gcc",fileName,"-o",executableName])
-        pBuilder.directory(directory.toFile)
+        val pBuilder = new ProcessBuilder("gcc",fileName,"-o",executableName)
+        pBuilder.directory(project.location.append(directory).toFile)
         val p = pBuilder.start()
         // Wait until the process finished
         val errorCode = p.waitFor()
         if(errorCode != 0) {
             System.err.println("GCC has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+        } else {
+            executableFile.refreshLocal(1, null)
+        }
+    }
+    
+    private def void createExecutableFromJavaCode(String simPath) {
+        // Create jar file
+        // Example command: jar cvfe ../output.jar JavaSimulationJSimple *.class
+        val fileName = new Path(simPath).lastSegment
+        val fileNameNoExtension = Files.getNameWithoutExtension(fileName)
+        val executableName = Files.getNameWithoutExtension(fileName) + ".jar"
+        val directory = new Path(simPath).removeLastSegments(1)
+        
+        // Delete old executable
+        val executableFile = project.getFile(directory.toOSString + File.separator + executableName)
+        if(executableFile.exists)
+            executableFile.delete(true, null)
+        
+        val List<String> classFiles = newArrayList()
+        for(m : project.getFolder("bin").members) {
+            if(m.name.endsWith(".class")) {
+                classFiles.add(m.name)
+            }
+        }
+        
+        val pBuilder = new ProcessBuilder(#["jar","cvfe","../"+directory.toOSString + File.separator + fileNameNoExtension+".jar",fileNameNoExtension] + classFiles)
+        pBuilder.directory(project.location.append(new Path("/bin")).toFile)
+        pBuilder.redirectError(project.location.append(new Path("log.txt")).toFile)
+        
+        val p = pBuilder.start()
+        // Wait until the process finished
+        val errorCode = p.waitFor()
+        if(errorCode != 0) {
+            System.err.println("jar has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+        } else {
+            executableFile.refreshLocal(1, null)
         }
     }
     

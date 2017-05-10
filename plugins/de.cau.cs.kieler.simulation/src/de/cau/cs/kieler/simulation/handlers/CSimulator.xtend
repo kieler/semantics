@@ -42,10 +42,14 @@ class CSimulator extends DefaultDataHandler implements Simulator {
     private var PrintStream processWriter
     
     override initialize(DataPool pool) {
-        val pBuilder = new ProcessBuilder(#["./"+executable.name])
+        var ProcessBuilder pBuilder
+        if(executable.name.endsWith(".jar"))
+            pBuilder = new ProcessBuilder(#["java", "-jar", "./"+executable.name])
+        else
+            pBuilder = new ProcessBuilder(#["./"+executable.name])
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
-        
+         
         val model = new Model()
         model.name = modelName
         pool.addModel(model)
