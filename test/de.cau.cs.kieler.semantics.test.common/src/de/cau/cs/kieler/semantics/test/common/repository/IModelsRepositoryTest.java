@@ -14,17 +14,16 @@ package de.cau.cs.kieler.semantics.test.common.repository;
 
 import java.util.Comparator;
 
-import org.junit.runner.RunWith;
-
 
 /**
  * Interface for a test running on the models repository.
+ * 
+ * Annotate the implementing class with @RunWith(ModelsRepositoryTestRunner.class)
  * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-@RunWith(ModelsRepositoryTestRunner.class)
 public interface IModelsRepositoryTest<T> extends Comparator<TestModelData> {
     
     /**

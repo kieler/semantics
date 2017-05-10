@@ -14,7 +14,6 @@ package de.cau.cs.kieler.semantics.test.common.repository
 
 import java.util.Comparator
 import java.util.List
-import com.google.common.collect.Ordering
 
 /**
  * Common utility for the {@link TestModelData}.
