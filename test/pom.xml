@@ -25,7 +25,7 @@
 
     <!-- TEST Plugins -->
     <module>de.cau.cs.kieler.kexpressions.text.test</module> <!-- responsible: ssm  -->
-    <module>de.cau.cs.kieler.sccharts.test</module> <!-- responsible: aas  -->
+    <module>de.cau.cs.kieler.sccharts.test</module> <!-- responsible: als  -->
     <module>de.cau.cs.kieler.sccharts.sim.c.test</module> <!-- responsible: aas  -->
     <module>de.cau.cs.kieler.esterel.sim.c.test</module> <!-- responsible: aas  -->
   </modules>

@@ -248,7 +248,13 @@ class ModelsRepositoryTestRunner extends Suite {
          * @return the name
          */
         override String getName() {
-            return modelData.name
+            val builder = new StringBuilder()
+            builder.append(modelData.name)
+            builder.append(" - ")
+            builder.append(modelData.repositoryPath.fileName)
+            builder.append(":")
+            builder.append(modelData.modelPath)
+            return builder.toString
         }
         
         /**
