@@ -37,6 +37,10 @@
             class="de.cau.cs.kieler.simulation.ui.toolbar.PauseSimulation"
             commandId="de.cau.cs.kieler.simulation.ui.pause">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.simulation.ui.toolbar.StepSimulationBack"
+            commandId="de.cau.cs.kieler.simulation.ui.back">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -130,6 +134,13 @@
                      </equals>
                   </with>
                </visibleWhen>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.simulation.ui.back"
+                  icon="icons/stepBackIcon.png"
+                  id="de.cau.cs.kieler.simulation.ui.menus.back"
+                  label="Step Back"
+                  style="push">
             </command>
          </toolbar>
       </menuContribution>

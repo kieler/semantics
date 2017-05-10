@@ -18,11 +18,9 @@ import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.viewers.ArrayContentProvider
-import org.eclipse.jface.viewers.ColumnLabelProvider
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.GridData
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
@@ -92,9 +90,13 @@ class DataPoolView extends ViewPart {
      */
     private def void createToolbar() {
         val mgr = getViewSite().getActionBars().getToolBarManager();
-        mgr.add(new Action("Dummy Action"){
+        mgr.add(new Action("Reset Value"){
             override run(){
-                println("Dummy action")
+                val variable = viewer.structuredSelection.firstElement as Variable
+                if(variable != null) {
+                    variable.userValue = null
+                    viewer.update(variable, null)
+                } 
             }
         });
     }
@@ -103,36 +105,42 @@ class DataPoolView extends ViewPart {
         val table = new Table(parent, SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION))
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-//        table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
         // Create viewer
         val viewer = new TableViewer(table)
         
         // Create columns
         variableColumn = createTableColumn(viewer, "Variable", 120, true)
-        variableColumn.labelProvider = new ColumnLabelProvider() {
+        variableColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
-                if(element instanceof Variable)
-                    return element.name
-                else if(element instanceof Model) 
+                if(element instanceof Variable) {
+                    if(element.isDirty)
+                        return element.name+"*"
+                    else
+                        return element.name
+                } else if(element instanceof Model) { 
                     return "-----" + element.name + "-----"
+                }
             }
         };
         valueColumn = createTableColumn(viewer, "Value", 80, true)
-        valueColumn.labelProvider = new ColumnLabelProvider() {
+        valueColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
-                if(element instanceof Variable)
-                    return element.value.toString
-                else if(element instanceof Model) 
-                    return "----------"
+                 if(element instanceof Variable) {
+                    if(element.isDirty)
+                        return "* "+element.userValue?.toString
+                    else
+                        return element.value?.toString
+                }
+                return ""
             }
         };
         historyColumn = createTableColumn(viewer, "History", 80, true)
-        historyColumn.labelProvider = new ColumnLabelProvider() {
+        historyColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
+                var txt = ""
                 if(element instanceof Variable) {
                     val history = element.history
-                    var txt = ""
                     var size = history.size()
                     val max = 6
                     if(size > max) {
@@ -144,34 +152,33 @@ class DataPoolView extends ViewPart {
                         if(i < history.size()-2)
                             txt += ", "
                     }
-                    return txt
-                } else if(element instanceof Model) { 
-                    return "----------"    
-                }
+                }                    
+                return txt
             }
         };
         inputColumn = createTableColumn(viewer, "Is Input", 80, false)
-        inputColumn.labelProvider = new ColumnLabelProvider() {
+        inputColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return String.valueOf(element.isInput)
-                else if(element instanceof Model) 
-                    return "----------"
+                return ""
             }
         };
         outputColumn = createTableColumn(viewer, "Is Output", 80, false)
-        outputColumn.labelProvider = new ColumnLabelProvider() {
+        outputColumn.labelProvider = new DataPoolViewerColumn() {
             override String getText(Object element) {
                 if(element instanceof Variable)
                     return String.valueOf(element.isOutput)
-                else if(element instanceof Model) 
-                    return "----------"
+                return ""
             }
         };
 
         // Create content
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
+        
+        // Make cells editable
+        valueColumn.editingSupport = new ValueColumnEditingSupport(viewer)
         
         return viewer
     }

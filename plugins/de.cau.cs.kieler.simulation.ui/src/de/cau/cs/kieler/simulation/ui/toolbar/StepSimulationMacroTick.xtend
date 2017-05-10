@@ -27,7 +27,7 @@ class StepSimulationMacroTick extends SimulationToolbarButton {
         if(simulation != null) {
             SimulationConsole.writeToConsole("Step macro tick")
             simulation.stepMacroTick()
-            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
+//            SimulationConsole.writeToConsole("New pool:" + simulation.currentPool)
         }
         return null
     }

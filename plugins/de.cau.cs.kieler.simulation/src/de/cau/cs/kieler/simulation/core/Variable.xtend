@@ -33,6 +33,9 @@ class Variable {
     private Object value
     
     @Accessors
+    private Object userValue
+    
+    @Accessors
     private boolean isInput
     
     @Accessors
@@ -84,6 +87,13 @@ class Variable {
             }
         }
         return history
+    }
+    
+    public def boolean isDirty() {
+        if(userValue == null)
+            return false
+        else
+            return !userValue.equals(value)
     }
     
     override Variable clone() {

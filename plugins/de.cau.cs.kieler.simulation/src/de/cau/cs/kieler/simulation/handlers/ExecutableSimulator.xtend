@@ -32,7 +32,7 @@ import de.cau.cs.kieler.simulation.core.Simulator
  * @author aas
  *
  */
-class CSimulator extends DefaultDataHandler implements Simulator {
+class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     
     @Accessors
     private var IFile executable
@@ -43,6 +43,7 @@ class CSimulator extends DefaultDataHandler implements Simulator {
     
     override initialize(DataPool pool) {
         var ProcessBuilder pBuilder
+        // Execute jar file or binary
         if(executable.name.endsWith(".jar"))
             pBuilder = new ProcessBuilder(#["java", "-jar", "./"+executable.name])
         else
@@ -64,9 +65,6 @@ class CSimulator extends DefaultDataHandler implements Simulator {
         println("Parsing JSON:"+line)
         val json = new JSONObject(line)
         model.fromJSONObject(json)
-    }
-    
-    override apply(DataPool pool) {
     }
     
     override read(DataPool pool) {
@@ -124,6 +122,6 @@ class CSimulator extends DefaultDataHandler implements Simulator {
     }
     
     override String toString() {
-        return "CSimulator for "+modelName
+        return "Simulator for "+modelName
     }
 }

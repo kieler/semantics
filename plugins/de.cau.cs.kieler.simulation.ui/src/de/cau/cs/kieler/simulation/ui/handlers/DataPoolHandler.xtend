@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ui.handlers
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.ui.views.DataPoolView
+import org.eclipse.swt.widgets.Display
 
 /**
  * @author aas
@@ -23,7 +24,12 @@ import de.cau.cs.kieler.simulation.ui.views.DataPoolView
 class DataPoolHandler extends DefaultDataHandler {
     
     override read(DataPool pool) {
-        DataPoolView.instance?.setDataPool(pool)
+        // Execute in UI thread
+        Display.getDefault().asyncExec(new Runnable() {
+            override void run() {
+                DataPoolView.instance?.setDataPool(pool)
+            }
+        });
     }
     
     override updateEachStep() {
@@ -31,6 +37,11 @@ class DataPoolHandler extends DefaultDataHandler {
     }
     
     override stop() {
-        DataPoolView.instance?.setDataPool(null)
+        // Execute in UI thread
+         Display.getDefault().asyncExec(new Runnable() {
+            override void run() {
+                DataPoolView.instance?.setDataPool(null)
+            }
+        });
     }
 }
