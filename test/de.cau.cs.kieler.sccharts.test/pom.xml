@@ -18,11 +18,24 @@
         <groupId>org.eclipse.xtend</groupId>
         <artifactId>xtend-maven-plugin</artifactId>
         <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
+            <execution>
+		      <id>xtend-compile</id>
+		      <goals>
+		        <goal>compile</goal>
+		      </goals>
+		      <configuration>
+		        <outputDirectory>${basedir}/src/main/xtend-gen</outputDirectory>
+		      </configuration>
+		    </execution>
+		    <execution>
+		      <id>xtend-test-compile</id>
+		      <goals>
+		        <goal>testCompile</goal>
+		      </goals>
+		      <configuration>
+		         <outputDirectory>${basedir}/src/test/xtend-gen</outputDirectory>
+		      </configuration>
+		    </execution>
         </executions>
       </plugin>
     </plugins>
