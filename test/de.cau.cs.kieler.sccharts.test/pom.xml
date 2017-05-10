@@ -21,12 +21,11 @@
           <execution>
             <goals>
               <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <goals>
               <goal>testCompile</goal>
             </goals>
+            <configuration>
+                <outputDirectory>xtend-gen</outputDirectory>
+            </configuration>
           </execution>
         </executions>
       </plugin>
