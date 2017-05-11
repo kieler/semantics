@@ -20,7 +20,7 @@
 
   <modules>
     <!-- General infrastructure -->
-    <module>de.cau.cs.kieler.semantics.test.common</module>
+    <module>de.cau.cs.kieler.test.common</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
 
     <!-- TEST Plugins -->
