@@ -16,16 +16,28 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Central class of the simulation that holds all models and their variables at a given time.
+ * A data pool consists of the models it contains.
+ * 
  * @author aas
  *
  */
 class DataPool {
     
+    /**
+     * The models in this pool
+     */
     private val List<Model> models = newArrayList()
     
+    /**
+     * The data pool of the previous state of the simulation.
+     */
     @Accessors
     private var DataPool previousPool
     
+    /**
+     * Clone this object.
+     */
     override DataPool clone() {
         val pool = new DataPool()
         for(m : models) {
@@ -34,6 +46,9 @@ class DataPool {
         return pool
     }
     
+    /**
+     * Returns the concatenation of all variables of all models.
+     */
     public def List<Variable> getAllVariables() {
         val List<Variable> allVariables = newArrayList()
         for(m : models) {
@@ -42,10 +57,16 @@ class DataPool {
         return allVariables
     }
     
+    /**
+     * The models in this pool
+     */
     public def List<Model> getModels() {
         return models
     }
     
+    /**
+     * Add a model to the pool
+     */
     public def void addModel(Model m) {
         // Remove in old model
         if(m.pool != null) {
@@ -58,6 +79,9 @@ class DataPool {
         }
     }
     
+    /**
+     * Returns a list of all previous pools from old to new.
+     */
     public def List<DataPool> getHistory() {
         val List<DataPool> history = newArrayList()
         history.add(this)
@@ -69,6 +93,9 @@ class DataPool {
         return history.reverse
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override String toString() {
         var String txt = "{  "
         val modelCount = models.size

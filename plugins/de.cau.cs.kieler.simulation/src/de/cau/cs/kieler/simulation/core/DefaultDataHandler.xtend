@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.simulation.core
 
 /**
- * Default implementation for a data handler
+ * Default implementation for a data handler.
  * 
  * @author aas
  *

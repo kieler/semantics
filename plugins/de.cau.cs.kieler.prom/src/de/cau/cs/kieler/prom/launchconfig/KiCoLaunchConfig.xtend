@@ -272,7 +272,6 @@ class KiCoLaunchConfig extends PromLaunchConfig {
                 try {
                     // resolve template path
                     val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate, project)
-                    println(resolvedWrapperCodeTemplate)
                     // Create wrapper code
                     val generator = new WrapperCodeGenerator(project, launchData)
                     val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, launchData.files)
@@ -415,6 +414,13 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             return project.location + File.separator + projectRelativeTargetPath    
     }
 
+    /**
+     * Checks if the directory in the java project is configured as source directory.
+     * 
+     * @param javaProject A project with the java nature
+     * @param directory The directory
+     * @return true if the directory is a source directory. false otherwise.
+     */
     private def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
         val classPathEntries = javaProject.getRawClasspath();
         for(entry : classPathEntries) {
@@ -466,6 +472,12 @@ class KiCoLaunchConfig extends PromLaunchConfig {
         }
     }
 
+    /**
+     * Serializes and saves an EObject in the file system.
+     * 
+     * @param eobject the EObject
+     * @param targetLocation the fully qualified path where it should be saved
+     */
     private def void saveEObject(EObject eobject, String targetLocation) {
         val resSet = new ResourceSetImpl();
         

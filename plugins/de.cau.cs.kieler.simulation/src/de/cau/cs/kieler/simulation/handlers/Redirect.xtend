@@ -16,14 +16,27 @@ import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 
 /**
+ * Sets the value of input variables of one model (to)
+ * to the value of output variables of another model (from).
+ * 
  * @author aas
  *
  */
 class Redirect extends DefaultDataHandler {
     
+    /**
+     * The name of the model of which the outputs should be used.
+     */
     public String from
+    /**
+     * The name of the model of which the inputs should be set.
+     */
     public String to
     
+    /**
+     * Sets the value of input variables the to-model
+     * to the value of output variables of the from-model.
+     */
     override write(DataPool pool) {
         val fromModel = pool.models.findFirst[it.name == from]
         val outputs = fromModel.variables.filter[it.isOutput]

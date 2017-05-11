@@ -18,6 +18,8 @@ import org.eclipse.ui.console.MessageConsoleStream
 import org.eclipse.ui.console.ConsolePlugin
 
 /**
+ * Dedecated console in the Console View of Eclipse for output about the simulation. 
+ * 
  * @author aas
  *
  */
@@ -44,8 +46,13 @@ class SimulationConsole {
         consoleStream.println(message)
         
         // Bring console to front
-//        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
-//        consoleManager.showConsoleView(console)
+//        bringToFront()
+    }
+    
+    public static def void bringToFront() {
+        initializeConsole()
+        val consoleManager = ConsolePlugin.getDefault().getConsoleManager();
+        consoleManager.showConsoleView(console)
     }
 
     /**

@@ -17,19 +17,34 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.json.JSONObject
 
 /**
+ * A model is a named container for variables.
+ * A model is part of a data pool.
+ * 
  * @author aas
  *
  */
 class Model {
     
+    /**
+     * The name of the model
+     */
     @Accessors
     private String name
     
+    /**
+     * The pool in which this model is saved
+     */
     @Accessors
     private DataPool pool
     
+    /**
+     * The variables of the model
+     */
     private List<Variable> variables = newArrayList()
 
+    /**
+     * Converts the variables of this model to a json representation.
+     */
     public def JSONObject toJSONObject() {
         val json = new JSONObject()
         for(v : variables) {
@@ -43,6 +58,9 @@ class Model {
         return json
     }
     
+    /**
+     * Loads the variables of this model from a json representation
+     */
     public def void fromJSONObject(JSONObject json) {
         variables.clear()
         val names = json.names
@@ -59,6 +77,9 @@ class Model {
         }
     }
     
+    /**
+     * Returns a list of previous states of this model from old to new. 
+     */
     public def List<Model> getHistory() {
         val List<Model> history = newArrayList()
         val pools = pool.history
@@ -72,10 +93,16 @@ class Model {
         return history
     }
     
+    /**
+     * Returns the variables.
+     */
     public def List<Variable> getVariables() {
         return variables
     }
 
+    /**
+     * Adds a variables.
+     */
     public def void addVariable(Variable v) {
         // Remove in old model
         if(v.model != null) {
@@ -88,6 +115,9 @@ class Model {
         }
     }
     
+    /**
+     * Clone an object.
+     */
     override Model clone() {
         val m = new Model()
         m.name = this.name

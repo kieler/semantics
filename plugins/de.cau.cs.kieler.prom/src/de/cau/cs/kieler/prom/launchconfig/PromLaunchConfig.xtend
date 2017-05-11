@@ -127,11 +127,17 @@ abstract class PromLaunchConfig implements ILaunchConfigurationDelegate {
         return myConsole;
     }
     
+    /**
+     * Removes all text from the console.
+     */
     static def void clearConsole() {
         initializeConsole()
         console.clearConsole()
     }
     
+    /**
+     * Creates the console if it has not been created.
+     */
     static def void initializeConsole() {
         if (console == null || consoleStream == null) {
             console = findOrCreateConsole(CONSOLE_NAME)

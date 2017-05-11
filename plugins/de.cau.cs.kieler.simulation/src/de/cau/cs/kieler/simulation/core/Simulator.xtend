@@ -13,10 +13,15 @@
 package de.cau.cs.kieler.simulation.core
 
 /**
+ * A simulator is a special data handler that communicates with a model to send, receive and update its state. 
+ * 
  * @author aas
  *
  */
 interface Simulator extends DataHandler {
     
+    /**
+     * Initialize the simulation and add variables of the simulation to the given pool.
+     */
     public def void initialize(DataPool pool)
 }

@@ -16,49 +16,91 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * A container for information about a variable.
+ * A Variable belongs to a model.
+ * 
  * @author aas
  *
  */
 class Variable {
+    /**
+     * Possible types for variables
+     */
     public enum VariableType {
         INT, BOOL, FLOAT, STRING
     }
     
+    /**
+     * The variable name.
+     */
     @Accessors
     private String name
     
+    /**
+     * The variable type.
+     */
     private VariableType type
     
+    /**
+     * The variable value.
+     */
     @Accessors
     private Object value
     
+    /**
+     * A value for this variable entered by the user.
+     */
     @Accessors
     private Object userValue
     
+    /**
+     * Is this variable an input of the model?
+     */
     @Accessors
     private boolean isInput
     
+    /**
+     * Is this variable an output of the model?
+     */
     @Accessors
     private boolean isOutput
  
+    /**
+     * Is this variable a signal?
+     */
     @Accessors
     private boolean isSignal
     
+    /**
+     * The model in which this variable is saved.
+     */
     @Accessors
     private Model model
     
+    /**
+     * Constructor
+     */
     new() {
     }
     
+    /**
+     * Constructor
+     */
     new(String name) {
         this.name = name
     }
     
+    /**
+     * Constructor
+     */
     new(String name, Object value) {
         this( name)
         this.value = value
     }
     
+    /**
+     * Set the value and type of this variable.
+     */
     public def void setValue(Object value) {
         this.value = value
         if(value instanceof String) {
@@ -72,10 +114,16 @@ class Variable {
         }
     }
     
+    /**
+     * Returns the type.
+     */
     public def VariableType getType() {
         return type
     }
     
+    /**
+     * Returns a list with previous states of this variable from old to new.
+     */
     public def List<Variable> getHistory() {
         val List<Variable> history = newArrayList()
         val models = model.history
@@ -89,6 +137,10 @@ class Variable {
         return history
     }
     
+    /**
+     * Returns true if the user has set a value for this variable,
+     * and the user value differs from the actual value.
+     */
     public def boolean isDirty() {
         if(userValue == null)
             return false
@@ -96,6 +148,9 @@ class Variable {
             return !userValue.equals(value)
     }
     
+    /**
+     * Clones an object
+     */
     override Variable clone() {
         val v = new Variable()
         v.name = this.name

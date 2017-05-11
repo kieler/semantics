@@ -32,11 +32,23 @@ import org.eclipse.ui.dialogs.PropertyPage
  */
 class PromProjectProperties extends PropertyPage {
     
+    /**
+     * The quialifier for prom project properties.
+     */
     public static val QUALIFIER = "de.cau.cs.kieler.prom"
+    /**
+     * The name of the property for environments
+     */
     public static val ATTR_ENVIRONMENT = "environment"
     
+    /**
+     * Widget to select the environment
+     */
     ComboViewer environment;
     
+    /**
+     * {@inheritDocs}
+     */
     override protected createContents(Composite parent) {
         val store = PromPlugin.getDefault().preferenceStore
         val environments = EnvironmentData.loadAllFromPreferenceStore(store)
@@ -54,26 +66,57 @@ class PromProjectProperties extends PropertyPage {
         return parent
     }
     
+    /**
+     * Return the element of this page as an IResource
+     * @return the element as IResource
+     */
     def IResource getResource() {
         return element as IResource
     }
     
+    /**
+     * Sets a property on the resource
+     * 
+     * @param qualifier The qualified name name of the property
+     * @param value The value of the property
+     */
     def void setProperty(QualifiedName qualifier, String value) {
         resource.setPersistentProperty(qualifier, value)
     }
     
+    /**
+     * Returns a property of the resource
+     * 
+     * @param qualifier The qualified name of the property
+     * @retrun the value of the property
+     */
     def String getProperty(QualifiedName qualifier) {
         resource.getPersistentProperty(qualifier)
     }
     
+    /**
+     * Sets a property on the resource
+     * 
+     * @param localName The name of the property. The qualified name is constructed from this.
+     * @param value The value of the property
+     */
     def void setProperty(String localName, String value) {
         resource.setPersistentProperty(new QualifiedName(QUALIFIER, localName), value)
     }
     
+    /**
+     * Returns a property of the resource
+     * 
+     * @param localName The name of the property. The qualified name is constructed from this.
+     * @return the value of the property
+     */
     def String getProperty(String localName) {
         return resource.getPersistentProperty(new QualifiedName(QUALIFIER, localName))
     }
     
+    /**
+     * Updates the UI with the values of the resource
+     */
     private def void loadSettings() {
         // Load environment
         if (environment.input != null) {
@@ -87,6 +130,8 @@ class PromProjectProperties extends PropertyPage {
     }
     
     /**
+     * Returns the selected environment.
+     * 
      * @return the environment selected in the combobox<br />
      *         or null if there is no selection.
      */

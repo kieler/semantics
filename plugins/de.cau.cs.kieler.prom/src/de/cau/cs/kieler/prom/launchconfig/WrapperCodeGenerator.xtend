@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.prom.launchconfig
 
-import com.google.common.base.Strings
 import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
@@ -90,7 +89,13 @@ class WrapperCodeGenerator {
      */
     public static var String macroDefinitions = null
 
+    /**
+     * The launch data
+     */
     private KiCoLaunchData launchData
+    /**
+     * The project
+     */
     private IProject project
 
     /**
@@ -127,7 +132,7 @@ class WrapperCodeGenerator {
      * Generates wrapper code for a list of annotated model files.
      * 
      * @param templatePath The project relative path to the wrapper code template
-     * @param datas The model files to generate wrapper code for
+     * @param annotationDatas The annotations that injected as macro calls
      */
     def public String generateWrapperCode(String templatePath, List<WrapperCodeAnnotationData> annotationDatas) {
         generateWrapperCode(templatePath, #{}, annotationDatas)
@@ -138,7 +143,7 @@ class WrapperCodeGenerator {
      * 
      * @param templatePath The project relative path to the wrapper code template
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
-     * @param datas The model files to generate wrapper code for
+     * @param annotationDatas The annotations that injected as macro calls
      */
     def public String generateWrapperCode(String templatePath, Map<String, Object> additionalMappings,
             List<WrapperCodeAnnotationData> annotationDatas) {
@@ -160,7 +165,9 @@ class WrapperCodeGenerator {
      * Searches for wrapper code annotations in the models
      * and injects macro calls accordingly in the template.
      * 
-     * @param datas List with containers holding paths to model files
+     * @param templatePath The project relative path to the wrapper code template
+     * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
+     * @param annotationDatas The annotations that injected as macro calls
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
@@ -428,6 +435,13 @@ class WrapperCodeGenerator {
         }
     }
 
+    /**
+     * Fetches all annotation datas from the file data in the given project
+     * 
+     * @param project the project
+     * @param data the FileData with information which model file will be analyzed
+     * @return the annotation datas
+     */
     public static def List<WrapperCodeAnnotationData> getWrapperCodeAnnotationData(IProject project, FileData data) {
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
         getWrapperCodeAnnotationData(data.getLocationAsPath(project), annotationDatas)

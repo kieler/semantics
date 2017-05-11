@@ -55,39 +55,66 @@ import org.eclipse.xtext.util.StringInputStream
  * 
  */
 class KiCoBuilder extends IncrementalProjectBuilder {
+    /**
+     * Id of the builder
+     */
     public static val String BUILDER_ID = "de.cau.cs.kieler.prom.KiCoBuilder"; 
     
+    /**
+     * The monitor of the current build process.
+     */
     private IProgressMonitor monitor
 
+    /**
+     * The environment data used for the build.
+     */
     private EnvironmentData env
     
+    /**
+     * All annotation datas of models in the project.
+     */
     private val HashMap<String, List<WrapperCodeAnnotationData>> annotations = newHashMap()
+    /**
+     * The names of all models in the project
+     */
     private val HashMap<String, String> modelNames = newHashMap()
-    private boolean isInitialized
     
+    /**
+     * Flag to remember if the builder has been initialized before
+     */
+    private boolean isInitialized
+   
+    /**
+     * {@inheritDoc}
+     */
     protected override IProject[] build(int kind, Map args, IProgressMonitor monitor) {
         this.monitor = monitor
         
-        if (kind == IncrementalProjectBuilder.FULL_BUILD) {
-            fullBuild(monitor);
+        if (kind == IncrementalProjectBuilder.FULL_BUILD || kind == IncrementalProjectBuilder.CLEAN_BUILD) {
+            fullBuild();
         } else {
             val delta = getDelta(project);
             if (delta == null) {
-               fullBuild(monitor);
+               fullBuild();
             } else {
-               incrementalBuild(delta, monitor);
+               incrementalBuild(delta);
             }
         }
         return null;
     }   
 
-    private def void fullBuild(IProgressMonitor monitor) {
+    /**
+     * Perform a full build of all files.
+     */
+    private def void fullBuild() {
+        // Re-initialize
+        isInitialized = false
         // Find all model files
         val modelFiles = findModelFilesInProject()
         build(modelFiles)
     }
     
-    private def void incrementalBuild(IResourceDelta delta, IProgressMonitor monitor) {
+    private def void incrementalBuild(IResourceDelta delta) {
         // Find changed files
         val ArrayList<IFile> changedFiles = newArrayList()
         try {
@@ -95,6 +122,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 override visit(IResourceDelta delta) throws CoreException {
                     val res = delta.getResource()
                     if(res.type == IResource.FILE && res.fileExtension != null) {
+                        // Only take care of files with the following extensions
                         switch(res.fileExtension.toLowerCase) {
                             case "sct",
                             case "strl",
@@ -113,9 +141,14 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             e.printStackTrace();
         }
         
+        // Build the changed files
         build(changedFiles)
     }
-
+    
+    /**
+     * Build a list of files
+     * @param resources The list of files to build 
+     */
     private def void build(List<IFile> resources) {
         // Compile the found resources
         if(!resources.isNullOrEmpty) {
@@ -147,6 +180,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
 
+    /**
+     * Initialize this builder
+     */
     private def void initialize() {
         val environmentName = project.getPersistentProperty(PromPlugin.ENVIRIONMENT_QUALIFIER);
         env = EnvironmentData.loadInstanceFromPreferenceStore(PromPlugin.^default.preferenceStore, environmentName)
@@ -161,6 +197,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // These are updated later, if a model file changes.
         if(!isInitialized) {
             isInitialized = true
+            annotations.clear()
+            modelNames.clear()
             val modelFiles = findModelFilesInProject()
             for(f : modelFiles) {
                 getWrapperCodeAnnotations(f, false)
@@ -168,16 +206,28 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
 
+    /**
+     * Returns a list with all model files in the project that can be built.
+     * @return the list of model files that can be built
+     */ 
     private def List<IFile> findModelFilesInProject() {
         // Search for models in project
         val membersWithoutBinDirectory = project.members.filter[it.name != "bin"]
         return PromPlugin.findFiles(membersWithoutBinDirectory, #["sct", "strl"])
     }
     
+    /**
+     * Return the launch data of the used environment
+     * @return the launch data
+     */
     private def KiCoLaunchData getLaunchData() {
         return env.launchData
     }
     
+    /**
+     * Refreshes the folders of the resources or the general output folder for generated files.
+     * This depends of the configuration of the output behaviour.
+     */
     private def void refreshOutput(IFile... resources) {
         // Refresh target directory
         if(!launchData.targetDirectory.isNullOrEmpty()) {
@@ -190,6 +240,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Compile a model file via KiCo. 
+     * 
+     * @param res the resource to build
+     */
     private def void compile(IFile res) {
         // Update wrapper code annotations of this file
         getWrapperCodeAnnotations(res, true)
@@ -236,6 +291,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Generates wrapper code using the main file template
+     * and all annotation datas that have been found in models.
+     */
     private def void generateWrapperCode() {
         if(!launchData.wrapperCodeTemplate.isNullOrEmpty) {
             val List<WrapperCodeAnnotationData> allAnnotationDatas = newArrayList()
@@ -264,6 +323,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Generate the code for simulation of a model file
+     * 
+     * @param res the model file for which simulation code should be created
+     */
     private def void generateSimulationCode(IFile res) {
         //TODO: Hardcoded stuff
         val simTargetPathDirectory = new Path(computeTargetPath(res.projectRelativePath.toOSString, true)).removeLastSegments(1)
@@ -327,6 +391,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         compileSimulationCode(simTargetPath);
     }
     
+    /**
+     * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
+     * @param projectRelativeDirectory the directory to copy the files into
+     */
     private def void createCJSONLibrary(String projectRelativeDirectory) {
         val cJSON_c = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.c", null)
         val cJSON_h = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.h", null)
@@ -337,6 +405,12 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         PromPlugin.createResource(hFile, cJSON_h)
     }
     
+    /**
+     * Creates an executable from the code in the project relative path.
+     * The executable is either a binary in case the simulation file is a c file.
+     * Or it is a Java archive (jar file) in case the simulation is a Java file.
+     * @param simPath the path to the simulation file
+     */
     private def void compileSimulationCode(String simPath) {
         if(!project.getFile(simPath).exists) {
             System.err.println("Simulation file '" + simPath + "'does not exist in project "+project.name)
@@ -350,6 +424,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             createExecutableFromJavaCode(simPath)
     }
     
+    /**
+     * Creates a binary using gcc on the simulation file.
+     * @param simPath the path to the simulation file
+     */
     private def void createExecutableFromCCode(String simPath) {
          // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
@@ -375,6 +453,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Creates a Java archive using jar on the simulation file.
+     * @param simPath the path to the simulation file
+     */
     private def void createExecutableFromJavaCode(String simPath) {
         // Create jar file
         // Example command: jar cvfe ../output.jar JavaSimulationJSimple *.class
@@ -409,6 +491,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
+    /**
+     * Adds the wrapper code annotations that are found in the model file to the map of annotations.
+     * @param modelFile the model file
+     * @param overwrite determines if old annotation data should be replaced
+     */
     private def void getWrapperCodeAnnotations(IFile modelFile, boolean overwrite) {
         val location = modelFile.location.toOSString
         if(!annotations.containsKey(location) || overwrite) {
@@ -483,6 +570,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             return project.location + File.separator + projectRelativeTargetPath    
     }
 
+    /**
+     * Checks if the directory in the java project is configured as source directory.
+     * 
+     * @param javaProject A project with the java nature
+     * @param directory The directory
+     * @return true if the directory is a source directory. false otherwise.
+     */
     private def boolean isJavaSourceDirectory(IJavaProject javaProject, String directory) {
         val classPathEntries = javaProject.getRawClasspath();
         for(entry : classPathEntries) {
@@ -534,6 +628,12 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
 
+    /**
+     * Serializes and saves an EObject in the file system.
+     * 
+     * @param eobject the EObject
+     * @param targetLocation the fully qualified path where it should be saved
+     */
     private def void saveEObject(EObject eobject, String targetLocation) {
         val resSet = new ResourceSetImpl();
         

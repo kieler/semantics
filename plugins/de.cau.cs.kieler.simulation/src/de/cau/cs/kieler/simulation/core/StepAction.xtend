@@ -15,24 +15,41 @@ package de.cau.cs.kieler.simulation.core
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Combination of a data handler and a method (read / write) to perform on that handler.
+ * 
  * @author aas
  *
  */
 class StepAction {
+    /**
+     * The handler to perform the method on.
+     */
     @Accessors
     private var DataHandler handler
+    /**
+     * The method to perform on the handler.
+     */
     @Accessors
     private var Method method
     
+    /**
+     * Possible methods to perform.
+     */
     public enum Method {
         READ, WRITE
     }
     
+    /**
+     * Constructor
+     */
     new(Method method, DataHandler handler) {
         this.method = method
         this.handler = handler
     }
     
+    /**
+     * Performs the method on the data handler.
+     */
     public def void apply(DataPool pool) {
         println("Performing "+method + " on "+handler)
         switch(method) {

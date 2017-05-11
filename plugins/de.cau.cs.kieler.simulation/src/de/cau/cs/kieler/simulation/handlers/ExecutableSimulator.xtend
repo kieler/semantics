@@ -29,6 +29,9 @@ import org.json.JSONObject
 import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
+ * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
+ * The executable should be a compiled model file and is taken as system under development. 
+ * 
  * @author aas
  *
  */
@@ -41,6 +44,9 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     private var BufferedReader processReader
     private var PrintStream processWriter
     
+    /**
+     * Create new process and read it's first JSON object with variables to fill the data pool.
+     */
     override initialize(DataPool pool) {
         var ProcessBuilder pBuilder
         // Execute jar file or binary
@@ -67,9 +73,9 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         model.fromJSONObject(json)
     }
     
-    override read(DataPool pool) {
-    }
-    
+    /**
+     * Send the variables in the pool of this simulator's model via JSON.
+     */
     override write(DataPool pool) {
         // Create json for this model from data pool
         val model = pool.models.findFirst[it.name == modelName]
@@ -88,6 +94,9 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         model.fromJSONObject(jsonOutput)
     }
     
+    /**
+     * Terminate the process.
+     */
     override stop() {
         if(process != null) {
             process.destroy()
@@ -95,10 +104,17 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         }
     }
     
+    /**
+     * Returns the name of the executable.
+     */
     public def String getModelName() {
         return executable.name
     }
     
+    /**
+     * Reads stdout of the process and until a JSON object is returned.
+     * Reading stdout is done with a time limit in case the process does not respond.
+     */
     private def String waitForJSONOutput(BufferedReader br) {
         // Wait until output has been generated
         var String line
@@ -121,6 +137,9 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         return line
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override String toString() {
         return "Simulator for "+modelName
     }

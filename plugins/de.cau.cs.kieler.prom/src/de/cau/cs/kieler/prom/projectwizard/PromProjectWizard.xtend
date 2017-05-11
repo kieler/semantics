@@ -92,25 +92,11 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var MainPage mainPage
     
-    /**
-     * Dummy page to have the next button available.
-     * Anyhow, this page is never reached.
-     */
-    protected var DummyPage secondPage
-
-
 
     /**
      * The main file that has been created as part of this wizard
      */
     private IFile createdMainFile;
-
-    /**
-     * A dummy file in the project that is created and opened only to have the project active in a way
-     * that variables such as ${project_name} can be resolved.
-     */
-    private IFile createdTemporaryFile;
-
 
 
     /**
@@ -139,8 +125,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // Continue only if project has been created
         if(newlyCreatedProject != null) {
-            // Select project to resolve variables such as ${project_name}
-            
             // Create main file.
             // Create model file
             val isModelFileOk = createModelFile()
@@ -148,9 +132,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
             val isResourceCreationOk = createInitialResources()
             // Add some data to properties of new project
             val isProjectPropertiesOk = initializeProjectProperties()
-            
-            // Undo opening the project
-            closeProjectForResolvingVariables(newlyCreatedProject)
             
             // If everything finished successful, the wizard can finish successful
             val isOK = isModelFileOk
@@ -165,13 +146,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             return false
         }
-    }
-    
-    private def void closeProjectForResolvingVariables(IProject project) {
-        if(createdTemporaryFile != null && createdTemporaryFile.exists) {
-            createdTemporaryFile.delete(false, null)
-        }
-        createdTemporaryFile = null
     }
     
     /**
@@ -320,6 +294,13 @@ class PromProjectWizard extends Wizard implements INewWizard {
         return true
     }
     
+    /**
+     * Creates a file in the new project with the content from the origin,
+     * or an empty file if the origin is null or empty
+     * 
+     * @param projectRelativePath The project relative path of the resource to create
+     * @param origin Optional path to initial content for the new file
+     */
     private def void initializeFile(String projectRelativePath, String origin) {
         val resource = newlyCreatedProject.getFile(projectRelativePath)
        // Create empty file
@@ -332,6 +313,13 @@ class PromProjectWizard extends Wizard implements INewWizard {
        }
     }
 
+    /**
+     * Creates a folder in the new project with the content from the origin,
+     * or an empty folder if the origin is null or empty
+     * 
+     * @param projectRelativePath The project relative path of the resource to create
+     * @param origin Optional path to initial content for the new folder
+     */
     private def void initializeFolder(String projectRelativePath, String origin) {
         if (origin.trim.startsWith("platform:")) {
             // Fill folder with files from plugin
@@ -572,6 +560,9 @@ class PromProjectWizard extends Wizard implements INewWizard {
         }
     }
     
+    /**
+     * Creates the output folder for compiled files
+     */
     private def void createBuildDirectory() {
         val env = mainPage.selectedEnvironment
         val targetDirectory = env.launchData.targetDirectory
@@ -585,18 +576,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 val javaProject = JavaCore.create(newlyCreatedProject);
                 PromPlugin.addFolderToJavaClasspath(javaProject, sourceFolder)
             }
-        }
-    }
-    
-    private static class DummyPage extends WizardPage {
-        
-        protected new(String pageName) {
-            super(pageName)
-        }
-        
-        override createControl(Composite parent) {
-            val comp = UIUtil.createComposite(parent, 1)
-            control = comp
         }
     }
 }

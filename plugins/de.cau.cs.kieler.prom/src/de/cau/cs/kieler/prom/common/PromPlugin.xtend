@@ -237,7 +237,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     }
     
     /**
-     * Sets several eclipse string variables for this launch (e.g. ${main_name}, ${compiled_main_name}).
+     * Sets several eclipse string variables (e.g. ${main_name}, ${compiled_main_name}).
      * The variables can be used for example in the commands and file paths.
      */
     public static def void setVariables(String projectLocation, String mainFilePath, String compiledMainFilePath) {
@@ -295,7 +295,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
     }
     
     /**
-     * Initializes all variables that are used in the launch configuration if they have not been initialized yet.
+     * Initializes all variables if they have not been initialized yet.
      */
     public static def void initializeVariables() {
         // Check if variables have been initialized already
@@ -374,6 +374,14 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         }
     }
     
+    /**
+     * Uses the variable manager to perform a substitution of variables to their value (e.g. ${project_name} -> MyProject)
+     * If the project is specified, the variables ${project_name} and ${project_loc} are replaced accordingly.
+     * 
+     * @param expression An expression with placeholders
+     * @param project Optional project to set ${project_name} and ${project_loc}. May be null.
+     * @return the expression with all placeholders resolved
+     */
     public static def String performStringSubstitution(String expression, IProject project) {
         if(project == null) {
             return variableManager.performStringSubstitution(expression)

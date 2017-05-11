@@ -15,16 +15,30 @@ package de.cau.cs.kieler.simulation.core
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
+ * Combination of<br>
+ *   1. a data pool<br>
+ *   2. index of the step action to be executed next (like a program counter).
+ * 
  * @author aas
  *
  */
 class StepState {
+    /** 
+     * The data pool 
+     */
     @Accessors
     private var DataPool pool
+    /**
+     * Index of the step action to be executed next.
+     * This is similar to a program counter.
+     * The index is always increasing. Use modulo to calculate the actual action to be executed.
+     */
     @Accessors
     private var int actionIndex
     
-    
+    /** 
+     * Constructor
+     */
     new(DataPool pool, int actionIndex) {
         this.pool = pool
         this.actionIndex = actionIndex

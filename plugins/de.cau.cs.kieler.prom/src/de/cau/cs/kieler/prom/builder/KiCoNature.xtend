@@ -18,6 +18,8 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.resources.ICommand
 
 /**
+ * Nature for projects that have models which can be compiled with KiCo.
+ * 
  * @author aas
  *
  */
@@ -28,6 +30,9 @@ class KiCoNature implements IProjectNature {
     
     private IProject project;
     
+    /**
+     * Add the KiCoBuilder to the project
+     */
     override void configure() throws CoreException {
         // Add builder to project
         val desc = project.getDescription();
@@ -51,8 +56,11 @@ class KiCoNature implements IProjectNature {
         project.setDescription(desc, null);
     }
     
+    /**
+     * Remove the KiCoBuilder from the project
+     */
     override void deconfigure() throws CoreException {
-        // Add builder to project
+        // Remove builder
         val desc = project.getDescription();
         val commands = desc.getBuildSpec();
         // Remove KiCo builder
@@ -63,10 +71,18 @@ class KiCoNature implements IProjectNature {
         project.setDescription(desc, null);
     }
     
+    /**
+     * Returns the project
+     * @return the project
+     */
     override IProject getProject() {
         return project;
     }
 
+    /**
+     * Sets the project
+     * @return the project
+     */
     override void setProject(IProject project) {
         this.project = project;
     }
