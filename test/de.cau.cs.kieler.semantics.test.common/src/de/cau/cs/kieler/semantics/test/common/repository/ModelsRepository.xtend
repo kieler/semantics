@@ -104,7 +104,7 @@ class ModelsRepository {
             }
         
             // traverse
-            (new ModelsRepositoryIndexer).index(repo)
+            models.addAll((new ModelsRepositoryIndexer).index(repo))
         }
     }
 
@@ -131,20 +131,20 @@ class ModelsRepository {
             // Create model file index
             for (dir : files.keySet) {
                 for (fileGroup : files.get(dir).groupBy[fileName.toString.split("\\.", 2).get(0)].entrySet) {
-                    val files = fileGroup.value
+                    val sameModelFiles = fileGroup.value
                     
-                    val modelProperty = files.findFirst[modelPropertyFiles.containsKey(it)]
+                    val modelProperty = sameModelFiles.findFirst[modelPropertyFiles.containsKey(it)]
                     val property = if (modelProperty != null) {
-                        new ModelProperties(files.head.getParentPropertiesPattern(repository), modelPropertyFiles.get(modelProperty))
+                        new ModelProperties(sameModelFiles.head.getParentPropertiesPattern(repository), modelPropertyFiles.get(modelProperty))
                     } else {
-                        files.head.getParentPropertiesPattern(repository)
+                        sameModelFiles.head.getParentPropertiesPattern(repository)
                     }
                     if (!property.ignore) {
-                        files.remove(modelProperty)
-                        for (model : files.filter[ f | property.modelExt.exists[f.fileName.toString.endsWith(it)]]) {
-                            val traces = files.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].toList
+                        sameModelFiles.remove(modelProperty)
+                        for (model : sameModelFiles.filter[ f | property.modelExt.exists[f.fileName.toString.endsWith(it)]]) {
+                            val traces = sameModelFiles.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].toList
                             if (traces.empty) {
-                                ModelsRepository.models.add(new TestModelData(
+                                models.add(new TestModelData(
                                     repository,
                                     repository.relativize(model),
                                     null,
@@ -155,7 +155,7 @@ class ModelsRepository {
                                 ))
                             } else {
                                 for (trace : traces) {
-                                    ModelsRepository.models.add(new TestModelData(
+                                    models.add(new TestModelData(
                                         repository,
                                         repository.relativize(model),
                                         repository.relativize(trace),
@@ -170,9 +170,11 @@ class ModelsRepository {
                     }
                 }
             }
+            
+            return models
         }
         
-        def getParentPropertiesPattern(Path file, Path root) {
+        private def getParentPropertiesPattern(Path file, Path root) {
             var parent = file.parent
             while (parent.nameCount >= root.nameCount) {
                 if (directoryTestModelPropertiesPatterns.containsKey(parent)) {
@@ -191,6 +193,7 @@ class ModelsRepository {
                     directoryPropertyFiles.put(file.parent, new Properties => [load(Files.newInputStream(file))])
                 } else if (modelPropertyFileMatcher.matches(file)) {
                     modelPropertyFiles.put(file, new Properties => [load(Files.newInputStream(file))])
+                    files.put(file.parent, file)
                 } else {
                     files.put(file.parent, file)
                 }
