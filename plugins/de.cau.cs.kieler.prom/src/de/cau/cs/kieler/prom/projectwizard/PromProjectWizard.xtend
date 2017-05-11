@@ -140,7 +140,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         // Continue only if project has been created
         if(newlyCreatedProject != null) {
             // Select project to resolve variables such as ${project_name}
-            selectProjectForResolvingVariables(newlyCreatedProject)
             
             // Create main file.
             // Create model file
@@ -166,15 +165,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             return false
         }
-    }
-    
-    private def void selectProjectForResolvingVariables(IProject project) {
-        if(createdTemporaryFile != null) {
-            closeProjectForResolvingVariables(project)
-        }
-        createdTemporaryFile = project.getFile("tmp.txt")
-        PromPlugin.createResource(createdTemporaryFile, null)
-        UIUtil.openFileInEditor(createdTemporaryFile)
     }
     
     private def void closeProjectForResolvingVariables(IProject project) {
@@ -249,8 +239,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val env = mainPage.selectedEnvironment
         var resolvedPath = ""
         try {
-            val variableManager = VariablesPlugin.getDefault().stringVariableManager
-            resolvedPath = variableManager.performStringSubstitution(env.modelFile)
+            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
         } catch (CoreException ce) {
             MessageDialog.openError(shell, "Error", ce.message)
             return "Model"
@@ -294,8 +283,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             try {
                 if(!data.projectRelativePath.trim.isNullOrEmpty) {
                     try {
-                        val variableManager = VariablesPlugin.getDefault().stringVariableManager
-                        resolvedProjectRelativePath = variableManager.performStringSubstitution(data.projectRelativePath.trim)
+                        resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, newlyCreatedProject)
                     } catch (CoreException ce) {
                         MessageDialog.openError(shell, "Error", ce.message)
                         return false
@@ -417,15 +405,13 @@ class PromProjectWizard extends Wizard implements INewWizard {
         if(!env.launchData.mainFile.isNullOrEmpty) {
             var resolvedMainFilePath = ""
             try {
-                val variableManager = VariablesPlugin.getDefault().stringVariableManager
-                resolvedMainFilePath = variableManager.performStringSubstitution(env.launchData.mainFile)
+                resolvedMainFilePath = PromPlugin.performStringSubstitution(env.launchData.mainFile, newlyCreatedProject)
             } catch (CoreException ce) {
                 MessageDialog.openError(shell, "Error", ce.message)
                 return false
             }
             newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
         }
-        // The main file property is set in createMainFile().
         
         // Add Xtext nature to project (e.g. for SCCharts with cross-references)
         newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")

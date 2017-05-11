@@ -45,6 +45,7 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
                 if (decl.input || decl.output) {
                     for (annotation : decl.annotations) {
                         val data = new WrapperCodeAnnotationData()
+                        data.modelName = model.id
                         initData(data, decl)
                         initData(data, annotation)
                         annotationDatas += data
@@ -64,13 +65,6 @@ class SCTWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer
         } else {
             return null
         }
-    }
-    
-    override getModelName(EObject model) {
-        if(model instanceof State)
-            return model.id
-        else
-            return null
     }
     
     /**

@@ -271,7 +271,8 @@ class KiCoLaunchConfig extends PromLaunchConfig {
 
                 try {
                     // resolve template path
-                    val resolvedWrapperCodeTemplate = PromPlugin.variableManager.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate)
+                    val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchConfig.launchData.wrapperCodeTemplate, project)
+                    println(resolvedWrapperCodeTemplate)
                     // Create wrapper code
                     val generator = new WrapperCodeGenerator(project, launchData)
                     val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, launchData.files)
@@ -444,18 +445,21 @@ class KiCoLaunchConfig extends PromLaunchConfig {
             saveEObject(result.getEObject(), targetLocation)
         } else {
             // Save generated code to file, possibly using a target template
-            val resolvedTargetTemplate = PromPlugin.variableManager.performStringSubstitution(launchData.targetTemplate)
+            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(launchData.targetTemplate, project)
             if (resolvedTargetTemplate.isNullOrEmpty()) {
                 // Don't use template
                 Files.write(result.string, new File(targetLocation), Charsets.UTF_8)
             } else {
                 // Create wrapper code
+                val modelName = Files.getNameWithoutExtension(data.name)
                 val annotationDatas = WrapperCodeGenerator.getWrapperCodeAnnotationData(project, data)
                 val generator = new WrapperCodeGenerator(project, launchData)
                 val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate,
-                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string},
-                    annotationDatas)
-                    
+                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
+                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
+                      WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]},
+                      annotationDatas)
+                
                 // Save output
                 Files.write(wrapperCode, new File(targetLocation), Charsets.UTF_8)
             }

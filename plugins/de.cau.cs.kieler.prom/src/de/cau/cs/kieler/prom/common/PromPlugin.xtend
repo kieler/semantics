@@ -41,6 +41,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import java.util.regex.Pattern
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -292,7 +293,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         variable.description = description
         variableManager.addVariables(#[variable])
     }
-     
+    
     /**
      * Initializes all variables that are used in the launch configuration if they have not been initialized yet.
      */
@@ -332,7 +333,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      * 
      * @return the variable manager
      */
-    public static def IStringVariableManager getVariableManager() {
+    private static def IStringVariableManager getVariableManager() {
         if(varManager == null) {
             varManager = VariablesPlugin.getDefault.stringVariableManager
         }
@@ -370,6 +371,21 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
                 (resource as IProject).create(null)
                 (resource as IProject).open(null)
             }
+        }
+    }
+    
+    public static def String performStringSubstitution(String expression, IProject project) {
+        if(project == null) {
+            return variableManager.performStringSubstitution(expression)
+        } else {
+            // The variables ${project_name} and ${project_loc}
+            // normally refer to the project selected in the Project Explorer.
+            // However we want to replace these with the corresponding value of the given project.
+            val project_loc = project.location.toOSString
+            val project_name = project.name
+            val newExpression = expression.replaceAll(Pattern.quote("${project_loc}"), project_loc)
+                                          .replaceAll(Pattern.quote("${project_name}"), project_name)
+            return variableManager.performStringSubstitution(newExpression)
         }
     }
 }

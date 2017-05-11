@@ -24,6 +24,14 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class WrapperCodeAnnotationData {
     
     /**
+     * The name of the model.
+     * e.g. 'MyModel' for an scchart 'scchart MyModel {initial state init;}'
+     * If the model name is not specified in the language, the file name without extension should be used.
+     */
+    @Accessors
+    private String modelName = ""
+    
+    /**
      * True if the variable of this annotation is an input variable.
      */
     @Accessors

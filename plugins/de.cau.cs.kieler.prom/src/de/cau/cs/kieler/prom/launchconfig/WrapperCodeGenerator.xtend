@@ -18,6 +18,8 @@ import com.google.common.io.Files
 import de.cau.cs.kieler.prom.common.FileData
 import de.cau.cs.kieler.prom.common.KiCoLaunchData
 import de.cau.cs.kieler.prom.common.ModelImporter
+import de.cau.cs.kieler.prom.common.PromPlugin
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 import freemarker.template.Template
 import java.io.File
 import java.io.FileFilter
@@ -30,12 +32,9 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.IPath
-import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
-import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
-import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /**
  * This class generates wrapper code for models.
@@ -60,13 +59,17 @@ class WrapperCodeGenerator {
     /**
      * A template variable which is replaced with the name of the last analyzed model.
      */
-    private static val MODEL_NAME_VARIABLE = "model_name"    
-
+    public static val MODEL_NAME_VARIABLE = "model_name"
+    /**
+     * A template variable which is replaced with the names of the models.
+     */
+    public static val MODEL_NAMES_VARIABLE = "model_names"
+    
     /**
      * A template variable which is replaced with the name of the file (without file extension)
      * that is created during wrapper code generation.
      */
-    private static val FILE_NAME_VARIABLE = "file_name"
+    public static val FILE_NAME_VARIABLE = "file_name"
     
     /**
      * The variable name in the target template
@@ -91,12 +94,6 @@ class WrapperCodeGenerator {
     private IProject project
 
     /**
-     * The name of the last processed model
-     * (e.g. the name for an SCChart).  
-     */
-    private static HashMap<String, String> modelNames = newHashMap()
-
-    /**
      * Constructor
      */
     new(IProject project, KiCoLaunchData launchData) {
@@ -112,11 +109,18 @@ class WrapperCodeGenerator {
      */
     def public String generateWrapperCode(String templatePath, FileData... datas) {
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
+        var List<String> modelNames = newArrayList()
+        var String modelName = ""
         for(data : datas) {
             getWrapperCodeAnnotationData(data.getLocationAsPath(project), annotationDatas)
+            modelName = Files.getNameWithoutExtension(datas.get(0).name)
+            modelNames += modelName
         }
-        
-        generateWrapperCode(templatePath, #{}, annotationDatas)
+
+        // Set model names
+        val mapping = #{MODEL_NAME_VARIABLE -> modelName,
+                        MODEL_NAMES_VARIABLE -> modelNames}
+        generateWrapperCode(templatePath, mapping, annotationDatas)
     }
     
     /**
@@ -136,7 +140,7 @@ class WrapperCodeGenerator {
      * @param additionalMappings Additional mappings of placeholder variables to their corresponding values
      * @param datas The model files to generate wrapper code for
      */
-    def public String generateWrapperCode(String templatePath, Map<String,String> additionalMappings,
+    def public String generateWrapperCode(String templatePath, Map<String, Object> additionalMappings,
             List<WrapperCodeAnnotationData> annotationDatas) {
                 
         // Check consistency of path
@@ -160,16 +164,17 @@ class WrapperCodeGenerator {
      * @return a String with the input template's wrapper code
      * plus injected macro calls from annotations of the given files.
      */
-    private def String getTemplateWithMacroCalls(String templatePath, Map<String,String> additionalMappings,
+    private def String getTemplateWithMacroCalls(String templatePath, Map<String, Object> additionalMappings,
             List<WrapperCodeAnnotationData> annotationDatas) {
         
         // Create macro calls from annotations
         val map = getMacroCalls(annotationDatas)
         
         // Add name of model 
-        if(!map.containsKey(MODEL_NAME_VARIABLE)) {
-            val modelName = modelNames.values.get(0)
-            map.put(MODEL_NAME_VARIABLE, Strings.nullToEmpty(modelName))
+        if(!map.containsKey(MODEL_NAME_VARIABLE) && !annotationDatas.isEmpty) {
+            val modelName = annotationDatas.get(0).modelName
+            map.put(MODEL_NAME_VARIABLE, modelName)
+            map.put(MODEL_NAMES_VARIABLE, #[modelName])
         }
         
         // Add name of output file 
@@ -201,8 +206,7 @@ class WrapperCodeGenerator {
     private def String processTemplateWithSnippetDefinitions(String templateWithMacroCalls) {
         
         // Resolve snippet path
-        val variableManager = VariablesPlugin.getDefault.stringVariableManager
-        val resolvedWrapperCodeSnippetDirectory = variableManager.performStringSubstitution(launchData.wrapperCodeSnippetDirectory)
+        val resolvedWrapperCodeSnippetDirectory = PromPlugin.performStringSubstitution(launchData.wrapperCodeSnippetDirectory, project)
         
         // Load snippet definitions
         if(!resolvedWrapperCodeSnippetDirectory.isNullOrEmpty()) {
@@ -265,8 +269,8 @@ class WrapperCodeGenerator {
      * @return a map where the keys 'inits', 'inputs' and 'outputs'
      *         are mapped to the corresponding macro calls for the given annotations.
      */
-    private def HashMap<String, String> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
-        val map = new HashMap<String, String>()
+    private def HashMap<String, Object> getMacroCalls(WrapperCodeAnnotationData... annotationDatas) {
+        val map = new HashMap<String, Object>()
         // The assignment macros such as <@init> and <@output> use a variable
         // to determine if their snippet should be inserted.
         for(phase : codeGenerationPhases) {
@@ -446,25 +450,25 @@ class WrapperCodeGenerator {
         if (model != null) {
             initAnalyzers()
             
-            // If none of the analyzers can get a name for the model
-            // we interpret the file name as the model's name, like it is in java classes. 
-            var modelName = modelLocation.removeFileExtension.lastSegment
-            
+            var fileNameWithoutExtension = modelLocation.removeFileExtension.lastSegment
+
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : wrapperCodeAnnotationAnalyzers) {
-                // Get model name if possible
-                val name = analyzer.getModelName(model)
-                if (name != null) {
-                    modelName = name
-                }
-                
-                // Add annotations from analyzer
+                // Get annotations
                 val annotations = analyzer.getAnnotations(model)
-                if (annotations != null)
-                    annotationDatas.addAll(annotations)
+                // If the name could not be determined,
+                // we interpret the file name as the model's name, like it is in java classes.
+                for(a : annotations) {
+                    if(a.modelName.isNullOrEmpty) {
+                        a.modelName = fileNameWithoutExtension
+                    }
+                }
+                // Add annotations from analyzer
+                if (annotations != null) {
+                    annotationDatas.addAll(annotations)    
+                }
             }
 
-            modelNames.put(modelLocation.toOSString, modelName)
         }
     }
     

@@ -151,7 +151,7 @@ class SimulationManager {
             
             steppingJob = new Job("Simulation Player") {
                 override protected run(IProgressMonitor monitor) {
-                    val delay = 10
+                    val delay = 100
                     val updateInterval = 500
                     var lastUpdate = System.currentTimeMillis
                     

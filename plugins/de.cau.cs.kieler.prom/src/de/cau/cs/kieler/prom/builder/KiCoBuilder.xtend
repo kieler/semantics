@@ -62,6 +62,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private EnvironmentData env
     
     private val HashMap<String, List<WrapperCodeAnnotationData>> annotations = newHashMap()
+    private val HashMap<String, String> modelNames = newHashMap()
     private boolean isInitialized
     
     protected override IProject[] build(int kind, Map args, IProgressMonitor monitor) {
@@ -243,10 +244,16 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             }
             
             // resolve template path
-            val resolvedWrapperCodeTemplate = PromPlugin.variableManager.performStringSubstitution(launchData.wrapperCodeTemplate)
+            val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchData.wrapperCodeTemplate, project)
             // Create wrapper code
+            val names = modelNames.values.toList
+            val name = names.get(0)
             val generator = new WrapperCodeGenerator(project, launchData)
-            val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate, allAnnotationDatas)
+            val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate,
+                #{WrapperCodeGenerator.MODEL_NAME_VARIABLE -> name,
+                  WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> names},
+                allAnnotationDatas
+            )
             // Save output
             val resolvedWrapperCodeTargetLocation = computeTargetPath(resolvedWrapperCodeTemplate, false)
             Files.write(wrapperCode, new File(resolvedWrapperCodeTargetLocation), Charsets.UTF_8)
@@ -283,6 +290,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                     data.arguments.add(String.valueOf(decl.output))
                     data.arguments.add(String.valueOf(decl.signal))
                     
+                    data.modelName = model.id
                     data.input = true
                     data.output = true
                     data.name = "Simulate"
@@ -295,10 +303,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
         
         // Get simulation code
+        val modelName = Files.getNameWithoutExtension(res.name)
         val generator = new WrapperCodeGenerator(project, launchData)
         val simulationCode = generator.generateWrapperCode(simTemplate,
             #{"compiled_model_loc" -> computeTargetPath(res.projectRelativePath.toOSString, false),
-              "file_name" -> Files.getNameWithoutExtension(simTargetPath) },
+              WrapperCodeGenerator.FILE_NAME_VARIABLE -> Files.getNameWithoutExtension(simTargetPath),
+              WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
+              WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName] },
             variables)
         
         // Save the result as simulation for this model
@@ -404,6 +415,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             val List<WrapperCodeAnnotationData> datas = newArrayList()
             WrapperCodeGenerator.getWrapperCodeAnnotationData(modelFile.location, datas)
             annotations.put(location, datas)
+            modelNames.put(location, Files.getNameWithoutExtension(modelFile.name))
         }
     }
     
@@ -501,17 +513,20 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             saveEObject(result.getEObject(), targetLocation)
         } else {
             // Save generated code to file, possibly using a target template
-            val resolvedTargetTemplate = PromPlugin.variableManager.performStringSubstitution(launchData.targetTemplate)
+            val resolvedTargetTemplate = PromPlugin.performStringSubstitution(launchData.targetTemplate, project)
             if (resolvedTargetTemplate.isNullOrEmpty()) {
                 // Don't use template
                 Files.write(result.string, new File(targetLocation), Charsets.UTF_8)
             } else {
                 // Inject compilation result into target template
+                val modelName = Files.getNameWithoutExtension(res.name)
                 val annotationDatas = newArrayList()
                 WrapperCodeGenerator.getWrapperCodeAnnotationData(res.location, annotationDatas)
                 val generator = new WrapperCodeGenerator(project, launchData)
                 val wrapperCode = generator.generateWrapperCode(resolvedTargetTemplate,
-                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string},
+                    #{WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE -> result.string,
+                      WrapperCodeGenerator.MODEL_NAME_VARIABLE -> modelName,
+                      WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> #[modelName]},
                     annotationDatas)
                 // Save output
                 Files.write(wrapperCode, new File(targetLocation), Charsets.UTF_8)
