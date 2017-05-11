@@ -16,9 +16,9 @@ import de.cau.cs.kieler.kico.KiCoPlugin
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.semantics.test.common.repository.AbstractXTextModelRepositoryTest
-import de.cau.cs.kieler.semantics.test.common.repository.ModelsRepositoryTestRunner
-import de.cau.cs.kieler.semantics.test.common.repository.TestModelData
+import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
+import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.ByteArrayOutputStream
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource

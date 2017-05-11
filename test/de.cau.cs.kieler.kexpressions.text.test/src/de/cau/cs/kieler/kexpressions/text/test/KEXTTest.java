@@ -32,12 +32,12 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtSerializeExtensions;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.BundleId;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelFilter;
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner.ModelPath;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.BundleId;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelFilter;
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner.ModelPath;
 
 
 /**

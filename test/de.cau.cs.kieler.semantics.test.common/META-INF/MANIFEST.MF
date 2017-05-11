@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Common Semantics Test Components
-Bundle-SymbolicName: de.cau.cs.kieler.semantics.test.common
+Bundle-SymbolicName: de.cau.cs.kieler.test.common
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -12,6 +12,6 @@ Require-Bundle: org.junit,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext;visibility:=reexport
-Export-Package: de.cau.cs.kieler.semantics.test.common.repository,
- de.cau.cs.kieler.semantics.test.common.runners
+Export-Package: de.cau.cs.kieler.test.common.repository,
+ de.cau.cs.kieler.test.common.runners
 

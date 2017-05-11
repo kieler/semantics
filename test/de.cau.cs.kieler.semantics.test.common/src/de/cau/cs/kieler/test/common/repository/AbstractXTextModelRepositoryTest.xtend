@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.semantics.test.common.repository
+package de.cau.cs.kieler.test.common.repository
 
 import com.google.inject.Guice
 import java.io.FileInputStream
@@ -21,7 +21,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
 import static extension com.google.common.base.Preconditions.*
-import static extension de.cau.cs.kieler.semantics.test.common.repository.TestModelDataUtil.*
+import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
 import com.google.common.reflect.TypeToken
 
 /**

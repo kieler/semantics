@@ -10,6 +10,6 @@ Require-Bundle: com.google.inject;bundle-version="3.0.0",
  org.eclipse.xtext,
  de.cau.cs.kieler.annotations,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.semantics.test.common,
+ de.cau.cs.kieler.test.common,
  org.eclipse.core.runtime;bundle-version="3.10.0",
  org.eclipse.core.resources

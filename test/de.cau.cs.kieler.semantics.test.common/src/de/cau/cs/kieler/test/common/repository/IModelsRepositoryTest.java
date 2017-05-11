@@ -10,9 +10,11 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.semantics.test.common.repository;
+package de.cau.cs.kieler.test.common.repository;
 
 import java.util.Comparator;
+
+import de.cau.cs.kieler.test.common.repository.TestModelData;
 
 
 /**

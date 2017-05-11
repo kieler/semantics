@@ -10,9 +10,9 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.semantics.test.common.repository
+package de.cau.cs.kieler.test.common.repository
 
-import de.cau.cs.kieler.semantics.test.common.runners.ModelCollectionTestRunner
+import de.cau.cs.kieler.test.common.runners.ModelCollectionTestRunner
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
@@ -29,7 +29,7 @@ import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 
-import static extension de.cau.cs.kieler.semantics.test.common.repository.TestModelDataUtil.*
+import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static org.junit.Assert.*
@@ -289,7 +289,7 @@ class ModelsRepositoryTestRunner extends Suite {
             var description = methodDescriptions.get(method);
     
             if (description == null) {
-                description = Description.createTestDescription(testClass.javaClass.name, method.name, method.name + "@" + ID);
+                description = Description.createTestDescription(testClass.javaClass.name, method.name + " with model " + modelData.modelPath, method.name + "@" + ID);
                 methodDescriptions.putIfAbsent(method, description);
             }
     
