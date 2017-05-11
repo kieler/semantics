@@ -72,11 +72,11 @@ class SCChartsTransformationsTest extends AbstractXTextModelRepositoryTest<State
     //-----------------------------------------------------------------------------------------------------------------
     
     override filter(TestModelData modelData) {
-        return modelData.modelProperties.contains("sccharts")
+        return modelData.modelProperties.contains("sccharts") && !modelData.additionalProperties.containsKey("testSerializability")
     }
     
     @Test(timeout=60000)
-    def void testSerializablility(State scc, TestModelData modelData) {
+    def void testSerializability(State scc, TestModelData modelData) {
         val result = scc.compile
         
         // Check all intermediate results
