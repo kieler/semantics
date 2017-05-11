@@ -19,6 +19,9 @@ import de.cau.cs.kieler.kitt.tracing.Tracing
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KLayoutData
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -31,20 +34,15 @@ import de.cau.cs.kieler.sccharts.klighd.synthesis.GeneralSynthesisOptions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 import java.util.List
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
-import org.eclipse.elk.core.klayoutdata.KLayoutData
-import org.eclipse.elk.graph.KGraphElement
-import org.eclipse.elk.graph.KNode
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ui.progress.UIJob
-
-import static de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.SCGLoopHook.*
-import de.cau.cs.kieler.scg.processors.analyzer.PotentialInstantaneousLoopResult
 
 /**
  * Highlights the SCCharts elements lying on a illegal loop in SCG.
@@ -74,9 +72,10 @@ class SCGLoopHook extends SynthesisActionHook {
     private static final IProperty<Boolean> IS_HIGHLIGHTING = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.klighd.synthesis.hooks.loops.highlighting", false);
 
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SCG_LOOPS);
-    }
+// Deactivated until new SCG compilation provides loop information
+//    override getDisplayedSynthesisOptions() {
+//        return newLinkedList(SHOW_SCG_LOOPS);
+//    }
 
     override finish(Scope model, KNode rootNode) {
         if (SHOW_SCG_LOOPS.booleanValue) {
@@ -102,15 +101,10 @@ class SCGLoopHook extends SynthesisActionHook {
         }
         val scc = model as State;
         val context = usedContext;
-        val propertyHolder = rootNode.data.filter(KLayoutData).head;
-        if (propertyHolder == null) {
-            throw new IllegalArgumentException("Missing property holder on root element");
-        }
-
-        val loopElements = propertyHolder.getProperty(LOOP_ELEMENTS);
+        val loopElements = rootNode.getProperty(LOOP_ELEMENTS);
         // If not already calculated
         if (loopElements == null) {
-            val tracker = propertyHolder.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
+            val tracker = rootNode.getProperty(SCChartsDiagramProperties::MODEL_TRACKER);
             if (tracker == null) {
                 throw new IllegalArgumentException("Missing source model tracker");
             }
@@ -125,8 +119,8 @@ class SCGLoopHook extends SynthesisActionHook {
                     new UIJob(JOB_NAME) {
 
                         override runInUIThread(IProgressMonitor monitor) {
-                            if (propertyHolder.getProperty(LOOP_ELEMENTS) == null) {
-                                propertyHolder.setProperty(LOOP_ELEMENTS, newLoopElements);
+                            if (rootNode.getProperty(LOOP_ELEMENTS) == null) {
+                                rootNode.setProperty(LOOP_ELEMENTS, newLoopElements);
                                 if (context.getOptionValue(SHOW_SCG_LOOPS) as Boolean) {
                                     newLoopElements.forEach[addHighlighting];
                                 }

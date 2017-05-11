@@ -1,0 +1,8 @@
+module M:
+input I;
+output O;
+
+await  I;
+emit O;
+
+end module 

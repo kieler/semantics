@@ -70,4 +70,12 @@ public class EsterelCECSimAutomatedJUnitTest extends KiemAutomatedJUnitTest {
     protected String getExecutionFileName() {
         return "esterel_validation_headless.execution";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected IPath getExternalRelativeTestPath() {
+        return null;
+    }
 }

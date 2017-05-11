@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.elk.core.service.ElkServicePlugin;
+import org.eclipse.elk.core.util.ElkUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -36,18 +37,17 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
-import org.eclipse.elk.core.service.ElkServicePlugin;
-import org.eclipse.elk.core.util.ElkUtil;
-import org.eclipse.elk.graph.KGraphData;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KNode;
-import org.eclipse.elk.graph.impl.KGraphDataImpl;
-import de.cau.cs.kieler.kico.internal.KiCoUtil;
+
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.internal.KiCoUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.kgraph.KGraphData;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
+import de.cau.cs.kieler.klighd.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.klighd.piccolo.export.SVGOffscreenRenderer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
@@ -217,8 +217,10 @@ public class KlighdServer extends HttpServer {
                 Resource r = rs.createResource(URI.createPlatformResourceURI("Dummy.kgx", true));
                 // write a copy of the view model kgraph to the selected file
                 EObject copy = EcoreUtil.copy(viewContext.getViewModel());
+                // FIXME think about this as soon as this hack is to be reactivated with 
+                // the elk graph
                 // persist layout options and friends
-                ElkUtil.persistDataElements((KNode) copy);
+//                ElkUtil.persistDataElements((KNode) copy);
                 // remove transient klighd state
                 @SuppressWarnings("unchecked")
                 Iterator<KGraphElement> kgeIt =

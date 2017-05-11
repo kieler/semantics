@@ -21,15 +21,15 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.elk.graph.KEdge;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KNode;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.klighd.kgraph.KEdge;
+import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
+import de.cau.cs.kieler.klighd.kgraph.KNode;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;

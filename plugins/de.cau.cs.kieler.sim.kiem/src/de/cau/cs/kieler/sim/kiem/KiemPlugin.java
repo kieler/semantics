@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -506,28 +507,39 @@ public class KiemPlugin extends AbstractUIPluginLog {
     }
 
     // -------------------------------------------------------------------------
-
+    /**
+     * Gets the IFile of the currently opened file. If no file is opened, null is returned.
+     * 
+     * @return the active file
+     */
+    public IFile getActiveEditorFile() {
+        try {
+            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage();
+            IEditorPart editor = page.getActiveEditor();
+            IEditorInput input = editor.getEditorInput();
+            IFile file = ((IFileEditorInput)input).getFile();
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     /**
      * Gets the file name (without possible extension) of the currently opened file, if any, or
      * "noname" otherwise.
      * 
      * @return the active project name
      */
-    public String getActiveProjectName() {
-        try {
-            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
-            String name = page.getActiveEditor().getEditorInput().getName();
-            int i = name.indexOf(".");
-            if (i > -1) {
-                name = name.substring(0, i);
-            }
-            return name;
-        } catch (Exception e) {
+    public String getActiveEditorFileName() {
+        IFile file = getActiveEditorFile();
+        if (file != null) {
+            return file.getLocation().removeFileExtension().lastSegment();
+        } else {
             return "noname";
         }
     }
-
+    
     // -------------------------------------------------------------------------
     /**
      * Sets the current file.
@@ -1067,7 +1079,7 @@ public class KiemPlugin extends AbstractUIPluginLog {
         KiemPlugin.getDefault().setShell(parentShellParam);
         SaveAsDialog dlg = new SaveAsDialog(parentShell);
         dlg.setBlockOnOpen(true);
-        dlg.setOriginalName(this.getActiveProjectName() + ".execution");
+        dlg.setOriginalName(this.getActiveEditorFileName() + ".execution");
         if (dlg.open() == SaveAsDialog.OK) {
             this.currentFile = dlg.getResult();
             this.doSave(null, parentShell);

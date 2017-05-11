@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
-
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.11.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.12.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
@@ -49,24 +48,13 @@ openFile
 
    <windowImages i16="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.gif" i32="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.gif" i48="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.gif" i64="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.gif" i128="/de.cau.cs.kieler.core.product/icons/foerde-logo-128.gif"/>
 
-   <splash
-      location="de.cau.cs.kieler.core.product"
-      startupProgressRect="19,301,207,15"
-      startupMessageRect="10,200,0,0"
-      startupForegroundColor="FFFFFF" />
+   <splash location="de.cau.cs.kieler.core.product" startupProgressRect="19,301,207,15" startupMessageRect="10,200,0,0" startupForegroundColor="FFFFFF"/>
    <launcher name="kieler">
       <linux icon="/de.cau.cs.kieler.core.product/icons/foerde-logo-64.xpm"/>
       <macosx icon="/de.cau.cs.kieler.core.product/icons/foerde-logo.icns"/>
       <solaris/>
       <win useIco="false">
-         <bmp
-            winSmallHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.bmp"
-            winSmallLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-16i.bmp"
-            winMediumHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.bmp"
-            winMediumLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-32i.bmp"
-            winLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.bmp"
-            winLargeLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-48i.bmp"
-            winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
+         <bmp winSmallHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-16.bmp" winSmallLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-16i.bmp" winMediumHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-32.bmp" winMediumLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-32i.bmp" winLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-48.bmp" winLargeLow="/de.cau.cs.kieler.core.product/icons/foerde-logo-48i.bmp" winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
 
@@ -176,10 +164,10 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </features>
 
    <configurations>
-      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="2" />
-      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="3" />
-      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="3" />
-      <property name="osgi.instance.area.default" value="@user.home/kieler-workspace" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="2"/>
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="3"/>
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="3"/>
+      <property name="osgi.instance.area.default" value="@user.home/kieler-workspace"/>
    </configurations>
 
 </product>

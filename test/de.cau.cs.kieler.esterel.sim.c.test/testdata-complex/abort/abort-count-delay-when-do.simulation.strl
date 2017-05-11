@@ -1,0 +1,198 @@
+module M:
+input A ,
+    B ,
+    C ;
+output U , V , W , X , Y , Z ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028853 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028852 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028851 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028850 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028849 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028848 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657816 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657817 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657818 ; output
+oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181 ;
+[
+    [
+        signal AP1747693738
+        in
+        [
+            abort
+                [
+                    [
+                        signal AP418674526
+                        in
+                        [
+                            emit X;
+                            emit AP418674526
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028853;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028853
+                            when immediate AP418674526
+                        ]
+                        end
+                    ];
+                    [
+                        signal AP1187046886
+                        in
+                        [
+                            pause ;
+                            emit AP1187046886
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028852;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028852
+                            when immediate AP1187046886
+                        ]
+                        end
+                    ];
+                    [
+                        signal AP1916013376
+                        in
+                        [
+                            emit Y;
+                            emit AP1916013376
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028851;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028851
+                            when immediate AP1916013376
+                        ]
+                        end
+                    ];
+                    [
+                        signal AP1220413718
+                        in
+                        [
+                            pause ;
+                            emit AP1220413718
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028850;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028850
+                            when immediate AP1220413718
+                        ]
+                        end
+                    ];
+                    [
+                        signal AP1942735320
+                        in
+                        [
+                            emit Z;
+                            emit AP1942735320
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028849;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028849
+                            when immediate AP1942735320
+                        ]
+                        end
+                    ];
+                    [
+                        signal AP845544850
+                        in
+                        [
+                            pause ;
+                            emit AP845544850
+                            ||
+                            emit
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028848;
+                            abort
+                                sustain
+                                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDoM459028848
+                            when immediate AP845544850
+                        ]
+                        end
+                    ]
+                ]
+            when 2 A
+            do
+            [
+                [
+                    signal AP1616486037
+                    in
+                    [
+                        emit U;
+                        emit AP1616486037
+                        ||
+                        emit
+                        oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657816;
+                        abort
+                            sustain
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657816
+                        when immediate AP1616486037
+                    ]
+                    end
+                ];
+                [
+                    signal AP1477958961
+                    in
+                    [
+                        pause ;
+                        emit AP1477958961
+                        ||
+                        emit
+                        oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657817;
+                        abort
+                            sustain
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657817
+                        when immediate AP1477958961
+                    ]
+                    end
+                ];
+                [
+                    signal AP1975470818
+                    in
+                    [
+                        emit V;
+                        emit AP1975470818
+                        ||
+                        emit
+                        oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657818;
+                        abort
+                            sustain
+                            oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1544657818
+                        when immediate AP1975470818
+                    ]
+                    end
+                ]
+            ]
+            end;
+            emit AP1747693738
+            ||
+            emit oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180;
+            abort
+                sustain
+                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174180
+            when immediate AP1747693738
+        ] end
+    ];
+    [
+        signal AP1143617036
+        in
+        [
+            emit W;
+            emit AP1143617036
+            ||
+            emit oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181;
+            abort
+                sustain
+                oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo1493174181
+            when immediate AP1143617036
+        ]
+        end
+    ]
+] end module

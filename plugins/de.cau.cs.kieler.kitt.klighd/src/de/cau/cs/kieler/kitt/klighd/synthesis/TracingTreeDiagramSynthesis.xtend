@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
@@ -36,11 +37,8 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import java.util.List
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.graph.KNode
-import org.eclipse.elk.graph.properties.IProperty
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -103,7 +101,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         return newLinkedList(
             specifyLayoutOption(CoreOptions::DIRECTION,
                 newImmutableList(Direction::DOWN, Direction::RIGHT)),
-            specifyLayoutOption(CoreOptions::SPACING_NODE, newArrayList(0, 150))
+            specifyLayoutOption(CoreOptions::SPACING_NODE_NODE, newArrayList(0, 150))
         );
     }
 
