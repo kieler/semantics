@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 import java.util.Observer
 import java.util.Observable
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 
 /**
  * @author ssm
@@ -30,6 +32,7 @@ class CompilationUpdate implements Observer {
     }
     
     override update(Observable o, Object arg) {
+        CompilationActionSimSalabim.simSalabim(arg)
     }
     
 }

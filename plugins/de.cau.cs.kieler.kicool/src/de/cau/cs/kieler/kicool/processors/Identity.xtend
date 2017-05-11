@@ -35,6 +35,7 @@ class Identity extends Processor {
     }
     
     override process() {
+        println("TEST")
     }
     
 }

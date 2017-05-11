@@ -47,7 +47,7 @@ class CompilationAction {
     }
     
     protected def invokeCompile(CompilerView view) {
-        val model = "String program! :)"
+        val model = CompilationActionSimSalabim.SIM_MODEL
         
         val cc = Compile.createCompilationContext("de.cau.cs.kieler.kicool.identity", model)
         
