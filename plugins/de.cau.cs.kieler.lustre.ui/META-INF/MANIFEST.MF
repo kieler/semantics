@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.lustre.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.lustre.ui; singleton:=true
+Require-Bundle: de.cau.cs.kieler.lustre,
+ de.cau.cs.kieler.lustre.ide,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder,
+ org.eclipse.xtend.lib;resolution:=optional,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.kico.ui,
+ de.cau.cs.kieler.klighd.ui.view,
+ de.cau.cs.kieler.kico;bundle-version="0.2.0"
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.lustre.ui.internal,
+ de.cau.cs.kieler.lustre.ui.quickfix,
+ de.cau.cs.kieler.lustre.ui.contentassist
+Bundle-Activator: de.cau.cs.kieler.lustre.ui.internal.LustreActivator
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,239 @@
+grammar de.cau.cs.kieler.lustre.Lustre
+
+generate lustre "http://www.cau.de/cs/kieler/lustre/Lustre"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Program hidden(WS, LUSTRE_COMMENT):
+    pkg=Package
+;
+
+Package:
+    head=Package_Header body=Package_Body_Content 'end'
+;
+
+Package_Header:
+    'package' name=IDENT  ('uses' uses=Ident_List)? 'provides' provides+=Package_Provide+
+;
+
+Package_Provide:
+    'node' name=[Node_Header | IDENT] '(' param=Var_Decl_List ')' 'returns' '(' ret=Var_Decl_List ')' ';'
+;
+
+Package_Body_Content:
+    'body' entities+=Entity_Decl+
+;
+
+Entity_Decl returns Node_Decl:
+    Node_Decl
+;
+
+/*
+ * Pragmas
+ */
+ 
+Pragma:
+    ('%' STRING_CONST '%')*;
+
+
+/*
+ * Identifiers
+ */
+ 
+Identifier:
+    (pkg=IDENT fromPgk?='::')? name=IDENT;
+
+
+/* 
+ * Types
+ */
+
+Type_Decl:
+    'type' name=IDENT  ';'
+    | 'type' name=IDENT '=' type=Type  ';';
+
+Type:
+    name=IDENT
+//    | Record_Type
+//    | Array_Type
+//    | Enum_Type;
+;
+
+Record_Type:
+    'struct' '{' fields=Field_List '}';
+
+Field_List:
+    fields+=Field (',' fields+=Field)*;
+
+Field:
+    name=IDENT ':' type=Type;
+
+Enum_Type:
+    'enum' '{' nameList=Ident_List '}';
+
+/*
+ * Constants and variables
+ */
+
+Const_Decl:
+    'const' name=IDENT ':' type=Type ';'
+    | 'const' name=IDENT '=' expr=Expression ';'
+    | 'const' name=IDENT ':' type=Type '=' expr=Expression ';'
+;
+
+Ident_List:
+    names+=IDENT (',' names+=IDENT)*;
+
+Node_Decl:
+    head=Node_Header bdy=FN_Body;
+
+Node_Header:
+    'node'  name=IDENT '(' param=Var_Decl_List ')' 'returns' '(' ret=Var_Decl_List ')' ';';
+
+Var_Decl_List:
+    varList+=Var_Decl (',' varList+=Var_Decl)*
+;
+
+Var_Decl:
+    name=IDENT ':' type=Type clk=Declared_Clock?;
+
+Declared_Clock:
+    'when' name=Identifier;
+
+FN_Body:
+    {FN_Body} decl+=Local_Var_Decl* 'let' eq+=Equation* 'tel' ';'?
+;
+
+Local_Var_Decl returns Var_Decl:
+    'var' Var_Decl ';'; 
+
+Equation_List:
+    {Equation_List} eq+=Eq_or_Ast*
+;
+
+Eq_or_Ast:
+    Equation
+    | Assertion
+;
+
+Equation:
+    left=IDENT '=' right=Right_Part ';';
+
+Left_Part:
+    '(' Left_List ')'
+    | Left_List;
+
+Left_List:
+    id+=Left (',' id+=Left)*;
+
+Left:
+    name=Identifier sel=Selector?
+;
+
+Selector:
+     '.' name=IDENT
+     | '[' begin=Expression end=SelTrancheEnd? ']'
+ ;
+
+SelTrancheEnd:
+    '..' Expression;
+
+Right_Part returns Expression:
+    Expression
+;
+
+Assertion:
+    'assert' Expression ';';
+
+/*
+ * Expressions
+ */
+ 
+Expression:
+    {IfThenElse} 'if' ifexpr=Expression 'then' thenexpr=Expression 'else' elseexpr=Expression
+//    | {Arrow} left=Expression '->' right=Expression
+    | Fby
+;
+
+Fby returns Expression:
+    Arrow ({Fby.left=current} 'fby' right=Arrow)*
+;
+
+Arrow returns Expression:
+    Or ({Arrow.left=current} '->' right=Or)*
+;
+
+Or returns Expression:
+    And ({Or.left=current} 'or' right=And)*
+;
+
+And returns Expression:
+    Equality ({And.left=current} 'and' right=Equality)*
+;
+
+Equality returns Expression:
+    Comparison ({Equality.left=current} op=('='|'<>') right=Comparison)*
+;
+
+Comparison returns Expression:
+    PlusOrMinus ({Comparison.left=current} op=('>='|'<='|'>'|'<') right=PlusOrMinus)*
+;
+
+PlusOrMinus returns Expression:
+    MulOrDiv ((({Plus.left=current} '+') | ({Minus.left=current} '-')) right=MulOrDiv)*
+;
+
+MulOrDiv returns Expression:
+    Primary ((({Mul.left=current} '*') | ({Div.left=current} '/')) right=Primary)*
+;
+
+Primary returns Expression:
+    '(' Expression ')'
+    | {Not} 'not' expression=Primary
+    | {UMinus} '-' expression=Primary
+    | {Pre} 'pre' expression=Primary
+    | {Current} 'current' expression=Primary
+    | AtomicExpression
+;
+
+AtomicExpression returns Expression:
+    ConstantExpression | {Variableref} value=IDENT
+;
+
+ConstantExpression returns Expression:
+    {BooleanConstant} value=BOOL
+    | {FloatConstant} value=FLOAT
+    | {IntConstant} value=INT
+;
+
+/*
+ * Lexical tokens
+ */
+ 
+terminal BOOL returns ecore::EBoolean:
+    'true' | 'false';
+ 
+terminal IDENT returns ecore::EString: 
+    '^'?('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+
+terminal INT returns ecore::EInt: 
+    ('0'..'9')+;
+
+terminal FLOAT returns ecore::EFloat:
+    ('0'..'9')+ '.' ('0'..'9')*
+    | '.' ('0'..'9')+;
+
+terminal STRING_CONST: 
+    '"' ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+    "'" ( '\\'('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"; 
+
+terminal LUSTRE_COMMENT:
+    LUSTRE_ML_COMMENT | LUSTRE_SL_COMMENT;
+
+terminal LUSTRE_ML_COMMENT: 
+    '(*' -> '*)';
+ 
+terminal LUSTRE_SL_COMMENT: 
+    '--' !('\n'|'\r')* ('\r'? '\n')?;
+ 
+terminal WS: 
+    (' '|'\t'|'\r'|'\n')+;
