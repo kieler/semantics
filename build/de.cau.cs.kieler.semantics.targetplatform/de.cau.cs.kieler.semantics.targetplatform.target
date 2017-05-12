@@ -17,6 +17,7 @@
       <unit id="org.eclipse.uml2.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.cdt.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/neon"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
