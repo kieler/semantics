@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.ui.INewWizard
 import org.eclipse.ui.IWorkbench
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.prom.builder.KiCoNature
 
 /**op
  * Wizard implementation wich creates a project
@@ -91,25 +92,11 @@ class PromProjectWizard extends Wizard implements INewWizard {
      */
     protected var MainPage mainPage
     
-    /**
-     * Dummy page to have the next button available.
-     * Anyhow, this page is never reached.
-     */
-    protected var DummyPage secondPage
-
-
 
     /**
      * The main file that has been created as part of this wizard
      */
     private IFile createdMainFile;
-
-    /**
-     * A dummy file in the project that is created and opened only to have the project active in a way
-     * that variables such as ${project_name} can be resolved.
-     */
-    private IFile createdTemporaryFile;
-
 
 
     /**
@@ -138,9 +125,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         
         // Continue only if project has been created
         if(newlyCreatedProject != null) {
-            // Select project to resolve variables such as ${project_name}
-            selectProjectForResolvingVariables(newlyCreatedProject)
-            
             // Create main file.
             // Create model file
             val isModelFileOk = createModelFile()
@@ -148,9 +132,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
             val isResourceCreationOk = createInitialResources()
             // Add some data to properties of new project
             val isProjectPropertiesOk = initializeProjectProperties()
-            
-            // Undo opening the project
-            closeProjectForResolvingVariables(newlyCreatedProject)
             
             // If everything finished successful, the wizard can finish successful
             val isOK = isModelFileOk
@@ -165,22 +146,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             return false
         }
-    }
-    
-    private def void selectProjectForResolvingVariables(IProject project) {
-        if(createdTemporaryFile != null) {
-            closeProjectForResolvingVariables(project)
-        }
-        createdTemporaryFile = project.getFile("tmp.txt")
-        createResource(createdTemporaryFile, null)
-        UIUtil.openFileInEditor(createdTemporaryFile)
-    }
-    
-    private def void closeProjectForResolvingVariables(IProject project) {
-        if(createdTemporaryFile != null && createdTemporaryFile.exists) {
-            createdTemporaryFile.delete(false, null)
-        }
-        createdTemporaryFile = null
     }
     
     /**
@@ -225,7 +190,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             
             // Create file
             val fileHandle = newlyCreatedProject.getFile(modelFilePathWithoutExtension + modelFileExtension)
-            createResource(fileHandle, initialContentStream)
+            PromPlugin.createResource(fileHandle, initialContentStream)
             UIUtil.openFileInEditor(fileHandle)
 
             return true
@@ -248,8 +213,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         val env = mainPage.selectedEnvironment
         var resolvedPath = ""
         try {
-            val variableManager = VariablesPlugin.getDefault().stringVariableManager
-            resolvedPath = variableManager.performStringSubstitution(env.modelFile)
+            resolvedPath = PromPlugin.performStringSubstitution(env.modelFile, newlyCreatedProject)
         } catch (CoreException ce) {
             MessageDialog.openError(shell, "Error", ce.message)
             return "Model"
@@ -293,8 +257,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
             try {
                 if(!data.projectRelativePath.trim.isNullOrEmpty) {
                     try {
-                        val variableManager = VariablesPlugin.getDefault().stringVariableManager
-                        resolvedProjectRelativePath = variableManager.performStringSubstitution(data.projectRelativePath.trim)
+                        resolvedProjectRelativePath = PromPlugin.performStringSubstitution(data.projectRelativePath.trim, newlyCreatedProject)
                     } catch (CoreException ce) {
                         MessageDialog.openError(shell, "Error", ce.message)
                         return false
@@ -331,18 +294,32 @@ class PromProjectWizard extends Wizard implements INewWizard {
         return true
     }
     
+    /**
+     * Creates a file in the new project with the content from the origin,
+     * or an empty file if the origin is null or empty
+     * 
+     * @param projectRelativePath The project relative path of the resource to create
+     * @param origin Optional path to initial content for the new file
+     */
     private def void initializeFile(String projectRelativePath, String origin) {
         val resource = newlyCreatedProject.getFile(projectRelativePath)
        // Create empty file
        if(origin.trim.isNullOrEmpty) {
-           createResource(resource, null)
+           PromPlugin.createResource(resource, null)
        } else {
            // Create file with initial content from origin
            val initialContentStream = PromPlugin.getInputStream(origin, null)
-           createResource(resource, initialContentStream)
+           PromPlugin.createResource(resource, initialContentStream)
        }
     }
 
+    /**
+     * Creates a folder in the new project with the content from the origin,
+     * or an empty folder if the origin is null or empty
+     * 
+     * @param projectRelativePath The project relative path of the resource to create
+     * @param origin Optional path to initial content for the new folder
+     */
     private def void initializeFolder(String projectRelativePath, String origin) {
         if (origin.trim.startsWith("platform:")) {
             // Fill folder with files from plugin
@@ -357,7 +334,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
         } else {
             // Create empty directory
             val newFolder = newlyCreatedProject.getFolder(projectRelativePath)
-            createResource(newFolder, null);
+            PromPlugin.createResource(newFolder, null);
         }
     }
 
@@ -416,18 +393,18 @@ class PromProjectWizard extends Wizard implements INewWizard {
         if(!env.launchData.mainFile.isNullOrEmpty) {
             var resolvedMainFilePath = ""
             try {
-                val variableManager = VariablesPlugin.getDefault().stringVariableManager
-                resolvedMainFilePath = variableManager.performStringSubstitution(env.launchData.mainFile)
+                resolvedMainFilePath = PromPlugin.performStringSubstitution(env.launchData.mainFile, newlyCreatedProject)
             } catch (CoreException ce) {
                 MessageDialog.openError(shell, "Error", ce.message)
                 return false
             }
             newlyCreatedProject.setPersistentProperty(PromPlugin.MAIN_FILE_QUALIFIER, resolvedMainFilePath)
         }
-        // The main file property is set in createMainFile().
         
         // Add Xtext nature to project (e.g. for SCCharts with cross-references)
         newlyCreatedProject.addNature("org.eclipse.xtext.ui.shared.xtextNature")
+        // Add KiCo nature to project (e.g. for builder)
+        newlyCreatedProject.addNature(KiCoNature.NATURE_ID)
         
         return true
     }
@@ -454,40 +431,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 throw new Exception("Failed to add nature " + newNature + " to project " + project.name, e)
              }
          }
-    }
-
-    /**
-     * Creates a resource and all needed parent folders in a project.
-     * The created resource is initialized with the inputs of the stream.
-     * 
-     * @param resource The resource handle to be created
-     * @param stream Input stream with initial content for the resource
-     */
-    protected def void createResource(IResource resource, InputStream stream) throws CoreException {
-        if (resource == null || resource.exists())
-            return;
-
-        if (!resource.getParent().exists())
-            createResource(resource.getParent(), stream);
-
-        switch(resource.getType()){
-            case IResource.FILE : {
-                if(stream != null) {
-                    (resource as IFile).create(stream, true, null)
-                    stream.close()
-                } else {
-                    val stringStream = new StringInputStream("")
-                    (resource as IFile).create(stringStream, true, null)
-                    stringStream.close()
-                }
-            }
-            case IResource.FOLDER :
-                (resource as IFolder).create(IResource.NONE, true, null)
-            case IResource.PROJECT : {
-                (resource as IProject).create(null)
-                (resource as IProject).open(null)
-            }
-        }
     }
 
     /**
@@ -532,7 +475,7 @@ class PromProjectWizard extends Wizard implements INewWizard {
                         // Create file in project with content of file from url
                         val stream = fileUrl.openStream()
                         val file = newFolder.getFile(relativePath)
-                        createResource(file, stream)
+                        PromPlugin.createResource(file, stream)
                         stream.close()
                     }
                 } else {
@@ -617,6 +560,9 @@ class PromProjectWizard extends Wizard implements INewWizard {
         }
     }
     
+    /**
+     * Creates the output folder for compiled files
+     */
     private def void createBuildDirectory() {
         val env = mainPage.selectedEnvironment
         val targetDirectory = env.launchData.targetDirectory
@@ -630,18 +576,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 val javaProject = JavaCore.create(newlyCreatedProject);
                 PromPlugin.addFolderToJavaClasspath(javaProject, sourceFolder)
             }
-        }
-    }
-    
-    private static class DummyPage extends WizardPage {
-        
-        protected new(String pageName) {
-            super(pageName)
-        }
-        
-        override createControl(Composite parent) {
-            val comp = UIUtil.createComposite(parent, 1)
-            control = comp
         }
     }
 }

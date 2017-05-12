@@ -15,21 +15,33 @@ package de.cau.cs.kieler.prom.common
 
 import com.google.common.base.Charsets
 import com.google.common.io.CharStreams
-import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
+import java.util.ArrayList
+import java.util.List
 import java.util.Map
+import org.eclipse.core.resources.IContainer
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IFolder
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.QualifiedName
+import org.eclipse.core.variables.IStringVariableManager
+import org.eclipse.core.variables.VariablesPlugin
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.xtext.util.StringInputStream
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import java.util.regex.Pattern
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -54,6 +66,21 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
      */
     public static val MAIN_FILE_QUALIFIER = new QualifiedName(PromPlugin.ID, "main.file")
 
+    // Variable names
+    public static val LAUNCHED_PROJECT_VARIABLE = "launched_project_loc"
+
+    public static val MAIN_FILE_NAME_VARIABLE = "main_name"
+    public static val MAIN_FILE_PATH_VARIABLE = "main_path"
+    public static val MAIN_FILE_LOCATION_VARIABLE = "main_loc"
+    public static val MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "main_name_no_ext"
+
+    public static val COMPILED_MAIN_FILE_NAME_VARIABLE = "compiled_main_name"
+    public static val COMPILED_MAIN_FILE_PATH_VARIABLE = "compiled_main_path"
+    public static val COMPILED_MAIN_FILE_LOCATION_VARIABLE = "compiled_main_loc"
+    public static val COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE = "compiled_main_name_no_ext"
+    
+    private static var IStringVariableManager varManager
+    
     /**
      * The constructor
      */
@@ -69,7 +96,7 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         plugin = this
         
         // Initialize the variables that can be used in the launch configuration
-        KiCoLaunchConfig.initializeVariables()
+        initializeVariables()
     }
 
     /*
@@ -177,5 +204,196 @@ class PromPlugin extends AbstractUIPlugin implements BundleActivator  {
         System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
         newEntries.set(oldEntries.length, JavaCore.newSourceEntry(root.getPath()));
         javaProject.setRawClasspath(newEntries, null);
+    }
+    
+    /**
+     * Searches recursively for resources with the same file extension.
+     * 
+     * @param resources The resources in which the search takes place
+     * @param fileExtension The file extension that files must have, or null if all files should be included
+     */
+    public static def List<IFile> findFiles(IResource[] resources, String fileExtension) {
+        return findFiles(resources, #[fileExtension])
+    }
+    
+    /**
+     * Searches recursively for resources with the same file extension.
+     * 
+     * @param resources The resources in which the search takes place
+     * @param fileExtensions The file extensions that files must have, or null if all files should be included
+     */
+    public static def List<IFile> findFiles(IResource[] resources, String[] fileExtension) {
+        val ArrayList<IFile> findings = newArrayList()
+        for(IResource res : resources) {
+            if (res instanceof IContainer) {
+                findings.addAll(findFiles(res.members, fileExtension));
+            } else if (res instanceof IFile) {
+                if(fileExtension == null || res.fileExtension != null && fileExtension.contains(res.fileExtension.toLowerCase) ){
+                    findings.add(res)
+                }
+            }
+        }
+        return findings
+    }
+    
+    /**
+     * Sets several eclipse string variables (e.g. ${main_name}, ${compiled_main_name}).
+     * The variables can be used for example in the commands and file paths.
+     */
+    public static def void setVariables(String projectLocation, String mainFilePath, String compiledMainFilePath) {
+        // Set project
+        setVariable(LAUNCHED_PROJECT_VARIABLE, projectLocation)
+
+        // Set main file
+        val mainFileName = new File(mainFilePath).name
+        val mainFileLocation = if(mainFileName != "")
+                                   new File(projectLocation + File.separator + mainFilePath).absolutePath
+                               else
+                                   ""
+        val mainFileWithoutExtension = new Path(mainFileName).removeFileExtension.toOSString
+        setVariable(MAIN_FILE_NAME_VARIABLE, mainFileName)
+        setVariable(MAIN_FILE_LOCATION_VARIABLE, mainFileLocation)
+        setVariable(MAIN_FILE_PATH_VARIABLE, mainFilePath)
+        setVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainFileWithoutExtension)
+
+        // Set compiled main file
+        val mainTargetName = new File(compiledMainFilePath).name
+        val mainTargetLocation = if(mainTargetName != "")
+                                     new File(projectLocation + File.separator + compiledMainFilePath).absolutePath
+                                 else
+                                    ""
+        val mainTargetWithoutExtension = new Path(mainTargetName).removeFileExtension.toOSString
+        setVariable(COMPILED_MAIN_FILE_NAME_VARIABLE, mainTargetName)
+        setVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE, mainTargetLocation)
+        setVariable(COMPILED_MAIN_FILE_PATH_VARIABLE, compiledMainFilePath)
+        setVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE, mainTargetWithoutExtension)
+    }
+
+    /**
+     * Creates or modifies the variable with the given name and data.
+     * 
+     * @param name The variable's name
+     * @param value The variable's value
+     * @param description The variable's description 
+     */
+    public static def void setVariable(String name, String value) {
+        val variableManager = VariablesPlugin.getDefault.stringVariableManager
+        var variable = variableManager.getValueVariable(name)
+        variable.value = value
+    }
+    
+    /**
+     * Registers a string variable at the string variable manager.
+     * 
+     * @param name The name of the variable
+     * @param description A short description for the variable
+     */
+    public static def void initializeVariable(String name, String description) {
+        val variable = variableManager.newValueVariable(name, description, false, "")
+        variable.description = description
+        variableManager.addVariables(#[variable])
+    }
+    
+    /**
+     * Initializes all variables if they have not been initialized yet.
+     */
+    public static def void initializeVariables() {
+        // Check if variables have been initialized already
+        var variable = variableManager.getValueVariable(MAIN_FILE_NAME_VARIABLE)
+        // Instantiate all variables if none yet
+        if (variable == null) {
+            // Project
+            initializeVariable(LAUNCHED_PROJECT_VARIABLE,
+            "Fully qualified path to the launched application")
+    
+            // Main file
+            initializeVariable(MAIN_FILE_NAME_VARIABLE,
+                "Name of the main file of the launched application")
+            initializeVariable(MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the main file of the launched application")
+            initializeVariable(MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the main file of the launched application")
+            initializeVariable(MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the main file of the launched application without file extension")
+            
+            // Compiled main file
+            initializeVariable(COMPILED_MAIN_FILE_NAME_VARIABLE,
+                "Name of the compiled main file of the launched application")
+            initializeVariable(COMPILED_MAIN_FILE_LOCATION_VARIABLE,
+                "Fully qualified location of the compiled main file of the launched application")
+            initializeVariable(COMPILED_MAIN_FILE_PATH_VARIABLE,
+                "Project relative path of the compiled main file of the launched application")
+            initializeVariable(COMPILED_MAIN_FILE_NAME_WITHOUT_FILE_EXTENSION_VARIABLE,
+                "Project relative path of the compiled main file of the launched application without file extension")
+        }
+    }
+    
+    /**
+     * Initializes and returns the variable manager that performs string substitutions
+     * 
+     * @return the variable manager
+     */
+    private static def IStringVariableManager getVariableManager() {
+        if(varManager == null) {
+            varManager = VariablesPlugin.getDefault.stringVariableManager
+        }
+        return varManager
+    }
+    
+    /**
+     * Creates a resource and all needed parent folders in a project.
+     * The created resource is initialized with the inputs of the stream.
+     * 
+     * @param resource The resource handle to be created
+     * @param stream Input stream with initial content for the resource
+     */
+    public static def void createResource(IResource resource, InputStream stream) throws CoreException {
+        if (resource == null || resource.exists())
+            return;
+
+        if (!resource.getParent().exists())
+            createResource(resource.getParent(), stream);
+
+        switch(resource.getType()){
+            case IResource.FILE : {
+                if(stream != null) {
+                    (resource as IFile).create(stream, true, null)
+                    stream.close()
+                } else {
+                    val stringStream = new StringInputStream("")
+                    (resource as IFile).create(stringStream, true, null)
+                    stringStream.close()
+                }
+            }
+            case IResource.FOLDER :
+                (resource as IFolder).create(IResource.NONE, true, null)
+            case IResource.PROJECT : {
+                (resource as IProject).create(null)
+                (resource as IProject).open(null)
+            }
+        }
+    }
+    
+    /**
+     * Uses the variable manager to perform a substitution of variables to their value (e.g. ${project_name} -> MyProject)
+     * If the project is specified, the variables ${project_name} and ${project_loc} are replaced accordingly.
+     * 
+     * @param expression An expression with placeholders
+     * @param project Optional project to set ${project_name} and ${project_loc}. May be null.
+     * @return the expression with all placeholders resolved
+     */
+    public static def String performStringSubstitution(String expression, IProject project) {
+        if(project == null) {
+            return variableManager.performStringSubstitution(expression)
+        } else {
+            // The variables ${project_name} and ${project_loc}
+            // normally refer to the project selected in the Project Explorer.
+            // However we want to replace these with the corresponding value of the given project.
+            val project_loc = project.location.toOSString
+            val project_name = project.name
+            val newExpression = expression.replaceAll(Pattern.quote("${project_loc}"), project_loc)
+                                          .replaceAll(Pattern.quote("${project_name}"), project_name)
+            return variableManager.performStringSubstitution(newExpression)
+        }
     }
 }

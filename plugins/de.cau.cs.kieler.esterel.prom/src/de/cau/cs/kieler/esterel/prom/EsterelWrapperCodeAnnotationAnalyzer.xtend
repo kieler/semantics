@@ -17,27 +17,18 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl
 import de.cau.cs.kieler.prom.launchconfig.IWrapperCodeAnnotationAnalyzer
-import de.cau.cs.kieler.prom.launchconfig.WrapperCodeAnnotationData
 import java.io.File
 import java.util.List
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.prom.common.WrapperCodeAnnotationData
 
 /** 
  * An analyzer for wrapper code annotations in Esterel files.
  * @author aas
  */
 class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnalyzer {
-    
-    override getModelName(EObject model) {
-        if (model instanceof ProgramImpl) {
-            val modules = model.modules
-            if(!modules.isNullOrEmpty)
-                return modules.get(0).name
-        }
-        return null
-    }
     
     override getAnnotations(EObject model) {
         // At the moment there are no annotations for inputs/outputs in the esterel grammar.
@@ -73,6 +64,14 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         // The returned list
         val datas = newArrayList() 
         
+        // Get model name
+        var modelName = ""
+        if (model instanceof ProgramImpl) {
+            val modules = model.modules
+            if(!modules.isNullOrEmpty)
+                modelName = modules.get(0).name
+        }
+        
         // Load text from model
         val path = model.eResource.URI.path
         val file = new File(path)
@@ -82,6 +81,7 @@ class EsterelWrapperCodeAnnotationAnalyzer implements IWrapperCodeAnnotationAnal
         for(line : lines) {
             val anno = parseLineAndGetWrapperCodeAnnotation(line)
             if(anno != null) {
+                anno.modelName = modelName
                 annotations += anno
             } else {
                 val inputOutput = parseInputOutputDeclaration(line)
