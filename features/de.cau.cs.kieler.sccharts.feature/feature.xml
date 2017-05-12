@@ -302,6 +302,9 @@ litigation.
 
    <plugin id="de.cau.cs.kieler.sim.kiem.toolbar" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
+   <plugin id="de.cau.cs.kieler.simulation" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.simulation.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.sim.instructions" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
