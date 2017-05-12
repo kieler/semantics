@@ -27,9 +27,13 @@ import org.eclipse.jface.action.Separator
 import org.eclipse.jface.action.IToolBarManager
 import de.cau.cs.kieler.kicool.ui.view.actions.CompilationAction
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.actions.SmartSystemSelectionToggleAction
-import de.cau.cs.kieler.kicool.ui.view.actions.DebugToggleAction
+import de.cau.cs.kieler.kicool.ui.view.actions.SmartSystemSelectionToggle
+import de.cau.cs.kieler.kicool.ui.view.actions.DebugToggle
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
+import org.eclipse.ui.IMemento
+import org.eclipse.ui.IViewSite
+import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 
 /**
  * @author ssm
@@ -38,6 +42,7 @@ import de.cau.cs.kieler.kicool.System
  */
 class CompilerView extends DiagramViewPart {
     
+    @Accessors private IMemento memento
     @Accessors private ToolbarSystemCombo combo
     @Accessors private System activeSystem = null 
     @Accessors private EditPartSystemManager editPartSystemManager = new EditPartSystemManager
@@ -46,6 +51,9 @@ class CompilerView extends DiagramViewPart {
     
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
+    @Accessors private var SmartSystemSelectionToggle smartSystemSelectionToggle = null
+    @Accessors private var DeveloperToggle developerToggle = null
+    @Accessors private var DebugToggle debugToggle = null
     
     /**
      * {@inheritDoc}
@@ -76,22 +84,44 @@ class CompilerView extends DiagramViewPart {
     protected def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
         
         // Compile
-        toolBar.add(new CompilationAction(this).compileAction)        
+        toolBar.add(new CompilationAction(this).action)        
+        
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
         systemSelectionManager = new SystemSelectionManager(this)
         
+        developerToggle = new DeveloperToggle(this)
+        developerToggle.addContributions(toolBar, menu)
+        smartSystemSelectionToggle = new SmartSystemSelectionToggle(this)
+        debugToggle = new DebugToggle(this)
+        
         toolBar.add(new Separator)
-        // The standard klighd view part buttons will be inserted after this separator. 
+        // The standard klighd view part menu entries will be inserted after this separator.    
 
-        menu.add(new SmartSystemSelectionToggleAction(this).smartSystemSelectionToggleAction)
-        menu.add(new DebugToggleAction(this).debugToggleAction)
+        menu.add(smartSystemSelectionToggle.action)
+        menu.add(developerToggle.action)
+        menu.add(debugToggle.action)
+        
+        memento?.loadCheckedValue(developerToggle)
+        memento?.loadCheckedValue(debugToggle)
+        memento?.loadCheckedValue(smartSystemSelectionToggle)
         
         menu.add(new Separator)
-        // The standard kligd view part menu entries will be inserted after this separator.    
-    }    
+        // The standard klighd view part menu entries will be inserted after this separator.    
+    }   
     
+    override init(IViewSite site, IMemento memento) {
+        super.init(site, memento)
+        this.memento = memento
+    }
+    
+    override saveState(IMemento memento) {
+        super.saveState(memento)
+        memento.saveCheckedValue(smartSystemSelectionToggle)
+        memento.saveCheckedValue(developerToggle)
+        memento.saveCheckedValue(debugToggle)
+    }
     
     def void updateView() {
         if (activeSystem == null) return
@@ -125,7 +155,17 @@ class CompilerView extends DiagramViewPart {
         }
     }    
 
-
+    private def void loadCheckedValue(IMemento memento, AbstractAction action) {
+        val setting = memento.getString(action.action.id)
+        if (setting != null) {
+            action.action.checked = Boolean.parseBoolean(setting)
+            action.invoke
+        } 
+    }
+    
+    private def void saveCheckedValue(IMemento memento, AbstractAction action) {
+        memento?.putString(action.action.id, action.action.checked.toString)
+    }
 
     
 }

@@ -22,27 +22,23 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow  
  */
-class DebugToggleAction {
+class DebugToggle extends AbstractAction {
 
     private static val DEBUG_TOGGLE_ACTION_DEFAULT = true
 
-    /** The action for toggling debug mode. */
-    @Accessors private Action debugToggleAction;
-    
     new(CompilerView view) {  
-        debugToggleAction = new Action("Debug Mode", IAction.AS_CHECK_BOX) {
-            override void run() {
-                invokeToggleDebug(view);
-            }
-        }
-        debugToggleAction.setId("debugToggleAction")
-        debugToggleAction.setText("Debug Mode")
-        debugToggleAction.setToolTipText("Sets the system to debug mode meaning that each processor step and each " + 
-            "intermediate result will be saved during processing.")
-        debugToggleAction.setChecked(DEBUG_TOGGLE_ACTION_DEFAULT)
+        super(view, 
+            "Debug Mode", 
+            IAction.AS_CHECK_BOX,
+            "debugToggle",
+            "Debug Mode",
+            "Sets the system to debug mode meaning that each processor step and each " + 
+            "intermediate result will be saved during processing.",
+            null)
+        action.setChecked(DEBUG_TOGGLE_ACTION_DEFAULT)
     }
     
-    protected def invokeToggleDebug(CompilerView view) {
+    override void invoke() {
         // implement me!
     }
 }

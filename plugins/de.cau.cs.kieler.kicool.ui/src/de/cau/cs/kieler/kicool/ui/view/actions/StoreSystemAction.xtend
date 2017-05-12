@@ -22,10 +22,10 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm
- * @kieler.design 2017-02-19 proposed
- * @kieler.rating 2017-02-19 proposed yellow  
+ * @kieler.design 2017-05-12 proposed
+ * @kieler.rating 2017-05-12 proposed yellow  
  */
-class CompilationAction {
+class StoreSystemAction {
 
     public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
@@ -34,27 +34,21 @@ class CompilationAction {
     @Accessors private Action action
     @Accessors private CompilerView view
     
-    new(CompilerView view) {  
+    new(CompilerView view) {
         this.view = view  
-        action = new Action("Compile", IAction.AS_PUSH_BUTTON) {
+        action = new Action("OpenSystem", IAction.AS_PUSH_BUTTON) {
             override void run() {
-                invokeCompile
+                invokeStoreSystem
             }
         }
-        action.setId("compileAction")
-        action.setText("Compile")
-        action.setToolTipText("Invocates a compilation process.")
-        action.imageDescriptor = ICON_GO     
+        action.setId("openSystemAction")
+        action.setText("Open active system")
+        action.setToolTipText("Opens the actual active system inside a seperate editor to enable modifications.")
+        action.imageDescriptor = ICON_GO    
+        action.disabledImageDescriptor = null
     }
     
-    def void invokeCompile() {
-        val model = CompilationActionSimSalabim.SIM_MODEL
-        
-        val cc = Compile.createCompilationContext("de.cau.cs.kieler.kicool.identity", model)
-        
-        val updateObserver = new CompilationUpdate(view)
-        cc.addObserver(updateObserver)
-        
-        cc.compile
+    def void invokeStoreSystem() {
+        // implement me!
     }
 }

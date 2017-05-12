@@ -17,6 +17,7 @@ import java.util.Observable
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -25,7 +26,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
  */
 class CompilationUpdate implements Observer {
     
-    private CompilerView view
+    @Accessors private CompilerView view
     
     new(CompilerView view) {
         this.view = view
