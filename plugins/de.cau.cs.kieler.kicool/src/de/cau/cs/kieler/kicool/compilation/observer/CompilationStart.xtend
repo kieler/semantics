@@ -19,5 +19,5 @@ package de.cau.cs.kieler.kicool.compilation.observer
  */
 @Data
 class CompilationStart {
-    
+    val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
 }

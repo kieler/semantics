@@ -61,9 +61,9 @@ class CompilationContext extends Observable {
         
         environment.inplaceCompilation = false
         
-        notify(new CompilationStart())
+        notify(new CompilationStart(this))
         processorEntry.compileEntry(environment)
-        notify(new CompilationFinished())        
+        notify(new CompilationFinished(this))        
     }
     
     
@@ -73,11 +73,11 @@ class CompilationContext extends Observable {
         
         compilationUnit.setEnvironment(environment, environmentPrime)
         
-        notify(new ProcessorStart(processor, compilationUnit))
+        notify(new ProcessorStart(this, processor, compilationUnit))
         compilationUnit.process
         // Add Metric code
         
-        notify(new ProcessorFinished(processor, compilationUnit))
+        notify(new ProcessorFinished(this, processor, compilationUnit))
         
         environmentPrime
     }

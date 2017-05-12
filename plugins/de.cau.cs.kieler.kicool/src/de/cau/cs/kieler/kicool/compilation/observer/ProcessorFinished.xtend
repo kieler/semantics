@@ -19,6 +19,7 @@ package de.cau.cs.kieler.kicool.compilation.observer
  */
 @Data
 class ProcessorFinished {
+    val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
     val de.cau.cs.kieler.kicool.Processor processorEntry
     val de.cau.cs.kieler.kicool.compilation.Processor processorUnit
 }
