@@ -72,17 +72,17 @@ class ModelsRepository {
         var List<Path> repositories = newLinkedList
         
         // compose path
-        if (userModelsRepository != null) {
+        if (userModelsRepository !== null) {
             repositories.add(Paths.get(userModelsRepository))
-            if (userAdditionalRepositories != null) {
+            if (userAdditionalRepositories !== null) {
                 for (dir : bambooAdditionalRepositories.split(",").map[trim]) {
                     val path = Paths.get(dir)
                     repositories.add(path)
                 }
             }
-        } else if (bambooWD != null) {
+        } else if (bambooWD !== null) {
             repositories.add(Paths.get(bambooWD, "models"))
-            if (bambooAdditionalRepositories != null) {
+            if (bambooAdditionalRepositories !== null) {
                 for (dir : bambooAdditionalRepositories.split(",").map[trim]) {
                     val path = Paths.get(bambooWD, dir)
                     val name = path.fileName.toString
@@ -134,7 +134,7 @@ class ModelsRepository {
                     val sameModelFiles = fileGroup.value
                     
                     val modelProperty = sameModelFiles.findFirst[modelPropertyFiles.containsKey(it)]
-                    val property = if (modelProperty != null) {
+                    val property = if (modelProperty !== null) {
                         new ModelProperties(sameModelFiles.head.getParentPropertiesPattern(repository), modelPropertyFiles.get(modelProperty))
                     } else {
                         sameModelFiles.head.getParentPropertiesPattern(repository)
@@ -142,30 +142,16 @@ class ModelsRepository {
                     if (!property.ignore) {
                         sameModelFiles.remove(modelProperty)
                         for (model : sameModelFiles.filter[ f | property.modelExt.exists[f.fileName.toString.endsWith(it)]]) {
-                            val traces = sameModelFiles.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].toList
-                            if (traces.empty) {
-                                models.add(new TestModelData(
-                                    repository,
-                                    repository.relativize(model),
-                                    null,
-                                    property.resourceSetID,
-                                    property.modelProperties.unmodifiableView,
-                                    property.additionalProperties.unmodifiableView,
-                                    property.confidential
-                                ))
-                            } else {
-                                for (trace : traces) {
-                                    models.add(new TestModelData(
-                                        repository,
-                                        repository.relativize(model),
-                                        repository.relativize(trace),
-                                        property.resourceSetID,
-                                        property.modelProperties.unmodifiableView,
-                                        property.additionalProperties.unmodifiableView,
-                                        property.confidential
-                                    ))
-                                }
-                            }
+                            val traces = sameModelFiles.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].sort.toList
+                            models.add(new TestModelData(
+                                repository,
+                                repository.relativize(model),
+                                traces.unmodifiableView,
+                                property.resourceSetID,
+                                property.modelProperties.unmodifiableView,
+                                property.additionalProperties.unmodifiableView,
+                                property.confidential
+                            ))
                         }
                     }
                 }

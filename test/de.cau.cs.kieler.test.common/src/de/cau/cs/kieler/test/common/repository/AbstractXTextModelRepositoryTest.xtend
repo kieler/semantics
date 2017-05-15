@@ -36,7 +36,7 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
     /** The resource sets for referenced models. */
     val resourceSets = <String, XtextResourceSet>newHashMap
     /** The list of hierarchical compare predicates */
-    protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ReferencesComparator, ComplexityComparator, ModelPathComparator, TracePathComparator)  
+    protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ReferencesComparator, ComplexityComparator, ModelPathComparator)  
     
     /**
      * {@inheritDoc}

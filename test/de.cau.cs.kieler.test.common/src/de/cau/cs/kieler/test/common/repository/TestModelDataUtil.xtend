@@ -77,8 +77,8 @@ class TestModelDataUtil {
         override compare(TestModelData a, TestModelData b) {
             return switch(a) {
                 case a.resourceSetID == b.resourceSetID: 0
-                case a.resourceSetID == null: -1
-                case b.resourceSetID == null: 1
+                case a.resourceSetID === null: -1
+                case b.resourceSetID === null: 1
                 default: a.resourceSetID.compareTo(b.resourceSetID)
             } 
         }
@@ -94,20 +94,6 @@ class TestModelDataUtil {
             return switch(a) {
                 case a.modelPath == b.modelPath: 0
                 default: a.modelPath.compareTo(b.modelPath)
-            }
-        }
-        
-    }
-    
-    /**
-     * A comparator based on the trace path of two models.
-     */
-    public static val TracePathComparator = new Comparator<TestModelData>(){
-        
-        override compare(TestModelData a, TestModelData b) {
-            return switch(a) {
-                case a.tracePath == b.tracePath: 0
-                default: a.tracePath.compareTo(b.tracePath)
             }
         }
         

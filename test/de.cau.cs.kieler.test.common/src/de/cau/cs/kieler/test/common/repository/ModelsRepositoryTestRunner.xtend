@@ -265,10 +265,6 @@ class ModelsRepositoryTestRunner extends Suite {
             builder.append(modelData.repositoryPath.fileName)
             builder.append("-")
             builder.append(modelData.modelPath)
-            if (modelData.tracePath != null) {
-                builder.append("-")
-                builder.append(modelData.tracePath)
-            }
             return builder.toString
         }
         
@@ -288,7 +284,7 @@ class ModelsRepositoryTestRunner extends Suite {
         override Description describeChild(FrameworkMethod method) {
             var description = methodDescriptions.get(method);
     
-            if (description == null) {
+            if (description === null) {
                 description = Description.createTestDescription(testClass.javaClass.name, method.name + " with model " + modelData.modelPath, method.name + "@" + ID);
                 methodDescriptions.putIfAbsent(method, description);
             }

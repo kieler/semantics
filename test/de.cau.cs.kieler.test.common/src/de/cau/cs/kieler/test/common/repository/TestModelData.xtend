@@ -16,6 +16,7 @@ import java.nio.file.Path
 import java.util.Map
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Data
+import java.util.List
 
 /**
  * Data holder for test models in the models repository.
@@ -30,8 +31,8 @@ class TestModelData {
     val Path repositoryPath
     /** Relative path to the model file. */
     val Path modelPath
-    /** Relative path to the trace file. */
-    val Path tracePath
+    /** Relative paths to the trace files. */
+    val List<Path> tracePaths
     /** Unique ID for the resource set of the model. */
     val String resourceSetID
     /** Set of property String characterizing the the model. */
