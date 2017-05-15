@@ -12,32 +12,25 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.validation
 
-import org.eclipse.xtext.validation.Check
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.DoubleValue
-import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import org.eclipse.xtext.validation.Check
 
 /**
  * @author ssm
  * @kieler.design 2017-05-15 proposed 
  * @kieler.rating 2017-05-15 proposed yellow
  */
-class KExtValidator extends de.cau.cs.kieler.kexpressions.kext.validation.AbstractKExtJavaValidator {
+class KExtValidator extends AbstractKExtJavaValidator {
     
     static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
     static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
      
-
     @Check
     def void checkConstDeclarationInArrays(Declaration declaration) {
         for (vo : declaration.valuedObjects) {
@@ -59,11 +52,6 @@ class KExtValidator extends de.cau.cs.kieler.kexpressions.kext.validation.Abstra
         }
     }
 
-
-    /**
-    *
-    * @param state the state
-    */
    @Check
    def void checkConstBinding(Declaration declaration) {
        if (declaration.isConst) {
@@ -74,7 +62,7 @@ class KExtValidator extends de.cau.cs.kieler.kexpressions.kext.validation.Abstra
                    // If it is a literal, it's ok.
                    if (initialValue instanceof Value) ok = true
                    
-                   // If it is an substraction operator expression with a single literal, it's ok. E.g., -12
+                   // If it is an subtraction operator expression with a single literal, it's ok. E.g., -12
                    if (initialValue instanceof OperatorExpression) {
                        if (initialValue.operator == OperatorType.SUB) {
                            if (initialValue.subExpressions.size == 1 &&
