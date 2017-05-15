@@ -187,7 +187,7 @@ public class KielerCompiler {
      * @return the compilation result
      */
     public static CompilationResult compile(KielerCompilerContext context) {
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
 
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
@@ -299,7 +299,7 @@ public class KielerCompiler {
         if (monitor != null) {
             monitor.done();
         }
-        long end = System.currentTimeMillis();
+        long end = System.nanoTime();
         String seconds = (((float) (end - start)) / 1000) + "";
         KiCoPlugin.log("KIELER Compiler compiled in " + seconds + " seconds.");
 
@@ -447,9 +447,9 @@ public class KielerCompiler {
             }
         }
 
-        start = System.currentTimeMillis();
+        start = System.nanoTime();
         Object result = transformation.doTransform(transformationInput, context);
-        end = System.currentTimeMillis();
+        end = System.nanoTime();
 
         // Invoke post hooks
         for (IHook hook : getHooks()) {
