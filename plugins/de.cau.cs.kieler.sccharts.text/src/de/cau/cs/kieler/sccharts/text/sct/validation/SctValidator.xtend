@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author ssm, cmot
@@ -31,13 +32,10 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
  */
 class SctValidator extends SctJavaValidator {
     
-    @Inject
-    extension SCChartsExtension = sCChartExtension;
-    
-    @Inject
-    extension KExpressionsValuedObjectExtensions
+    @Inject extension SCChartsExtension = sCChartExtension;
+    @Inject extension KExpressionsValuedObjectExtensions
 
-
+    static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
 
     /**
      * Check if valued signal has a combine functions
@@ -259,4 +257,18 @@ class SctValidator extends SctJavaValidator {
                 warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
        }
     }  
+    
+    /**
+     *
+     * @param state the state
+     */
+    @Check
+    def void checkAssignmentToConst(de.cau.cs.kieler.kexpressions.keffects.Assignment assignment) {
+        if (assignment.getValuedObject() != null) {
+            val declaration =  assignment.getValuedObject.eContainer as Declaration
+            if (declaration.isConst()) {
+                error(ASSIGNMENT_TO_CONST, assignment, null, -1);
+            }
+        }
+    }    
 }

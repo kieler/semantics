@@ -17,6 +17,15 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.DoubleValue
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 /**
  * @author ssm
@@ -25,7 +34,9 @@ import de.cau.cs.kieler.kexpressions.ValueType
  */
 class KExtValidator extends de.cau.cs.kieler.kexpressions.kext.validation.AbstractKExtJavaValidator {
     
-    static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object." 
+    static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
+    static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
+     
 
     @Check
     def void checkConstDeclarationInArrays(Declaration declaration) {
@@ -48,4 +59,31 @@ class KExtValidator extends de.cau.cs.kieler.kexpressions.kext.validation.Abstra
         }
     }
 
+
+    /**
+    *
+    * @param state the state
+    */
+   @Check
+   def void checkConstBinding(Declaration declaration) {
+       if (declaration.isConst) {
+           for (valuedObject : declaration.getValuedObjects) {
+               val initialValue = valuedObject.getInitialValue
+               if (initialValue != null) {
+                   var ok = false
+                   // If it is a literal, it's ok.
+                   if (initialValue instanceof Value) ok = true
+                   
+                   // If it is an substraction operator expression with a single literal, it's ok. E.g., -12
+                   if (initialValue instanceof OperatorExpression) {
+                       if (initialValue.operator == OperatorType.SUB) {
+                           if (initialValue.subExpressions.size == 1 &&
+                               initialValue.subExpressions.head instanceof Value) ok = true
+                       } 
+                   }
+                   if (!ok) error(NO_CONST_LITERAL, valuedObject, null, -1);
+               }
+           }
+       }
+    } 
 }
