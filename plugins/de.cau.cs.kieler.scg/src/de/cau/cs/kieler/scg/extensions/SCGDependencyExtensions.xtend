@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.EnumSet
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -115,15 +116,17 @@ class SCGDependencyExtensions {
         dependency.confluent = false
         if (sourceNode instanceof Assignment) {
             if (targetNode instanceof Assignment) {
-                val sourceExpression = sourceNode.expression
-                val targetExpression = targetNode.expression
-                //TODO als: @ssm is this really the correct dependency analysis? x /= 5 confluent to x += 5
-                if (sourceExpression.isSameValue(targetExpression)) {
-                    dependency.confluent = true
-                } else {
-                    // To be downward-compatible, check for operator expression with same value.
-                    if (areOldConfluentSetter(sourceNode, targetNode)) {
+                if (sourceNode.operator == AssignOperator.ASSIGN && targetNode.operator == AssignOperator.ASSIGN) {
+                    val sourceExpression = sourceNode.expression
+                    val targetExpression = targetNode.expression
+                    //TODO als: @ssm is this really the correct dependency analysis? x /= 5 confluent to x += 5
+                    if (sourceExpression.isSameValue(targetExpression)) {
                         dependency.confluent = true
+                    } else {
+                        // To be downward-compatible, check for operator expression with same value.
+                        if (areOldConfluentSetter(sourceNode, targetNode)) {
+                            dependency.confluent = true
+                        }
                     }
                 }
             }
