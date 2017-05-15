@@ -7,6 +7,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import java.util.Iterator
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Serialization of KExpressions in human readable form.
@@ -45,8 +46,13 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         cs.toString.humanReadable
     }
     
-    
-
+    def dispatch CharSequence serializeHR(ValuedObject valuedObject) {
+        var vo = valuedObject.name
+        for (index : valuedObject.cardinalities) {
+            vo = vo + "[" + index.serializeHR + "]"
+        }
+        vo
+    }    
 
     def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
         var vo = valuedObjectReference.valuedObject.name

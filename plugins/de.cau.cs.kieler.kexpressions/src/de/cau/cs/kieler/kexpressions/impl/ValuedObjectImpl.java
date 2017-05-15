@@ -23,6 +23,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -92,14 +95,14 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     protected Expression initialValue;
 
     /**
-     * The cached value of the '{@link #getCardinalities() <em>Cardinalities</em>}' attribute list.
+     * The cached value of the '{@link #getCardinalities() <em>Cardinalities</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @see #getCardinalities()
      * @generated
      * @ordered
      */
-	protected EList<Integer> cardinalities;
+	protected EList<Expression> cardinalities;
 
 				/**
      * <!-- begin-user-doc -->
@@ -189,9 +192,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Integer> getCardinalities() {
+	public EList<Expression> getCardinalities() {
         if (cardinalities == null) {
-            cardinalities = new EDataTypeUniqueEList<Integer>(Integer.class, this, KExpressionsPackage.VALUED_OBJECT__CARDINALITIES);
+            cardinalities = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT__CARDINALITIES);
         }
         return cardinalities;
     }
@@ -206,6 +209,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return basicSetInitialValue(null, msgs);
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
+                return ((InternalEList<?>)getCardinalities()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -271,7 +276,7 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return;
             case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 getCardinalities().clear();
-                getCardinalities().addAll((Collection<? extends Integer>)newValue);
+                getCardinalities().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -335,8 +340,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         result.append(name);
         result.append(", combineOperator: ");
         result.append(combineOperator);
-        result.append(", cardinalities: ");
-        result.append(cardinalities);
         result.append(')');
         return result.toString();
     }

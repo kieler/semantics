@@ -264,7 +264,7 @@ class KExpressionsSerializeExtensions {
     def dispatch CharSequence serialize(ValuedObject valuedObject) {
         var vo = valuedObject.name
         for (index : valuedObject.cardinalities) {
-            vo = vo + "[" + index.toString + "]"
+            vo = vo + "[" + index.serialize + "]"
         }
         vo
     }

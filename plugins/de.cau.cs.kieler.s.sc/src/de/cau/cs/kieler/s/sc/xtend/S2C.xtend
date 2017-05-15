@@ -54,6 +54,7 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.StringValue
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import de.cau.cs.kieler.s.sc.S2SCPlugin
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -74,6 +75,9 @@ class S2C {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+
+    @Inject
+    extension KExpressionsValueExtensions    
 
     @Inject
     extension SExtension

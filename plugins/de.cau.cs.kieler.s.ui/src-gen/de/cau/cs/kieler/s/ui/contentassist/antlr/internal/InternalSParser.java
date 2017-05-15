@@ -21360,7 +21360,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // InternalS.g:7294:1: ( rule__ValuedObject__Group_1__0__Impl rule__ValuedObject__Group_1__1 )
             // InternalS.g:7295:2: rule__ValuedObject__Group_1__0__Impl rule__ValuedObject__Group_1__1
             {
-            pushFollow(FOLLOW_7);
+            pushFollow(FOLLOW_18);
             rule__ValuedObject__Group_1__0__Impl();
 
             state._fsp--;
@@ -39590,24 +39590,28 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__CardinalitiesAssignment_1_1"
-    // InternalS.g:13859:1: rule__ValuedObject__CardinalitiesAssignment_1_1 : ( RULE_INT ) ;
+    // InternalS.g:13859:1: rule__ValuedObject__CardinalitiesAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__ValuedObject__CardinalitiesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // InternalS.g:13863:1: ( ( RULE_INT ) )
-            // InternalS.g:13864:1: ( RULE_INT )
+            // InternalS.g:13863:1: ( ( ruleExpression ) )
+            // InternalS.g:13864:1: ( ruleExpression )
             {
-            // InternalS.g:13864:1: ( RULE_INT )
-            // InternalS.g:13865:1: RULE_INT
+            // InternalS.g:13864:1: ( ruleExpression )
+            // InternalS.g:13865:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_1_1_0()); 
+               before(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
-            match(input,RULE_INT,FOLLOW_2); if (state.failed) return ;
+            pushFollow(FOLLOW_2);
+            ruleExpression();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_1_1_0()); 
+               after(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
 
             }
@@ -43332,8 +43336,8 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     protected DFA24 dfa24 = new DFA24(this);
     static final String dfa_1s = "\112\uffff";
     static final String dfa_2s = "\13\uffff\1\4\76\uffff";
-    static final String dfa_3s = "\3\6\2\uffff\1\4\1\6\1\7\1\6\1\7\5\6\2\4\1\70\1\6\1\7\1\4\2\6\1\4\1\6\1\7\1\4\4\6\1\4\1\6\2\70\4\6\1\7\1\6\1\7\3\6\1\7\3\6\1\4\1\6\1\7\1\4\2\6\2\4\1\70\7\6\1\7\1\4\1\6\1\7\2\70\3\6";
-    static final String dfa_4s = "\2\110\1\6\2\uffff\1\112\1\6\1\7\1\6\1\10\1\110\1\112\3\110\1\112\1\110\1\112\1\6\1\7\1\6\1\110\3\6\1\7\1\6\1\112\2\110\2\112\1\110\1\112\1\70\1\110\1\112\1\110\1\6\1\7\1\6\1\7\1\6\1\110\1\112\1\10\3\110\2\6\1\7\1\6\1\112\1\110\1\112\1\110\1\112\1\110\1\112\1\110\1\112\2\110\1\6\1\7\2\6\1\7\1\112\1\70\1\110\1\112\1\110";
+    static final String dfa_3s = "\3\6\2\uffff\1\4\1\6\2\7\6\6\2\4\1\70\1\6\1\7\1\4\2\6\1\4\1\6\1\7\1\4\4\6\1\4\1\6\2\70\4\6\1\7\1\6\1\7\4\6\1\7\2\6\1\4\1\6\1\7\1\4\2\6\2\4\1\70\7\6\1\7\1\4\1\6\1\7\2\70\3\6";
+    static final String dfa_4s = "\2\110\1\6\2\uffff\1\112\1\6\1\7\1\10\1\110\1\6\1\112\3\110\1\112\1\110\1\112\1\6\1\7\1\6\1\110\3\6\1\7\1\6\1\112\2\110\2\112\1\110\1\112\1\70\1\110\1\112\1\110\1\6\1\7\1\6\1\7\2\110\1\112\1\6\1\10\2\110\2\6\1\7\1\6\1\112\1\110\1\112\1\110\1\112\1\110\1\112\1\110\1\112\2\110\1\6\1\7\2\6\1\7\1\112\1\70\1\110\1\112\1\110";
     static final String dfa_5s = "\3\uffff\1\1\1\2\105\uffff";
     static final String dfa_6s = "\112\uffff}>";
     static final String[] dfa_7s = {
@@ -43342,18 +43346,18 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             "\1\5",
             "",
             "",
-            "\1\14\1\16\1\13\1\15\1\12\1\4\1\1\12\uffff\1\11\12\uffff\1\4\26\uffff\1\10\16\uffff\1\3\1\uffff\1\2\1\6\1\7",
+            "\1\14\1\16\1\13\1\15\1\11\1\4\1\1\12\uffff\1\10\12\uffff\1\4\26\uffff\1\12\16\uffff\1\3\1\uffff\1\2\1\6\1\7",
             "\1\17",
             "\1\20",
-            "\1\21",
-            "\1\15\1\12",
+            "\1\15\1\11",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\45\uffff\1\3\1\uffff\1\2",
+            "\1\21",
             "\1\4\2\uffff\1\4\1\25\22\uffff\2\4\1\uffff\1\4\17\uffff\1\4\6\uffff\1\4\2\uffff\1\24\13\uffff\1\3\1\uffff\1\26\1\22\1\23",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\31\uffff\1\27\13\uffff\1\3\1\uffff\1\2",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\45\uffff\1\3\1\uffff\1\2",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\45\uffff\1\3\1\uffff\1\2",
-            "\1\14\1\16\1\13\1\15\1\12\1\4\1\1\12\uffff\1\11\12\uffff\1\4\26\uffff\1\10\16\uffff\1\3\1\uffff\1\2\1\6\1\7",
-            "\1\14\1\16\1\13\1\15\1\12\1\4\1\1\12\uffff\1\11\12\uffff\1\4\26\uffff\1\10\16\uffff\1\3\1\uffff\1\2",
+            "\1\14\1\16\1\13\1\15\1\11\1\4\1\1\12\uffff\1\10\12\uffff\1\4\26\uffff\1\12\16\uffff\1\3\1\uffff\1\2\1\6\1\7",
+            "\1\14\1\16\1\13\1\15\1\11\1\4\1\1\12\uffff\1\10\12\uffff\1\4\26\uffff\1\12\16\uffff\1\3\1\uffff\1\2",
             "\1\32\20\uffff\1\30\1\31",
             "\1\33",
             "\1\34",
@@ -43368,7 +43372,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26\1\46\1\47",
-            "\1\53\1\60\1\54\1\56\1\57\1\4\1\25\12\uffff\1\55\12\uffff\1\4\26\uffff\1\52\16\uffff\1\3\1\uffff\1\26\1\50\1\51",
+            "\1\53\1\52\1\54\1\57\1\60\1\4\1\25\12\uffff\1\56\12\uffff\1\4\26\uffff\1\55\16\uffff\1\3\1\uffff\1\26\1\50\1\51",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\31\uffff\1\27\13\uffff\1\3\1\uffff\1\2",
             "\1\32\20\uffff\1\30\1\31",
             "\1\32",
@@ -43379,11 +43383,11 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             "\1\66",
             "\1\67",
             "\1\70",
-            "\1\71",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\45\uffff\1\3\1\uffff\1\26",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26",
             "\1\4\2\uffff\1\4\1\25\22\uffff\2\4\1\uffff\1\4\26\uffff\1\4\2\uffff\1\24\13\uffff\1\3\1\uffff\1\26\1\22\1\23",
-            "\1\56\1\57",
-            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\45\uffff\1\3\1\uffff\1\26",
+            "\1\71",
+            "\1\57\1\60",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\45\uffff\1\3\1\uffff\1\26",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\45\uffff\1\3\1\uffff\1\26",
             "\1\72\1\74\1\73",
@@ -43392,8 +43396,8 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             "\1\77\1\74\1\73",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26\1\46\1\47",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\24\13\uffff\1\3\1\uffff\1\26",
-            "\1\53\1\60\1\54\1\56\1\57\1\4\1\25\12\uffff\1\55\12\uffff\1\4\26\uffff\1\52\16\uffff\1\3\1\uffff\1\26\1\50\1\51",
-            "\1\53\1\60\1\54\1\56\1\57\1\4\1\25\12\uffff\1\55\12\uffff\1\4\26\uffff\1\52\16\uffff\1\3\1\uffff\1\26",
+            "\1\53\1\52\1\54\1\57\1\60\1\4\1\25\12\uffff\1\56\12\uffff\1\4\26\uffff\1\55\16\uffff\1\3\1\uffff\1\26\1\50\1\51",
+            "\1\53\1\52\1\54\1\57\1\60\1\4\1\25\12\uffff\1\56\12\uffff\1\4\26\uffff\1\55\16\uffff\1\3\1\uffff\1\26",
             "\1\102\20\uffff\1\100\1\101",
             "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\31\uffff\1\61\13\uffff\1\3\1\uffff\1\2",
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\31\uffff\1\64\13\uffff\1\3\1\uffff\1\26\1\103\1\104",
@@ -43892,28 +43896,28 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_26s = "\20\uffff";
-    static final String dfa_27s = "\3\uffff\1\14\6\uffff\1\11\3\uffff\2\14";
-    static final String dfa_28s = "\1\12\1\uffff\1\6\1\4\1\6\2\7\3\uffff\1\6\3\uffff\2\4";
-    static final String dfa_29s = "\1\110\1\uffff\1\6\1\120\1\6\1\7\1\10\3\uffff\1\120\3\uffff\2\120";
-    static final String dfa_30s = "\1\uffff\1\1\5\uffff\1\6\1\2\1\3\1\uffff\1\4\1\7\1\5\2\uffff";
+    static final String dfa_27s = "\3\uffff\1\15\7\uffff\1\12\2\uffff\2\15";
+    static final String dfa_28s = "\1\12\1\uffff\1\6\1\4\1\6\2\7\4\uffff\1\6\2\uffff\2\4";
+    static final String dfa_29s = "\1\110\1\uffff\1\6\1\120\1\6\1\7\1\10\4\uffff\1\120\2\uffff\2\120";
+    static final String dfa_30s = "\1\uffff\1\1\5\uffff\1\5\1\6\1\2\1\3\1\uffff\1\4\1\7\2\uffff";
     static final String dfa_31s = "\20\uffff}>";
     static final String[] dfa_32s = {
             "\1\1\75\uffff\1\2",
             "",
             "\1\3",
-            "\1\11\1\10\1\12\1\15\1\7\2\14\12\uffff\1\6\12\uffff\1\14\4\uffff\7\14\3\uffff\1\14\2\uffff\1\14\4\uffff\1\13\11\uffff\1\14\4\uffff\1\14\1\uffff\1\14\1\4\1\5\6\14",
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\1\15\2\uffff\1\15\4\uffff\1\14\11\uffff\1\15\4\uffff\1\15\1\uffff\1\15\1\4\1\5\6\15",
             "\1\16",
             "\1\17",
-            "\1\15\1\7",
+            "\1\7\1\10",
             "",
             "",
             "",
-            "\1\11\2\uffff\2\11\22\uffff\2\14\1\uffff\1\11\4\uffff\7\11\3\uffff\1\11\2\uffff\1\11\4\uffff\1\14\2\uffff\1\11\6\uffff\1\11\4\uffff\1\11\1\uffff\11\11",
+            "",
+            "\1\12\2\uffff\2\12\22\uffff\2\15\1\uffff\1\12\4\uffff\7\12\3\uffff\1\12\2\uffff\1\12\4\uffff\1\15\2\uffff\1\12\6\uffff\1\12\4\uffff\1\12\1\uffff\11\12",
             "",
             "",
-            "",
-            "\1\11\1\10\1\12\1\15\1\7\2\14\12\uffff\1\6\12\uffff\1\14\4\uffff\7\14\3\uffff\1\14\2\uffff\1\14\4\uffff\1\13\11\uffff\1\14\4\uffff\1\14\1\uffff\1\14\1\4\1\5\6\14",
-            "\1\11\1\10\1\12\1\15\1\7\2\14\12\uffff\1\6\12\uffff\1\14\4\uffff\7\14\3\uffff\1\14\2\uffff\1\14\4\uffff\1\13\11\uffff\1\14\4\uffff\1\14\1\uffff\1\14\2\uffff\6\14"
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\1\15\2\uffff\1\15\4\uffff\1\14\11\uffff\1\15\4\uffff\1\15\1\uffff\1\15\1\4\1\5\6\15",
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\1\15\2\uffff\1\15\4\uffff\1\14\11\uffff\1\15\4\uffff\1\15\1\uffff\1\15\2\uffff\6\15"
     };
 
     static final short[] dfa_26 = DFA.unpackEncodedString(dfa_26s);
@@ -43942,27 +43946,27 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_33s = "\17\uffff";
-    static final String dfa_34s = "\3\uffff\1\11\11\uffff\2\11";
-    static final String dfa_35s = "\1\12\1\uffff\1\6\1\4\1\6\1\7\4\uffff\1\7\2\uffff\2\4";
-    static final String dfa_36s = "\1\110\1\uffff\1\6\1\112\1\6\1\7\4\uffff\1\10\2\uffff\1\112\1\110";
-    static final String dfa_37s = "\1\uffff\1\1\4\uffff\1\3\1\4\1\2\1\7\1\uffff\1\5\1\6\2\uffff";
+    static final String dfa_34s = "\3\uffff\1\13\11\uffff\2\13";
+    static final String dfa_35s = "\1\12\1\uffff\1\6\1\4\1\6\2\7\6\uffff\2\4";
+    static final String dfa_36s = "\1\110\1\uffff\1\6\1\112\1\6\1\7\1\10\6\uffff\1\112\1\110";
+    static final String dfa_37s = "\1\uffff\1\1\5\uffff\1\6\1\3\1\4\1\2\1\7\1\5\2\uffff";
     static final String dfa_38s = "\17\uffff}>";
     static final String[] dfa_39s = {
             "\1\1\75\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\7\1\11\1\13\1\14\1\uffff\1\11\12\uffff\1\12\41\uffff\1\6\20\uffff\1\11\1\4\1\5",
+            "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\41\uffff\1\10\20\uffff\1\13\1\4\1\5",
             "\1\15",
             "\1\16",
+            "\1\14\1\7",
             "",
             "",
             "",
             "",
-            "\1\13\1\14",
             "",
             "",
-            "\1\10\1\7\1\11\1\13\1\14\1\uffff\1\11\12\uffff\1\12\41\uffff\1\6\20\uffff\1\11\1\4\1\5",
-            "\1\10\1\7\1\11\1\13\1\14\1\uffff\1\11\12\uffff\1\12\41\uffff\1\6\20\uffff\1\11"
+            "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\41\uffff\1\10\20\uffff\1\13\1\4\1\5",
+            "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\41\uffff\1\10\20\uffff\1\13"
     };
 
     static final short[] dfa_33 = DFA.unpackEncodedString(dfa_33s);
@@ -43991,8 +43995,8 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_40s = "\61\uffff";
-    static final String dfa_41s = "\1\11\1\uffff\1\12\1\6\1\uffff\1\4\1\6\1\7\3\12\1\6\1\7\2\12\3\4\1\6\1\7\1\70\4\12\1\6\1\7\1\4\1\6\1\7\2\70\5\12\1\4\1\6\1\7\5\12\1\6\1\7\2\12";
-    static final String dfa_42s = "\1\120\1\uffff\1\120\1\6\1\uffff\1\120\1\6\1\7\3\120\1\6\1\10\4\120\2\6\1\7\1\112\4\120\1\6\1\7\2\6\1\7\1\112\1\70\5\120\2\6\1\7\5\120\1\6\1\7\2\120";
+    static final String dfa_41s = "\1\11\1\uffff\1\12\1\6\1\uffff\1\4\1\6\1\7\2\12\1\6\1\7\3\12\3\4\1\6\1\7\1\70\4\12\1\6\1\7\1\4\1\6\1\7\2\70\5\12\1\4\1\6\1\7\5\12\1\6\1\7\2\12";
+    static final String dfa_42s = "\1\120\1\uffff\1\120\1\6\1\uffff\1\120\1\6\1\7\2\120\1\6\1\10\5\120\2\6\1\7\1\112\4\120\1\6\1\7\2\6\1\7\1\112\1\70\5\120\2\6\1\7\5\120\1\6\1\7\2\120";
     static final String dfa_43s = "\1\uffff\1\2\2\uffff\1\1\54\uffff";
     static final String dfa_44s = "\61\uffff}>";
     static final String[] dfa_45s = {
@@ -44001,18 +44005,18 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             "\1\2\32\uffff\7\4\6\uffff\1\1\16\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
             "\1\5",
             "",
-            "\1\11\1\10\1\12\1\15\1\16\1\uffff\1\2\12\uffff\1\14\17\uffff\7\4\6\uffff\1\1\4\uffff\1\13\11\uffff\1\4\6\uffff\1\3\1\6\1\7\6\4",
+            "\1\10\1\15\1\11\1\14\1\16\1\uffff\1\2\12\uffff\1\13\17\uffff\7\4\6\uffff\1\1\4\uffff\1\12\11\uffff\1\4\6\uffff\1\3\1\6\1\7\6\4",
             "\1\17",
             "\1\20",
-            "\1\2\32\uffff\7\4\6\uffff\1\1\16\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
             "\1\2\32\uffff\7\4\6\uffff\1\1\7\uffff\1\21\6\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
             "\1\2\32\uffff\7\4\6\uffff\1\1\7\uffff\1\21\6\uffff\1\4\6\uffff\1\3\1\22\1\23\6\4",
             "\1\24",
-            "\1\15\1\16",
+            "\1\14\1\16",
             "\1\2\32\uffff\7\4\6\uffff\1\1\16\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
             "\1\2\32\uffff\7\4\6\uffff\1\1\16\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
-            "\1\11\1\10\1\12\1\15\1\16\1\uffff\1\2\12\uffff\1\14\17\uffff\7\4\6\uffff\1\1\4\uffff\1\13\11\uffff\1\4\6\uffff\1\3\1\6\1\7\6\4",
-            "\1\11\1\10\1\12\1\15\1\16\1\uffff\1\2\12\uffff\1\14\17\uffff\7\4\6\uffff\1\1\4\uffff\1\13\11\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
+            "\1\2\32\uffff\7\4\6\uffff\1\1\16\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
+            "\1\10\1\15\1\11\1\14\1\16\1\uffff\1\2\12\uffff\1\13\17\uffff\7\4\6\uffff\1\1\4\uffff\1\12\11\uffff\1\4\6\uffff\1\3\1\6\1\7\6\4",
+            "\1\10\1\15\1\11\1\14\1\16\1\uffff\1\2\12\uffff\1\13\17\uffff\7\4\6\uffff\1\1\4\uffff\1\12\11\uffff\1\4\6\uffff\1\3\2\uffff\6\4",
             "\1\25\1\uffff\1\26",
             "\1\27",
             "\1\30",
