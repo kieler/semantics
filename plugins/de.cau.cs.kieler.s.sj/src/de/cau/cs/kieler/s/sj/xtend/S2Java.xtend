@@ -187,7 +187,7 @@ class S2Java {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
               «IF !declaration.volatile»
-              «'''  '''»«signal.privateOrPublic» «signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card.expand»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «'''  '''»«signal.privateOrPublic» «signal.type.expand»«IF signal.isArray»«FOR card : signal.cardinalities»[]«ENDFOR»«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card.expand»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray
 //TODO: initial values für arrays
 »
