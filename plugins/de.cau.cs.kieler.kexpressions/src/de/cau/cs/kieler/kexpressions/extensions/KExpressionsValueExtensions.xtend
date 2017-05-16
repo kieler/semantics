@@ -72,4 +72,8 @@ class KExpressionsValueExtensions {
 	def FloatValue asFloatValue(Expression expression) {
 		expression as FloatValue
 	}
+	
+	def getIntValue(Expression expression) {
+	    expression.asIntValue.value 
+	}
 }

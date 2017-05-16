@@ -14,7 +14,10 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Value;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +30,8 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Binding#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding()
@@ -92,5 +97,47 @@ public interface Binding extends Annotatable {
      * @generated
      */
     void setActual(ValuedObject value);
+
+    /**
+     * Returns the value of the '<em><b>Indices</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Indices</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Indices</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Indices()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Expression> getIndices();
+
+    /**
+     * Returns the value of the '<em><b>Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Value</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Value</em>' containment reference.
+     * @see #setValue(Value)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getBinding_Value()
+     * @model containment="true"
+     * @generated
+     */
+    Value getValue();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Binding#getValue <em>Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Value</em>' containment reference.
+     * @see #getValue()
+     * @generated
+     */
+    void setValue(Value value);
 
 } // Binding

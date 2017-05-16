@@ -1026,13 +1026,31 @@ public interface SCChartsPackage extends EPackage {
     int BINDING__ACTUAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__INDICES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Binding</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2112,6 +2130,28 @@ public interface SCChartsPackage extends EPackage {
     EReference getBinding_Actual();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Binding#getIndices <em>Indices</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Indices</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding#getIndices()
+     * @see #getBinding()
+     * @generated
+     */
+    EReference getBinding_Indices();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Binding#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Value</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding#getValue()
+     * @see #getBinding()
+     * @generated
+     */
+    EReference getBinding_Value();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2762,6 +2802,22 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference BINDING__ACTUAL = eINSTANCE.getBinding_Actual();
+
+        /**
+         * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BINDING__INDICES = eINSTANCE.getBinding_Indices();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BINDING__VALUE = eINSTANCE.getBinding_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

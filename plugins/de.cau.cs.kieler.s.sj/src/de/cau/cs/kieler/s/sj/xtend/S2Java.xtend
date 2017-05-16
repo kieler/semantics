@@ -52,6 +52,7 @@ import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -72,6 +73,9 @@ class S2Java {
 
     @Inject
     extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsValueExtensions      
 
     @Inject
     extension SExtension

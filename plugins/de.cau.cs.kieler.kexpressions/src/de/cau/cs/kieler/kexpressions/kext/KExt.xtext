@@ -79,7 +79,7 @@ Declaration returns kexpressions::Declaration:
 // Examples: array[10], initial = false, z = 0 combine max
 ValuedObject returns kexpressions::ValuedObject:
     name=ID
-    ('[' cardinalities+=INT ']')* 
+    ('[' (cardinalities+=Expression) ']')* 
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
