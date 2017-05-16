@@ -55,6 +55,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }    
 
     def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+        if (valuedObjectReference.valuedObject == null) {
+            System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
+            return ""
+        }
         var vo = valuedObjectReference.valuedObject.name
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"

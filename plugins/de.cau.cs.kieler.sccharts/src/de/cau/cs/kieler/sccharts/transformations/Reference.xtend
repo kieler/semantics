@@ -42,6 +42,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Value
 
 /**
  * SCCharts Reference Transformation.
@@ -141,12 +142,14 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                     } else if (eObject instanceof ValuedObjectReference) {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
                         val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
-                        if (valuedObjectReference.valuedObject.name == binding.formal.name) {
+                        if (valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
                             valuedObjectReference.valuedObject = binding.actual
-                        }
-                        valuedObjectReference.indices.clear
-                        for (index : valuedObjectReferenceCopy.indices) {
-                            valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+                            // This should be handled by copyState.
+                            // However, we need more testing for bindings with arrays.
+//                            valuedObjectReference.indices.clear
+//                            for (index : valuedObjectReferenceCopy.indices) {
+//                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+//                            }
                         }
                     } else if (eObject instanceof Binding) {
                         val bing = eObject as Binding
@@ -169,7 +172,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
             }
             newState.declarations.immutableCopy.forEach [
                 val bindingName = binding.formal.name
-                val objects = valuedObjects.filter[name == bindingName].toList
+                val objects = valuedObjects.filter[name.equals(bindingName)].toList
                 objects.immutableCopy.forEach[delete]
             ]
         ]
