@@ -35,7 +35,8 @@ class SctValidator extends SctJavaValidator {
     @Inject extension SCChartsExtension = sCChartExtension;
     @Inject extension KExpressionsValuedObjectExtensions
 
-    static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
+    static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object.";
+    static val String CANNOT_BIND_ARRAYCELL_TO_ARRAY = "You cannot bind a single array cell to an array."
 
     /**
      * Check if valued signal has a combine functions
@@ -271,4 +272,13 @@ class SctValidator extends SctJavaValidator {
             }
         }
     }    
+    
+    @Check
+    def void checkArrayCellToArrayBinding(de.cau.cs.kieler.sccharts.Binding binding) {
+        if (binding.indices.size > 0) {
+            if (binding.formal.cardinalities.size > 0) {
+                error(CANNOT_BIND_ARRAYCELL_TO_ARRAY, binding, null, -1)
+            }
+        }
+    }
 }
