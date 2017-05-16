@@ -91,6 +91,7 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    static val CONST_VO_PREFIX = "_literal"
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
     static private final String PROPAGATE_ANNOTATION = "propagate"
@@ -151,19 +152,31 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
                         val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
                         if (valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
-                            valuedObjectReference.valuedObject = binding.actual 
-                            // This should be handled by copyState.
-                            // However, we need more testing for bindings with arrays.
-//                            valuedObjectReference.indices.clear
-//                            for (index : valuedObjectReferenceCopy.indices) {
-//                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
-//                            }
-
-                            if (binding.indices.size > 0) {
-                                valuedObjectReference.indices.clear
-                                for(index : binding.indices) {
-                                    valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
-                                }                                
+                            
+                            if (binding.actual != null) {
+                                valuedObjectReference.valuedObject = binding.actual 
+                                // This should be handled by copyState.
+                                // However, we need more testing for bindings with arrays.
+    //                            valuedObjectReference.indices.clear
+    //                            for (index : valuedObjectReferenceCopy.indices) {
+    //                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
+    //                            }
+    
+                                if (binding.indices.size > 0) {
+                                    valuedObjectReference.indices.clear
+                                    for(index : binding.indices) {
+                                        valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
+                                    }                                
+                                }
+                            } else { // bind to literal
+                                val newConstVO = createValuedObject(CONST_VO_PREFIX + binding.value.hashCode) => [
+                                    initialValue = binding.value.copy
+                                ]
+                                binding.value.createDeclaration.attach(newConstVO) => [
+                                    const = true
+                                    newState.declarations += it 
+                                ]
+                                valuedObjectReference.valuedObject = newConstVO
                             }
                         }
                     } else if (eObject instanceof Binding) {

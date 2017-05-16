@@ -21,6 +21,11 @@ import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.emf.ecore.EObject
 import java.util.List
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.StringValue
 
 /**
  * @author ssm
@@ -53,6 +58,10 @@ class KExpressionsDeclarationExtensions {
     def public Declaration createBoolDeclaration() {
         createDeclaration(ValueType::BOOL)
     }    
+
+    def public Declaration createFloatDeclaration() {
+        createDeclaration(ValueType::FLOAT)
+    }    
     
     def public Declaration createStringDeclaration() {
         createDeclaration(ValueType::STRING)
@@ -71,6 +80,14 @@ class KExpressionsDeclarationExtensions {
             hostType = declaration.hostType
         ]
     } 
+    
+    def Declaration createDeclaration(Value value) {
+        if (value instanceof IntValue) createIntDeclaration
+        else if (value instanceof BoolValue) createBoolDeclaration
+        else if (value instanceof FloatValue) createFloatDeclaration
+        else if (value instanceof StringValue) createStringDeclaration
+        else createDeclaration
+    }
     
     def Declaration applyAttributes(Declaration declaration, Declaration declarationWithAttributes) {
         declaration => [

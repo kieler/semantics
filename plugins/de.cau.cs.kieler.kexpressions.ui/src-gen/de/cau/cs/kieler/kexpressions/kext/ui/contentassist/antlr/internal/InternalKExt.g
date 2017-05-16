@@ -1125,6 +1125,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleAnnotation
 entryRuleAnnotation 
 :
@@ -2260,6 +2262,7 @@ rule__FunctionCall__Alternatives_2
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 rule__Annotation__Alternatives

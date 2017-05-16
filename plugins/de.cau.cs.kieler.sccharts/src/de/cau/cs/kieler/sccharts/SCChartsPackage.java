@@ -1035,13 +1035,22 @@ public interface SCChartsPackage extends EPackage {
     int BINDING__INDICES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Binding</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2132,6 +2141,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getBinding_Indices();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Binding#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Value</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding#getValue()
+     * @see #getBinding()
+     * @generated
+     */
+    EReference getBinding_Value();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2790,6 +2810,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference BINDING__INDICES = eINSTANCE.getBinding_Indices();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference BINDING__VALUE = eINSTANCE.getBinding_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

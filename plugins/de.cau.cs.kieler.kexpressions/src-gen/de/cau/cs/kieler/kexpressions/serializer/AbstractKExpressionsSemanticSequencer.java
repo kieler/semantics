@@ -244,6 +244,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
+	 *     AnyValue returns BoolValue
 	 *
 	 * Constraint:
 	 *     value=BOOLEAN
@@ -291,6 +292,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
+	 *     AnyValue returns FloatValue
 	 *
 	 * Constraint:
 	 *     value=FLOAT
@@ -379,6 +381,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
+	 *     AnyValue returns IntValue
 	 *
 	 * Constraint:
 	 *     value=INT
@@ -438,6 +441,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
+	 *     AnyValue returns StringValue
 	 *
 	 * Constraint:
 	 *     value=STRING

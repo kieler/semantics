@@ -37,6 +37,7 @@ class SctValidator extends SctJavaValidator {
 
     static val String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object.";
     static val String CANNOT_BIND_ARRAYCELL_TO_ARRAY = "You cannot bind a single array cell to an array."
+    static val String CANNOT_BIND_LITERAL_TO_OUTPUT = "You cannot bind a literal to an output object."
 
     /**
      * Check if valued signal has a combine functions
@@ -278,6 +279,15 @@ class SctValidator extends SctJavaValidator {
         if (binding.indices.size > 0) {
             if (binding.formal.cardinalities.size > 0) {
                 error(CANNOT_BIND_ARRAYCELL_TO_ARRAY, binding, null, -1)
+            }
+        }
+    }
+    
+    @Check
+    def void checkLiteralToOutputBinding(de.cau.cs.kieler.sccharts.Binding binding) {
+        if (binding.value != null) {
+            if (binding.formal.declaration.output) {
+                error(CANNOT_BIND_LITERAL_TO_OUTPUT, binding, null, -1);
             }
         }
     }

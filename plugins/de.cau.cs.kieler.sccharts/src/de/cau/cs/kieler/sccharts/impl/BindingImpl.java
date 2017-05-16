@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Value;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getFormal <em>Formal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getActual <em>Actual</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getIndices <em>Indices</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -83,6 +85,16 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
      * @ordered
      */
     protected EList<Expression> indices;
+
+    /**
+     * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getValue()
+     * @generated
+     * @ordered
+     */
+    protected Value value;
 
     /**
      * <!-- begin-user-doc -->
@@ -196,11 +208,56 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Value getValue() {
+        return value;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
+        Value oldValue = value;
+        value = newValue;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__VALUE, oldValue, newValue);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setValue(Value newValue) {
+        if (newValue != value) {
+            NotificationChain msgs = null;
+            if (value != null)
+                msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.BINDING__VALUE, null, msgs);
+            if (newValue != null)
+                msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.BINDING__VALUE, null, msgs);
+            msgs = basicSetValue(newValue, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.BINDING__VALUE, newValue, newValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.BINDING__INDICES:
                 return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.BINDING__VALUE:
+                return basicSetValue(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -221,6 +278,8 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
                 return basicGetActual();
             case SCChartsPackage.BINDING__INDICES:
                 return getIndices();
+            case SCChartsPackage.BINDING__VALUE:
+                return getValue();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -244,6 +303,9 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
                 getIndices().clear();
                 getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
+            case SCChartsPackage.BINDING__VALUE:
+                setValue((Value)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -265,6 +327,9 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
             case SCChartsPackage.BINDING__INDICES:
                 getIndices().clear();
                 return;
+            case SCChartsPackage.BINDING__VALUE:
+                setValue((Value)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -283,6 +348,8 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
                 return actual != null;
             case SCChartsPackage.BINDING__INDICES:
                 return indices != null && !indices.isEmpty();
+            case SCChartsPackage.BINDING__VALUE:
+                return value != null;
         }
         return super.eIsSet(featureID);
     }
