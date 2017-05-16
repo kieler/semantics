@@ -1996,7 +1996,33 @@ ruleBinding returns [EObject current=null]
 	}
 
 )
-))
+)(	otherlv_4='[' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getBindingAccess().getLeftSquareBracketKeyword_4_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getBindingAccess().getIndicesExpressionParserRuleCall_4_1_0()); 
+	    }
+		lv_indices_5_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBindingRule());
+	        }
+       		add(
+       			$current, 
+       			"indices",
+        		lv_indices_5_0, 
+        		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_6=']' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getBindingAccess().getRightSquareBracketKeyword_4_2());
+    }
+)*)
 ;
 
 

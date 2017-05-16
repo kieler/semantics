@@ -134,22 +134,37 @@ class Reference extends AbstractExpansionTransformation implements Traceable {
                         val assignmentCopy = assignment.nontracingCopy;
                         if (assignment.valuedObject.name == binding.formal.name) {
                             assignment.valuedObject = binding.actual
-                        }
-                        assignment.indices.clear
-                        for (index : assignmentCopy.indices) {
-                            assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                            assignment.indices.clear
+                            for (index : assignmentCopy.indices) {
+                                assignment.indices.add(index.nontracingCopy.rtrace(binding));
+                            }
+                            
+                            // Use binding indices when bind to scalar.
+                            if (binding.indices.size > 0 && assignment.indices.size == 0) {
+                                assignment.indices.clear
+                                for(index : binding.indices) {
+                                    assignment.indices.add(index.nontracingCopy.rtrace(binding))
+                                }                                
+                            }                        
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
                         val valuedObjectReference = (eObject as ValuedObjectReference);
                         val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy
                         if (valuedObjectReference.valuedObject.name.equals(binding.formal.name)) {
-                            valuedObjectReference.valuedObject = binding.actual
+                            valuedObjectReference.valuedObject = binding.actual 
                             // This should be handled by copyState.
                             // However, we need more testing for bindings with arrays.
 //                            valuedObjectReference.indices.clear
 //                            for (index : valuedObjectReferenceCopy.indices) {
 //                                valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding));
 //                            }
+
+                            if (binding.indices.size > 0) {
+                                valuedObjectReference.indices.clear
+                                for(index : binding.indices) {
+                                    valuedObjectReference.indices.add(index.nontracingCopy.rtrace(binding))
+                                }                                
+                            }
                         }
                     } else if (eObject instanceof Binding) {
                         val bing = eObject as Binding

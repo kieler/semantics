@@ -1306,16 +1306,22 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cActualAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final CrossReference cActualValuedObjectCrossReference_3_0 = (CrossReference)cActualAssignment_3.eContents().get(0);
 		private final RuleCall cActualValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cActualValuedObjectCrossReference_3_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftSquareBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cIndicesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_4_1_0 = (RuleCall)cIndicesAssignment_4_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Binding sccharts::Binding:
 		//	annotations+=Annotation*
 		//	formal=[kexpressions::ValuedObject]
 		//	'to'
-		//	actual=[kexpressions::ValuedObject]
+		//	actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
 		@Override public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* formal=[kexpressions::ValuedObject] 'to' actual=[kexpressions::ValuedObject]
+		//annotations+=Annotation* formal=[kexpressions::ValuedObject] 'to' actual=[kexpressions::ValuedObject] ('['
+		//indices+=Expression ']')*
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -1344,6 +1350,21 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ID
 		public RuleCall getActualValuedObjectIDTerminalRuleCall_3_0_1() { return cActualValuedObjectIDTerminalRuleCall_3_0_1; }
+
+		//('[' indices+=Expression ']')*
+		public Group getGroup_4() { return cGroup_4; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_4_0() { return cLeftSquareBracketKeyword_4_0; }
+
+		//indices+=Expression
+		public Assignment getIndicesAssignment_4_1() { return cIndicesAssignment_4_1; }
+
+		//Expression
+		public RuleCall getIndicesExpressionParserRuleCall_4_1_0() { return cIndicesExpressionParserRuleCall_4_1_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_4_2() { return cRightSquareBracketKeyword_4_2; }
 	}
 	
 	
@@ -1748,7 +1769,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	formal=[kexpressions::ValuedObject]
 	//	'to'
-	//	actual=[kexpressions::ValuedObject]
+	//	actual=[kexpressions::ValuedObject] ('[' indices+=Expression ']')*
 	public BindingElements getBindingAccess() {
 		return pBinding;
 	}

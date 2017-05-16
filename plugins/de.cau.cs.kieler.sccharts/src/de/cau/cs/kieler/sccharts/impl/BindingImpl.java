@@ -14,16 +14,22 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +41,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getFormal <em>Formal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getActual <em>Actual</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.BindingImpl#getIndices <em>Indices</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,6 +73,16 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
      * @ordered
      */
     protected ValuedObject actual;
+
+    /**
+     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIndices()
+     * @generated
+     * @ordered
+     */
+    protected EList<Expression> indices;
 
     /**
      * <!-- begin-user-doc -->
@@ -167,6 +184,32 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Expression> getIndices() {
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.BINDING__INDICES);
+        }
+        return indices;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.BINDING__INDICES:
+                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -176,6 +219,8 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
             case SCChartsPackage.BINDING__ACTUAL:
                 if (resolve) return getActual();
                 return basicGetActual();
+            case SCChartsPackage.BINDING__INDICES:
+                return getIndices();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -185,6 +230,7 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -193,6 +239,10 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
                 return;
             case SCChartsPackage.BINDING__ACTUAL:
                 setActual((ValuedObject)newValue);
+                return;
+            case SCChartsPackage.BINDING__INDICES:
+                getIndices().clear();
+                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -212,6 +262,9 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
             case SCChartsPackage.BINDING__ACTUAL:
                 setActual((ValuedObject)null);
                 return;
+            case SCChartsPackage.BINDING__INDICES:
+                getIndices().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -228,6 +281,8 @@ public class BindingImpl extends AnnotatableImpl implements Binding {
                 return formal != null;
             case SCChartsPackage.BINDING__ACTUAL:
                 return actual != null;
+            case SCChartsPackage.BINDING__INDICES:
+                return indices != null && !indices.isEmpty();
         }
         return super.eIsSet(featureID);
     }

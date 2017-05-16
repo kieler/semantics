@@ -681,6 +681,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getBinding_Indices() {
+        return (EReference)bindingEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getTransition() {
         return transitionEClass;
     }
@@ -982,6 +991,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         bindingEClass = createEClass(BINDING);
         createEReference(bindingEClass, BINDING__FORMAL);
         createEReference(bindingEClass, BINDING__ACTUAL);
+        createEReference(bindingEClass, BINDING__INDICES);
 
         transitionEClass = createEClass(TRANSITION);
         createEAttribute(transitionEClass, TRANSITION__PRIORITY);
@@ -1127,6 +1137,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(bindingEClass, Binding.class, "Binding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBinding_Formal(), theKExpressionsPackage.getValuedObject(), null, "formal", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBinding_Actual(), theKExpressionsPackage.getValuedObject(), null, "actual", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getBinding_Indices(), theKExpressionsPackage.getExpression(), null, "indices", null, 0, -1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

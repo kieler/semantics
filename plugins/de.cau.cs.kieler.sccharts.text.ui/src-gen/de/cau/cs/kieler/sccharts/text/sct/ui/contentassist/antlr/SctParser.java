@@ -110,6 +110,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getGroup_7_2(), "rule__Transition__Group_7_2__0");
 					put(grammarAccess.getTransitionAccess().getGroup_7_2_2(), "rule__Transition__Group_7_2_2__0");
 					put(grammarAccess.getBindingAccess().getGroup(), "rule__Binding__Group__0");
+					put(grammarAccess.getBindingAccess().getGroup_4(), "rule__Binding__Group_4__0");
 					put(grammarAccess.getEntryActionAccess().getGroup(), "rule__EntryAction__Group__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_3(), "rule__EntryAction__Group_3__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_3_2(), "rule__EntryAction__Group_3_2__0");
@@ -277,6 +278,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getBindingAccess().getAnnotationsAssignment_0(), "rule__Binding__AnnotationsAssignment_0");
 					put(grammarAccess.getBindingAccess().getFormalAssignment_1(), "rule__Binding__FormalAssignment_1");
 					put(grammarAccess.getBindingAccess().getActualAssignment_3(), "rule__Binding__ActualAssignment_3");
+					put(grammarAccess.getBindingAccess().getIndicesAssignment_4_1(), "rule__Binding__IndicesAssignment_4_1");
 					put(grammarAccess.getEntryActionAccess().getTriggerAssignment_2(), "rule__EntryAction__TriggerAssignment_2");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_3_1(), "rule__EntryAction__EffectsAssignment_3_1");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_3_2_1(), "rule__EntryAction__EffectsAssignment_3_2_1");
