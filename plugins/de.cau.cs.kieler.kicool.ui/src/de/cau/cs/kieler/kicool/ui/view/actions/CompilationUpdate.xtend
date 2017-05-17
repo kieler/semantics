@@ -15,9 +15,12 @@ package de.cau.cs.kieler.kicool.ui.view.actions
 import java.util.Observer
 import java.util.Observable
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
 
 /**
  * @author ssm
@@ -34,6 +37,14 @@ class CompilationUpdate implements Observer {
     
     override update(Observable o, Object arg) {
         CompilationActionSimSalabim.simSalabim(arg)
+        
+        if (arg instanceof ProcessorStart) {
+//            arg.resetProcessor(view.viewContext.viewModel)
+        }
+        
+        if (arg instanceof ProcessorFinished) {
+            arg.updateProcessor(view.viewContext.viewModel)
+        }
     }
     
 }

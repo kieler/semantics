@@ -12,18 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.compilation.observer
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.Processor
-
 /**
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 
  */
-class ProcessorSnapshot extends AbstractProcessorNotification {
-    
-    new(CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
-        super(compilationContext, processorEntry, processorUnit)
-    }
-    
+@Data
+abstract class AbstractProcessorNotification {
+    val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
+    val de.cau.cs.kieler.kicool.Processor processorEntry
+    val de.cau.cs.kieler.kicool.compilation.Processor processorUnit
 }

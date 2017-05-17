@@ -12,17 +12,12 @@
  */
 package de.cau.cs.kieler.kicool.compilation.observer
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-
 /**
  * @author ssm
- * @kieler.design 2017-02-24 proposed
- * @kieler.rating 2017-02-24 proposed yellow 
+ * @kieler.design 2017-05-17 proposed
+ * @kieler.rating 2017-05-17 proposed yellow 
  */
-class CompilationFinished extends AbstractCompilationNotification {
-    
-    new(CompilationContext compilationContext) {
-        super(compilationContext)
-    }
-    
+@Data
+abstract class AbstractCompilationNotification {
+    val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
 }
