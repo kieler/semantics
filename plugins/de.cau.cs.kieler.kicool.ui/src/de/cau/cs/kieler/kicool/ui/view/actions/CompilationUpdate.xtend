@@ -39,7 +39,7 @@ class CompilationUpdate implements Observer {
         CompilationActionSimSalabim.simSalabim(arg)
         
         if (arg instanceof ProcessorStart) {
-//            arg.resetProcessor(view.viewContext.viewModel)
+            arg.resetProcessor(view.viewContext.viewModel)
         }
         
         if (arg instanceof ProcessorFinished) {

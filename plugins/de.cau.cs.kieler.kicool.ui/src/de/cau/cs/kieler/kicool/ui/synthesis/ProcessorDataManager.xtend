@@ -19,12 +19,19 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
 import java.util.Map
 import org.eclipse.elk.graph.KLabel
 import de.cau.cs.kieler.kicool.compilation.RuntimeSystems
-import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KForeground
 
-import static extension org.eclipse.xtext.EcoreUtil2.* import de.cau.cs.kieler.klighd.krendering.KColor
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import static extension org.eclipse.xtext.EcoreUtil2.* 
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KBackground
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
+import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
+import de.cau.cs.kieler.klighd.krendering.KContainerRendering
+import de.cau.cs.kieler.klighd.krendering.KColoring
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
+import static de.cau.cs.kieler.kicool.ui.synthesis.ColorSystem.*
+
 
 /**
  * @author ssm
@@ -35,24 +42,14 @@ class ProcessorDataManager {
     
     @Inject extension KNodeExtensions
     
-    private static val KColor ERROR_COLOR_FOREGROUND = KRenderingFactory::eINSTANCE.createKColor() => 
-        [it.red = 200; it.green = 0; it.blue = 0;]
-    private static val KColor ERROR_COLOR_BACKGROUND = KRenderingFactory::eINSTANCE.createKColor() => 
-        [it.red = 255; it.green = 222; it.blue = 222;]
-    private static val KColor ERROR_COLOR_BACKGROUND_TARGET = KRenderingFactory::eINSTANCE.createKColor() => 
-        [it.red = 222; it.green = 177; it.blue = 177;]
-    
-    private static String NODE_PROCESSOR_BODY = "processorbody"
-    private static String NODE_NAME = "name"
+    static val NODE_PROCESSOR_BODY = "processorbody"
+    static val NODE_ACTIVITY_STATUS = "status"
+    static val NODE_NAME = "name"
     
     static def void populateProcessorData(de.cau.cs.kieler.kicool.Processor processor, KNode node) {
         val rtProcessor = RuntimeSystems.getProcessorInstance(processor)
         
-        val nodeIdMap = <String, KNode> newHashMap
-        node.eAllContents.filter(KNode).forEach[
-            val identifier = getData(KIdentifier)
-            nodeIdMap.put(identifier.id, it)
-        ]
+        val nodeIdMap = node.createNodeIdMap
         
         if (rtProcessor == null) {
             nodeIdMap.findNode(NODE_PROCESSOR_BODY).setFrameErrorColor
@@ -64,17 +61,80 @@ class ProcessorDataManager {
     }
     
     
+    
+    static def void resetProcessor(AbstractProcessorNotification processorNotification, KNode node) {
+        val processorEntry = processorNotification.processorEntry
+        val processorUnit = processorNotification.processorUnit
+        val processorNode = node.findNode(processorEntry.id)
+        val nodeIdMap = processorNode.createNodeIdMap
+        
+        NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(BUSY)
+    }    
+    
+    static def void updateProcessor(AbstractProcessorNotification processorNotification, KNode node) {
+        val processorEntry = processorNotification.processorEntry
+        val processorUnit = processorNotification.processorUnit
+        val processorNode = node.findNode(processorEntry.id)
+        val nodeIdMap = processorNode.createNodeIdMap
+        
+        if (processorUnit.environment.status == ProcessorStatus.OK) {
+            NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(WARNING)        
+        } else if (processorUnit.environment.status == ProcessorStatus.ERRORS) {
+            NODE_ACTIVITY_STATUS.getContainer(nodeIdMap).setFBColor(ERROR)
+        }
+    }
+    
+
     static def void setFrameErrorColor(KNode node) {
-        val rect = node.getData(KRoundedRectangle)
-        rect.styles.filter(KForeground).head.color = ERROR_COLOR_FOREGROUND.copy
-        rect.styles.filter(KBackground).head => [
-            it.color = ERROR_COLOR_BACKGROUND.copy
-            it.targetColor = ERROR_COLOR_BACKGROUND_TARGET.copy
+        val rect = node.getData(KContainerRendering) as KContainerRendering
+        rect.setFBColor(ERROR)
+    }
+    
+    
+    
+    
+    
+    static def void setFBColor(KContainerRendering container, ColorSystem colorSystem) {
+        container.setFBColors(colorSystem.foreground.color, colorSystem.background.color, colorSystem.backgroundTarget.color)
+    }
+    
+    /**
+     * Private because KColors are not copied.
+     */
+    private static def void setFBColors(KContainerRendering container, KColor foreground, KColor background, KColor backgroundTarget) {
+        container.styles.filter(KColoring).forEach[ c |
+            if (c instanceof KForeground) c.color = foreground
+            if (c instanceof KBackground) { 
+                c.color = background
+                c.targetColor = backgroundTarget
+            }
+        ]
+    }
+    
+    
+    private static def getContainer(String id, Map<String, KNode> nodeIdMap) {
+        nodeIdMap.findNode(id).getContainer
+    }
+    
+    private static def getContainer(KNode node) {
+        node.getData(KContainerRendering) as KContainerRendering
+    }
+    
+    private static def Map<String, KNode> createNodeIdMap(KNode node) {
+        <String, KNode> newHashMap => [ map |
+            node.eAllContents.filter(KNode).forEach[
+                val identifier = getData(KIdentifier)
+                map.put(identifier.id, it)
+            ]
         ]
     }
     
     private static def KNode findNode(Map<String, KNode> idMap, String id) {
         idMap.get(id)
+    }
+    
+    private static def KNode findNode(KNode node, String id) {
+        node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ]?.head
     }
     
     private static def KLabel getLabel(KNode node) {

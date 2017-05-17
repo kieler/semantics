@@ -15,8 +15,8 @@ package de.cau.cs.kieler.kicool.ui.synthesis
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import com.google.inject.Inject
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import static de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.Color.*
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ColorStore.*
 import org.eclipse.elk.graph.KNode
 
 /**
@@ -30,8 +30,6 @@ import org.eclipse.elk.graph.KNode
 class ProcessorStyles {
     
     @Inject extension KRenderingExtensions
-    @Inject extension KContainerRenderingExtensions    
-    @Inject extension ColorStore
     
     def addProcessorGroupFigure(KNode node) {
         node.addRoundedRectangle(7, 7, 2) => [

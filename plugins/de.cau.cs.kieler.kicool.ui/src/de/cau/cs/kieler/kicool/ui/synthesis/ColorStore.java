@@ -22,7 +22,7 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 
 /**
- * The SCCharts colors.
+ * The KiCool colors.
  * 
  * @author ssm
  * @kieler.design 2015-10-27 proposed
@@ -35,94 +35,44 @@ public class ColorStore {
         PROCESSORGROUP_FOREGROUND(Colors.BLACK),
         PROCESSORGROUP_BACKGROUND(Colors.WHITE),
         
-        KEYWORD(115, 0, 65);
+        KEYWORD(115, 0, 65),
+        
+        BUSY_FOREGROUND(200, 200, 200),
+        BUSY_BACKGROUND(255, 222, 222),
+        BUSY_BACKGROUND_TARGET(177, 177, 177),        
 
-        /** the default color */
-        private final KColor defaultColor = KRenderingFactory.eINSTANCE.createKColor();
+        OK_FOREGROUND(0, 200, 0),
+        OK_BACKGROUND(222, 255, 222),
+        OK_BACKGROUND_TARGET(177, 222, 177),
+        
+        WARNING_FOREGROUND(200, 200, 0),
+        WARNING_BACKGROUND(255, 255, 170),
+        WARNING_BACKGROUND_TARGET(222, 222, 0),
+        
+        ERROR_FOREGROUND(200, 0, 0),
+        ERROR_BACKGROUND(255, 222, 222),
+        ERROR_BACKGROUND_TARGET(222, 177, 177);        
+        
 
-        /**
-         * Hidden constructor.
-         * 
-         * @param red
-         *            the red component of the desired color in range of 0 to 255
-         * @param green
-         *            the green component of the desired color in range of 0 to 255
-         * @param blue
-         *            the blue component of the desired color in range of 0 to 255
-         */
+        private final KColor color = KRenderingFactory.eINSTANCE.createKColor();
+
         private Color(final int red, final int green, final int blue) {
-            defaultColor.setRed(red);
-            defaultColor.setGreen(green);
-            defaultColor.setBlue(blue);
+            color.setRed(red);
+            color.setGreen(green);
+            color.setBlue(blue);
         }
 
-        /**
-         * Hidden constructor.
-         * 
-         * @param color
-         *            the {@link Colors} color
-         */
         private Color(final Colors color) {
-            defaultColor.setColor(color);
+            this.color.setColor(color);
         }
 
-        /**
-         * @return the default color
-         */
-        private KColor getDefaultColor() {
-            return defaultColor;
+        private KColor getColor() {
+            return color;
         }
+        
     };
 
-    private final static KRenderingFactory FACTORY = KRenderingFactory.eINSTANCE;
-    /** the configuration */
-    private HashMap<Color, KColor> configuration = new HashMap<ColorStore.Color, KColor>();
-
-    /**
-     * Configures the given color with RGB values.
-     * 
-     * @param color
-     *            the color to configure
-     * @param red
-     *            the red component of the desired color in range of 0 to 255
-     * @param green
-     *            the green component of the desired color in range of 0 to 255
-     * @param blue
-     *            the blue component of the desired color in range of 0 to 255
-     */
-    public void configureColor(final Color color, final int red, final int green, final int blue) {
-        KColor kColor = FACTORY.createKColor();
-        kColor.setRed(red);
-        kColor.setGreen(green);
-        kColor.setBlue(blue);
-        configuration.put(color, kColor);
-    }
-
-    /**
-     * Configures the given color with a {@link Colors} color.
-     * 
-     * @param color
-     *            the color to configure
-     * @param color
-     *            the {@link Colors} color
-     */
-    public void configureColor(final Color color, final Colors cColor) {
-        KColor kColor = FACTORY.createKColor();
-        kColor.setColor(cColor);
-        configuration.put(color, kColor);
-    }
-
-    /**
-     * @param color
-     *            the color
-     * @return a new {@link KColor} for the given color respecting all configurations.
-     */
-    public KColor getColor(Color color) {
-        if (configuration.containsKey(color)) {
-            return EcoreUtil.copy(configuration.get(color));
-        } else if (color != null) {
-            return EcoreUtil.copy(color.getDefaultColor());
-        }
-        return null;
+    public static KColor getColor(Color color) {
+        return EcoreUtil.copy(color.getColor());
     }
 }
