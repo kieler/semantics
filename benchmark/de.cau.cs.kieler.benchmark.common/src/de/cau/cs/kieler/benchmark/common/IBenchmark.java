@@ -12,9 +12,6 @@ package de.cau.cs.kieler.benchmark.common;
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
 
-import java.util.Collection;
-import java.util.List;
-
 import org.bson.Document;
 
 import de.cau.cs.kieler.test.common.repository.TestModelData;
@@ -31,8 +28,15 @@ import de.cau.cs.kieler.test.common.repository.TestModelData;
 public interface IBenchmark {
     
     /**
-     * @retrun a unique ID
+     * A unique identifier for the benchmark.
+     * <p>
+     * Must fullfill the following requirements:<br>
+     * - The ID must not be null or empty.<br>
+     * - The ID must not be _id.<br>
+     * - The ID must not start with the dollar sign ($) character.<br>
+     * - The ID must not contain the dot (.) character.<br>
      * 
+     * @retrun a unique ID
      */
     public abstract String getID();   
 
@@ -41,8 +45,9 @@ public interface IBenchmark {
      * <p>
      * May not be invoked on the same instance as the actual benchmark of the filtered model.
      * 
+     * @return true if the model is accepted for this benchmark.
      */
-    public abstract Collection<TestModelData> filter(List<TestModelData> data);
+    public abstract boolean filter(TestModelData data);
 
     /**
      * Prepares the instance for the actual benchmark.

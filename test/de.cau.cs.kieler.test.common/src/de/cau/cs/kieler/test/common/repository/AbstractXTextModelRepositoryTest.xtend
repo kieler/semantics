@@ -33,14 +33,12 @@ import com.google.common.reflect.TypeToken
  */
 abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IModelsRepositoryTest<T> {
     
-    /** The resource sets for referenced models. */
-    val resourceSets = <String, XtextResourceSet>newHashMap
     /** The list of hierarchical compare predicates */
-    protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ReferencesComparator, ComplexityComparator, ModelPathComparator)  
+    protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ComplexityComparator, ModelPathComparator)  
     
     /**
      * {@inheritDoc}
-     */   
+     */
     override getModelType() {
         return (new TypeToken<T>(getClass()) {}).rawType
     }
@@ -54,17 +52,16 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
             val uri = URI.createFileURI(absModelPath.toFile.absolutePath)
             // Get resource set
             var resourceSet = uri.xtextResourceSet
-            if (!data.resourceSetID.nullOrEmpty) {
-                if (resourceSets.containsKey(data.resourceSetID)) {
-                    resourceSet = resourceSets.get(data.resourceSetID)
-                } else {
-                    resourceSets.put(data.resourceSetID, resourceSet)
-                }
+            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
+            // Load referenced model
+            for (absRelatedPath : data.resourceSetModels.filter[it != data.modelPath].map[data.repositoryPath.resolve(it)]) {
+                val relatedURI = URI.createFileURI(absRelatedPath.toFile.absolutePath)
+                val relatedResource = resourceSet.createResource(relatedURI)
+                relatedResource.load(new FileInputStream(absRelatedPath.toFile), resourceSet.getLoadOptions())
             }
             // Load file
-            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
-            val resource = resourceSet.createResource(uri);
-            resource.load(new FileInputStream(absModelPath.toFile), resourceSet.getLoadOptions());
+            val resource = resourceSet.createResource(uri)
+            resource.load(new FileInputStream(absModelPath.toFile), resourceSet.getLoadOptions())
             return resource.getContents().head as T
         } catch (Exception e) {
             throw new Exception("Cannot load model from "+absModelPath.toString, e)

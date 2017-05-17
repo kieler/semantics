@@ -97,7 +97,7 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
     /**
      * {@inheritDoc}
      */
-    override Document perform(TestModelData modelData) {
+    override Document perform(State model, TestModelData modelData) {
         if (model === null) return null
         
         val data = new Document

@@ -29,6 +29,7 @@ import java.util.Set
 import org.eclipse.xtend.lib.annotations.Data
 
 import static extension java.lang.Boolean.*
+import java.util.HashMap
 
 /**
  * Provides the models in the model repositories.
@@ -128,6 +129,9 @@ class ModelsRepository {
                 val parentPropertiesPattern = dir.getParentPropertiesPattern(repository)
                 directoryTestModelPropertiesPatterns.put(dir, new ModelProperties(parentPropertiesPattern, directoryPropertyFiles.get(dir)))
             }
+            
+            val resourceSets = <String, Set<Path>>newHashMap
+            
             // Create model file index
             for (dir : files.keySet) {
                 for (fileGroup : files.get(dir).groupBy[fileName.toString.split("\\.", 2).get(0)].entrySet) {
@@ -142,12 +146,17 @@ class ModelsRepository {
                     if (!property.ignore) {
                         sameModelFiles.remove(modelProperty)
                         for (model : sameModelFiles.filter[ f | property.modelExt.exists[f.fileName.toString.endsWith(it)]]) {
+                            val relModelPath = repository.relativize(model)
+                            resourceSets.putIfAbsent(property.resourceSetID, newHashSet)
+                            val resourceSet = resourceSets.get(property.resourceSetID)
+                            resourceSet.add(relModelPath)
                             val traces = sameModelFiles.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].sort.toList
                             models.add(new TestModelData(
                                 repository,
-                                repository.relativize(model),
+                                relModelPath,
                                 traces.unmodifiableView,
                                 property.resourceSetID,
+                                resourceSet.unmodifiableView,
                                 property.modelProperties.unmodifiableView,
                                 property.additionalProperties.unmodifiableView,
                                 property.confidential

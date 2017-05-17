@@ -109,15 +109,5 @@ class TestModelDataUtil {
         }
         
     }
-    
-    /**
-     * A comparator based on optional "complexity" property of two models.
-     */  
-    public static val ReferencesComparator = new Comparator<TestModelData>(){
-        
-        override compare(TestModelData a, TestModelData b) {
-            return b.getAdditionalIntegerProperty("references", 0) - a.getAdditionalIntegerProperty("references", 0)
-        }
-        
-    }
+
 }

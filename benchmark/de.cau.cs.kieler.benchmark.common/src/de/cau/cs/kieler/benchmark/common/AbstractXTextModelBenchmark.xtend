@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.benchmark.common
 
-import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.IModelsRepositoryTest
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.util.List
+import org.bson.Document
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -37,8 +36,6 @@ abstract class AbstractXTextModelBenchmark<T extends EObject> implements IBenchm
         
     }
     
-    /** Global resource set relations */
-    static val modelSets = HashMultimap.<String, TestModelData>create
     /** The loaded Model */
     protected var T model;
     
@@ -47,33 +44,21 @@ abstract class AbstractXTextModelBenchmark<T extends EObject> implements IBenchm
     /**
      * {@inheritDoc}
      */
-    override filter(List<TestModelData> data) {
-        // Statically save resource sets
-        if (modelSets.empty) {
-            data.filter[!resourceSetID.nullOrEmpty].forEach[modelSets.put(resourceSetID, it)]
-        }
-        // Perform filter
-        return data.filter[filter(it)].toList
-    }
-    
-    /**
-     * Filter for selecting the models to perform benchmarks with.
-     */
-    abstract def boolean filter(TestModelData data)
-    
-    /**
-     * {@inheritDoc}
-     */
     override prepare(TestModelData data) {
-        // Load referenced models
-        if (!data.resourceSetID.nullOrEmpty) {
-            for (relatedData : modelSets.get(data.resourceSetID).filter[it != data]) {
-                loadModel(relatedData)
-            }
-        }
         // Load benchmark model
         model = loadModel(data)
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    override Document perform(TestModelData data) {
+        return perform(model, data)
+    }    
+    
+    /**
+     * Perform the benchmark on the model.
+     */
+    abstract def Document perform(T model, TestModelData data)
 }
 	

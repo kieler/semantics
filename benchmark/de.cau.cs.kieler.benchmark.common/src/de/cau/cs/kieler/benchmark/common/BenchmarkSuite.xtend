@@ -67,8 +67,8 @@ class BenchmarkSuite extends UIJob {
 
         // Run each benchmark
         for (benchmarkClass : benchmarks) {
-            val models = injector.getInstance(benchmarkClass).filter(ModelsRepository.models)
-            for (data : models) {
+            val filterInstance = injector.getInstance(benchmarkClass)
+            for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
                 // Prepare
                 val benchmark = injector.getInstance(benchmarkClass)
                 benchmark.prepare(data)
@@ -118,7 +118,7 @@ class BenchmarkSuite extends UIJob {
                     }
                     benchmarks.add(benchmark.class as Class<IBenchmark>)
                 } catch (Exception exception) {
-                    // TODO logging
+                    exception.printStackTrace
                 }
             }
         }

@@ -35,6 +35,8 @@ class TestModelData {
     val List<Path> tracePaths
     /** Unique ID for the resource set of the model. */
     val String resourceSetID
+    /** All model paths with the same resource set ID, including this model. */
+    val Set<Path> resourceSetModels
     /** Set of property String characterizing the the model. */
     val Set<String> modelProperties
     /** Map with all properties specified in the repository for this model. */
