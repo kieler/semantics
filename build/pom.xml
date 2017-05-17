@@ -63,6 +63,26 @@
         <module>de.cau.cs.kieler.semantics.product.repository</module>
       </modules>
     </profile>  
+
+
+    <!-- The Semantics bechmarks. -->
+    <profile>
+      <id>semantics.benchmarks</id>
+    
+      <repositories>
+        <repository>
+          <id>p2.kieler-semantics</id>
+          <layout>p2</layout>
+          <url>${kieler.semantics.updatesite}</url>
+        </repository>
+      </repositories>
+      
+      <modules>
+        <module>../benchmark</module>
+        <module>../test</module>
+        <module>de.cau.cs.kieler.semantics.repository</module>
+      </modules>
+    </profile> 
   
   </profiles>
 
