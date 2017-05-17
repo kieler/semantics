@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import de.cau.cs.kieler.kicool.compilation.ICloneable
+import java.util.List
+import java.util.LinkedList
 
 /**
  * @author ssm
@@ -73,6 +75,10 @@ class EnvironmentManager {
                         prime.data.put(k, v)
                     } else {
                         prime.data.put(k, v.cloneObject)
+                    }
+                } else if (v instanceof List<?>) {
+                    if (k.equals(Environment.ERRORS)) {
+                        prime.data.put(k, new LinkedList<String>(v as List<String>))
                     }
                 } else {
                     prime.data.put(k, v)

@@ -16,6 +16,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.ecore.EObject
 import java.util.HashMap
+import java.util.List
 
 /**
  * @author ssm
@@ -25,11 +26,13 @@ import java.util.HashMap
 class Environment {
     
     public static val MODEL = "model"
+    public static val ERRORS = "errors"        
     
     @Accessors Map<String, Object> data
     
     new() {
         data = new HashMap<String, Object>()
+        data.put(ERRORS, <String> newLinkedList)
     }    
     
     def getModel() {
@@ -43,4 +46,17 @@ class Environment {
     def setModel(Object model) {
         data.put(MODEL, model)
     }
+    
+    def getErrors() {
+        data.get(ERRORS) as List<String>    
+    }
+    
+    def setError(String msg) {
+        errors += msg
+    }
+    
+    def getStatus() {
+        if (errors.size == 0) ProcessorStatus.OK else ProcessorStatus.ERRORS
+    }
+    
 }
