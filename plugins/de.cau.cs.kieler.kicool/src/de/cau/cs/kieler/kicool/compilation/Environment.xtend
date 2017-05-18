@@ -32,19 +32,19 @@ class Environment {
     public static val ERRORS = "errors"        
         
     @Accessors Map<String, Object> data
-        
     
     new() {
         data = new HashMap<String, Object>()
         data.put(ERRORS, <String> newLinkedList)
     }
     
-    def setData(String key, Object data) {
-        this.data.put(key, data)
-    }
+//    def setData(String key, Object data) {
+//        this.data.put(key, data)
+//    }
     
-    def Object getData(String key) {
-        data.get(key)
+    def Object getData(String key, Object ^default) {
+        val obj = data.get(key)
+        if (obj != null) obj else ^default
     }        
     
     def getModel() {

@@ -46,8 +46,7 @@ abstract class Processor implements IKiCoolCloneable {
         this
     }
     
-    
-    protected def void update(double progress) {
+    protected def void updateProgress(double progress) {
         val compilationContext = environments.key.getCompilationContext
         val metaProcessor = environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
         

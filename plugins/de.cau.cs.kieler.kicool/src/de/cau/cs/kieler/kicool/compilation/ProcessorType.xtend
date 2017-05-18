@@ -18,5 +18,5 @@ package de.cau.cs.kieler.kicool.compilation
  * @kieler.rating 2017-02-19 proposed yellow  
  */
 enum ProcessorType {
-    TRANSFORMATOR, ANALYZER, OPTIMIZER
+    TRANSFORMATOR, ANALYZER, OPTIMIZER, TESTER, DEVELOPER
 }
