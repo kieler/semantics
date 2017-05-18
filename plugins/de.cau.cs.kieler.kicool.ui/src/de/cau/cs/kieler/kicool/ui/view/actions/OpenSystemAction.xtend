@@ -54,7 +54,7 @@ class OpenSystemAction {
     }
     
     def void invokeOpenSystem() {
-        val system = KiCoolRegistration.getSystemById(view.systemSelectionManager.selectedSystemId)
+        val system = view.systemSelectionManager.selectedSystem
         system.openSystemInEditor
     }
     

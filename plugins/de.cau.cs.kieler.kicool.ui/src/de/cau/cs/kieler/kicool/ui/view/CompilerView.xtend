@@ -34,6 +34,8 @@ import de.cau.cs.kieler.kicool.ui.view.actions.DeveloperToggle
 import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
+import org.eclipse.ui.IEditorPart
+import org.eclipse.ui.PlatformUI
 
 /**
  * @author ssm
@@ -85,7 +87,6 @@ class CompilerView extends DiagramViewPart {
         
         // Compile
         toolBar.add(new CompilationAction(this).action)        
-        
        
         combo = new ToolbarSystemCombo("System Combo")
         toolBar.add(combo)
@@ -134,6 +135,10 @@ class CompilerView extends DiagramViewPart {
                                 
         updateDiagram(activeSystem, properties)
     }
+    
+    def void updateToolbar() {
+        viewSite.actionBars.updateActionBars
+    }
 
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
@@ -167,5 +172,7 @@ class CompilerView extends DiagramViewPart {
         memento?.putString(action.action.id, action.action.checked.toString)
     }
 
-    
+    public static def IEditorPart getActiveEditor() {
+        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
+    } 
 }

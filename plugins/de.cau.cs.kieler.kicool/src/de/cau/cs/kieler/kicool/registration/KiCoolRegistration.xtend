@@ -131,7 +131,7 @@ class KiCoolRegistration {
                 resourceList += clazz as Class<? extends Processor> 
                 //Class.forName(processor.name) as Class<? extends Processor>
             } catch(Exception e) {
-                java.lang.System.err.println("KiCool: Cannot load processor " + processor.name);
+                java.lang.System.err.println("KiCool: Cannot load processor " + processor.getAttribute("class"));
             }
         }
         resourceList       

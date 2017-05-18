@@ -31,7 +31,7 @@
             class="de.cau.cs.kieler.kicool.processors.metrics.EObjectCount">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.kicool.processor.Delay">
+            class="de.cau.cs.kieler.kicool.processors.Delay">
       </Processor>
    </extension>
    

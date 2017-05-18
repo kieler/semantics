@@ -51,7 +51,7 @@ class CompilerViewPartListener implements IPartListener2 {
 //            val currentPartName = editorPart.getPartName
             var system = view.editPartSystemManager.get(part)
             if (system == null) {
-               system = KiCoolRegistration.getSystemById(view.systemSelectionManager.selectedSystemId) 
+               system = view.systemSelectionManager.selectedSystem 
                view.editPartSystemManager.attachSystemToEditPart(part, system)
             }
             view.activeSystem = system
@@ -92,9 +92,5 @@ class CompilerViewPartListener implements IPartListener2 {
     
     override partVisible(IWorkbenchPartReference partRef) {
     }
-    
-    public static def IEditorPart getActiveEditor() {
-        PlatformUI.getWorkbench.getActiveWorkbenchWindow.getActivePage.getActiveEditor
-    }       
     
 }

@@ -34,7 +34,7 @@ class KiCoolEditorInput implements IStorageEditorInput {
     @Accessors KiCoolStorage storage
     
     new(de.cau.cs.kieler.kicool.System system) {
-        name = "Temporary Compilation System"
+        name = system.id + "." + KiCoolStorage.RESOURCE_EXTENSION
         tooltip = "This is an imported compilation system. You must save it if you want to keep it."
         storage = new KiCoolStorage(system)
     }
@@ -71,7 +71,7 @@ class KiCoolEditorInput implements IStorageEditorInput {
 
 class KiCoolStorage implements IStorage {
     
-    static val RESOURCE_EXTENSION = "kico"
+    public static val RESOURCE_EXTENSION = "kico"
     static val injector = KiCoolStandaloneSetup.doSetup
     static val serializer = injector.getInstance(typeof(ISerializer))   
         
@@ -97,7 +97,7 @@ class KiCoolStorage implements IStorage {
     }
     
     override isReadOnly() {
-        true
+        false
     }
     
     override <T> getAdapter(Class<T> adapter) {

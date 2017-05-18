@@ -219,7 +219,7 @@
      <extension
            point="de.cau.cs.kieler.kicool.processor">
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.splitTED">
+              class="de.cau.cs.kieler.sccharts.processors.transformators.SplitTED">
         </Processor>
      </extension>   
 
