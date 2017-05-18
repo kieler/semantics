@@ -20,7 +20,7 @@
     <module>de.cau.cs.kieler.dependencies.feature</module>
     <module>de.cau.cs.kieler.esterel.feature</module>
     <module>de.cau.cs.kieler.sccharts.feature</module>
-    <module>de.cau.cs.kieler.benchmark.feature</module>
+    <!-- <module>de.cau.cs.kieler.benchmark.feature</module> --><!-- must not be included in regular build -->
   </modules>
 
 </project>
