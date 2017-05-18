@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+  <description name="KIELER Semantics (Nightly Benchmark Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/">
+      Update site for the KIELER Semantics project nightly benchmark builds.
+  </description>
+
+  <category-def name="kieler-sem-benchmark" label="KIELER Semantics Benchmarks">
+      <description>
+         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components
+      </description>
+  </category-def>
+
+  <feature url="features/de.cau.cs.kieler.benchmark.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.benchmark.feature" version="0.1.0.qualifier">
+    <category name="kieler-sem-benchmark"/>
+  </feature>
+
+  <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics/" enabled="true" />
+</site>
