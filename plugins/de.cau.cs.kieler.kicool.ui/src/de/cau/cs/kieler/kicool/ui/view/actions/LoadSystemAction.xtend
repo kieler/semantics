@@ -27,8 +27,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  */
 class LoadSystemAction {
 
-    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+    public static final ImageDescriptor ICON_LIGHTNING = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_lightning.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -44,7 +44,7 @@ class LoadSystemAction {
         action.setId("loadSystemAction")
         action.setText("Load active system")
         action.setToolTipText("Loads the system that is opened in the active editor.")
-        action.imageDescriptor = ICON_GO    
+        action.imageDescriptor = ICON_LIGHTNING    
         action.disabledImageDescriptor = null
     }
     

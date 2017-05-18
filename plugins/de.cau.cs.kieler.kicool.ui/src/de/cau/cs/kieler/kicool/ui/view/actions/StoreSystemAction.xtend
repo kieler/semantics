@@ -27,8 +27,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  */
 class StoreSystemAction {
 
-    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+    public static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_save.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -36,15 +36,15 @@ class StoreSystemAction {
     
     new(CompilerView view) {
         this.view = view  
-        action = new Action("OpenSystem", IAction.AS_PUSH_BUTTON) {
+        action = new Action("StoreSystem", IAction.AS_PUSH_BUTTON) {
             override void run() {
                 invokeStoreSystem
             }
         }
-        action.setId("openSystemAction")
-        action.setText("Open active system")
-        action.setToolTipText("Opens the actual active system inside a seperate editor to enable modifications.")
-        action.imageDescriptor = ICON_GO    
+        action.setId("storeSystemAction")
+        action.setText("Store active system")
+        action.setToolTipText("Stores the actual system for permanent use.")
+        action.imageDescriptor = ICON_SAVE    
         action.disabledImageDescriptor = null
     }
     

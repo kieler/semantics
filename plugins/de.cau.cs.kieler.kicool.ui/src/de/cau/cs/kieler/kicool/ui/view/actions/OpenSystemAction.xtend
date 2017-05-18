@@ -12,13 +12,18 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.ui.KiCoolEditorInput
+import de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.ImageDescriptor
+import org.eclipse.ui.IWorkbenchWindow
+import org.eclipse.ui.PartInitException
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author ssm
@@ -27,8 +32,8 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  */
 class OpenSystemAction {
 
-    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+    public static final ImageDescriptor ICON_EDIT = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_edit.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -36,19 +41,36 @@ class OpenSystemAction {
     
     new(CompilerView view) {  
         this.view = view
-        action = new Action("StoreSystem", IAction.AS_PUSH_BUTTON) {
+        action = new Action("OpenSystem", IAction.AS_PUSH_BUTTON) {
             override void run() {
                 invokeOpenSystem
             }
         }
-        action.setId("storeSystemAction")
-        action.setText("Store active system")
-        action.setToolTipText("Stores the actual system for permanent use.")
-        action.imageDescriptor = ICON_GO    
+        action.setId("openSystemAction")
+        action.setText("Open active system")
+        action.setToolTipText("Opens the actual active system inside a seperate editor to enable modifications.")
+        action.imageDescriptor = ICON_EDIT    
         action.disabledImageDescriptor = null
     }
     
     def void invokeOpenSystem() {
-        // implement me!
+        val system = KiCoolRegistration.getSystemById(view.systemSelectionManager.selectedSystemId)
+        system.openSystemInEditor
     }
+    
+    def private void openSystemInEditor(System system) {
+        val IWorkbenchWindow window = view.getViewContext().getDiagramWorkbenchPart().getSite()
+            .getWorkbenchWindow();
+
+        val input = new KiCoolEditorInput(system)
+
+        val page = window.getActivePage();
+        if (page != null) {
+            try {
+                page.openEditor(input, KiCoolActivator.DE_CAU_CS_KIELER_KICOOL_KICOOL);
+            } catch (PartInitException e) {
+                e.printStackTrace();
+            }
+        }
+    }    
 }
