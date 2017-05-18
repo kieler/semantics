@@ -12,22 +12,23 @@
  */
 package de.cau.cs.kieler.kicool.ui.view.actions
 
-import java.util.Observer
-import java.util.Observable
-import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.compilation.observer.AbstractProcessorNotification
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
-import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorStart
+import de.cau.cs.kieler.kicool.ui.KiCoolUIObserver
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import java.util.Observable
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.resetProcessor
+import static extension de.cau.cs.kieler.kicool.ui.synthesis.ProcessorDataManager.updateProcessor
 
 /**
  * @author ssm
  * @kieler.design 2017-02-24 proposed
  * @kieler.rating 2017-02-24 proposed yellow 
  */
-class CompilationUpdate implements Observer {
+class CompilationUpdate extends KiCoolUIObserver {
     
     @Accessors private CompilerView view
     
@@ -36,14 +37,21 @@ class CompilationUpdate implements Observer {
     }
     
     override update(Observable o, Object arg) {
-        CompilationActionSimSalabim.simSalabim(arg)
+    }
+    
+    override runInUIThread() {
+        true
+    }
+    
+    override update(AbstractContextNotification notification) {
+        CompilationActionSimSalabim.simSalabim(notification)
         
-        if (arg instanceof ProcessorStart) {
-            arg.resetProcessor(view.viewContext.viewModel)
+        if (notification instanceof ProcessorStart) {
+            notification.resetProcessor(view.viewContext.viewModel)
         }
         
-        if (arg instanceof ProcessorFinished) {
-            arg.updateProcessor(view.viewContext.viewModel)
+        if (notification instanceof ProcessorFinished) {
+            notification.updateProcessor(view.viewContext.viewModel)
         }
     }
     

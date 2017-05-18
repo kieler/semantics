@@ -10,13 +10,16 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.compilation
+package de.cau.cs.kieler.kicool.compilation.observer
 
 /**
  * @author ssm
- * @kieler.design 2017-02-19 proposed
- * @kieler.rating 2017-02-19 proposed yellow  
+ * @kieler.design 2017-05-18 proposed
+ * @kieler.rating 2017-05-18 proposed yellow 
  */
-interface ICloneable {
-    public def Object cloneObject();
+@Data
+abstract class AbstractContextNotification {
+    val de.cau.cs.kieler.kicool.compilation.CompilationContext compilationContext
+    
+    
 }

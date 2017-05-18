@@ -10,15 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.compilation.observer
+package de.cau.cs.kieler.kicool.compilation
 
 /**
  * @author ssm
- * @kieler.design 2017-02-24 proposed
- * @kieler.rating 2017-02-24 proposed yellow 
+ * @kieler.design 2017-02-19 proposed
+ * @kieler.rating 2017-02-19 proposed yellow  
  */
-@Data
-abstract class AbstractProcessorNotification extends AbstractContextNotification {
-    val de.cau.cs.kieler.kicool.Processor processorEntry
-    val de.cau.cs.kieler.kicool.compilation.Processor processorUnit
+interface IKiCoolCloneable {
+    public def boolean isMutable()
+    public def Object cloneObject()
 }

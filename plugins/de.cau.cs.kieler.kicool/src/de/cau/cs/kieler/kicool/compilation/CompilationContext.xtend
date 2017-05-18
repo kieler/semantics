@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-class CompilationContext extends Observable {
+class CompilationContext extends Observable implements IKiCoolCloneable {
     
     // Minimal requirements for compilation
     @Accessors System system
@@ -44,11 +44,14 @@ class CompilationContext extends Observable {
         processorMap.get(entry)
     }
     
-    def notify(Object arg) {
+    public def notify(Object arg) {
         setChanged
         notifyObservers(arg)
     }
     
+    def void compileAsynchronously() {
+        Compile.asyncronousCompilation(this)
+    }
     
     def void compile() {
         val processorEntry = system.processors
@@ -56,6 +59,7 @@ class CompilationContext extends Observable {
         val environment = new Environment
         environment.sourceModel = sourceModel
         environment.model = sourceModel
+        environment.compilationContext = this
         
         // Add metric code for initial model
         
@@ -69,6 +73,8 @@ class CompilationContext extends Observable {
     
     protected dispatch def Environment compileEntry(de.cau.cs.kieler.kicool.Processor processor, Environment environment) {
         val compilationUnit = processorMap.get(processor)
+        environment.data.put(Environment.META_PROCESSOR, processor)
+        environment.data.put(Environment.COMPILATION__UNIT, compilationUnit)
         val environmentPrime = environment.preparePrimeEnvironment
         
         compilationUnit.setEnvironment(environment, environmentPrime)
@@ -98,4 +104,12 @@ class CompilationContext extends Observable {
         environmentLists.last
     }
     
+    override cloneObject() {
+        this
+    }
+    
+    override isMutable() {
+        false
+    }
+        
 }

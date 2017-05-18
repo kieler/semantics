@@ -19,6 +19,7 @@ import org.eclipse.jface.resource.ImageDescriptor
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
+import de.cau.cs.kieler.kicool.compilation.AsynchronousCompilation
 
 /**
  * @author ssm
@@ -45,6 +46,7 @@ class CompilationAction {
         action.setText("Compile")
         action.setToolTipText("Invocates a compilation process.")
         action.imageDescriptor = ICON_GO     
+        
     }
     
     def void invokeCompile() {
@@ -55,6 +57,6 @@ class CompilationAction {
         val updateObserver = new CompilationUpdate(view)
         cc.addObserver(updateObserver)
         
-        cc.compile
+        cc.compileAsynchronously
     }
 }

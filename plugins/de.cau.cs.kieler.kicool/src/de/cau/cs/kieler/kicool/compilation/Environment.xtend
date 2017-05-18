@@ -26,14 +26,26 @@ import java.util.List
 class Environment {
     
     public static val MODEL = "model"
+    public static val CONTEXT = "context"
+    public static val META_PROCESSOR = "metaProcessor"
+    public static val COMPILATION__UNIT = "compilationUnit"
     public static val ERRORS = "errors"        
-    
+        
     @Accessors Map<String, Object> data
+        
     
     new() {
         data = new HashMap<String, Object>()
         data.put(ERRORS, <String> newLinkedList)
-    }    
+    }
+    
+    def setData(String key, Object data) {
+        this.data.put(key, data)
+    }
+    
+    def Object getData(String key) {
+        data.get(key)
+    }        
     
     def getModel() {
         data.get(MODEL)
@@ -46,6 +58,14 @@ class Environment {
     def setModel(Object model) {
         data.put(MODEL, model)
     }
+    
+    def setCompilationContext(CompilationContext cc) {
+        data.put(CONTEXT, cc)
+    }
+    
+    def getCompilationContext() {
+        data.get(CONTEXT) as CompilationContext
+    }    
     
     def getErrors() {
         data.get(ERRORS) as List<String>    

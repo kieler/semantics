@@ -43,4 +43,8 @@ class Compile {
         
         createCompilationContext(system, sourceModel)
     }
+    
+    static def asyncronousCompilation(CompilationContext compilationContext) {
+        AsynchronousCompilation.compile(compilationContext)
+    }
 }

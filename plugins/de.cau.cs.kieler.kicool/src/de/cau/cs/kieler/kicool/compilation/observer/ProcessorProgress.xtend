@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.compilation.observer
 
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.Processor
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -22,8 +23,11 @@ import de.cau.cs.kieler.kicool.Processor
  */
 class ProcessorProgress extends AbstractProcessorNotification {
     
-    new(CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
+    @Accessors double progress
+    
+    new(double progress, CompilationContext compilationContext, Processor processorEntry, de.cau.cs.kieler.kicool.compilation.Processor processorUnit) {
         super(compilationContext, processorEntry, processorUnit)
+        this.progress = progress
     }
     
 }

@@ -16,9 +16,9 @@ import de.cau.cs.kieler.kicool.compilation.Environment
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import de.cau.cs.kieler.kicool.compilation.ICloneable
 import java.util.List
 import java.util.LinkedList
+import de.cau.cs.kieler.kicool.compilation.IKiCoolCloneable
 
 /**
  * @author ssm
@@ -70,7 +70,7 @@ class EnvironmentManager {
                     prime.data.put(k, new Double(v))
                 } else if (v instanceof String) {
                     prime.data.put(k, new String(v))
-                } else if (v instanceof ICloneable) {
+                } else if (v instanceof IKiCoolCloneable) {
                     if (inplace) {
                         prime.data.put(k, v)
                     } else {

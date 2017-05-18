@@ -12,12 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
+
 /**
  * @author ssm
  * @kieler.design 2017-02-19 proposed
  * @kieler.rating 2017-02-19 proposed yellow  
  */
-abstract class Processor {
+abstract class Processor implements IKiCoolCloneable {
     
     protected var Pair<Environment, Environment> environments
     
@@ -34,6 +36,24 @@ abstract class Processor {
     
     public def Environment getEnvironment() {
         return environments.value
+    }
+    
+    override boolean isMutable() {
+        false
+    }
+    
+    override Object cloneObject() {
+        this
+    }
+    
+    
+    protected def void update(double progress) {
+        val compilationContext = environments.key.getCompilationContext
+        val metaProcessor = environments.key.data.get(Environment.META_PROCESSOR) as de.cau.cs.kieler.kicool.Processor
+        
+        compilationContext.notify(
+            new ProcessorProgress(progress, compilationContext, metaProcessor, this)
+        )
     }
     
     abstract public def String getId()
