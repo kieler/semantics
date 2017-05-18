@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.rtsys.peu.railsl.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.cau.rtsys.peu.railsl.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: de.cau.rtsys.peu.railsl,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.rtsys.peu.ide.contentassist.antlr,
+ de.cau.rtsys.peu.ide.contentassist.antlr.internal
+

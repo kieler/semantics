@@ -1,0 +1,380 @@
+/*
+ * THIS FILE GENERATES PURE TEXTUAL CODE FOR SCCHARTS. WILL CHANGE TO M2M CONVERSIONS.
+ */
+package de.cau.rtsys.peu.generator
+
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.AbstractGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IGeneratorContext
+import de.cau.rtsys.peu.railSL.Statement
+import de.cau.rtsys.peu.railSL.TimeWaitStatement
+import de.cau.rtsys.peu.railSL.Block
+import de.cau.rtsys.peu.railSL.ContactWaitStatement
+import de.cau.rtsys.peu.railSL.SetTrackStatement
+import de.cau.rtsys.peu.railSL.SetPointStatement
+import de.cau.rtsys.peu.railSL.LightStatement
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.impl.SCChartsFactoryImpl
+import de.cau.cs.kieler.sccharts.Region
+
+/**
+ * Generates code from your model files on save.
+ * 
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
+ */
+class RailSLGenerator extends AbstractGenerator {
+
+	static var nextRegionID = 0;
+
+	static var nextStateID = 0;
+
+	final static val SPEED_SLOW = 45;
+	final static val SPEED_FULL = 120;
+
+	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+
+		
+		fsa.generateFile('controller.sct', generateCode(resource));
+
+	}
+	
+	/**
+	 * Generates all code required for a model.
+	 * 
+	 */
+	def String generateCode(Resource resource) {
+		
+		var factory = SCChartsFactoryImpl.init();
+		
+		var chart = factory.createState();
+		chart.id = "Controller";
+		var bindings = chart.bindings
+		
+		var contacts = factory.createBinding();
+		//contacts.
+		
+		var regions = chart.regions;
+		
+		for (block : resource.allContents.toIterable.filter(Block)) {
+		    regions.add(block.compile(factory));
+		}
+		
+		return "";
+		/*
+		var iter = resource.allContents.toIterable.filter(Block);
+		var code = "";
+		code += "scchart controller {\n\n";
+		
+		code += "@Wrapper contacts\n";
+		code += "input bool contacts[48][2];\n\n";
+		
+		code += "@Wrapper tracks\n";
+		code += "output int tracks[48][2];\n\n";
+		
+		code += "@Wrapper points\n"
+		code += "output bool points;\n\n";
+		
+		code += "@Wrapper signals\n";
+		code += "output int signals[48][2];\n\n";
+		
+		code += "@Wrapper lights\n";
+		code += "output bool lights[24];\n\n";
+		
+		for(block:iter) {
+			nextStateID = 0;
+			code += block.compile();
+		}
+		
+		code += "}";
+		return code;
+		* 
+		*/
+	}
+	
+	
+	
+	
+	/**
+	 * Generates code for a single block.
+	 */
+	def Region compile(Block block, SCChartsFactory factory) {
+		var statements = block.getStatements();
+		
+        var region = factory.createRegion();
+		//region.
+		
+		
+		return region;
+	}
+	
+	/**
+	 * Generates code for a single statement.
+	 */
+	def String compile(Statement statement) {
+		if (statement instanceof ContactWaitStatement) {
+			return compile(statement as ContactWaitStatement);
+		} else if (statement instanceof TimeWaitStatement) {
+			return compile(statement as TimeWaitStatement);
+		} else if (statement instanceof SetTrackStatement) {
+			return compile(statement as SetTrackStatement);
+		} else if (statement instanceof SetPointStatement) {
+			return compile(statement as SetPointStatement);
+		} else if (statement instanceof LightStatement) {
+			return compile(statement as LightStatement);
+		}
+		
+	}
+	
+	/**
+	 * Compiles a LightStatement to an SCCharts state.
+	 */
+	def String compile(LightStatement lStatement) {
+		var lights = lStatement.lights;
+		var state = lStatement.parseLightMode();
+		
+		var ID = getStateID();
+		
+		var result = ">-> _" + ID + "_Light;\n\n"
+		result += "state _" + ID + "_Light {\n";
+		result += "initial state init\n";
+		
+		for (var i = 0; i < lights.size(); i++) {
+			// range check
+			if (lights.get(i) > 23) {
+				throw new IllegalArgumentException("Invalid Light Index: " + lights.get(i) + ". Maximum valid index is 23.");
+			}
+			result += "--> _S" + i + " immediate with /lights[" + lights.get(i) + "] = " + state + ";\n\n";
+			result += "state _S" + i + "\n";
+		}
+		
+		result += "--> done immediate;\n\n"
+		result += "final state done;\n"
+		result += "}" // Transition and closing ';' will be added elsewhere.
+		return result;
+	}
+	
+	/**
+	 * Compiles a SetPointStatement to an SCCharts state.
+	 */
+	def String compile(SetPointStatement spStatement) {
+		var points = spStatement.points;
+		var orientation = parsePointSetting(spStatement);
+		
+		var ID = getStateID();
+		
+		var result= ">-> _" + ID + "_SetPoint;\n\n"
+		result += "state _" + ID + "_SetPoint {\n";
+		result += "initial state init\n";
+		
+		for (var i = 0; i < points.size(); i++) {
+			// range check
+			if (points.get(i) > 29) {
+				throw new IllegalArgumentException("Invalid Point index: " + points.get(i) + ". Maximum valid index is 29.");
+			}
+			result += "--> _S" + i + " immediate with /points[" + points.get(i) + "] = " + orientation + ";\n\n"
+			result += "state _S" + i + "\n";
+		}
+		
+		result += "--> done immediate;";
+		result += "final state done;\n";
+		result += "}" // Transition and closing ';' will be added elsewhere.
+		return result;
+	}
+	 
+	/**
+	 * Compiles a SetTrackStatement to an SCCharts state.
+	 * 
+	 * TODO: Set signals accordingly
+	 */
+	def String compile(SetTrackStatement stStatement) {
+		var segments = stStatement.segments;
+		var direction = stStatement.parseDirection(); 
+		var speed = stStatement.parseSpeed();
+		
+		var ID = getStateID();
+		
+		var result = ">-> _" + ID + "_SetTrack;\n\n";
+		result += "state _" + ID + "_SetTrack {\n";
+		result += "initial state init\n"
+		
+		for (var i = 0; i < segments.size(); i++) {
+			var segment = segments.get(i).parseTrackSegment();
+			
+			result += "--> _S" + i + " immediate with " + 
+			"/ tracks[" + segment + "][0] = " + direction + ";";
+			result += "tracks[" + segment + "][1] = " + speed + ";\n\n";
+			result += "state _S" + i + "\n"
+		}
+		
+		result += "--> done immediate;\n\n";
+		result += "final state done;\n"
+		result += "}" // Transition and closing ';' will be added elsewhere.
+		return result;
+	}
+	
+	/**
+	 * Compile a ContactWaitStatement into an SCCharts state.
+	 * 
+	 * This state references a prototypical state in order to avoid
+	 * duplicate code.
+	 * 
+	 * Due to a current issue, the contact variable has to be copied in each instance.
+	 */
+	def String compile(ContactWaitStatement cStatement) {
+		
+		var index = 0;
+		if (cStatement.contactIndex == "second") {
+			index = 1;
+		}
+		
+		var refState = "ReachContact";
+		if (cStatement.event.equals("Pass")) {
+			refState = "PassContact";
+		}
+		
+		var track = parseTrackSegment(cStatement.segName);
+		
+		var ID = getStateID(); 
+		
+		var result = ">-> _" + ID + "_ContactWaitStatement;\n\n"; // Final transition of previous state
+		result += "state _" + ID + "_ContactWaitStatement {\n";
+		result += "bool contact;\n"
+		result += "during /contact = contacts[" + track + "][" + index + "];\n\n";
+		result += "initial state wait references " + refState +"\n";
+		result += ">-> done;\n\n"
+		result += "final state done;\n"
+		result += "}" // Transition and closing ';' will be added elsewhere.
+		return result;
+	}
+	
+	/**
+	 * Compile a timeWaitStatement into an SCCharts state.
+	 * 
+	 * This state references a prototypical time wait chart.
+	 * Due to a current issue, the variable time has to be introduced with an
+	 * additional initial state.
+	 */
+	def String compile(TimeWaitStatement tStatement) {
+		var ID = getStateID();
+		
+		var result = ">-> _" + ID + "_TimeWait;\n\n"
+		result += "state _" + getStateID() + "_TimeWait {\n"
+		result += "int time;\n"
+		result += "entry /time = " + tStatement.getTime() + ";\n\n"
+		result += "initial state wait references WaitTime bind secondsLeft to time\n";
+		result += ">-> done;\n"
+		result += "}" // Transition and closing ';' will be added elsewhere.
+		return result;
+	}
+	
+	/*****************************************************************************************
+	 * H E L P E R   M E T H O D S ***********************************************************
+	 *****************************************************************************************/
+	 
+	def String getStateID() {
+		nextStateID++;
+		return "" + (nextStateID - 1)
+	}
+	
+	def String getRegionID() {
+		nextRegionID++;
+		return "" + (nextRegionID - 1);
+	}
+	
+	def int parseLightMode(LightStatement lStatement) {
+		if (lStatement.state.equals("on")) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	def int parsePointSetting(SetPointStatement spStatement) {
+		if (spStatement.orientation.equals("straight")) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	
+	def int parseSpeed(SetTrackStatement stStatement) {
+		if (stStatement.mode.contains("stop")) {
+			return 0;
+		} else if (stStatement.mode.contains("slow")) {
+			return SPEED_SLOW;
+		} else {
+			return SPEED_FULL;
+		}
+	}
+	
+	/**
+	 * Helper method to determine the direction of travel.
+	 */
+	def int parseDirection (SetTrackStatement stStatement) {
+		if (stStatement.mode.contains("reverse")) {
+			return 2;
+		} else {
+			return 1;
+		}
+	}
+	
+	/**
+	 * Helper method to translate track segment names to integers.
+	 * Defined according to the <Railway.h> header file.
+	 */
+	def int parseTrackSegment(String string) {
+		return switch(string) {
+			case "IC_JCT_0": 0
+			case "IC_LN_0" : 1
+			case "IC_LN_1" : 2
+			case "IC_LN_2" : 3
+			case "IC_LN_3" : 4
+			case "IC_LN_4" : 5
+			case "IC_LN_5" : 6
+			case "IC_ST_0" : 7
+			case "IC_ST_1" : 8
+			case "IC_ST_2" : 9
+			case "IC_ST_3" : 10
+			case "IC_ST_4" : 11
+			case "IO_LN_0" : 12
+			case "IO_LN_1" : 13
+			case "IO_LN_2" : 14
+			case "KH_LN_0" : 15
+			case "KH_LN_1" : 16
+			case "KH_LN_2" : 17
+			case "KH_LN_3" : 18
+			case "KH_LN_4" : 19
+			case "KH_LN_5" : 20
+			case "KH_LN_6" : 21
+			case "KH_LN_7" : 22
+			case "KH_LN_8" : 23
+			case "KH_ST_0" : 24
+			case "KH_ST_1" : 25
+			case "KH_ST_2" : 26
+			case "KH_ST_3" : 27
+			case "KH_ST_4" : 28
+			case "KH_ST_5" : 29
+			case "KH_ST_6" : 30
+			case "KIO_LN_0" : 31
+			case "KIO_LN_1" : 32
+			case "OC_JCT_0" : 33
+			case "OC_LN_0" : 34
+			case "OC_LN_1" : 35
+			case "OC_LN_2" : 36
+			case "OC_LN_3" : 37
+			case "OC_LN_4" : 38
+			case "OC_LN_5" : 39
+			case "OC_ST_0" : 40
+			case "OC_ST_1" : 41
+			case "OC_ST_2" : 42
+			case "OC_ST_3" : 43
+			case "OC_ST_4" : 44
+			case "OI_LN_0" : 45
+			case "OI_LN_1" : 46
+			case "OI_LN_2" : 47
+			default: -1
+		};
+	}
+	
+}
