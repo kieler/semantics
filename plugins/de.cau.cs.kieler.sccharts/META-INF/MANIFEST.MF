@@ -25,5 +25,6 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.klighd.piccolo,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.kitt
+ de.cau.cs.kieler.kitt,
+ de.cau.cs.kieler.kicool
 Bundle-ActivationPolicy: lazy

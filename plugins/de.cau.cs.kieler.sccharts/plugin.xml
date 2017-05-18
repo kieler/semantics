@@ -215,6 +215,12 @@
         <featureClass
               class="de.cau.cs.kieler.sccharts.enforcer.EnforcerFeature">
         </featureClass>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kicool.processor">
+        <Processor
+              class="de.cau.cs.kieler.sccharts.Processor1">
+        </Processor>
      </extension>   
 
 
