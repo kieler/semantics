@@ -39,9 +39,7 @@
       <modules>
         <module>../plugins</module>
         <module>../features</module>
-        <module>../test</module> 
         <module>de.cau.cs.kieler.semantics.repository</module>
-        <module>de.cau.cs.kieler.semantics.targetplatform</module>
       </modules>
     </profile>
   

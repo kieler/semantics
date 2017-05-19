@@ -17,6 +17,8 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
+    <module>../build/de.cau.cs.kieler.semantics.targetplatform</module>
+    <module>../test</module> 
     <module>de.cau.cs.kieler.circuit</module>
     <module>de.cau.cs.kieler.circuit.kivi</module>
     <module>de.cau.cs.kieler.circuit.klighd</module>
