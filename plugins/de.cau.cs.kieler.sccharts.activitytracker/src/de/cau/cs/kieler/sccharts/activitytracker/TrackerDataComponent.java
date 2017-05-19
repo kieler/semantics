@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -30,6 +34,8 @@ public class TrackerDataComponent extends JSONObjectDataComponent
     static final String CONSOLE_NAME = "SCCharts ActivityTracker";
     
     static final String TRANSITION_NAME = "transition";
+    
+    static final String CONSOLEVIEWID = "org.eclipse.ui.console.ConsoleView";
 
     MessageConsoleStream consoleStream = null;
 
@@ -47,6 +53,7 @@ public class TrackerDataComponent extends JSONObjectDataComponent
         MessageConsole console = findConsole(CONSOLE_NAME);
         consoleStream = console.newMessageStream();
         console.clearConsole();
+        bringToFront();
         eObjectMap = new HashMap<String, EObject>();
         modelRoot = null;
     }
@@ -269,5 +276,24 @@ public class TrackerDataComponent extends JSONObjectDataComponent
         MessageConsole myConsole = new MessageConsole(name, null);
         conMan.addConsoles(new IConsole[] { myConsole });
         return myConsole;
+    }
+    
+    // -----------------------------------------------------------------------------
+    
+    public static void bringToFront() {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // bring Console View to the front
+                try {
+                    IWorkbenchWindow window = PlatformUI.getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(CONSOLEVIEWID);
+                    vP.setFocus();
+                    // set done flag
+                } catch (Exception e) {
+                    // ignore if we cannot bring it to front
+                }
+            }
+        });
     }
 }
