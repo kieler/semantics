@@ -167,7 +167,7 @@ class ModelsRepository {
                             val relModelPath = repository.relativize(model)
                             resourceSets.putIfAbsent(property.resourceSetID, newHashSet)
                             val resourceSet = resourceSets.get(property.resourceSetID)
-                            resourceSet.add(relModelPath)
+                            if (!property.resourceSetID.nullOrEmpty) resourceSet.add(relModelPath)
                             val traces = sameModelFiles.filter[ f | property.traceExt.exists[f.fileName.toString.endsWith(it)]].sort.toList
                             models.add(new TestModelData(
                                 repository,
