@@ -142,15 +142,15 @@ public class TrackerDataComponent extends JSONObjectDataComponent
                     }
                     if (isInput(key)) {
                         if (inputs.length() > 0) {
-                            inputs += ",";
+                            inputs += ", ";
                         }
                         inputs += key + "=" + value;
                     }
                     if (isOutput(key)) {
                         if (outputs.length() > 0) {
-                            outputs += ",";
+                            outputs += ", ";
                         }
-                        outputs += key + "=" + value;
+                        outputs += key + "=" + value ;
                     }
                 }
             } catch (JSONException e) {
