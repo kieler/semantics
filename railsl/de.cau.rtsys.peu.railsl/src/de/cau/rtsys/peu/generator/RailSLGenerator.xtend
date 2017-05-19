@@ -14,9 +14,17 @@ import de.cau.rtsys.peu.railSL.ContactWaitStatement
 import de.cau.rtsys.peu.railSL.SetTrackStatement
 import de.cau.rtsys.peu.railSL.SetPointStatement
 import de.cau.rtsys.peu.railSL.LightStatement
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.impl.SCChartsFactoryImpl
-import de.cau.cs.kieler.sccharts.Region
+import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Generates code from your model files on save.
@@ -25,6 +33,28 @@ import de.cau.cs.kieler.sccharts.Region
  */
 class RailSLGenerator extends AbstractGenerator {
 
+    final static val NUM_OF_SEGMENTS = 48
+    final static val NUM_OF_POINTS = 30
+    final static val NUM_OF_LIGHTS = 24
+    
+    @Inject
+    extension SCChartsExtension
+
+    @Inject
+    extension KExpressionsCreateExtensions
+
+    @Inject
+    extension KExpressionsDeclarationExtensions
+    
+    @Inject
+    extension KExpressionsValuedObjectExtensions
+    
+    @Inject
+    extension KExpressionsValueExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
+    
 	static var nextRegionID = 0;
 
 	static var nextStateID = 0;
@@ -35,7 +65,8 @@ class RailSLGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
 		
-		fsa.generateFile('controller.sct', generateCode(resource));
+		fsa.generateFile('controller.sct', generateCode(resource))
+		
 
 	}
 	
@@ -45,68 +76,136 @@ class RailSLGenerator extends AbstractGenerator {
 	 */
 	def String generateCode(Resource resource) {
 		
-		var factory = SCChartsFactoryImpl.init();
+		var chart = createSCChart();
 		
-		var chart = factory.createState();
-		chart.id = "Controller";
-		var bindings = chart.bindings
+		/****************************************************************
+		 * I N T E R F A C E ********************************************
+		 ****************************************************************/
 		
-		var contacts = factory.createBinding();
-		//contacts.
+		// input bool contacts[48][2];
+		val contactsDecl = createDeclaration(ValueType.BOOL)
+		contactsDecl.input = true;
+		val contacts = createValuedObject("contacts")
+		contacts.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+		contacts.cardinalities.add(createIntValue(2))
+		contactsDecl.attach(contacts)
+		contactsDecl.annotations.add(createStringAnnotation("Wrapper", "contacts"));
 		
-		var regions = chart.regions;
+		chart.declarations.add(contactsDecl)
+		
+		// output int tracks[48][2];
+		val tracksDecl = createDeclaration(ValueType.INT)
+		tracksDecl.output = true;
+		val tracks = createValuedObject("tracks")
+		tracks.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+		tracks.cardinalities.add(createIntValue(2))
+		tracksDecl.attach(tracks)
+		tracksDecl.annotations.add(createStringAnnotation("Wrapper", "tracks"))
+		
+		chart.declarations.add(tracksDecl)
+		
+		// output bool points[30];
+		val pointsDecl = createDeclaration(ValueType.BOOL)
+		pointsDecl.output = true
+		val points = createValuedObject("points")
+		points.cardinalities.add(createIntValue(NUM_OF_POINTS))
+		pointsDecl.attach(points)
+		pointsDecl.annotations.add(createStringAnnotation("Wrapper", "points"))
+		
+		chart.declarations.add(pointsDecl)
+		
+		// output int signals[48][2];
+		val signalsDecl = createDeclaration(ValueType.INT)
+		signalsDecl.output = true
+		val signals = createValuedObject("signals")
+		signals.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+		signalsDecl.attach(signals)
+		signalsDecl.annotations.add(createStringAnnotation("Wrapper","signals"))
+		
+		chart.declarations.add(signalsDecl)
+		
+		//output bool lights[24];
+		val lightsDecl = createDeclaration(ValueType.BOOL)
+		lightsDecl.output = true
+		val lights = createValuedObject("lights")
+		lights.cardinalities.add(createIntValue(NUM_OF_LIGHTS))
+		lightsDecl.attach(lights)
+		lightsDecl.annotations.add(createStringAnnotation("Wrapper", "lights"))
+		
+		
+		
+		// STUFF VON STEVEN UND ALEX
+		chart.declarations.add(createDeclaration(ValueType.INT) => [
+		    valuedObjects += createValuedObject("foo") => [
+		        initialValue = createIntValue(0) 
+		    ] 
+		])
+		
 		
 		for (block : resource.allContents.toIterable.filter(Block)) {
-		    regions.add(block.compile(factory));
+            block.compile(chart)
 		}
 		
 		return "";
-		/*
-		var iter = resource.allContents.toIterable.filter(Block);
-		var code = "";
-		code += "scchart controller {\n\n";
 		
-		code += "@Wrapper contacts\n";
-		code += "input bool contacts[48][2];\n\n";
-		
-		code += "@Wrapper tracks\n";
-		code += "output int tracks[48][2];\n\n";
-		
-		code += "@Wrapper points\n"
-		code += "output bool points;\n\n";
-		
-		code += "@Wrapper signals\n";
-		code += "output int signals[48][2];\n\n";
-		
-		code += "@Wrapper lights\n";
-		code += "output bool lights[24];\n\n";
-		
-		for(block:iter) {
-			nextStateID = 0;
-			code += block.compile();
-		}
-		
-		code += "}";
-		return code;
-		* 
-		*/
+	}
+	
+	def void compile(Block block, State chart) {
+	    
+	    var region = chart.createControlflowRegion("Thread " + getRegionID())
+        
+        for (statement : block.statements) {
+            var state = statement.compile(region)
+        }
+	    
+	}
+	
+	def State compile(Statement statement, ControlflowRegion region) {
+	    
+	    var state = region.createState("");
+	    
+	    
+	    if (statement instanceof TimeWaitStatement) {
+	        
+	    }
+	    
+	    /*
+	    if (statement instanceof ContactWaitStatement) {
+            compile(statement as ContactWaitStatement);
+        } else if (statement instanceof TimeWaitStatement) {
+            return compile(statement as TimeWaitStatement);
+        } else if (statement instanceof SetTrackStatement) {
+            return compile(statement as SetTrackStatement);
+        } else if (statement instanceof SetPointStatement) {
+            return compile(statement as SetPointStatement);
+        } else if (statement instanceof LightStatement) {
+            return compile(statement as LightStatement);
+        }
+        * */
+	}
+	
+	
+	def void makeTimeWaitStatement(State state, TimeWaitStatement twStatement) {
+	    var region = state.createControlflowRegion("Wait " + twStatement.time)
+	    var init = region.createInitialState("init")
+	    var done = region.createFinalState("done")
+	    var transition = init.createImmediateTransitionTo(done)
+	    transition.delay = twStatement.time
+        // ??????????
+	    // transition.trigger =  
 	}
 	
 	
 	
 	
-	/**
-	 * Generates code for a single block.
-	 */
-	def Region compile(Block block, SCChartsFactory factory) {
-		var statements = block.getStatements();
-		
-        var region = factory.createRegion();
-		//region.
-		
-		
-		return region;
-	}
+	
+	
+	
+	
+	/**********************************************************************
+	 * O L D   A N D   J A N K Y ******************************************
+	 **********************************************************************/
+	
 	
 	/**
 	 * Generates code for a single statement.
