@@ -34,6 +34,7 @@ class BenchmarkStartup implements IStartup {
     override earlyStartup() {
         if (System.getenv(BENCHMARK_BAMBOO_KEY) !== null) {
             // Start benchmark suite when eclipse had time to finish startup
+            println("\n-- Waiting for other background jobs to finish. Benchmarks will start in 30 seconds. --\n")
             new BenchmarkSuite(true, System.getenv(BENCHMARK_BAMBOO_KEY)).schedule(30000)
         } else if (System.getenv(BENCHMARK_USER_KEY) !== null) {
             new BenchmarkSuite(false, System.getenv(BENCHMARK_USER_KEY)).schedule(10000)
