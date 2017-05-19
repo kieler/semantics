@@ -333,6 +333,8 @@ litigation.
    <plugin id="de.cau.cs.kieler.sccharts.s" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.sccharts.kivi" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.sccharts.activitytracker" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.sccharts.sim.c" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
