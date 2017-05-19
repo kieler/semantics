@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
  */
 class StoreSystemAction {
 
-    public static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
+    public static final ImageDescriptor ICON_STORE_SYSTEM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_save.png");    
     
     /** The action for compiling systems. */
@@ -44,7 +44,7 @@ class StoreSystemAction {
         action.setId("storeSystemAction")
         action.setText("Store active system")
         action.setToolTipText("Stores the actual system for permanent use.")
-        action.imageDescriptor = ICON_SAVE    
+        action.imageDescriptor = ICON_STORE_SYSTEM    
         action.disabledImageDescriptor = null
     }
     

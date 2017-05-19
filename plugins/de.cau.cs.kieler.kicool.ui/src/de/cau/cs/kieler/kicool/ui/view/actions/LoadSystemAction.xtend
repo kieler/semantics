@@ -35,8 +35,8 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
  */
 class LoadSystemAction {
 
-    public static final ImageDescriptor ICON_LIGHTNING = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_lightning.png");    
+    public static final ImageDescriptor ICON_LOAD_SYSTEM = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_gear.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -52,7 +52,7 @@ class LoadSystemAction {
         action.setId("loadSystemAction")
         action.setText("Load active system")
         action.setToolTipText("Loads the system that is opened in the active editor.")
-        action.imageDescriptor = ICON_LIGHTNING    
+        action.imageDescriptor = ICON_LOAD_SYSTEM    
         action.disabledImageDescriptor = null
     }
     

@@ -32,10 +32,11 @@ class DeveloperToggle extends AbstractAction {
     /** The action for toggling debug mode. */
     @Accessors private IToolBarManager toolBar
     
-    private var Separator mySeparator
-    private var OpenSystemAction myOpenSystemAction
-    private var LoadSystemAction myLoadSystemAction
-    private var StoreSystemAction myStoreSystemAction
+    private var Separator separator
+    private var OpenSystemAction openSystemAction
+    private var LoadSystemAction loadSystemAction
+    private var StoreSystemAction storeSystemAction
+    private var RegisterProcessorAction registerProcessorAction
     
     new(CompilerView view) {
         super(view, 
@@ -49,25 +50,28 @@ class DeveloperToggle extends AbstractAction {
     }
     
     override void invoke() {
-        mySeparator.visible = action.isChecked
-        toolBar.find(myOpenSystemAction.action.id).visible = action.isChecked
-        toolBar.find(myLoadSystemAction.action.id).visible = action.isChecked
-        toolBar.find(myStoreSystemAction.action.id).visible = action.isChecked
+        separator.visible = action.isChecked
+        toolBar.find(openSystemAction.action.id).visible = action.isChecked
+        toolBar.find(loadSystemAction.action.id).visible = action.isChecked
+        toolBar.find(storeSystemAction.action.id).visible = action.isChecked
+        toolBar.find(registerProcessorAction.action.id).visible = action.isChecked
         view.viewSite.actionBars.updateActionBars
     }
     
     
     def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
         this.toolBar = toolBar
-        mySeparator = new Separator
-        myOpenSystemAction = new OpenSystemAction(view)
-        myLoadSystemAction = new LoadSystemAction(view)
-        myStoreSystemAction = new StoreSystemAction(view)
+        separator = new Separator
+        openSystemAction = new OpenSystemAction(view)
+        loadSystemAction = new LoadSystemAction(view)
+        storeSystemAction = new StoreSystemAction(view)
+        registerProcessorAction = new RegisterProcessorAction(view)
         
-        toolBar.add(mySeparator)
-        toolBar.add(myOpenSystemAction.action)
-        toolBar.add(myLoadSystemAction.action)
-        toolBar.add(myStoreSystemAction.action)
+        toolBar.add(separator)
+        toolBar.add(openSystemAction.action)
+        toolBar.add(loadSystemAction.action)
+        toolBar.add(storeSystemAction.action)
+        toolBar.add(registerProcessorAction.action)
         
         invoke
     }

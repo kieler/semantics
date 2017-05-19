@@ -110,6 +110,10 @@ class KiCoolRegistration {
         throw new IOException("Could not load resource '" + resourceLocation + "'!");
     }
     
+    static def void addProcessor(Processor processor) {
+        processorMap.put(processor.id, processor.class)
+        processorList += processor.class
+    }
     
     static def loadRegisteredProcessors() {
         val processors = getRegisteredProcessors

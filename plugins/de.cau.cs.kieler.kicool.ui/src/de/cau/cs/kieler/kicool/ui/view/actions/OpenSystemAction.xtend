@@ -32,7 +32,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class OpenSystemAction {
 
-    public static final ImageDescriptor ICON_EDIT = AbstractUIPlugin.imageDescriptorFromPlugin(
+    public static final ImageDescriptor ICON_OPEN_SYSTEM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_edit.png");    
     
     /** The action for compiling systems. */
@@ -49,7 +49,7 @@ class OpenSystemAction {
         action.setId("openSystemAction")
         action.setText("Open active system")
         action.setToolTipText("Opens the actual active system inside a seperate editor to enable modifications.")
-        action.imageDescriptor = ICON_EDIT    
+        action.imageDescriptor = ICON_OPEN_SYSTEM    
         action.disabledImageDescriptor = null
     }
     

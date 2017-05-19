@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kicool.compilation.AsynchronousCompilation
  */
 class CompilationAction {
 
-    public static final ImageDescriptor ICON_GO = AbstractUIPlugin.imageDescriptorFromPlugin(
+    public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
     
     /** The action for compiling systems. */
@@ -45,7 +45,7 @@ class CompilationAction {
         action.setId("compileAction")
         action.setText("Compile")
         action.setToolTipText("Invocates a compilation process.")
-        action.imageDescriptor = ICON_GO     
+        action.imageDescriptor = ICON_COMPILE     
         
     }
     
