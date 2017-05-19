@@ -233,7 +233,6 @@ public class KielerCompiler {
         }
         logString += "]";
         KiCoPlugin.log(logString);
-        System.out.println(logString);
 
         
         // The progress monitor is optional and may be null!
