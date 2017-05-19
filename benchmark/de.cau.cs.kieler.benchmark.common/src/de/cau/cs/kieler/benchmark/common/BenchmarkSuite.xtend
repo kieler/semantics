@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.ui.progress.UIJob
+import org.eclipse.ui.PlatformUI
 
 /**
  * The main benchmark suite starting all benchmarks.
@@ -39,7 +40,7 @@ class BenchmarkSuite extends UIJob {
     private static val String ATTRIBUTE_CLASS = "class";
     
     /** Bamboo run flag */
-    val boolean isBambooRun
+    package boolean isBambooRun
     /** Database location */
     val String dbLocation
     
@@ -56,36 +57,57 @@ class BenchmarkSuite extends UIJob {
      * {@inheritDoc}
      */
     override runInUIThread(IProgressMonitor monitor) {
-        // Setup
-        val injector = Guice.createInjector
-        val benchmarks = loadBenchmarks
-        val db = if (isBambooRun) {
-                new MongoBenchmarkDatabase(dbLocation)
-            } else {
-                new WorkspaceBenchmarkDatabase(dbLocation)
+        try {
+            if (isBambooRun) println("=== Benchmarks START  ===")
+            
+            // Setup
+            val injector = Guice.createInjector
+            val benchmarks = loadBenchmarks
+            val db = if (isBambooRun) {
+                    new MongoBenchmarkDatabase(dbLocation)
+                } else {
+                    new WorkspaceBenchmarkDatabase(dbLocation)
+                }
+    
+            // Run each benchmark
+            for (benchmarkClass : benchmarks) {
+                val filterInstance = injector.getInstance(benchmarkClass)
+                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
+                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
+                    if (isBambooRun) println(new StringBuilder("- with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
+                    try {
+                        // Prepare
+                        val benchmark = injector.getInstance(benchmarkClass)
+                        benchmark.prepare(data)
+                        
+                        // Clean JVM
+                        System.gc
+                        Thread.sleep(500)
+                        
+                        // Perform benchmark and store data
+                        val result = benchmark.perform(data)
+                        db.storeResult(benchmark, data, result)
+                    } catch (Exception e) {
+                        if (isBambooRun) e.printStackTrace else throw e
+                    }
+                }
+                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
             }
-
-        // Run each benchmark
-        for (benchmarkClass : benchmarks) {
-            val filterInstance = injector.getInstance(benchmarkClass)
-            for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
-                // Prepare
-                val benchmark = injector.getInstance(benchmarkClass)
-                benchmark.prepare(data)
-                
-                // Clean JVM
-                System.gc
-                Thread.sleep(500)
-                
-                // Perform benchmark and store data
-                val result = benchmark.perform(data)
-                db.storeResult(benchmark, data, result)
+    
+            // Save database
+            db.save
+        } catch (Exception e) {
+            if (isBambooRun) println("=== Benchmarks FAILED  ===")
+            if (isBambooRun) e.printStackTrace else throw e
+        } finally {
+            if (isBambooRun) println("=== Benchmarks END  ===")
+            if (isBambooRun) {
+                val closed = PlatformUI.workbench.close
+                if (!closed) {
+                    System.exit(0)
+                }
             }
         }
-
-        // Save database
-        db.save
-        
         return Status.OK_STATUS
     }
 
@@ -117,8 +139,8 @@ class BenchmarkSuite extends UIJob {
                         ids.add(benchmark.ID)
                     }
                     benchmarks.add(benchmark.class as Class<IBenchmark>)
-                } catch (Exception exception) {
-                    exception.printStackTrace
+                } catch (Exception e) {
+                    if (isBambooRun) e.printStackTrace else throw e
                 }
             }
         }

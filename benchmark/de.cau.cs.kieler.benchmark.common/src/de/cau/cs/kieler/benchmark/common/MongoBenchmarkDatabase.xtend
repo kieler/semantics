@@ -18,7 +18,9 @@ import com.mongodb.MongoClient
 import com.mongodb.MongoClientURI
 import com.mongodb.client.MongoCollection
 import de.cau.cs.kieler.test.common.repository.ModelsRepository
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryUtil
 import de.cau.cs.kieler.test.common.repository.TestModelData
+import java.util.Collection
 import java.util.Map
 import org.bson.Document
 import org.bson.types.ObjectId
@@ -26,6 +28,7 @@ import org.bson.types.ObjectId
 import static com.mongodb.client.model.Filters.*
 import static com.mongodb.client.model.Sorts.*
 import static com.mongodb.client.model.Updates.*
+import org.bson.BsonArray
 
 /**
  * Database handler for the benchmark MongoDB.
@@ -71,30 +74,40 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
         }.doc
         runs.insertOne(run)
         runID = run.getObjectId("_id")
-        // Add serverside stime stamp
+        // Add serverside time stamp
         runs.updateOne(eq("_id", runID), combine(currentDate("date"), currentTimestamp("start")))
 
         // Update model data set
         for (data : ModelsRepository.models) {
             val absModelPath = data.repositoryPath.resolve(data.modelPath)
-            val hash = Files.hash(absModelPath.toFile, Hashing.sha256)
-            val fileFilter = and(eq("repository", data.repositoryPath.fileName.toString), eq("path", data.modelPath.toString), eq("hash", hash.toString))
+            val revision = ModelsRepositoryUtil.getFileVersion(data.repositoryPath, data.modelPath)
+            val fileFilter = and(eq("repository", data.repositoryPath.fileName.toString), eq("path", data.modelPath.toString), eq("revision", revision))
             var fileEntry = files.find(fileFilter).first
-            val content = #{
-                "repository" -> data.repositoryPath.fileName.toString,
-                "path" -> data.modelPath.toString,
-                "hash" -> hash.toString,
-                "traces" -> data.tracePaths.map[toString].toList,
-                "properties" -> data.modelProperties
-            }.doc
-            // Create of replace
+            
+            // Create entry if not present
             if (fileEntry === null) {
-                files.insertOne(content)
-                fileEntry = content
-            } else {
-                files.replaceOne(fileFilter, content)
+                fileEntry = #{
+                    "repository" -> data.repositoryPath.fileName.toString,
+                    "path" -> data.modelPath.toString,
+                    "revision" -> revision,
+                    "hash" -> Files.hash(absModelPath.toFile, Hashing.sha256).toString
+                }.doc
+                files.insertOne(fileEntry)
             }
-            modelFiles.put(data, fileEntry.getObjectId("_id"))
+            val id = fileEntry.getObjectId("_id")  
+    
+            // Update data
+            files.updateOne(eq("_id", id), combine(
+                unset("traces"), // Cannot set lists (mongo 3.2 bug)
+                unset("properties")
+            ))
+            files.updateOne(eq("_id", id), combine(
+                pushEach("traces", data.tracePaths.map[toString]),
+                pushEach("properties", data.modelProperties.toList)
+            ))
+            
+            // Store db association
+            modelFiles.put(data, id)
         }
     }
     

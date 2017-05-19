@@ -11,7 +11,8 @@ Require-Bundle: org.junit,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- org.eclipse.xtext;visibility:=reexport
+ org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.jgit;bundle-version="4.6.1"
 Export-Package: de.cau.cs.kieler.test.common.repository,
  de.cau.cs.kieler.test.common.runners
 

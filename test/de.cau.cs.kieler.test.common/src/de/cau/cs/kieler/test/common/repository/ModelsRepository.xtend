@@ -48,29 +48,30 @@ class ModelsRepository {
     
     /** Models retrieved form repository */
     private static val List<TestModelData> models = newLinkedList
-    
+    /** Models repositories */
+    private static val List<Path> repositories = newLinkedList    
+        
     /**
-     * Returns an unmodifiable view on the test models of the repository
+     * Returns an unmodifiable view on the models of the repositories.
      */
-    public static def getModels() {
-        if (ModelsRepository.models.empty) {
-            readModelsRepository()
+    public static def getRepositories() {
+        if (ModelsRepository.repositories.empty) {
+            findRepositories()
         }
-        return ModelsRepository.models.unmodifiableView
+        return ModelsRepository.repositories.unmodifiableView
     }
-    
+
     /**
-     * Traverses the models repository and creates an index.
+     * Retrieves the repositories from the environment.
      */
-    private static def readModelsRepository() {
-        ModelsRepository.models.clear
+    private static def findRepositories() {
+        ModelsRepository.repositories.clear
         
         // Find models repository
         val bambooWD = System.getenv(BAMBOO_WD_KEY)
         val bambooAdditionalRepositories = System.getenv(BAMBOO_ADDITIONAL_REPOS_KEY)
         val userModelsRepository = System.getenv(USER_MODELS_KEY)
         val userAdditionalRepositories = System.getenv(USER_ADDITIONAL_REPOS_KEY)
-        var List<Path> repositories = newLinkedList
         
         // compose path
         if (userModelsRepository !== null) {
@@ -97,8 +98,25 @@ class ModelsRepository {
                 "Cannot detect the models repository." +
                 "Please provide the environment variable \""+USER_MODELS_KEY+"\" with the path to the models repository")
         }
+    }
+    
+    /**
+     * Returns an unmodifiable view on the test models of the repository
+     */
+    public static def getModels() {
+        if (ModelsRepository.models.empty) {
+            findModels()
+        }
+        return ModelsRepository.models.unmodifiableView
+    }
+    
+    /**
+     * Traverses the models repository and creates an index.
+     */
+    private static def findModels() {
+        ModelsRepository.models.clear
         
-        for (repo : repositories) {
+        for (repo : getRepositories) {
             // check path
             if (!repo.toFile.isDirectory) {
                 throw new IllegalArgumentException(repo + "is not an existing directory")
