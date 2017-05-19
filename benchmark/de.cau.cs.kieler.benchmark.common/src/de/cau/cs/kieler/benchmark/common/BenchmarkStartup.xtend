@@ -24,7 +24,7 @@ import org.eclipse.ui.IStartup
 class BenchmarkStartup implements IStartup {
     
     /** Environment key for activating benchmarks on bamboo with mongoDB. The value is the db URI. */
-    private static val BENCHMARK_BAMBOO_KEY = "bamboo_benchmark"
+    private static val BENCHMARK_BAMBOO_KEY = "server_benchmark"
     /** Environment key for activating local benchmarks. The value is a name for the locally create project. */
     private static val BENCHMARK_USER_KEY = "local_benchmark"
     
