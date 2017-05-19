@@ -115,6 +115,9 @@ public class TrackerDataComponent extends JSONObjectDataComponent
 
         JSONArray namesArray = jSONObject.names();
 
+        String inputs = "";
+        String outputs = "";
+        
         for (int c = 0; c < namesArray.length(); c++) {
             Object obj;
             try {
@@ -131,14 +134,23 @@ public class TrackerDataComponent extends JSONObjectDataComponent
                         }
                     }
                     if (isInput(key)) {
-                        consoleStream.print(key + "=" + value  + ",");
+                        if (inputs.length() > 0) {
+                            inputs += ",";
+                        }
+                        inputs += key + "=" + value;
+                    }
+                    if (isOutput(key)) {
+                        if (outputs.length() > 0) {
+                            outputs += ",";
+                        }
+                        outputs += key + "=" + value;
                     }
                 }
             } catch (JSONException e) {
             }
         }
-        consoleStream.println("");
 
+        consoleStream.println("Inputs: " + inputs);
         
         for (int c = 0; c < namesArray.length(); c++) {
             Object obj;
@@ -165,9 +177,9 @@ public class TrackerDataComponent extends JSONObjectDataComponent
             }
         }
         
+        consoleStream.println("Outputs: " + outputs);
+        consoleStream.println("");
         
-        
-        // TODO Auto-generated method stub
         return null;
     }
     
