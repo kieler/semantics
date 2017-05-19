@@ -58,7 +58,8 @@ class SCChartsTransformationsBenchmark extends AbstractXTextModelBenchmark<State
                                     "TRIGGEREFFECT",    // CORE
                                     "SURFACEDEPTH")
     
-    static var warmUp = false
+    /** Warm up flag */
+    private static var warmUp = false
     
     //-----------------------------------------------------------------------------------------------------------------
 

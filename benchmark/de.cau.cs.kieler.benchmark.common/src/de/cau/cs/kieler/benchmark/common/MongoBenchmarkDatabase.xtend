@@ -20,15 +20,14 @@ import com.mongodb.client.MongoCollection
 import de.cau.cs.kieler.test.common.repository.ModelsRepository
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryUtil
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.util.Collection
 import java.util.Map
+import java.util.logging.Logger
 import org.bson.Document
 import org.bson.types.ObjectId
 
 import static com.mongodb.client.model.Filters.*
 import static com.mongodb.client.model.Sorts.*
 import static com.mongodb.client.model.Updates.*
-import org.bson.BsonArray
 
 /**
  * Database handler for the benchmark MongoDB.
@@ -38,7 +37,8 @@ import org.bson.BsonArray
  * @kieler.rating proposed yellow
  */
 class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
-
+    
+    val logger = Logger.getLogger(this.class.name)
     /** The client connection */
     val MongoClient client
     /** The benchmarks collection */
@@ -65,6 +65,7 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
         runs = db.getCollection("runs")
         val files = db.getCollection("files")
 
+        logger.info("Creating DB entry for this run")
         // Find the run with the highest number
         val lastRun = runs.find().sort(descending("num")).first
         // Add new run entry
@@ -78,6 +79,7 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
         runs.updateOne(eq("_id", runID), combine(currentDate("date"), currentTimestamp("start")))
 
         // Update model data set
+        logger.info("Updating model file data")
         for (data : ModelsRepository.models) {
             val absModelPath = data.repositoryPath.resolve(data.modelPath)
             val revision = ModelsRepositoryUtil.getFileVersion(data.repositoryPath, data.modelPath)
@@ -115,7 +117,8 @@ class MongoBenchmarkDatabase extends AbstractBenchmarkDatabase {
      * {@inheritDoc}
      */
     override storeResult(IBenchmark benchmark, TestModelData data, Document result) {
-        // FInd entry
+        logger.info("Storing benchmark result")
+        // Find entry
         val benchmarkFinder = and(eq("run", runID), eq("file", modelFiles.get(data)))
         var benchmarkEntry = benchmarks.find(benchmarkFinder).first
         // Create entry if necessary

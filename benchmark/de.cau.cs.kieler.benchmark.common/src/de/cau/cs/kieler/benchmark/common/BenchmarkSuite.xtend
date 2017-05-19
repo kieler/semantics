@@ -58,7 +58,7 @@ class BenchmarkSuite extends UIJob {
      */
     override runInUIThread(IProgressMonitor monitor) {
         try {
-            if (isBambooRun) println("=== Benchmarks START  ===")
+            if (isBambooRun) println("=== STARTED Benchmarks ===")
             
             // Setup
             val injector = Guice.createInjector
@@ -74,7 +74,7 @@ class BenchmarkSuite extends UIJob {
                 val filterInstance = injector.getInstance(benchmarkClass)
                 if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
                 for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
-                    if (isBambooRun) println(new StringBuilder("- with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
+                    if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
                     try {
                         // Prepare
                         val benchmark = injector.getInstance(benchmarkClass)
@@ -97,10 +97,10 @@ class BenchmarkSuite extends UIJob {
             // Save database
             db.save
         } catch (Exception e) {
-            if (isBambooRun) println("=== Benchmarks FAILED  ===")
+            if (isBambooRun) println("=== FAILED Benchmarks ===")
             if (isBambooRun) e.printStackTrace else throw e
         } finally {
-            if (isBambooRun) println("=== Benchmarks END  ===")
+            if (isBambooRun) println("=== FINISHED Benchmarks ===")
             if (isBambooRun) {
                 val closed = PlatformUI.workbench.close
                 if (!closed) {
