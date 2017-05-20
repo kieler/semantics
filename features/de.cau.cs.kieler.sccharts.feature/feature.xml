@@ -243,6 +243,10 @@ litigation.
    <plugin id="de.cau.cs.kieler.core.model" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.core.perspectives" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="de.cau.cs.kieler.cview" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+   <plugin id="de.cau.cs.kieler.cview.ecids" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="de.cau.cs.kieler.kev" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
