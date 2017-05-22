@@ -59,6 +59,7 @@ class BenchmarkSuite extends UIJob {
     override runInUIThread(IProgressMonitor monitor) {
         try {
             if (isBambooRun) println("=== STARTED Benchmarks ===")
+            flush
             
             // Setup
             val injector = Guice.createInjector
@@ -99,13 +100,13 @@ class BenchmarkSuite extends UIJob {
         } catch (Exception e) {
             if (isBambooRun) println("=== FAILED Benchmarks ===")
             if (isBambooRun) e.printStackTrace else throw e
+            flush
         } finally {
             if (isBambooRun) println("=== FINISHED Benchmarks ===")
-            if (isBambooRun) {
-                val closed = PlatformUI.workbench.close
-                if (!closed) {
-                    System.exit(0)
-                }
+            if (isBambooRun) { // Shutdown
+                flush
+                PlatformUI.workbench.close
+                System.exit(-1)
             }
         }
         return Status.OK_STATUS
@@ -159,6 +160,14 @@ class BenchmarkSuite extends UIJob {
             case id.nullOrEmpty: true
             default: false
         }
-    }    
+    }
+    
+    /**
+     * Flushes all pipes.
+     */
+    private def flush() {
+        System.out.flush
+        System.err.flush
+    } 
 
 }
