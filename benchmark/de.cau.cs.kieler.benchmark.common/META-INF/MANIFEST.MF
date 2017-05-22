@@ -17,4 +17,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.orbit.mongodb;bundle-version="3.2.2"
 Export-Package: de.cau.cs.kieler.benchmark.common
 Bundle-Activator: de.cau.cs.kieler.benchmark.common.CommonBenchmarkActivator
+Bundle-ActivationPolicy: lazy
 
