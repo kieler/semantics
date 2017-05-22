@@ -73,30 +73,30 @@ class BenchmarkSuite extends UIJob {
                 }
     
             // Run each benchmark
-//            for (benchmarkClass : benchmarks) {
-//                val filterInstance = injector.getInstance(benchmarkClass)
-//                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
-//                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
-//                    if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
-//                    try {
-//                        // Prepare
-//                        val benchmark = injector.getInstance(benchmarkClass)
-//                        benchmark.prepare(data)
-//                        
-//                        // Clean JVM
-//                        System.gc
-//                        Thread.sleep(500)
-//                        
-//                        // Perform benchmark and store data
-//                        val result = benchmark.perform(data)
-//                        db.storeResult(benchmark, data, result)
-//                    } catch (Exception e) {
-//                        if (isBambooRun) e.printStackTrace else throw e
-//                    }
-//                }
-//                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
-//                flush
-//            }
+            for (benchmarkClass : benchmarks) {
+                val filterInstance = injector.getInstance(benchmarkClass)
+                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
+                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
+                    if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
+                    try {
+                        // Prepare
+                        val benchmark = injector.getInstance(benchmarkClass)
+                        benchmark.prepare(data)
+                        
+                        // Clean JVM
+                        System.gc
+                        Thread.sleep(500)
+                        
+                        // Perform benchmark and store data
+                        val result = benchmark.perform(data)
+                        db.storeResult(benchmark, data, result)
+                    } catch (Exception e) {
+                        if (isBambooRun) e.printStackTrace else throw e
+                    }
+                }
+                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
+                flush
+            }
     
             // Save database
             db.save
