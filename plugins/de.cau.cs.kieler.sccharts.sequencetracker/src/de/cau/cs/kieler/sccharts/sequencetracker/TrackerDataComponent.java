@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 public class TrackerDataComponent extends JSONObjectDataComponent
         implements IJSONObjectDataComponent {
 
-    static final String CONSOLE_NAME = "SCCharts ActivityTracker";
+    static final String CONSOLE_NAME = "SCCharts Activity Sequence Tracker";
     
     static final String TRANSITION_NAME = "transition";
     
