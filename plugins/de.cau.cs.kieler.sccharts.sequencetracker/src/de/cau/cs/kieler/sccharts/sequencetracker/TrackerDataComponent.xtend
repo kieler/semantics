@@ -51,7 +51,7 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     static final String ENVIRONMENT_OUTPUT = "User";
 
     MessageConsoleStream consoleStream = null;
-    
+
     TransitionSerializer transitionSerializer = null;
 
     private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
@@ -59,19 +59,16 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     private State modelRoot = null;
 
     // -------------------------------------------------------------------------
-    
-    def void TrackerDataComponent () {
+    def void TrackerDataComponent() {
         println("BUH")
     }
 
     // -------------------------------------------------------------------------
-    
 //    @Inject
 //    extension SCChartsExtension
 //
 //    @Inject
 //    extension SCChartsSerializeHRExtension
-
     // -------------------------------------------------------------------------
     override initialize() throws KiemInitializationException {
         val console = findConsole(CONSOLE_NAME);
@@ -81,7 +78,7 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
         eObjectMap = new HashMap<String, EObject>();
         modelRoot = null;
         consoleStream.println("@startuml");
-        
+
         transitionSerializer = Guice.createInjector().getInstance(TransitionSerializer);
     }
 
@@ -305,7 +302,6 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     }
 
     // -------------------------------------------------------------------------
-
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
         action.eAllContents().filter(typeof(Emission)).toList();
@@ -315,15 +311,15 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     def List<Assignment> getAllContainedAssignments(Action action) {
         action.eAllContents().filter(typeof(Assignment)).toList();
     }
-    
+
     // -------------------------------------------------------------------------
     def List<ValuedObject> getEffectAssignmentValuedObjects(Transition transition) {
         var returnList = newArrayList; // as EList<ValuedObject>
-        //for (assignment : transition.eAllContents().filter(typeof(Assignment)).toList()) {
+        // for (assignment : transition.eAllContents().filter(typeof(Assignment)).toList()) {
         for (assignment : transition.allContainedAssignments) {
             returnList.add(assignment.valuedObject)
         }
-        //for (assignment : transition.eAllContents().filter(typeof(Emission)).toList()) {
+        // for (assignment : transition.eAllContents().filter(typeof(Emission)).toList()) {
         for (assignment : transition.allContainedEmissions) {
             returnList.add(assignment.valuedObject)
         }
