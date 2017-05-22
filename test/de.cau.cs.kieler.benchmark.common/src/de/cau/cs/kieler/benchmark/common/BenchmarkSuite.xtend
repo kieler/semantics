@@ -22,6 +22,8 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.ui.PlatformUI
+import org.eclipse.core.resources.ResourcesPlugin
+import java.nio.file.Paths
 
 /**
  * The main benchmark suite starting all benchmarks.
@@ -71,32 +73,38 @@ class BenchmarkSuite extends UIJob {
                 }
     
             // Run each benchmark
-            for (benchmarkClass : benchmarks) {
-                val filterInstance = injector.getInstance(benchmarkClass)
-                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
-                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
-                    if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
-                    try {
-                        // Prepare
-                        val benchmark = injector.getInstance(benchmarkClass)
-                        benchmark.prepare(data)
-                        
-                        // Clean JVM
-                        System.gc
-                        Thread.sleep(500)
-                        
-                        // Perform benchmark and store data
-                        val result = benchmark.perform(data)
-                        db.storeResult(benchmark, data, result)
-                    } catch (Exception e) {
-                        if (isBambooRun) e.printStackTrace else throw e
-                    }
-                }
-                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
-            }
+//            for (benchmarkClass : benchmarks) {
+//                val filterInstance = injector.getInstance(benchmarkClass)
+//                if (isBambooRun) println("Executing Benchmark: " + filterInstance.ID)
+//                for (data : ModelsRepository.models.filter[filterInstance.filter(it)]) {
+//                    if (isBambooRun) println(new StringBuilder("\nPerforming benchmark with model: ").append(data.repositoryPath.fileName).append(":").append(data.modelPath).toString)
+//                    try {
+//                        // Prepare
+//                        val benchmark = injector.getInstance(benchmarkClass)
+//                        benchmark.prepare(data)
+//                        
+//                        // Clean JVM
+//                        System.gc
+//                        Thread.sleep(500)
+//                        
+//                        // Perform benchmark and store data
+//                        val result = benchmark.perform(data)
+//                        db.storeResult(benchmark, data, result)
+//                    } catch (Exception e) {
+//                        if (isBambooRun) e.printStackTrace else throw e
+//                    }
+//                }
+//                if (isBambooRun) println("Finished Benchmark: " + filterInstance.ID)
+//                flush
+//            }
     
             // Save database
             db.save
+            
+            // Indicate success
+            if (isBambooRun) {
+                ResourcesPlugin.getWorkspace().getRoot().getProject("SUCCESS").create(null)
+            }
         } catch (Exception e) {
             if (isBambooRun) println("=== FAILED Benchmarks ===")
             if (isBambooRun) e.printStackTrace else throw e
@@ -105,8 +113,7 @@ class BenchmarkSuite extends UIJob {
             if (isBambooRun) println("=== FINISHED Benchmarks ===")
             if (isBambooRun) { // Shutdown
                 flush
-                PlatformUI.workbench.close
-                System.exit(-1)
+                if (!PlatformUI.workbench.close) System.exit(-1)
             }
         }
         return Status.OK_STATUS
@@ -131,10 +138,10 @@ class BenchmarkSuite extends UIJob {
                         val builder = new StringBuilder
                         builder.append(benchmark.class.name)
                         builder.append(" has an invalid ID!\n")
-                        builder.append(" -The ID must not be null or empty.\n")
-                        builder.append(" -The ID must not be _id.\n")
-                        builder.append(" -The ID must not start with the dollar sign ($) character.\n")
-                        builder.append(" -The ID must not contain the dot (.) character.\n")
+                        builder.append(" - The ID must not be null or empty.\n")
+                        builder.append(" - The ID must not be _id.\n")
+                        builder.append(" - The ID must not start with the dollar sign ($) character.\n")
+                        builder.append(" - The ID must not contain the dot (.) character.\n")
                         throw new Exception(builder.toString)
                     } else {
                         ids.add(benchmark.ID)
