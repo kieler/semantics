@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sccharts.activitytracker;
+package de.cau.cs.kieler.sccharts.sequencetracker;
 
 import java.util.HashMap;
 
@@ -111,7 +111,7 @@ public class TrackerDataComponent extends JSONObjectDataComponent
             }
         } else {
             throw (new KiemExecutionException(
-                    "SCCharts Activity Tracker can only track activity of SCCharts models.", false,
+                    "SCCharts Sequence Tracker can only track activity sequences of SCCharts models.", false,
                     false, false, null));
         }
         return false;
