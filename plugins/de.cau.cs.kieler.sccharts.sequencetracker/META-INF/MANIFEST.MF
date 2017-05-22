@@ -14,5 +14,6 @@ Require-Bundle: de.cau.cs.kieler.sccharts,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.xtext.ui;bundle-version="2.10.0"
 
