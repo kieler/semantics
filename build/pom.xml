@@ -78,7 +78,6 @@
       </repositories>
       
       <modules>
-        <module>../benchmark</module>
         <module>../test</module>
         <module>../features/de.cau.cs.kieler.benchmark.feature</module>
         <module>de.cau.cs.kieler.semantics.benchmark.repository</module>

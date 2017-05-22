@@ -19,7 +19,7 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
-    <!-- General infrastructure -->
+    <!-- TEST General infrastructure -->
     <module>de.cau.cs.kieler.test.common</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
 
@@ -28,6 +28,12 @@
     <module>de.cau.cs.kieler.sccharts.test</module> <!-- responsible: als  -->
     <module>de.cau.cs.kieler.sccharts.sim.c.test</module> <!-- responsible: aas  -->
     <module>de.cau.cs.kieler.esterel.sim.c.test</module> <!-- responsible: aas  -->
+
+    <!-- BENCHMARK General infrastructure -->
+    <module>de.cau.cs.kieler.benchmark.common</module>
+
+    <!-- BENCHMARK Plugins -->
+    <module>de.cau.cs.kieler.sccharts.benchmark</module> <!-- responsible: als  -->
   </modules>
 
 </project>
