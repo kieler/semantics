@@ -7,4 +7,7 @@
 			class = "de.cau.rtsys.peu.railSL.RailSLPackage"
 			genModel = "model/generated/RailSL.genmodel" />
 	</extension>
+ <extension
+       point="de.cau.cs.kieler.kico.transformation">
+ </extension>
 </plugin>

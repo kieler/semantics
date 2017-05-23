@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Generates code from your model files on save.
@@ -67,6 +68,11 @@ class RailSLGenerator extends AbstractGenerator {
 	final static val SPEED_SLOW = 45;
 	final static val SPEED_FULL = 120;
 
+    def EObject transform(EObject model) {
+        
+    }
+
+    /*
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
         generateHeaders(fsa)
@@ -77,7 +83,7 @@ class RailSLGenerator extends AbstractGenerator {
 		fsa.generateFile('controller.sct', generateCode(resource))
 
 	}
-	
+	*/
 	/*************************************************************************
 	 * S T A T I C   C O D E   G E N E R A T I O N ***************************
 	 *************************************************************************/
