@@ -25,6 +25,9 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.OperatorType
+import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Generates code from your model files on save.
@@ -58,28 +61,38 @@ class RailSLGenerator extends AbstractGenerator {
 	static var nextRegionID = 0;
 	static var nextStateID = 0;
 
+    static var valObjects = new HashMap<String, ValuedObject>()
+
 	final static val SPEED_SLOW = 45;
 	final static val SPEED_FULL = 120;
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
+        generateHeaders()
+        generateSnippets()
+
 		
+		// TODO What should happen here? 
 		fsa.generateFile('controller.sct', generateCode(resource))
-		
 
 	}
 	
+	def void generateHeaders() {
+	   // TODO implement me!
+	}
+	
+	def void generateSnippets() {
+	   // TODO implement me!    
+	}
+	
 	/**
-	 * Generates all code required for a model.
-	 * 
+	 * Transforms the model into an SCCharts model
 	 */
 	def String generateCode(Resource resource) {
 		
 		var chart = createSCChart();
 		
-		/****************************************************************
-		 * I N T E R F A C E ********************************************
-		 ****************************************************************/
+		// I N T E R F A C E
 		
 		// input bool contacts[48][2];
 		val contactsDecl = createDeclaration(ValueType.BOOL)
@@ -91,6 +104,7 @@ class RailSLGenerator extends AbstractGenerator {
 		contactsDecl.annotations.add(createStringAnnotation("Wrapper", "contacts"));
 		
 		chart.declarations.add(contactsDecl)
+		valObjects.put("contacts", contacts)
 		
 		// output int tracks[48][2];
 		val tracksDecl = createDeclaration(ValueType.INT)
@@ -102,6 +116,7 @@ class RailSLGenerator extends AbstractGenerator {
 		tracksDecl.annotations.add(createStringAnnotation("Wrapper", "tracks"))
 		
 		chart.declarations.add(tracksDecl)
+		valObjects.put("tracks", tracks)
 		
 		// output bool points[30];
 		val pointsDecl = createDeclaration(ValueType.BOOL)
@@ -112,6 +127,7 @@ class RailSLGenerator extends AbstractGenerator {
 		pointsDecl.annotations.add(createStringAnnotation("Wrapper", "points"))
 		
 		chart.declarations.add(pointsDecl)
+		valObjects.put("points", points)
 		
 		// output int signals[48][2];
 		val signalsDecl = createDeclaration(ValueType.INT)
@@ -122,6 +138,7 @@ class RailSLGenerator extends AbstractGenerator {
 		signalsDecl.annotations.add(createStringAnnotation("Wrapper","signals"))
 		
 		chart.declarations.add(signalsDecl)
+		valObjects.put("signals", signals)
 		
 		// output bool lights[24];
 		val lightsDecl = createDeclaration(ValueType.BOOL)
@@ -132,8 +149,17 @@ class RailSLGenerator extends AbstractGenerator {
 		lightsDecl.annotations.add(createStringAnnotation("Wrapper", "lights"))
 		
 		chart.declarations.add(lightsDecl)
+		valObjects.put("lights", lights)
 		
+		// input bool second;
+		val secondDecl = createDeclaration(ValueType.BOOL)
+		secondDecl.input = true
+		val second = createValuedObject("second")
+		secondDecl.attach(second)
+		secondDecl.annotations.add(createStringAnnotation("Wrapper", "second"))
 		
+		chart.declarations.add(secondDecl)
+		valObjects.put("second", second);
 		
 		// STUFF VON STEVEN UND ALEX
 		/*
@@ -152,6 +178,10 @@ class RailSLGenerator extends AbstractGenerator {
 		return "";
 		
 	}
+	
+	/**************************************************************************
+	 * T R A N S F O R M A T I O N S ******************************************
+	 **************************************************************************/
 	
 	/**
 	 * Compiles a block into a region in the given state.
@@ -222,11 +252,14 @@ class RailSLGenerator extends AbstractGenerator {
         var currentState = region.createInitialState("init") 
         var i = 0
        
-        for (segment : lStatement.lights) {
+        val lights = valObjects.get("lights")       
+       
+        for (light : lStatement.lights) {
            var nextState = region.createState("_S" + i)
            var transition = currentState.createImmediateTransitionTo(nextState)
-           // TODO set effect to lights[lightIndex] = setting 
-           // transition.setEffect();
+           transition.addEffect(lights.assign(createIntValue(setting)) => [
+               indices += createIntValue(light)
+           ])
            i++
         }
        
@@ -249,11 +282,14 @@ class RailSLGenerator extends AbstractGenerator {
        var currentState = region.createInitialState("init") 
        var i = 0
        
+       val points = valObjects.get("points")
+       
        for (segment : spStatement.points) {
            var nextState = region.createState("_S" + i)
            var transition = currentState.createImmediateTransitionTo(nextState)
-           // TODO set effect to points[pointIndex] = direction 
-           // transition.setEffect();
+           transition.addEffect(points.assign(createIntValue(direction)) => [
+               indices += createIntValue(segment)
+           ])
            i++
        }
        
@@ -265,6 +301,8 @@ class RailSLGenerator extends AbstractGenerator {
      * Transforms an empty state into a track statement state.
      * 
      * This state sets one or multiple tracks to a certain setting.
+     * 
+     * @TODO Make this set signals as well
      */
 	def void makeSetTrackStatement(State state, SetTrackStatement stStatement) {
 	   state.label = "_" + getStateID() + "_SetTrack"
@@ -277,11 +315,22 @@ class RailSLGenerator extends AbstractGenerator {
 	   var currentState = region.createInitialState("init") 
 	   var i = 0
 	   
+	   val tracks = valObjects.get("tracks")
+	   
 	   for (segment : stStatement.segments) {
 	       var nextState = region.createState("_S" + i)
 	       var transition = currentState.createImmediateTransitionTo(nextState)
-	       // TODO set effect to tracks[parseTrackSegment][0] = speed, [1] = direction 
-	       // transition.setEffect();
+	       
+	       val trackIndex = segment.parseTrackSegment
+	       
+	       transition.addEffect(tracks.assign(createIntValue(speed)) => [
+	           indices += createIntValue(trackIndex)
+	           indices += createIntValue(0)
+	       ])
+	       transition.addEffect(tracks.assign(createIntValue(direction)) => [
+	           indices += createIntValue(trackIndex)
+	           indices += createIntValue(1)
+	       ])
 	       i++
 	   }
 	   
@@ -311,10 +360,15 @@ class RailSLGenerator extends AbstractGenerator {
 	    transition.delay = delay
 	    
 	    // Get the root state's variable called "contacts", which is a bool array 
-	    val contacts = state.getRootState.declarations.filter[valuedObjects.head.name == "contacts"].head.valuedObjects.head
+	    val contacts = valObjects.get("contacts")
 	    
-	    // TODO fix this
-	    // transition.trigger =
+	    transition.trigger = createOperatorExpression(OperatorType.EQ) => [
+	        subExpressions += contacts.reference => [
+	            indices += createIntValue(contactIndex)
+                indices += createIntValue(contactIndex)
+	        ]
+	        subExpressions += createBoolValue(true)
+	    ]
 	    
 	}
 	
@@ -331,174 +385,12 @@ class RailSLGenerator extends AbstractGenerator {
 	    var transition = init.createImmediateTransitionTo(done)
 	    transition.delay = twStatement.time
 	    
-	    // TODO fix this
-	    // transition.trigger = 
-	}
-	
-	
-	/**********************************************************************
-	 * O L D   A N D   J A N K Y ******************************************
-	 **********************************************************************/
-	
-	
-	/**
-	 * Generates code for a single statement.
-	 */
-	def String compile(Statement statement) {
-		if (statement instanceof ContactWaitStatement) {
-			return compile(statement as ContactWaitStatement);
-		} else if (statement instanceof TimeWaitStatement) {
-			return compile(statement as TimeWaitStatement);
-		} else if (statement instanceof SetTrackStatement) {
-			return compile(statement as SetTrackStatement);
-		} else if (statement instanceof SetPointStatement) {
-			return compile(statement as SetPointStatement);
-		} else if (statement instanceof LightStatement) {
-			return compile(statement as LightStatement);
-		}
-		
-	}
-	
-	/**
-	 * Compiles a LightStatement to an SCCharts state.
-	 */
-	def String compile(LightStatement lStatement) {
-		var lights = lStatement.lights;
-		var state = lStatement.parseLightMode();
-		
-		var ID = getStateID();
-		
-		var result = ">-> _" + ID + "_Light;\n\n"
-		result += "state _" + ID + "_Light {\n";
-		result += "initial state init\n";
-		
-		for (var i = 0; i < lights.size(); i++) {
-			// range check
-			if (lights.get(i) > 23) {
-				throw new IllegalArgumentException("Invalid Light Index: " + lights.get(i) + ". Maximum valid index is 23.");
-			}
-			result += "--> _S" + i + " immediate with /lights[" + lights.get(i) + "] = " + state + ";\n\n";
-			result += "state _S" + i + "\n";
-		}
-		
-		result += "--> done immediate;\n\n"
-		result += "final state done;\n"
-		result += "}" // Transition and closing ';' will be added elsewhere.
-		return result;
-	}
-	
-	/**
-	 * Compiles a SetPointStatement to an SCCharts state.
-	 */
-	def String compile(SetPointStatement spStatement) {
-		var points = spStatement.points;
-		var orientation = parsePointSetting(spStatement);
-		
-		var ID = getStateID();
-		
-		var result= ">-> _" + ID + "_SetPoint;\n\n"
-		result += "state _" + ID + "_SetPoint {\n";
-		result += "initial state init\n";
-		
-		for (var i = 0; i < points.size(); i++) {
-			// range check
-			if (points.get(i) > 29) {
-				throw new IllegalArgumentException("Invalid Point index: " + points.get(i) + ". Maximum valid index is 29.");
-			}
-			result += "--> _S" + i + " immediate with /points[" + points.get(i) + "] = " + orientation + ";\n\n"
-			result += "state _S" + i + "\n";
-		}
-		
-		result += "--> done immediate;";
-		result += "final state done;\n";
-		result += "}" // Transition and closing ';' will be added elsewhere.
-		return result;
-	}
-	 
-	/**
-	 * Compiles a SetTrackStatement to an SCCharts state.
-	 * 
-	 * TODO: Set signals accordingly
-	 */
-	def String compile(SetTrackStatement stStatement) {
-		var segments = stStatement.segments;
-		var direction = stStatement.parseDirection(); 
-		var speed = stStatement.parseSpeed();
-		
-		var ID = getStateID();
-		
-		var result = ">-> _" + ID + "_SetTrack;\n\n";
-		result += "state _" + ID + "_SetTrack {\n";
-		result += "initial state init\n"
-		
-		for (var i = 0; i < segments.size(); i++) {
-			var segment = segments.get(i).parseTrackSegment();
-			
-			result += "--> _S" + i + " immediate with " + 
-			"/ tracks[" + segment + "][0] = " + direction + ";";
-			result += "tracks[" + segment + "][1] = " + speed + ";\n\n";
-			result += "state _S" + i + "\n"
-		}
-		
-		result += "--> done immediate;\n\n";
-		result += "final state done;\n"
-		result += "}" // Transition and closing ';' will be added elsewhere.
-		return result;
-	}
-	
-	/**
-	 * Compile a ContactWaitStatement into an SCCharts state.
-	 * 
-	 * This state references a prototypical state in order to avoid
-	 * duplicate code.
-	 * 
-	 * Due to a current issue, the contact variable has to be copied in each instance.
-	 */
-	def String compile(ContactWaitStatement cStatement) {
-		
-		var index = 0;
-		if (cStatement.contactIndex == "second") {
-			index = 1;
-		}
-		
-		var refState = "ReachContact";
-		if (cStatement.event.equals("Pass")) {
-			refState = "PassContact";
-		}
-		
-		var track = parseTrackSegment(cStatement.segName);
-		
-		var ID = getStateID(); 
-		
-		var result = ">-> _" + ID + "_ContactWaitStatement;\n\n"; // Final transition of previous state
-		result += "state _" + ID + "_ContactWaitStatement {\n";
-		result += "bool contact;\n"
-		result += "during /contact = contacts[" + track + "][" + index + "];\n\n";
-		result += "initial state wait references " + refState +"\n";
-		result += ">-> done;\n\n"
-		result += "final state done;\n"
-		result += "}" // Transition and closing ';' will be added elsewhere.
-		return result;
-	}
-	
-	/**
-	 * Compile a timeWaitStatement into an SCCharts state.
-	 * 
-	 * This state references a prototypical time wait chart.
-	 * Due to a current issue, the variable time has to be introduced with an
-	 * additional initial state.
-	 */
-	def String compile(TimeWaitStatement tStatement) {
-		var ID = getStateID();
-		
-		var result = ">-> _" + ID + "_TimeWait;\n\n"
-		result += "state _" + getStateID() + "_TimeWait {\n"
-		result += "int time;\n"
-		result += "entry /time = " + tStatement.getTime() + ";\n\n"
-		result += "initial state wait references WaitTime bind secondsLeft to time\n";
-		result += ">-> done;\n"
-		result += "}" // Transition and closing ';' will be added elsewhere.
-		return result;
+	    val second = valObjects.get("second")
+	    
+	    transition.trigger = createOperatorExpression(OperatorType.EQ) => [
+            subExpressions += second.reference
+            subExpressions += createBoolValue(true)
+        ]
 	}
 	
 	/*****************************************************************************************
