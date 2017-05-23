@@ -28,6 +28,7 @@ import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import org.eclipse.xtext.generator.IFileSystemAccess
 
 /**
  * Generates code from your model files on save.
@@ -69,7 +70,7 @@ class RailSLGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
         generateHeaders()
-        generateSnippets()
+        generateSnippets(fsa)
 
 		
 		// TODO What should happen here? 
@@ -77,13 +78,130 @@ class RailSLGenerator extends AbstractGenerator {
 
 	}
 	
+	/*************************************************************************
+	 * S T A T I C   C O D E   G E N E R A T I O N ***************************
+	 *************************************************************************/
+	
 	def void generateHeaders() {
 	   // TODO implement me!
 	}
 	
-	def void generateSnippets() {
-	   // TODO implement me!    
+	def void generateSnippets(IFileSystemAccess fsa) {
+	    
+	   fsa.generateFile('contacts.ftl', generateContactsSnippet())
+	   fsa.generateFile('lights.ftl', generateLightsSnippet())
+	   fsa.generateFile('points.ftl', generatePointsSnippet())
+	   fsa.generateFile('signals.ftl', generateSignalsSnippet())
+	   fsa.generateFile('tracks.ftl', generateTracksSnippet())
+	   fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
 	}
+	
+	def String generateMainSnippet() {
+	    var result = "/* C O O L   H E A D E R */\n\n"
+	    result += '#include "kicking.h"\n'
+        result += '#include "railway.h"\n\n'
+        result += "// Basic dimension constants\n"
+        result += "#define NUM_OF_TRACKS 48\n"
+        result += "#define NUM_OF_POINTS 30\n"
+        result += "#define NUM_OF_LIGHTS 24\n\n"
+        result += "int main(int *argn, char *argv[]) {\n\n"
+        result += "\t// Setup and establishing connection to the railway\n"
+        result += "\tstruct railway_system *railway;\n"
+        result += "\trailway = railway_initsystem(&kicking);\n"
+        result += '\trailway_openlinks_udp(railway,"node%02i","/dev/ttyS0");\n'
+        result += "\trailway_startcontrol(railway,0,0);\n\n"
+        result += "\treset();\n\n"
+        result += "\twhile(1) {\n\n"
+        result += "${inputs}\n\n"
+        result += "\t\ttick();\n\n"
+        result += "${outputs}\n"
+        result += "\t}\n\n"
+        result += "\t// Shut down the connection to the railway\n"
+        result += "\trailway_stopcontrol(railway,1);\n"
+        result += "\trailway_closelinks(railway);\n"
+        result += "\trailway_donesystem(railway);\n\n"
+        result += "\treturn 0;\n"
+        result += "}\n"
+	    return result
+	}
+	
+	def String generateTracksSnippet() {
+	    var result = "<#-- T R A C K S -->\n"
+        result += "<#macro tracks>\n"
+        result += "\t<@output>\n"
+        result += "\t\t// Set the tracks to the appropriate speed\n"
+        result += "\t\tfor (int i = 0; i < NUM_OF_TRACKS; i++) {\n"
+        result += "\t\t\tsettrack(railway, i, ${varname}[i][0], ${varname}[i][1]);\n"
+        result += "\t\t}\n"
+        result += "\t</@>\n"
+        result += "</#macro>\n"
+        return result
+	}
+	
+	def String generateSignalsSnippet() {
+	   var result = "<#-- S I G N A L S -->\n"
+       result += "<#macro signals>\n"
+       result += "\t<@output>\n"
+       result += "\t\t// Set all the signals appropriately\n"
+       result += "\t\tfor (int i = 0; i < NUM_OF_TRACKS; i++) {\n"
+       result += "\t\t\tif ((i != KH_ST_0) && (i != KH_ST_6) && (i != IC_ST_0) && (i != IC_ST_4) && \\ \n"
+       result += "\t\t\t\t(i != OC_ST_0) && (i != OC_ST_4) && (i != IC_JCT_0) && (i != OC_JCT_0) {\n"
+       result += "\t\t\t\tsetsignal(railway, i, 0, ${varname}[i][0];\n"
+       result += "\t\t\t\tsetsignal(railway, i, 1, ${varname}[i][1];\n"
+       result += "\t\t\t}\n"
+       result += "\t\t}\n"
+       result += "\n</@>\n"
+       result += "</#macro>\n"
+       return result
+	}
+
+	def String generatePointsSnippet() {
+	    var result = "<#-- S W I T C H   P O I N T S -->\n"
+        result += "<#macro points>\n"
+        result += "\t<@output>\n"
+        result += "\t\t// Set all the switch points appropriately\n"
+        result += "\t\tfor (int i = 0; i < NUM_OF_POINTS; i++) {\n"
+        result += "\t\t\tsetpoint(railway, i, ${varname}[i]);\n"
+        result += "\t\t}\n"
+        result += "\t</@>\n"
+        result += "</#macro>\n"
+        return result
+	}
+	
+	def String generateLightsSnippet() {
+        var result = "<#-- L I G H T S -->\n"
+        result += "<#macro lights>\n"
+        result += "\t<@output>\n"
+        result += "\t\t// Set all the lights appropriately\n"
+        result += "\t\tfor (int i = 0; i < NUM_OF_LIGHTS; i++) {\n"
+        result += "\t\t\tsetlight(railway, i, ${varname}[i];\n"
+        result += "\t\t}\n"
+        result += "\t</@>\n"
+        result += "</#macro>\n"
+        return result
+	}
+	
+	def String generateContactsSnippet() {
+	    var result = "<#-- C O N T A C T S -->\n"
+	    result += "<#macro contacts>\n"
+	    result += "\t<@input>\n"
+	    
+	    result += "\t\t// Scan the contacts at the beginning of each tick\n" 
+	    result += "\t\tfor (int i = 0; i < NUM_OF_TRACKS, i++) {\n"
+	    result += "\t\t\tif ((i != KH_ST_0) && (i != KH_ST_6) && (i != IC_ST_0) && (i != IC_ST_4) && \\ \n"
+	    result += "\t\t\t\t(i != OC_ST_0) && (i != OC_ST_4) && (i != IC_JCT_0) && (i != OC_JCT_0)) {\n"
+	    result += "\t\t\t\t${varname}[i][0] = scancontact(railway, i, 0, 1);\n"
+	    result += "\t\t\t\t${varname}[i][1] = scancontact(railway, i, 1, 1);\n"
+	    result += "\t\t\t}\n"
+	    result += "\t\t}\n"
+	    result += "\t</@>\n"
+	    result += "</#macro>"
+	    return result
+	}
+	
+	/**************************************************************************
+     * T R A N S F O R M A T I O N S ******************************************
+     **************************************************************************/
 	
 	/**
 	 * Transforms the model into an SCCharts model
@@ -178,10 +296,6 @@ class RailSLGenerator extends AbstractGenerator {
 		return "";
 		
 	}
-	
-	/**************************************************************************
-	 * T R A N S F O R M A T I O N S ******************************************
-	 **************************************************************************/
 	
 	/**
 	 * Compiles a block into a region in the given state.
