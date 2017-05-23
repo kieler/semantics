@@ -30,13 +30,27 @@ class TransitionSerializer {
     }
 
     def serializeTrigger(Transition transition) {
-        val trigger = transition.serialize
-        return trigger.subSequence(0, trigger.indexOf("/")).toString
+        val triggerEffect = transition.serialize
+        if (triggerEffect.indexOf("/") < 0) {
+            if (transition.effects.size == 0) {
+                return triggerEffect
+            } else {
+                return ""
+            }
+        }
+        return triggerEffect.subSequence(0, triggerEffect.indexOf("/")).toString
     }
 
     def serializeEffects(Transition transition) {
-        val trigger = transition.serialize
-        return trigger.subSequence(trigger.indexOf("/") + 1, trigger.length).toString
+        val triggerEffect = transition.serialize
+        if (triggerEffect.indexOf("/") < 0) {
+            if (transition.effects.size == 0) {
+                return ""
+            } else {
+                return triggerEffect
+            }
+        }
+        return triggerEffect.subSequence(triggerEffect.indexOf("/") + 1, triggerEffect.length).toString
     }
 
 }

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import com.google.inject.Guice
+import java.util.HashSet
 
 class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
@@ -49,6 +50,12 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     static final String ENVIRONMENT_INPUT = "User";
 
     static final String ENVIRONMENT_OUTPUT = "User";
+
+    static final String SIGNAL_PRESENT = "PRESENT";
+    static final String SIGNAL_ABSENT = "ABSENT";
+
+    static HashMap<String, Object> valuedObjectValues = new HashMap<String, Object>
+    static HashMap<String, Boolean> valuedObjectChanged = new HashMap<String, Boolean>
 
     MessageConsoleStream consoleStream = null;
 
@@ -95,14 +102,49 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     }
 
     // -------------------------------------------------------------------------
+    def applyValue(String valuedObjectName, Object value) {
+        var changed = false
+        if (!valuedObjectValues.containsKey(valuedObjectName)) {
+            changed = true
+        } else if (value != null && (value.equals(SIGNAL_PRESENT) || value.equals(SIGNAL_ABSENT))) {
+            changed = true
+        } else {
+            val oldValue = valuedObjectValues.get(valuedObjectName)
+            if (oldValue != value) {
+                changed = true
+            }
+        }
+        if (changed) {
+            valuedObjectValues.put(valuedObjectName, value)
+            valuedObjectChanged.put(valuedObjectName, true)
+        } else {
+            valuedObjectChanged.put(valuedObjectName, false)
+        }
+    }
+
+    def boolean hasChanged(String valuedObjectName) {
+        if (valuedObjectChanged.containsKey(valuedObjectName)) {
+            valuedObjectChanged.get(valuedObjectName)
+        }
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
     def getSignalVarValue(String key, JSONObject jSONObject) {
         var value = jSONObject.getString(key);
         // Signal special case
         if (JSONSignalValues.isSignalValue(jSONObject.get(key))) {
-            if (JSONSignalValues.isPresent(jSONObject.get(key))) {
-                value = "PRESENT";
+            val signalValue = JSONSignalValues.getSignalValue(jSONObject.get(key))
+            if (signalValue != null) {
+                // Valued signal
+                value = signalValue.toString
             } else {
-                value = "ABSENT";
+                // Pure signal
+                if (JSONSignalValues.isPresent(jSONObject.get(key))) {
+                    value = SIGNAL_PRESENT;
+                } else {
+                    value = SIGNAL_ABSENT;
+                }
             }
         }
 
@@ -161,8 +203,9 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
                 obj = namesArray.get(c);
                 if (obj instanceof String) {
                     var key = obj;
-                    // var value = key.getSignalVarValue(jSONObject)
+                    var value = key.getSignalVarValue(jSONObject)
                     valuedObjectList.add(key)
+                    applyValue(key, value)
                 }
             } catch (JSONException e) {
             }
@@ -172,83 +215,55 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
             val triggerValuedObjects = transition.getTriggerValuedObjects
             val effectValuedObjects = transition.effectAssignmentValuedObjects
 
+            // Optional Note
+            val transitionNote = transition.sourceState.id + " -> " + transition.targetState.id // + " with " + transitionSerializer.serializeTrigger(transition)  
+            consolePrintln("note left \n   " + transitionNote + "")
+            consolePrintln("end note\n")
+
             if (!triggerValuedObjects.nullOrEmpty) {
                 for (valuedObject : triggerValuedObjects) {
-                    for (senderComponent : valuedObject.name.senderRegions) {
-                        for (receiverComponent : valuedObject.name.receiverRegions) {
-                            consolePrintln("autonumber")
+                    if (valuedObject.name.hasChanged) {
+                        for (senderComponent : valuedObject.name.senderRegions) {
+                            for (receiverComponent : valuedObject.name.receiverRegions) {
+                                consolePrintln("autonumber")
 
-                            consolePrint(senderComponent)
-                            // consolePrint(transition.sourceState.id)
-                            consolePrint(" -> ")
-                            consolePrint(receiverComponent)
-                            // consolePrint(transition.targetState.id)
-                            consolePrint(" : ")
+                                consolePrint(senderComponent)
+                                // consolePrint(transition.sourceState.id)
+                                consolePrint(" -> ")
+                                consolePrint(receiverComponent)
+                                // consolePrint(transition.targetState.id)
+                                consolePrint(" : ")
 
-                            consolePrintln(transitionSerializer.serializeTrigger(transition))
-                            consolePrintln("")
+                                consolePrintln(transitionSerializer.serializeTrigger(transition))
+                                consolePrintln("")
+                            }
                         }
                     }
                 }
             }
             if (!effectValuedObjects.nullOrEmpty) {
                 for (valuedObject : effectValuedObjects) {
-                    for (senderComponent : valuedObject.name.senderRegions) {
-                        for (receiverComponent : valuedObject.name.receiverRegions) {
-                            consolePrintln("autonumber")
+                    if (valuedObject.name.hasChanged) {
+                        for (senderComponent : valuedObject.name.senderRegions) {
+                            for (receiverComponent : valuedObject.name.receiverRegions) {
+                                consolePrintln("autonumber")
 
-                            consolePrint(senderComponent)
-                            // consolePrint(transition.sourceState.id)
-                            consolePrint(" -> ")
-                            consolePrint(receiverComponent)
-                            // consolePrint(transition.targetState.id)
-                            consolePrint(" : ")
+                                consolePrint(senderComponent)
+                                // consolePrint(transition.sourceState.id)
+                                consolePrint(" -> ")
+                                consolePrint(receiverComponent)
+                                // consolePrint(transition.targetState.id)
+                                consolePrint(" : ")
 
-                            consolePrintln(transitionSerializer.serializeEffects(transition))
-                            consolePrintln("")
+                                consolePrintln(transitionSerializer.serializeEffects(transition))
+                                consolePrintln("")
+                            }
                         }
                     }
                 }
             }
 
         }
-
-//        for (region : toplevelRegions) {
-//            // valuedObjectList
-//            for (valuedObject : valuedObjectList) {
-//                 if (valuedObject.getSenderRegions().contains(region.id)) {
-//                     
-//                 }
-//            }
-//        }
-//        consoleStream.println("Inputs: " + inputs);
-//        for (var c = 0; c < namesArray.length(); c++) {
-//            var Object obj;
-//            try {
-//                obj = namesArray.get(c);
-//                if (obj instanceof String) {
-//                    var key = obj;
-//                    var value = jSONObject.getString(key);
-//                    if (key.equals(TRANSITION_NAME)) {
-//                        var transitions = value.split(",");
-//                        if (transitions != null) {
-//                            for (String eObjectID : transitions) {
-//                                val eObject = getEObject(eObjectID);
-//                                if (eObject instanceof Transition) {
-//                                    val transition = eObject;
-//                                    var output = transition.getSourceState().getId() + "->" +
-//                                        transition.getTargetState().getId();
-//                                    consoleStream.println(output);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            } catch (JSONException e) {
-//            }
-//        }
-//        consoleStream.println("Outputs: " + outputs);
-//        consoleStream.println("");
         return null;
     }
 
@@ -329,15 +344,22 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     // -------------------------------------------------------------------------
     def String[] getSenderRegions(String name) throws KiemExecutionException {
         val valuedObject = getValuedObject(name);
-        var returnList = newArrayList
+        var returnList = newHashSet
         for (region : toplevelRegions) {
             val actions = region.eAllContents().filter(typeof(Action)).toList()
             for (action : actions) {
                 if (action.getAllContainedEmissions.filter[e|e.valuedObject == valuedObject].toList.size > 0) {
-                    returnList.add(region.id)
-                }
-                if (action.allContainedAssignments.filter[e|e.valuedObject == valuedObject].toList.size > 0) {
-                    returnList.add(region.id)
+                    if (region.id == null) {
+                        returnList.add("REGION_WITH_NO_ID")
+                    } else {
+                        returnList.add(region.id)
+                    }
+                } else if (action.allContainedAssignments.filter[e|e.valuedObject == valuedObject].toList.size > 0) {
+                    if (region.id == null) {
+                        returnList.add("REGION_WITH_NO_ID")
+                    } else {
+                        returnList.add(region.id)
+                    }
                 }
             }
         }
@@ -350,7 +372,7 @@ class TrackerDataComponent extends JSONObjectDataComponent implements IJSONObjec
     // -------------------------------------------------------------------------
     def String[] getReceiverRegions(String name) throws KiemExecutionException {
         val valuedObject = getValuedObject(name);
-        var returnList = newArrayList
+        var returnList = newHashSet
         for (region : toplevelRegions) {
             val references = region.eAllContents().filter(typeof(ValuedObjectReference)).toList()
             for (reference : references) {
