@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
@@ -70,6 +71,13 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
                                     "SURFACEDEPTH")
     
     //-----------------------------------------------------------------------------------------------------------------
+    
+    /**
+     * Constructor
+     */
+    new() {
+        super(new SctStandaloneSetup().createInjectorAndDoEMFRegistration)
+    }
     
     /**
      * {@inheritDoc}

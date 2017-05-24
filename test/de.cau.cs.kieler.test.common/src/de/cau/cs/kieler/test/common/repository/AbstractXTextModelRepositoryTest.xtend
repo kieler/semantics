@@ -40,14 +40,8 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
     private val Injector resourceSetInjector;
     
     /**
-     * Default constructor.
-     */
-    new() {
-        this.resourceSetInjector = null
-    }
-    
-    /**
      * Constructor with specific injector for resource set creation.
+     * @param resourceSetInjector the injector. Can be null if not used in tests.
      */
     new(Injector resourceSetInjector) {
         this.resourceSetInjector = resourceSetInjector
@@ -68,11 +62,7 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
         try {
             val uri = URI.createFileURI(absModelPath.toFile.absolutePath)
             // Get resource set
-            var resourceSet =if (resourceSetInjector !== null) {
-                resourceSetInjector.getInstance(XtextResourceSet);
-            } else {
-                uri.xtextResourceSet
-            }
+            var resourceSet = uri.xtextResourceSet
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
             // Load referenced model
             for (absRelatedPath : data.resourceSetModels.filter[it != data.modelPath].map[data.repositoryPath.resolve(it)]) {
@@ -92,10 +82,14 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
     /**
      * @return the correct XtextResourceSet for the given uri based in its file extension.
      */
-    static def XtextResourceSet getXtextResourceSet(URI uri) {
-        uri.checkNotNull
-        val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
-        return registry.getResourceServiceProvider(uri).get(XtextResourceSet)
+    def XtextResourceSet getXtextResourceSet(URI uri) {
+        if (resourceSetInjector !== null) {
+            return resourceSetInjector.getInstance(XtextResourceSet);
+        } else {
+            uri.checkNotNull
+            val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
+            return registry.getResourceServiceProvider(uri).get(XtextResourceSet)
+        }
     }
     
     /**
