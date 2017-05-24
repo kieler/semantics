@@ -30,6 +30,7 @@ import org.eclipse.xtend.lib.annotations.Data
 
 import static extension java.lang.Boolean.*
 import java.util.HashMap
+import java.util.LinkedList
 
 /**
  * Provides the models in the model repositories.
@@ -140,6 +141,7 @@ class ModelsRepository {
         val directoryTestModelPropertiesPatterns = <Path, ModelProperties>newHashMap
         
         def index(Path repository) {
+            val models = new LinkedList
             // Walk directory
             Files.walkFileTree(repository, this)
             // Calculate directory properties
