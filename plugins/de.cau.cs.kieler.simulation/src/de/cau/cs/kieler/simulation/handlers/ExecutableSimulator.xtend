@@ -13,9 +13,11 @@
 package de.cau.cs.kieler.simulation.handlers
 
 import com.google.common.util.concurrent.SimpleTimeLimiter
+import com.google.gson.GsonBuilder
 import de.cau.cs.kieler.simulation.core.DataPool
 import de.cau.cs.kieler.simulation.core.DefaultDataHandler
 import de.cau.cs.kieler.simulation.core.Model
+import de.cau.cs.kieler.simulation.core.Simulator
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -25,8 +27,6 @@ import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.json.JSONObject
-import de.cau.cs.kieler.simulation.core.Simulator
 
 /**
  * Creates a new process by starting an executable and sends / receives variables of this process using JSON.
@@ -57,10 +57,6 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
          
-        val model = new Model()
-        model.name = modelName
-        pool.addModel(model)
-        
         // Get reader and writer for process
         val isr = new InputStreamReader(process.inputStream)
         processReader = new BufferedReader(isr)
@@ -68,9 +64,9 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         
         // Read json data
         var String line = waitForJSONOutput(processReader)
-        println("Parsing JSON:"+line)
-        val json = new JSONObject(line)
-        model.fromJSONObject(json)
+
+        val model = Model.createFromJson(modelName, line)
+        pool.addModel(model)
     }
     
     /**
@@ -79,19 +75,20 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     override write(DataPool pool) {
         // Create json for this model from data pool
         val model = pool.models.findFirst[it.name == modelName]
-        val jsonInput = model.toJSONObject
+        val jsonInput = model.toJson
+        println("Serialized model:"+jsonInput)
         
         // Write data pool to process
-        processWriter.print(jsonInput.toString)
+        processWriter.print(jsonInput)
         processWriter.print("\n")
         processWriter.flush()
         
+        // Read data pool from process
         // Let the process perform tick and wait for output
         val line = waitForJSONOutput(processReader)
-        
-        // Read data pool from process
-        val jsonOutput = new JSONObject(line)
-        model.fromJSONObject(jsonOutput)
+        val newModel = Model.createFromJson(modelName, line)
+        pool.models.remove(model)
+        pool.addModel(newModel)        
     }
     
     /**
@@ -129,6 +126,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             try {
                 line = timeLimiter.callWithTimeout(callable, 1, TimeUnit.SECONDS, false)
             } catch(Exception e) {
+                stop();
                 throw new IOException("Process of simulation "+executable.location.toOSString +" is not responding", e)
             }
             

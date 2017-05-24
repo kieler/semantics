@@ -40,9 +40,9 @@ class ValueColumnEditingSupport extends EditingSupport {
                 return new TextCellEditor(viewer.table)
             } else if(element.value instanceof Boolean) {
                 return new CheckboxCellEditor(viewer.table)
-            } else if(element.value instanceof Float){
-                return new TextCellEditor(viewer.table)
-            } else if(element.value instanceof Integer){
+            } else if(element.value instanceof Float
+                      || element.value instanceof Double
+                      || element.value instanceof Integer){
                 return new TextCellEditor(viewer.table)
             }
         }
@@ -56,9 +56,9 @@ class ValueColumnEditingSupport extends EditingSupport {
                 return v
             } else if(v instanceof Boolean) {
                 return v
-            } else if(v instanceof Float){
-                return v.toString
-            } else if(v instanceof Integer){
+            } else if(v instanceof Float
+                      || v instanceof Double
+                      || v instanceof Integer){
                 return v.toString
             }
         }
@@ -67,16 +67,18 @@ class ValueColumnEditingSupport extends EditingSupport {
     
     override protected setValue(Object element, Object value) {
         if(element instanceof Variable){
-            if(element.value instanceof Float){
-                try {
+            try {
+                if(element.value instanceof Float){
                     element.userValue = Float.valueOf(value.toString)    
-                } catch (NumberFormatException e) {}
-            } else if(element.value instanceof Integer){
-                try {
+                } if(element.value instanceof Double){
+                    element.userValue = Double.valueOf(value.toString)    
+                } else if(element.value instanceof Integer){
                     element.userValue = Integer.valueOf(value.toString)
-                } catch (NumberFormatException e) {}
-            } else {
-                element.userValue = value
+                } else {
+                    element.userValue = value
+                }
+            } catch (NumberFormatException e) {
+                throw new Exception("Can't set variable "+element.name+ " to "+value, e)
             }
             viewer.update(element, null);
         }

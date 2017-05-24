@@ -15,6 +15,8 @@ package de.cau.cs.kieler.prom.builder
 import com.google.common.base.Charsets
 import com.google.common.base.Strings
 import com.google.common.io.Files
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
@@ -49,12 +51,14 @@ import org.eclipse.jdt.core.IClasspathEntry
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kexpressions.impl.IntValueImpl
 
 /**
  * @author aas
  * 
  */
 class KiCoBuilder extends IncrementalProjectBuilder {
+    
     /**
      * Id of the builder
      */
@@ -332,10 +336,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         //TODO: Hardcoded stuff
         val simTargetPathDirectory = new Path(computeTargetPath(res.projectRelativePath.toOSString, true)).removeLastSegments(1)
         var simTemplate = "Simulation.ftl";
-        var simTargetPath = simTargetPathDirectory + File.separator + "Simulation" + Files.getNameWithoutExtension(res.name)+".c"
+        var simTargetPath = simTargetPathDirectory + File.separator + "Simulation_" + Files.getNameWithoutExtension(res.name)+".c"
         if(project.findMember(simTemplate) == null) {
             simTemplate = "src/JavaSimulation.ftl"
-            simTargetPath = simTargetPathDirectory + File.separator + "JavaSimulation" + Files.getNameWithoutExtension(res.name)+".java"
+            simTargetPath = simTargetPathDirectory + File.separator + "JavaSimulation_" + Files.getNameWithoutExtension(res.name)+".java"
             if(project.findMember(simTemplate) == null) {
                 println("No simulation template found.")
                 return;                
@@ -352,7 +356,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                     val data = new WrapperCodeAnnotationData();
                     data.arguments.add(String.valueOf(decl.input))
                     data.arguments.add(String.valueOf(decl.output))
-                    data.arguments.add(String.valueOf(decl.signal))
+                    // add array sizes if any
+                    if(!valuedObject.cardinalities.nullOrEmpty) {
+                        for(card : valuedObject.cardinalities) {
+                            val intVal = card as IntValueImpl;
+                            data.arguments.add(intVal.value.toString)
+                        }
+                    }
                     
                     data.modelName = model.id
                     data.input = true
@@ -416,7 +426,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             System.err.println("Simulation file '" + simPath + "'does not exist in project "+project.name)
             return   
         }
-    
+        
         val fileExtension = new Path(simPath).fileExtension.toLowerCase
         if(fileExtension.equals("c"))
             createExecutableFromCCode(simPath)

@@ -12,8 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import com.google.gson.JsonElement
+import com.google.gson.internal.LinkedTreeMap
 
 /**
  * A container for information about a variable.
@@ -24,58 +28,60 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class Variable {
     /**
-     * Possible types for variables
-     */
-    public enum VariableType {
-        INT, BOOL, FLOAT, STRING
-    }
-    
-    /**
      * The variable name.
      */
     @Accessors
-    private String name
+    @Expose
+    private String name = ""
     
     /**
      * The variable type.
      */
-    private VariableType type
+    @Expose
+    private VariableType type = VariableType.INT
     
     /**
      * The variable value.
      */
     @Accessors
-    private Object value
+    @Expose
+    private Object value = null
     
     /**
      * A value for this variable entered by the user.
      */
     @Accessors
-    private Object userValue
+    private Object userValue = null
     
     /**
      * Is this variable an input of the model?
      */
     @Accessors
-    private boolean isInput
+    @Expose
+    @SerializedName("input")
+    private boolean isInput = false
     
     /**
      * Is this variable an output of the model?
      */
     @Accessors
-    private boolean isOutput
+    @Expose
+    @SerializedName("output")
+    private boolean isOutput = false
  
     /**
      * Is this variable a signal?
      */
     @Accessors
-    private boolean isSignal
+    @Expose
+    @SerializedName("signal")
+    private boolean isSignal = false
     
     /**
      * The model in which this variable is saved.
      */
     @Accessors
-    private Model model
+    private Model model = null
     
     /**
      * Constructor
@@ -146,6 +152,17 @@ class Variable {
             return false
         else
             return !userValue.equals(value)
+    }
+    
+    public def void valueFromJson() {
+        // Make array from json object
+        if(value instanceof LinkedTreeMap<?,?>) {
+            val jsonValue = Model.GSON.toJsonTree(value).getAsJsonObject();
+            val indices = jsonValue.get("indices").asJsonArray
+            val values = jsonValue.get("values").asJsonArray
+            println(indices)
+            println(values)
+        }
     }
     
     /**
