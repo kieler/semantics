@@ -23,6 +23,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static extension com.google.common.base.Preconditions.*
 import static extension de.cau.cs.kieler.test.common.repository.TestModelDataUtil.*
 import com.google.common.reflect.TypeToken
+import com.google.inject.Injector
 
 /**
  * An abstract {@link IModelsRepositoryTest} which automatically parses XText models.
@@ -35,6 +36,22 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
     
     /** The list of hierarchical compare predicates */
     protected val compareHierarchy = newLinkedList(ResourceSetIDComparator, ComplexityComparator, ModelPathComparator)  
+    /** Injector used for resource set creation */
+    private val Injector resourceSetInjector;
+    
+    /**
+     * Default constructor.
+     */
+    new() {
+        this.resourceSetInjector = null
+    }
+    
+    /**
+     * Constructor with specific injector for resource set creation.
+     */
+    new(Injector resourceSetInjector) {
+        this.resourceSetInjector = resourceSetInjector
+    }
     
     /**
      * {@inheritDoc}
@@ -42,7 +59,7 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
     override getModelType() {
         return (new TypeToken<T>(getClass()) {}).rawType
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -51,7 +68,11 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
         try {
             val uri = URI.createFileURI(absModelPath.toFile.absolutePath)
             // Get resource set
-            var resourceSet = uri.xtextResourceSet
+            var resourceSet =if (resourceSetInjector !== null) {
+                resourceSetInjector.getInstance(XtextResourceSet);
+            } else {
+                uri.xtextResourceSet
+            }
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
             // Load referenced model
             for (absRelatedPath : data.resourceSetModels.filter[it != data.modelPath].map[data.repositoryPath.resolve(it)]) {
@@ -73,7 +94,8 @@ abstract class AbstractXTextModelRepositoryTest<T extends EObject> implements IM
      */
     static def XtextResourceSet getXtextResourceSet(URI uri) {
         uri.checkNotNull
-        return Guice.createInjector().getInstance(IResourceServiceProvider.Registry).getResourceServiceProvider(uri).get(XtextResourceSet)
+        val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
+        return registry.getResourceServiceProvider(uri).get(XtextResourceSet)
     }
     
     /**

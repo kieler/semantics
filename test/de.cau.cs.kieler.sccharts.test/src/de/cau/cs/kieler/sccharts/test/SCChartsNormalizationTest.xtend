@@ -31,14 +31,14 @@ import static org.junit.Assert.*
 import static extension java.lang.String.format
 
 /**
- * Tests if all intermediate results of an SCCharts compilation fullfill basic sanity properties.
+ * Tests if all intermediate results of an SCCharts normalization compilation fullfill basic sanity properties.
  * 
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsTransformationsTest extends AbstractXTextModelRepositoryTest<State> {
+class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> {
     
     // List of all transformations
     // in an order that respects dependencies.
@@ -71,6 +71,9 @@ class SCChartsTransformationsTest extends AbstractXTextModelRepositoryTest<State
     
     //-----------------------------------------------------------------------------------------------------------------
     
+    /**
+     * {@inheritDoc}
+     */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts") && !modelData.additionalProperties.containsKey("testSerializability")
     }
@@ -118,7 +121,7 @@ class SCChartsTransformationsTest extends AbstractXTextModelRepositoryTest<State
             
             // Check if feature was removed
             val feature = KiCoPlugin.getFeature(iResult.id)
-            if (feature != null) {
+            if (feature !== null) {
                 assertFalse("Transformed intermediate result of transformation " + iResult.id + " still contains the expanded feature", feature.isContained(iResult.result as State))
             }
         }
