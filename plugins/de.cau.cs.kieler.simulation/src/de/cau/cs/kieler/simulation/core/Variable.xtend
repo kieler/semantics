@@ -12,12 +12,12 @@
  */
 package de.cau.cs.kieler.simulation.core
 
+import com.google.gson.JsonPrimitive
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.google.gson.internal.LinkedTreeMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.gson.JsonElement
-import com.google.gson.internal.LinkedTreeMap
 
 /**
  * A container for information about a variable.
@@ -157,11 +157,27 @@ class Variable {
     public def void valueFromJson() {
         // Make array from json object
         if(value instanceof LinkedTreeMap<?,?>) {
-            val jsonValue = Model.GSON.toJsonTree(value).getAsJsonObject();
-            val indices = jsonValue.get("indices").asJsonArray
-            val values = jsonValue.get("values").asJsonArray
-            println(indices)
-            println(values)
+            val jsonObject = Model.GSON.toJsonTree(value).getAsJsonObject();
+            val jsonIndices = jsonObject.get("indices").asJsonArray
+            val indices = newArrayList()
+            for(jsonElem : jsonIndices) {
+                indices += jsonElem.asInt
+            }
+            
+            val jsonValues = jsonObject.get("values").asJsonArray
+            val List<Object> values = newArrayList()
+            for(jsonElem : jsonValues) {
+                if(jsonElem instanceof JsonPrimitive) {
+                    if(jsonElem.isBoolean) {
+                        values += jsonElem.asBoolean
+                    } else if(jsonElem.isNumber) {
+                        values += jsonElem.asNumber
+                    } else if(jsonElem.isString) {
+                        values += jsonElem.asString
+                    }
+                }
+            }
+            value = new NDimensionalArray(values, indices)
         }
     }
     

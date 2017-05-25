@@ -191,7 +191,7 @@ class DataPoolView extends ViewPart {
      * @param width The width of this column
      * @return the created column.
      */
-    private static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
+    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
         val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
         val column = viewerColumn.getColumn()
         column.setText(title);

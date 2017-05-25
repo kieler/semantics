@@ -76,7 +76,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Create json for this model from data pool
         val model = pool.models.findFirst[it.name == modelName]
         val jsonInput = model.toJson
-        println("Serialized model:"+jsonInput)
+//        println("Serialized model:"+jsonInput)
         
         // Write data pool to process
         processWriter.print(jsonInput)
