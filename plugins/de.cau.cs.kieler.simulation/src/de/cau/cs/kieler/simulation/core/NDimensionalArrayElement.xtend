@@ -18,7 +18,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class NDimensionalArrayElement {
+class NDimensionalArrayElement implements Cloneable {
     
     @Accessors
     private var Integer[] index;
@@ -29,5 +29,20 @@ class NDimensionalArrayElement {
     new(Object value, Integer... index) {
         this.value = value
         this.index = index.clone
+    }
+    
+    public def Object getCloneOfValue() {
+        if(value instanceof String) {
+            return new String(value)  
+        } else if(value instanceof Boolean) {
+            return new Boolean(value)
+        } else if(value instanceof Integer) {
+            return new Integer(value)
+        } else if(value instanceof Float) {
+            return new Float(value)
+        } else if(value instanceof Double) {
+            return new Double(value)
+        } 
+        return null
     }
 }

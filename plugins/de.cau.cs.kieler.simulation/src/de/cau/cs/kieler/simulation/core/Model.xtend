@@ -12,10 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.core
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import com.google.gson.annotations.Expose
+import de.cau.cs.kieler.simulation.json.JsonManager
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -26,7 +23,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class Model {
+class Model implements Cloneable {
     
     /**
      * The name of the model
@@ -43,16 +40,13 @@ class Model {
     /**
      * The variables of the model
      */
-    @Expose
     private List<Variable> variables = newArrayList()
-
-    public static Gson GSON = createGson();
 
     /**
      * Convert this model to a json representation.
      */
     public def String toJson() {
-        val json = GSON.toJson(this)
+        val json = JsonManager.GSON.toJson(this)
         return json
     }
     
@@ -60,13 +54,8 @@ class Model {
      * Creates a model from a json representation
      */
     public static def Model createFromJson(String name, String json) {
-        val m = GSON.fromJson(json, typeof(Model))
+        val m = JsonManager.GSON.fromJson(json, typeof(Model))
         m.name = name
-        // Set reference to model in variables
-        for(v : m.variables) {
-            v.model = m;
-            v.valueFromJson();
-        }
         return m
     }
     
@@ -106,12 +95,6 @@ class Model {
         if(!variables.contains(v)) {
             variables.add(v)
         }
-    }
-    
-    private static def Gson createGson() {
-        val builder = new GsonBuilder()
-        builder.excludeFieldsWithoutExposeAnnotation();
-        return builder.create();
     }
     
     /**

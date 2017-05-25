@@ -12,10 +12,6 @@
  */
 package de.cau.cs.kieler.simulation.core
 
-import com.google.gson.JsonPrimitive
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import com.google.gson.internal.LinkedTreeMap
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -26,25 +22,22 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class Variable {
+class Variable implements Cloneable {
     /**
      * The variable name.
      */
     @Accessors
-    @Expose
     private String name = ""
     
     /**
      * The variable type.
      */
-    @Expose
     private VariableType type = VariableType.INT
     
     /**
      * The variable value.
      */
     @Accessors
-    @Expose
     private Object value = null
     
     /**
@@ -57,24 +50,18 @@ class Variable {
      * Is this variable an input of the model?
      */
     @Accessors
-    @Expose
-    @SerializedName("input")
     private boolean isInput = false
     
     /**
      * Is this variable an output of the model?
      */
     @Accessors
-    @Expose
-    @SerializedName("output")
     private boolean isOutput = false
  
     /**
      * Is this variable a signal?
      */
     @Accessors
-    @Expose
-    @SerializedName("signal")
     private boolean isSignal = false
     
     /**
@@ -109,13 +96,19 @@ class Variable {
      */
     public def void setValue(Object value) {
         this.value = value
-        if(value instanceof String) {
+        // Update type.
+        // In case of array, use type of first element.        
+        var Object v = value
+        if(v instanceof NDimensionalArray) {
+            v = v.elements.get(0)
+        }
+        if(v instanceof String) {
             type = VariableType.STRING
-        } else if (value instanceof Boolean) {
+        } else if (v instanceof Boolean) {
             type = VariableType.BOOL
-        } else if (value instanceof Integer) {
+        } else if (v instanceof Integer) {
             type = VariableType.INT
-        } else if (value instanceof Float) {
+        } else if (v instanceof Float) {
             type = VariableType.FLOAT
         }
     }
@@ -152,33 +145,6 @@ class Variable {
             return false
         else
             return !userValue.equals(value)
-    }
-    
-    public def void valueFromJson() {
-        // Make array from json object
-        if(value instanceof LinkedTreeMap<?,?>) {
-            val jsonObject = Model.GSON.toJsonTree(value).getAsJsonObject();
-            val jsonIndices = jsonObject.get("indices").asJsonArray
-            val indices = newArrayList()
-            for(jsonElem : jsonIndices) {
-                indices += jsonElem.asInt
-            }
-            
-            val jsonValues = jsonObject.get("values").asJsonArray
-            val List<Object> values = newArrayList()
-            for(jsonElem : jsonValues) {
-                if(jsonElem instanceof JsonPrimitive) {
-                    if(jsonElem.isBoolean) {
-                        values += jsonElem.asBoolean
-                    } else if(jsonElem.isNumber) {
-                        values += jsonElem.asNumber
-                    } else if(jsonElem.isString) {
-                        values += jsonElem.asString
-                    }
-                }
-            }
-            value = new NDimensionalArray(values, indices)
-        }
     }
     
     /**

@@ -103,7 +103,7 @@ class ArrayCellEditor extends CellEditor {
     
     override protected doSetValue(Object value) {
         Assert.isTrue(value != null && (value instanceof NDimensionalArray))
-        array = value as NDimensionalArray
+        array = (value as NDimensionalArray).clone
         viewer.input = array.elements
     }
     

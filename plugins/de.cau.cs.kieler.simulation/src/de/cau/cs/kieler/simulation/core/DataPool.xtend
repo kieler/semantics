@@ -22,7 +22,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class DataPool {
+class DataPool implements Cloneable {
     
     /**
      * The models in this pool

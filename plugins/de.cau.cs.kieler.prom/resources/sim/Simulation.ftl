@@ -30,7 +30,8 @@ void receiveVariables() {
     if(cJSON_IsArray(variables)) {
         cJSON* variable = 0;
         int i = 0;
-    
+        
+${inputs}    
 
     } else {
         printf("WARNING: Did not receive JSON input\n");

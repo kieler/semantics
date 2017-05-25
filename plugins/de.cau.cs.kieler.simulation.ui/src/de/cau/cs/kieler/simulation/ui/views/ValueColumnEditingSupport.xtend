@@ -64,7 +64,6 @@ class ValueColumnEditingSupport extends EditingSupport {
         if(element instanceof Variable) {
             value = if(element.isDirty) element.userValue else element.value
         } else if(element instanceof NDimensionalArrayElement) {
-            println("ArEl val:"+element.value)
             value = element.value
         }
         
@@ -89,26 +88,25 @@ class ValueColumnEditingSupport extends EditingSupport {
             if(element instanceof Variable){
                 if(element.value instanceof Float) {
                     element.userValue = Float.valueOf(value.toString)    
-                } if(element.value instanceof Double) {
+                } else if(element.value instanceof Double) {
                     element.userValue = Double.valueOf(value.toString)    
                 } else if(element.value instanceof Integer) {
                     element.userValue = Integer.valueOf(value.toString)
                 } else {
                     element.userValue = value
                 }
-                println("New value:"+value)
             } else if(element instanceof NDimensionalArrayElement) {
-                println("value:"+element.value)
                 if(element.value instanceof Float) {
                     element.value = Float.valueOf(value.toString)    
-                } if(element.value instanceof Double) {
-                    element.value = Double.valueOf(value.toString)    
+                } else if(element.value instanceof Double) {
+                    element.value = Double.valueOf(value.toString)
                 } else if(element.value instanceof Integer) {
                     element.value = Integer.valueOf(value.toString)
                 } else {
                     element.value = value
                 }
             }
+            println("New value:"+element.value)
         } catch (NumberFormatException e) {
             throw new Exception("Can't set value of "+element+ " to "+value, e)
         }

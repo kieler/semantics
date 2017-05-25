@@ -19,21 +19,19 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class NDimensionalArray {
+class NDimensionalArray implements Cloneable{
     
-    @Accessors
+    @Accessors(PUBLIC_GETTER)
     private var Integer[] indices;
     
-    @Accessors
+    @Accessors(PUBLIC_GETTER)
     private var List<NDimensionalArrayElement> elements = newArrayList();
     
     new(List<Object> values, Integer... indices) {
-//        println("indices:"+indices.map[it.intValue])
-//        println(values)
         this.indices = indices
         
         val Integer[] index = newArrayOfSize(dimension)
-        for(var i=0; i < index.length; i++) {
+        for(var i = 0; i < index.length; i++) {
             index.set(i, 0);
         }
         
@@ -41,11 +39,10 @@ class NDimensionalArray {
             val elem = new NDimensionalArrayElement(v, index)
             elements += elem
             
-//            println("index:"+index.map[it.intValue+" "])
             // Increase index ripple-carry-style
             var d = dimension-1; // "least significant dimension"
             index.set(d, index.get(d)+1)
-            while(index.get(d) > indices.get(d)) {
+            while(d > 0 && index.get(d) >= indices.get(d)) {
                 index.set(d, 0)
                 d--
                 index.set(d, index.get(d)+1)
@@ -75,6 +72,11 @@ class NDimensionalArray {
             step *= getLength(i)
         }
         return index
+    }
+    
+    public override NDimensionalArray clone() {
+        val arr = new NDimensionalArray(elements.map[it.cloneOfValue], indices.clone)
+        return arr 
     }
     
     override toString() {

@@ -9,12 +9,20 @@
         variable = cJSON_GetArrayItem(variables, i);
         if(variable != NULL) {
             cJSON *value_item = cJSON_GetObjectItemCaseSensitive(variable, "value");
-            <#if vartype == "int" || vartype == "float">
-            ${varname} = value_item->valuedouble;
-            <#elseif vartype == "bool">
-            ${varname} = value_item->valueint;
-            <#elseif vartype == "string">
-            ${varname} = value_item->valuestring;
+            <#if indices?has_content>
+            cJSON *array_values = cJSON_GetObjectItemCaseSensitive(value_item, "values");
+            int oneDimIndex = 0;
+            <#list indices as s>
+            for(int i${s?index} = 0; i${s?index} < ${s}; i${s?index}++) {
+            </#list>
+                cJSON *array_value = cJSON_GetArrayItem(array_values, oneDimIndex);
+                <@array_elem indices /> = <@value_of_item "array_value" />
+                oneDimIndex++;
+            <#list indices as s>
+            }
+            </#list>
+            <#else>
+            ${varname} = <@value_of_item "value_item" />
             </#if>
         } else {
             printf("WARNING: Did not receive variable ${varname}\n");
@@ -22,7 +30,7 @@
         i++;
     </@>
     <@output>
-        // Send ${varname} 
+        // Send ${varname}
         variable = cJSON_CreateObject();
         cJSON_AddItemToArray(variables, variable);
         cJSON_AddStringToObject(variable, "name", "${varname}");
@@ -47,11 +55,11 @@
             }
             </#list>
         <#else>
-        cJSON_AddItemToObject(variable, "value", <@cJSON_value varname />);
+            cJSON_AddItemToObject(variable, "value", <@cJSON_value varname />);
         </#if>
         cJSON_AddStringToObject(variable, "type", "${vartype}");
-        cJSON_AddBoolToObject(variable, "input", ${isInput?c});
-        cJSON_AddBoolToObject(variable, "output", ${isOutput?c});
+        cJSON_AddBoolToObject(variable, "in", ${isInput?c});
+        cJSON_AddBoolToObject(variable, "out", ${isOutput?c});
     </@>
 </#macro>
 
@@ -61,6 +69,16 @@ ${varname}<#list indices as s>[i${s?index}]</#list><#t>
 
 <#macro cJSON_value var>
 <@cJSON_value_method />(${var})<#t>
+</#macro>
+
+<#macro value_of_item item>
+<#if vartype == "int" || vartype == "float">
+${item}->valuedouble;
+<#elseif vartype == "bool">
+${item}->valueint;
+<#elseif vartype == "string">
+${item}->valuestring;
+</#if>
 </#macro>
 
 <#macro cJSON_value_method>
