@@ -1,6 +1,6 @@
 scchart ${name} {
 
-  input int I;
+  input bool I;
   output int O;
 
   initial state init

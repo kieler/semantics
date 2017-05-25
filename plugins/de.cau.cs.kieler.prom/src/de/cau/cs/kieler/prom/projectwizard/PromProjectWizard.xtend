@@ -267,10 +267,10 @@ class PromProjectWizard extends Wizard implements INewWizard {
                     
                     if(isFile) {
                         // Create file
-                        initializeFile(resolvedProjectRelativePath, data.origin)
+                        PromPlugin.initializeFile(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
                     } else {
                         // Create folder
-                        initializeFolder(resolvedProjectRelativePath, data.origin)
+                        PromPlugin.initializeFolder(newlyCreatedProject, resolvedProjectRelativePath, data.origin)
                     }
                 }
             } catch (Exception e) {
@@ -292,89 +292,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
             }
         }
         return true
-    }
-    
-    /**
-     * Creates a file in the new project with the content from the origin,
-     * or an empty file if the origin is null or empty
-     * 
-     * @param projectRelativePath The project relative path of the resource to create
-     * @param origin Optional path to initial content for the new file
-     */
-    private def void initializeFile(String projectRelativePath, String origin) {
-        val resource = newlyCreatedProject.getFile(projectRelativePath)
-       // Create empty file
-       if(origin.trim.isNullOrEmpty) {
-           PromPlugin.createResource(resource, null)
-       } else {
-           // Create file with initial content from origin
-           val initialContentStream = PromPlugin.getInputStream(origin, null)
-           PromPlugin.createResource(resource, initialContentStream)
-       }
-    }
-
-    /**
-     * Creates a folder in the new project with the content from the origin,
-     * or an empty folder if the origin is null or empty
-     * 
-     * @param projectRelativePath The project relative path of the resource to create
-     * @param origin Optional path to initial content for the new folder
-     */
-    private def void initializeFolder(String projectRelativePath, String origin) {
-        if (origin.trim.startsWith("platform:")) {
-            // Fill folder with files from plugin
-            val newFolder = newlyCreatedProject.getFolder(projectRelativePath)
-            initializeFolderViaPlatformURL(newFolder, origin)
-        } else if(!origin.isNullOrEmpty) {
-            // Copy directory from file system
-            val source = new File(origin)
-            val target = new File(newlyCreatedProject.location + File.separator + projectRelativePath)
-            
-            copyFolder(source, target)
-        } else {
-            // Create empty directory
-            val newFolder = newlyCreatedProject.getFolder(projectRelativePath)
-            PromPlugin.createResource(newFolder, null);
-        }
-    }
-
-    /**
-     * Copy the contents of a folder recursively.
-     * 
-     * @param src The source folder
-     * @param dest The destination folder
-     */
-    def static private void copyFolder(File src, File dest) {
-        // Checks
-        if(src == null || dest == null)
-            return;
-        if(!src.isDirectory())
-            return;
-        if(dest.exists()){
-            if(!dest.isDirectory()){
-//                System.out.println("destination not a folder " + dest);
-                return;
-            }
-        } else {
-            dest.mkdirs();
-        }
-    
-        if(src.listFiles() == null || src.listFiles().length == 0)
-            return;
-        
-        for(File file : src.listFiles()){
-            val fileDest = new File(dest, file.getName())
-//            println(file.getAbsolutePath()+" --> "+fileDest.getAbsolutePath())
-            if(file.isDirectory()){
-                copyFolder(file, fileDest)
-            }else if(!fileDest.exists()){
-                try {
-                    Files.copy(file.toPath(), fileDest.toPath())
-                } catch (IOException e) {
-                    e.printStackTrace()
-                }
-            }
-        }
     }
 
     /**
@@ -431,59 +348,6 @@ class PromProjectWizard extends Wizard implements INewWizard {
                 throw new Exception("Failed to add nature " + newNature + " to project " + project.name, e)
              }
          }
-    }
-
-    /**
-     * Copies the contents of the resources from the platform url
-     * to the folder of the newly created project.
-     * 
-     * @param newFolder The folder to be created and initialized
-     * @param url URL to a plugin's directory with initial content for snippets
-     */
-    protected def void initializeFolderViaPlatformURL(IFolder newFolder, String url) throws Exception {
-        // URL should be in form 'platform:/plugin/org.myplugin.bla/path/to/template/directory'
-
-        val uriWithUnifiedSegmentSeparator = url.trim().replace("\\", "/")
-        if (uriWithUnifiedSegmentSeparator.startsWith("platform:/plugin/")) {
-            // Remove 'platform:/plugin/'
-            val path = uriWithUnifiedSegmentSeparator.substring(17)
-
-            // First segment is the bundle name,
-            // followed by the path of the directory.
-            val index = path.indexOf("/")
-            if (index > 0 && path.length > index + 1) {
-                val bundleName = path.substring(0, index)
-                val dir = path.substring(index + 1)
-
-                // Load bundle / plugin
-                val bundle = Platform.getBundle(bundleName);
-
-                // Copy files from bundle which are in the directory.
-                val entries = bundle.findEntries(dir, "*.*", true)
-                if (entries != null) {
-                    for (var e = entries; e.hasMoreElements();) {
-                        val entry = e.nextElement
-                        val fileUrl = FileLocator.toFileURL(entry)
-
-                        // Calculate the relative path of the file
-                        // in the target snippet directory.
-                        val i = fileUrl.toString.indexOf(dir) + dir.length
-                        var relativePath = fileUrl.toString.substring(i)
-                        if (relativePath.startsWith("/"))
-                            relativePath = relativePath.substring(1)
-
-                        // Create file in project with content of file from url
-                        val stream = fileUrl.openStream()
-                        val file = newFolder.getFile(relativePath)
-                        PromPlugin.createResource(file, stream)
-                        stream.close()
-                    }
-                } else {
-                    throw new Exception("The directory '"+dir+"'\n"
-                        + "of the plugin '"+bundleName+"' does not exist or is empty.")
-                }
-            }
-        }
     }
 
     /**

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "cJSON.c"
+#include "../lib/cJSON.c"
 #include "${compiled_model_loc}"
 
 /*****************************************************************************/

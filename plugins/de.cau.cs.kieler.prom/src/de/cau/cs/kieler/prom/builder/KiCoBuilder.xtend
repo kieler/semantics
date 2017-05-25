@@ -334,12 +334,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      */
     private def void generateSimulationCode(IFile res) {
         //TODO: Hardcoded stuff
-        val simTargetPathDirectory = new Path(computeTargetPath(res.projectRelativePath.toOSString, true)).removeLastSegments(1)
+//        val simTargetPathDirectory = new Path(computeTargetPath(res.projectRelativePath.toOSString, true)).removeLastSegments(1)
+        val simTargetPathDirectory = new Path(computeTargetPath("sim/code/", true))
         var simTemplate = "Simulation.ftl";
-        var simTargetPath = simTargetPathDirectory + File.separator + "Simulation_" + Files.getNameWithoutExtension(res.name)+".c"
+        var simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(res.name)+".c"
         if(project.findMember(simTemplate) == null) {
             simTemplate = "src/JavaSimulation.ftl"
-            simTargetPath = simTargetPathDirectory + File.separator + "JavaSimulation_" + Files.getNameWithoutExtension(res.name)+".java"
+            simTargetPath = simTargetPathDirectory + File.separator + "Sim_" + Files.getNameWithoutExtension(res.name)+".java"
             if(project.findMember(simTemplate) == null) {
                 println("No simulation template found.")
                 return;                
@@ -394,9 +395,11 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         PromPlugin.createResource(targetFile, new StringInputStream(simulationCode))
         
         // Copy cJSON.c and cJSON.h to output directory of simulation
-        if(new Path(simTargetPath).fileExtension.equals("c"))
-            createCJSONLibrary(simTargetPathDirectory.toOSString)
-        
+        if(isCTarget)
+            createCJsonLibrary(simTargetPathDirectory)
+        else if(isJavaTarget)
+            createJavaJsonLibrary(simTargetPathDirectory)
+            
         // Compile to executable
         compileSimulationCode(simTargetPath);
     }
@@ -405,14 +408,20 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
      * @param projectRelativeDirectory the directory to copy the files into
      */
-    private def void createCJSONLibrary(String projectRelativeDirectory) {
-        val cJSON_c = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.c", null)
-        val cJSON_h = PromPlugin.getInputStream("platform:/plugin/de.cau.cs.kieler.prom/resources/sim/cJSON.h", null)
+    private def void createCJsonLibrary(Path simTargetPath) {
+        val libPath = simTargetPath.removeLastSegments(1).append("lib")
         
-        val cFile = project.getFile(projectRelativeDirectory+"/"+"cJSON.c")
-        val hFile = project.getFile(projectRelativeDirectory+"/"+"cJSON.h")
-        PromPlugin.createResource(cFile, cJSON_c)
-        PromPlugin.createResource(hFile, cJSON_h)
+        PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/c/cJSON")
+    }
+    
+    /**
+     * Copies the cJSON.c and cJSON.h files from the plugin to the directory.
+     * @param projectRelativeDirectory the directory to copy the files into
+     */
+    private def void createJavaJsonLibrary(Path simTargetPath) {
+        val libPath = simTargetPath.removeLastSegments(2).append("org/json")
+        
+        PromPlugin.initializeFolder(project, libPath.toOSString, "platform:/plugin/de.cau.cs.kieler.prom/resources/sim/java/json")
     }
     
     /**
@@ -427,10 +436,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             return   
         }
         
-        val fileExtension = new Path(simPath).fileExtension.toLowerCase
-        if(fileExtension.equals("c"))
+        if(isCTarget)
             createExecutableFromCCode(simPath)
-        else if(fileExtension.equals("java"))
+        else if(isJavaTarget)
             createExecutableFromJavaCode(simPath)
     }
     
@@ -438,12 +446,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Creates a binary using gcc on the simulation file.
      * @param simPath the path to the simulation file
      */
-    private def void createExecutableFromCCode(String simPath) {
+    private def void createExecutableFromCCode(String simTargetPath) {
          // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
-        val fileName = new Path(simPath).lastSegment
+        val fileName = new Path(simTargetPath).lastSegment
         val executableName = Files.getNameWithoutExtension(fileName) + if(isWindows) ".exe" else ""
-        val directory = new Path(simPath).removeLastSegments(1)
+        val directory = new Path(simTargetPath).removeLastSegments(1)
+        val parentDir = ".." + File.separator
         
         // Delete old executable
         val executableFile = project.getFile(directory.toOSString + File.separator + executableName)
@@ -451,7 +460,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             executableFile.delete(true, null)
         
         // Run gcc on simulation code
-        val pBuilder = new ProcessBuilder("gcc",fileName,"-o",executableName)
+        val pBuilder = new ProcessBuilder("gcc",fileName,"-o", parentDir + executableName)
         pBuilder.directory(project.location.append(directory).toFile)
         val p = pBuilder.start()
         // Wait until the process finished
@@ -470,25 +479,28 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private def void createExecutableFromJavaCode(String simPath) {
         // Create jar file
         // Example command: jar cvfe ../output.jar JavaSimulationJSimple *.class
-        val fileName = new Path(simPath).lastSegment
+        val filePath = new Path(simPath)
+        val fileName = filePath.lastSegment
         val fileNameNoExtension = Files.getNameWithoutExtension(fileName)
-        val executableName = Files.getNameWithoutExtension(fileName) + ".jar"
-        val directory = new Path(simPath).removeLastSegments(1)
+        val executableName = fileNameNoExtension + ".jar"
+        val directory = filePath.removeLastSegments(1)
+        val parentDir = ".." + File.separator
         
         // Delete old executable
-        val executableFile = project.getFile(directory.toOSString + File.separator + executableName)
+        val executableFile = project.getFile(directory.removeLastSegments(1).toOSString + File.separator + executableName)
+        println(executableFile.projectRelativePath)
         if(executableFile.exists)
             executableFile.delete(true, null)
         
-        val List<String> classFiles = newArrayList()
-        for(m : project.getFolder("bin").members) {
-            if(m.name.endsWith(".class")) {
-                classFiles.add(m.name)
-            }
-        }
+        // Search for all class files in the bin directory
+        val classFiles = PromPlugin.findFiles(project.getFolder("bin").members, "class")
+        val classFilePaths = classFiles.map[it.projectRelativePath.removeFirstSegments(1).toOSString]
         
-        val pBuilder = new ProcessBuilder(#["jar","cvfe","../"+directory.toOSString + File.separator + fileNameNoExtension+".jar",fileNameNoExtension] + classFiles)
-        pBuilder.directory(project.location.append(new Path("/bin")).toFile)
+        // Create process builder to compile jar
+        val mainClassWithoutSourceDirectoryAndFileExtension = filePath.removeFirstSegments(1).removeFileExtension.toOSString
+        val pBuilder = new ProcessBuilder(#["jar", "cvfe", parentDir+executableFile.projectRelativePath.toOSString, mainClassWithoutSourceDirectoryAndFileExtension] + classFilePaths)
+        println(pBuilder.command)
+        pBuilder.directory(project.location.append(new Path(File.separator + "bin")).toFile)
         pBuilder.redirectError(project.location.append(new Path("log.txt")).toFile)
         
         val p = pBuilder.start()
@@ -548,9 +560,15 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      */
     public def String computeTargetPath(String projectRelativePath, boolean projectRelative) {
         var String projectRelativeTargetPath;
+        val projectRelativePathObject = new Path(projectRelativePath)
+        // Only append file extension if the input path does have one
+        val newFileExtension = if(projectRelativePathObject.fileExtension.isNullOrEmpty)
+                                   ""
+                               else
+                                   launchData.targetLanguageFileExtension
         if(launchData.targetDirectory.isNullOrEmpty()) {
             // Compute path such that the target file will be in the same file as the source file.
-            projectRelativeTargetPath = new Path(projectRelativePath).removeFileExtension.toOSString + launchData.targetLanguageFileExtension
+            projectRelativeTargetPath = projectRelativePathObject.removeFileExtension.toOSString + newFileExtension
         } else {
             // Compute path in the target directory
             // such that the directory structure of the original file is retained.
@@ -570,7 +588,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             val projectRelativeRelevantPathWithoutExtension = new Path(projectRelativeRelevantPath).removeFileExtension        
          
             // Compute target path
-            projectRelativeTargetPath = launchData.targetDirectory + File.separator + projectRelativeRelevantPathWithoutExtension + launchData.targetLanguageFileExtension
+            projectRelativeTargetPath = launchData.targetDirectory + File.separator + projectRelativeRelevantPathWithoutExtension + newFileExtension
         }
         
         // Return either absolute or relative target path
@@ -668,5 +686,13 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      */
     private def void createDirectories(String filePath) {
         new File(filePath).parentFile.mkdirs()
+    }
+    
+    private def boolean isCTarget() {
+        return launchData.targetLanguage.contains("s.c")
+    }
+    
+    private def boolean isJavaTarget() {
+        return launchData.targetLanguage.contains("s.java")
     }
 }
