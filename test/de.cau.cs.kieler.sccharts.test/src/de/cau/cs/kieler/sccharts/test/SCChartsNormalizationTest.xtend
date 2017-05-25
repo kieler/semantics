@@ -70,13 +70,16 @@ class SCChartsNormalizationTest extends AbstractXTextModelRepositoryTest<State> 
                                     "TRIGGEREFFECT",    // CORE
                                     "SURFACEDEPTH")
     
+    /** Sct Parser Injector */
+    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
+    
     //-----------------------------------------------------------------------------------------------------------------
     
     /**
      * Constructor
      */
     new() {
-        super(new SctStandaloneSetup().createInjectorAndDoEMFRegistration)
+        super(resourceSetInjector)
     }
     
     /**

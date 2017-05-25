@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject
 abstract class AbstractXTextModelBenchmark<T extends EObject> implements IBenchmark {
     
     /** Reusage of model parsing */
-    extension AbstractXTextModelRepositoryTest<T> = new AbstractXTextModelRepositoryTest<T>() {
+    extension AbstractXTextModelRepositoryTest<T> = new AbstractXTextModelRepositoryTest<T>(null) {
         
         override filter(TestModelData modelData) {
             throw new UnsupportedOperationException("Delegate Instance")

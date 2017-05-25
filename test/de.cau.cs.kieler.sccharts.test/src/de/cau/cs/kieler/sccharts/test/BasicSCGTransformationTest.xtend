@@ -77,11 +77,14 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
     
     //-----------------------------------------------------------------------------------------------------------------
     
+    /** Sct Parser Injector */
+    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
+    
     /**
      * Constructor
      */
     new() {
-        super(new SctStandaloneSetup().createInjectorAndDoEMFRegistration)
+        super(resourceSetInjector)
     }
     
     /**

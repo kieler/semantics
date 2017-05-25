@@ -32,12 +32,15 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
  */
 @RunWith(ModelsRepositoryTestRunner)
 class SctParserTest extends AbstractXTextModelRepositoryTest<State> {
+    
+    /** Sct Parser Injector */
+    static val resourceSetInjector = new SctStandaloneSetup().createInjectorAndDoEMFRegistration
 
     /**
      * Constructor
      */
     new() {
-        super(new SctStandaloneSetup().createInjectorAndDoEMFRegistration)
+        super(resourceSetInjector)
     }
     
     //-----------------------------------------------------------------------------------------------------------------
