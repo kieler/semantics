@@ -106,7 +106,7 @@ class ValueColumnEditingSupport extends EditingSupport {
                     element.value = value
                 }
             }
-            println("New value:"+element.value)
+//            println("New value:"+element.value)
         } catch (NumberFormatException e) {
             throw new Exception("Can't set value of "+element+ " to "+value, e)
         }

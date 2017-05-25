@@ -51,7 +51,7 @@ class StepAction {
      * Performs the method on the data handler.
      */
     public def void apply(DataPool pool) {
-        println("Performing "+method + " on "+handler)
+//        println("Performing "+method + " on "+handler)
         switch(method) {
             case StepAction.Method.READ : handler.read(pool)
             case StepAction.Method.WRITE : handler.write(pool)    

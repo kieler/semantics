@@ -39,6 +39,8 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
     @Accessors
     private var IFile executable
     
+    private var String modelName
+    
     private var Process process
     private var BufferedReader processReader
     private var PrintStream processWriter
@@ -64,6 +66,7 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
         // Read json data
         var String line = waitForJSONOutput(processReader)
 
+        modelName = getUniqueModelName(executable.name, pool, 0)
         val model = Model.createFromJson(modelName, line)
         pool.addModel(model)
     }
@@ -131,6 +134,19 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
             Thread.sleep(1);
         } while(line == null || !line.startsWith("{") || !line.endsWith("}"))
         return line
+    }
+    
+    private def String getUniqueModelName(String name, DataPool pool, int suffix) {
+        val uniqueName = if(suffix > 0)
+                             name+"_"+suffix
+                         else
+                             name
+        val modelWithThisName = pool.models.findFirst[it.name.equals(uniqueName)]
+        if(modelWithThisName == null) {
+            return uniqueName
+        } else {
+            return getUniqueModelName(name, pool, suffix+1)
+        }
     }
     
     /**
