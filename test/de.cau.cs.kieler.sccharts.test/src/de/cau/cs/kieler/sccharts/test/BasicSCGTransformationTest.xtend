@@ -32,6 +32,7 @@ import static org.junit.Assert.*
 import static extension java.lang.String.format
 import java.nio.channels.ShutdownChannelGroupException
 import de.cau.cs.kieler.scg.SCGraph
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Tests if all intermediate results of an SCCharts normalization compilation fullfill basic sanity properties.
@@ -72,7 +73,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
                                     "TRIGGEREFFECT",    // CORE
                                     "SURFACEDEPTH",
                                     
-                                    "scg.basic"         // SCG
+                                    "sccharts.scg"         // SCG
                                     )
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -107,7 +108,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
         assertTrue("Compilation result of SCG transformation is not an SCGraph", resultModel instanceof SCGraph)
         
         // Dependencies
-        result = scc.compile("T_scg.dependencies")
+        result = resultModel.compile("T_scg.dependencies")
         if (!result.postponedErrors.empty) {
             throw new Exception("Could not perform dependency analysis on SCGraph. Compilation error occurred!", result.postponedErrors.head)
         }
@@ -117,7 +118,7 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
         assertTrue("Compilation result of dependency analysis is not an SCGraph", resultModel instanceof SCGraph)
         
         // BasicBlocks
-        result = scc.compile("T_scg.basicblock.sc")
+        result = resultModel.compile("T_scg.basicblock.sc")
         if (!result.postponedErrors.empty) {
             throw new Exception("Could not perform basic block analysis on SCGraph. Compilation error occurred!", result.postponedErrors.head)
         }
@@ -129,9 +130,9 @@ class BasicSCGTransformationTest extends AbstractXTextModelRepositoryTest<State>
     
     //-----------------------------------------------------------------------------------------------------------------
     
-    private def compile(State scc, String compileChain) {        
+    private def compile(EObject input, String compileChain) {        
         // Compile with KiCo
-        val context = new KielerCompilerContext(compileChain, scc)
+        val context = new KielerCompilerContext(compileChain, input)
         context.advancedSelect = false // Compilation has fixed chain (respecting dependencies)
         context.inplace = false // Save intermediate results
         return KielerCompiler.compile(context)
