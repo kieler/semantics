@@ -14,6 +14,8 @@ package de.cau.cs.kieler.simulation.ui.views
 
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
+import de.cau.cs.kieler.simulation.core.Variable
+import java.util.List
 import org.eclipse.core.runtime.Assert
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.CellEditor
@@ -24,6 +26,7 @@ import org.eclipse.swt.events.FocusAdapter
 import org.eclipse.swt.events.FocusEvent
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Table
+import java.util.HashMap
 
 /**
  * @author aas
@@ -39,6 +42,8 @@ class ArrayCellEditor extends CellEditor {
     var NDimensionalArray array
     
     var Composite parent
+    
+    var int alignment
     
     /**
      * Default ArrayCellEditor style
@@ -65,13 +70,14 @@ class ArrayCellEditor extends CellEditor {
     }
     
     override protected createControl(Composite parent) {
-        this.parent = parent
+        this.parent = parent.parent
         viewer = createTable(parent)
         viewer.control.addFocusListener(new FocusAdapter() {
             override focusLost(FocusEvent e) {
                 ArrayCellEditor.this.focusLost();
             }
         });
+        
         return viewer.control
     }
     
@@ -80,9 +86,12 @@ class ArrayCellEditor extends CellEditor {
         if (control != null) {
             val preferredSize = control.computeSize(SWT.DEFAULT, SWT.DEFAULT, true)
             result.minimumWidth = preferredSize.x;
-            result.minimumHeight = Math.min(preferredSize.y, parent.size.y);
+            val parentHeight = (parent.size.y*0.6f) as int
+            result.minimumHeight = Math.min(preferredSize.y, parentHeight);
+            
+            result.verticalAlignment = alignment
         }
-        return result;
+        return result
     }
     
     override protected doGetValue() {
@@ -105,10 +114,26 @@ class ArrayCellEditor extends CellEditor {
         Assert.isTrue(value != null && (value instanceof NDimensionalArray))
         array = (value as NDimensionalArray).clone
         viewer.input = array.elements
+        
+        // Find good alignment base on position in parent input
+        alignment = SWT.TOP
+        val parentInput = control.getData("parentInput")
+        if(parentInput != null) {
+            val list = parentInput as List<Object>
+            val variable = list.findFirst[it instanceof Variable
+                                          && ((it as Variable).value == value
+                                               || (it as Variable).userValue == value)]
+            val pos = list.indexOf(variable)
+            if(pos > 10) 
+                alignment = SWT.BOTTOM
+            else if(pos > 5)
+                alignment = SWT.CENTER
+        }
     }
     
     private def TableViewer createTable(Composite parent) {
-        val table = new Table(parent, getStyle())
+        val style = getStyle().bitwiseOr(SWT.BORDER.bitwiseOr(SWT.FULL_SELECTION).bitwiseOr(SWT.SHADOW_ETCHED_OUT))
+        val table = new Table(parent, style)
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setSize(500,500)

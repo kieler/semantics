@@ -49,15 +49,16 @@ class ExecutableSimulator extends DefaultDataHandler implements Simulator {
      * Create new process and read it's first JSON object with variables to fill the data pool.
      */
     override initialize(DataPool pool) {
-        var ProcessBuilder pBuilder
+        val currentDir = "." + File.separator
         // Execute jar file or binary
+        var ProcessBuilder pBuilder
         if(executable.name.endsWith(".jar"))
-            pBuilder = new ProcessBuilder(#["java", "-jar", "./"+executable.name])
+            pBuilder = new ProcessBuilder(#["java", "-jar", currentDir+executable.name])
         else
-            pBuilder = new ProcessBuilder(#["./"+executable.name])
+            pBuilder = new ProcessBuilder(#[executable.location.toOSString])
         pBuilder.directory(new File(executable.location.removeLastSegments(1).toOSString))
         process = pBuilder.start()
-         
+        
         // Get reader and writer for process
         val isr = new InputStreamReader(process.inputStream)
         processReader = new BufferedReader(isr)

@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TextCellEditor
 import de.cau.cs.kieler.simulation.core.NDimensionalArrayElement
 import de.cau.cs.kieler.simulation.core.NDimensionalArray
+import java.util.List
 
 /**
  * @author aas
@@ -53,7 +54,9 @@ class ValueColumnEditingSupport extends EditingSupport {
                       || value instanceof Integer){
                 return new TextCellEditor(viewer.table)
             } else if(value instanceof NDimensionalArray) {
-                return new ArrayCellEditor(viewer.table)
+                val ed= new ArrayCellEditor(viewer.table)
+                ed.control.setData("parentInput", viewer.input)
+                return ed
             }
         }
         return null
