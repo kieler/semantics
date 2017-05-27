@@ -18,10 +18,15 @@ import de.cau.cs.kieler.simulation.core.Variable
 import java.util.List
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.swt.SWT
+import org.eclipse.swt.graphics.GC
+import org.eclipse.swt.graphics.Image
+import org.eclipse.swt.graphics.Point
 import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Display
 import org.eclipse.swt.widgets.Table
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.part.ViewPart
@@ -137,6 +142,8 @@ class DataPoolView extends ViewPart {
         };
         historyColumn = createTableColumn(viewer, "History", 80, true)
         historyColumn.labelProvider = new DataPoolViewerColumn() {
+            var Image img
+            
             override String getText(Object element) {
                 var txt = ""
                 if(element instanceof Variable) {
@@ -154,6 +161,17 @@ class DataPoolView extends ViewPart {
                     }
                 }                    
                 return txt
+            }
+            
+            override Image getToolTipImage(Object element) {
+                if(img != null) {
+                    img.dispose()
+                    img = null
+                }
+                if(element instanceof Variable) {
+                    img = createHistoryGraph(element.history)
+                }
+                return img
             }
         };
         inputColumn = createTableColumn(viewer, "Is Input", 80, false)
@@ -173,6 +191,9 @@ class DataPoolView extends ViewPart {
             }
         };
 
+        // Fancy tooltips
+        ColumnViewerToolTipSupport.enableFor(viewer)
+
         // Create content
         viewer.setContentProvider(ArrayContentProvider.instance);
         viewer.input = newArrayList()
@@ -191,7 +212,7 @@ class DataPoolView extends ViewPart {
      * @param width The width of this column
      * @return the created column.
      */
-    private static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
+    public static def TableViewerColumn createTableColumn(TableViewer viewer, String title, int width, boolean visible) {
         val viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
         val column = viewerColumn.getColumn()
         column.setText(title);
@@ -205,5 +226,91 @@ class DataPoolView extends ViewPart {
             column.resizable = false
         }
         return viewerColumn
+    }
+    
+    private static def Image createHistoryGraph(List<Variable> history) {
+        if(!history.isNullOrEmpty) {
+            val firstValue = history.get(0).value
+            if(firstValue instanceof Double) {
+                val List<Double> numbers = history.map[it.value as Double]
+                return createNumberGraph(numbers)
+            } else if(firstValue instanceof Boolean) {
+                val List<Boolean> booleans = history.map[it.value as Boolean]
+                return createBooleanGraph(booleans)
+            }
+        }
+        
+        return null
+    }
+    
+    private static def Image createNumberGraph(List<Double> numbers) {
+        // Min / max value from history        
+        val min = numbers.min
+        val max = numbers.max
+        
+        // Create image
+        val w = 92
+        val h = 48
+        val display = Display.getCurrent()
+        val img = new Image(display, w, h);
+        
+        val gc = new GC(img)
+        // Draw scale
+        gc.drawText(max.toString, 0, 0)
+        gc.drawText(min.toString, 0, h-16)
+        // Draw graph
+        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
+        val int step = w/numbers.size
+        var int x
+        var int y
+        var Point lastPos = null
+        for(n : numbers) {
+            val fraction = ((n-min) / (max-min))
+            y = (h * fraction).intValue
+            val pos = new Point(x, h-y-1)
+            x += step
+            
+            if(lastPos != null) {
+                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
+            }
+            
+            lastPos = pos
+        }
+        
+        gc.dispose()
+        
+        return img
+    }
+    
+    private static def Image createBooleanGraph(List<Boolean> booleans) {
+        // Create image
+        val w = 92
+        val h = 48
+        val display = Display.getCurrent()
+        val img = new Image(display, w, h);
+        
+        val gc = new GC(img)
+        // Draw graph
+        gc.foreground = display.getSystemColor(SWT.COLOR_RED)
+        val int spacing = 8
+        val int step = w/booleans.size
+        var int x
+        var int y
+        var Point lastPos = null
+        for(b : booleans) {
+            y = if(b) (h - spacing) else spacing
+            val pos = new Point(x, h-y-1)
+            x += step
+            
+            if(lastPos != null) {
+                gc.drawLine(lastPos.x, lastPos.y, pos.x, pos.y)
+            }
+            
+            lastPos = pos
+        }
+        
+        gc.dispose()
+        
+        return img
     }
 }

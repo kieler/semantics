@@ -22,60 +22,53 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-class Variable {
-    /**
-     * Possible types for variables
-     */
-    public enum VariableType {
-        INT, BOOL, FLOAT, STRING
-    }
-    
+class Variable implements Cloneable {
     /**
      * The variable name.
      */
     @Accessors
-    private String name
+    private String name = ""
     
     /**
      * The variable type.
      */
-    private VariableType type
+    private VariableType type = VariableType.INT
     
     /**
      * The variable value.
      */
     @Accessors
-    private Object value
+    private Object value = null
     
     /**
      * A value for this variable entered by the user.
      */
     @Accessors
-    private Object userValue
+    private Object userValue = null
     
     /**
      * Is this variable an input of the model?
      */
     @Accessors
-    private boolean isInput
+    private boolean isInput = false
     
     /**
      * Is this variable an output of the model?
      */
     @Accessors
-    private boolean isOutput
+    private boolean isOutput = false
  
     /**
      * Is this variable a signal?
      */
     @Accessors
-    private boolean isSignal
+    private boolean isSignal = false
     
     /**
      * The model in which this variable is saved.
      */
     @Accessors
-    private Model model
+    private Model model = null
     
     /**
      * Constructor
@@ -103,13 +96,19 @@ class Variable {
      */
     public def void setValue(Object value) {
         this.value = value
-        if(value instanceof String) {
+        // Update type.
+        // In case of array, use type of first element.        
+        var Object v = value
+        if(v instanceof NDimensionalArray) {
+            v = v.elements.get(0)
+        }
+        if(v instanceof String) {
             type = VariableType.STRING
-        } else if (value instanceof Boolean) {
+        } else if (v instanceof Boolean) {
             type = VariableType.BOOL
-        } else if (value instanceof Integer) {
+        } else if (v instanceof Integer) {
             type = VariableType.INT
-        } else if (value instanceof Float) {
+        } else if (v instanceof Float) {
             type = VariableType.FLOAT
         }
     }

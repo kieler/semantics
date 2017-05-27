@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "cJSON.c"
+#include "../lib/cJSON.c"
 #include "${compiled_model_loc}"
 
 /*****************************************************************************/
@@ -26,19 +26,33 @@ void receiveVariables() {
     buffer[i] = 0;
 
     cJSON * root = cJSON_Parse(buffer);
-    cJSON* variable = 0;
-    
-${inputs}
+    cJSON* variables = cJSON_GetObjectItemCaseSensitive(root, "variables");
+    if(cJSON_IsArray(variables)) {
+        cJSON* variable = 0;
+        int i = 0;
+        
+${inputs}    
 
+    } else {
+        printf("WARNING: Did not receive JSON input\n");
+    }
+  
     cJSON_Delete(root);
 }
 
 void sendVariables() {
     cJSON* root = cJSON_CreateObject();
+    
+    cJSON* variables = cJSON_CreateArray();
+    cJSON_AddItemToObject(root, "variables", variables);
+  
     cJSON* variable = 0;
+    cJSON* arr = 0;
+    cJSON* arrIndices = 0;
+    cJSON* arrValues = 0;
     
 ${outputs}
-    
+
     char* outString = cJSON_Print(root);
     cJSON_Minify(outString);
     printf("%s\n", outString);
@@ -53,13 +67,13 @@ int main(int argc, const char* argv[]) {
     sendVariables();
     
     while (1) {
-       // Receive variables
-       receiveVariables();
-       
-       // Reaction of model
-       tick();
-       
-       // Send variables
-       sendVariables();
+        // Receive variables
+        receiveVariables();
+  
+        // Reaction of model
+        tick();
+         
+        // Send variables
+        sendVariables();
     }
 }
