@@ -120,6 +120,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def void incrementalBuild(IResourceDelta delta) {
         // Find changed files
+        monitor.subTask("Searching files")
+        
         val ArrayList<IFile> changedFiles = newArrayList()
         try {
             delta.accept(new IResourceDeltaVisitor() {
@@ -144,8 +146,9 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         } catch (CoreException e) {
             e.printStackTrace();
         }
-        
+
         // Build the changed files
+        monitor.subTask("Building files")
         build(changedFiles)
     }
     
@@ -165,8 +168,10 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                     switch(res.fileExtension.toLowerCase) {
                         case "sct",
                         case "strl" : {
+                            monitor.subTask("Compiling "+res.name)
                             compile(res)
                             if(!monitor.isCanceled) {
+                                monitor.subTask("Generating simulation code for "+res.name)
                                 generateSimulationCode(res)
                             }
                         }
@@ -176,10 +181,12 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             
             // Generate wrapper code
             if(!monitor.isCanceled) {
+                monitor.subTask("Generating wrapper code.")
                 generateWrapperCode()
             }
             
             // Refresh output in workspace
+            monitor.subTask("Refreshing output directory")
             refreshOutput(resources)
         }
     }
@@ -354,25 +361,28 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         if (model instanceof State) {
             for(decl : model.declarations) {
                 for(valuedObject : decl.valuedObjects) {
-                    val data = new WrapperCodeAnnotationData();
-                    data.arguments.add(String.valueOf(decl.input))
-                    data.arguments.add(String.valueOf(decl.output))
-                    // add array sizes if any
-                    if(!valuedObject.cardinalities.nullOrEmpty) {
-                        for(card : valuedObject.cardinalities) {
-                            val intVal = card as IntValueImpl;
-                            data.arguments.add(intVal.value.toString)
+                    // At the moment, send only inputs and outputs
+                    if(decl.input || decl.output) {
+                        val data = new WrapperCodeAnnotationData();
+                        data.arguments.add(String.valueOf(decl.input))
+                        data.arguments.add(String.valueOf(decl.output))
+                        // add array sizes if any
+                        if(!valuedObject.cardinalities.nullOrEmpty) {
+                            for(card : valuedObject.cardinalities) {
+                                val intVal = card as IntValueImpl;
+                                data.arguments.add(intVal.value.toString)
+                            }
                         }
+                        
+                        data.modelName = model.id
+                        data.input = true
+                        data.output = true
+                        data.name = "Simulate"
+                        data.varType = decl.type.literal
+                        data.varName = valuedObject.name
+                        
+                        variables.add(data)
                     }
-                    
-                    data.modelName = model.id
-                    data.input = true
-                    data.output = true
-                    data.name = "Simulate"
-                    data.varType = decl.type.literal
-                    data.varName = valuedObject.name
-                    
-                    variables.add(data)
                 }
             }
         }
@@ -466,7 +476,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // Wait until the process finished
         val errorCode = p.waitFor()
         if(errorCode != 0) {
-            System.err.println("GCC has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+            throw new Exception("GCC has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
         } else {
             executableFile.refreshLocal(1, null)
         }
@@ -505,7 +515,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // Wait until the process finished
         val errorCode = p.waitFor()
         if(errorCode != 0) {
-            System.err.println("jar has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
+            throw new Exception("jar has issues:" + errorCode + " (" + pBuilder.command + " in " + pBuilder.directory + ")")
         } else {
             executableFile.refreshLocal(1, null)
         }
