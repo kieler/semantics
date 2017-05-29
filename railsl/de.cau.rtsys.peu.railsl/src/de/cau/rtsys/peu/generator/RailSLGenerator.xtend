@@ -23,13 +23,22 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
-import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.HashMap
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.emf.ecore.EObject
+import de.cau.rtsys.peu.railSL.Program
+import java.util.Map
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.common.notify.Notification
+import java.util.ArrayList
+import org.eclipse.emf.common.util.TreeIterator
+import java.util.List
 
 /**
  * Generates code from your model files on save.
@@ -68,22 +77,23 @@ class RailSLGenerator extends AbstractGenerator {
 	final static val SPEED_SLOW = 45;
 	final static val SPEED_FULL = 120;
 
-    def EObject transform(EObject model) {
+    def State transform(Program model) {
         
+        return generateCode(model.blocks)
     }
 
-    /*
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
         generateHeaders(fsa)
         generateSnippets(fsa)
-
-		
-		// TODO What should happen here? 
-		fsa.generateFile('controller.sct', generateCode(resource))
-
+		// TODO What should happen here? This has no side effects.
+		val list = new ArrayList<Block>
+		for (block: resource.allContents.toList.filter(Block)) {
+		    list.add(block)
+		}
+		System.out.println(generateCode(list))
 	}
-	*/
+	
 	/*************************************************************************
 	 * S T A T I C   C O D E   G E N E R A T I O N ***************************
 	 *************************************************************************/
@@ -433,9 +443,10 @@ struct railway_hardware kicking;
 #define _KICKING_H_
 #endif'
     
-    fsa.generateFile("kicking.h", kickingH)
+        fsa.generateFile("kicking.h", kickingH)
  
-}
+    }
+    
 	def void generateSnippets(IFileSystemAccess fsa) {
 	    
 	   fsa.generateFile('contacts.ftl', generateContactsSnippet())
@@ -579,7 +590,7 @@ ${outputs}
 	/**
 	 * Transforms the model into an SCCharts model
 	 */
-	def String generateCode(Resource resource) {
+	def State generateCode(List<Block> blocks) {
 		
 		var chart = createSCChart();
 		
@@ -661,12 +672,13 @@ ${outputs}
 		])
 		*/
 		
-		for (block : resource.allContents.toIterable.filter(Block)) {
+		// A C T U A L   D I A G R A M   S Y N T H E S I S
+		
+		for (block : blocks) {
             block.compile(chart)
 		}
-		
-		// TODO
-		return "";
+
+		return chart;
 		
 	}
 	

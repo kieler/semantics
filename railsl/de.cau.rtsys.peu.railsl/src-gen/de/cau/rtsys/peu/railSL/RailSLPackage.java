@@ -347,6 +347,34 @@ public interface RailSLPackage extends EPackage
   int OP_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.rtsys.peu.railSL.impl.CrossingStatementImpl <em>Crossing Statement</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.rtsys.peu.railSL.impl.CrossingStatementImpl
+   * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getCrossingStatement()
+   * @generated
+   */
+  int CROSSING_STATEMENT = 10;
+
+  /**
+   * The feature id for the '<em><b>Mode</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CROSSING_STATEMENT__MODE = OP_STATEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Crossing Statement</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CROSSING_STATEMENT_FEATURE_COUNT = OP_STATEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link de.cau.rtsys.peu.railSL.impl.LightStatementImpl <em>Light Statement</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -354,7 +382,7 @@ public interface RailSLPackage extends EPackage
    * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getLightStatement()
    * @generated
    */
-  int LIGHT_STATEMENT = 10;
+  int LIGHT_STATEMENT = 11;
 
   /**
    * The feature id for the '<em><b>Lights</b></em>' attribute list.
@@ -606,6 +634,27 @@ public interface RailSLPackage extends EPackage
   EClass getOpStatement();
 
   /**
+   * Returns the meta object for class '{@link de.cau.rtsys.peu.railSL.CrossingStatement <em>Crossing Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Crossing Statement</em>'.
+   * @see de.cau.rtsys.peu.railSL.CrossingStatement
+   * @generated
+   */
+  EClass getCrossingStatement();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.rtsys.peu.railSL.CrossingStatement#getMode <em>Mode</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Mode</em>'.
+   * @see de.cau.rtsys.peu.railSL.CrossingStatement#getMode()
+   * @see #getCrossingStatement()
+   * @generated
+   */
+  EAttribute getCrossingStatement_Mode();
+
+  /**
    * Returns the meta object for class '{@link de.cau.rtsys.peu.railSL.LightStatement <em>Light Statement</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -847,6 +896,24 @@ public interface RailSLPackage extends EPackage
      * @generated
      */
     EClass OP_STATEMENT = eINSTANCE.getOpStatement();
+
+    /**
+     * The meta object literal for the '{@link de.cau.rtsys.peu.railSL.impl.CrossingStatementImpl <em>Crossing Statement</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.rtsys.peu.railSL.impl.CrossingStatementImpl
+     * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getCrossingStatement()
+     * @generated
+     */
+    EClass CROSSING_STATEMENT = eINSTANCE.getCrossingStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Mode</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CROSSING_STATEMENT__MODE = eINSTANCE.getCrossingStatement_Mode();
 
     /**
      * The meta object literal for the '{@link de.cau.rtsys.peu.railSL.impl.LightStatementImpl <em>Light Statement</em>}' class.

@@ -5,6 +5,7 @@ package de.cau.rtsys.peu.railSL.impl;
 
 import de.cau.rtsys.peu.railSL.Block;
 import de.cau.rtsys.peu.railSL.ContactWaitStatement;
+import de.cau.rtsys.peu.railSL.CrossingStatement;
 import de.cau.rtsys.peu.railSL.LightStatement;
 import de.cau.rtsys.peu.railSL.OpStatement;
 import de.cau.rtsys.peu.railSL.Program;
@@ -101,6 +102,13 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * @generated
    */
   private EClass opStatementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass crossingStatementEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -387,6 +395,26 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getCrossingStatement()
+  {
+    return crossingStatementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCrossingStatement_Mode()
+  {
+    return (EAttribute)crossingStatementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLightStatement()
   {
     return lightStatementEClass;
@@ -473,6 +501,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
 
     opStatementEClass = createEClass(OP_STATEMENT);
 
+    crossingStatementEClass = createEClass(CROSSING_STATEMENT);
+    createEAttribute(crossingStatementEClass, CROSSING_STATEMENT__MODE);
+
     lightStatementEClass = createEClass(LIGHT_STATEMENT);
     createEAttribute(lightStatementEClass, LIGHT_STATEMENT__LIGHTS);
     createEAttribute(lightStatementEClass, LIGHT_STATEMENT__STATE);
@@ -514,6 +545,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     timeWaitStatementEClass.getESuperTypes().add(this.getWaitStatement());
     contactWaitStatementEClass.getESuperTypes().add(this.getWaitStatement());
     opStatementEClass.getESuperTypes().add(this.getStatement());
+    crossingStatementEClass.getESuperTypes().add(this.getOpStatement());
     lightStatementEClass.getESuperTypes().add(this.getOpStatement());
 
     // Initialize classes and features; add operations and parameters
@@ -547,6 +579,9 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     initEAttribute(getContactWaitStatement_SegName(), ecorePackage.getEString(), "segName", null, 0, 1, ContactWaitStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(opStatementEClass, OpStatement.class, "OpStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(crossingStatementEClass, CrossingStatement.class, "CrossingStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCrossingStatement_Mode(), ecorePackage.getEString(), "mode", null, 0, 1, CrossingStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lightStatementEClass, LightStatement.class, "LightStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLightStatement_Lights(), ecorePackage.getEInt(), "lights", null, 0, -1, LightStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

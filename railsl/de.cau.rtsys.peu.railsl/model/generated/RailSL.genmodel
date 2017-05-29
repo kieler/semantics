@@ -33,6 +33,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ContactWaitStatement/segName"/>
     </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//OpStatement"/>
+    <genClasses ecoreClass="RailSL.ecore#//CrossingStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//CrossingStatement/mode"/>
+    </genClasses>
     <genClasses ecoreClass="RailSL.ecore#//LightStatement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//LightStatement/lights"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//LightStatement/state"/>

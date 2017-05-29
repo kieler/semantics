@@ -28,10 +28,10 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBlocksBlockParserRuleCall_0 = (RuleCall)cBlocksAssignment.eContents().get(0);
 		
 		//Program:
-		//	blocks+=Block+;
+		//	blocks+=Block*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//blocks+=Block+
+		//blocks+=Block*
 		public Assignment getBlocksAssignment() { return cBlocksAssignment; }
 		
 		//Block
@@ -44,7 +44,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatementsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cStatementsStatementParserRuleCall_1_0 = (RuleCall)cStatementsAssignment_1.eContents().get(0);
 		private final Assignment cEndAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cEndBLOCK_ENDTerminalRuleCall_2_0 = (RuleCall)cEndAssignment_2.eContents().get(0);
+		private final RuleCall cEndBLOCK_ENDParserRuleCall_2_0 = (RuleCall)cEndAssignment_2.eContents().get(0);
 		
 		//Block:
 		//	'Start:' statements+=Statement+ end=BLOCK_END;
@@ -66,7 +66,26 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		public Assignment getEndAssignment_2() { return cEndAssignment_2; }
 		
 		//BLOCK_END
-		public RuleCall getEndBLOCK_ENDTerminalRuleCall_2_0() { return cEndBLOCK_ENDTerminalRuleCall_2_0; }
+		public RuleCall getEndBLOCK_ENDParserRuleCall_2_0() { return cEndBLOCK_ENDParserRuleCall_2_0; }
+	}
+	public class BLOCK_ENDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.BLOCK_END");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cEndKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cLoopKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//BLOCK_END:
+		//	'End.' | 'Loop.';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'End.' | 'Loop.'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'End.'
+		public Keyword getEndKeyword_0() { return cEndKeyword_0; }
+		
+		//'Loop.'
+		public Keyword getLoopKeyword_1() { return cLoopKeyword_1; }
 	}
 	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.Statement");
@@ -115,39 +134,55 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cSetTrackKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cSegmentsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSegmentsSEG_NAMETerminalRuleCall_1_0 = (RuleCall)cSegmentsAssignment_1.eContents().get(0);
-		private final Keyword cToKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cModeAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cModeTrackSettingParserRuleCall_3_0 = (RuleCall)cModeAssignment_3.eContents().get(0);
-		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final RuleCall cSegmentsSEG_NAMEParserRuleCall_1_0 = (RuleCall)cSegmentsAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cSegmentsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cSegmentsSEG_NAMEParserRuleCall_2_1_0 = (RuleCall)cSegmentsAssignment_2_1.eContents().get(0);
+		private final Keyword cToKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cModeAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cModeTrackSettingParserRuleCall_4_0 = (RuleCall)cModeAssignment_4.eContents().get(0);
+		private final Keyword cFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//SetTrackStatement:
-		//	'Set track' segments+=SEG_NAME+ 'to' mode=TrackSetting '.';
+		//	'Set track' segments+=SEG_NAME (',' segments+=SEG_NAME)* 'to' mode=TrackSetting '.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Set track' segments+=SEG_NAME+ 'to' mode=TrackSetting '.'
+		//'Set track' segments+=SEG_NAME (',' segments+=SEG_NAME)* 'to' mode=TrackSetting '.'
 		public Group getGroup() { return cGroup; }
 		
 		//'Set track'
 		public Keyword getSetTrackKeyword_0() { return cSetTrackKeyword_0; }
 		
-		//segments+=SEG_NAME+
+		//segments+=SEG_NAME
 		public Assignment getSegmentsAssignment_1() { return cSegmentsAssignment_1; }
 		
 		//SEG_NAME
-		public RuleCall getSegmentsSEG_NAMETerminalRuleCall_1_0() { return cSegmentsSEG_NAMETerminalRuleCall_1_0; }
+		public RuleCall getSegmentsSEG_NAMEParserRuleCall_1_0() { return cSegmentsSEG_NAMEParserRuleCall_1_0; }
+		
+		//(',' segments+=SEG_NAME)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//segments+=SEG_NAME
+		public Assignment getSegmentsAssignment_2_1() { return cSegmentsAssignment_2_1; }
+		
+		//SEG_NAME
+		public RuleCall getSegmentsSEG_NAMEParserRuleCall_2_1_0() { return cSegmentsSEG_NAMEParserRuleCall_2_1_0; }
 		
 		//'to'
-		public Keyword getToKeyword_2() { return cToKeyword_2; }
+		public Keyword getToKeyword_3() { return cToKeyword_3; }
 		
 		//mode=TrackSetting
-		public Assignment getModeAssignment_3() { return cModeAssignment_3; }
+		public Assignment getModeAssignment_4() { return cModeAssignment_4; }
 		
 		//TrackSetting
-		public RuleCall getModeTrackSettingParserRuleCall_3_0() { return cModeTrackSettingParserRuleCall_3_0; }
+		public RuleCall getModeTrackSettingParserRuleCall_4_0() { return cModeTrackSettingParserRuleCall_4_0; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
+		public Keyword getFullStopKeyword_5() { return cFullStopKeyword_5; }
 	}
 	public class TrackSettingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.TrackSetting");
@@ -190,46 +225,63 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSetPointKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cPointsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cPointsINTTerminalRuleCall_1_0 = (RuleCall)cPointsAssignment_1.eContents().get(0);
-		private final Keyword cToKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cOrientationAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Alternatives cOrientationAlternatives_3_0 = (Alternatives)cOrientationAssignment_3.eContents().get(0);
-		private final Keyword cOrientationStraightKeyword_3_0_0 = (Keyword)cOrientationAlternatives_3_0.eContents().get(0);
-		private final Keyword cOrientationBranchKeyword_3_0_1 = (Keyword)cOrientationAlternatives_3_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cPointsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cPointsINTTerminalRuleCall_2_1_0 = (RuleCall)cPointsAssignment_2_1.eContents().get(0);
+		private final Keyword cToKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cOrientationAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Alternatives cOrientationAlternatives_4_0 = (Alternatives)cOrientationAssignment_4.eContents().get(0);
+		private final Keyword cOrientationStraightKeyword_4_0_0 = (Keyword)cOrientationAlternatives_4_0.eContents().get(0);
+		private final Keyword cOrientationBranchKeyword_4_0_1 = (Keyword)cOrientationAlternatives_4_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
+		////TODO handle range check for Ints
 		//SetPointStatement:
-		//	'Set point' points+=INT+ 'to' orientation=('straight' | 'branch') '.';
+		//	'Set point' points+=INT (',' points+=INT)* 'to' orientation=('straight' | 'branch') '.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Set point' points+=INT+ 'to' orientation=('straight' | 'branch') '.'
+		//'Set point' points+=INT (',' points+=INT)* 'to' orientation=('straight' | 'branch') '.'
 		public Group getGroup() { return cGroup; }
 		
 		//'Set point'
 		public Keyword getSetPointKeyword_0() { return cSetPointKeyword_0; }
 		
-		//points+=INT+
+		//points+=INT
 		public Assignment getPointsAssignment_1() { return cPointsAssignment_1; }
 		
 		//INT
 		public RuleCall getPointsINTTerminalRuleCall_1_0() { return cPointsINTTerminalRuleCall_1_0; }
 		
+		//(',' points+=INT)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//points+=INT
+		public Assignment getPointsAssignment_2_1() { return cPointsAssignment_2_1; }
+		
+		//INT
+		public RuleCall getPointsINTTerminalRuleCall_2_1_0() { return cPointsINTTerminalRuleCall_2_1_0; }
+		
 		//'to'
-		public Keyword getToKeyword_2() { return cToKeyword_2; }
+		public Keyword getToKeyword_3() { return cToKeyword_3; }
 		
 		//orientation=('straight' | 'branch')
-		public Assignment getOrientationAssignment_3() { return cOrientationAssignment_3; }
+		public Assignment getOrientationAssignment_4() { return cOrientationAssignment_4; }
 		
 		//('straight' | 'branch')
-		public Alternatives getOrientationAlternatives_3_0() { return cOrientationAlternatives_3_0; }
+		public Alternatives getOrientationAlternatives_4_0() { return cOrientationAlternatives_4_0; }
 		
 		//'straight'
-		public Keyword getOrientationStraightKeyword_3_0_0() { return cOrientationStraightKeyword_3_0_0; }
+		public Keyword getOrientationStraightKeyword_4_0_0() { return cOrientationStraightKeyword_4_0_0; }
 		
 		//'branch'
-		public Keyword getOrientationBranchKeyword_3_0_1() { return cOrientationBranchKeyword_3_0_1; }
+		public Keyword getOrientationBranchKeyword_4_0_1() { return cOrientationBranchKeyword_4_0_1; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
+		public Keyword getFullStopKeyword_5() { return cFullStopKeyword_5; }
 	}
 	public class WaitStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.WaitStatement");
@@ -290,7 +342,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cContactIndexSecondKeyword_1_0_1 = (Keyword)cContactIndexAlternatives_1_0.eContents().get(1);
 		private final Keyword cContactOfKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cSegNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cSegNameSEG_NAMETerminalRuleCall_3_0 = (RuleCall)cSegNameAssignment_3.eContents().get(0);
+		private final RuleCall cSegNameSEG_NAMEParserRuleCall_3_0 = (RuleCall)cSegNameAssignment_3.eContents().get(0);
 		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ContactWaitStatement:
@@ -331,7 +383,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		public Assignment getSegNameAssignment_3() { return cSegNameAssignment_3; }
 		
 		//SEG_NAME
-		public RuleCall getSegNameSEG_NAMETerminalRuleCall_3_0() { return cSegNameSEG_NAMETerminalRuleCall_3_0; }
+		public RuleCall getSegNameSEG_NAMEParserRuleCall_3_0() { return cSegNameSEG_NAMEParserRuleCall_3_0; }
 		
 		//'.'
 		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
@@ -358,26 +410,30 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	public class CrossingStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.CrossingStatement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cOpenKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cCloseKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Assignment cModeAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Alternatives cModeAlternatives_0_0 = (Alternatives)cModeAssignment_0.eContents().get(0);
+		private final Keyword cModeOpenKeyword_0_0_0 = (Keyword)cModeAlternatives_0_0.eContents().get(0);
+		private final Keyword cModeCloseKeyword_0_0_1 = (Keyword)cModeAlternatives_0_0.eContents().get(1);
 		private final Keyword cCrossingKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//CrossingStatement:
-		//	('Open' | 'Close') 'crossing.';
+		//	mode=('Open' | 'Close') 'crossing.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('Open' | 'Close') 'crossing.'
+		//mode=('Open' | 'Close') 'crossing.'
 		public Group getGroup() { return cGroup; }
 		
+		//mode=('Open' | 'Close')
+		public Assignment getModeAssignment_0() { return cModeAssignment_0; }
+		
 		//('Open' | 'Close')
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		public Alternatives getModeAlternatives_0_0() { return cModeAlternatives_0_0; }
 		
 		//'Open'
-		public Keyword getOpenKeyword_0_0() { return cOpenKeyword_0_0; }
+		public Keyword getModeOpenKeyword_0_0_0() { return cModeOpenKeyword_0_0_0; }
 		
 		//'Close'
-		public Keyword getCloseKeyword_0_1() { return cCloseKeyword_0_1; }
+		public Keyword getModeCloseKeyword_0_0_1() { return cModeCloseKeyword_0_0_1; }
 		
 		//'crossing.'
 		public Keyword getCrossingKeyword_1() { return cCrossingKeyword_1; }
@@ -388,48 +444,279 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTurnLightKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cLightsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cLightsINTTerminalRuleCall_1_0 = (RuleCall)cLightsAssignment_1.eContents().get(0);
-		private final Assignment cStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Alternatives cStateAlternatives_2_0 = (Alternatives)cStateAssignment_2.eContents().get(0);
-		private final Keyword cStateOnKeyword_2_0_0 = (Keyword)cStateAlternatives_2_0.eContents().get(0);
-		private final Keyword cStateOffKeyword_2_0_1 = (Keyword)cStateAlternatives_2_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLightsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cLightsINTTerminalRuleCall_2_1_0 = (RuleCall)cLightsAssignment_2_1.eContents().get(0);
+		private final Assignment cStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cStateAlternatives_3_0 = (Alternatives)cStateAssignment_3.eContents().get(0);
+		private final Keyword cStateOnKeyword_3_0_0 = (Keyword)cStateAlternatives_3_0.eContents().get(0);
+		private final Keyword cStateOffKeyword_3_0_1 = (Keyword)cStateAlternatives_3_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
+		////TODO handle range check for Ints
 		//LightStatement:
-		//	'Turn light' lights+=INT+ state=('on' | 'off') '.';
+		//	'Turn light' lights+=INT (',' lights+=INT)* state=('on' | 'off') '.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Turn light' lights+=INT+ state=('on' | 'off') '.'
+		//'Turn light' lights+=INT (',' lights+=INT)* state=('on' | 'off') '.'
 		public Group getGroup() { return cGroup; }
 		
 		//'Turn light'
 		public Keyword getTurnLightKeyword_0() { return cTurnLightKeyword_0; }
 		
-		//lights+=INT+
+		//lights+=INT
 		public Assignment getLightsAssignment_1() { return cLightsAssignment_1; }
 		
 		//INT
 		public RuleCall getLightsINTTerminalRuleCall_1_0() { return cLightsINTTerminalRuleCall_1_0; }
 		
+		//(',' lights+=INT)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//lights+=INT
+		public Assignment getLightsAssignment_2_1() { return cLightsAssignment_2_1; }
+		
+		//INT
+		public RuleCall getLightsINTTerminalRuleCall_2_1_0() { return cLightsINTTerminalRuleCall_2_1_0; }
+		
 		//state=('on' | 'off')
-		public Assignment getStateAssignment_2() { return cStateAssignment_2; }
+		public Assignment getStateAssignment_3() { return cStateAssignment_3; }
 		
 		//('on' | 'off')
-		public Alternatives getStateAlternatives_2_0() { return cStateAlternatives_2_0; }
+		public Alternatives getStateAlternatives_3_0() { return cStateAlternatives_3_0; }
 		
 		//'on'
-		public Keyword getStateOnKeyword_2_0_0() { return cStateOnKeyword_2_0_0; }
+		public Keyword getStateOnKeyword_3_0_0() { return cStateOnKeyword_3_0_0; }
 		
 		//'off'
-		public Keyword getStateOffKeyword_2_0_1() { return cStateOffKeyword_2_0_1; }
+		public Keyword getStateOffKeyword_3_0_1() { return cStateOffKeyword_3_0_1; }
 		
 		//'.'
-		public Keyword getFullStopKeyword_3() { return cFullStopKeyword_3; }
+		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
+	}
+	public class SEG_NAMEElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.SEG_NAME");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cKH_ST_0Keyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cKH_ST_1Keyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cKH_ST_2Keyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cKH_ST_3Keyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cKH_ST_4Keyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cKH_ST_5Keyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cKH_ST_6Keyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cKH_LN_0Keyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cKH_LN_1Keyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cKH_LN_2Keyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cKH_LN_3Keyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cKH_LN_4Keyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cKH_LN_5Keyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Keyword cKH_LN_6Keyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		private final Keyword cKH_LN_7Keyword_14 = (Keyword)cAlternatives.eContents().get(14);
+		private final Keyword cKH_LN_8Keyword_15 = (Keyword)cAlternatives.eContents().get(15);
+		private final Keyword cKIO_LN_0Keyword_16 = (Keyword)cAlternatives.eContents().get(16);
+		private final Keyword cKIO_LN_1Keyword_17 = (Keyword)cAlternatives.eContents().get(17);
+		private final Keyword cOC_ST_0Keyword_18 = (Keyword)cAlternatives.eContents().get(18);
+		private final Keyword cOC_ST_1Keyword_19 = (Keyword)cAlternatives.eContents().get(19);
+		private final Keyword cOC_ST_2Keyword_20 = (Keyword)cAlternatives.eContents().get(20);
+		private final Keyword cOC_ST_3Keyword_21 = (Keyword)cAlternatives.eContents().get(21);
+		private final Keyword cOC_ST_4Keyword_22 = (Keyword)cAlternatives.eContents().get(22);
+		private final Keyword cOC_LN_0Keyword_23 = (Keyword)cAlternatives.eContents().get(23);
+		private final Keyword cOC_LN_1Keyword_24 = (Keyword)cAlternatives.eContents().get(24);
+		private final Keyword cOC_LN_2Keyword_25 = (Keyword)cAlternatives.eContents().get(25);
+		private final Keyword cOC_LN_3Keyword_26 = (Keyword)cAlternatives.eContents().get(26);
+		private final Keyword cOC_LN_4Keyword_27 = (Keyword)cAlternatives.eContents().get(27);
+		private final Keyword cOC_LN_5Keyword_28 = (Keyword)cAlternatives.eContents().get(28);
+		private final Keyword cIC_ST_0Keyword_29 = (Keyword)cAlternatives.eContents().get(29);
+		private final Keyword cIC_ST_1Keyword_30 = (Keyword)cAlternatives.eContents().get(30);
+		private final Keyword cIC_ST_2Keyword_31 = (Keyword)cAlternatives.eContents().get(31);
+		private final Keyword cIC_ST_3Keyword_32 = (Keyword)cAlternatives.eContents().get(32);
+		private final Keyword cIC_ST_4Keyword_33 = (Keyword)cAlternatives.eContents().get(33);
+		private final Keyword cIC_LN_0Keyword_34 = (Keyword)cAlternatives.eContents().get(34);
+		private final Keyword cIC_LN_1Keyword_35 = (Keyword)cAlternatives.eContents().get(35);
+		private final Keyword cIC_LN_2Keyword_36 = (Keyword)cAlternatives.eContents().get(36);
+		private final Keyword cIC_LN_3Keyword_37 = (Keyword)cAlternatives.eContents().get(37);
+		private final Keyword cIC_LN_4Keyword_38 = (Keyword)cAlternatives.eContents().get(38);
+		private final Keyword cIC_LN_5Keyword_39 = (Keyword)cAlternatives.eContents().get(39);
+		private final Keyword cOC_JCT_0Keyword_40 = (Keyword)cAlternatives.eContents().get(40);
+		private final Keyword cIC_JCT_0Keyword_41 = (Keyword)cAlternatives.eContents().get(41);
+		private final Keyword cOI_LN_0Keyword_42 = (Keyword)cAlternatives.eContents().get(42);
+		private final Keyword cOI_LN_1Keyword_43 = (Keyword)cAlternatives.eContents().get(43);
+		private final Keyword cOI_LN_2Keyword_44 = (Keyword)cAlternatives.eContents().get(44);
+		private final Keyword cIO_LN_0Keyword_45 = (Keyword)cAlternatives.eContents().get(45);
+		private final Keyword cIO_LN_1Keyword_46 = (Keyword)cAlternatives.eContents().get(46);
+		private final Keyword cIO_LN_2Keyword_47 = (Keyword)cAlternatives.eContents().get(47);
+		
+		//SEG_NAME:
+		//	'KH_ST_0' | 'KH_ST_1' | 'KH_ST_2' | 'KH_ST_3' | 'KH_ST_4' | 'KH_ST_5' | 'KH_ST_6' |
+		//	'KH_LN_0' | 'KH_LN_1' | 'KH_LN_2' | 'KH_LN_3' | 'KH_LN_4' | 'KH_LN_5' | 'KH_LN_6' | 'KH_LN_7' | 'KH_LN_8' |
+		//	'KIO_LN_0' | 'KIO_LN_1' | 'OC_ST_0' | 'OC_ST_1' | 'OC_ST_2' | 'OC_ST_3' | 'OC_ST_4' |
+		//	'OC_LN_0' | 'OC_LN_1' | 'OC_LN_2' | 'OC_LN_3' | 'OC_LN_4' | 'OC_LN_5' |
+		//	'IC_ST_0' | 'IC_ST_1' | 'IC_ST_2' | 'IC_ST_3' | 'IC_ST_4' |
+		//	'IC_LN_0' | 'IC_LN_1' | 'IC_LN_2' | 'IC_LN_3' | 'IC_LN_4' | 'IC_LN_5' |
+		//	'OC_JCT_0' | 'IC_JCT_0' | 'OI_LN_0' | 'OI_LN_1' | 'OI_LN_2' |
+		//	'IO_LN_0' | 'IO_LN_1' | 'IO_LN_2';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'KH_ST_0' | 'KH_ST_1' | 'KH_ST_2' | 'KH_ST_3' | 'KH_ST_4' | 'KH_ST_5' | 'KH_ST_6' | 'KH_LN_0' | 'KH_LN_1' | 'KH_LN_2' |
+		//'KH_LN_3' | 'KH_LN_4' | 'KH_LN_5' | 'KH_LN_6' | 'KH_LN_7' | 'KH_LN_8' | 'KIO_LN_0' | 'KIO_LN_1' | 'OC_ST_0' | 'OC_ST_1'
+		//| 'OC_ST_2' | 'OC_ST_3' | 'OC_ST_4' | 'OC_LN_0' | 'OC_LN_1' | 'OC_LN_2' | 'OC_LN_3' | 'OC_LN_4' | 'OC_LN_5' | 'IC_ST_0'
+		//| 'IC_ST_1' | 'IC_ST_2' | 'IC_ST_3' | 'IC_ST_4' | 'IC_LN_0' | 'IC_LN_1' | 'IC_LN_2' | 'IC_LN_3' | 'IC_LN_4' | 'IC_LN_5'
+		//| 'OC_JCT_0' | 'IC_JCT_0' | 'OI_LN_0' | 'OI_LN_1' | 'OI_LN_2' | 'IO_LN_0' | 'IO_LN_1' | 'IO_LN_2'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'KH_ST_0'
+		public Keyword getKH_ST_0Keyword_0() { return cKH_ST_0Keyword_0; }
+		
+		//'KH_ST_1'
+		public Keyword getKH_ST_1Keyword_1() { return cKH_ST_1Keyword_1; }
+		
+		//'KH_ST_2'
+		public Keyword getKH_ST_2Keyword_2() { return cKH_ST_2Keyword_2; }
+		
+		//'KH_ST_3'
+		public Keyword getKH_ST_3Keyword_3() { return cKH_ST_3Keyword_3; }
+		
+		//'KH_ST_4'
+		public Keyword getKH_ST_4Keyword_4() { return cKH_ST_4Keyword_4; }
+		
+		//'KH_ST_5'
+		public Keyword getKH_ST_5Keyword_5() { return cKH_ST_5Keyword_5; }
+		
+		//'KH_ST_6'
+		public Keyword getKH_ST_6Keyword_6() { return cKH_ST_6Keyword_6; }
+		
+		//'KH_LN_0'
+		public Keyword getKH_LN_0Keyword_7() { return cKH_LN_0Keyword_7; }
+		
+		//'KH_LN_1'
+		public Keyword getKH_LN_1Keyword_8() { return cKH_LN_1Keyword_8; }
+		
+		//'KH_LN_2'
+		public Keyword getKH_LN_2Keyword_9() { return cKH_LN_2Keyword_9; }
+		
+		//'KH_LN_3'
+		public Keyword getKH_LN_3Keyword_10() { return cKH_LN_3Keyword_10; }
+		
+		//'KH_LN_4'
+		public Keyword getKH_LN_4Keyword_11() { return cKH_LN_4Keyword_11; }
+		
+		//'KH_LN_5'
+		public Keyword getKH_LN_5Keyword_12() { return cKH_LN_5Keyword_12; }
+		
+		//'KH_LN_6'
+		public Keyword getKH_LN_6Keyword_13() { return cKH_LN_6Keyword_13; }
+		
+		//'KH_LN_7'
+		public Keyword getKH_LN_7Keyword_14() { return cKH_LN_7Keyword_14; }
+		
+		//'KH_LN_8'
+		public Keyword getKH_LN_8Keyword_15() { return cKH_LN_8Keyword_15; }
+		
+		//'KIO_LN_0'
+		public Keyword getKIO_LN_0Keyword_16() { return cKIO_LN_0Keyword_16; }
+		
+		//'KIO_LN_1'
+		public Keyword getKIO_LN_1Keyword_17() { return cKIO_LN_1Keyword_17; }
+		
+		//'OC_ST_0'
+		public Keyword getOC_ST_0Keyword_18() { return cOC_ST_0Keyword_18; }
+		
+		//'OC_ST_1'
+		public Keyword getOC_ST_1Keyword_19() { return cOC_ST_1Keyword_19; }
+		
+		//'OC_ST_2'
+		public Keyword getOC_ST_2Keyword_20() { return cOC_ST_2Keyword_20; }
+		
+		//'OC_ST_3'
+		public Keyword getOC_ST_3Keyword_21() { return cOC_ST_3Keyword_21; }
+		
+		//'OC_ST_4'
+		public Keyword getOC_ST_4Keyword_22() { return cOC_ST_4Keyword_22; }
+		
+		//'OC_LN_0'
+		public Keyword getOC_LN_0Keyword_23() { return cOC_LN_0Keyword_23; }
+		
+		//'OC_LN_1'
+		public Keyword getOC_LN_1Keyword_24() { return cOC_LN_1Keyword_24; }
+		
+		//'OC_LN_2'
+		public Keyword getOC_LN_2Keyword_25() { return cOC_LN_2Keyword_25; }
+		
+		//'OC_LN_3'
+		public Keyword getOC_LN_3Keyword_26() { return cOC_LN_3Keyword_26; }
+		
+		//'OC_LN_4'
+		public Keyword getOC_LN_4Keyword_27() { return cOC_LN_4Keyword_27; }
+		
+		//'OC_LN_5'
+		public Keyword getOC_LN_5Keyword_28() { return cOC_LN_5Keyword_28; }
+		
+		//'IC_ST_0'
+		public Keyword getIC_ST_0Keyword_29() { return cIC_ST_0Keyword_29; }
+		
+		//'IC_ST_1'
+		public Keyword getIC_ST_1Keyword_30() { return cIC_ST_1Keyword_30; }
+		
+		//'IC_ST_2'
+		public Keyword getIC_ST_2Keyword_31() { return cIC_ST_2Keyword_31; }
+		
+		//'IC_ST_3'
+		public Keyword getIC_ST_3Keyword_32() { return cIC_ST_3Keyword_32; }
+		
+		//'IC_ST_4'
+		public Keyword getIC_ST_4Keyword_33() { return cIC_ST_4Keyword_33; }
+		
+		//'IC_LN_0'
+		public Keyword getIC_LN_0Keyword_34() { return cIC_LN_0Keyword_34; }
+		
+		//'IC_LN_1'
+		public Keyword getIC_LN_1Keyword_35() { return cIC_LN_1Keyword_35; }
+		
+		//'IC_LN_2'
+		public Keyword getIC_LN_2Keyword_36() { return cIC_LN_2Keyword_36; }
+		
+		//'IC_LN_3'
+		public Keyword getIC_LN_3Keyword_37() { return cIC_LN_3Keyword_37; }
+		
+		//'IC_LN_4'
+		public Keyword getIC_LN_4Keyword_38() { return cIC_LN_4Keyword_38; }
+		
+		//'IC_LN_5'
+		public Keyword getIC_LN_5Keyword_39() { return cIC_LN_5Keyword_39; }
+		
+		//'OC_JCT_0'
+		public Keyword getOC_JCT_0Keyword_40() { return cOC_JCT_0Keyword_40; }
+		
+		//'IC_JCT_0'
+		public Keyword getIC_JCT_0Keyword_41() { return cIC_JCT_0Keyword_41; }
+		
+		//'OI_LN_0'
+		public Keyword getOI_LN_0Keyword_42() { return cOI_LN_0Keyword_42; }
+		
+		//'OI_LN_1'
+		public Keyword getOI_LN_1Keyword_43() { return cOI_LN_1Keyword_43; }
+		
+		//'OI_LN_2'
+		public Keyword getOI_LN_2Keyword_44() { return cOI_LN_2Keyword_44; }
+		
+		//'IO_LN_0'
+		public Keyword getIO_LN_0Keyword_45() { return cIO_LN_0Keyword_45; }
+		
+		//'IO_LN_1'
+		public Keyword getIO_LN_1Keyword_46() { return cIO_LN_1Keyword_46; }
+		
+		//'IO_LN_2'
+		public Keyword getIO_LN_2Keyword_47() { return cIO_LN_2Keyword_47; }
 	}
 	
 	
 	private final ProgramElements pProgram;
 	private final BlockElements pBlock;
-	private final TerminalRule tBLOCK_END;
+	private final BLOCK_ENDElements pBLOCK_END;
 	private final StatementElements pStatement;
 	private final SetStatementElements pSetStatement;
 	private final SetTrackStatementElements pSetTrackStatement;
@@ -441,7 +728,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	private final OpStatementElements pOpStatement;
 	private final CrossingStatementElements pCrossingStatement;
 	private final LightStatementElements pLightStatement;
-	private final TerminalRule tSEG_NAME;
+	private final SEG_NAMEElements pSEG_NAME;
 	
 	private final Grammar grammar;
 	
@@ -454,7 +741,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pProgram = new ProgramElements();
 		this.pBlock = new BlockElements();
-		this.tBLOCK_END = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.BLOCK_END");
+		this.pBLOCK_END = new BLOCK_ENDElements();
 		this.pStatement = new StatementElements();
 		this.pSetStatement = new SetStatementElements();
 		this.pSetTrackStatement = new SetTrackStatementElements();
@@ -466,7 +753,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pOpStatement = new OpStatementElements();
 		this.pCrossingStatement = new CrossingStatementElements();
 		this.pLightStatement = new LightStatementElements();
-		this.tSEG_NAME = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.SEG_NAME");
+		this.pSEG_NAME = new SEG_NAMEElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -497,7 +784,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Program:
-	//	blocks+=Block+;
+	//	blocks+=Block*;
 	public ProgramElements getProgramAccess() {
 		return pProgram;
 	}
@@ -516,10 +803,14 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getBlockAccess().getRule();
 	}
 	
-	//terminal BLOCK_END:
+	//BLOCK_END:
 	//	'End.' | 'Loop.';
-	public TerminalRule getBLOCK_ENDRule() {
-		return tBLOCK_END;
+	public BLOCK_ENDElements getBLOCK_ENDAccess() {
+		return pBLOCK_END;
+	}
+	
+	public ParserRule getBLOCK_ENDRule() {
+		return getBLOCK_ENDAccess().getRule();
 	}
 	
 	//Statement:
@@ -543,7 +834,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SetTrackStatement:
-	//	'Set track' segments+=SEG_NAME+ 'to' mode=TrackSetting '.';
+	//	'Set track' segments+=SEG_NAME (',' segments+=SEG_NAME)* 'to' mode=TrackSetting '.';
 	public SetTrackStatementElements getSetTrackStatementAccess() {
 		return pSetTrackStatement;
 	}
@@ -562,8 +853,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getTrackSettingAccess().getRule();
 	}
 	
+	////TODO handle range check for Ints
 	//SetPointStatement:
-	//	'Set point' points+=INT+ 'to' orientation=('straight' | 'branch') '.';
+	//	'Set point' points+=INT (',' points+=INT)* 'to' orientation=('straight' | 'branch') '.';
 	public SetPointStatementElements getSetPointStatementAccess() {
 		return pSetPointStatement;
 	}
@@ -613,7 +905,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//CrossingStatement:
-	//	('Open' | 'Close') 'crossing.';
+	//	mode=('Open' | 'Close') 'crossing.';
 	public CrossingStatementElements getCrossingStatementAccess() {
 		return pCrossingStatement;
 	}
@@ -622,8 +914,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getCrossingStatementAccess().getRule();
 	}
 	
+	////TODO handle range check for Ints
 	//LightStatement:
-	//	'Turn light' lights+=INT+ state=('on' | 'off') '.';
+	//	'Turn light' lights+=INT (',' lights+=INT)* state=('on' | 'off') '.';
 	public LightStatementElements getLightStatementAccess() {
 		return pLightStatement;
 	}
@@ -632,7 +925,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getLightStatementAccess().getRule();
 	}
 	
-	//terminal SEG_NAME:
+	//SEG_NAME:
 	//	'KH_ST_0' | 'KH_ST_1' | 'KH_ST_2' | 'KH_ST_3' | 'KH_ST_4' | 'KH_ST_5' | 'KH_ST_6' |
 	//	'KH_LN_0' | 'KH_LN_1' | 'KH_LN_2' | 'KH_LN_3' | 'KH_LN_4' | 'KH_LN_5' | 'KH_LN_6' | 'KH_LN_7' | 'KH_LN_8' |
 	//	'KIO_LN_0' | 'KIO_LN_1' | 'OC_ST_0' | 'OC_ST_1' | 'OC_ST_2' | 'OC_ST_3' | 'OC_ST_4' |
@@ -641,8 +934,12 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	//	'IC_LN_0' | 'IC_LN_1' | 'IC_LN_2' | 'IC_LN_3' | 'IC_LN_4' | 'IC_LN_5' |
 	//	'OC_JCT_0' | 'IC_JCT_0' | 'OI_LN_0' | 'OI_LN_1' | 'OI_LN_2' |
 	//	'IO_LN_0' | 'IO_LN_1' | 'IO_LN_2';
-	public TerminalRule getSEG_NAMERule() {
-		return tSEG_NAME;
+	public SEG_NAMEElements getSEG_NAMEAccess() {
+		return pSEG_NAME;
+	}
+	
+	public ParserRule getSEG_NAMERule() {
+		return getSEG_NAMEAccess().getRule();
 	}
 	
 	//terminal ID:

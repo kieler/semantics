@@ -30,21 +30,9 @@ public class RailSLSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getCrossingStatementRule())
-			return getCrossingStatementToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * CrossingStatement:
-	 * 	('Open' | 'Close') 'crossing.'
-	 * ;
-	 */
-	protected String getCrossingStatementToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "Opencrossing.";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

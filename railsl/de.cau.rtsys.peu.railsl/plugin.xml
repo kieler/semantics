@@ -9,5 +9,8 @@
 	</extension>
  <extension
        point="de.cau.cs.kieler.kico.transformation">
+    <expansionTransformationClass
+          class="de.cau.rtsys.peu.RailSLTransformation">
+    </expansionTransformationClass>
  </extension>
 </plugin>

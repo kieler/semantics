@@ -154,6 +154,15 @@ public class RailSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case RailSLPackage.CROSSING_STATEMENT:
+      {
+        CrossingStatement crossingStatement = (CrossingStatement)theEObject;
+        T result = caseCrossingStatement(crossingStatement);
+        if (result == null) result = caseOpStatement(crossingStatement);
+        if (result == null) result = caseStatement(crossingStatement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case RailSLPackage.LIGHT_STATEMENT:
       {
         LightStatement lightStatement = (LightStatement)theEObject;
@@ -323,6 +332,22 @@ public class RailSLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseOpStatement(OpStatement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Crossing Statement</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Crossing Statement</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCrossingStatement(CrossingStatement object)
   {
     return null;
   }

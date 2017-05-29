@@ -126,6 +126,11 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
         return createOpStatementAdapter();
       }
       @Override
+      public Adapter caseCrossingStatement(CrossingStatement object)
+      {
+        return createCrossingStatementAdapter();
+      }
+      @Override
       public Adapter caseLightStatement(LightStatement object)
       {
         return createLightStatementAdapter();
@@ -298,6 +303,21 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createOpStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.rtsys.peu.railSL.CrossingStatement <em>Crossing Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.rtsys.peu.railSL.CrossingStatement
+   * @generated
+   */
+  public Adapter createCrossingStatementAdapter()
   {
     return null;
   }

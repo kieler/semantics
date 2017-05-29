@@ -75,6 +75,7 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
       case RailSLPackage.TIME_WAIT_STATEMENT: return createTimeWaitStatement();
       case RailSLPackage.CONTACT_WAIT_STATEMENT: return createContactWaitStatement();
       case RailSLPackage.OP_STATEMENT: return createOpStatement();
+      case RailSLPackage.CROSSING_STATEMENT: return createCrossingStatement();
       case RailSLPackage.LIGHT_STATEMENT: return createLightStatement();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -189,6 +190,17 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
   {
     OpStatementImpl opStatement = new OpStatementImpl();
     return opStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CrossingStatement createCrossingStatement()
+  {
+    CrossingStatementImpl crossingStatement = new CrossingStatementImpl();
+    return crossingStatement;
   }
 
   /**

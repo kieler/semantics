@@ -114,6 +114,15 @@ public interface RailSLFactory extends EFactory
   OpStatement createOpStatement();
 
   /**
+   * Returns a new object of class '<em>Crossing Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Crossing Statement</em>'.
+   * @generated
+   */
+  CrossingStatement createCrossingStatement();
+
+  /**
    * Returns a new object of class '<em>Light Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

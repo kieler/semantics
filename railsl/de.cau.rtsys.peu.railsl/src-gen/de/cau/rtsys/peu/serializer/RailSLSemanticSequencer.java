@@ -6,6 +6,7 @@ package de.cau.rtsys.peu.serializer;
 import com.google.inject.Inject;
 import de.cau.rtsys.peu.railSL.Block;
 import de.cau.rtsys.peu.railSL.ContactWaitStatement;
+import de.cau.rtsys.peu.railSL.CrossingStatement;
 import de.cau.rtsys.peu.railSL.LightStatement;
 import de.cau.rtsys.peu.railSL.Program;
 import de.cau.rtsys.peu.railSL.RailSLPackage;
@@ -41,6 +42,9 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case RailSLPackage.CONTACT_WAIT_STATEMENT:
 				sequence_ContactWaitStatement(context, (ContactWaitStatement) semanticObject); 
+				return; 
+			case RailSLPackage.CROSSING_STATEMENT:
+				sequence_CrossingStatement(context, (CrossingStatement) semanticObject); 
 				return; 
 			case RailSLPackage.LIGHT_STATEMENT:
 				sequence_LightStatement(context, (LightStatement) semanticObject); 
@@ -90,12 +94,26 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns CrossingStatement
+	 *     OpStatement returns CrossingStatement
+	 *     CrossingStatement returns CrossingStatement
+	 *
+	 * Constraint:
+	 *     (mode='Open' | mode='Close')
+	 */
+	protected void sequence_CrossingStatement(ISerializationContext context, CrossingStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns LightStatement
 	 *     OpStatement returns LightStatement
 	 *     LightStatement returns LightStatement
 	 *
 	 * Constraint:
-	 *     (lights+=INT+ (state='on' | state='off'))
+	 *     (lights+=INT lights+=INT* (state='on' | state='off'))
 	 */
 	protected void sequence_LightStatement(ISerializationContext context, LightStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -121,7 +139,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SetPointStatement returns SetPointStatement
 	 *
 	 * Constraint:
-	 *     (points+=INT+ (orientation='straight' | orientation='branch'))
+	 *     (points+=INT points+=INT* (orientation='straight' | orientation='branch'))
 	 */
 	protected void sequence_SetPointStatement(ISerializationContext context, SetPointStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -135,7 +153,7 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SetTrackStatement returns SetTrackStatement
 	 *
 	 * Constraint:
-	 *     (segments+=SEG_NAME+ mode=TrackSetting)
+	 *     (segments+=SEG_NAME segments+=SEG_NAME* mode=TrackSetting)
 	 */
 	protected void sequence_SetTrackStatement(ISerializationContext context, SetTrackStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
