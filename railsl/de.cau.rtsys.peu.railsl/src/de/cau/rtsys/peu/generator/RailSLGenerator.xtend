@@ -673,8 +673,9 @@ ${outputs}
 		*/
 		
 		// A C T U A L   D I A G R A M   S Y N T H E S I S
-		
+		nextRegionID = 0
 		for (block : blocks) {
+		    nextStateID = 0
             block.compile(chart)
 		}
 
@@ -701,10 +702,14 @@ ${outputs}
             transition.setTypeTermination
             currentState = state
         }
-	    
-	    val done = region.createFinalState("done")
-	    var transition = currentState.createTransitionTo(done)
-        transition.setTypeTermination
+	    if (block.end.equals("End.")) {
+	       val done = region.createFinalState("done")
+	       var transition = currentState.createTransitionTo(done)
+           transition.setTypeTermination
+        } else {
+           var transition = currentState.createTransitionTo(region.initialState)
+           transition.setTypeTermination
+        }
 	}
 	
 	/**
@@ -759,6 +764,7 @@ ${outputs}
            transition.addEffect(lights.assign(createIntValue(setting)) => [
                indices += createIntValue(light)
            ])
+           currentState = nextState
            i++
         }
        
@@ -789,6 +795,7 @@ ${outputs}
            transition.addEffect(points.assign(createIntValue(direction)) => [
                indices += createIntValue(segment)
            ])
+           currentState = nextState
            i++
        }
        
@@ -830,6 +837,7 @@ ${outputs}
 	           indices += createIntValue(trackIndex)
 	           indices += createIntValue(1)
 	       ])
+	       currentState = nextState
 	       i++
 	   }
 	   
@@ -863,7 +871,7 @@ ${outputs}
 	    
 	    transition.trigger = createOperatorExpression(OperatorType.EQ) => [
 	        subExpressions += contacts.reference => [
-	            indices += createIntValue(contactIndex)
+	            indices += createIntValue(trackIndex)
                 indices += createIntValue(contactIndex)
 	        ]
 	        subExpressions += createBoolValue(true)
