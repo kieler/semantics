@@ -407,4 +407,20 @@
 			type="text">
 		</fileTypes>
 	</extension>
+ <extension
+       point="de.cau.cs.kieler.klighd.ui.view.editor">
+    <editor
+          controllerID="de.cau.cs.kieler.kico.klighd.KiCoModelUpdateController"
+          editorID="de.cau.rtsys.peu.RailSL">
+    </editor>
+ </extension>
+ <extension
+       point="de.cau.cs.kieler.kico.ui.transformation">
+    <editor
+          editor="de.cau.rtsys.peu.RailSL"
+          features="RailSL.basic, REFERENCE"
+          label="Railway Compilation"
+          priority="100">
+    </editor>
+ </extension>
 </plugin>

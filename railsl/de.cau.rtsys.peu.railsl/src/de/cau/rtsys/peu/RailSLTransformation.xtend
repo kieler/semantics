@@ -12,30 +12,37 @@
  */
 package de.cau.rtsys.peu
 
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.State
 import de.cau.rtsys.peu.railSL.Program
 import de.cau.rtsys.peu.generator.RailSLGenerator
+import org.eclipse.emf.ecore.EObject
+import java.util.Set
+import com.google.common.collect.Sets
+import de.cau.cs.kieler.kico.transformation.AbstractProductionTransformation
+import com.google.inject.Inject
 
 /**
  * @author stu121235
  *
  */
-class RailSLTransformation extends AbstractExpansionTransformation implements Traceable {
+class RailSLTransformation extends AbstractProductionTransformation implements Traceable {
     
-    override getExpandsFeatureId() {
-        return "RailSL"
+    @Inject extension RailSLGenerator
+    
+    override getProducedFeatureId() {
+        return "REFERENCE"
     }
     
     override getId() {
         return "RailSLTransformation"
     }
     
-    def State transform (Program program) {
-        val gen = new RailSLGenerator()
-        
-        return gen.transform(program)
+    override Set<String> getRequiredFeatureIds() {
+        return Sets.newHashSet(RailSLFeatures.BASIC_ID)
+    }    
+    
+    override transform(EObject eObject) {
+        return (eObject as Program).transform2
     }
     
 }

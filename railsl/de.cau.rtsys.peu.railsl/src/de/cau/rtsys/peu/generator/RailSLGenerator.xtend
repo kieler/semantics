@@ -77,7 +77,7 @@ class RailSLGenerator extends AbstractGenerator {
 	final static val SPEED_SLOW = 45;
 	final static val SPEED_FULL = 120;
 
-    def State transform(Program model) {
+    def State transform2(Program model) {
         
         return generateCode(model.blocks)
     }
