@@ -229,6 +229,15 @@ ruleStatement returns [EObject current=null]
 			$current = $this_OpStatement_2.current;
 			afterParserOrEnumRuleCall();
 		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getStatementAccess().getConditionalStatementParserRuleCall_3());
+		}
+		this_ConditionalStatement_3=ruleConditionalStatement
+		{
+			$current = $this_ConditionalStatement_3.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -637,29 +646,21 @@ ruleContactWaitStatement returns [EObject current=null]
 		)
 		(
 			(
-				(
-					lv_contactIndex_1_1='first'
-					{
-						newLeafNode(lv_contactIndex_1_1, grammarAccess.getContactWaitStatementAccess().getContactIndexFirstKeyword_1_0_0());
+				{
+					newCompositeNode(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0());
+				}
+				lv_contactIndex_1_0=ruleContactIndex
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getContactWaitStatementRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getContactWaitStatementRule());
-						}
-						setWithLastConsumed($current, "contactIndex", lv_contactIndex_1_1, null);
-					}
-					    |
-					lv_contactIndex_1_2='second'
-					{
-						newLeafNode(lv_contactIndex_1_2, grammarAccess.getContactWaitStatementAccess().getContactIndexSecondKeyword_1_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getContactWaitStatementRule());
-						}
-						setWithLastConsumed($current, "contactIndex", lv_contactIndex_1_2, null);
-					}
-				)
+					set(
+						$current,
+						"contactIndex",
+						lv_contactIndex_1_0,
+						"de.cau.rtsys.peu.RailSL.ContactIndex");
+					afterParserOrEnumRuleCall();
+				}
 			)
 		)
 		otherlv_2='contact of'
@@ -870,6 +871,193 @@ ruleLightStatement returns [EObject current=null]
 		otherlv_5='.'
 		{
 			newLeafNode(otherlv_5, grammarAccess.getLightStatementAccess().getFullStopKeyword_4());
+		}
+	)
+;
+
+// Entry rule entryRuleConditionalStatement
+entryRuleConditionalStatement returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConditionalStatementRule()); }
+	iv_ruleConditionalStatement=ruleConditionalStatement
+	{ $current=$iv_ruleConditionalStatement.current; }
+	EOF;
+
+// Rule ConditionalStatement
+ruleConditionalStatement returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='Branch:'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getConditionalStatementAccess().getBranchKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_1_0());
+				}
+				lv_lines_1_0=ruleConditionalLine
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionalStatementRule());
+					}
+					add(
+						$current,
+						"lines",
+						lv_lines_1_0,
+						"de.cau.rtsys.peu.RailSL.ConditionalLine");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_2_0());
+				}
+				lv_lines_2_0=ruleConditionalLine
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionalStatementRule());
+					}
+					add(
+						$current,
+						"lines",
+						lv_lines_2_0,
+						"de.cau.rtsys.peu.RailSL.ConditionalLine");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)+
+		otherlv_3='End.'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getConditionalStatementAccess().getEndKeyword_3());
+		}
+	)
+;
+
+// Entry rule entryRuleConditionalLine
+entryRuleConditionalLine returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getConditionalLineRule()); }
+	iv_ruleConditionalLine=ruleConditionalLine
+	{ $current=$iv_ruleConditionalLine.current; }
+	EOF;
+
+// Rule ConditionalLine
+ruleConditionalLine returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='If'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getConditionalLineAccess().getIfKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConditionalLineAccess().getContactContactIndexParserRuleCall_1_0());
+				}
+				lv_contact_1_0=ruleContactIndex
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionalLineRule());
+					}
+					set(
+						$current,
+						"contact",
+						lv_contact_1_0,
+						"de.cau.rtsys.peu.RailSL.ContactIndex");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_2='contact of'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getConditionalLineAccess().getContactOfKeyword_2());
+			}
+		)+
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0());
+				}
+				lv_segName_3_0=ruleSEG_NAME
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionalLineRule());
+					}
+					set(
+						$current,
+						"segName",
+						lv_segName_3_0,
+						"de.cau.rtsys.peu.RailSL.SEG_NAME");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_4='is reached first, do'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4());
+			}
+		)+
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getConditionalLineAccess().getBlockBlockParserRuleCall_5_0());
+				}
+				lv_block_5_0=ruleBlock
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionalLineRule());
+					}
+					set(
+						$current,
+						"block",
+						lv_block_5_0,
+						"de.cau.rtsys.peu.RailSL.Block");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleContactIndex
+entryRuleContactIndex returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getContactIndexRule()); }
+	iv_ruleContactIndex=ruleContactIndex
+	{ $current=$iv_ruleContactIndex.current.getText(); }
+	EOF;
+
+// Rule ContactIndex
+ruleContactIndex returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		kw='first'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getContactIndexAccess().getFirstKeyword_0());
+		}
+		    |
+		kw='second'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getContactIndexAccess().getSecondKeyword_1());
 		}
 	)
 ;

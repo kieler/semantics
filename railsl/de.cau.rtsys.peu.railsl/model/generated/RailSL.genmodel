@@ -40,5 +40,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//LightStatement/lights"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//LightStatement/state"/>
     </genClasses>
+    <genClasses ecoreClass="RailSL.ecore#//ConditionalStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//ConditionalStatement/lines"/>
+    </genClasses>
+    <genClasses ecoreClass="RailSL.ecore#//ConditionalLine">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ConditionalLine/contact"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute RailSL.ecore#//ConditionalLine/segName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference RailSL.ecore#//ConditionalLine/block"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

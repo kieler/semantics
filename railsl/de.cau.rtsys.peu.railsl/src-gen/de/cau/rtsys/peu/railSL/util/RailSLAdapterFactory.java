@@ -136,6 +136,16 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
         return createLightStatementAdapter();
       }
       @Override
+      public Adapter caseConditionalStatement(ConditionalStatement object)
+      {
+        return createConditionalStatementAdapter();
+      }
+      @Override
+      public Adapter caseConditionalLine(ConditionalLine object)
+      {
+        return createConditionalLineAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -333,6 +343,36 @@ public class RailSLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLightStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.rtsys.peu.railSL.ConditionalStatement <em>Conditional Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.rtsys.peu.railSL.ConditionalStatement
+   * @generated
+   */
+  public Adapter createConditionalStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.rtsys.peu.railSL.ConditionalLine <em>Conditional Line</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.rtsys.peu.railSL.ConditionalLine
+   * @generated
+   */
+  public Adapter createConditionalLineAdapter()
   {
     return null;
   }

@@ -93,12 +93,13 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSetStatementParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cWaitStatementParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cOpStatementParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cConditionalStatementParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//Statement:
-		//	SetStatement | WaitStatement | OpStatement;
+		//	SetStatement | WaitStatement | OpStatement | ConditionalStatement;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SetStatement | WaitStatement | OpStatement
+		//SetStatement | WaitStatement | OpStatement | ConditionalStatement
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//SetStatement
@@ -109,6 +110,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//OpStatement
 		public RuleCall getOpStatementParserRuleCall_2() { return cOpStatementParserRuleCall_2; }
+		
+		//ConditionalStatement
+		public RuleCall getConditionalStatementParserRuleCall_3() { return cConditionalStatementParserRuleCall_3; }
 	}
 	public class SetStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.SetStatement");
@@ -236,7 +240,6 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOrientationBranchKeyword_4_0_1 = (Keyword)cOrientationAlternatives_4_0.eContents().get(1);
 		private final Keyword cFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		////TODO handle range check for Ints
 		//SetPointStatement:
 		//	'Set point' points+=INT (',' points+=INT)* 'to' orientation=('straight' | 'branch') '.';
 		@Override public ParserRule getRule() { return rule; }
@@ -337,19 +340,17 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEventReachKeyword_0_0_0 = (Keyword)cEventAlternatives_0_0.eContents().get(0);
 		private final Keyword cEventPassKeyword_0_0_1 = (Keyword)cEventAlternatives_0_0.eContents().get(1);
 		private final Assignment cContactIndexAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cContactIndexAlternatives_1_0 = (Alternatives)cContactIndexAssignment_1.eContents().get(0);
-		private final Keyword cContactIndexFirstKeyword_1_0_0 = (Keyword)cContactIndexAlternatives_1_0.eContents().get(0);
-		private final Keyword cContactIndexSecondKeyword_1_0_1 = (Keyword)cContactIndexAlternatives_1_0.eContents().get(1);
+		private final RuleCall cContactIndexContactIndexParserRuleCall_1_0 = (RuleCall)cContactIndexAssignment_1.eContents().get(0);
 		private final Keyword cContactOfKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cSegNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cSegNameSEG_NAMEParserRuleCall_3_0 = (RuleCall)cSegNameAssignment_3.eContents().get(0);
 		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ContactWaitStatement:
-		//	event=('Reach' | 'Pass') contactIndex=('first' | 'second') 'contact of' segName=SEG_NAME '.';
+		//	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//event=('Reach' | 'Pass') contactIndex=('first' | 'second') 'contact of' segName=SEG_NAME '.'
+		//event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.'
 		public Group getGroup() { return cGroup; }
 		
 		//event=('Reach' | 'Pass')
@@ -364,17 +365,11 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		//'Pass'
 		public Keyword getEventPassKeyword_0_0_1() { return cEventPassKeyword_0_0_1; }
 		
-		//contactIndex=('first' | 'second')
+		//contactIndex=ContactIndex
 		public Assignment getContactIndexAssignment_1() { return cContactIndexAssignment_1; }
 		
-		//('first' | 'second')
-		public Alternatives getContactIndexAlternatives_1_0() { return cContactIndexAlternatives_1_0; }
-		
-		//'first'
-		public Keyword getContactIndexFirstKeyword_1_0_0() { return cContactIndexFirstKeyword_1_0_0; }
-		
-		//'second'
-		public Keyword getContactIndexSecondKeyword_1_0_1() { return cContactIndexSecondKeyword_1_0_1; }
+		//ContactIndex
+		public RuleCall getContactIndexContactIndexParserRuleCall_1_0() { return cContactIndexContactIndexParserRuleCall_1_0; }
 		
 		//'contact of'
 		public Keyword getContactOfKeyword_2() { return cContactOfKeyword_2; }
@@ -454,7 +449,6 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cStateOffKeyword_3_0_1 = (Keyword)cStateAlternatives_3_0.eContents().get(1);
 		private final Keyword cFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		////TODO handle range check for Ints
 		//LightStatement:
 		//	'Turn light' lights+=INT (',' lights+=INT)* state=('on' | 'off') '.';
 		@Override public ParserRule getRule() { return rule; }
@@ -497,6 +491,110 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'.'
 		public Keyword getFullStopKeyword_4() { return cFullStopKeyword_4; }
+	}
+	public class ConditionalStatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.ConditionalStatement");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cBranchKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cLinesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLinesConditionalLineParserRuleCall_1_0 = (RuleCall)cLinesAssignment_1.eContents().get(0);
+		private final Assignment cLinesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLinesConditionalLineParserRuleCall_2_0 = (RuleCall)cLinesAssignment_2.eContents().get(0);
+		private final Keyword cEndKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//ConditionalStatement:
+		//	'Branch:'
+		//	lines+=ConditionalLine
+		//	lines+=ConditionalLine+
+		//	'End.';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'Branch:' lines+=ConditionalLine lines+=ConditionalLine+ 'End.'
+		public Group getGroup() { return cGroup; }
+		
+		//'Branch:'
+		public Keyword getBranchKeyword_0() { return cBranchKeyword_0; }
+		
+		//lines+=ConditionalLine
+		public Assignment getLinesAssignment_1() { return cLinesAssignment_1; }
+		
+		//ConditionalLine
+		public RuleCall getLinesConditionalLineParserRuleCall_1_0() { return cLinesConditionalLineParserRuleCall_1_0; }
+		
+		//lines+=ConditionalLine+
+		public Assignment getLinesAssignment_2() { return cLinesAssignment_2; }
+		
+		//ConditionalLine
+		public RuleCall getLinesConditionalLineParserRuleCall_2_0() { return cLinesConditionalLineParserRuleCall_2_0; }
+		
+		//'End.'
+		public Keyword getEndKeyword_3() { return cEndKeyword_3; }
+	}
+	public class ConditionalLineElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.ConditionalLine");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cIfKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cContactAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cContactContactIndexParserRuleCall_1_0 = (RuleCall)cContactAssignment_1.eContents().get(0);
+		private final Keyword cContactOfKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cSegNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cSegNameSEG_NAMEParserRuleCall_3_0 = (RuleCall)cSegNameAssignment_3.eContents().get(0);
+		private final Keyword cIsReachedFirstDoKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cBlockAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cBlockBlockParserRuleCall_5_0 = (RuleCall)cBlockAssignment_5.eContents().get(0);
+		
+		//ConditionalLine:
+		//	'If' contact=ContactIndex 'contact of'+ segName=SEG_NAME 'is reached first, do'+ block=Block;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'If' contact=ContactIndex 'contact of'+ segName=SEG_NAME 'is reached first, do'+ block=Block
+		public Group getGroup() { return cGroup; }
+		
+		//'If'
+		public Keyword getIfKeyword_0() { return cIfKeyword_0; }
+		
+		//contact=ContactIndex
+		public Assignment getContactAssignment_1() { return cContactAssignment_1; }
+		
+		//ContactIndex
+		public RuleCall getContactContactIndexParserRuleCall_1_0() { return cContactContactIndexParserRuleCall_1_0; }
+		
+		//'contact of'+
+		public Keyword getContactOfKeyword_2() { return cContactOfKeyword_2; }
+		
+		//segName=SEG_NAME
+		public Assignment getSegNameAssignment_3() { return cSegNameAssignment_3; }
+		
+		//SEG_NAME
+		public RuleCall getSegNameSEG_NAMEParserRuleCall_3_0() { return cSegNameSEG_NAMEParserRuleCall_3_0; }
+		
+		//'is reached first, do'+
+		public Keyword getIsReachedFirstDoKeyword_4() { return cIsReachedFirstDoKeyword_4; }
+		
+		//block=Block
+		public Assignment getBlockAssignment_5() { return cBlockAssignment_5; }
+		
+		//Block
+		public RuleCall getBlockBlockParserRuleCall_5_0() { return cBlockBlockParserRuleCall_5_0; }
+	}
+	public class ContactIndexElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.ContactIndex");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cFirstKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cSecondKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//ContactIndex:
+		//	'first' | 'second';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'first' | 'second'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'first'
+		public Keyword getFirstKeyword_0() { return cFirstKeyword_0; }
+		
+		//'second'
+		public Keyword getSecondKeyword_1() { return cSecondKeyword_1; }
 	}
 	public class SEG_NAMEElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.SEG_NAME");
@@ -728,6 +826,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	private final OpStatementElements pOpStatement;
 	private final CrossingStatementElements pCrossingStatement;
 	private final LightStatementElements pLightStatement;
+	private final ConditionalStatementElements pConditionalStatement;
+	private final ConditionalLineElements pConditionalLine;
+	private final ContactIndexElements pContactIndex;
 	private final SEG_NAMEElements pSEG_NAME;
 	
 	private final Grammar grammar;
@@ -753,6 +854,9 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pOpStatement = new OpStatementElements();
 		this.pCrossingStatement = new CrossingStatementElements();
 		this.pLightStatement = new LightStatementElements();
+		this.pConditionalStatement = new ConditionalStatementElements();
+		this.pConditionalLine = new ConditionalLineElements();
+		this.pContactIndex = new ContactIndexElements();
 		this.pSEG_NAME = new SEG_NAMEElements();
 	}
 	
@@ -814,7 +918,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Statement:
-	//	SetStatement | WaitStatement | OpStatement;
+	//	SetStatement | WaitStatement | OpStatement | ConditionalStatement;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}
@@ -853,7 +957,6 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getTrackSettingAccess().getRule();
 	}
 	
-	////TODO handle range check for Ints
 	//SetPointStatement:
 	//	'Set point' points+=INT (',' points+=INT)* 'to' orientation=('straight' | 'branch') '.';
 	public SetPointStatementElements getSetPointStatementAccess() {
@@ -885,7 +988,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ContactWaitStatement:
-	//	event=('Reach' | 'Pass') contactIndex=('first' | 'second') 'contact of' segName=SEG_NAME '.';
+	//	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME '.';
 	public ContactWaitStatementElements getContactWaitStatementAccess() {
 		return pContactWaitStatement;
 	}
@@ -914,7 +1017,6 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		return getCrossingStatementAccess().getRule();
 	}
 	
-	////TODO handle range check for Ints
 	//LightStatement:
 	//	'Turn light' lights+=INT (',' lights+=INT)* state=('on' | 'off') '.';
 	public LightStatementElements getLightStatementAccess() {
@@ -923,6 +1025,39 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getLightStatementRule() {
 		return getLightStatementAccess().getRule();
+	}
+	
+	//ConditionalStatement:
+	//	'Branch:'
+	//	lines+=ConditionalLine
+	//	lines+=ConditionalLine+
+	//	'End.';
+	public ConditionalStatementElements getConditionalStatementAccess() {
+		return pConditionalStatement;
+	}
+	
+	public ParserRule getConditionalStatementRule() {
+		return getConditionalStatementAccess().getRule();
+	}
+	
+	//ConditionalLine:
+	//	'If' contact=ContactIndex 'contact of'+ segName=SEG_NAME 'is reached first, do'+ block=Block;
+	public ConditionalLineElements getConditionalLineAccess() {
+		return pConditionalLine;
+	}
+	
+	public ParserRule getConditionalLineRule() {
+		return getConditionalLineAccess().getRule();
+	}
+	
+	//ContactIndex:
+	//	'first' | 'second';
+	public ContactIndexElements getContactIndexAccess() {
+		return pContactIndex;
+	}
+	
+	public ParserRule getContactIndexRule() {
+		return getContactIndexAccess().getRule();
 	}
 	
 	//SEG_NAME:

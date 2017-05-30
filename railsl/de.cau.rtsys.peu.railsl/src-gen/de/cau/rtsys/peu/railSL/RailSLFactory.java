@@ -132,6 +132,24 @@ public interface RailSLFactory extends EFactory
   LightStatement createLightStatement();
 
   /**
+   * Returns a new object of class '<em>Conditional Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Conditional Statement</em>'.
+   * @generated
+   */
+  ConditionalStatement createConditionalStatement();
+
+  /**
+   * Returns a new object of class '<em>Conditional Line</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Conditional Line</em>'.
+   * @generated
+   */
+  ConditionalLine createConditionalLine();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

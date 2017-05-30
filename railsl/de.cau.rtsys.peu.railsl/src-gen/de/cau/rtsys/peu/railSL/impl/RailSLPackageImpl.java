@@ -4,6 +4,8 @@
 package de.cau.rtsys.peu.railSL.impl;
 
 import de.cau.rtsys.peu.railSL.Block;
+import de.cau.rtsys.peu.railSL.ConditionalLine;
+import de.cau.rtsys.peu.railSL.ConditionalStatement;
 import de.cau.rtsys.peu.railSL.ContactWaitStatement;
 import de.cau.rtsys.peu.railSL.CrossingStatement;
 import de.cau.rtsys.peu.railSL.LightStatement;
@@ -116,6 +118,20 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * @generated
    */
   private EClass lightStatementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionalStatementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionalLineEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -445,6 +461,66 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getConditionalStatement()
+  {
+    return conditionalStatementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConditionalStatement_Lines()
+  {
+    return (EReference)conditionalStatementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConditionalLine()
+  {
+    return conditionalLineEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConditionalLine_Contact()
+  {
+    return (EAttribute)conditionalLineEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConditionalLine_SegName()
+  {
+    return (EAttribute)conditionalLineEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConditionalLine_Block()
+  {
+    return (EReference)conditionalLineEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public RailSLFactory getRailSLFactory()
   {
     return (RailSLFactory)getEFactoryInstance();
@@ -507,6 +583,14 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     lightStatementEClass = createEClass(LIGHT_STATEMENT);
     createEAttribute(lightStatementEClass, LIGHT_STATEMENT__LIGHTS);
     createEAttribute(lightStatementEClass, LIGHT_STATEMENT__STATE);
+
+    conditionalStatementEClass = createEClass(CONDITIONAL_STATEMENT);
+    createEReference(conditionalStatementEClass, CONDITIONAL_STATEMENT__LINES);
+
+    conditionalLineEClass = createEClass(CONDITIONAL_LINE);
+    createEAttribute(conditionalLineEClass, CONDITIONAL_LINE__CONTACT);
+    createEAttribute(conditionalLineEClass, CONDITIONAL_LINE__SEG_NAME);
+    createEReference(conditionalLineEClass, CONDITIONAL_LINE__BLOCK);
   }
 
   /**
@@ -547,6 +631,7 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     opStatementEClass.getESuperTypes().add(this.getStatement());
     crossingStatementEClass.getESuperTypes().add(this.getOpStatement());
     lightStatementEClass.getESuperTypes().add(this.getOpStatement());
+    conditionalStatementEClass.getESuperTypes().add(this.getStatement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -586,6 +671,14 @@ public class RailSLPackageImpl extends EPackageImpl implements RailSLPackage
     initEClass(lightStatementEClass, LightStatement.class, "LightStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLightStatement_Lights(), ecorePackage.getEInt(), "lights", null, 0, -1, LightStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLightStatement_State(), ecorePackage.getEString(), "state", null, 0, 1, LightStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionalStatementEClass, ConditionalStatement.class, "ConditionalStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConditionalStatement_Lines(), this.getConditionalLine(), null, "lines", null, 0, -1, ConditionalStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionalLineEClass, ConditionalLine.class, "ConditionalLine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConditionalLine_Contact(), ecorePackage.getEString(), "contact", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConditionalLine_SegName(), ecorePackage.getEString(), "segName", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConditionalLine_Block(), this.getBlock(), null, "block", null, 0, 1, ConditionalLine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

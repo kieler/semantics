@@ -5,6 +5,8 @@ package de.cau.rtsys.peu.serializer;
 
 import com.google.inject.Inject;
 import de.cau.rtsys.peu.railSL.Block;
+import de.cau.rtsys.peu.railSL.ConditionalLine;
+import de.cau.rtsys.peu.railSL.ConditionalStatement;
 import de.cau.rtsys.peu.railSL.ContactWaitStatement;
 import de.cau.rtsys.peu.railSL.CrossingStatement;
 import de.cau.rtsys.peu.railSL.LightStatement;
@@ -21,7 +23,9 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -39,6 +43,12 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			switch (semanticObject.eClass().getClassifierID()) {
 			case RailSLPackage.BLOCK:
 				sequence_Block(context, (Block) semanticObject); 
+				return; 
+			case RailSLPackage.CONDITIONAL_LINE:
+				sequence_ConditionalLine(context, (ConditionalLine) semanticObject); 
+				return; 
+			case RailSLPackage.CONDITIONAL_STATEMENT:
+				sequence_ConditionalStatement(context, (ConditionalStatement) semanticObject); 
 				return; 
 			case RailSLPackage.CONTACT_WAIT_STATEMENT:
 				sequence_ContactWaitStatement(context, (ContactWaitStatement) semanticObject); 
@@ -80,12 +90,49 @@ public class RailSLSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ConditionalLine returns ConditionalLine
+	 *
+	 * Constraint:
+	 *     (contact=ContactIndex segName=SEG_NAME block=Block)
+	 */
+	protected void sequence_ConditionalLine(ISerializationContext context, ConditionalLine semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__CONTACT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__CONTACT));
+			if (transientValues.isValueTransient(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__SEG_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__SEG_NAME));
+			if (transientValues.isValueTransient(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RailSLPackage.Literals.CONDITIONAL_LINE__BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConditionalLineAccess().getContactContactIndexParserRuleCall_1_0(), semanticObject.getContact());
+		feeder.accept(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0(), semanticObject.getSegName());
+		feeder.accept(grammarAccess.getConditionalLineAccess().getBlockBlockParserRuleCall_5_0(), semanticObject.getBlock());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns ConditionalStatement
+	 *     ConditionalStatement returns ConditionalStatement
+	 *
+	 * Constraint:
+	 *     (lines+=ConditionalLine lines+=ConditionalLine+)
+	 */
+	protected void sequence_ConditionalStatement(ISerializationContext context, ConditionalStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns ContactWaitStatement
 	 *     WaitStatement returns ContactWaitStatement
 	 *     ContactWaitStatement returns ContactWaitStatement
 	 *
 	 * Constraint:
-	 *     ((event='Reach' | event='Pass') (contactIndex='first' | contactIndex='second') segName=SEG_NAME)
+	 *     ((event='Reach' | event='Pass') contactIndex=ContactIndex segName=SEG_NAME)
 	 */
 	protected void sequence_ContactWaitStatement(ISerializationContext context, ContactWaitStatement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

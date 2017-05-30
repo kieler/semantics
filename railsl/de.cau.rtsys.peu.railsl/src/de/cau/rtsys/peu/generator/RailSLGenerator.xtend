@@ -39,6 +39,8 @@ import org.eclipse.emf.common.notify.Notification
 import java.util.ArrayList
 import org.eclipse.emf.common.util.TreeIterator
 import java.util.List
+import de.cau.rtsys.peu.railSL.ConditionalStatement
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
  * Generates code from your model files on save.
@@ -50,7 +52,7 @@ class RailSLGenerator extends AbstractGenerator {
     final static val NUM_OF_SEGMENTS = 48
     final static val NUM_OF_POINTS = 30
     final static val NUM_OF_LIGHTS = 24
-    
+
     @Inject
     extension SCChartsExtension
 
@@ -59,48 +61,46 @@ class RailSLGenerator extends AbstractGenerator {
 
     @Inject
     extension KExpressionsDeclarationExtensions
-    
+
     @Inject
     extension KExpressionsValuedObjectExtensions
-    
+
     @Inject
     extension KExpressionsValueExtensions
-    
+
     @Inject
     extension AnnotationsExtensions
-    
-	static var nextRegionID = 0;
-	static var nextStateID = 0;
+
+    static var nextRegionID = 0;
+    static var nextStateID = 0;
 
     static var valObjects = new HashMap<String, ValuedObject>()
 
-	final static val SPEED_SLOW = 45;
-	final static val SPEED_FULL = 120;
+    final static val SPEED_SLOW = 45;
+    final static val SPEED_FULL = 120;
 
     def State transform2(Program model) {
-        
+
         return generateCode(model.blocks)
     }
 
-	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+    override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 
         generateHeaders(fsa)
         generateSnippets(fsa)
-		// TODO What should happen here? This has no side effects.
-		val list = new ArrayList<Block>
-		for (block: resource.allContents.toList.filter(Block)) {
-		    list.add(block)
-		}
-		System.out.println(generateCode(list))
-	}
-	
-	/*************************************************************************
-	 * S T A T I C   C O D E   G E N E R A T I O N ***************************
-	 *************************************************************************/
-	
-	def void generateHeaders(IFileSystemAccess fsa) {
-	   var railwayH = 
-'//===========================================================================//
+        // TODO What should happen here? This has no side effects.
+        val list = new ArrayList<Block>
+        for (block : resource.allContents.toList.filter(Block)) {
+            list.add(block)
+        }
+        System.out.println(generateCode(list))
+    }
+
+    /*************************************************************************
+     * S T A T I C   C O D E   G E N E R A T I O N ***************************
+     *************************************************************************/
+    def void generateHeaders(IFileSystemAccess fsa) {
+        var railwayH = '//===========================================================================//
 //==             R T S Y S   M O D E L   R A I L W A Y   A P I             ==//
 //==                   R A I L W A Y   I N T E R F A C E                   ==//
 //==                                                                       ==//
@@ -368,10 +368,9 @@ int getbell(struct railway_system *railway, int bell);
 
 #endif'
 
-    fsa.generateFile('railway.h', railwayH)
- 
-    val kickingH = 
-'/* ==========================================================================
+        fsa.generateFile('railway.h', railwayH)
+
+        val kickingH = '/* ==========================================================================
 
     kicking.h
 
@@ -442,24 +441,23 @@ struct railway_hardware kicking;
 
 #define _KICKING_H_
 #endif'
-    
+
         fsa.generateFile("kicking.h", kickingH)
- 
+
     }
-    
-	def void generateSnippets(IFileSystemAccess fsa) {
-	    
-	   fsa.generateFile('contacts.ftl', generateContactsSnippet())
-	   fsa.generateFile('lights.ftl', generateLightsSnippet())
-	   fsa.generateFile('points.ftl', generatePointsSnippet())
-	   fsa.generateFile('signals.ftl', generateSignalsSnippet())
-	   fsa.generateFile('tracks.ftl', generateTracksSnippet())
-	   fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
-	}
-	
-	def String generateMainSnippet() {
-	    var result = 
-'/******************************************************************
+
+    def void generateSnippets(IFileSystemAccess fsa) {
+
+        fsa.generateFile('contacts.ftl', generateContactsSnippet())
+        fsa.generateFile('lights.ftl', generateLightsSnippet())
+        fsa.generateFile('points.ftl', generatePointsSnippet())
+        fsa.generateFile('signals.ftl', generateSignalsSnippet())
+        fsa.generateFile('tracks.ftl', generateTracksSnippet())
+        fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
+    }
+
+    def String generateMainSnippet() {
+        var result = '/******************************************************************
  * T E S T   H E A D E R                                          *
  *                                                                *
  * C O O L   S T U F F   H E R E                                  *
@@ -501,12 +499,11 @@ ${outputs}
     
     return 0;
 }'
-	    return result
-	}
-	
-	def String generateTracksSnippet() {
-	    var result =
-'<#-- T R A C K S -->
+        return result
+    }
+
+    def String generateTracksSnippet() {
+        var result = '<#-- T R A C K S -->
 <#macro tracks>
     <@output>
         // Set the tracks to the appropriate speed
@@ -516,11 +513,10 @@ ${outputs}
     </@>
 </#macro>'
         return result
-	}
-	
-	def String generateSignalsSnippet() {
-	   var result = 
-'<#-- S I G N A L S -->
+    }
+
+    def String generateSignalsSnippet() {
+        var result = '<#-- S I G N A L S -->
 <#macro signals>
     <@output>
         // Set all the signals appropriately
@@ -533,12 +529,11 @@ ${outputs}
         }
     </@>
 </#macro>'
-       return result
-	}
+        return result
+    }
 
-	def String generatePointsSnippet() {
-	    var result = 
-'<#-- S W I T C H   P O I N T S -->
+    def String generatePointsSnippet() {
+        var result = '<#-- S W I T C H   P O I N T S -->
 <#macro points>
     <@output>
         // Set all the switch points appropriately
@@ -548,11 +543,10 @@ ${outputs}
     </@>
 </#macro>'
         return result
-	}
-	
-	def String generateLightsSnippet() {
-        var result = 
-'<#-- L I G H T S -->
+    }
+
+    def String generateLightsSnippet() {
+        var result = '<#-- L I G H T S -->
 <#macro lights>
     <@output>
         // Set all the lights appropriately
@@ -563,11 +557,10 @@ ${outputs}
 </#macro>'
 
         return result
-	}
-	
-	def String generateContactsSnippet() {
-	    var result = 
-'<#-- C O N T A C T S -->
+    }
+
+    def String generateContactsSnippet() {
+        var result = '<#-- C O N T A C T S -->
 <#macro contacts>
     <@input>
         // Scan the contacts at the beginning of each tick
@@ -580,433 +573,550 @@ ${outputs}
         }
     </@>
 </#macro>'
-	    return result
-	}
-	
-	/**************************************************************************
+        return result
+    }
+
+    /**************************************************************************
      * T R A N S F O R M A T I O N S ******************************************
      **************************************************************************/
-	
-	/**
-	 * Transforms the model into an SCCharts model
-	 */
-	def State generateCode(List<Block> blocks) {
-		
-		var chart = createSCChart();
-		
-		// I N T E R F A C E
-		
-		// input bool contacts[48][2];
-		val contactsDecl = createDeclaration(ValueType.BOOL)
-		contactsDecl.input = true;
-		val contacts = createValuedObject("contacts")
-		contacts.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
-		contacts.cardinalities.add(createIntValue(2))
-		contactsDecl.attach(contacts)
-		contactsDecl.annotations.add(createStringAnnotation("Wrapper", "contacts"));
-		
-		chart.declarations.add(contactsDecl)
-		valObjects.put("contacts", contacts)
-		
-		// output int tracks[48][2];
-		val tracksDecl = createDeclaration(ValueType.INT)
-		tracksDecl.output = true;
-		val tracks = createValuedObject("tracks")
-		tracks.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
-		tracks.cardinalities.add(createIntValue(2))
-		tracksDecl.attach(tracks)
-		tracksDecl.annotations.add(createStringAnnotation("Wrapper", "tracks"))
-		
-		chart.declarations.add(tracksDecl)
-		valObjects.put("tracks", tracks)
-		
-		// output bool points[30];
-		val pointsDecl = createDeclaration(ValueType.BOOL)
-		pointsDecl.output = true
-		val points = createValuedObject("points")
-		points.cardinalities.add(createIntValue(NUM_OF_POINTS))
-		pointsDecl.attach(points)
-		pointsDecl.annotations.add(createStringAnnotation("Wrapper", "points"))
-		
-		chart.declarations.add(pointsDecl)
-		valObjects.put("points", points)
-		
-		// output int signals[48][2];
-		val signalsDecl = createDeclaration(ValueType.INT)
-		signalsDecl.output = true
-		val signals = createValuedObject("signals")
-		signals.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
-		signalsDecl.attach(signals)
-		signalsDecl.annotations.add(createStringAnnotation("Wrapper","signals"))
-		
-		chart.declarations.add(signalsDecl)
-		valObjects.put("signals", signals)
-		
-		// output bool lights[24];
-		val lightsDecl = createDeclaration(ValueType.BOOL)
-		lightsDecl.output = true
-		val lights = createValuedObject("lights")
-		lights.cardinalities.add(createIntValue(NUM_OF_LIGHTS))
-		lightsDecl.attach(lights)
-		lightsDecl.annotations.add(createStringAnnotation("Wrapper", "lights"))
-		
-		chart.declarations.add(lightsDecl)
-		valObjects.put("lights", lights)
-		
-		// input bool second;
-		val secondDecl = createDeclaration(ValueType.BOOL)
-		secondDecl.input = true
-		val second = createValuedObject("second")
-		secondDecl.attach(second)
-		secondDecl.annotations.add(createStringAnnotation("Wrapper", "second"))
-		
-		chart.declarations.add(secondDecl)
-		valObjects.put("second", second);
-		
-		// STUFF VON STEVEN UND ALEX
-		/*
-		chart.declarations.add(createDeclaration(ValueType.INT) => [
-		    valuedObjects += createValuedObject("foo") => [
-		        initialValue = createIntValue(0) 
-		    ] 
-		])
-		*/
-		
-		// A C T U A L   D I A G R A M   S Y N T H E S I S
-		nextRegionID = 0
-		for (block : blocks) {
-		    nextStateID = 0
-            block.compile(chart)
-		}
+    /**
+     * Transforms the model into an SCCharts model
+     */
+    def State generateCode(List<Block> blocks) {
 
-		return chart;
-		
-	}
-	
-	/**
-	 * Compiles a block into a region in the given state.
-	 * <p>
-	 * Blocks are represented by purely sequential regions within the same superstate.
-	 * Each statement is translated to a state within the region along with an initial and a
-	 * final state. All statements are connected by termination transitions.
-	 * 
-	 */
-	def void compile(Block block, State chart) {
-	    
-	    var region = chart.createControlflowRegion("Thread " + getRegionID())
-        var currentState = region.createInitialState("init") 
-        
+        var chart = createSCChart();
+
+        // I N T E R F A C E
+        // input bool contacts[48][2];
+        val contactsDecl = createDeclaration(ValueType.BOOL)
+        contactsDecl.input = true;
+        val contacts = createValuedObject("contacts")
+        contacts.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+        contacts.cardinalities.add(createIntValue(2))
+        contactsDecl.attach(contacts)
+        contactsDecl.annotations.add(createStringAnnotation("Wrapper", "contacts"));
+
+        chart.declarations.add(contactsDecl)
+        valObjects.put("contacts", contacts)
+
+        // output int tracks[48][2];
+        val tracksDecl = createDeclaration(ValueType.INT)
+        tracksDecl.output = true;
+        val tracks = createValuedObject("tracks")
+        tracks.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+        tracks.cardinalities.add(createIntValue(2))
+        tracksDecl.attach(tracks)
+        tracksDecl.annotations.add(createStringAnnotation("Wrapper", "tracks"))
+
+        chart.declarations.add(tracksDecl)
+        valObjects.put("tracks", tracks)
+
+        // output bool points[30];
+        val pointsDecl = createDeclaration(ValueType.BOOL)
+        pointsDecl.output = true
+        val points = createValuedObject("points")
+        points.cardinalities.add(createIntValue(NUM_OF_POINTS))
+        pointsDecl.attach(points)
+        pointsDecl.annotations.add(createStringAnnotation("Wrapper", "points"))
+
+        chart.declarations.add(pointsDecl)
+        valObjects.put("points", points)
+
+        // output int signals[48][2];
+        val signalsDecl = createDeclaration(ValueType.INT)
+        signalsDecl.output = true
+        val signals = createValuedObject("signals")
+        signals.cardinalities.add(createIntValue(NUM_OF_SEGMENTS))
+        signalsDecl.attach(signals)
+        signalsDecl.annotations.add(createStringAnnotation("Wrapper", "signals"))
+
+        chart.declarations.add(signalsDecl)
+        valObjects.put("signals", signals)
+
+        // output bool lights[24];
+        val lightsDecl = createDeclaration(ValueType.BOOL)
+        lightsDecl.output = true
+        val lights = createValuedObject("lights")
+        lights.cardinalities.add(createIntValue(NUM_OF_LIGHTS))
+        lightsDecl.attach(lights)
+        lightsDecl.annotations.add(createStringAnnotation("Wrapper", "lights"))
+
+        chart.declarations.add(lightsDecl)
+        valObjects.put("lights", lights)
+
+        // input bool second;
+        val secondDecl = createDeclaration(ValueType.BOOL)
+        secondDecl.input = true
+        val second = createValuedObject("second")
+        secondDecl.attach(second)
+        secondDecl.annotations.add(createStringAnnotation("Wrapper", "second"))
+
+        chart.declarations.add(secondDecl)
+        valObjects.put("second", second);
+
+        // STUFF VON STEVEN UND ALEX
+        /*
+         * chart.declarations.add(createDeclaration(ValueType.INT) => [
+         *     valuedObjects += createValuedObject("foo") => [
+         *         initialValue = createIntValue(0) 
+         *     ] 
+         * ])
+         */
+        // A C T U A L   D I A G R A M   S Y N T H E S I S
+        nextRegionID = 0
+        for (block : blocks) {
+            nextStateID = 0
+            block.compile(chart)
+        }
+
+        return chart;
+
+    }
+
+    /**
+     * Compiles a block into a region in the given state.
+     * <p>
+     * Blocks are represented by purely sequential regions within the same superstate.
+     * Each statement is translated to a state within the region along with an initial and a
+     * final state. All statements are connected by termination transitions.
+     * 
+     */
+    def void compile(Block block, State chart) {
+
+        var region = chart.createControlflowRegion("Thread " + getRegionID())
+        var currentState = region.createInitialState("init")
+
         for (statement : block.statements) {
             var state = statement.compile(region)
             var transition = currentState.createTransitionTo(state)
             transition.setTypeTermination
             currentState = state
         }
-	    if (block.end.equals("End.")) {
-	       val done = region.createFinalState("done")
-	       var transition = currentState.createTransitionTo(done)
-           transition.setTypeTermination
+        if (block.end.equals("End.")) {
+            val done = region.createFinalState("done")
+            var transition = currentState.createTransitionTo(done)
+            transition.setTypeTermination
         } else {
-           var transition = currentState.createTransitionTo(region.initialState)
-           transition.setTypeTermination
+            var transition = currentState.createTransitionTo(region.initialState)
+            transition.setTypeTermination
         }
-	}
-	
-	/**
-	 * Generates a state representing a statement.
-	 * 
-	 * The state will be located within the region passed as an argument.
-	 * The state will in itself contain various simple states.
-	 * <p>
-	 * It is ensured that all states generated by this method will have
-	 * an internal final state that will always be reached.
-	 */
-	def State compile(Statement statement, ControlflowRegion region) {
-	    
-	    var state = region.createState("");
-	    
-	    
-	    if (statement instanceof TimeWaitStatement) {
-	        state.makeTimeWaitStatement(statement as TimeWaitStatement)
-	    } else if (statement instanceof ContactWaitStatement) {
-	        state.makeContactWaitStatement(statement as ContactWaitStatement)
-	    } else if (statement instanceof SetTrackStatement) {
-	        state.makeSetTrackStatement(statement as SetTrackStatement)
-	    } else if (statement instanceof SetPointStatement) {
-	        state.makeSetPointStatement(statement as SetPointStatement)
-	    } else if (statement instanceof LightStatement) { 
-	        state.makeLightStatement(statement as LightStatement)
-	    }
-	    
-	    return state
-	}
-	
-	/**
-	 * Transforms an empty state into a light statement state.
-	 * 
-	 * This state sets one or multiple lights to a certain setting.
-	 */
-	def void makeLightStatement(State state, LightStatement lStatement) {
-	    state.label = "_" + getStateID() + "_Light"
-	    
-	    val region = state.createControlflowRegion("Set_lights_to_" + lStatement.state)
-       
+    }
+
+    /**
+     * Generates a state representing a statement.
+     * 
+     * The state will be located within the region passed as an argument.
+     * The state will in itself contain various simple states.
+     * <p>
+     * It is ensured that all states generated by this method will have
+     * an internal final state that will always be reached.
+     */
+    def State compile(Statement statement, ControlflowRegion region) {
+
+        var state = region.createState("");
+
+        if (statement instanceof TimeWaitStatement) {
+            state.makeTimeWaitStatement(statement as TimeWaitStatement)
+        } else if (statement instanceof ContactWaitStatement) {
+            state.makeContactWaitStatement(statement as ContactWaitStatement)
+        } else if (statement instanceof SetTrackStatement) {
+            state.makeSetTrackStatement(statement as SetTrackStatement)
+        } else if (statement instanceof SetPointStatement) {
+            state.makeSetPointStatement(statement as SetPointStatement)
+        } else if (statement instanceof LightStatement) {
+            state.makeLightStatement(statement as LightStatement)
+        } else if (statement instanceof ConditionalStatement) {
+            state.makeConditionalStatement(statement as ConditionalStatement)
+        }
+
+        return state
+    }
+
+    def void makeConditionalStatement(State state, ConditionalStatement cStatement) {
+        state.label = "_" + getStateID() + "_Conditional"
+        var i = 0;
+        val contacts = valObjects.get("contacts")
+        var expressions = new ArrayList<Expression>()
+
+        // create trigger expressions for each statement
+        for (line : cStatement.lines) {
+            val contactIndex = if(line.contact.equals("first")) 0 else 1
+            val trackIndex = line.segName.parseTrackSegment
+
+            expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
+                subExpressions += contacts.reference => [
+                    indices += createIntValue(trackIndex)
+                    indices += createIntValue(contactIndex)
+                ]
+                subExpressions += createBoolValue(true)
+            ])
+            i++
+        }
+
+        var j = 0
+        
+        // Creating parallel regions for each line
+        for (line : cStatement.lines) {
+            val region = state.createControlflowRegion("Condition_" + j);
+            region.createInitialState("init")
+            region.createFinalState("done")
+
+            // creating the state with the 'then' block
+            var blockList = new ArrayList<Block>()
+            blockList.add(line.block)
+            var blockState = generateCode(blockList)
+            region.states.add(blockState)
+
+            // normal termination of the block state
+            var term = blockState.createTransitionTo(region.finalState)
+            term.setTypeTermination
+
+            // trigger expression for alternative transitions
+            if (j > 0) {
+                var otherExpr = expressions.get(0)
+
+                // all triggers with higher precedence
+                for (var k = 1; k < j; k++) {
+                    val oldExpr = otherExpr
+                    val newExpr = expressions.get(k)
+                    otherExpr = createOperatorExpression(OperatorType.LOGICAL_OR) => [
+                        subExpressions += oldExpr
+                        subExpressions += newExpr
+                    ]
+                }
+                
+            
+                var altTrans1 = region.initialState.createImmediateTransitionTo(region.finalState)
+                altTrans1.trigger = otherExpr
+                altTrans1.priority = 1
+            }
+            
+            //TODO this is horrible.
+            expressions = new ArrayList<Expression>()
+            i = 0
+            for (lineA : cStatement.lines) {
+                val contactIndex = if(lineA.contact.equals("first")) 0 else 1
+                val trackIndex = lineA.segName.parseTrackSegment
+
+                expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
+                    subExpressions += contacts.reference => [
+                        indices += createIntValue(trackIndex)
+                        indices += createIntValue(contactIndex)
+                    ]
+                    subExpressions += createBoolValue(true)
+                ])
+                i++
+            }
+            
+            // transition from initial state to block state
+            var blockTrans = region.initialState.createImmediateTransitionTo(blockState)
+            blockTrans.trigger = expressions.get(j)
+            blockTrans.priority = 2
+
+            if ((j + 1) < expressions.size) {
+                
+                // TODO this is bad.
+                i = 0
+                expressions = new ArrayList<Expression>()
+                for (lineA : cStatement.lines) {
+                    val contactIndex = if(lineA.contact.equals("first")) 0 else 1
+                    val trackIndex = lineA.segName.parseTrackSegment
+
+                    expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
+                        subExpressions += contacts.reference => [
+                            indices += createIntValue(trackIndex)
+                            indices += createIntValue(contactIndex)
+                        ]
+                        subExpressions += createBoolValue(true)
+                    ])
+                    i++
+                }
+                var otherExpr2 = expressions.get(j + 1)
+
+                // all triggers with lower precedence
+                for (var k = j + 2; k < expressions.size; k++) {
+                    val oldExpr = otherExpr2
+                    val newExpr = expressions.get(k)
+                    otherExpr2 = createOperatorExpression(OperatorType.LOGICAL_OR) => [
+                        subExpressions += oldExpr
+                        subExpressions += newExpr
+                    ]
+                }
+                
+                var altTrans2 = region.initialState.createImmediateTransitionTo(region.finalState)
+                altTrans2.trigger = otherExpr2
+                altTrans2.priority = 3
+            }
+            j++
+        }
+    }
+
+    /**
+     * Transforms an empty state into a light statement state.
+     * 
+     * This state sets one or multiple lights to a certain setting.
+     */
+    def void makeLightStatement(State state, LightStatement lStatement) {
+        state.label = "_" + getStateID() + "_Light"
+
+        val region = state.createControlflowRegion("Set_lights_to_" + lStatement.state)
+
         val setting = parseLightMode(lStatement)
-       
-        var currentState = region.createInitialState("init") 
+
+        var currentState = region.createInitialState("init")
         var i = 0
-       
-        val lights = valObjects.get("lights")       
-       
+
+        val lights = valObjects.get("lights")
+
         for (light : lStatement.lights) {
-           var nextState = region.createState("_S" + i)
-           var transition = currentState.createImmediateTransitionTo(nextState)
-           transition.addEffect(lights.assign(createIntValue(setting)) => [
-               indices += createIntValue(light)
-           ])
-           currentState = nextState
-           i++
+            var nextState = region.createState("_S" + i)
+            var transition = currentState.createImmediateTransitionTo(nextState)
+            transition.addEffect(lights.assign(createIntValue(setting)) => [
+                indices += createIntValue(light)
+            ])
+            currentState = nextState
+            i++
         }
-       
+
         val done = region.createFinalState("done")
         currentState.createImmediateTransitionTo(done)
-	}
-	
-	/**
+    }
+
+    /**
      * Transforms an empty state into a point statement state.
      * 
      * This state sets one or multiple points to a certain setting.
      */
-	def void makeSetPointStatement(State state, SetPointStatement spStatement) {
-	   state.label = "_" + getStateID() + "_SetPoint"
-	   
-	   val region = state.createControlflowRegion("Set_points_to_" + spStatement.orientation)
-       
-       val direction = parsePointSetting(spStatement)
-       
-       var currentState = region.createInitialState("init") 
-       var i = 0
-       
-       val points = valObjects.get("points")
-       
-       for (segment : spStatement.points) {
-           var nextState = region.createState("_S" + i)
-           var transition = currentState.createImmediateTransitionTo(nextState)
-           transition.addEffect(points.assign(createIntValue(direction)) => [
-               indices += createIntValue(segment)
-           ])
-           currentState = nextState
-           i++
-       }
-       
-       val done = region.createFinalState("done")
-       currentState.createImmediateTransitionTo(done)
-	}
-	
-	/**
+    def void makeSetPointStatement(State state, SetPointStatement spStatement) {
+        state.label = "_" + getStateID() + "_SetPoint"
+
+        val region = state.createControlflowRegion("Set_points_to_" + spStatement.orientation)
+
+        val direction = parsePointSetting(spStatement)
+
+        var currentState = region.createInitialState("init")
+        var i = 0
+
+        val points = valObjects.get("points")
+
+        for (segment : spStatement.points) {
+            var nextState = region.createState("_S" + i)
+            var transition = currentState.createImmediateTransitionTo(nextState)
+            transition.addEffect(points.assign(createIntValue(direction)) => [
+                indices += createIntValue(segment)
+            ])
+            currentState = nextState
+            i++
+        }
+
+        val done = region.createFinalState("done")
+        currentState.createImmediateTransitionTo(done)
+    }
+
+    /**
      * Transforms an empty state into a track statement state.
      * 
      * This state sets one or multiple tracks to a certain setting.
      * 
      * @TODO Make this set signals as well
      */
-	def void makeSetTrackStatement(State state, SetTrackStatement stStatement) {
-	   state.label = "_" + getStateID() + "_SetTrack"
-	   
-	   val region = state.createControlflowRegion("Set_tracks_to_" + stStatement.mode)
-	   
-	   val speed = parseSpeed(stStatement)
-	   val direction = parseDirection(stStatement)
-	   
-	   var currentState = region.createInitialState("init") 
-	   var i = 0
-	   
-	   val tracks = valObjects.get("tracks")
-	   
-	   for (segment : stStatement.segments) {
-	       var nextState = region.createState("_S" + i)
-	       var transition = currentState.createImmediateTransitionTo(nextState)
-	       
-	       val trackIndex = segment.parseTrackSegment
-	       
-	       transition.addEffect(tracks.assign(createIntValue(speed)) => [
-	           indices += createIntValue(trackIndex)
-	           indices += createIntValue(0)
-	       ])
-	       transition.addEffect(tracks.assign(createIntValue(direction)) => [
-	           indices += createIntValue(trackIndex)
-	           indices += createIntValue(1)
-	       ])
-	       currentState = nextState
-	       i++
-	   }
-	   
-	   val done = region.createFinalState("done")
-	   currentState.createImmediateTransitionTo(done)
-	   
-	}
-	
-	/**
+    def void makeSetTrackStatement(State state, SetTrackStatement stStatement) {
+        state.label = "_" + getStateID() + "_SetTrack"
+
+        val region = state.createControlflowRegion("Set_tracks_to_" + stStatement.mode)
+
+        val speed = parseSpeed(stStatement)
+        val direction = parseDirection(stStatement)
+
+        var currentState = region.createInitialState("init")
+        var i = 0
+
+        val tracks = valObjects.get("tracks")
+
+        for (segment : stStatement.segments) {
+            var nextState = region.createState("_S" + i)
+            var transition = currentState.createImmediateTransitionTo(nextState)
+
+            val trackIndex = segment.parseTrackSegment
+
+            transition.addEffect(tracks.assign(createIntValue(speed)) => [
+                indices += createIntValue(trackIndex)
+                indices += createIntValue(0)
+            ])
+            transition.addEffect(tracks.assign(createIntValue(direction)) => [
+                indices += createIntValue(trackIndex)
+                indices += createIntValue(1)
+            ])
+            currentState = nextState
+            i++
+        }
+
+        val done = region.createFinalState("done")
+        currentState.createImmediateTransitionTo(done)
+
+    }
+
+    /**
      * Transforms an empty state into a contact wait statement state.
      * 
      * This state will terminate once a certain contact event has occured.
      */
-	def void makeContactWaitStatement(State state, ContactWaitStatement cwStatement) {
-	    state.label = "_" + getStateID() + "_ContactWait"
-	    
-	    // Parse information from statement object 
-	    val trackIndex = cwStatement.segName.parseTrackSegment
-	    val contactIndex = (if (cwStatement.contactIndex.equals("first")) 0 else 1)
-	    val delay =(if (cwStatement.event.equals("Reach")) 1 else 2)
-	    
-	    // Create all required states
-	    var region = state.createControlflowRegion(cwStatement.event + "_contact_" + contactIndex + cwStatement.segName);
-	    var init = region.createInitialState("init")
-	    var done = region.createFinalState("done");
-	    var transition = init.createImmediateTransitionTo(done)
-	    transition.delay = delay
-	    
-	    // Get the root state's variable called "contacts", which is a bool array 
-	    val contacts = valObjects.get("contacts")
-	    
-	    transition.trigger = createOperatorExpression(OperatorType.EQ) => [
-	        subExpressions += contacts.reference => [
-	            indices += createIntValue(trackIndex)
+    def void makeContactWaitStatement(State state, ContactWaitStatement cwStatement) {
+        state.label = "_" + getStateID() + "_ContactWait"
+
+        // Parse information from statement object 
+        val trackIndex = cwStatement.segName.parseTrackSegment
+        val contactIndex = (if(cwStatement.contactIndex.equals("first")) 0 else 1)
+        val delay = (if(cwStatement.event.equals("Reach")) 1 else 2)
+
+        // Create all required states
+        var region = state.createControlflowRegion(cwStatement.event + "_contact_" + contactIndex +
+            cwStatement.segName);
+        var init = region.createInitialState("init")
+        var done = region.createFinalState("done");
+        var transition = init.createImmediateTransitionTo(done)
+        transition.delay = delay
+
+        // Get the root state's variable called "contacts", which is a bool array 
+        val contacts = valObjects.get("contacts")
+
+        transition.trigger = createOperatorExpression(OperatorType.EQ) => [
+            subExpressions += contacts.reference => [
+                indices += createIntValue(trackIndex)
                 indices += createIntValue(contactIndex)
-	        ]
-	        subExpressions += createBoolValue(true)
-	    ]
-	    
-	}
-	
-	/**
+            ]
+            subExpressions += createBoolValue(true)
+        ]
+
+    }
+
+    /**
      * Transforms an empty state into a time wait statement state.
      * 
      * This state will terminate once a certain amount of time has passed.
      */
-	def void makeTimeWaitStatement(State state, TimeWaitStatement twStatement) {
-	    state.label = "_" + getStateID() + "_TimeWait"
-	    var region = state.createControlflowRegion("Wait " + twStatement.time)
-	    var init = region.createInitialState("init")
-	    var done = region.createFinalState("done")
-	    var transition = init.createImmediateTransitionTo(done)
-	    transition.delay = twStatement.time
-	    
-	    val second = valObjects.get("second")
-	    
-	    transition.trigger = createOperatorExpression(OperatorType.EQ) => [
+    def void makeTimeWaitStatement(State state, TimeWaitStatement twStatement) {
+        state.label = "_" + getStateID() + "_TimeWait"
+        var region = state.createControlflowRegion("Wait " + twStatement.time)
+        var init = region.createInitialState("init")
+        var done = region.createFinalState("done")
+        var transition = init.createImmediateTransitionTo(done)
+        transition.delay = twStatement.time
+
+        val second = valObjects.get("second")
+
+        transition.trigger = createOperatorExpression(OperatorType.EQ) => [
             subExpressions += second.reference
             subExpressions += createBoolValue(true)
         ]
-	}
-	
-	/*****************************************************************************************
-	 * H E L P E R   M E T H O D S ***********************************************************
-	 *****************************************************************************************/
-	 
-	def String getStateID() {
-		nextStateID++;
-		return "" + (nextStateID - 1)
-	}
-	
-	def String getRegionID() {
-		nextRegionID++;
-		return "" + (nextRegionID - 1);
-	}
-	
-	def int parseLightMode(LightStatement lStatement) {
-		if (lStatement.state.equals("on")) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
-	
-	def int parsePointSetting(SetPointStatement spStatement) {
-		if (spStatement.orientation.equals("straight")) {
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-	
-	def int parseSpeed(SetTrackStatement stStatement) {
-		if (stStatement.mode.contains("stop")) {
-			return 0;
-		} else if (stStatement.mode.contains("slow")) {
-			return SPEED_SLOW;
-		} else {
-			return SPEED_FULL;
-		}
-	}
-	
-	/**
-	 * Helper method to determine the direction of travel.
-	 */
-	def int parseDirection (SetTrackStatement stStatement) {
-		if (stStatement.mode.contains("reverse")) {
-			return 2;
-		} else {
-			return 1;
-		}
-	}
-	
-	/**
-	 * Helper method to translate track segment names to integers.
-	 * Defined according to the <Railway.h> header file.
-	 */
-	def int parseTrackSegment(String string) {
-		return switch(string) {
-			case "IC_JCT_0": 0
-			case "IC_LN_0" : 1
-			case "IC_LN_1" : 2
-			case "IC_LN_2" : 3
-			case "IC_LN_3" : 4
-			case "IC_LN_4" : 5
-			case "IC_LN_5" : 6
-			case "IC_ST_0" : 7
-			case "IC_ST_1" : 8
-			case "IC_ST_2" : 9
-			case "IC_ST_3" : 10
-			case "IC_ST_4" : 11
-			case "IO_LN_0" : 12
-			case "IO_LN_1" : 13
-			case "IO_LN_2" : 14
-			case "KH_LN_0" : 15
-			case "KH_LN_1" : 16
-			case "KH_LN_2" : 17
-			case "KH_LN_3" : 18
-			case "KH_LN_4" : 19
-			case "KH_LN_5" : 20
-			case "KH_LN_6" : 21
-			case "KH_LN_7" : 22
-			case "KH_LN_8" : 23
-			case "KH_ST_0" : 24
-			case "KH_ST_1" : 25
-			case "KH_ST_2" : 26
-			case "KH_ST_3" : 27
-			case "KH_ST_4" : 28
-			case "KH_ST_5" : 29
-			case "KH_ST_6" : 30
-			case "KIO_LN_0" : 31
-			case "KIO_LN_1" : 32
-			case "OC_JCT_0" : 33
-			case "OC_LN_0" : 34
-			case "OC_LN_1" : 35
-			case "OC_LN_2" : 36
-			case "OC_LN_3" : 37
-			case "OC_LN_4" : 38
-			case "OC_LN_5" : 39
-			case "OC_ST_0" : 40
-			case "OC_ST_1" : 41
-			case "OC_ST_2" : 42
-			case "OC_ST_3" : 43
-			case "OC_ST_4" : 44
-			case "OI_LN_0" : 45
-			case "OI_LN_1" : 46
-			case "OI_LN_2" : 47
-			default: -1
-		};
-	}
-	
+    }
+
+    /*****************************************************************************************
+     * H E L P E R   M E T H O D S ***********************************************************
+     *****************************************************************************************/
+    def String getStateID() {
+        nextStateID++;
+        return "" + (nextStateID - 1)
+    }
+
+    def String getRegionID() {
+        nextRegionID++;
+        return "" + (nextRegionID - 1);
+    }
+
+    def int parseLightMode(LightStatement lStatement) {
+        if (lStatement.state.equals("on")) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    def int parsePointSetting(SetPointStatement spStatement) {
+        if (spStatement.orientation.equals("straight")) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    def int parseSpeed(SetTrackStatement stStatement) {
+        if (stStatement.mode.contains("stop")) {
+            return 0;
+        } else if (stStatement.mode.contains("slow")) {
+            return SPEED_SLOW;
+        } else {
+            return SPEED_FULL;
+        }
+    }
+
+    /**
+     * Helper method to determine the direction of travel.
+     */
+    def int parseDirection(SetTrackStatement stStatement) {
+        if (stStatement.mode.contains("reverse")) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    /**
+     * Helper method to translate track segment names to integers.
+     * Defined according to the <Railway.h> header file.
+     */
+    def int parseTrackSegment(String string) {
+        return switch (string) {
+            case "IC_JCT_0": 0
+            case "IC_LN_0": 1
+            case "IC_LN_1": 2
+            case "IC_LN_2": 3
+            case "IC_LN_3": 4
+            case "IC_LN_4": 5
+            case "IC_LN_5": 6
+            case "IC_ST_0": 7
+            case "IC_ST_1": 8
+            case "IC_ST_2": 9
+            case "IC_ST_3": 10
+            case "IC_ST_4": 11
+            case "IO_LN_0": 12
+            case "IO_LN_1": 13
+            case "IO_LN_2": 14
+            case "KH_LN_0": 15
+            case "KH_LN_1": 16
+            case "KH_LN_2": 17
+            case "KH_LN_3": 18
+            case "KH_LN_4": 19
+            case "KH_LN_5": 20
+            case "KH_LN_6": 21
+            case "KH_LN_7": 22
+            case "KH_LN_8": 23
+            case "KH_ST_0": 24
+            case "KH_ST_1": 25
+            case "KH_ST_2": 26
+            case "KH_ST_3": 27
+            case "KH_ST_4": 28
+            case "KH_ST_5": 29
+            case "KH_ST_6": 30
+            case "KIO_LN_0": 31
+            case "KIO_LN_1": 32
+            case "OC_JCT_0": 33
+            case "OC_LN_0": 34
+            case "OC_LN_1": 35
+            case "OC_LN_2": 36
+            case "OC_LN_3": 37
+            case "OC_LN_4": 38
+            case "OC_LN_5": 39
+            case "OC_ST_0": 40
+            case "OC_ST_1": 41
+            case "OC_ST_2": 42
+            case "OC_ST_3": 43
+            case "OC_ST_4": 44
+            case "OI_LN_0": 45
+            case "OI_LN_1": 46
+            case "OI_LN_2": 47
+            default: -1
+        };
+    }
+
 }

@@ -15,7 +15,7 @@ BLOCK_END:
 ;
 
 Statement:
-	SetStatement | WaitStatement | OpStatement
+	SetStatement | WaitStatement | OpStatement | ConditionalStatement
 ;
 	
 SetStatement:
@@ -30,7 +30,6 @@ TrackSetting:
 	(('reverse')? ('go' | 'slow')) | 'stop'
 ;
 
-//TODO handle range check for Ints
 SetPointStatement:
 	'Set point' (points+=INT)(','points+=INT)* 'to' orientation=('straight' | 'branch')'.'
 ;
@@ -44,7 +43,7 @@ TimeWaitStatement:
 ;
 
 ContactWaitStatement:
-	event=('Reach' | 'Pass') contactIndex=('first' | 'second') 'contact of' segName=SEG_NAME'.' 
+	event=('Reach' | 'Pass') contactIndex=ContactIndex 'contact of' segName=SEG_NAME'.' 
 ;
 
 OpStatement:
@@ -55,11 +54,23 @@ CrossingStatement:
 	mode=('Open' | 'Close') 'crossing.'
 ;
 
-//TODO handle range check for Ints
 LightStatement:
 	'Turn light' (lights+=INT)(',' lights+=INT)* state=('on' | 'off')'.'
 ;
 
+ConditionalStatement:
+    'Branch:'
+    lines+=ConditionalLine
+    (lines+=ConditionalLine)+
+    'End.'
+;
+ConditionalLine:
+    'If' contact=ContactIndex 'contact of' + segName=SEG_NAME 'is reached first, do' + block=Block
+;
+
+ContactIndex:
+    'first' | 'second'
+;
 
 SEG_NAME:
 	'KH_ST_0' | 'KH_ST_1' | 'KH_ST_2' | 'KH_ST_3' | 'KH_ST_4' | 'KH_ST_5' | 'KH_ST_6' | 

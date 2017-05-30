@@ -172,6 +172,21 @@ public class RailSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case RailSLPackage.CONDITIONAL_STATEMENT:
+      {
+        ConditionalStatement conditionalStatement = (ConditionalStatement)theEObject;
+        T result = caseConditionalStatement(conditionalStatement);
+        if (result == null) result = caseStatement(conditionalStatement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case RailSLPackage.CONDITIONAL_LINE:
+      {
+        ConditionalLine conditionalLine = (ConditionalLine)theEObject;
+        T result = caseConditionalLine(conditionalLine);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -364,6 +379,38 @@ public class RailSLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLightStatement(LightStatement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Conditional Statement</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Conditional Statement</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConditionalStatement(ConditionalStatement object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Conditional Line</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Conditional Line</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConditionalLine(ConditionalLine object)
   {
     return null;
   }

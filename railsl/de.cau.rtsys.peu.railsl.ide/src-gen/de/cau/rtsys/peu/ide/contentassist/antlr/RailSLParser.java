@@ -43,10 +43,10 @@ public class RailSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSetPointStatementAccess().getOrientationAlternatives_4_0(), "rule__SetPointStatement__OrientationAlternatives_4_0");
 					put(grammarAccess.getWaitStatementAccess().getAlternatives(), "rule__WaitStatement__Alternatives");
 					put(grammarAccess.getContactWaitStatementAccess().getEventAlternatives_0_0(), "rule__ContactWaitStatement__EventAlternatives_0_0");
-					put(grammarAccess.getContactWaitStatementAccess().getContactIndexAlternatives_1_0(), "rule__ContactWaitStatement__ContactIndexAlternatives_1_0");
 					put(grammarAccess.getOpStatementAccess().getAlternatives(), "rule__OpStatement__Alternatives");
 					put(grammarAccess.getCrossingStatementAccess().getModeAlternatives_0_0(), "rule__CrossingStatement__ModeAlternatives_0_0");
 					put(grammarAccess.getLightStatementAccess().getStateAlternatives_3_0(), "rule__LightStatement__StateAlternatives_3_0");
+					put(grammarAccess.getContactIndexAccess().getAlternatives(), "rule__ContactIndex__Alternatives");
 					put(grammarAccess.getSEG_NAMEAccess().getAlternatives(), "rule__SEG_NAME__Alternatives");
 					put(grammarAccess.getBlockAccess().getGroup(), "rule__Block__Group__0");
 					put(grammarAccess.getSetTrackStatementAccess().getGroup(), "rule__SetTrackStatement__Group__0");
@@ -59,6 +59,8 @@ public class RailSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCrossingStatementAccess().getGroup(), "rule__CrossingStatement__Group__0");
 					put(grammarAccess.getLightStatementAccess().getGroup(), "rule__LightStatement__Group__0");
 					put(grammarAccess.getLightStatementAccess().getGroup_2(), "rule__LightStatement__Group_2__0");
+					put(grammarAccess.getConditionalStatementAccess().getGroup(), "rule__ConditionalStatement__Group__0");
+					put(grammarAccess.getConditionalLineAccess().getGroup(), "rule__ConditionalLine__Group__0");
 					put(grammarAccess.getProgramAccess().getBlocksAssignment(), "rule__Program__BlocksAssignment");
 					put(grammarAccess.getBlockAccess().getStatementsAssignment_1(), "rule__Block__StatementsAssignment_1");
 					put(grammarAccess.getBlockAccess().getEndAssignment_2(), "rule__Block__EndAssignment_2");
@@ -76,6 +78,11 @@ public class RailSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLightStatementAccess().getLightsAssignment_1(), "rule__LightStatement__LightsAssignment_1");
 					put(grammarAccess.getLightStatementAccess().getLightsAssignment_2_1(), "rule__LightStatement__LightsAssignment_2_1");
 					put(grammarAccess.getLightStatementAccess().getStateAssignment_3(), "rule__LightStatement__StateAssignment_3");
+					put(grammarAccess.getConditionalStatementAccess().getLinesAssignment_1(), "rule__ConditionalStatement__LinesAssignment_1");
+					put(grammarAccess.getConditionalStatementAccess().getLinesAssignment_2(), "rule__ConditionalStatement__LinesAssignment_2");
+					put(grammarAccess.getConditionalLineAccess().getContactAssignment_1(), "rule__ConditionalLine__ContactAssignment_1");
+					put(grammarAccess.getConditionalLineAccess().getSegNameAssignment_3(), "rule__ConditionalLine__SegNameAssignment_3");
+					put(grammarAccess.getConditionalLineAccess().getBlockAssignment_5(), "rule__ConditionalLine__BlockAssignment_5");
 				}
 			};
 		}

@@ -77,6 +77,8 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
       case RailSLPackage.OP_STATEMENT: return createOpStatement();
       case RailSLPackage.CROSSING_STATEMENT: return createCrossingStatement();
       case RailSLPackage.LIGHT_STATEMENT: return createLightStatement();
+      case RailSLPackage.CONDITIONAL_STATEMENT: return createConditionalStatement();
+      case RailSLPackage.CONDITIONAL_LINE: return createConditionalLine();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -212,6 +214,28 @@ public class RailSLFactoryImpl extends EFactoryImpl implements RailSLFactory
   {
     LightStatementImpl lightStatement = new LightStatementImpl();
     return lightStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionalStatement createConditionalStatement()
+  {
+    ConditionalStatementImpl conditionalStatement = new ConditionalStatementImpl();
+    return conditionalStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionalLine createConditionalLine()
+  {
+    ConditionalLineImpl conditionalLine = new ConditionalLineImpl();
+    return conditionalLine;
   }
 
   /**

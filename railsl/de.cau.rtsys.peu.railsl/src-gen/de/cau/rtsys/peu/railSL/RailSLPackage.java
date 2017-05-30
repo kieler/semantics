@@ -411,6 +411,80 @@ public interface RailSLPackage extends EPackage
    */
   int LIGHT_STATEMENT_FEATURE_COUNT = OP_STATEMENT_FEATURE_COUNT + 2;
 
+  /**
+   * The meta object id for the '{@link de.cau.rtsys.peu.railSL.impl.ConditionalStatementImpl <em>Conditional Statement</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.rtsys.peu.railSL.impl.ConditionalStatementImpl
+   * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getConditionalStatement()
+   * @generated
+   */
+  int CONDITIONAL_STATEMENT = 12;
+
+  /**
+   * The feature id for the '<em><b>Lines</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_STATEMENT__LINES = STATEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Conditional Statement</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.rtsys.peu.railSL.impl.ConditionalLineImpl <em>Conditional Line</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.rtsys.peu.railSL.impl.ConditionalLineImpl
+   * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getConditionalLine()
+   * @generated
+   */
+  int CONDITIONAL_LINE = 13;
+
+  /**
+   * The feature id for the '<em><b>Contact</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_LINE__CONTACT = 0;
+
+  /**
+   * The feature id for the '<em><b>Seg Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_LINE__SEG_NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Block</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_LINE__BLOCK = 2;
+
+  /**
+   * The number of structural features of the '<em>Conditional Line</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_LINE_FEATURE_COUNT = 3;
+
 
   /**
    * Returns the meta object for class '{@link de.cau.rtsys.peu.railSL.Program <em>Program</em>}'.
@@ -687,6 +761,70 @@ public interface RailSLPackage extends EPackage
   EAttribute getLightStatement_State();
 
   /**
+   * Returns the meta object for class '{@link de.cau.rtsys.peu.railSL.ConditionalStatement <em>Conditional Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Conditional Statement</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalStatement
+   * @generated
+   */
+  EClass getConditionalStatement();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.rtsys.peu.railSL.ConditionalStatement#getLines <em>Lines</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Lines</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalStatement#getLines()
+   * @see #getConditionalStatement()
+   * @generated
+   */
+  EReference getConditionalStatement_Lines();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.rtsys.peu.railSL.ConditionalLine <em>Conditional Line</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Conditional Line</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalLine
+   * @generated
+   */
+  EClass getConditionalLine();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.rtsys.peu.railSL.ConditionalLine#getContact <em>Contact</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Contact</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalLine#getContact()
+   * @see #getConditionalLine()
+   * @generated
+   */
+  EAttribute getConditionalLine_Contact();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.rtsys.peu.railSL.ConditionalLine#getSegName <em>Seg Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Seg Name</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalLine#getSegName()
+   * @see #getConditionalLine()
+   * @generated
+   */
+  EAttribute getConditionalLine_SegName();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.rtsys.peu.railSL.ConditionalLine#getBlock <em>Block</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Block</em>'.
+   * @see de.cau.rtsys.peu.railSL.ConditionalLine#getBlock()
+   * @see #getConditionalLine()
+   * @generated
+   */
+  EReference getConditionalLine_Block();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -940,6 +1078,58 @@ public interface RailSLPackage extends EPackage
      * @generated
      */
     EAttribute LIGHT_STATEMENT__STATE = eINSTANCE.getLightStatement_State();
+
+    /**
+     * The meta object literal for the '{@link de.cau.rtsys.peu.railSL.impl.ConditionalStatementImpl <em>Conditional Statement</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.rtsys.peu.railSL.impl.ConditionalStatementImpl
+     * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getConditionalStatement()
+     * @generated
+     */
+    EClass CONDITIONAL_STATEMENT = eINSTANCE.getConditionalStatement();
+
+    /**
+     * The meta object literal for the '<em><b>Lines</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL_STATEMENT__LINES = eINSTANCE.getConditionalStatement_Lines();
+
+    /**
+     * The meta object literal for the '{@link de.cau.rtsys.peu.railSL.impl.ConditionalLineImpl <em>Conditional Line</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.rtsys.peu.railSL.impl.ConditionalLineImpl
+     * @see de.cau.rtsys.peu.railSL.impl.RailSLPackageImpl#getConditionalLine()
+     * @generated
+     */
+    EClass CONDITIONAL_LINE = eINSTANCE.getConditionalLine();
+
+    /**
+     * The meta object literal for the '<em><b>Contact</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONDITIONAL_LINE__CONTACT = eINSTANCE.getConditionalLine_Contact();
+
+    /**
+     * The meta object literal for the '<em><b>Seg Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONDITIONAL_LINE__SEG_NAME = eINSTANCE.getConditionalLine_SegName();
+
+    /**
+     * The meta object literal for the '<em><b>Block</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL_LINE__BLOCK = eINSTANCE.getConditionalLine_Block();
 
   }
 
