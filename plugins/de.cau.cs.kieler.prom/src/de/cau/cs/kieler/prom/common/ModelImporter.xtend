@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.core.resources.IContainer
 
 /** 
  * Auxilary class to load an EObject from a fully qualified file path.
@@ -81,22 +82,19 @@ class ModelImporter {
      * @param modelFileLocation Fully qualified path to a model file
      * @param resourceSet The ResourceSet to which possible references should be added
      */
-    private static def collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
+    private static def void collectPossiblyReferencedResources(String modelFileLocation, ResourceSet resourceSet) {      
         val modelFile = getFile(modelFileLocation)
         if(modelFile != null && modelFile.exists) {
             val fileExtensionOfModelFiles = modelFile.fileExtension
-            // Search in project for other files with the model file extension
-            // and add them to the resource set.
             val project = modelFile.project
-            for(IResource res : project.members) {
-                val fileExtension = res.fileExtension
-                if(fileExtension != null && fileExtension.equals(fileExtensionOfModelFiles) ){
-                    val location = res.location.toOSString
-                    // Don't add resource of model file itself
-                    if(!modelFileLocation.equals(location)) {
-                        val uri = URI.createFileURI(res.location.toOSString)
-                        resourceSet.getResource(uri, true)
-                    }
+            
+            val files = PromPlugin.findFiles(project.members, fileExtensionOfModelFiles)
+            for(f : files) {
+                val location = f.location.toOSString
+                // Don't add resource of model file itself
+                if(!modelFileLocation.equals(location)) {
+                    val uri = URI.createFileURI(location)
+                    resourceSet.getResource(uri, true)
                 }
             }
         }

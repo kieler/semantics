@@ -33,6 +33,8 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Fork
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Join
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -289,6 +291,10 @@ class SCGCoreExtensions {
     def Entry asEntry(Node node) {
     	node as Entry
     }
+
+    def Exit asExit(Node node) {
+        node as Exit
+    }
     
     def Assignment asAssignment(Node node) {
     	node as Assignment
@@ -296,6 +302,10 @@ class SCGCoreExtensions {
     
     def Fork asFork(Node node) {
     	node as Fork
+    }
+    
+    def Join asJoin(Node node) {
+        node as Join
     }
     
     def Node asNode(EObject eObject) {

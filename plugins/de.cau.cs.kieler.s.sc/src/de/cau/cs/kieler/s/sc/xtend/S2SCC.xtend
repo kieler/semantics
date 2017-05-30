@@ -44,6 +44,7 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -59,6 +60,9 @@ class S2SCC {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+    
+    @Inject
+    extension KExpressionsValueExtensions      
 
     @Inject
     extension SExtension    

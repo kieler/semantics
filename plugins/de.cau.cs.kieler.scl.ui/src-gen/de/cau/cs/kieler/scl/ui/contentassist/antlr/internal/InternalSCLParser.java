@@ -19373,7 +19373,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6363:1: ( rule__ValuedObject__Group_1__0__Impl rule__ValuedObject__Group_1__1 )
             // InternalSCL.g:6364:2: rule__ValuedObject__Group_1__0__Impl rule__ValuedObject__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_33);
+=======
+            pushFollow(FollowSets000.FOLLOW_15);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObject__Group_1__0__Impl();
 
             state._fsp--;
@@ -19778,7 +19782,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6522:1: ( rule__ValuedObject__Group_3__0__Impl rule__ValuedObject__Group_3__1 )
             // InternalSCL.g:6523:2: rule__ValuedObject__Group_3__0__Impl rule__ValuedObject__Group_3__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_34);
+=======
+            pushFollow(FollowSets000.FOLLOW_31);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObject__Group_3__0__Impl();
 
             state._fsp--;
@@ -20048,7 +20056,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6614:1: ( rule__Emission__Group__1__Impl rule__Emission__Group__2 )
             // InternalSCL.g:6615:2: rule__Emission__Group__1__Impl rule__Emission__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_35);
+=======
+            pushFollow(FollowSets000.FOLLOW_32);
+>>>>>>> refs/remotes/origin/master
             rule__Emission__Group__1__Impl();
 
             state._fsp--;
@@ -20311,7 +20323,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6708:1: ( rule__Emission__Group_2__1__Impl rule__Emission__Group_2__2 )
             // InternalSCL.g:6709:2: rule__Emission__Group_2__1__Impl rule__Emission__Group_2__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_36);
+=======
+            pushFollow(FollowSets000.FOLLOW_33);
+>>>>>>> refs/remotes/origin/master
             rule__Emission__Group_2__1__Impl();
 
             state._fsp--;
@@ -20581,7 +20597,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6802:1: ( rule__PostfixEffect__Group__1__Impl rule__PostfixEffect__Group__2 )
             // InternalSCL.g:6803:2: rule__PostfixEffect__Group__1__Impl rule__PostfixEffect__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_37);
+=======
+            pushFollow(FollowSets000.FOLLOW_34);
+>>>>>>> refs/remotes/origin/master
             rule__PostfixEffect__Group__1__Impl();
 
             state._fsp--;
@@ -20670,7 +20690,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6831:1: ( rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3 )
             // InternalSCL.g:6832:2: rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_37);
+=======
+            pushFollow(FollowSets000.FOLLOW_34);
+>>>>>>> refs/remotes/origin/master
             rule__PostfixEffect__Group__2__Impl();
 
             state._fsp--;
@@ -21103,7 +21127,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:6992:1: ( rule__HostcodeEffect__Group__0__Impl rule__HostcodeEffect__Group__1 )
             // InternalSCL.g:6993:2: rule__HostcodeEffect__Group__0__Impl rule__HostcodeEffect__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_38);
+=======
+            pushFollow(FollowSets000.FOLLOW_35);
+>>>>>>> refs/remotes/origin/master
             rule__HostcodeEffect__Group__0__Impl();
 
             state._fsp--;
@@ -21294,7 +21322,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7053:1: ( rule__FunctionCallEffect__Group__0__Impl rule__FunctionCallEffect__Group__1 )
             // InternalSCL.g:7054:2: rule__FunctionCallEffect__Group__0__Impl rule__FunctionCallEffect__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_39);
+=======
+            pushFollow(FollowSets000.FOLLOW_36);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group__0__Impl();
 
             state._fsp--;
@@ -21480,7 +21512,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7113:1: ( rule__FunctionCallEffect__Group__2__Impl rule__FunctionCallEffect__Group__3 )
             // InternalSCL.g:7114:2: rule__FunctionCallEffect__Group__2__Impl rule__FunctionCallEffect__Group__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_40);
+=======
+            pushFollow(FollowSets000.FOLLOW_37);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group__2__Impl();
 
             state._fsp--;
@@ -21569,7 +21605,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7142:1: ( rule__FunctionCallEffect__Group__3__Impl rule__FunctionCallEffect__Group__4 )
             // InternalSCL.g:7143:2: rule__FunctionCallEffect__Group__3__Impl rule__FunctionCallEffect__Group__4
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_40);
+=======
+            pushFollow(FollowSets000.FOLLOW_37);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group__3__Impl();
 
             state._fsp--;
@@ -21743,7 +21783,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7211:1: ( rule__FunctionCallEffect__Group_3_0__0__Impl rule__FunctionCallEffect__Group_3_0__1 )
             // InternalSCL.g:7212:2: rule__FunctionCallEffect__Group_3_0__0__Impl rule__FunctionCallEffect__Group_3_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_41);
+=======
+            pushFollow(FollowSets000.FOLLOW_38);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group_3_0__0__Impl();
 
             state._fsp--;
@@ -21822,7 +21866,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7242:1: ( rule__FunctionCallEffect__Group_3_0__1__Impl rule__FunctionCallEffect__Group_3_0__2 )
             // InternalSCL.g:7243:2: rule__FunctionCallEffect__Group_3_0__1__Impl rule__FunctionCallEffect__Group_3_0__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_42);
+=======
+            pushFollow(FollowSets000.FOLLOW_39);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group_3_0__1__Impl();
 
             state._fsp--;
@@ -21911,7 +21959,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7271:1: ( rule__FunctionCallEffect__Group_3_0__2__Impl rule__FunctionCallEffect__Group_3_0__3 )
             // InternalSCL.g:7272:2: rule__FunctionCallEffect__Group_3_0__2__Impl rule__FunctionCallEffect__Group_3_0__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_42);
+=======
+            pushFollow(FollowSets000.FOLLOW_39);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group_3_0__2__Impl();
 
             state._fsp--;
@@ -22092,7 +22144,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7338:1: ( rule__FunctionCallEffect__Group_3_0_2__0__Impl rule__FunctionCallEffect__Group_3_0_2__1 )
             // InternalSCL.g:7339:2: rule__FunctionCallEffect__Group_3_0_2__0__Impl rule__FunctionCallEffect__Group_3_0_2__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_41);
+=======
+            pushFollow(FollowSets000.FOLLOW_38);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCallEffect__Group_3_0_2__0__Impl();
 
             state._fsp--;
@@ -22255,7 +22311,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7401:1: ( rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1 )
             // InternalSCL.g:7402:2: rule__LogicalOrExpression__Group__0__Impl rule__LogicalOrExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_43);
+=======
+            pushFollow(FollowSets000.FOLLOW_40);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalOrExpression__Group__0__Impl();
 
             state._fsp--;
@@ -22433,7 +22493,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7462:1: ( rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1 )
             // InternalSCL.g:7463:2: rule__LogicalOrExpression__Group_1__0__Impl rule__LogicalOrExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_43);
+=======
+            pushFollow(FollowSets000.FOLLOW_40);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalOrExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -22557,7 +22621,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7508:1: ( rule__LogicalOrExpression__Group_1_1__0 )
             // InternalSCL.g:7508:2: rule__LogicalOrExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_44);
+=======
+            pushFollow(FollowSets000.FOLLOW_41);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalOrExpression__Group_1_1__0();
 
             state._fsp--;
@@ -22592,7 +22660,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:7513:2: rule__LogicalOrExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_44);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_41);
+>>>>>>> refs/remotes/origin/master
             	    rule__LogicalOrExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -22816,7 +22888,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7593:1: ( rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1 )
             // InternalSCL.g:7594:2: rule__LogicalAndExpression__Group__0__Impl rule__LogicalAndExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_45);
+=======
+            pushFollow(FollowSets000.FOLLOW_42);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalAndExpression__Group__0__Impl();
 
             state._fsp--;
@@ -22994,7 +23070,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7654:1: ( rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1 )
             // InternalSCL.g:7655:2: rule__LogicalAndExpression__Group_1__0__Impl rule__LogicalAndExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_45);
+=======
+            pushFollow(FollowSets000.FOLLOW_42);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalAndExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -23118,7 +23198,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7700:1: ( rule__LogicalAndExpression__Group_1_1__0 )
             // InternalSCL.g:7700:2: rule__LogicalAndExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_46);
+=======
+            pushFollow(FollowSets000.FOLLOW_43);
+>>>>>>> refs/remotes/origin/master
             rule__LogicalAndExpression__Group_1_1__0();
 
             state._fsp--;
@@ -23153,7 +23237,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:7705:2: rule__LogicalAndExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_46);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_43);
+>>>>>>> refs/remotes/origin/master
             	    rule__LogicalAndExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -23377,7 +23465,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7785:1: ( rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1 )
             // InternalSCL.g:7786:2: rule__BitwiseOrExpression__Group__0__Impl rule__BitwiseOrExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_47);
+=======
+            pushFollow(FollowSets000.FOLLOW_44);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseOrExpression__Group__0__Impl();
 
             state._fsp--;
@@ -23555,7 +23647,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7846:1: ( rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1 )
             // InternalSCL.g:7847:2: rule__BitwiseOrExpression__Group_1__0__Impl rule__BitwiseOrExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_47);
+=======
+            pushFollow(FollowSets000.FOLLOW_44);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseOrExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -23679,7 +23775,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7892:1: ( rule__BitwiseOrExpression__Group_1_1__0 )
             // InternalSCL.g:7892:2: rule__BitwiseOrExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_48);
+=======
+            pushFollow(FollowSets000.FOLLOW_45);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseOrExpression__Group_1_1__0();
 
             state._fsp--;
@@ -23714,7 +23814,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:7897:2: rule__BitwiseOrExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_48);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_45);
+>>>>>>> refs/remotes/origin/master
             	    rule__BitwiseOrExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -23938,7 +24042,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:7977:1: ( rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1 )
             // InternalSCL.g:7978:2: rule__BitwiseAndExpression__Group__0__Impl rule__BitwiseAndExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_49);
+=======
+            pushFollow(FollowSets000.FOLLOW_46);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseAndExpression__Group__0__Impl();
 
             state._fsp--;
@@ -24116,7 +24224,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8038:1: ( rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1 )
             // InternalSCL.g:8039:2: rule__BitwiseAndExpression__Group_1__0__Impl rule__BitwiseAndExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_49);
+=======
+            pushFollow(FollowSets000.FOLLOW_46);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseAndExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -24240,7 +24352,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8084:1: ( rule__BitwiseAndExpression__Group_1_1__0 )
             // InternalSCL.g:8084:2: rule__BitwiseAndExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_50);
+=======
+            pushFollow(FollowSets000.FOLLOW_47);
+>>>>>>> refs/remotes/origin/master
             rule__BitwiseAndExpression__Group_1_1__0();
 
             state._fsp--;
@@ -24275,7 +24391,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:8089:2: rule__BitwiseAndExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_50);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_47);
+>>>>>>> refs/remotes/origin/master
             	    rule__BitwiseAndExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -24499,7 +24619,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8169:1: ( rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1 )
             // InternalSCL.g:8170:2: rule__CompareOperation__Group__0__Impl rule__CompareOperation__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_51);
+=======
+            pushFollow(FollowSets000.FOLLOW_48);
+>>>>>>> refs/remotes/origin/master
             rule__CompareOperation__Group__0__Impl();
 
             state._fsp--;
@@ -24677,7 +24801,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8230:1: ( rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1 )
             // InternalSCL.g:8231:2: rule__CompareOperation__Group_1__0__Impl rule__CompareOperation__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_51);
+=======
+            pushFollow(FollowSets000.FOLLOW_48);
+>>>>>>> refs/remotes/origin/master
             rule__CompareOperation__Group_1__0__Impl();
 
             state._fsp--;
@@ -24929,7 +25057,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8324:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
             // InternalSCL.g:8325:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_52);
+=======
+            pushFollow(FollowSets000.FOLLOW_49);
+>>>>>>> refs/remotes/origin/master
             rule__NotExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -25181,7 +25313,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8418:1: ( rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 )
             // InternalSCL.g:8419:2: rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_53);
+=======
+            pushFollow(FollowSets000.FOLLOW_50);
+>>>>>>> refs/remotes/origin/master
             rule__AddExpression__Group__0__Impl();
 
             state._fsp--;
@@ -25359,7 +25495,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8479:1: ( rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 )
             // InternalSCL.g:8480:2: rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_53);
+=======
+            pushFollow(FollowSets000.FOLLOW_50);
+>>>>>>> refs/remotes/origin/master
             rule__AddExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -25483,7 +25623,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8525:1: ( rule__AddExpression__Group_1_1__0 )
             // InternalSCL.g:8525:2: rule__AddExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_54);
+=======
+            pushFollow(FollowSets000.FOLLOW_51);
+>>>>>>> refs/remotes/origin/master
             rule__AddExpression__Group_1_1__0();
 
             state._fsp--;
@@ -25518,7 +25662,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:8530:2: rule__AddExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_54);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_51);
+>>>>>>> refs/remotes/origin/master
             	    rule__AddExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -25569,7 +25717,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8549:1: ( rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1 )
             // InternalSCL.g:8550:2: rule__AddExpression__Group_1_1__0__Impl rule__AddExpression__Group_1_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__AddExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -25742,7 +25894,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8610:1: ( rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 )
             // InternalSCL.g:8611:2: rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_56);
+=======
+            pushFollow(FollowSets000.FOLLOW_53);
+>>>>>>> refs/remotes/origin/master
             rule__SubExpression__Group__0__Impl();
 
             state._fsp--;
@@ -25920,7 +26076,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8671:1: ( rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 )
             // InternalSCL.g:8672:2: rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_56);
+=======
+            pushFollow(FollowSets000.FOLLOW_53);
+>>>>>>> refs/remotes/origin/master
             rule__SubExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -26044,7 +26204,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8717:1: ( rule__SubExpression__Group_1_1__0 )
             // InternalSCL.g:8717:2: rule__SubExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_57);
+=======
+            pushFollow(FollowSets000.FOLLOW_54);
+>>>>>>> refs/remotes/origin/master
             rule__SubExpression__Group_1_1__0();
 
             state._fsp--;
@@ -26079,7 +26243,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:8722:2: rule__SubExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_57);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_54);
+>>>>>>> refs/remotes/origin/master
             	    rule__SubExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -26130,7 +26298,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8741:1: ( rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1 )
             // InternalSCL.g:8742:2: rule__SubExpression__Group_1_1__0__Impl rule__SubExpression__Group_1_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__SubExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -26303,7 +26475,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8802:1: ( rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 )
             // InternalSCL.g:8803:2: rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_58);
+=======
+            pushFollow(FollowSets000.FOLLOW_55);
+>>>>>>> refs/remotes/origin/master
             rule__MultExpression__Group__0__Impl();
 
             state._fsp--;
@@ -26481,7 +26657,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8863:1: ( rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 )
             // InternalSCL.g:8864:2: rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_58);
+=======
+            pushFollow(FollowSets000.FOLLOW_55);
+>>>>>>> refs/remotes/origin/master
             rule__MultExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -26605,7 +26785,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8909:1: ( rule__MultExpression__Group_1_1__0 )
             // InternalSCL.g:8909:2: rule__MultExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_59);
+=======
+            pushFollow(FollowSets000.FOLLOW_56);
+>>>>>>> refs/remotes/origin/master
             rule__MultExpression__Group_1_1__0();
 
             state._fsp--;
@@ -26640,7 +26824,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:8914:2: rule__MultExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_59);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_56);
+>>>>>>> refs/remotes/origin/master
             	    rule__MultExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -26691,7 +26879,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8933:1: ( rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1 )
             // InternalSCL.g:8934:2: rule__MultExpression__Group_1_1__0__Impl rule__MultExpression__Group_1_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__MultExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -26864,7 +27056,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:8994:1: ( rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 )
             // InternalSCL.g:8995:2: rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_60);
+=======
+            pushFollow(FollowSets000.FOLLOW_57);
+>>>>>>> refs/remotes/origin/master
             rule__DivExpression__Group__0__Impl();
 
             state._fsp--;
@@ -27042,7 +27238,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9055:1: ( rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 )
             // InternalSCL.g:9056:2: rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_60);
+=======
+            pushFollow(FollowSets000.FOLLOW_57);
+>>>>>>> refs/remotes/origin/master
             rule__DivExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -27166,7 +27366,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9101:1: ( rule__DivExpression__Group_1_1__0 )
             // InternalSCL.g:9101:2: rule__DivExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_61);
+=======
+            pushFollow(FollowSets000.FOLLOW_58);
+>>>>>>> refs/remotes/origin/master
             rule__DivExpression__Group_1_1__0();
 
             state._fsp--;
@@ -27201,7 +27405,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:9106:2: rule__DivExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_61);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_58);
+>>>>>>> refs/remotes/origin/master
             	    rule__DivExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -27252,7 +27460,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9125:1: ( rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1 )
             // InternalSCL.g:9126:2: rule__DivExpression__Group_1_1__0__Impl rule__DivExpression__Group_1_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__DivExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -27425,7 +27637,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9186:1: ( rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 )
             // InternalSCL.g:9187:2: rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_62);
+=======
+            pushFollow(FollowSets000.FOLLOW_59);
+>>>>>>> refs/remotes/origin/master
             rule__ModExpression__Group__0__Impl();
 
             state._fsp--;
@@ -27603,7 +27819,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9247:1: ( rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 )
             // InternalSCL.g:9248:2: rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_62);
+=======
+            pushFollow(FollowSets000.FOLLOW_59);
+>>>>>>> refs/remotes/origin/master
             rule__ModExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -27727,7 +27947,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9293:1: ( rule__ModExpression__Group_1_1__0 )
             // InternalSCL.g:9293:2: rule__ModExpression__Group_1_1__0
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_63);
+=======
+            pushFollow(FollowSets000.FOLLOW_60);
+>>>>>>> refs/remotes/origin/master
             rule__ModExpression__Group_1_1__0();
 
             state._fsp--;
@@ -27762,7 +27986,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:9298:2: rule__ModExpression__Group_1_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_63);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_60);
+>>>>>>> refs/remotes/origin/master
             	    rule__ModExpression__Group_1_1__0();
 
             	    state._fsp--;
@@ -27813,7 +28041,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9317:1: ( rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1 )
             // InternalSCL.g:9318:2: rule__ModExpression__Group_1_1__0__Impl rule__ModExpression__Group_1_1__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__ModExpression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -27986,7 +28218,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9378:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
             // InternalSCL.g:9379:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_56);
+=======
+            pushFollow(FollowSets000.FOLLOW_53);
+>>>>>>> refs/remotes/origin/master
             rule__NegExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -28065,7 +28301,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9409:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
             // InternalSCL.g:9410:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__NegExpression__Group_0__1__Impl();
 
             state._fsp--;
@@ -28317,7 +28557,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9503:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
             // InternalSCL.g:9504:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_36);
+=======
+            pushFollow(FollowSets000.FOLLOW_33);
+>>>>>>> refs/remotes/origin/master
             rule__AtomicExpression__Group_2__1__Impl();
 
             state._fsp--;
@@ -28474,7 +28718,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9568:1: ( rule__AtomicValuedExpression__Group_3__0__Impl rule__AtomicValuedExpression__Group_3__1 )
             // InternalSCL.g:9569:2: rule__AtomicValuedExpression__Group_3__0__Impl rule__AtomicValuedExpression__Group_3__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_55);
+=======
+            pushFollow(FollowSets000.FOLLOW_52);
+>>>>>>> refs/remotes/origin/master
             rule__AtomicValuedExpression__Group_3__0__Impl();
 
             state._fsp--;
@@ -28553,7 +28801,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9599:1: ( rule__AtomicValuedExpression__Group_3__1__Impl rule__AtomicValuedExpression__Group_3__2 )
             // InternalSCL.g:9600:2: rule__AtomicValuedExpression__Group_3__1__Impl rule__AtomicValuedExpression__Group_3__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_36);
+=======
+            pushFollow(FollowSets000.FOLLOW_33);
+>>>>>>> refs/remotes/origin/master
             rule__AtomicValuedExpression__Group_3__1__Impl();
 
             state._fsp--;
@@ -28710,7 +28962,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9664:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
             // InternalSCL.g:9665:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_64);
+=======
+            pushFollow(FollowSets000.FOLLOW_61);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObjectTestExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -28789,7 +29045,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9695:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
             // InternalSCL.g:9696:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_35);
+=======
+            pushFollow(FollowSets000.FOLLOW_32);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObjectTestExpression__Group_0__1__Impl();
 
             state._fsp--;
@@ -28878,7 +29138,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9724:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
             // InternalSCL.g:9725:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_65);
+=======
+            pushFollow(FollowSets000.FOLLOW_62);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -28957,7 +29221,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9755:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
             // InternalSCL.g:9756:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_36);
+=======
+            pushFollow(FollowSets000.FOLLOW_33);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
 
             state._fsp--;
@@ -29120,7 +29388,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:9824:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
             // InternalSCL.g:9825:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_66);
+=======
+            pushFollow(FollowSets000.FOLLOW_63);
+>>>>>>> refs/remotes/origin/master
             rule__ValuedObjectReference__Group__0__Impl();
 
             state._fsp--;
@@ -29632,7 +29904,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10012:1: ( rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 )
             // InternalSCL.g:10013:2: rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_40);
+=======
+            pushFollow(FollowSets000.FOLLOW_37);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group__1__Impl();
 
             state._fsp--;
@@ -29721,7 +29997,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10041:1: ( rule__FunctionCall__Group__2__Impl rule__FunctionCall__Group__3 )
             // InternalSCL.g:10042:2: rule__FunctionCall__Group__2__Impl rule__FunctionCall__Group__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_40);
+=======
+            pushFollow(FollowSets000.FOLLOW_37);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group__2__Impl();
 
             state._fsp--;
@@ -29895,7 +30175,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10108:1: ( rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 )
             // InternalSCL.g:10109:2: rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_41);
+=======
+            pushFollow(FollowSets000.FOLLOW_38);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group_2_0__0__Impl();
 
             state._fsp--;
@@ -29974,7 +30258,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10139:1: ( rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 )
             // InternalSCL.g:10140:2: rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_42);
+=======
+            pushFollow(FollowSets000.FOLLOW_39);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group_2_0__1__Impl();
 
             state._fsp--;
@@ -30063,7 +30351,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10168:1: ( rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 )
             // InternalSCL.g:10169:2: rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_42);
+=======
+            pushFollow(FollowSets000.FOLLOW_39);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group_2_0__2__Impl();
 
             state._fsp--;
@@ -30244,7 +30536,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10235:1: ( rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 )
             // InternalSCL.g:10236:2: rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_41);
+=======
+            pushFollow(FollowSets000.FOLLOW_38);
+>>>>>>> refs/remotes/origin/master
             rule__FunctionCall__Group_2_0_2__0__Impl();
 
             state._fsp--;
@@ -30407,7 +30703,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10298:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
             // InternalSCL.g:10299:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_41);
+=======
+            pushFollow(FollowSets000.FOLLOW_38);
+>>>>>>> refs/remotes/origin/master
             rule__Parameter__Group__0__Impl();
 
             state._fsp--;
@@ -30598,7 +30898,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10359:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
             // InternalSCL.g:10360:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_67);
+=======
+            pushFollow(FollowSets000.FOLLOW_64);
+>>>>>>> refs/remotes/origin/master
             rule__Parameter__Group_0__0__Impl();
 
             state._fsp--;
@@ -31024,7 +31328,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10514:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // InternalSCL.g:10515:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_68);
+=======
+            pushFollow(FollowSets000.FOLLOW_65);
+>>>>>>> refs/remotes/origin/master
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -31113,7 +31421,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10543:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
             // InternalSCL.g:10544:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_69);
+=======
+            pushFollow(FollowSets000.FOLLOW_66);
+>>>>>>> refs/remotes/origin/master
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -31304,7 +31616,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10608:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // InternalSCL.g:10609:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_68);
+=======
+            pushFollow(FollowSets000.FOLLOW_65);
+>>>>>>> refs/remotes/origin/master
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -31546,7 +31862,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10702:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // InternalSCL.g:10703:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_66);
+=======
+            pushFollow(FollowSets000.FOLLOW_63);
+>>>>>>> refs/remotes/origin/master
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -31803,7 +32123,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10791:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // InternalSCL.g:10792:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_70);
+=======
+            pushFollow(FollowSets000.FOLLOW_67);
+>>>>>>> refs/remotes/origin/master
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -31882,7 +32206,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10822:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
             // InternalSCL.g:10823:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_69);
+=======
+            pushFollow(FollowSets000.FOLLOW_66);
+>>>>>>> refs/remotes/origin/master
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -32073,7 +32401,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10893:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // InternalSCL.g:10894:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_70);
+=======
+            pushFollow(FollowSets000.FOLLOW_67);
+>>>>>>> refs/remotes/origin/master
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -32315,7 +32647,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:10987:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
             // InternalSCL.g:10988:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_71);
+=======
+            pushFollow(FollowSets000.FOLLOW_68);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -32404,7 +32740,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11016:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
             // InternalSCL.g:11017:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_69);
+=======
+            pushFollow(FollowSets000.FOLLOW_66);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -32595,7 +32935,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11081:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
             // InternalSCL.g:11082:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_71);
+=======
+            pushFollow(FollowSets000.FOLLOW_68);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
@@ -32837,7 +33181,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11175:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
             // InternalSCL.g:11176:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_66);
+=======
+            pushFollow(FollowSets000.FOLLOW_63);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -33094,7 +33442,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11264:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
             // InternalSCL.g:11265:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_71);
+=======
+            pushFollow(FollowSets000.FOLLOW_68);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
@@ -33173,7 +33525,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11295:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
             // InternalSCL.g:11296:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_69);
+=======
+            pushFollow(FollowSets000.FOLLOW_66);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
@@ -33364,7 +33720,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11366:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
             // InternalSCL.g:11367:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_71);
+=======
+            pushFollow(FollowSets000.FOLLOW_68);
+>>>>>>> refs/remotes/origin/master
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
@@ -33606,7 +33966,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11460:1: ( rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2 )
             // InternalSCL.g:11461:2: rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_72);
+=======
+            pushFollow(FollowSets000.FOLLOW_69);
+>>>>>>> refs/remotes/origin/master
             rule__KeyBooleanValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -33858,7 +34222,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11554:1: ( rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2 )
             // InternalSCL.g:11555:2: rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_73);
+=======
+            pushFollow(FollowSets000.FOLLOW_70);
+>>>>>>> refs/remotes/origin/master
             rule__KeyIntValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -34110,7 +34478,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11648:1: ( rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2 )
             // InternalSCL.g:11649:2: rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_74);
+=======
+            pushFollow(FollowSets000.FOLLOW_71);
+>>>>>>> refs/remotes/origin/master
             rule__KeyFloatValueAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -34283,7 +34655,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11711:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // InternalSCL.g:11712:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_75);
+=======
+            pushFollow(FollowSets000.FOLLOW_72);
+>>>>>>> refs/remotes/origin/master
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
@@ -34362,7 +34738,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11740:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
             // InternalSCL.g:11741:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_75);
+=======
+            pushFollow(FollowSets000.FOLLOW_72);
+>>>>>>> refs/remotes/origin/master
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -34421,7 +34801,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalSCL.g:11755:2: rule__ExtendedID__Group_1__0
             	    {
+<<<<<<< HEAD
             	    pushFollow(FollowSets000.FOLLOW_76);
+=======
+            	    pushFollow(FollowSets000.FOLLOW_73);
+>>>>>>> refs/remotes/origin/master
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -34717,7 +35101,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11866:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
             // InternalSCL.g:11867:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_33);
+=======
+            pushFollow(FollowSets000.FOLLOW_74);
+>>>>>>> refs/remotes/origin/master
             rule__ExtendedID__Group_2__0__Impl();
 
             state._fsp--;
@@ -34870,7 +35258,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11929:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
             // InternalSCL.g:11930:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_73);
+=======
+            pushFollow(FollowSets000.FOLLOW_70);
+>>>>>>> refs/remotes/origin/master
             rule__Integer__Group__0__Impl();
 
             state._fsp--;
@@ -35040,7 +35432,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // InternalSCL.g:11992:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
             // InternalSCL.g:11993:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
+<<<<<<< HEAD
             pushFollow(FollowSets000.FOLLOW_74);
+=======
+            pushFollow(FollowSets000.FOLLOW_71);
+>>>>>>> refs/remotes/origin/master
             rule__Floateger__Group__0__Impl();
 
             state._fsp--;
@@ -37879,24 +38275,42 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__CardinalitiesAssignment_1_1"
+<<<<<<< HEAD
     // InternalSCL.g:12996:1: rule__ValuedObject__CardinalitiesAssignment_1_1 : ( RULE_INT ) ;
+=======
+    // InternalSCL.g:12823:1: rule__ValuedObject__CardinalitiesAssignment_1_1 : ( ruleExpression ) ;
+>>>>>>> refs/remotes/origin/master
     public final void rule__ValuedObject__CardinalitiesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
+<<<<<<< HEAD
             // InternalSCL.g:13000:1: ( ( RULE_INT ) )
             // InternalSCL.g:13001:1: ( RULE_INT )
+=======
+            // InternalSCL.g:12827:1: ( ( ruleExpression ) )
+            // InternalSCL.g:12828:1: ( ruleExpression )
+>>>>>>> refs/remotes/origin/master
             {
+<<<<<<< HEAD
             // InternalSCL.g:13001:1: ( RULE_INT )
             // InternalSCL.g:13002:1: RULE_INT
+=======
+            // InternalSCL.g:12828:1: ( ruleExpression )
+            // InternalSCL.g:12829:1: ruleExpression
+>>>>>>> refs/remotes/origin/master
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_1_1_0()); 
+               before(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
-            match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleExpression();
+
+            state._fsp--;
+            if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_1_1_0()); 
+               after(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
 
             }
@@ -41858,9 +42272,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     protected DFA59 dfa59 = new DFA59(this);
     protected DFA60 dfa60 = new DFA60(this);
     static final String dfa_1s = "\62\uffff";
+<<<<<<< HEAD
     static final String dfa_2s = "\3\6\1\60\2\uffff\1\4\1\6\1\7\2\6\1\7\4\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
     static final String dfa_3s = "\2\104\1\6\1\65\2\uffff\1\106\1\6\1\7\1\106\1\104\1\10\1\104\1\6\2\104\1\106\1\104\1\6\1\7\1\6\2\106\2\104\1\106\1\6\1\7\2\6\1\7\1\106\1\66\1\104\1\106\1\104\1\106\1\104\2\6\1\7\1\104\1\106\1\104\1\106\1\104\1\6\1\7\1\106\1\104";
     static final String dfa_4s = "\4\uffff\1\1\1\2\54\uffff";
+=======
+    static final String dfa_2s = "\3\6\1\63\1\uffff\1\4\1\uffff\1\6\1\7\3\6\1\7\3\6\2\4\1\66\1\4\1\6\1\7\1\6\1\7\1\4\4\6\2\66\4\6\1\7\1\4\1\6\1\7\10\6\1\7\2\6";
+    static final String dfa_3s = "\2\106\1\6\1\65\1\uffff\1\110\1\uffff\1\6\1\7\1\6\1\106\1\110\1\10\3\106\1\110\1\106\1\110\2\6\1\7\1\6\1\7\1\6\1\106\2\110\1\106\1\110\1\66\1\106\1\110\1\106\1\6\1\7\2\6\1\7\1\110\2\106\1\110\1\106\1\110\1\106\1\6\1\7\1\110\1\106";
+    static final String dfa_4s = "\4\uffff\1\1\1\uffff\1\2\53\uffff";
+>>>>>>> refs/remotes/origin/master
     static final String dfa_5s = "\62\uffff}>";
     static final String[] dfa_6s = {
             "\1\3\3\uffff\1\1\47\uffff\2\4\3\uffff\1\4\1\uffff\1\5\2\uffff\1\4\7\uffff\1\2",
@@ -41868,10 +42288,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\6",
             "\1\5\3\uffff\2\4",
             "",
+<<<<<<< HEAD
+=======
+            "\1\12\1\16\1\13\1\15\1\17\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\11\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+>>>>>>> refs/remotes/origin/master
             "",
             "\1\12\1\16\1\11\1\14\1\17\1\uffff\1\1\12\uffff\1\13\34\uffff\1\4\2\uffff\1\15\1\uffff\1\4\1\uffff\1\5\12\uffff\1\2\1\7\1\10",
             "\1\20",
             "\1\21",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\45\uffff\1\5\1\uffff\1\4\1\uffff\2\4\1\uffff\1\4\1\uffff\1\5\6\uffff\1\24\3\uffff\1\2\1\22\1\23",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\24\3\uffff\1\2",
             "\1\14\1\17",
@@ -41895,6 +42320,20 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\44",
             "\1\45",
             "\1\34\16\uffff\1\32\1\33",
+=======
+            "\1\22",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\2\uffff\1\6\2\4\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2\1\24\1\25",
+            "\1\15\1\17",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\12\1\16\1\13\1\15\1\17\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\11\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+            "\1\12\1\16\1\13\1\15\1\17\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\11\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\30\20\uffff\1\26\1\27",
+            "\1\31\1\uffff\1\32",
+            "\1\33",
+>>>>>>> refs/remotes/origin/master
             "\1\34",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\46\3\uffff\1\2",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\46\3\uffff\1\2\1\47\1\50",
@@ -41939,21 +42378,40 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             return "2213:1: rule__SCLProgram__Alternatives_4_1 : ( ( ( rule__SCLProgram__Group_4_1_0__0 ) ) | ( ( rule__SCLProgram__StatementsAssignment_4_1_1 ) ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_7s = "\3\6\1\60\2\uffff\1\4\1\6\1\7\3\6\1\7\3\6\3\4\1\6\1\7\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
     static final String dfa_8s = "\2\104\1\6\1\65\2\uffff\1\106\1\6\1\7\1\104\1\106\1\6\1\10\3\104\1\106\1\104\2\6\1\7\1\106\1\104\2\106\1\104\1\6\1\7\2\6\1\7\1\106\1\66\1\104\1\106\1\104\1\106\1\104\2\6\1\7\1\104\1\106\1\104\1\106\1\104\1\6\1\7\1\106\1\104";
+=======
+    static final String dfa_7s = "\3\6\1\63\1\uffff\1\4\1\uffff\1\6\2\7\6\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
+    static final String dfa_8s = "\2\106\1\6\1\65\1\uffff\1\110\1\uffff\1\6\1\7\1\10\2\106\1\110\2\106\1\6\1\110\1\106\1\6\1\7\1\6\2\110\2\106\1\110\1\6\1\7\2\6\1\7\1\110\1\66\1\106\1\110\1\106\1\110\1\106\2\6\1\7\1\106\1\110\1\106\1\110\1\106\1\6\1\7\1\110\1\106";
+>>>>>>> refs/remotes/origin/master
     static final String[] dfa_9s = {
             "\1\3\3\uffff\1\1\47\uffff\2\4\3\uffff\1\4\1\uffff\1\5\2\uffff\1\4\7\uffff\1\2",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\6",
             "\1\5\3\uffff\2\4",
             "",
+<<<<<<< HEAD
+=======
+            "\1\16\1\13\1\14\1\12\1\15\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\17\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+>>>>>>> refs/remotes/origin/master
             "",
             "\1\11\1\16\1\12\1\15\1\17\1\uffff\1\1\12\uffff\1\14\34\uffff\1\4\2\uffff\1\13\1\uffff\1\4\1\uffff\1\5\12\uffff\1\2\1\7\1\10",
             "\1\20",
             "\1\21",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\22\3\uffff\1\2",
             "\1\3\3\uffff\1\1\45\uffff\1\5\1\uffff\1\4\1\uffff\2\4\1\uffff\1\4\1\uffff\1\5\6\uffff\1\22\3\uffff\1\2\1\23\1\24",
+=======
+            "\1\12\1\15",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\2\uffff\1\6\2\4\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\22\1\23",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\25",
+<<<<<<< HEAD
             "\1\15\1\17",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
@@ -41968,6 +42426,18 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\22\3\uffff\1\2\1\35\1\36",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\22\3\uffff\1\2\1\23\1\24",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\22\3\uffff\1\2",
+=======
+            "\1\16\1\13\1\14\1\12\1\15\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\17\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+            "\1\16\1\13\1\14\1\12\1\15\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\17\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\26",
+            "\1\27",
+            "\1\30\1\uffff\1\31",
+            "\1\34\20\uffff\1\32\1\33",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\22\1\23",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\35\1\36",
+>>>>>>> refs/remotes/origin/master
             "\1\37",
             "\1\40",
             "\1\41\1\43\1\42",
@@ -42014,6 +42484,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             return "2235:1: rule__Statement__Alternatives : ( ( ruleInstructionStatement ) | ( ruleMetaStatement ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_10s = "\64\uffff";
     static final String dfa_11s = "\3\6\5\uffff\1\4\1\6\2\7\6\6\3\4\1\6\1\7\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
     static final String dfa_12s = "\2\104\1\6\5\uffff\1\106\1\6\1\7\1\10\3\104\1\106\1\6\1\104\1\106\1\104\2\6\1\7\1\106\1\104\2\106\1\104\1\6\1\7\2\6\1\7\1\106\1\66\1\104\1\106\1\104\1\106\1\104\2\6\1\7\1\104\1\106\1\104\1\106\1\104\1\6\1\7\1\106\1\104";
@@ -42161,12 +42632,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
     static final short[] dfa_20 = DFA.unpackEncodedString(dfa_20s);
     static final short[][] dfa_21 = unpackEncodedStringArray(dfa_21s);
+=======
+>>>>>>> refs/remotes/origin/master
 
     class DFA4 extends DFA {
 
         public DFA4(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 4;
+<<<<<<< HEAD
             this.eot = dfa_16;
             this.eof = dfa_16;
             this.min = dfa_17;
@@ -42174,11 +42648,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_19;
             this.special = dfa_20;
             this.transition = dfa_21;
+=======
+            this.eot = dfa_1;
+            this.eof = dfa_1;
+            this.min = dfa_2;
+            this.max = dfa_3;
+            this.accept = dfa_4;
+            this.special = dfa_5;
+            this.transition = dfa_6;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2297:1: rule__MetaStatement__Alternatives : ( ( ruleLabel ) | ( ruleScopeStatement ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_22s = "\3\6\1\60\2\uffff\1\4\1\6\1\7\2\6\1\7\4\6\3\4\1\6\1\7\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
     static final String dfa_23s = "\2\104\1\6\1\65\2\uffff\1\106\1\6\1\7\1\104\1\106\1\10\1\104\1\6\2\104\1\106\1\104\2\6\1\7\1\106\1\104\2\106\1\104\1\6\1\7\2\6\1\7\1\106\1\66\1\104\1\106\1\104\1\106\1\104\2\6\1\7\1\104\1\106\1\104\1\106\1\104\1\6\1\7\1\106\1\104";
     static final String[] dfa_24s = {
@@ -42186,6 +42670,14 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\6",
             "\1\5\3\uffff\2\4",
+=======
+    static final String dfa_10s = "\2\106\1\6\1\65\1\uffff\1\110\1\uffff\1\6\1\7\1\10\2\106\1\110\1\106\1\6\1\106\1\110\1\106\1\6\1\7\1\6\2\110\2\106\1\110\1\6\1\7\2\6\1\7\1\110\1\66\1\106\1\110\1\106\1\110\1\106\2\6\1\7\1\106\1\110\1\106\1\110\1\106\1\6\1\7\1\110\1\106";
+    static final String[] dfa_11s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\5",
+            "\1\6\2\4",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
             "\1\11\1\16\1\12\1\14\1\17\1\uffff\1\1\12\uffff\1\13\34\uffff\1\4\2\uffff\1\15\1\uffff\1\4\1\uffff\1\5\12\uffff\1\2\1\7\1\10",
@@ -42233,9 +42725,14 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\46\3\uffff\1\2\1\56\1\57",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\46\3\uffff\1\2"
     };
+<<<<<<< HEAD
     static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
     static final char[] dfa_23 = DFA.unpackEncodedStringToUnsignedChars(dfa_23s);
     static final short[][] dfa_24 = unpackEncodedStringArray(dfa_24s);
+=======
+    static final char[] dfa_10 = DFA.unpackEncodedStringToUnsignedChars(dfa_10s);
+    static final short[][] dfa_11 = unpackEncodedStringArray(dfa_11s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA5 extends DFA {
 
@@ -42244,16 +42741,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 5;
             this.eot = dfa_1;
             this.eof = dfa_1;
+<<<<<<< HEAD
             this.min = dfa_22;
             this.max = dfa_23;
+=======
+            this.min = dfa_7;
+            this.max = dfa_10;
+>>>>>>> refs/remotes/origin/master
             this.accept = dfa_4;
             this.special = dfa_5;
+<<<<<<< HEAD
             this.transition = dfa_24;
+=======
+            this.transition = dfa_11;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2319:1: rule__Conditional__Alternatives_3_3 : ( ( ( rule__Conditional__Group_3_3_0__0 ) ) | ( ( rule__Conditional__StatementsAssignment_3_3_1 ) ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_25s = "\3\6\1\60\2\uffff\1\4\1\6\1\7\2\6\1\7\4\6\2\4\1\66\1\4\1\6\1\7\1\6\1\7\1\4\4\6\2\66\4\6\1\7\1\4\1\6\1\7\10\6\1\7\2\6";
     static final String dfa_26s = "\2\104\1\6\1\65\2\uffff\1\106\1\6\1\7\1\6\1\104\1\10\2\104\1\106\1\104\1\106\1\104\1\106\2\6\1\7\1\6\1\7\1\6\1\104\2\106\1\104\1\106\1\66\1\104\1\106\1\104\1\6\1\7\2\6\1\7\1\106\2\104\1\106\1\104\1\106\1\104\1\6\1\7\1\106\1\104";
     static final String[] dfa_27s = {
@@ -42261,11 +42768,24 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\6",
             "\1\5\3\uffff\2\4",
+=======
+    static final String dfa_12s = "\2\106\1\6\1\65\1\uffff\1\110\1\uffff\1\6\1\7\1\10\1\106\1\110\1\106\1\6\2\106\1\110\1\106\1\6\1\7\1\6\2\110\2\106\1\110\1\6\1\7\2\6\1\7\1\110\1\66\1\106\1\110\1\106\1\110\1\106\2\6\1\7\1\106\1\110\1\106\1\110\1\106\1\6\1\7\1\110\1\106";
+    static final String[] dfa_13s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\5",
+            "\1\6\2\4",
+>>>>>>> refs/remotes/origin/master
             "",
+<<<<<<< HEAD
+=======
+            "\1\14\1\17\1\13\1\12\1\16\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\15\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+>>>>>>> refs/remotes/origin/master
             "",
             "\1\15\1\12\1\16\1\17\1\14\1\uffff\1\1\12\uffff\1\13\34\uffff\1\4\2\uffff\1\11\1\uffff\1\4\1\uffff\1\5\12\uffff\1\2\1\7\1\10",
             "\1\20",
             "\1\21",
+<<<<<<< HEAD
             "\1\22",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\17\1\14",
@@ -42278,7 +42798,33 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\30\16\uffff\1\26\1\27",
             "\1\31\1\uffff\1\32",
             "\1\33",
+=======
+            "\1\12\1\16",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\2\uffff\1\6\2\4\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\22\1\23",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+            "\1\25",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\14\1\17\1\13\1\12\1\16\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\15\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2\1\7\1\10",
+            "\1\14\1\17\1\13\1\12\1\16\1\uffff\1\1\12\uffff\1\11\32\uffff\1\4\4\uffff\1\15\1\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\26",
+            "\1\27",
+            "\1\30\1\uffff\1\31",
+            "\1\34\20\uffff\1\32\1\33",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\22\1\23",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\35\1\36",
+            "\1\37",
+            "\1\40",
+            "\1\41\1\43\1\42",
+            "\1\44",
+            "\1\45",
+            "\1\34\20\uffff\1\32\1\33",
+>>>>>>> refs/remotes/origin/master
             "\1\34",
+<<<<<<< HEAD
             "\1\35",
             "\1\36",
             "\1\37\1\41\1\40",
@@ -42293,6 +42839,13 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\44\3\uffff\1\2",
             "\1\47",
             "\1\50",
+=======
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\46\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\46\3\uffff\1\2\1\47\1\50",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\46\3\uffff\1\2",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2\1\35\1\36",
+            "\1\3\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\uffff\1\4\2\uffff\1\4\1\uffff\1\24\3\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\51\1\53\1\52",
             "\1\54",
             "\1\55",
@@ -42308,9 +42861,14 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\44\3\uffff\1\2\1\56\1\57",
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\6\uffff\1\44\3\uffff\1\2"
     };
+<<<<<<< HEAD
     static final char[] dfa_25 = DFA.unpackEncodedStringToUnsignedChars(dfa_25s);
     static final char[] dfa_26 = DFA.unpackEncodedStringToUnsignedChars(dfa_26s);
     static final short[][] dfa_27 = unpackEncodedStringArray(dfa_27s);
+=======
+    static final char[] dfa_12 = DFA.unpackEncodedStringToUnsignedChars(dfa_12s);
+    static final short[][] dfa_13 = unpackEncodedStringArray(dfa_13s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA6 extends DFA {
 
@@ -42319,16 +42877,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.decisionNumber = 6;
             this.eot = dfa_1;
             this.eof = dfa_1;
+<<<<<<< HEAD
             this.min = dfa_25;
             this.max = dfa_26;
+=======
+            this.min = dfa_7;
+            this.max = dfa_12;
+>>>>>>> refs/remotes/origin/master
             this.accept = dfa_4;
             this.special = dfa_5;
+<<<<<<< HEAD
             this.transition = dfa_27;
+=======
+            this.transition = dfa_13;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2341:1: rule__ElseScope__Alternatives_5 : ( ( ( rule__ElseScope__Group_5_0__0 ) ) | ( ( rule__ElseScope__StatementsAssignment_5_1 ) ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_28s = "\15\uffff";
     static final String dfa_29s = "\1\4\14\uffff";
     static final String dfa_30s = "\1\6\3\0\11\uffff";
@@ -42340,8 +42908,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
+=======
+    static final String dfa_14s = "\112\uffff";
+    static final String dfa_15s = "\12\uffff\1\4\77\uffff";
+    static final String dfa_16s = "\3\6\2\uffff\1\4\1\6\1\7\3\6\1\7\3\6\3\4\1\6\1\7\1\4\2\6\1\66\5\6\1\4\1\6\1\7\1\4\1\6\1\7\1\6\1\7\3\6\1\7\3\6\2\66\5\6\2\4\1\66\1\4\1\6\1\7\1\4\1\6\1\7\1\4\6\6\2\66\2\6\1\7\2\6";
+    static final String dfa_17s = "\2\106\1\6\2\uffff\1\110\1\6\1\7\2\106\1\110\1\10\2\106\1\6\1\110\1\106\2\6\1\7\1\6\1\106\1\6\1\110\1\106\2\110\2\106\1\110\1\6\1\7\2\6\1\7\1\6\1\7\2\106\1\110\1\10\1\106\1\6\1\106\1\110\1\66\1\106\1\110\1\106\1\110\1\106\1\110\1\106\1\110\2\6\1\7\2\6\1\7\1\6\1\106\1\110\1\106\1\110\2\106\1\110\1\66\1\106\1\6\1\7\1\110\1\106";
+    static final String dfa_18s = "\3\uffff\1\1\1\2\105\uffff";
+    static final String dfa_19s = "\112\uffff}>";
+    static final String[] dfa_20s = {
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\4\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\4\uffff\1\2",
+            "\1\5",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
+<<<<<<< HEAD
             "",
             "",
             "",
@@ -42349,8 +42930,80 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             "",
             ""
+=======
+            "\1\11\1\10\1\12\1\14\1\15\1\4\1\1\12\uffff\1\13\12\uffff\1\4\24\uffff\1\16\13\uffff\1\3\4\uffff\1\2\1\6\1\7",
+            "\1\17",
+            "\1\20",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\4\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\1\21\3\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\25\22\uffff\2\4\1\uffff\1\4\24\uffff\1\4\13\uffff\1\3\1\24\1\uffff\1\4\1\uffff\1\26\1\22\1\23",
+            "\1\14\1\15",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\4\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\4\uffff\1\2",
+            "\1\27",
+            "\1\11\1\10\1\12\1\14\1\15\1\4\1\1\12\uffff\1\13\12\uffff\1\4\24\uffff\1\16\13\uffff\1\3\4\uffff\1\2\1\6\1\7",
+            "\1\11\1\10\1\12\1\14\1\15\1\4\1\1\12\uffff\1\13\12\uffff\1\4\24\uffff\1\16\13\uffff\1\3\4\uffff\1\2",
+            "\1\30\1\uffff\1\31",
+            "\1\32",
+            "\1\33",
+            "\1\34\1\uffff\1\31",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\4\uffff\1\26",
+            "\1\35",
+            "\1\40\20\uffff\1\36\1\37",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\1\21\3\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26\1\41\1\42",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26\1\22\1\23",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26",
+            "\1\46\1\45\1\47\1\51\1\53\1\4\1\25\12\uffff\1\50\12\uffff\1\4\24\uffff\1\52\13\uffff\1\3\4\uffff\1\26\1\43\1\44",
+            "\1\54",
+            "\1\55",
+            "\1\56\1\60\1\57",
+            "\1\61",
+            "\1\62",
+            "\1\63",
+            "\1\64",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\4\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\22\uffff\2\4\1\uffff\1\4\24\uffff\1\4\13\uffff\1\3\1\24\3\uffff\1\26\1\22\1\23",
+            "\1\51\1\53",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\4\uffff\1\26",
+            "\1\65",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\4\uffff\1\26",
+            "\1\40\20\uffff\1\36\1\37",
+            "\1\40",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\1\66\3\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26\1\67\1\70",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26\1\41\1\42",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\24\3\uffff\1\26",
+            "\1\46\1\45\1\47\1\51\1\53\1\4\1\25\12\uffff\1\50\12\uffff\1\4\24\uffff\1\52\13\uffff\1\3\4\uffff\1\26\1\43\1\44",
+            "\1\46\1\45\1\47\1\51\1\53\1\4\1\25\12\uffff\1\50\12\uffff\1\4\24\uffff\1\52\13\uffff\1\3\4\uffff\1\26",
+            "\1\74\20\uffff\1\72\1\73",
+            "\1\75\1\77\1\76",
+            "\1\100",
+            "\1\101",
+            "\1\102\1\77\1\76",
+            "\1\103",
+            "\1\104",
+            "\1\105\1\60\1\57",
+            "\1\4\2\uffff\1\4\1\1\25\uffff\1\4\40\uffff\1\3\1\66\3\uffff\1\2",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26\1\106\1\107",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26\1\67\1\70",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26",
+            "\1\74\20\uffff\1\72\1\73",
+            "\1\74",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26",
+            "\1\110",
+            "\1\111",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26\1\106\1\107",
+            "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\40\uffff\1\3\1\71\3\uffff\1\26"
+>>>>>>> refs/remotes/origin/master
     };
 
+<<<<<<< HEAD
     static final short[] dfa_28 = DFA.unpackEncodedString(dfa_28s);
     static final short[] dfa_29 = DFA.unpackEncodedString(dfa_29s);
     static final char[] dfa_30 = DFA.unpackEncodedStringToUnsignedChars(dfa_30s);
@@ -42358,12 +43011,22 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_32 = DFA.unpackEncodedString(dfa_32s);
     static final short[] dfa_33 = DFA.unpackEncodedString(dfa_33s);
     static final short[][] dfa_34 = unpackEncodedStringArray(dfa_34s);
+=======
+    static final short[] dfa_14 = DFA.unpackEncodedString(dfa_14s);
+    static final short[] dfa_15 = DFA.unpackEncodedString(dfa_15s);
+    static final char[] dfa_16 = DFA.unpackEncodedStringToUnsignedChars(dfa_16s);
+    static final char[] dfa_17 = DFA.unpackEncodedStringToUnsignedChars(dfa_17s);
+    static final short[] dfa_18 = DFA.unpackEncodedString(dfa_18s);
+    static final short[] dfa_19 = DFA.unpackEncodedString(dfa_19s);
+    static final short[][] dfa_20 = unpackEncodedStringArray(dfa_20s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA7 extends DFA {
 
         public DFA7(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 7;
+<<<<<<< HEAD
             this.eot = dfa_28;
             this.eof = dfa_29;
             this.min = dfa_30;
@@ -42371,6 +43034,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_32;
             this.special = dfa_33;
             this.transition = dfa_34;
+=======
+            this.eot = dfa_14;
+            this.eof = dfa_15;
+            this.min = dfa_16;
+            this.max = dfa_17;
+            this.accept = dfa_18;
+            this.special = dfa_19;
+            this.transition = dfa_20;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2363:1: rule__Thread__Alternatives_1 : ( ( ( rule__Thread__Group_1_0__0 ) ) | ( ( rule__Thread__Group_1_1__0 ) ) );";
@@ -42432,6 +43104,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
 
     class DFA8 extends DFA {
 
@@ -42457,6 +43130,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\47\uffff\1\4\4\uffff\1\4\1\uffff\1\5\12\uffff\1\2",
             "\1\6",
             "\1\5\3\uffff\2\4",
+=======
+    static final String dfa_21s = "\16\uffff";
+    static final String dfa_22s = "\1\4\13\0\2\uffff";
+    static final String dfa_23s = "\1\104\13\0\2\uffff";
+    static final String dfa_24s = "\14\uffff\1\1\1\2";
+    static final String dfa_25s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
+    static final String[] dfa_26s = {
+            "\1\4\1\6\1\11\1\2\1\3\1\13\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\6\uffff\1\12\43\uffff\1\5",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
             "\1\16\1\11\1\15\1\17\1\14\1\uffff\1\1\12\uffff\1\13\34\uffff\1\4\2\uffff\1\12\1\uffff\1\4\1\uffff\1\5\12\uffff\1\2\1\7\1\10",
@@ -42683,6 +43376,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\4\2\uffff\1\4\1\25\25\uffff\1\4\36\uffff\1\3\1\64\3\uffff\1\26"
     };
 
+<<<<<<< HEAD
     static final short[] dfa_41 = DFA.unpackEncodedString(dfa_41s);
     static final short[] dfa_42 = DFA.unpackEncodedString(dfa_42s);
     static final char[] dfa_43 = DFA.unpackEncodedStringToUnsignedChars(dfa_43s);
@@ -42690,12 +43384,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_45 = DFA.unpackEncodedString(dfa_45s);
     static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
     static final short[][] dfa_47 = unpackEncodedStringArray(dfa_47s);
+=======
+    static final short[] dfa_21 = DFA.unpackEncodedString(dfa_21s);
+    static final char[] dfa_22 = DFA.unpackEncodedStringToUnsignedChars(dfa_22s);
+    static final char[] dfa_23 = DFA.unpackEncodedStringToUnsignedChars(dfa_23s);
+    static final short[] dfa_24 = DFA.unpackEncodedString(dfa_24s);
+    static final short[] dfa_25 = DFA.unpackEncodedString(dfa_25s);
+    static final short[][] dfa_26 = unpackEncodedStringArray(dfa_26s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA11 extends DFA {
 
         public DFA11(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 11;
+<<<<<<< HEAD
             this.eot = dfa_41;
             this.eof = dfa_42;
             this.min = dfa_43;
@@ -42703,6 +43406,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_45;
             this.special = dfa_46;
             this.transition = dfa_47;
+=======
+            this.eot = dfa_21;
+            this.eof = dfa_21;
+            this.min = dfa_22;
+            this.max = dfa_23;
+            this.accept = dfa_24;
+            this.special = dfa_25;
+            this.transition = dfa_26;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2451:1: rule__TestEntity__Alternatives : ( ( ( rule__TestEntity__ExpressionAssignment_0 ) ) | ( ( rule__TestEntity__EffectAssignment_1 ) ) );";
@@ -42930,12 +43642,22 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_54s = "\1\4\4\uffff\7\0\1\uffff";
     static final String dfa_55s = "\1\102\4\uffff\7\0\1\uffff";
     static final String dfa_56s = "\1\uffff\1\1\12\uffff\1\2";
     static final String dfa_57s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
     static final String[] dfa_58s = {
             "\1\1\1\6\1\11\2\1\1\13\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\6\uffff\1\12\41\uffff\1\5",
+=======
+    static final String dfa_27s = "\15\uffff";
+    static final String dfa_28s = "\1\4\4\uffff\7\0\1\uffff";
+    static final String dfa_29s = "\1\104\4\uffff\7\0\1\uffff";
+    static final String dfa_30s = "\1\uffff\1\1\12\uffff\1\2";
+    static final String dfa_31s = "\5\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
+    static final String[] dfa_32s = {
+            "\1\1\1\6\1\11\2\1\1\13\6\uffff\1\7\2\uffff\1\14\1\uffff\1\1\3\uffff\1\10\6\uffff\1\12\43\uffff\1\5",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
             "",
@@ -42949,17 +43671,188 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\uffff",
             ""
     };
+<<<<<<< HEAD
     static final char[] dfa_54 = DFA.unpackEncodedStringToUnsignedChars(dfa_54s);
     static final char[] dfa_55 = DFA.unpackEncodedStringToUnsignedChars(dfa_55s);
     static final short[] dfa_56 = DFA.unpackEncodedString(dfa_56s);
     static final short[] dfa_57 = DFA.unpackEncodedString(dfa_57s);
     static final short[][] dfa_58 = unpackEncodedStringArray(dfa_58s);
+=======
+
+    static final short[] dfa_27 = DFA.unpackEncodedString(dfa_27s);
+    static final char[] dfa_28 = DFA.unpackEncodedStringToUnsignedChars(dfa_28s);
+    static final char[] dfa_29 = DFA.unpackEncodedStringToUnsignedChars(dfa_29s);
+    static final short[] dfa_30 = DFA.unpackEncodedString(dfa_30s);
+    static final short[] dfa_31 = DFA.unpackEncodedString(dfa_31s);
+    static final short[][] dfa_32 = unpackEncodedStringArray(dfa_32s);
+
+    class DFA12 extends DFA {
+
+        public DFA12(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 12;
+            this.eot = dfa_27;
+            this.eof = dfa_27;
+            this.min = dfa_28;
+            this.max = dfa_29;
+            this.accept = dfa_30;
+            this.special = dfa_31;
+            this.transition = dfa_32;
+        }
+        public String getDescription() {
+            return "2443:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA12_5 = input.LA(1);
+
+                         
+                        int index12_5 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_5);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA12_6 = input.LA(1);
+
+                         
+                        int index12_6 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_6);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA12_7 = input.LA(1);
+
+                         
+                        int index12_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_7);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA12_8 = input.LA(1);
+
+                         
+                        int index12_8 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_8);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
+                        int LA12_9 = input.LA(1);
+
+                         
+                        int index12_9 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_9);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA12_10 = input.LA(1);
+
+                         
+                        int index12_10 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_10);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA12_11 = input.LA(1);
+
+                         
+                        int index12_11 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred19_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 12;}
+
+                         
+                        input.seek(index12_11);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            if (state.backtracking>0) {state.failed=true; return -1;}
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 12, _s, input);
+            error(nvae);
+            throw nvae;
+        }
+    }
+    static final String dfa_33s = "\14\uffff";
+    static final String dfa_34s = "\1\4\3\uffff\1\0\7\uffff";
+    static final String dfa_35s = "\1\104\3\uffff\1\0\7\uffff";
+    static final String dfa_36s = "\1\uffff\1\1\1\2\1\3\1\uffff\1\5\5\uffff\1\4";
+    static final String dfa_37s = "\4\uffff\1\0\7\uffff}>";
+    static final String[] dfa_38s = {
+            "\1\3\2\5\1\1\1\2\1\5\6\uffff\1\5\10\uffff\1\5\6\uffff\1\5\43\uffff\1\4",
+            "",
+            "",
+            "",
+            "\1\uffff",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+    };
+
+    static final short[] dfa_33 = DFA.unpackEncodedString(dfa_33s);
+    static final char[] dfa_34 = DFA.unpackEncodedStringToUnsignedChars(dfa_34s);
+    static final char[] dfa_35 = DFA.unpackEncodedStringToUnsignedChars(dfa_35s);
+    static final short[] dfa_36 = DFA.unpackEncodedString(dfa_36s);
+    static final short[] dfa_37 = DFA.unpackEncodedString(dfa_37s);
+    static final short[][] dfa_38 = unpackEncodedStringArray(dfa_38s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA16 extends DFA {
 
         public DFA16(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 16;
+<<<<<<< HEAD
             this.eot = dfa_28;
             this.eof = dfa_28;
             this.min = dfa_54;
@@ -42967,6 +43860,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_56;
             this.special = dfa_57;
             this.transition = dfa_58;
+=======
+            this.eot = dfa_33;
+            this.eof = dfa_33;
+            this.min = dfa_34;
+            this.max = dfa_35;
+            this.accept = dfa_36;
+            this.special = dfa_37;
+            this.transition = dfa_38;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2581:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
@@ -43088,6 +43990,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_59s = "\14\uffff";
     static final String dfa_60s = "\1\4\3\uffff\1\0\7\uffff";
     static final String dfa_61s = "\1\102\3\uffff\1\0\7\uffff";
@@ -43095,31 +43998,68 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String dfa_63s = "\4\uffff\1\0\7\uffff}>";
     static final String[] dfa_64s = {
             "\1\3\2\5\1\1\1\2\1\5\6\uffff\1\5\10\uffff\1\5\6\uffff\1\5\41\uffff\1\4",
+=======
+    static final String dfa_39s = "\20\uffff";
+    static final String dfa_40s = "\3\uffff\1\15\7\uffff\1\12\2\uffff\2\15";
+    static final String dfa_41s = "\1\12\1\uffff\1\6\1\4\1\6\2\7\4\uffff\1\6\2\uffff\2\4";
+    static final String dfa_42s = "\1\106\1\uffff\1\6\1\117\1\6\1\7\1\10\4\uffff\1\117\2\uffff\2\117";
+    static final String dfa_43s = "\1\uffff\1\1\5\uffff\1\5\1\6\1\2\1\3\1\uffff\1\4\1\7\2\uffff";
+    static final String dfa_44s = "\20\uffff}>";
+    static final String[] dfa_45s = {
+            "\1\1\73\uffff\1\2",
+            "",
+            "\1\3",
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\2\15\4\uffff\1\14\1\uffff\1\15\3\uffff\3\15\2\uffff\2\15\4\uffff\1\15\1\4\1\5\7\15",
+            "\1\16",
+            "\1\17",
+            "\1\7\1\10",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
             "",
+<<<<<<< HEAD
             "\1\uffff",
+=======
+            "",
+            "\1\12\2\uffff\2\12\22\uffff\2\15\1\uffff\1\12\4\uffff\7\12\3\uffff\2\12\2\uffff\3\15\1\uffff\1\12\3\uffff\3\12\2\uffff\3\12\3\uffff\12\12",
+>>>>>>> refs/remotes/origin/master
             "",
             "",
+<<<<<<< HEAD
             "",
             "",
             "",
             "",
             ""
+=======
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\2\15\4\uffff\1\14\1\uffff\1\15\3\uffff\3\15\2\uffff\2\15\4\uffff\1\15\1\4\1\5\7\15",
+            "\1\12\1\11\1\13\1\7\1\10\2\15\12\uffff\1\6\12\uffff\1\15\4\uffff\7\15\3\uffff\2\15\4\uffff\1\14\1\uffff\1\15\3\uffff\3\15\2\uffff\2\15\4\uffff\1\15\2\uffff\7\15"
+>>>>>>> refs/remotes/origin/master
     };
 
+<<<<<<< HEAD
     static final short[] dfa_59 = DFA.unpackEncodedString(dfa_59s);
     static final char[] dfa_60 = DFA.unpackEncodedStringToUnsignedChars(dfa_60s);
     static final char[] dfa_61 = DFA.unpackEncodedStringToUnsignedChars(dfa_61s);
     static final short[] dfa_62 = DFA.unpackEncodedString(dfa_62s);
     static final short[] dfa_63 = DFA.unpackEncodedString(dfa_63s);
     static final short[][] dfa_64 = unpackEncodedStringArray(dfa_64s);
+=======
+    static final short[] dfa_39 = DFA.unpackEncodedString(dfa_39s);
+    static final short[] dfa_40 = DFA.unpackEncodedString(dfa_40s);
+    static final char[] dfa_41 = DFA.unpackEncodedStringToUnsignedChars(dfa_41s);
+    static final char[] dfa_42 = DFA.unpackEncodedStringToUnsignedChars(dfa_42s);
+    static final short[] dfa_43 = DFA.unpackEncodedString(dfa_43s);
+    static final short[] dfa_44 = DFA.unpackEncodedString(dfa_44s);
+    static final short[][] dfa_45 = unpackEncodedStringArray(dfa_45s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA20 extends DFA {
 
         public DFA20(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 20;
+<<<<<<< HEAD
             this.eot = dfa_59;
             this.eof = dfa_59;
             this.min = dfa_60;
@@ -43127,6 +44067,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_62;
             this.special = dfa_63;
             this.transition = dfa_64;
+=======
+            this.eot = dfa_39;
+            this.eof = dfa_40;
+            this.min = dfa_41;
+            this.max = dfa_42;
+            this.accept = dfa_43;
+            this.special = dfa_44;
+            this.transition = dfa_45;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2687:1: rule__AtomicValuedExpression__Alternatives : ( ( ruleIntValue ) | ( ruleFloatValue ) | ( ruleStringValue ) | ( ( rule__AtomicValuedExpression__Group_3__0 ) ) | ( ruleAtomicExpression ) );";
@@ -43158,6 +44107,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_65s = "\20\uffff";
     static final String dfa_66s = "\3\uffff\1\6\3\uffff\1\14\6\uffff\2\6";
     static final String dfa_67s = "\1\12\1\uffff\1\6\1\4\1\6\1\7\1\uffff\1\6\1\7\5\uffff\2\4";
@@ -43166,8 +44116,19 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String dfa_70s = "\20\uffff}>";
     static final String[] dfa_71s = {
             "\1\1\71\uffff\1\2",
+=======
+    static final String dfa_46s = "\17\uffff";
+    static final String dfa_47s = "\3\uffff\1\13\11\uffff\2\13";
+    static final String dfa_48s = "\1\12\1\uffff\1\6\1\4\1\6\2\7\6\uffff\2\4";
+    static final String dfa_49s = "\1\106\1\uffff\1\6\1\110\1\6\1\7\1\10\6\uffff\1\110\1\106";
+    static final String dfa_50s = "\1\uffff\1\1\5\uffff\1\6\1\4\1\3\1\2\1\7\1\5\2\uffff";
+    static final String dfa_51s = "\17\uffff}>";
+    static final String[] dfa_52s = {
+            "\1\1\73\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "",
             "\1\3",
+<<<<<<< HEAD
             "\1\14\1\13\1\7\1\11\1\12\2\6\12\uffff\1\10\12\uffff\1\6\4\uffff\7\6\3\uffff\1\6\2\uffff\1\6\2\uffff\1\15\1\uffff\1\6\1\uffff\1\6\1\uffff\1\6\3\uffff\1\6\4\uffff\1\6\1\4\1\5\7\6",
             "\1\16",
             "\1\17",
@@ -43219,6 +44180,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             "\1\3",
             "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\10\16\uffff\1\13\1\4\1\5",
+=======
+            "\1\12\1\10\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\11\20\uffff\1\13\1\4\1\5",
+>>>>>>> refs/remotes/origin/master
             "\1\15",
             "\1\16",
             "\1\14\1\7",
@@ -43228,10 +44192,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
+<<<<<<< HEAD
             "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\10\16\uffff\1\13\1\4\1\5",
             "\1\12\1\11\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\10\16\uffff\1\13"
+=======
+            "\1\12\1\10\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\11\20\uffff\1\13\1\4\1\5",
+            "\1\12\1\10\1\13\1\14\1\7\1\uffff\1\13\12\uffff\1\6\37\uffff\1\11\20\uffff\1\13"
+>>>>>>> refs/remotes/origin/master
     };
 
+<<<<<<< HEAD
     static final short[] dfa_72 = DFA.unpackEncodedString(dfa_72s);
     static final short[] dfa_73 = DFA.unpackEncodedString(dfa_73s);
     static final char[] dfa_74 = DFA.unpackEncodedStringToUnsignedChars(dfa_74s);
@@ -43239,11 +44209,317 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final short[] dfa_76 = DFA.unpackEncodedString(dfa_76s);
     static final short[] dfa_77 = DFA.unpackEncodedString(dfa_77s);
     static final short[][] dfa_78 = unpackEncodedStringArray(dfa_78s);
+=======
+    static final short[] dfa_46 = DFA.unpackEncodedString(dfa_46s);
+    static final short[] dfa_47 = DFA.unpackEncodedString(dfa_47s);
+    static final char[] dfa_48 = DFA.unpackEncodedStringToUnsignedChars(dfa_48s);
+    static final char[] dfa_49 = DFA.unpackEncodedStringToUnsignedChars(dfa_49s);
+    static final short[] dfa_50 = DFA.unpackEncodedString(dfa_50s);
+    static final short[] dfa_51 = DFA.unpackEncodedString(dfa_51s);
+    static final short[][] dfa_52 = unpackEncodedStringArray(dfa_52s);
+
+    class DFA21 extends DFA {
+
+        public DFA21(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 21;
+            this.eot = dfa_46;
+            this.eof = dfa_47;
+            this.min = dfa_48;
+            this.max = dfa_49;
+            this.accept = dfa_50;
+            this.special = dfa_51;
+            this.transition = dfa_52;
+        }
+        public String getDescription() {
+            return "2711:1: rule__RestrictedAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleQuotedKeyStringValueAnnotation ) | ( ruleQuotedTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) | ( ruleTagAnnotation ) );";
+        }
+    }
+    static final String dfa_53s = "\13\uffff";
+    static final String dfa_54s = "\1\6\10\0\2\uffff";
+    static final String dfa_55s = "\1\106\10\0\2\uffff";
+    static final String dfa_56s = "\11\uffff\1\2\1\1";
+    static final String dfa_57s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff}>";
+    static final String[] dfa_58s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\10\1\11\5\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\uffff\1\7\5\uffff\1\2",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "",
+            ""
+    };
+
+    static final short[] dfa_53 = DFA.unpackEncodedString(dfa_53s);
+    static final char[] dfa_54 = DFA.unpackEncodedStringToUnsignedChars(dfa_54s);
+    static final char[] dfa_55 = DFA.unpackEncodedStringToUnsignedChars(dfa_55s);
+    static final short[] dfa_56 = DFA.unpackEncodedString(dfa_56s);
+    static final short[] dfa_57 = DFA.unpackEncodedString(dfa_57s);
+    static final short[][] dfa_58 = unpackEncodedStringArray(dfa_58s);
+
+    class DFA30 extends DFA {
+
+        public DFA30(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 30;
+            this.eot = dfa_53;
+            this.eof = dfa_53;
+            this.min = dfa_54;
+            this.max = dfa_55;
+            this.accept = dfa_56;
+            this.special = dfa_57;
+            this.transition = dfa_58;
+        }
+        public String getDescription() {
+            return "()* loopback of 3258:1: ( rule__SCLProgram__Alternatives_5_0 )*";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA30_1 = input.LA(1);
+
+                         
+                        int index30_1 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_1);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA30_2 = input.LA(1);
+
+                         
+                        int index30_2 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_2);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA30_3 = input.LA(1);
+
+                         
+                        int index30_3 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_3);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA30_4 = input.LA(1);
+
+                         
+                        int index30_4 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_4);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
+                        int LA30_5 = input.LA(1);
+
+                         
+                        int index30_5 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_5);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA30_6 = input.LA(1);
+
+                         
+                        int index30_6 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_6);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA30_7 = input.LA(1);
+
+                         
+                        int index30_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_7);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA30_8 = input.LA(1);
+
+                         
+                        int index30_8 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred69_InternalSCL()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index30_8);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            if (state.backtracking>0) {state.failed=true; return -1;}
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 30, _s, input);
+            error(nvae);
+            throw nvae;
+        }
+    }
+    static final String dfa_59s = "\61\uffff";
+    static final String dfa_60s = "\3\6\2\uffff\1\4\1\6\1\7\3\6\1\7\3\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
+    static final String dfa_61s = "\2\117\1\6\2\uffff\1\117\1\6\1\7\3\117\1\10\2\117\1\6\2\117\1\6\1\7\1\6\1\110\4\117\1\6\1\7\2\6\1\7\1\110\1\66\5\117\2\6\1\7\5\117\1\6\1\7\2\117";
+    static final String dfa_62s = "\3\uffff\1\2\1\1\54\uffff";
+    static final String dfa_63s = "\61\uffff}>";
+    static final String[] dfa_64s = {
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\1\uffff\3\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\5",
+            "",
+            "",
+            "\1\11\1\12\1\10\1\14\1\15\1\uffff\1\1\12\uffff\1\13\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+            "\1\17",
+            "\1\20",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\2\uffff\3\3\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\14\1\15",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\24",
+            "\1\11\1\12\1\10\1\14\1\15\1\uffff\1\1\12\uffff\1\13\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+            "\1\11\1\12\1\10\1\14\1\15\1\uffff\1\1\12\uffff\1\13\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\25",
+            "\1\26",
+            "\1\27\1\uffff\1\30",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+            "\1\36",
+            "\1\37",
+            "\1\40\1\42\1\41",
+            "\1\43",
+            "\1\44",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\33",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\1\46\1\47\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\50\1\52\1\51",
+            "\1\53",
+            "\1\54",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\1\55\1\56\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\1\46\1\47\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\57",
+            "\1\60",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\1\55\1\56\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4"
+    };
+
+    static final short[] dfa_59 = DFA.unpackEncodedString(dfa_59s);
+    static final char[] dfa_60 = DFA.unpackEncodedStringToUnsignedChars(dfa_60s);
+    static final char[] dfa_61 = DFA.unpackEncodedStringToUnsignedChars(dfa_61s);
+    static final short[] dfa_62 = DFA.unpackEncodedString(dfa_62s);
+    static final short[] dfa_63 = DFA.unpackEncodedString(dfa_63s);
+    static final short[][] dfa_64 = unpackEncodedStringArray(dfa_64s);
+
+    class DFA36 extends DFA {
+
+        public DFA36(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 36;
+            this.eot = dfa_59;
+            this.eof = dfa_59;
+            this.min = dfa_60;
+            this.max = dfa_61;
+            this.accept = dfa_62;
+            this.special = dfa_63;
+            this.transition = dfa_64;
+        }
+        public String getDescription() {
+            return "()* loopback of 3940:1: ( rule__Conditional__DeclarationsAssignment_3 )*";
+        }
+    }
+    static final String dfa_65s = "\1\6\10\0\3\uffff";
+    static final String dfa_66s = "\1\106\10\0\3\uffff";
+    static final String dfa_67s = "\11\uffff\1\2\1\uffff\1\1";
+    static final String dfa_68s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\3\uffff}>";
+    static final String[] dfa_69s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\10\6\uffff\1\4\1\uffff\2\11\1\5\1\uffff\1\6\2\uffff\1\7\5\uffff\1\2",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "",
+            "",
+            ""
+    };
+    static final char[] dfa_65 = DFA.unpackEncodedStringToUnsignedChars(dfa_65s);
+    static final char[] dfa_66 = DFA.unpackEncodedStringToUnsignedChars(dfa_66s);
+    static final short[] dfa_67 = DFA.unpackEncodedString(dfa_67s);
+    static final short[] dfa_68 = DFA.unpackEncodedString(dfa_68s);
+    static final short[][] dfa_69 = unpackEncodedStringArray(dfa_69s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA25 extends DFA {
 
         public DFA25(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 25;
             this.eot = dfa_72;
             this.eof = dfa_73;
@@ -43252,29 +44528,62 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_76;
             this.special = dfa_77;
             this.transition = dfa_78;
+=======
+            this.decisionNumber = 38;
+            this.eot = dfa_33;
+            this.eof = dfa_33;
+            this.min = dfa_65;
+            this.max = dfa_66;
+            this.accept = dfa_67;
+            this.special = dfa_68;
+            this.transition = dfa_69;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "2849:1: rule__RestrictedAnnotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleQuotedKeyStringValueAnnotation ) | ( ruleQuotedTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) | ( ruleTagAnnotation ) );";
         }
     }
+<<<<<<< HEAD
     static final String dfa_79s = "\1\3\60\uffff";
     static final String dfa_80s = "\2\115\1\6\2\uffff\1\115\1\6\1\7\1\10\4\115\1\6\3\115\1\6\1\7\1\6\1\106\4\115\1\6\1\7\2\6\1\7\1\106\1\66\5\115\2\6\1\7\5\115\1\6\1\7\2\115";
     static final String dfa_81s = "\3\uffff\1\2\1\1\54\uffff";
     static final String[] dfa_82s = {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\2\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\7\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
+=======
+    static final String dfa_70s = "\1\3\60\uffff";
+    static final String dfa_71s = "\3\6\2\uffff\1\4\1\6\1\7\2\6\1\7\4\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
+    static final String dfa_72s = "\2\117\1\6\2\uffff\1\117\1\6\1\7\2\117\1\10\3\117\1\6\2\117\1\6\1\7\1\6\1\110\4\117\1\6\1\7\2\6\1\7\1\110\1\66\5\117\2\6\1\7\5\117\1\6\1\7\2\117";
+    static final String[] dfa_73s = {
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\1\uffff\1\3\1\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\5",
             "",
             "",
+<<<<<<< HEAD
             "\1\14\1\16\1\12\1\13\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\6\uffff\1\3\2\uffff\1\15\1\uffff\1\3\1\uffff\1\3\12\uffff\1\2\1\6\1\7\7\4",
+=======
+            "\1\11\1\15\1\10\1\14\1\13\1\uffff\1\1\12\uffff\1\12\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\17",
             "\1\20",
+<<<<<<< HEAD
             "\1\13\1\11",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\1\uffff\1\3\1\uffff\2\3\1\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+=======
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\2\uffff\3\3\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\14\1\13",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\24",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
             "\1\14\1\16\1\12\1\13\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\6\uffff\1\3\2\uffff\1\15\1\uffff\1\3\1\uffff\1\3\12\uffff\1\2\1\6\1\7\7\4",
             "\1\14\1\16\1\12\1\13\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\6\uffff\1\3\2\uffff\1\15\1\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
@@ -43286,6 +44595,18 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+=======
+            "\1\11\1\15\1\10\1\14\1\13\1\uffff\1\1\12\uffff\1\12\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+            "\1\11\1\15\1\10\1\14\1\13\1\uffff\1\1\12\uffff\1\12\17\uffff\7\4\4\uffff\1\3\4\uffff\1\16\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\25",
+            "\1\26",
+            "\1\27\1\uffff\1\30",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\36",
             "\1\37",
             "\1\40\1\42\1\41",
@@ -43293,11 +44614,19 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\44",
             "\1\33\16\uffff\1\31\1\32",
             "\1\33",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\1\46\1\47\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+=======
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\1\46\1\47\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\50\1\52\1\51",
             "\1\53",
             "\1\54",
@@ -43311,15 +44640,23 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\1\55\1\56\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4"
     };
+<<<<<<< HEAD
     static final short[] dfa_79 = DFA.unpackEncodedString(dfa_79s);
     static final char[] dfa_80 = DFA.unpackEncodedStringToUnsignedChars(dfa_80s);
     static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
     static final short[][] dfa_82 = unpackEncodedStringArray(dfa_82s);
+=======
+    static final short[] dfa_70 = DFA.unpackEncodedString(dfa_70s);
+    static final char[] dfa_71 = DFA.unpackEncodedStringToUnsignedChars(dfa_71s);
+    static final char[] dfa_72 = DFA.unpackEncodedStringToUnsignedChars(dfa_72s);
+    static final short[][] dfa_73 = unpackEncodedStringArray(dfa_73s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA34 extends DFA {
 
         public DFA34(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 34;
             this.eot = dfa_16;
             this.eof = dfa_79;
@@ -43328,11 +44665,22 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_81;
             this.special = dfa_20;
             this.transition = dfa_82;
+=======
+            this.decisionNumber = 41;
+            this.eot = dfa_59;
+            this.eof = dfa_70;
+            this.min = dfa_71;
+            this.max = dfa_72;
+            this.accept = dfa_62;
+            this.special = dfa_63;
+            this.transition = dfa_73;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 3332:1: ( rule__SCLProgram__DeclarationsAssignment_4_0 )*";
         }
     }
+<<<<<<< HEAD
     static final String dfa_83s = "\13\uffff";
     static final String dfa_84s = "\1\11\12\uffff";
     static final String dfa_85s = "\1\6\10\0\2\uffff";
@@ -43341,6 +44689,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String dfa_88s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\2\uffff}>";
     static final String[] dfa_89s = {
             "\1\3\3\uffff\1\1\47\uffff\1\7\1\5\3\uffff\1\4\1\uffff\1\10\2\uffff\1\6\7\uffff\1\2",
+=======
+    static final String dfa_74s = "\1\11\13\uffff";
+    static final String[] dfa_75s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\10\6\uffff\1\4\1\uffff\1\11\1\uffff\1\5\1\uffff\1\6\2\uffff\1\7\5\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -43352,6 +44705,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             ""
     };
+<<<<<<< HEAD
+=======
+    static final short[] dfa_74 = DFA.unpackEncodedString(dfa_74s);
+    static final short[][] dfa_75 = unpackEncodedStringArray(dfa_75s);
+>>>>>>> refs/remotes/origin/master
 
     static final short[] dfa_83 = DFA.unpackEncodedString(dfa_83s);
     static final short[] dfa_84 = DFA.unpackEncodedString(dfa_84s);
@@ -43365,6 +44723,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
         public DFA35(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 35;
             this.eot = dfa_83;
             this.eof = dfa_84;
@@ -43373,6 +44732,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_87;
             this.special = dfa_88;
             this.transition = dfa_89;
+=======
+            this.decisionNumber = 42;
+            this.eot = dfa_33;
+            this.eof = dfa_74;
+            this.min = dfa_65;
+            this.max = dfa_66;
+            this.accept = dfa_67;
+            this.special = dfa_68;
+            this.transition = dfa_75;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 3361:1: ( rule__SCLProgram__Alternatives_4_1 )*";
@@ -43509,17 +44878,32 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_90s = "\3\6\2\uffff\1\4\1\6\1\7\2\6\1\7\4\6\3\4\1\6\1\7\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
     static final String dfa_91s = "\2\115\1\6\2\uffff\1\115\1\6\1\7\2\115\1\10\1\115\1\6\4\115\2\6\1\7\1\106\4\115\1\6\1\7\2\6\1\7\1\106\1\66\5\115\2\6\1\7\5\115\1\6\1\7\2\115";
     static final String[] dfa_92s = {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\2\3\3\uffff\1\3\1\uffff\2\3\1\uffff\1\3\7\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
+=======
+    static final String dfa_76s = "\1\4\60\uffff";
+    static final String dfa_77s = "\3\6\2\uffff\1\4\1\6\1\7\4\6\1\7\2\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
+    static final String dfa_78s = "\2\106\1\6\2\uffff\1\110\1\6\1\7\1\106\1\110\1\6\1\106\1\10\2\106\1\110\1\106\1\6\1\7\1\6\2\110\2\106\1\110\1\6\1\7\2\6\1\7\1\110\1\66\1\106\1\110\1\106\1\110\1\106\2\6\1\7\1\106\1\110\1\106\1\110\1\106\1\6\1\7\1\110\1\106";
+    static final String dfa_79s = "\3\uffff\1\1\1\2\54\uffff";
+    static final String[] dfa_80s = {
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\4\4\5\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\5",
             "",
             "",
+<<<<<<< HEAD
             "\1\10\1\15\1\11\1\13\1\16\1\uffff\1\1\12\uffff\1\12\17\uffff\7\4\6\uffff\1\3\2\uffff\1\14\1\uffff\1\3\1\uffff\1\3\12\uffff\1\2\1\6\1\7\7\4",
+=======
+            "\1\13\1\10\1\11\1\15\1\16\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\12\1\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2\1\6\1\7",
+>>>>>>> refs/remotes/origin/master
             "\1\17",
             "\1\20",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\21\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\1\uffff\1\3\1\uffff\2\3\1\uffff\1\3\1\uffff\1\3\6\uffff\1\21\3\uffff\1\2\1\22\1\23\7\4",
             "\1\13\1\16",
@@ -43549,19 +44933,64 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\21\3\uffff\1\2\1\34\1\35\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\21\3\uffff\1\2\2\uffff\7\4",
+=======
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\2\uffff\3\4\1\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2\1\21\1\22",
+            "\1\24",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2",
+            "\1\15\1\16",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\13\1\10\1\11\1\15\1\16\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\12\1\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2\1\6\1\7",
+            "\1\13\1\10\1\11\1\15\1\16\1\uffff\1\1\12\uffff\1\14\32\uffff\1\4\4\uffff\1\12\1\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\5\uffff\1\2",
+            "\1\25",
+            "\1\26",
+            "\1\27\1\uffff\1\30",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2\1\21\1\22",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2\1\34\1\35",
+            "\1\36",
+            "\1\37",
+            "\1\40\1\42\1\41",
+            "\1\43",
+            "\1\44",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\33",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2\1\46\1\47",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2\1\34\1\35",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\23\3\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\50\1\52\1\51",
             "\1\53",
             "\1\54",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\1\55\1\56\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\1\46\1\47\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4",
+=======
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2\1\55\1\56",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2\1\46\1\47",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\57",
             "\1\60",
+<<<<<<< HEAD
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\1\55\1\56\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\45\3\uffff\1\2\2\uffff\7\4"
+=======
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2\1\55\1\56",
+            "\1\4\3\uffff\1\1\45\uffff\1\4\6\uffff\1\4\3\uffff\1\4\1\3\1\4\2\uffff\1\4\1\uffff\1\45\3\uffff\1\2"
+>>>>>>> refs/remotes/origin/master
     };
+<<<<<<< HEAD
     static final char[] dfa_90 = DFA.unpackEncodedStringToUnsignedChars(dfa_90s);
     static final char[] dfa_91 = DFA.unpackEncodedStringToUnsignedChars(dfa_91s);
     static final short[][] dfa_92 = unpackEncodedStringArray(dfa_92s);
@@ -43597,12 +45026,20 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             ""
     };
     static final short[][] dfa_93 = unpackEncodedStringArray(dfa_93s);
+=======
+    static final short[] dfa_76 = DFA.unpackEncodedString(dfa_76s);
+    static final char[] dfa_77 = DFA.unpackEncodedStringToUnsignedChars(dfa_77s);
+    static final char[] dfa_78 = DFA.unpackEncodedStringToUnsignedChars(dfa_78s);
+    static final short[] dfa_79 = DFA.unpackEncodedString(dfa_79s);
+    static final short[][] dfa_80 = unpackEncodedStringArray(dfa_80s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA45 extends DFA {
 
         public DFA45(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 45;
+<<<<<<< HEAD
             this.eot = dfa_83;
             this.eof = dfa_83;
             this.min = dfa_85;
@@ -43610,6 +45047,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_87;
             this.special = dfa_88;
             this.transition = dfa_93;
+=======
+            this.eot = dfa_59;
+            this.eof = dfa_76;
+            this.min = dfa_77;
+            this.max = dfa_78;
+            this.accept = dfa_79;
+            this.special = dfa_63;
+            this.transition = dfa_80;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 4269:1: ( rule__Conditional__Alternatives_3_3 )*";
@@ -43746,6 +45192,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_94s = "\3\6\2\uffff\1\4\1\6\2\7\6\6\2\4\1\66\1\4\1\6\1\7\1\6\1\7\1\4\4\6\2\66\4\6\1\7\1\4\1\6\1\7\10\6\1\7\2\6";
     static final String dfa_95s = "\2\115\1\6\2\uffff\1\115\1\6\1\7\1\10\1\115\1\6\6\115\1\106\2\6\1\7\1\6\1\7\1\6\4\115\1\106\1\66\3\115\1\6\1\7\2\6\1\7\7\115\1\6\1\7\2\115";
     static final String[] dfa_96s = {
@@ -44199,6 +45646,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String dfa_104s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\4\uffff}>";
     static final String[] dfa_105s = {
             "\1\3\3\uffff\1\1\47\uffff\1\7\1\5\3\uffff\1\4\1\uffff\1\10\2\uffff\1\6\2\11\5\uffff\1\2",
+=======
+    static final String dfa_81s = "\1\11\14\uffff";
+    static final String dfa_82s = "\1\6\10\0\4\uffff";
+    static final String dfa_83s = "\1\106\10\0\4\uffff";
+    static final String dfa_84s = "\11\uffff\1\2\2\uffff\1\1";
+    static final String dfa_85s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\4\uffff}>";
+    static final String[] dfa_86s = {
+            "\1\3\3\uffff\1\1\45\uffff\1\10\6\uffff\1\4\3\uffff\1\5\1\uffff\1\6\2\11\1\7\5\uffff\1\2",
+>>>>>>> refs/remotes/origin/master
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -44212,17 +45668,27 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             ""
     };
+<<<<<<< HEAD
     static final short[] dfa_100 = DFA.unpackEncodedString(dfa_100s);
     static final char[] dfa_101 = DFA.unpackEncodedStringToUnsignedChars(dfa_101s);
     static final char[] dfa_102 = DFA.unpackEncodedStringToUnsignedChars(dfa_102s);
     static final short[] dfa_103 = DFA.unpackEncodedString(dfa_103s);
     static final short[] dfa_104 = DFA.unpackEncodedString(dfa_104s);
     static final short[][] dfa_105 = unpackEncodedStringArray(dfa_105s);
+=======
+    static final short[] dfa_81 = DFA.unpackEncodedString(dfa_81s);
+    static final char[] dfa_82 = DFA.unpackEncodedStringToUnsignedChars(dfa_82s);
+    static final char[] dfa_83 = DFA.unpackEncodedStringToUnsignedChars(dfa_83s);
+    static final short[] dfa_84 = DFA.unpackEncodedString(dfa_84s);
+    static final short[] dfa_85 = DFA.unpackEncodedString(dfa_85s);
+    static final short[][] dfa_86 = unpackEncodedStringArray(dfa_86s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA55 extends DFA {
 
         public DFA55(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 55;
             this.eot = dfa_28;
             this.eof = dfa_100;
@@ -44231,6 +45697,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_103;
             this.special = dfa_104;
             this.transition = dfa_105;
+=======
+            this.decisionNumber = 47;
+            this.eot = dfa_27;
+            this.eof = dfa_81;
+            this.min = dfa_82;
+            this.max = dfa_83;
+            this.accept = dfa_84;
+            this.special = dfa_85;
+            this.transition = dfa_86;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 5065:1: ( rule__Thread__Alternatives_1_1_0 )*";
@@ -44367,16 +45843,29 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
+<<<<<<< HEAD
     static final String dfa_106s = "\2\115\1\6\2\uffff\1\115\1\6\1\7\1\10\2\115\1\6\5\115\1\106\2\6\1\7\1\6\1\7\1\6\4\115\1\106\1\66\3\115\1\6\1\7\2\6\1\7\7\115\1\6\1\7\2\115";
     static final String[] dfa_107s = {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\2\3\3\uffff\1\3\1\uffff\2\3\1\uffff\1\3\7\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
+=======
+    static final String dfa_87s = "\3\6\2\uffff\1\4\1\6\2\7\6\6\2\4\1\6\1\7\1\4\1\66\5\6\1\7\1\4\1\6\1\7\2\66\5\6\1\4\1\6\1\7\6\6\1\7\2\6";
+    static final String dfa_88s = "\2\117\1\6\2\uffff\1\117\1\6\1\7\1\10\4\117\1\6\3\117\1\6\1\7\1\6\1\110\4\117\1\6\1\7\2\6\1\7\1\110\1\66\5\117\2\6\1\7\5\117\1\6\1\7\2\117";
+    static final String[] dfa_89s = {
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\2\3\5\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\5",
             "",
             "",
+<<<<<<< HEAD
             "\1\14\1\16\1\15\1\11\1\12\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\6\uffff\1\3\2\uffff\1\13\1\uffff\1\3\1\uffff\1\3\12\uffff\1\2\1\6\1\7\7\4",
+=======
+            "\1\16\1\14\1\13\1\12\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\4\uffff\1\3\4\uffff\1\15\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+>>>>>>> refs/remotes/origin/master
             "\1\17",
             "\1\20",
+<<<<<<< HEAD
             "\1\11\1\12",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\12\uffff\1\2\2\uffff\7\4",
@@ -44389,6 +45878,31 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\27\16\uffff\1\25\1\26",
             "\1\30\1\uffff\1\31",
             "\1\32",
+=======
+            "\1\12\1\11",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\2\uffff\3\3\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\24",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\16\1\14\1\13\1\12\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\4\uffff\1\3\4\uffff\1\15\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\1\6\1\7\7\4",
+            "\1\16\1\14\1\13\1\12\1\11\1\uffff\1\1\12\uffff\1\10\17\uffff\7\4\4\uffff\1\3\4\uffff\1\15\1\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\5\uffff\1\2\2\uffff\7\4",
+            "\1\25",
+            "\1\26",
+            "\1\27\1\uffff\1\30",
+            "\1\33\20\uffff\1\31\1\32",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\21\1\22\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\2\uffff\7\4",
+            "\1\3\3\uffff\1\1\32\uffff\7\4\4\uffff\1\3\6\uffff\1\3\3\uffff\1\3\1\uffff\1\3\2\uffff\1\3\1\uffff\1\23\3\uffff\1\2\1\34\1\35\7\4",
+            "\1\36",
+            "\1\37",
+            "\1\40\1\42\1\41",
+            "\1\43",
+            "\1\44",
+            "\1\33\20\uffff\1\31\1\32",
+>>>>>>> refs/remotes/origin/master
             "\1\33",
             "\1\34",
             "\1\35",
@@ -44419,13 +45933,20 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\43\3\uffff\1\2\1\55\1\56\7\4",
             "\1\3\3\uffff\1\1\32\uffff\7\4\6\uffff\1\3\4\uffff\1\3\1\uffff\1\3\6\uffff\1\43\3\uffff\1\2\2\uffff\7\4"
     };
+<<<<<<< HEAD
     static final char[] dfa_106 = DFA.unpackEncodedStringToUnsignedChars(dfa_106s);
     static final short[][] dfa_107 = unpackEncodedStringArray(dfa_107s);
+=======
+    static final char[] dfa_87 = DFA.unpackEncodedStringToUnsignedChars(dfa_87s);
+    static final char[] dfa_88 = DFA.unpackEncodedStringToUnsignedChars(dfa_88s);
+    static final short[][] dfa_89 = unpackEncodedStringArray(dfa_89s);
+>>>>>>> refs/remotes/origin/master
 
     class DFA59 extends DFA {
 
         public DFA59(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 59;
             this.eot = dfa_16;
             this.eof = dfa_16;
@@ -44434,6 +45955,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_81;
             this.special = dfa_20;
             this.transition = dfa_107;
+=======
+            this.decisionNumber = 51;
+            this.eot = dfa_59;
+            this.eof = dfa_59;
+            this.min = dfa_87;
+            this.max = dfa_88;
+            this.accept = dfa_62;
+            this.special = dfa_63;
+            this.transition = dfa_89;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 5500:1: ( rule__ScopeStatement__DeclarationsAssignment_3 )*";
@@ -44444,6 +45975,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
         public DFA60(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
+<<<<<<< HEAD
             this.decisionNumber = 60;
             this.eot = dfa_83;
             this.eof = dfa_83;
@@ -44452,6 +45984,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.accept = dfa_87;
             this.special = dfa_88;
             this.transition = dfa_93;
+=======
+            this.decisionNumber = 52;
+            this.eot = dfa_53;
+            this.eof = dfa_53;
+            this.min = dfa_54;
+            this.max = dfa_55;
+            this.accept = dfa_56;
+            this.special = dfa_57;
+            this.transition = dfa_58;
+>>>>>>> refs/remotes/origin/master
         }
         public String getDescription() {
             return "()* loopback of 5529:1: ( rule__ScopeStatement__Alternatives_4 )*";
@@ -44608,6 +46150,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0020000000000002L});
         public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x00000001022903F0L,0x0000000000000004L});
         public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0040000000000000L});
+<<<<<<< HEAD
         public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000010L});
         public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0300000000000000L});
         public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0800000000000400L,0x0000000000000010L});
@@ -44668,6 +46211,66 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000200100L});
         public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000060L});
         public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
+=======
+        public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x28810FE000000440L,0x000000000000FE41L});
+        public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0600000000000000L});
+        public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x3881000000000440L,0x0000000000000041L});
+        public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x1000000000000400L,0x0000000000000040L});
+        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x8000000000000000L});
+        public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x8000000000000002L});
+        public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+        public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x00000FE000000400L,0x000000000000FE40L});
+        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0004000000000000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
+        public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x00000FE000000000L,0x0000000000008000L});
+        public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0030000000000000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000780000560000L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+        public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0020000060000000L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000100000000L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000410000000L,0x0000000000000010L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x00000001022D03F0L,0x0000000000000010L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000024L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000004000000L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000004000002L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000008000000L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000008000002L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000000020000L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000020002L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000000040002L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000001F80000000L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000100000L});
+        public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x00000001022103F0L,0x0000000000000010L});
+        public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000200002L});
+        public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000400000L});
+        public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000400002L});
+        public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000001000000L});
+        public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000001000002L});
+        public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000800002L});
+        public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000000002010000L});
+        public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000002010040L});
+        public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0020000000000000L});
+        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x00000000000C0000L});
+        public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000000000050L});
+        public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+        public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000070L});
+        public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000200080L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000200100L});
+        public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000180L});
+        public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
+        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000080L});
+>>>>>>> refs/remotes/origin/master
     }
 
 

@@ -150,8 +150,8 @@
         eType="#//CombineOperator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalities" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cardinalities" upperBound="-1"
+        eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

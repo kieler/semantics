@@ -637,19 +637,19 @@ ruleValuedObject returns [EObject current=null]
     }
 (
 (
-		lv_cardinalities_2_0=RULE_INT
-		{
-			newLeafNode(lv_cardinalities_2_0, grammarAccess.getValuedObjectAccess().getCardinalitiesINTTerminalRuleCall_1_1_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+	    }
+		lv_cardinalities_2_0=ruleExpression		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getValuedObjectRule());
+	            $current = createModelElementForParent(grammarAccess.getValuedObjectRule());
 	        }
-       		addWithLastConsumed(
+       		add(
        			$current, 
        			"cardinalities",
         		lv_cardinalities_2_0, 
-        		"de.cau.cs.kieler.annotations.Annotations.INT");
+        		"de.cau.cs.kieler.kexpressions.KExpressions.Expression");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -3076,6 +3076,8 @@ ruleStringValue returns [EObject current=null]
 )
 )
 ;
+
+
 
 
 

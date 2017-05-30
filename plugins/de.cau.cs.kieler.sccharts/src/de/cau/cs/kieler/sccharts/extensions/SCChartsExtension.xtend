@@ -1364,8 +1364,8 @@ class SCChartsExtension {
     }
 
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
-        if (declaration.valuedObjects.filter[it.name == name].size > 0)
-            declaration.valuedObjects.filter[it.name == name].head
+        if (declaration.valuedObjects.filter[it.name.equals(name)].size > 0)
+            declaration.valuedObjects.filter[it.name.equals(name)].head
         else
             null
     }

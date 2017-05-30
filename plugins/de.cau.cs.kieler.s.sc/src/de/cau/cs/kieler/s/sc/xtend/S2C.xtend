@@ -54,6 +54,7 @@ import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.StringValue
 import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import de.cau.cs.kieler.s.sc.S2SCPlugin
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -74,6 +75,9 @@ class S2C {
     
     @Inject
     extension KExpressionsValuedObjectExtensions    
+
+    @Inject
+    extension KExpressionsValueExtensions    
 
     @Inject
     extension SExtension
@@ -170,7 +174,7 @@ class S2C {
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-            «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+            «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card.expand»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
