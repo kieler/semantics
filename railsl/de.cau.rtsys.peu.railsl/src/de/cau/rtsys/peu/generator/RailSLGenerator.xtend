@@ -738,6 +738,10 @@ ${outputs}
         val contacts = valObjects.get("contacts")
         var expressions = new ArrayList<Expression>()
 
+        val region = state.createControlflowRegion("")
+        region.createInitialState("init")
+        region.createFinalState("done")
+
         // create trigger expressions for each statement
         for (line : cStatement.lines) {
             val contactIndex = if(line.contact.equals("first")) 0 else 1
@@ -752,9 +756,25 @@ ${outputs}
             ])
             i++
         }
-
-        var j = 0
         
+        // create states for each line
+        var j = 0
+        for (line : cStatement.lines) {
+            var currentState = region.createState("Alternative " + j)
+            line.block.compile(currentState)
+            val trans = region.initialState.createImmediateTransitionTo(currentState)
+            trans.trigger = expressions.get(j)
+            trans.priority = j + 1
+            val termTrans = currentState.createImmediateTransitionTo(region.finalState)
+            termTrans.setTypeTermination
+            j++
+        }
+        
+        /*
+        
+        * CURRENTLY BEING REPLACED 
+        * 
+        *
         // Creating parallel regions for each line
         for (line : cStatement.lines) {
             val region = state.createControlflowRegion("Condition_" + j);
@@ -848,7 +868,8 @@ ${outputs}
                 altTrans2.priority = 3
             }
             j++
-        }
+           
+        }*/
     }
 
     /**
