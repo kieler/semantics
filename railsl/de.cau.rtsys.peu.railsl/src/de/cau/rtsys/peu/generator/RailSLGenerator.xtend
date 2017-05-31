@@ -689,16 +689,24 @@ ${outputs}
         for (statement : block.statements) {
             var state = statement.compile(region)
             var transition = currentState.createTransitionTo(state)
-            transition.setTypeTermination
+            if (currentState != region.initialState) {
+                transition.setTypeTermination
+                transition.setNotImmediate
+            } else {
+                transition.setImmediate
+            }
+            
             currentState = state
         }
         if (block.end.equals("End.")) {
             val done = region.createFinalState("done")
             var transition = currentState.createTransitionTo(done)
             transition.setTypeTermination
+            transition.setNotImmediate
         } else {
             var transition = currentState.createTransitionTo(region.initialState)
             transition.setTypeTermination
+            transition.setNotImmediate
         }
     }
 
@@ -765,8 +773,9 @@ ${outputs}
             val trans = region.initialState.createImmediateTransitionTo(currentState)
             trans.trigger = expressions.get(j)
             trans.priority = j + 1
-            val termTrans = currentState.createImmediateTransitionTo(region.finalState)
+            val termTrans = currentState.createTransitionTo(region.finalState)
             termTrans.setTypeTermination
+            termTrans.setNotImmediate
             j++
         }
         
@@ -898,9 +907,7 @@ ${outputs}
             currentState = nextState
             i++
         }
-
-        val done = region.createFinalState("done")
-        currentState.createImmediateTransitionTo(done)
+        currentState.final = true
     }
 
     /**
@@ -929,9 +936,7 @@ ${outputs}
             currentState = nextState
             i++
         }
-
-        val done = region.createFinalState("done")
-        currentState.createImmediateTransitionTo(done)
+        currentState.final = true
     }
 
     /**
@@ -971,10 +976,7 @@ ${outputs}
             currentState = nextState
             i++
         }
-
-        val done = region.createFinalState("done")
-        currentState.createImmediateTransitionTo(done)
-
+        currentState.final = true
     }
 
     /**
