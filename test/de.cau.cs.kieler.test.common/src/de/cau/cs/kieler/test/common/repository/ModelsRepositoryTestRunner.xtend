@@ -35,6 +35,7 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import static org.junit.Assert.*
 import org.junit.runner.Description
 import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.emf.ecore.EObject
 
 /**
  * The {@link Runner} for {@link IModelsRepositoryTest}.
@@ -317,6 +318,9 @@ class ModelsRepositoryTestRunner extends Suite {
         override evaluate() throws Throwable {
             val model = loadingInstance.loadModel(modelData)
             assertNotNull("Parsed input model is null", model)
+            if (model instanceof EObject) {
+                assertTrue("Parsed input model contains error markers: \n- " + model.eResource.errors.map[message].join("\n- "), model.eResource.errors.empty)
+            }
             if (method.method.parameterCount == 1) {
                 method.invokeExplosively(testInstance, model)
             } else {

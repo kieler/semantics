@@ -12,27 +12,19 @@
  */
 package de.cau.cs.kieler.sccharts.test
 
-import de.cau.cs.kieler.kico.KiCoPlugin
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.test.common.repository.AbstractXTextModelRepositoryTest
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import java.io.ByteArrayOutputStream
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.xmi.XMLResource
+import org.eclipse.emf.ecore.EObject
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-
-import static extension java.lang.String.format
-import java.nio.channels.ShutdownChannelGroupException
-import de.cau.cs.kieler.scg.SCGraph
-import org.eclipse.emf.ecore.EObject
 
 /**
  * Tests if all intermediate results of an SCCharts normalization compilation fullfill basic sanity properties.
