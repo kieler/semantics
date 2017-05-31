@@ -27,13 +27,14 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.freemarker.FreeMarkerPlugin
+import org.eclipse.emf.ecore.EObject
 
 /**
  * This class generates wrapper code for models.
@@ -117,7 +118,8 @@ class WrapperCodeGenerator {
         var List<String> modelNames = newArrayList()
         var String modelName = ""
         for(data : datas) {
-            getWrapperCodeAnnotationData(data.getLocationAsPath(project), annotationDatas)
+            val model = ModelImporter.load(data.getFile(project))
+            getWrapperCodeAnnotationData(model, annotationDatas)
             modelName = Files.getNameWithoutExtension(datas.get(0).name)
             modelNames += modelName
         }
@@ -444,7 +446,8 @@ class WrapperCodeGenerator {
      */
     public static def List<WrapperCodeAnnotationData> getWrapperCodeAnnotationData(IProject project, FileData data) {
         val List<WrapperCodeAnnotationData> annotationDatas = newArrayList()
-        getWrapperCodeAnnotationData(data.getLocationAsPath(project), annotationDatas)
+        val model = ModelImporter.load(data.getFile(project))
+        getWrapperCodeAnnotationData(model, annotationDatas)
         return annotationDatas
     }
 
@@ -455,29 +458,16 @@ class WrapperCodeGenerator {
      * @param data File data holding a path to a model file
      * @param annotationDatas List to add found annotation datas to
      */
-    public static def void getWrapperCodeAnnotationData(IPath modelLocation,
+    public static def void getWrapperCodeAnnotationData(EObject model,
         List<WrapperCodeAnnotationData> annotationDatas) {
 
         // Load EObject from file
-        val model = ModelImporter.load(modelLocation.toOSString, false)
-
         if (model != null) {
             initAnalyzers()
             
-            var fileNameWithoutExtension = modelLocation.removeFileExtension.lastSegment
-
             // Analyze the model with all wrapper code annotation analyzers
             for (analyzer : wrapperCodeAnnotationAnalyzers) {
-                // Get annotations
                 val annotations = analyzer.getAnnotations(model)
-                // If the name could not be determined,
-                // we interpret the file name as the model's name, like it is in java classes.
-                for(a : annotations) {
-                    if(a.modelName.isNullOrEmpty) {
-                        a.modelName = fileNameWithoutExtension
-                    }
-                }
-                // Add annotations from analyzer
                 if (annotations != null) {
                     annotationDatas.addAll(annotations)    
                 }
