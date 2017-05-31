@@ -638,7 +638,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                     threadSegmentIDText = "ThreadID: " + 
                                         (entry.getAnnotation(PriorityAuxiliaryData.THREAD_SEGMENT_ANNOTATION) 
                                                                 as IntAnnotation).value.toString  
-                                    val labelTR = addInsideTopRightNodeLabel(threadSegmentIDText, 10, 
+                                    val labelTR = addInsideBottomLeftNodeLabel(threadSegmentIDText, 10, 
                                                                         KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.KRendering.setForeground(SCGraphDiagramSynthesis.REGIONLABEL.copy)
                                     ]
@@ -734,7 +734,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     assignmentStr = serializeHR(assignment) as String
                 }
                         
-                it.addText(assignmentStr).associateWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
+                it.addText(assignmentStr).associateWith(assignment).setSurroundingSpace(4, 0.1f, 2, 0) => [
                     if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                 ]
             ]
@@ -781,7 +781,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var container = node.KContainerRendering
                 val txt = container.addText(nodePrio.toString)
                 txt.setProperty(NODE_PRIO_PROPERTY, true)
-                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setAreaPlacementData.from(LEFT,0,-0.9f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0)
                 txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
@@ -795,7 +795,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val container = node.KContainerRendering
                 val txt = container.addText(optNodePrio.toString)
                 txt.setProperty(OPT_PRIO_PROPERTY, true)
-                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setAreaPlacementData.from(LEFT,0,0.9f,TOP,0,0.3f).to(RIGHT,0,0.9f,BOTTOM,0,0)
                 txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
@@ -1050,7 +1050,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
                 val txt = container.addText(nodePrio.toString)
                 txt.setProperty(NODE_PRIO_PROPERTY, true)
-                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setAreaPlacementData.from(LEFT,0,-0.8f,TOP,0,-0.3f).to(RIGHT,0,0,BOTTOM,0,0)
                 txt.setForeground(SCGraphDiagramSynthesis.NODE_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)
@@ -1065,7 +1065,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
                 val txt = container.addText(optNodePrio.toString)
                 txt.setProperty(OPT_PRIO_PROPERTY, true)
-                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,0).to(RIGHT,0,0,BOTTOM,0,0.6f)
+                txt.setAreaPlacementData.from(LEFT,0,0.8f,TOP,0,-0.3f).to(RIGHT,0,0,BOTTOM,0,0)
                 txt.setForeground(SCGraphDiagramSynthesis.OPT_PRIORITY_COLOR.copy)
                 txt.setFontBold(true)
                 txt.setFontSize(7)

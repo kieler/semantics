@@ -12,19 +12,15 @@
  */
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
-import de.cau.cs.kieler.scg.DataDependency
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.priorities.extensions.SCCExtensions
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import javax.inject.Inject
-import de.cau.cs.kieler.scg.Fork
 
 /**
  * Class for the calculation of node priorities of an SCG.
@@ -41,8 +37,8 @@ class NodePriorities {
     private LinkedList<LinkedList<Node>> sccs
     private HashMap<Node, Integer> sccMap
     private HashMap<Node, Integer> nodePrio
-    private HashMap<LinkedList<Node>, Integer> Min
-    private HashMap<LinkedList<Node>, Integer> Max
+    private HashMap<LinkedList<Node>, Integer> min
+    private HashMap<LinkedList<Node>, Integer> max
     private HashMap<Node, Boolean> visitedNodes
     private int maxPrio
     
@@ -61,18 +57,19 @@ class NodePriorities {
         visited = newHashMap
         index = newHashMap
         nodePrio = newHashMap
-        Min = newHashMap
-        Max = newHashMap
+        min = newHashMap
+        max = newHashMap
         maxPrio = 0
         visitedNodes = newHashMap
         this.sccs = sccs
         this.sccMap = sccMap
         
-        
+        //Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
+        //Calculate min
         for(scc : sccs) {
             if(!visited.get(scc)) {
                 longestPath(scc)
@@ -80,19 +77,12 @@ class NodePriorities {
             }
         }
         
-//        for(scc : sccs) {
-//            val prio = sccPrio.get(scc)
-//            for(n : scc) {
-//                Min.put(n, prio)
-//
-//            }
-//
-//        }
-        
+        //Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
+        //Calculate max
         for(scc : sccs) {
             if(!visited.get(scc)) {
                 longestPathBackwards(scc)
@@ -100,37 +90,15 @@ class NodePriorities {
             }
         }
         
-//        for(scc : sccs) {
-//            for(n : scc) {
-//                nodePrio.put(n, Max.get(scc))
-//
-//            }
-//
-//        }
-        
-//        for(n: nodes) {
-//            visitedNodes.put(n, false)
-//        }
-        
-//        for(n : nodes.filter[n | n instanceof Entry || n instanceof Depth]) {
-//            opt(n, 0)            
-//        }
-        
-//        for(n : nodes) {
-//            if(!visitedNodes.containsKey(n)) {
-//                nodePrio.put(n, Max.get(n))
-//            }
-//        }
-        
-        //optimizeNodePrios(nodes)
-        
+        //Reset visited nodes
         for(scc : sccs) {
             visited.put(scc, false)
         }
         
+        //Calculate node priorities
         for(scc : sccs) {
             if(!visited.get(scc)) {
-                opt(scc)
+                calculateNodePrios(scc)
                 visited.put(scc, true)
             }
         }
@@ -141,7 +109,7 @@ class NodePriorities {
     /**
      * Using the depth first search, calculates the longest weighted path from an SCC through the SCG. Dependency edges 
      * have a weight of 1, neighboring edges a weight of 0. Writes the results of the calculations into the 
-     * sccPrio HashMap.
+     * min HashMap.
      * 
      * @param currentSCC
      *              The SCC to handle
@@ -157,9 +125,9 @@ class NodePriorities {
             if(!visited.get(depSCC)) {
                 longestPath(depSCC)
                 visited.put(depSCC, true)
-                prio = Math.max(prio, Min.get(depSCC) + 1)
+                prio = Math.max(prio, min.get(depSCC) + 1)
             } else {
-                prio = Math.max(prio, Min.get(depSCC) + 1)
+                prio = Math.max(prio, min.get(depSCC) + 1)
             }
         }
         
@@ -168,249 +136,86 @@ class NodePriorities {
             if(!visited.get(nSCC)) {
                 longestPath(nSCC)
                 visited.put(nSCC, true)
-                prio = Math.max(prio, Min.get(nSCC))
+                prio = Math.max(prio, min.get(nSCC))
             } else {
-                prio = Math.max(prio, Min.get(nSCC))
+                prio = Math.max(prio, min.get(nSCC))
             }
         }
         maxPrio = Math.max(maxPrio, prio)
-        Min.put(currentSCC, prio)
+        min.put(currentSCC, prio)
         
     }
     
-    
+    /**
+     *  Using depth first search, calculates the maximum priority a node in an SCG can have depending on incoming 
+     *  dependency edges and its predecessors, dependency edges have a weight of -1, neighboring edges a weight of 0.
+     *  Writes the results of the calculation into the max HashMap
+     */
     private def void longestPathBackwards(LinkedList<Node> currentSCC) {
         
         val predecessors = currentSCC.findPredecessorsOfSCC
         val incomingDependency = currentSCC.findAllIncomingDependenciesOfScc
         var int prio = maxPrio
+        var isEntry = false
         
         for(dep : incomingDependency) {
             val depSCC = sccs.get(sccMap.get(dep))
-            prio = Math.min(prio,Min.get(depSCC) - 1)
+            prio = Math.min(prio,min.get(depSCC) - 1)
         }
         
         for(n : predecessors) {
+            if(n instanceof Fork) {
+                isEntry = true
+            }
             val nSCC = sccs.get(sccMap.get(n))
             if(!visited.get(nSCC)) {
                 longestPathBackwards(nSCC)
                 visited.put(nSCC, true)
-                prio = Math.min(prio, Max.get(nSCC))
+                prio = Math.min(prio, max.get(nSCC))
             } else {
-                prio = Math.min(prio, Max.get(nSCC))
+                prio = Math.min(prio, max.get(nSCC))
             }
         }
-        Max.put(currentSCC, prio)
+        if(isEntry || (predecessors.empty && currentSCC.head instanceof Entry)) {
+            max.put(currentSCC, min.get(currentSCC))
+        } else {
+            
+            max.put(currentSCC, prio)
+        }
         
     }
     
     
+    
     /**
-     *  Optimizes node priorities by finding surface or exit nodes and searching their parent nodes for higher 
-     *  node priorities. This results in less context switches.
-     *  
-     *  @param nodes
-     *              The nodes of the SCG
+     *  Calculates the node priorities of each node in the SCG depending on the min and max priorities determined 
+     *  earlier.
      */
-    private def optimizeNodePrios(List<Node> nodes) {
-        visitedNodes = <Node, Boolean> newHashMap
-        var surfaceOrExit = nodes.filter[it instanceof Surface || it instanceof Exit]
-        for(node : surfaceOrExit) {
-            visitedNodes = <Node, Boolean> newHashMap
-            //propagateUpwards(node, Integer.MAX_VALUE, Integer.MAX_VALUE)
-        }
-        fixFirstAndLastPriorities(nodes)
-    }
-    
-    
-    
-    private def int opt(LinkedList<Node> currentSCC) {
+    private def int calculateNodePrios(LinkedList<Node> currentSCC) {
         val neighbors = currentSCC.findNeighborsOfSCC
-        var nextPrio = Max.get(currentSCC)
+        var nextPrio = max.get(currentSCC)
+        var succPrio = Integer.MIN_VALUE
         
         for(n : neighbors) {
             if(!(n instanceof Join)) {
                 val nextSCC = sccs.get(sccMap.get(n))
                 if(!visited.containsKey(nextSCC) || !visited.get(nextSCC)) {
-                    nextPrio = Math.min(opt(nextSCC), nextPrio)  
+                    succPrio = Math.max(calculateNodePrios(nextSCC), succPrio)  
                     visited.put(nextSCC, true)              
                 } else {
-                    nextPrio = Math.min(nodePrio.get(n), nextPrio)
+                    succPrio = Math.max(nodePrio.get(n), succPrio)
                 }                
             }
         }
         
-        if(nextPrio < Min.get(currentSCC)) {
-            nextPrio = Min.get(currentSCC)
+        if(succPrio >= min.get(currentSCC)) {
+            nextPrio = succPrio   
         }
-        if(nextPrio > Max.get(currentSCC)) {
-            nextPrio = Max.get(currentSCC)
-        }
-        
         for(node : currentSCC) {
             nodePrio.put(node, nextPrio)
         }
         
         return nextPrio
-    }
-    
-    
-    //Previous optimization, not anymore
-//    private def int opt(Node n, int mode) {
-//        if(!visitedNodes.containsKey(n) || !visitedNodes.get(n)) {
-//            
-//            visitedNodes.put(n, true)
-//            var nMode = mode
-//            var prio1 = -1
-//            var prio = 0
-//            var incDepExists = false
-//            var outDepExists = false
-//            
-//            if(n instanceof Entry) {
-//                nMode = 0
-//            }
-//            if(n instanceof Depth) {
-//                nMode = 1
-//            }
-//            for(inc : n.incoming) {
-//                incDepExists = incDepExists || (inc instanceof DataDependency && (inc as DataDependency).concurrent && 
-//                                                                                    !(inc as DataDependency).confluent)
-//            }
-//            for(dep : n.dependencies) {
-//                outDepExists = outDepExists || (dep instanceof DataDependency && (dep as DataDependency).concurrent && 
-//                                                                                    !(dep as DataDependency).confluent)
-//            }
-//            
-//            for(node : n.neighbors) {
-//                if(incDepExists) {
-//                    if(outDepExists) {
-//                        nMode = 1   
-//                    } else {
-//                        nMode = 0                    
-//                    }
-//                } else if(outDepExists) {
-//                    nMode = 1    
-//                }
-//                prio1 = Math.max(prio1, opt(node, nMode))
-//            }
-//            
-//            if(incDepExists || nMode == 0) {
-//                prio = Min.get(n)
-//            } else if(outDepExists) {
-//                prio = maxPrio - Max.get(n)
-//            } else if(nMode == 1) {
-//                if(prio1 == -1) {
-//                    prio = maxPrio - Max.get(n)
-//                } else {
-//                    if(n instanceof Exit) {
-//                        prio = Math.max(prio1, maxPrio - Max.get(n))                
-//                        
-//                    } else {
-//                        prio = Math.min(prio1, maxPrio - Max.get(n))
-//                    }
-//                }
-//            }
-//    
-//            nodePrio.put(n, prio)
-//            
-//            return prio
-//        } else if(visitedNodes.get(n)) {
-//            return nodePrio.get(n)
-//        } else {
-//            return -1
-//            
-//        }
-//    }
-    
-    
-    //Previous previous optimization
-    /**
-     *  Finds join, entry or depth nodes, or nodes that have incoming dependencies. If these are encountered, they return 
-     *  their node priority and propagate them to their following nodes.
-     * 
-     *  @param currentNode
-     *          The currently observed node
-     * 
-     *  @returns
-     *          The (new) node priority of the currentNode
-     * 
-     */
-     /*
-    private def int propagateUpwards(Node currentNode) {
-        visitedNodes.put(currentNode, true)
-        var dependencyExists = false
-        //Detect any incoming concurrent dependencies
-        for(inc : currentNode.incoming) {
-            dependencyExists = dependencyExists || (inc instanceof DataDependency && (inc as DataDependency).concurrent 
-                                                              && !(inc as DataDependency).confluent)
-        }
-        
-        //Check for termination condition. If we encounter one of these nodes, we should not look further.
-        if(currentNode instanceof Join || currentNode instanceof Entry || currentNode instanceof Depth || dependencyExists) {
-            return nodePrio.get(currentNode)
-        //Get the node priorities of the predecessors and compare them to the node priority of the current node
-        } else {
-            var min = Integer.MAX_VALUE
-            var depthPred = newLinkedList
-            for(incControlFlow : currentNode.incoming) {
-                if(!(incControlFlow instanceof DataDependency)) {
-                    val pred = incControlFlow.eContainer as Node
-                    if(!visitedNodes.containsKey(pred) || !visitedNodes.get(pred)) {
-                        val curr = propagateUpwards(pred)
-                        //TODO: THINK ABOUT THIS
-                        //TODO: Seems more like a quick hack and less like a real solution!
-                        //A Depth node can be ignored since there can't be any incoming dependencies into it.
-                        if(!(pred instanceof Depth)) {
-                            min = Math.min(curr, min)   
-                        //If a Depth node has been encountered, its node priority can be raised                         
-                        } else {
-                            depthPred.add(pred)
-                        }
-                    } else if(visitedNodes.containsKey(pred) && visitedNodes.get(pred)) {
-                        min = Math.min(nodePrio.get(pred), min)
-                    }                   
-                }
-            }
-            if(nodePrio.get(currentNode) < min && min != Integer.MAX_VALUE) {
-                nodePrio.put(currentNode, min)       
-                for(depth : depthPred) {
-                    nodePrio.put(depth, min)
-                }         
-            }
-            return nodePrio.get(currentNode)
-        }
-    }
-     */
-     
-     
-    /**
-     *  Fixes the Priorities of threads where the thread with the highest entry priority
-     *  also has the lowest exit priority. The SCL macros would not be able to properly schedule such
-     *  programs and therefore these occurrences need to be removed.
-     * 
-     * 
-     */
-    private def void fixFirstAndLastPriorities(List<Node> nodes) {
-        
-        val forks = nodes.filter[it instanceof Fork]
-        
-        for (fork : forks) {
-            val innerEntryNodes = fork.neighbors.sortBy[nodePrio.get(it)]
-            val innerExitNodes = <Node> newLinkedList
-            for(entry : innerEntryNodes) {
-                innerExitNodes.add((entry as Entry).exit)
-            }
-
-            val sortedExitNodes = innerExitNodes.sortBy[nodePrio.get(it)]
-            //If the thread with the highest entry priority is also 
-            //the thread with the lowest exit priority, we have to lower the second lowest priority
-            //in an exit node to the priority of the first thread. With this, the scheduler can perform 
-            //the join as intended.
-            if((innerEntryNodes.last as Entry).exit.equals(sortedExitNodes.head)) {
-                nodePrio.replace(sortedExitNodes.get(1), nodePrio.get(sortedExitNodes.head))
-            }
-        }
-        
     }
     
 }

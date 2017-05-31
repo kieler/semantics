@@ -10,27 +10,22 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.priorities
+package de.cau.cs.kieler.scg.priorities.sj
 
-import de.cau.cs.kieler.kico.features.FeatureGroup
-import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.kico.features.Feature
 
 /**
  * @author lpe
  *
  */
-class SCGPrioFeatureGroup extends FeatureGroup {
+class SJTransformationFeature extends Feature {
     
     override getId() {
-        "scg.priorities"
+        "sclp.sjTrans"
     }
     
     override getName() {
-        "SCG and Priorities"   
-    }
-    
-    override getFeatureIds() {
-        return newHashSet(SCGFeatures::BASIC_ID, SCGFeatures::DEPENDENCY_ID, "scg.scgPrio", "sclp.sclpTrans", "sclp.sjTrans")
+        "SJ"
     }
     
 }

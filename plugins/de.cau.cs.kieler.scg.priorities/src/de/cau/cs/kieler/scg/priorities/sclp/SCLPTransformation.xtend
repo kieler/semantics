@@ -207,7 +207,10 @@ class SCLPTransformation extends AbstractProductionTransformation{
                     sb.append(",")
                 }
                 sb.append(" ")
-                sb.append(variables.name)                
+                sb.append(variables.name)    
+                for(card : variables.cardinalities) {
+                    sb.append("[" + card + "]")
+                }            
             }
             sb.append(";\n")
         }
@@ -403,6 +406,8 @@ class SCLPTransformation extends AbstractProductionTransformation{
         var forkBody = new StringBuilder
         var String labelHead
         
+        currentIndentation += DEFAULT_INDENTATION
+        
         //Find threads with maximal entry priority and minimal exit priority
         for(child : children) {
             val entry = child.target
@@ -461,7 +466,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
                     }
                 }
                 //Create label
-                forkBody.append(newLabel + ":\n")
+                forkBody.appendInd(newLabel + ":\n")
                 
                 //Translate thread
                 forkBody.transformNode(node)
@@ -493,7 +498,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
                 }
             }
         } else {
-            prioList.add(min)
+            prioList.add((minNode.getAnnotation("OptPrioIDs") as IntAnnotation).value)
             if (regionName == "") {
                 newLabel = ("_region_" + regionNr++)
                 labelList.add(newLabel)
@@ -511,19 +516,19 @@ class SCLPTransformation extends AbstractProductionTransformation{
             }
         }
         //Create label
-        forkBody.append(newLabel + ":\n")
+        forkBody.appendInd(newLabel + ":\n")
         
         //Translate thread
         forkBody.transformNode(minNode)
+        currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         
         
         
         //Create fork
-        sb.generateForkn(children.length - 1, labelHead, labelList, prioList)        
+        sb.generateForkn(children.length - 1, labelHead, labelList, prioList)      
         //Append Body
         sb.append(forkBody)
         //Create join
-        currentIndentation = currentIndentation.substring(0, currentIndentation.length - 2)
         sb.appendInd("\n")
         
         sb.generateJoinn(joinPrioList.size, joinPrioList)
@@ -784,7 +789,7 @@ class SCLPTransformation extends AbstractProductionTransformation{
             }
         }
         sb.append(labelsAndPrios + ") {\n")
-        currentIndentation += DEFAULT_INDENTATION
+//        currentIndentation += DEFAULT_INDENTATION
         
         if(n > 4 && !generatedForks.contains(n)) {
             forkSb.append("#define fork" + n + "(label, ")

@@ -19,6 +19,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.priorities,
  de.cau.cs.kieler.scg.priorities.extensions,
- de.cau.cs.kieler.scg.priorities.sclp
+ de.cau.cs.kieler.scg.priorities.sclp,
+ de.cau.cs.kieler.scg.priorities.sj
 Bundle-Vendor: Kiel University
 

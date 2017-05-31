@@ -5,7 +5,7 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg.priorities, scg.basic, scg.dependency, scg.scgPrio, sclp.sclpTrans"
+            features="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT, T_ABORT, T_ABORTWTO ,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, NORMALIZED, MAP, FOR, REFERENCE, CONST, EXPANSION, scg.priorities, scg.basic, scg.dependency, scg.scgPrio, sclp.sclpTrans, sclp.sjTrans"
             label="Priority Compilation"
             preferred="ABORT, INITIALIZATION, scg.basicblock.sc, sccharts.scg, NOSIMULATIONVISUALIZATION, scg.scgPrio, sclp.sclpTrans"
             priority="1">
@@ -19,6 +19,9 @@
       <productionTransformationClass
             class="de.cau.cs.kieler.scg.priorities.sclp.SCLPTransformation">
       </productionTransformationClass>
+      <productionTransformationClass
+            class="de.cau.cs.kieler.scg.priorities.sj.SJTransformation">
+      </productionTransformationClass>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.feature">
@@ -30,6 +33,9 @@
       </featureGroupClass>
       <featureClass
             class="de.cau.cs.kieler.scg.priorities.sclp.SCLPTransformationFeature">
+      </featureClass>
+      <featureClass
+            class="de.cau.cs.kieler.scg.priorities.sj.SJTransformationFeature">
       </featureClass>
    </extension>
 

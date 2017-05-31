@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.scg.priorities.priorityCalculations
 
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
@@ -40,6 +41,8 @@ class ThreadSegmentIDs {
     /** The overall number of thread segment IDs */
     private int nThreadSegmentIDs
     
+    private int nextTID
+    
     /**
      * Gives the number of thread segment IDs
      */
@@ -65,6 +68,7 @@ class ThreadSegmentIDs {
         
         threadSegmentIDs = <Node, Integer> newHashMap
         visited          = <Node, Boolean> newHashMap
+        nextTID          = 1
         for(node : nodes) {
             visited.put(node, false)
         }
@@ -117,16 +121,21 @@ class ThreadSegmentIDs {
                 //The thread with the highest node Priority always gets the highest thread priority.
                 //This assures that when joining, the thread with the highest node priority when forking
                 //will not get the lowest thread priority when joining.
-                val sortedNeighbors = neighbors.sortBy[neighbor | nodePrios.get(neighbor)]
+                //val sortedNeighbors = neighbors.sortBy[neighbor | nodePrios.get(neighbor)]
+                val sortedNeighbors = neighbors.sortBy[neighbor | nodePrios.get((neighbor as Entry).exit)]
+                var highestnpr = Integer.MIN_VALUE
+                var highesttid = Integer.MIN_VALUE
                 
-                //var LinkedList<Integer> childIDs = <Integer> newLinkedList
                 for(n : sortedNeighbors) {
-                    tID = assignThreadSegmentIDs(n, tID)
-                    //childIDs.add(tID)
-                    tID++
+                    tID = assignThreadSegmentIDs(n, nextTID)
+                    if(nodePrios.get(n) >= highestnpr && tID >= highesttid) {
+                        highestnpr = nodePrios.get(n)
+                        highesttid = tID
+                    }
+                    nextTID++
                 }
-                //tID = childIDs.max
-                tID--
+                nextTID--
+                tID = highesttid
                 threadSegmentIDs.put(node, tID)
                 
             } else {
