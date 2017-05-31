@@ -322,8 +322,8 @@ class KiCoLaunchConfig extends PromLaunchConfig {
      */
     private def void compile(FileData data) {
         // Load model from file
-        val EObject model = ModelImporter.load(project.location.toOSString + File.separator + data.projectRelativePath, true)
-
+        val EObject model = ModelImporter.load(data.getFile(project))
+ 
         if (model != null) {
             // Get compiler context with settings for KiCo
             // TODO: ESTERELSIMULATIONVISUALIZATION throws an exception when used (21.07.2015), so we explicitly disable it.
