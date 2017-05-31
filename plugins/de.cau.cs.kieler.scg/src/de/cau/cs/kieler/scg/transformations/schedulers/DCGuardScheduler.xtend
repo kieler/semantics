@@ -110,7 +110,7 @@ class DCGuardScheduler extends SimpleGuardScheduler {
     	if (size < estimatedScheduleSize) {
     	    val message = "The SCG is NOT asc-schedulable!"
     	    if (context != null) {
-                context.getCompilationResult().addPostponedError(
+                context.getCompilationResult().addPostponedWarning(
                     new KielerCompilerException(getId(), getId(), message));
             }
     		SCGPlugin.logError(message)

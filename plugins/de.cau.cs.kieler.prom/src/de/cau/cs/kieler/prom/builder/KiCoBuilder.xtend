@@ -65,7 +65,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      */
     public static val String BUILDER_ID = "de.cau.cs.kieler.prom.KiCoBuilder"; 
     
-    public static val String KICO_ERROR_MARKER_TYPE = "kico.error"
+    public static val String KICO_PROBLEM_MARKER_TYPE = "kico.problem"
     
     /**
      * The monitor of the current build process.
@@ -314,8 +314,8 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                 val targetLocation = computeTargetPath(res.projectRelativePath.toOSString, false)
                 saveCompilationResult(res, model, result, targetLocation)
             } else {
-                if(result.allErrors != null && result.allErrors.toLowerCase.contains("not asc")) {
-                    createErrorMarker(res, "Model is not ASC-Schedulable")
+                if(result.allWarnings != null && result.allWarnings.toLowerCase.contains("not asc")) {
+                    createWarningMarker(res, "Model is not ASC-Schedulable")
                 } else {
                     val errorMessage = "Compilation of '" + res.name + "' failed:\n\n" +
                                        Strings.nullToEmpty(result.allErrors) + "\n" +
@@ -334,7 +334,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     }
     
     private def void deleteMarkers(IFile file) {
-        val markers = file.findMarkers(KICO_ERROR_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
+        val markers = file.findMarkers(KICO_PROBLEM_MARKER_TYPE, false, IResource.DEPTH_INFINITE)
         if(!markers.isNullOrEmpty) {
             for(m : markers){
                 m.delete()
@@ -342,13 +342,25 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         }
     }
     
-    private def IMarker createErrorMarker(IFile file, String message) {
-        val marker = file.createMarker(KICO_ERROR_MARKER_TYPE)
-        marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
-        marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+    private def IMarker createMarker(IFile file, String message) {
+        val marker = file.createMarker(KICO_PROBLEM_MARKER_TYPE)
         marker.setAttribute(IMarker.LINE_NUMBER, 1);
         marker.setAttribute(IMarker.MESSAGE, message);
         marker.setAttribute(IMarker.LOCATION, file.projectRelativePath.toOSString);
+        return marker
+    }
+    
+    private def IMarker createWarningMarker(IFile file, String message) {
+        val marker = createMarker(file,message)
+        marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
+        marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        return marker
+    }
+    
+    private def IMarker createErrorMarker(IFile file, String message) {
+        val marker = createMarker(file,message)
+        marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
+        marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
         return marker
     }
     

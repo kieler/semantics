@@ -427,7 +427,7 @@ class GuardSchedulerV2 extends AbstractScheduler implements Traceable {
         // and add the scheduling information to the graph.
         if (!schedulable) {
             if (context != null) {
-                context.getCompilationResult().addPostponedError(
+                context.getCompilationResult().addPostponedWarning(
                     new KielerCompilerException(getId(), getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
