@@ -42,7 +42,7 @@ class RailSLTransformation extends AbstractProductionTransformation implements T
     }    
     
     override transform(EObject eObject) {
-        return (eObject as Program).transform2
+        return (eObject as Program).railSLtoSCChart
     }
     
 }

@@ -49,10 +49,24 @@ import de.cau.cs.kieler.kexpressions.Expression
  */
 class RailSLGenerator extends AbstractGenerator {
 
+    /**
+     * The number of segments that exist in the railway installation.
+     */
     final static val NUM_OF_SEGMENTS = 48
+    
+    /**
+     * The number of points that exist in the railway installation.
+     */
     final static val NUM_OF_POINTS = 30
+    
+    /**
+     * The number of lights that exist in the railway installation.
+     */
     final static val NUM_OF_LIGHTS = 24
 
+    /*************************************************************************
+     * I N J E C T I O N S ***************************************************
+     *************************************************************************/
     @Inject
     extension SCChartsExtension
 
@@ -66,9 +80,6 @@ class RailSLGenerator extends AbstractGenerator {
     extension KExpressionsValuedObjectExtensions
 
     @Inject
-    extension KExpressionsValueExtensions
-
-    @Inject
     extension AnnotationsExtensions
 
     static var nextRegionID = 0;
@@ -79,26 +90,30 @@ class RailSLGenerator extends AbstractGenerator {
     final static val SPEED_SLOW = 45;
     final static val SPEED_FULL = 120;
 
-    def State transform2(Program model) {
+    /**
+     * Transforms an instance of the RailSL metamodel to an instance of the SCCharts metamodel.
+     */
+    def State railSLtoSCChart(Program model) {
 
-        return generateCode(model.blocks)
+        return generateSCChart(model.blocks)
     }
 
+    /**
+     * Generates static code required by PROM.
+     * This method is called by XText whenever the editor is saved.
+     */
     override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-
         generateHeaders(fsa)
         generateSnippets(fsa)
-        // TODO What should happen here? This has no side effects.
-        val list = new ArrayList<Block>
-        for (block : resource.allContents.toList.filter(Block)) {
-            list.add(block)
-        }
-        System.out.println(generateCode(list))
     }
 
     /*************************************************************************
      * S T A T I C   C O D E   G E N E R A T I O N ***************************
      *************************************************************************/
+     
+    /**
+     * Generates the header files 'kicking.h' and 'railway.h'
+     */
     def void generateHeaders(IFileSystemAccess fsa) {
         var railwayH = '//===========================================================================//
 //==             R T S Y S   M O D E L   R A I L W A Y   A P I             ==//
@@ -446,8 +461,10 @@ struct railway_hardware kicking;
 
     }
 
+    /**
+     * Generates all snippets required for a compilation via PROM.
+     */
     def void generateSnippets(IFileSystemAccess fsa) {
-
         fsa.generateFile('contacts.ftl', generateContactsSnippet())
         fsa.generateFile('lights.ftl', generateLightsSnippet())
         fsa.generateFile('points.ftl', generatePointsSnippet())
@@ -456,8 +473,13 @@ struct railway_hardware kicking;
         fsa.generateFile('ControllerMain.ftl', generateMainSnippet())
     }
 
+
+    /**
+     * Generate the static PROM main code snippet 
+     */
     def String generateMainSnippet() {
-        var result = '/******************************************************************
+        var result = 
+'/******************************************************************
  * T E S T   H E A D E R                                          *
  *                                                                *
  * C O O L   S T U F F   H E R E                                  *
@@ -502,6 +524,9 @@ ${outputs}
         return result
     }
 
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{tracks} variable.
+     */
     def String generateTracksSnippet() {
         var result = '<#-- T R A C K S -->
 <#macro tracks>
@@ -515,6 +540,9 @@ ${outputs}
         return result
     }
 
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{signals} variable.
+     */
     def String generateSignalsSnippet() {
         var result = '<#-- S I G N A L S -->
 <#macro signals>
@@ -532,6 +560,10 @@ ${outputs}
         return result
     }
 
+
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{points} variable.
+     */
     def String generatePointsSnippet() {
         var result = '<#-- S W I T C H   P O I N T S -->
 <#macro points>
@@ -545,6 +577,10 @@ ${outputs}
         return result
     }
 
+
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{lights} variable.
+     */
     def String generateLightsSnippet() {
         var result = '<#-- L I G H T S -->
 <#macro lights>
@@ -558,7 +594,10 @@ ${outputs}
 
         return result
     }
-
+    
+    /**
+     * Generate a static PROM code snippet as wrapper for the @code{contacts} variable.
+     */
     def String generateContactsSnippet() {
         var result = '<#-- C O N T A C T S -->
 <#macro contacts>
@@ -579,10 +618,11 @@ ${outputs}
     /**************************************************************************
      * T R A N S F O R M A T I O N S ******************************************
      **************************************************************************/
+     
     /**
      * Transforms the model into an SCCharts model
      */
-    def State generateCode(List<Block> blocks) {
+    def State generateSCChart(List<Block> blocks) {
 
         var chart = createSCChart();
 
@@ -654,14 +694,6 @@ ${outputs}
         chart.declarations.add(secondDecl)
         valObjects.put("second", second);
 
-        // STUFF VON STEVEN UND ALEX
-        /*
-         * chart.declarations.add(createDeclaration(ValueType.INT) => [
-         *     valuedObjects += createValuedObject("foo") => [
-         *         initialValue = createIntValue(0) 
-         *     ] 
-         * ])
-         */
         // A C T U A L   D I A G R A M   S Y N T H E S I S
         nextRegionID = 0
         for (block : blocks) {
@@ -740,6 +772,11 @@ ${outputs}
         return state
     }
 
+    /**
+     * Transforms an empty state into a ConditionalStatement.
+     * 
+     * Each line is represented by its own state with internal behavior.
+     */
     def void makeConditionalStatement(State state, ConditionalStatement cStatement) {
         state.label = "_" + getStateID() + "_Conditional"
         var i = 0;
@@ -778,107 +815,6 @@ ${outputs}
             termTrans.setNotImmediate
             j++
         }
-        
-        /*
-        
-        * CURRENTLY BEING REPLACED 
-        * 
-        *
-        // Creating parallel regions for each line
-        for (line : cStatement.lines) {
-            val region = state.createControlflowRegion("Condition_" + j);
-            region.createInitialState("init")
-            region.createFinalState("done")
-
-            // creating the state with the 'then' block
-            var blockList = new ArrayList<Block>()
-            blockList.add(line.block)
-            var blockState = generateCode(blockList)
-            region.states.add(blockState)
-
-            // normal termination of the block state
-            var term = blockState.createTransitionTo(region.finalState)
-            term.setTypeTermination
-
-            // trigger expression for alternative transitions
-            if (j > 0) {
-                var otherExpr = expressions.get(0)
-
-                // all triggers with higher precedence
-                for (var k = 1; k < j; k++) {
-                    val oldExpr = otherExpr
-                    val newExpr = expressions.get(k)
-                    otherExpr = createOperatorExpression(OperatorType.LOGICAL_OR) => [
-                        subExpressions += oldExpr
-                        subExpressions += newExpr
-                    ]
-                }
-                
-            
-                var altTrans1 = region.initialState.createImmediateTransitionTo(region.finalState)
-                altTrans1.trigger = otherExpr
-                altTrans1.priority = 1
-            }
-            
-            //TODO this is horrible.
-            expressions = new ArrayList<Expression>()
-            i = 0
-            for (lineA : cStatement.lines) {
-                val contactIndex = if(lineA.contact.equals("first")) 0 else 1
-                val trackIndex = lineA.segName.parseTrackSegment
-
-                expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
-                    subExpressions += contacts.reference => [
-                        indices += createIntValue(trackIndex)
-                        indices += createIntValue(contactIndex)
-                    ]
-                    subExpressions += createBoolValue(true)
-                ])
-                i++
-            }
-            
-            // transition from initial state to block state
-            var blockTrans = region.initialState.createImmediateTransitionTo(blockState)
-            blockTrans.trigger = expressions.get(j)
-            blockTrans.priority = 2
-
-            if ((j + 1) < expressions.size) {
-                
-                // TODO this is bad.
-                i = 0
-                expressions = new ArrayList<Expression>()
-                for (lineA : cStatement.lines) {
-                    val contactIndex = if(lineA.contact.equals("first")) 0 else 1
-                    val trackIndex = lineA.segName.parseTrackSegment
-
-                    expressions.add(i, createOperatorExpression(OperatorType.EQ) => [
-                        subExpressions += contacts.reference => [
-                            indices += createIntValue(trackIndex)
-                            indices += createIntValue(contactIndex)
-                        ]
-                        subExpressions += createBoolValue(true)
-                    ])
-                    i++
-                }
-                var otherExpr2 = expressions.get(j + 1)
-
-                // all triggers with lower precedence
-                for (var k = j + 2; k < expressions.size; k++) {
-                    val oldExpr = otherExpr2
-                    val newExpr = expressions.get(k)
-                    otherExpr2 = createOperatorExpression(OperatorType.LOGICAL_OR) => [
-                        subExpressions += oldExpr
-                        subExpressions += newExpr
-                    ]
-                }
-                
-                var altTrans2 = region.initialState.createImmediateTransitionTo(region.finalState)
-                altTrans2.trigger = otherExpr2
-                altTrans2.priority = 3
-            }
-            j++
-           
-        }*/
     }
 
     /**
@@ -1010,7 +946,6 @@ ${outputs}
             ]
             subExpressions += createBoolValue(true)
         ]
-
     }
 
     /**
@@ -1037,16 +972,26 @@ ${outputs}
     /*****************************************************************************************
      * H E L P E R   M E T H O D S ***********************************************************
      *****************************************************************************************/
+    
+    /**
+     * Helper method providing unique state IDs
+     */
     def String getStateID() {
         nextStateID++;
         return "" + (nextStateID - 1)
     }
 
+    /**
+     * Helper method providing unique region IDs
+     */
     def String getRegionID() {
         nextRegionID++;
         return "" + (nextRegionID - 1);
     }
 
+    /**
+     * Helper method to determine the light state
+     */
     def int parseLightMode(LightStatement lStatement) {
         if (lStatement.state.equals("on")) {
             return 1;
@@ -1055,6 +1000,9 @@ ${outputs}
         }
     }
 
+    /**
+     * Helper method to determine the setting for a point
+     */
     def int parsePointSetting(SetPointStatement spStatement) {
         if (spStatement.orientation.equals("straight")) {
             return 0;
@@ -1063,6 +1011,9 @@ ${outputs}
         }
     }
 
+    /**
+     * Helper method to determine the speed to which a track segment should be set.
+     */
     def int parseSpeed(SetTrackStatement stStatement) {
         if (stStatement.mode.contains("stop")) {
             return 0;
@@ -1141,5 +1092,4 @@ ${outputs}
             default: -1
         };
     }
-
 }
