@@ -270,26 +270,6 @@ class SJTransformation extends AbstractProductionTransformation {
     private def void transformNode(StringBuilder sb, Node node) {
         valuedObjectPrefix = "";
         
-        if(!(node instanceof Exit)) {
-            // If the node has already been visited before, add a gotoB, instead of translating it again
-            if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
-                sb.appendInd("gotoB(" + labeledNodes.get(node) + ");\n")
-                sb.appendInd("break;\n\n")
-                return
-                
-            } else if(!labeledNodes.containsKey(node)) {
-                // If a node has multiple incoming control flows, create a gotoB label
-                val incomingControlFlows = node.incoming.filter(ControlFlow).toList
-                if(incomingControlFlows.size > 1) {
-                    val newLabel = "_L_" + labelNr++
-                    labeledNodes.put(node, newLabel)
-                    sb.appendInd("gotoB(" + newLabel + ");\n")
-                    sb.appendInd("break;\n\n")
-                    sb.addCase(newLabel)
-                }                
-            }
-        }
-        
         // If the priority of the node has changed from the previous node, add a prioB-Statement and break the 
         // current state.
         if(!previousNode.empty()) {
@@ -297,8 +277,8 @@ class SJTransformation extends AbstractProductionTransformation {
             val prevPrio = prev.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             if(!(prev instanceof Fork) && (!(prev instanceof Surface)) && prevPrio.value != prio.value) {
-                val newLabel = "_L_" + labelNr++
-                labeledNodes.put(node, newLabel)
+                var newLabel = "_L_" + labelNr++
+                //labeledNodes.put(node, newLabel)
                 sb.appendInd("prioB(" + prio.value + ", " + newLabel +  ");\n")
                 sb.appendInd("break;\n\n")
                 sb.addCase(newLabel)
@@ -309,6 +289,26 @@ class SJTransformation extends AbstractProductionTransformation {
                 labeledNodes.put(node, labeledNodes.get(prev))
             }
         }
+
+        // If the node has already been visited before, add a gotoB, instead of translating it again
+        if(visited.containsKey(node) && visited.get(node) && labeledNodes.containsKey(node)) {
+            sb.appendInd("gotoB(" + labeledNodes.get(node) + ");\n")
+            sb.appendInd("break;\n\n")
+            return
+            
+        } else if(!labeledNodes.containsKey(node)) {
+            // If a node has multiple incoming control flows, create a gotoB label
+            val incomingControlFlows = node.incoming.filter(ControlFlow).toList
+            if(incomingControlFlows.size > 1) {
+                val newLabel = "_L_" + labelNr++
+                labeledNodes.put(node, newLabel)
+                sb.appendInd("gotoB(" + newLabel + ");\n")
+                sb.appendInd("break;\n\n")
+                sb.addCase(newLabel)
+            }                
+        }
+
+        
         
         
         previousNode.push(node)    
@@ -537,12 +537,17 @@ class SJTransformation extends AbstractProductionTransformation {
     private def void transformNode(StringBuilder sb, Join join, LinkedList<Integer> joinPrios) {
         // Perform the join.
         // Create new labels for new states
-        val newLabel  = "_L_" + labelNr++
+        var newLabel = ""
+        if(labeledNodes.containsKey(join)) {
+            newLabel = labeledNodes.get(join)
+        } else {
+            newLabel  = "_L_" + labelNr++            
+            
+            // Go to the new join-"state"
+            sb.appendInd("gotoB(" + newLabel + ");\n")
+            sb.appendInd("break;\n\n")
+        }
         val nextLabel = "_L_" + labelNr++
-        
-        // Go to the new join-"state"
-        sb.appendInd("gotoB(" + newLabel + ");\n")
-        sb.appendInd("break;\n\n")
         
         // Create the join-"state"
         sb.addCase(newLabel)
@@ -559,7 +564,9 @@ class SJTransformation extends AbstractProductionTransformation {
         
         // Create the following state
         sb.addCase(nextLabel)
+        previousNode.push(join)
         sb.transformNode(join.next.target)
+        previousNode.pop
     }
     
     /**
@@ -590,7 +597,23 @@ class SJTransformation extends AbstractProductionTransformation {
         // Only do something if the exit is the final node of the program. Otherwise
         // the fork/join does this
         if(!exit.entry.hasAnnotation("joinThread")) {
-            sb.appendInd("termB();\n\n")            
+            sb.appendInd("termB();\n")
+            sb.appendInd("break;\n\n")            
+        } else {
+            // Go to join
+            if(exit.next != null) {
+                val join = exit.next.target
+                var newLabel = ""
+                if(labeledNodes.containsKey(join)) {
+                    newLabel = labeledNodes.get(join)
+                } else {
+                    newLabel = "_L_" + labelNr++
+                    labeledNodes.put(exit.next.target, newLabel)                
+                }
+                
+                sb.appendInd("gotoB(" + newLabel + ");\n")
+                sb.appendInd("break;\n\n")
+            }
         }
     }
     
@@ -721,6 +744,10 @@ class SJTransformation extends AbstractProductionTransformation {
      */
     private def String getNewRegionName(Node node) {
         var newLabel = node.getStringAnnotationValue("regionName").replaceAll(" ", "")
+        if(newLabel == "") {
+            newLabel = "_L_" + labelNr++
+            return newLabel
+        }
         if(regionNr.containsKey(newLabel)) {
             val forkNr = regionNr.get(newLabel)
             regionNr.replace(newLabel, forkNr + 1)

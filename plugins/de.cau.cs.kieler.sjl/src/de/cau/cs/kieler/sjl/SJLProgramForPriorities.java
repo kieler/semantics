@@ -411,7 +411,7 @@ abstract public class SJLProgramForPriorities<State extends Enum<?>> implements 
         for(int i = 0; i < children.length; i++) {
             setAdd(childset, children[i]);
         }
-        return (setDisjoint(alive, children));
+        return (setDisjoint(alive, childset ));
     }
 
     // -------------------------------------------------------------------------
