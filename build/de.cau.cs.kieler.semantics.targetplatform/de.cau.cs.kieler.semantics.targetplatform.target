@@ -30,7 +30,7 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
-      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-01/"/>
+      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2017-02-03/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
