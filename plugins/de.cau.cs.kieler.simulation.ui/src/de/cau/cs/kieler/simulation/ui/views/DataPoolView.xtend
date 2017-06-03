@@ -37,6 +37,8 @@ import org.eclipse.ui.part.ViewPart
  */
 class DataPoolView extends ViewPart {
     
+    public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
+    
     public static var DataPoolView instance
     
     var TableViewer viewer

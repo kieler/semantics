@@ -53,6 +53,8 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.StringInputStream
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.emf.ecore.util.EContentsEList
 
 /**
  * @author aas
@@ -78,11 +80,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     private EnvironmentData env
     
     /**
-     * All annotations in the project.
-     * The key is the location of the file.
-     */
-    private val HashMap<String, List<WrapperCodeAnnotationData>> annotationsOfFile = newHashMap()
-    /**
      * The names of all models in the project
      */
     private val HashMap<String, String> modelNames = newHashMap()
@@ -91,7 +88,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Flag to remember if the builder has been initialized before
      */
     private boolean isInitialized
-   
+    
     /**
      * Cache of all loaded models of a project.
      */
@@ -171,19 +168,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
             // Init 
             monitor.subTask("Initializing build")
             initialize()
-            
+  
             // Compile via KiCo
+            var boolean isFirstModel = true
             for(res : resources) {
-                // Remove markers from old build
-                deleteMarkers(res)
-                
                 // Compile, generate simulation code, fetch wrapper code annotations
                 if(!monitor.isCanceled) {
                     switch(res.fileExtension.toLowerCase) {
                         case "sct",
                         case "strl" : {
                             monitor.subTask("Loading resource "+res.name)
-                            val EObject model = ModelImporter.load(res, resourceSet)
+                            val model = ModelImporter.load(res, resourceSet)
                             if(model == null) {
                                 throw new Exception("Couldn't load model "+res.name)
                             }
@@ -197,19 +192,17 @@ class KiCoBuilder extends IncrementalProjectBuilder {
                                 monitor.subTask("Creating simulation for "+res.name)
                                 generateSimulationCode(res, model)
                             }
-                            // Update wrapper code annotations of this file
+                            // Generate wrapper code for first model in the list
                             if(!monitor.isCanceled) {
-                                getWrapperCodeAnnotations(res, model)
+                                if(isFirstModel) {
+                                    monitor.subTask("Generating wrapper code.")
+                                    generateWrapperCode(res, model)
+                                }
                             }
                         }
                     }
                 }
-            }
-            
-            // Generate wrapper code
-            if(!monitor.isCanceled) {
-                monitor.subTask("Generating wrapper code.")
-                generateWrapperCode()
+                isFirstModel = false
             }
             
             // Refresh output in workspace
@@ -234,14 +227,20 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         // At first build, search for wrapper code annotations in all model files.
         // These are updated later, if a model file changes.
         if(!isInitialized) {
+            System.err.println("initialize")
             isInitialized = true
-            annotationsOfFile.clear()
-            modelNames.clear()
+            // Create resource set
             resourceSet = new XtextResourceSet()
+            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
+            // Load all model files into one resource set
+            modelNames.clear()
 //            val modelFiles = findModelFilesInProject()
 //            for(f : modelFiles) {
+//                System.err.println("loading "+f.name)
 //                val model = ModelImporter.load(f, resourceSet)
-//                getWrapperCodeAnnotations(f, model)
+//                if(model != null) {
+//                    modelNames.put(f.location.toOSString, Files.getNameWithoutExtension(f.name))
+//                }
 //            }
         }
     }
@@ -352,7 +351,7 @@ class KiCoBuilder extends IncrementalProjectBuilder {
     
     private def IMarker createWarningMarker(IFile file, String message) {
         val marker = createMarker(file,message)
-        marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
+        marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         return marker
     }
@@ -368,23 +367,23 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * Generates wrapper code using the main file template
      * and all annotation datas that have been found in models.
      */
-    private def void generateWrapperCode() {
+    private def void generateWrapperCode(IFile res, EObject model) {
         if(!launchData.wrapperCodeTemplate.isNullOrEmpty) {
-            val List<WrapperCodeAnnotationData> allAnnotationDatas = newArrayList()
-            for(annotationDatas : annotationsOfFile.values) {
-                allAnnotationDatas.addAll(annotationDatas)
-            }
+            // Get annotations in model
+            val annotationDatas = newArrayList()
+            WrapperCodeGenerator.getWrapperCodeAnnotationData(model, annotationDatas)
             
-            // resolve template path
+            // Resolve template path
             val resolvedWrapperCodeTemplate = PromPlugin.performStringSubstitution(launchData.wrapperCodeTemplate, project)
             // Create wrapper code
+            val name = Files.getNameWithoutExtension(res.name)
+            modelNames.put(res.location.toOSString, name)
             val names = modelNames.values.toList
-            val name = names.get(0)
             val generator = new WrapperCodeGenerator(project, launchData)
             val wrapperCode = generator.generateWrapperCode(resolvedWrapperCodeTemplate,
                 #{WrapperCodeGenerator.MODEL_NAME_VARIABLE -> name,
                   WrapperCodeGenerator.MODEL_NAMES_VARIABLE -> names},
-                allAnnotationDatas
+                annotationDatas
             )
             // Save output
             val resolvedWrapperCodeTargetLocation = computeTargetPath(resolvedWrapperCodeTemplate, false)
@@ -528,21 +527,37 @@ class KiCoBuilder extends IncrementalProjectBuilder {
      * @param simPath the path to the simulation file
      */
     private def void createExecutableFromCCode(String simTargetPath) {
-         // Command to compile simulation code: "gcc SimulationCode.c -o SimulationCode"
+        val slash = File.separator
+        val currentDir = "." + slash
         val isWindows = System.getProperty("os.name").toLowerCase.contains("win")
-        val fileName = new Path(simTargetPath).lastSegment
-        val executableName = Files.getNameWithoutExtension(fileName) + if(isWindows) ".exe" else ""
-        val directory = new Path(simTargetPath).removeLastSegments(1)
-        val parentDir = ".." + File.separator
+        // File name of the file to be compiled
+        val codeFileName = new Path(simTargetPath).lastSegment
+        // File name of the exectuable to be created
+        val executableName = Files.getNameWithoutExtension(codeFileName) + if(isWindows) ".exe" else ""
+        // The directory in which the code file is saved
+        val codeDirectory = new Path(simTargetPath).removeLastSegments(1)
+        // The directory for all simulation related files
+        val simDirectory = codeDirectory.removeLastSegments(1)
+        // The directory in which the executable should be created
+        val executableDirectory = simDirectory.append(slash + "bin")
+        // Project relative path to the executable 
+        val executablePath = executableDirectory.append(slash + executableName)
         
         // Delete old executable
-        val executableFile = project.getFile(directory.toOSString + File.separator + executableName)
+        val executableFile = project.getFile(executablePath.toOSString)
         if(executableFile.exists)
             executableFile.delete(true, null)
         
+        // Create bin directory
+        PromPlugin.createResource(project.getFolder(executableDirectory), null)
+        
         // Run gcc on simulation code
-        val pBuilder = new ProcessBuilder("gcc","-std=c99",fileName,"-o", parentDir + executableName)
-        pBuilder.directory(project.location.append(directory).toFile)
+        // Example command to compile simulation code: "gcc -std=c99 SimulationCode.c -o SimulationCode"
+        val pBuilder = new ProcessBuilder("gcc",
+                                          "-std=c99",
+                                          currentDir + "code" + slash + codeFileName,
+                                          "-o", currentDir + executablePath.makeRelativeTo(simDirectory).toOSString)
+        pBuilder.directory(project.location.append(simDirectory).toFile)
         val p = pBuilder.start()
         // Wait until the process finished
         val errorCode = p.waitFor()
@@ -590,19 +605,6 @@ class KiCoBuilder extends IncrementalProjectBuilder {
         } else {
             executableFile.refreshLocal(1, null)
         }
-    }
-    
-    /**
-     * Adds the wrapper code annotations that are found in the model file to the map of annotations.
-     * @param modelFile the model file
-     * @param overwrite determines if old annotation data should be replaced
-     */
-    private def void getWrapperCodeAnnotations(IFile file, EObject model) {
-        val List<WrapperCodeAnnotationData> datas = newArrayList()
-        WrapperCodeGenerator.getWrapperCodeAnnotationData(model, datas)
-        val location = file.location.toOSString
-        annotationsOfFile.put(location, datas)
-        modelNames.put(location, Files.getNameWithoutExtension(file.name))
     }
     
     /**
