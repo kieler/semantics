@@ -469,7 +469,7 @@ class SJTransformation extends AbstractProductionTransformation {
         if(forkThread.equals(joinThread)) {
             joinLabel = forkLabel
         } else {
-            joinLabel = forkThread.newRegionName
+            joinLabel = joinThread.newRegionName
         }
         
         // Joining thread must not have a term-statement
