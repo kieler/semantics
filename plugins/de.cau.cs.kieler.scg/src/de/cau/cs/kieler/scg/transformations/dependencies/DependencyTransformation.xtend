@@ -146,16 +146,18 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
 					val VOC = injector.getInstance(ValuedObjectContainer) => [ set(node) ]
 					writer.put(VOC, node)
 					
-					node.expression.getAllReferences.forEach[ vor |
-					    
+					val allReferences = node.expression.allReferences
+					node.indices.forEach[ allReferences += it.allReferences ]
+					
+					allReferences.forEach[ vor |
 					    val expVOC =  injector.getInstance(ValuedObjectContainer) => [ set(vor) ]
 						reader.put(expVOC, node)
 						
 						if (expVOC.equals(VOC)) {
 							relativeWriter += node
 						}
-						
 					]
+					
 					if (node.operator != AssignOperator::ASSIGN) {
 						relativeWriter += node
 					}
