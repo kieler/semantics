@@ -36,7 +36,6 @@ import org.eclipse.jface.viewers.ICellModifier
 import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.viewers.LabelProvider
-import org.eclipse.jface.viewers.ListViewer
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TableViewer
@@ -57,8 +56,7 @@ import org.eclipse.swt.widgets.TableItem
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbench
 import org.eclipse.ui.IWorkbenchPreferencePage
-import org.eclipse.core.runtime.Plugin
-import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.prom.launchconfig.WrapperCodeGenerator
 
 /**
  * Implementation of the preferences page for environments.
@@ -182,7 +180,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
         createEnvironmentsComponent(comp)
         createTabFolder(comp)
 
-        loadSettings()    
+        loadSettings()
 
         updateEnabled()
 
@@ -579,7 +577,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         targetTemplate.toolTipText = "Path to a template file for the compiled output.\n"
-        + "Use ${" + KiCoLaunchConfig.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
+        + "Use ${" + WrapperCodeGenerator.KICO_GENERATED_CODE_VARIABLE + "} in the template file as placeholder."
         
         // Create target directory control
         val comp = UIUtil.createComposite(group, 3)
@@ -631,7 +629,7 @@ class EnvironmentsPage extends PreferencePage implements IWorkbenchPreferencePag
             }
         })
         wrapperCodeTemplate.toolTipText = "Path to a template of a file, which will contain wrapper code.\n.\n"
-            + "The path may contain placeholders such as ${" + KiCoLaunchConfig.MAIN_FILE_NAME_VARIABLE + "}."
+            + "The path may contain placeholders such as ${" + PromPlugin.MAIN_FILE_NAME_VARIABLE + "}."
         
         // Create snippets directory control
         wrapperCodeSnippets = UIUtil.createTextField(group, "Snippets directory", EnumSet.of(UIUtil.Buttons.NONE))

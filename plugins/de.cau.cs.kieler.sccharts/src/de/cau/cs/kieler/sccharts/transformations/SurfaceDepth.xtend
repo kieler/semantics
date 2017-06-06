@@ -104,6 +104,7 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
 
         targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
             optimizeSuperflousImmediateTransitions.fixDeadCode
+//            optimizeSuperflousImmediateTransitions.fixDeadCode
 //            optimizeSuperflousImmediateTransitions.fixDeadCode;
 //        targetRootState.fixAllTextualOrdersByPriorities.fixDeadCode;
     }
@@ -162,6 +163,15 @@ class SurfaceDepth extends AbstractExpansionTransformation implements Traceable 
                 val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
                 // conditional
                 if (immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
+                    // This checks if the second transition is the default transition...
+                    // ... however, there may still be other transitions! 
+                    // This would violate the normalized form.
+                    if (numTransition > 2) {
+                        // Further transitions are not reachable! Remove them.
+                        for (var i = 2; i < numTransition; i++) {
+                            state.outgoingTransitions.remove(i)
+                        }
+                    }
                     return
                 }
             }

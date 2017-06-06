@@ -13,12 +13,14 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+
 import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.KiCoProperties
+import de.cau.cs.kieler.klighd.IKlighdSelection
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
@@ -92,11 +94,16 @@ import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortSide
 import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.jface.viewers.ISelectionChangedListener
+import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
 
 import static de.cau.cs.kieler.scg.SCGAnnotations.*
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.internal.macrolayout.KlighdDiagramLayoutConnector
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -187,6 +194,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Show dependencies */
     private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", true);
+    /** Show selective dependencies */
+    private static val SynthesisOption SELECTIVE_DEPENDENCIES = SynthesisOption::createCheckOption("Show only dependencies of selected elements", false);
 
     /** Layout dependencies */
     private static val SynthesisOption LAYOUT_DEPENDENCIES = SynthesisOption::createCheckOption("Dependencies", false);
@@ -292,6 +301,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_CAPTION,
             SHOW_HIERARCHY,
             SHOW_DEPENDENCIES,
+            SELECTIVE_DEPENDENCIES,
             SHOW_NONCONCURRENT,
             SHOW_CONFLUENT,
             SHOW_BASICBLOCKS,
@@ -424,6 +434,73 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val float LINEWIDTH = 1.0f
 
     // -------------------------------------------------------------------------
+    // -- Static Helper Class 
+    // -------------------------------------------------------------------------
+    /**
+     * Global selection listener which dependencies for element selection.
+     */
+    private static final ISelectionChangedListener SELECTION_LISTENER = new ISelectionChangedListener() {
+
+        override void selectionChanged(SelectionChangedEvent event) {
+            val selection = event.getSelection() as IKlighdSelection
+            val viewContext = selection.getViewContext()
+            val viewer = viewContext.viewer
+            
+            if(viewContext.getOptionValue(SHOW_DEPENDENCIES) as Boolean && viewContext.getOptionValue(SELECTIVE_DEPENDENCIES) as Boolean) {
+                val selectedNodes = <KNode>newHashSet
+                
+                // All nodes
+                selectedNodes.addAll(selection.diagramElementsIterator.filter(KNode).toIterable)
+                // All nodes with selected text
+                selectedNodes.addAll(selection.diagramElementsIterator.filter[
+                    !selectedNodes.contains(it)
+                ].map[
+                    var container = it.eContainer
+                    while (container != null) {
+                        if (container instanceof KNode) return container as KNode
+                        container = container.eContainer
+                    }
+                    return null
+                ].filterNull.toIterable)
+                
+    
+                val rootNode = viewContext.viewModel
+                // Hide all dependencies
+                rootNode.eAllContentsOfType(KNode, KEdge).filter(KEdge).filter[
+                    viewContext.getSourceElement(it) instanceof Dependency
+                ].forEach[
+                    viewer.hide(it)
+                ]
+                
+                // BLACK MAGIC to fix klighd behavior
+                val instance = new KlighdDiagramLayoutConnector
+                val arranger = instance.class.getDeclaredMethod("handleExcludedEdge", KEdge)
+                arranger.accessible = true
+                
+                // Show dependencies for selected nodes
+                for (knode : selectedNodes ) {
+                    val node = viewContext.getSourceElement(knode)
+                    // Show edges
+                    if (node instanceof Node) {
+                        node.dependencies.map[viewContext.getTargetElements(it)].forEach[
+                            it.filter(KEdge).forEach[
+                                viewer.show(it)
+                                arranger.invoke(instance, it)
+                            ]
+                        ]
+                        node.incoming.filter(Dependency).map[viewContext.getTargetElements(it)].forEach[
+                            it.filter(KEdge).forEach[
+                                viewer.show(it)
+                                arranger.invoke(instance, it)
+                            ]
+                        ]
+                    }
+                }
+            }
+        }
+    }
+    
+    // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
     /** The root node */
@@ -473,11 +550,29 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
         
 
-        // Invoke the synthesis.
-        SCGraph = model
+        // Start the synthesis.
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCG synthesis...")
+        
+        // Invoke the synthesis.
+        SCGraph = model
         val newModel = model.synthesize();
+        
+        // Activate or deactivate selective dependencies
+        if (SHOW_DEPENDENCIES.booleanValue) {
+            val contextViewer = usedContext.getViewer()?.getContextViewer()
+            if (SELECTIVE_DEPENDENCIES.booleanValue) {
+                contextViewer?.addSelectionChangedListener(SELECTION_LISTENER)
+            } else {
+                contextViewer?.removeSelectionChangedListener(SELECTION_LISTENER)
+            }
+        } else {
+            val contextViewer = usedContext.getViewer()?.getContextViewer()
+            contextViewer?.removeSelectionChangedListener(SELECTION_LISTENER)
+        }
+        
+        
+        // End notifiaction
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG synthesis finished (time elapsed: "+(time / 1000)+"s).")  
         
@@ -1588,6 +1683,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
                 // drawing.
                 edge.setLayoutOption(CoreOptions::NO_LAYOUT, true)
+            }
+            
+            // hide if only selected elements should be shown
+            if (SELECTIVE_DEPENDENCIES.booleanValue) {
+                edge.initiallyHide
             }
         ]
 

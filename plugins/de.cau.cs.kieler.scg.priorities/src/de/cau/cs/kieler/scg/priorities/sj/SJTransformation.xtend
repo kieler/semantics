@@ -130,9 +130,14 @@ class SJTransformation extends AbstractProductionTransformation {
         } else {
             programName = "Program"
         }
-        program.appendInd("public class " + scg.label + " extends SJLProgramForPriorities<State> {\n")
+        
+        program.addImports(programName)
+        
+        program.appendInd("public class " + programName + " extends SJLProgramForPriorities<State> {\n")
         
         currentIndentation += DEFAULT_INDENTATION
+        
+        sb.addReset(scg)
         
         // Translate program
         sb.addProgram(scg, programName)
@@ -150,6 +155,23 @@ class SJTransformation extends AbstractProductionTransformation {
         program.toString
         
     }
+    
+    /** 
+     *  Adds the required imports to the file
+     */
+    protected def void addImports(StringBuilder sb, String programName) {
+        
+        sb.appendInd("package model;\n\n")
+        
+        sb.appendInd("import model." + programName + ".State;\n")
+        sb.appendInd("import static model." + programName + ".State.*;\n")
+        sb.appendInd("import model.SJLProgramForPriorities;\n\n\n")
+    }
+    
+    protected def void addReset(StringBuilder sb, SCGraph scg) {
+        sb.appendInd("public void reset() {}\n\n")
+    }
+    
     
     /**
      * Translates the calculated states to an enumeration

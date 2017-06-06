@@ -730,9 +730,16 @@ public class SCChartsJavaDataComponent extends JSONObjectSimulationDataComponent
             }
 
             String constructor = "";// "\npublic SCChart() {};\n";
-            cSCChartCCode = cSCChartCCode.replace("class " + modelName + " {",
-                    "package test;\n\npublic class SCChart extends de.cau.cs.kieler.sccharts.sim.java.SCChartsJavaProgram {"
-                            + constructor);
+            if (cSCChartCCode.contains("public class " + modelName + " {")) {
+                cSCChartCCode = cSCChartCCode.replace("public class " + modelName + " {",
+                        "package test;\n\npublic class SCChart extends de.cau.cs.kieler.sccharts.sim.java.SCChartsJavaProgram {"
+                                + constructor);
+            } else if (cSCChartCCode.contains("class " + modelName + " {")) {
+                cSCChartCCode = cSCChartCCode.replace("class " + modelName + " {",
+                        "package test;\n\npublic class SCChart extends de.cau.cs.kieler.sccharts.sim.java.SCChartsJavaProgram {"
+                                + constructor);
+            }
+            
 
             // System.out.println("14 " + cSCChartCCode);
             if (cSCChartCCode == null) {

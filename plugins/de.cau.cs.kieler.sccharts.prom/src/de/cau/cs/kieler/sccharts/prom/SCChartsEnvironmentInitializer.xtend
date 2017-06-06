@@ -20,6 +20,7 @@ import de.cau.cs.kieler.prom.environments.IEnvironmentsInitializer
 import de.cau.cs.kieler.prom.launchconfig.KiCoLaunchConfig
 import java.util.List
 import de.cau.cs.kieler.prom.common.CommandData
+import de.cau.cs.kieler.prom.common.PromPlugin
 
 /**
  * Returns a list with default environments ready to use.
@@ -57,7 +58,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.nxt.ldt.launch.LaunchNXTShortcut"
         
@@ -90,7 +91,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         
         
@@ -131,7 +132,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.targetLanguage = "s.java"
         launchData.targetLanguageFileExtension = ".java"
         launchData.targetDirectory = KiCoLaunchConfig.BUILD_DIRECTORY
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "org.lejos.ev3.ldt.launch.LaunchEV3Shortcut"
 
@@ -158,7 +159,7 @@ class SCChartsEnvironmentInitializer implements IEnvironmentsInitializer {
         launchData.mainFile = "${project_name}.ftl"
         launchData.targetLanguage = "s.c"
         launchData.targetLanguageFileExtension = ".ino"
-        launchData.wrapperCodeTemplate = '''${«KiCoLaunchConfig.MAIN_FILE_PATH_VARIABLE»}'''
+        launchData.wrapperCodeTemplate = '''${«PromPlugin.MAIN_FILE_PATH_VARIABLE»}'''
         launchData.wrapperCodeSnippetDirectory = "snippets"
         launchData.associatedLaunchShortcut = "it.baeyens.arduino.ui.launchconfig.LaunchShortcut"
         

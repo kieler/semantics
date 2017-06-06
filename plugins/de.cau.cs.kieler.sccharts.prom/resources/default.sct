@@ -1,4 +1,8 @@
 scchart ${name} {
 
-    initial state init;
+  input bool I;
+  output int O;
+
+  initial state init
+    --> init with I / O++;
 }
