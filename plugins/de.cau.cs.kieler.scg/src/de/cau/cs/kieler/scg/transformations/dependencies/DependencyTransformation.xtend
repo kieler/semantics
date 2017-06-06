@@ -176,6 +176,7 @@ class DependencyTransformation extends AbstractProductionTransformation implemen
     	Set<Assignment> relativeWriter, Multimap<ValuedObjectContainer, Node> reader, Map<Node, List<Entry>> nodeMapping
     ) {
         val VOC = injector.getInstance(ValuedObjectContainer) => [ set(assignment) ]
+        VOC.potentiallyEqual = true
         if (!relativeWriter.contains(assignment)) { 
         	for(VOWriter : writer.get(VOC).filter[ !equals(assignment) ]
         	) {
