@@ -1,0 +1,108 @@
+grammar de.cau.cs.kieler.KVis with org.eclipse.xtext.common.Terminals
+
+generate kvis "http://www.cau.de/cs/kieler/kvis/KVis"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Visualization:
+	'image' ':' image=STRING
+	elements += Element*
+;
+
+
+Element:
+	'animate' name=ID '{'
+        (animations+=Animation)+
+	'}'
+;
+
+Animation:
+    type=AnimationType ('using' variable=VariableReference)? '{'
+        (mappings+=AttributeMapping)*
+    '}' (condition=Condition)?
+;
+
+AttributeMapping:
+    attribute=ID ':' (literal=Literal | (mappings+=Mapping) (',' mappings+=Mapping)*)
+;
+
+Mapping:
+    variableDomain = VariableDomain 'is' attributeDomain = AttributeDomain
+;
+
+VariableDomain:
+    value = Literal
+    | range = Interval
+;
+
+Interval:
+    from = Literal '..' to = Literal
+;
+
+AttributeDomain:
+    VariableDomain
+;
+
+Condition:
+    'when' expression=BooleanExpression
+;
+
+VariableReference:
+    (model=ModelReference)?
+    name=ID
+    ('[' indices+=INT ']')*
+;
+
+ModelReference:
+    name=ID '.'
+;
+
+BooleanExpression:
+    Comparison 
+//    (({AndOrExpression.left=current} operator=BooleanOperator) right=Comparison)*
+;
+
+Comparison returns Expression:
+   (leftSide = VariableReference
+    relation = CompareOperator
+    rightSide = Operand)
+;
+
+Operand:
+    variable = VariableReference
+    | literal = Literal
+;
+
+Literal:
+    INT | FLOAT | STRING
+;
+
+//-----------------------------------------------------------
+//---                  ENUMS                              ---
+//-----------------------------------------------------------
+
+// Relational operators
+enum CompareOperator returns OperatorType:
+    EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!="
+;
+
+// Animation types
+enum AnimationType returns AnimationType:
+    COLOR='set color' | TEXT='set text' | VISIBILITY='set visible' | ROTATE='rotate' | MOVE='move'
+;
+
+// Boolean operators
+enum BooleanOperator returns BooleanOperatorType:
+    AND="and" | OR="or"
+;
+
+
+// Primitive types
+terminal fragment DIGIT :
+    '0'..'9';
+terminal INT returns ecore::EInt:
+    DIGIT+;
+terminal FLOAT returns ecore::EFloatObject :
+    DIGIT+ ('.' DIGIT*) (("e"|"E") ("+"|"-")? DIGIT+)? 'f'? |
+    DIGIT+ 'f';
+terminal BOOLEAN returns ecore::EBooleanObject :
+    'true' | 'false';

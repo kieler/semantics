@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Simulation Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.kvis.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.ui.editors,
+ org.eclipse.ui,
+ de.cau.cs.kieler.kvis,
+ de.cau.cs.kieler.kvis
+Export-Package: de.cau.cs.kieler.ui.contentassist,
+ de.cau.cs.kieler.ui.quickfix,
+ de.cau.cs.kieler.ui.contentassist.antlr,
+ de.cau.cs.kieler.ui.contentassist.antlr.internal
+Import-Package: org.apache.log4j
+Bundle-Activator: de.cau.cs.kieler.ui.internal.KVisActivator

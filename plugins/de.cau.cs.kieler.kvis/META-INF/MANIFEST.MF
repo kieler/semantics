@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.cau.cs.kieler.kvis
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.kvis; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common,
+ org.eclipse.xtext.generator,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler,
+ de.cau.cs.kieler.services,
+ de.cau.cs.kieler.kvis,
+ de.cau.cs.kieler.kvis.impl,
+ de.cau.cs.kieler.kvis.util,
+ de.cau.cs.kieler.serializer,
+ de.cau.cs.kieler.parser.antlr,
+ de.cau.cs.kieler.parser.antlr.internal,
+ de.cau.cs.kieler.validation,
+ de.cau.cs.kieler.scoping,
+ de.cau.cs.kieler.formatting
+Import-Package: org.apache.log4j
