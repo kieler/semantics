@@ -267,18 +267,7 @@ class SctValidator extends SctJavaValidator {
                 error(VALUEDOBJECT_TRANSITION_SCOPE_WRONG, testValuedObject, null, -1);
             }
         }
-    }  
-
-    
-    /**
-     * Checks currently unsupported INPUT OUTPUT variables and displays a warning.
-     */
-    @Check
-    public def void checkNoInputOutput(ValuedObject valuedObject) {
-        if(valuedObject.isInput && valuedObject.isOutput) {
-                warning(INPUT_OUTPUT_CURRENTLY_NOTSUPPORTEDBYSIMULATOR, valuedObject, null);
-       }
-    }  
+    }
     
     /**
      *

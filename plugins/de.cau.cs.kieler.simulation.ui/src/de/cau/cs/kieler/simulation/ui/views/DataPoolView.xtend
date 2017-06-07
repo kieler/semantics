@@ -37,6 +37,8 @@ import org.eclipse.ui.part.ViewPart
  */
 class DataPoolView extends ViewPart {
     
+    public static val VIEW_ID = "de.cau.cs.kieler.simulation.ui.dataPoolView"
+    
     public static var DataPoolView instance
     
     var TableViewer viewer
@@ -62,9 +64,23 @@ class DataPoolView extends ViewPart {
         createToolbar();
     }
     
+    /**
+     * {@inheritDoc}
+     */
     override setFocus() {
     }
     
+    /**
+     * Dispose and clear reference to singleton instance.
+     */
+    override dispose() {
+        super.dispose()
+        instance = null
+    }
+    
+    /**
+     * Set the data pool to be displayed.
+     */
     public def void setDataPool(DataPool pool) {
         if(pool == null) {
             viewer.input = null

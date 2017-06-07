@@ -13,16 +13,12 @@
  */
 package de.cau.cs.kieler.prom.common
 
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup
-import java.io.File
 import org.eclipse.core.resources.IFile
-import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /** 
  * Auxilary class to load an EObject from a fully qualified file path.
@@ -85,46 +81,4 @@ class ModelImporter {
 //
 //        return load(file, resourceSet)
 //    }
-    
-    /**
-     * Searches in the project of the model file for files with the same file extension.
-     * All findings are added to the resource set, such that they can be resolved when loading the model file.
-     * 
-     * @param modelFileLocation Fully qualified path to a model file
-     * @param resourceSet The ResourceSet to which possible references should be added
-     */
-    private static def void collectPossiblyReferencedResources(IFile modelFile, ResourceSet resourceSet) {
-        val modelFileLocation = modelFile.location.toOSString 
-        if(modelFile != null && modelFile.exists) {
-            val fileExtensionOfModelFiles = modelFile.fileExtension
-            val project = modelFile.project
-            
-            val files = PromPlugin.findFiles(project.members, fileExtensionOfModelFiles)
-            for(f : files) {
-                val location = f.location.toOSString
-                // Don't add resource of model file itself
-                if(!modelFileLocation.equals(location)) {
-                    System.err.println("\tAdding "+f.name+" to resource set")
-                    val uri = URI.createFileURI(location)
-                    resourceSet.getResource(uri, true)
-                    System.err.println("\tDone!")
-                }
-            }
-        }
-    }
-    
-    /**
-     * Creates a file handle to a resource in the Eclipse workspace from an absolute file path.
-     * 
-     * @param fullPath The fully qualified file path to a resource in the Eclipse workspace.
-     * @return the loaded file handle or null if the file path is invalid
-     */
-    private static def IFile getFile(String fullPath) {
-        val uri = new File(fullPath).toURI();
-        val files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(uri)
-        if (files.isEmpty)
-            return null
-        else
-            return files.get(0)
-    }
 }

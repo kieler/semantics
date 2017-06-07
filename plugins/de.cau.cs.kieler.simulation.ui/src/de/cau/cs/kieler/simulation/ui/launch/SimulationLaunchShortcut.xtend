@@ -26,6 +26,13 @@ import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.ide.ResourceUtil
+import org.eclipse.ui.PlatformUI
+import de.cau.cs.kieler.simulation.ui.views.DataPoolView
+import org.eclipse.ui.statushandlers.StatusManager
+import org.eclipse.ui.statushandlers.StatusAdapter
+import org.eclipse.core.runtime.Status
+import de.cau.cs.kieler.simulation.SimulationPlugin
+import org.eclipse.jface.dialogs.ErrorDialog
 
 /**
  * @author aas
@@ -72,13 +79,27 @@ class SimulationLaunchShortcut implements ILaunchShortcut{
                     this.files = structuredSelection.toList
                     this.project = file.project
                     this.mode = mode
-                    launch()         
+                    
+                    
+                    try {
+                        launch()
+                    } catch (Exception e){
+                        val status = new Status(Status.ERROR, SimulationPlugin.PLUGIN_ID, "There was an error during simulation.", e)
+                        StatusManager.getManager().handle(status, StatusManager.SHOW);
+                        SimulationManager.instance.stop()
+                        throw e
+                    }
                 }
             }    
         }
     }
     
     private def void launch() {
+        // Show data pool view
+        if(DataPoolView.instance != null) {
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().bringToTop(DataPoolView.instance);
+        }
+        
         // TODO: Hard coded stuff
         if(files.size == 1) {
             val simulator = new ExecutableSimulator()
