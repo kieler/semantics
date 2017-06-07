@@ -39,7 +39,7 @@ public class RailSLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
 					put(grammarAccess.getSetStatementAccess().getAlternatives(), "rule__SetStatement__Alternatives");
 					put(grammarAccess.getTrackSettingAccess().getAlternatives(), "rule__TrackSetting__Alternatives");
-					put(grammarAccess.getTrackSettingAccess().getAlternatives_0_1(), "rule__TrackSetting__Alternatives_0_1");
+					put(grammarAccess.getTrackSettingAccess().getAlternatives_0_0(), "rule__TrackSetting__Alternatives_0_0");
 					put(grammarAccess.getSetPointStatementAccess().getOrientationAlternatives_4_0(), "rule__SetPointStatement__OrientationAlternatives_4_0");
 					put(grammarAccess.getWaitStatementAccess().getAlternatives(), "rule__WaitStatement__Alternatives");
 					put(grammarAccess.getContactWaitStatementAccess().getEventAlternatives_0_0(), "rule__ContactWaitStatement__EventAlternatives_0_0");

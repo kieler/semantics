@@ -27,7 +27,7 @@ SetTrackStatement:
 ;
 
 TrackSetting:
-	(('reverse')? ('go' | 'slow')) | 'stop'
+	(('full' | 'slow') ('reverse')?) | 'stop'
 ;
 
 SetPointStatement:
@@ -62,7 +62,6 @@ ConditionalStatement:
     'Branch:'
     lines+=ConditionalLine
     (lines+=ConditionalLine)+
-    'End.'
 ;
 ConditionalLine:
     'If' contact=ContactIndex 'contact of' + segName=SEG_NAME 'is reached first, do' + block=Block

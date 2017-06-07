@@ -720,25 +720,29 @@ ${outputs}
 
         for (statement : block.statements) {
             var state = statement.compile(region)
-            var transition = currentState.createTransitionTo(state)
             if (currentState != region.initialState) {
-                transition.setTypeTermination
-                transition.setNotImmediate
+                var connectorState = region.createState("");
+                var termTransition = currentState.createTransitionTo(connectorState)
+                var transition = connectorState.createTransitionTo(state)
+                termTransition.setTypeTermination
             } else {
+                var transition = currentState.createTransitionTo(state)
                 transition.setImmediate
             }
             
             currentState = state
         }
+        
+        var state = region.createState("")
+        var term = currentState.createTransitionTo(state)
+        term.setTypeTermination
+        currentState = state
+        
         if (block.end.equals("End.")) {
             val done = region.createFinalState("done")
-            var transition = currentState.createTransitionTo(done)
-            transition.setTypeTermination
-            transition.setNotImmediate
+            currentState.createTransitionTo(done)
         } else {
-            var transition = currentState.createTransitionTo(region.initialState)
-            transition.setTypeTermination
-            transition.setNotImmediate
+            currentState.createTransitionTo(region.initialState)
         }
     }
 

@@ -389,25 +389,25 @@ ruleTrackSetting returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleTo
 	(
 		(
 			(
-				kw='reverse'
+				kw='full'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getReverseKeyword_0_0());
-				}
-			)?
-			(
-				kw='go'
-				{
-					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getGoKeyword_0_1_0());
+					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0());
 				}
 				    |
 				kw='slow'
 				{
 					$current.merge(kw);
-					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getSlowKeyword_0_1_1());
+					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1());
 				}
 			)
+			(
+				kw='reverse'
+				{
+					$current.merge(kw);
+					newLeafNode(kw, grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1());
+				}
+			)?
 		)
 		    |
 		kw='stop'
@@ -933,10 +933,6 @@ ruleConditionalStatement returns [EObject current=null]
 				}
 			)
 		)+
-		otherlv_3='End.'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getConditionalStatementAccess().getEndKeyword_3());
-		}
 	)
 ;
 

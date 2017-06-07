@@ -595,21 +595,21 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TrackSetting__Alternatives_0_1
+rule__TrackSetting__Alternatives_0_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTrackSettingAccess().getGoKeyword_0_1_0()); }
-		'go'
-		{ after(grammarAccess.getTrackSettingAccess().getGoKeyword_0_1_0()); }
+		{ before(grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0()); }
+		'full'
+		{ after(grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_1_1()); }
+		{ before(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1()); }
 		'slow'
-		{ after(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_1_1()); }
+		{ after(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1()); }
 	)
 ;
 finally {
@@ -1382,9 +1382,9 @@ rule__TrackSetting__Group_0__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_0()); }
-	('reverse')?
-	{ after(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_0()); }
+	{ before(grammarAccess.getTrackSettingAccess().getAlternatives_0_0()); }
+	(rule__TrackSetting__Alternatives_0_0)
+	{ after(grammarAccess.getTrackSettingAccess().getAlternatives_0_0()); }
 )
 ;
 finally {
@@ -1408,9 +1408,9 @@ rule__TrackSetting__Group_0__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTrackSettingAccess().getAlternatives_0_1()); }
-	(rule__TrackSetting__Alternatives_0_1)
-	{ after(grammarAccess.getTrackSettingAccess().getAlternatives_0_1()); }
+	{ before(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1()); }
+	('reverse')?
+	{ after(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1()); }
 )
 ;
 finally {
@@ -2167,7 +2167,6 @@ rule__ConditionalStatement__Group__2
 	}
 :
 	rule__ConditionalStatement__Group__2__Impl
-	rule__ConditionalStatement__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -2189,32 +2188,6 @@ rule__ConditionalStatement__Group__2__Impl
 		(rule__ConditionalStatement__LinesAssignment_2)*
 		{ after(grammarAccess.getConditionalStatementAccess().getLinesAssignment_2()); }
 	)
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__ConditionalStatement__Group__3
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__ConditionalStatement__Group__3__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__ConditionalStatement__Group__3__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getConditionalStatementAccess().getEndKeyword_3()); }
-	'End.'
-	{ after(grammarAccess.getConditionalStatementAccess().getEndKeyword_3()); }
 )
 ;
 finally {

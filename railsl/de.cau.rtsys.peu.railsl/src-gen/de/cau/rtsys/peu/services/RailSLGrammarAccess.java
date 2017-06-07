@@ -192,33 +192,33 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.TrackSetting");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cReverseKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Alternatives cAlternatives_0_1 = (Alternatives)cGroup_0.eContents().get(1);
-		private final Keyword cGoKeyword_0_1_0 = (Keyword)cAlternatives_0_1.eContents().get(0);
-		private final Keyword cSlowKeyword_0_1_1 = (Keyword)cAlternatives_0_1.eContents().get(1);
+		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
+		private final Keyword cFullKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
+		private final Keyword cSlowKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
+		private final Keyword cReverseKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final Keyword cStopKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
 		//TrackSetting:
-		//	'reverse'? ('go' | 'slow') | 'stop';
+		//	('full' | 'slow') 'reverse'? | 'stop';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'reverse'? ('go' | 'slow') | 'stop'
+		//('full' | 'slow') 'reverse'? | 'stop'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//'reverse'? ('go' | 'slow')
+		//('full' | 'slow') 'reverse'?
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//'reverse'?
-		public Keyword getReverseKeyword_0_0() { return cReverseKeyword_0_0; }
+		//('full' | 'slow')
+		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
 		
-		//('go' | 'slow')
-		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
-		
-		//'go'
-		public Keyword getGoKeyword_0_1_0() { return cGoKeyword_0_1_0; }
+		//'full'
+		public Keyword getFullKeyword_0_0_0() { return cFullKeyword_0_0_0; }
 		
 		//'slow'
-		public Keyword getSlowKeyword_0_1_1() { return cSlowKeyword_0_1_1; }
+		public Keyword getSlowKeyword_0_0_1() { return cSlowKeyword_0_0_1; }
+		
+		//'reverse'?
+		public Keyword getReverseKeyword_0_1() { return cReverseKeyword_0_1; }
 		
 		//'stop'
 		public Keyword getStopKeyword_1() { return cStopKeyword_1; }
@@ -500,16 +500,14 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLinesConditionalLineParserRuleCall_1_0 = (RuleCall)cLinesAssignment_1.eContents().get(0);
 		private final Assignment cLinesAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cLinesConditionalLineParserRuleCall_2_0 = (RuleCall)cLinesAssignment_2.eContents().get(0);
-		private final Keyword cEndKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//ConditionalStatement:
 		//	'Branch:'
 		//	lines+=ConditionalLine
-		//	lines+=ConditionalLine+
-		//	'End.';
+		//	lines+=ConditionalLine+;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'Branch:' lines+=ConditionalLine lines+=ConditionalLine+ 'End.'
+		//'Branch:' lines+=ConditionalLine lines+=ConditionalLine+
 		public Group getGroup() { return cGroup; }
 		
 		//'Branch:'
@@ -526,9 +524,6 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionalLine
 		public RuleCall getLinesConditionalLineParserRuleCall_2_0() { return cLinesConditionalLineParserRuleCall_2_0; }
-		
-		//'End.'
-		public Keyword getEndKeyword_3() { return cEndKeyword_3; }
 	}
 	public class ConditionalLineElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.rtsys.peu.RailSL.ConditionalLine");
@@ -948,7 +943,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TrackSetting:
-	//	'reverse'? ('go' | 'slow') | 'stop';
+	//	('full' | 'slow') 'reverse'? | 'stop';
 	public TrackSettingElements getTrackSettingAccess() {
 		return pTrackSetting;
 	}
@@ -1030,8 +1025,7 @@ public class RailSLGrammarAccess extends AbstractGrammarElementFinder {
 	//ConditionalStatement:
 	//	'Branch:'
 	//	lines+=ConditionalLine
-	//	lines+=ConditionalLine+
-	//	'End.';
+	//	lines+=ConditionalLine+;
 	public ConditionalStatementElements getConditionalStatementAccess() {
 		return pConditionalStatement;
 	}

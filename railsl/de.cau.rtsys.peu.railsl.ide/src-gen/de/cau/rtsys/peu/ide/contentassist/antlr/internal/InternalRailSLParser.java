@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'End.'", "'Loop.'", "'stop'", "'go'", "'slow'", "'straight'", "'branch'", "'Reach'", "'Pass'", "'Open'", "'Close'", "'on'", "'off'", "'first'", "'second'", "'KH_ST_0'", "'KH_ST_1'", "'KH_ST_2'", "'KH_ST_3'", "'KH_ST_4'", "'KH_ST_5'", "'KH_ST_6'", "'KH_LN_0'", "'KH_LN_1'", "'KH_LN_2'", "'KH_LN_3'", "'KH_LN_4'", "'KH_LN_5'", "'KH_LN_6'", "'KH_LN_7'", "'KH_LN_8'", "'KIO_LN_0'", "'KIO_LN_1'", "'OC_ST_0'", "'OC_ST_1'", "'OC_ST_2'", "'OC_ST_3'", "'OC_ST_4'", "'OC_LN_0'", "'OC_LN_1'", "'OC_LN_2'", "'OC_LN_3'", "'OC_LN_4'", "'OC_LN_5'", "'IC_ST_0'", "'IC_ST_1'", "'IC_ST_2'", "'IC_ST_3'", "'IC_ST_4'", "'IC_LN_0'", "'IC_LN_1'", "'IC_LN_2'", "'IC_LN_3'", "'IC_LN_4'", "'IC_LN_5'", "'OC_JCT_0'", "'IC_JCT_0'", "'OI_LN_0'", "'OI_LN_1'", "'OI_LN_2'", "'IO_LN_0'", "'IO_LN_1'", "'IO_LN_2'", "'Start:'", "'Set track'", "'to'", "'.'", "','", "'reverse'", "'Set point'", "'Wait for'", "'seconds.'", "'contact of'", "'crossing.'", "'Turn light'", "'Branch:'", "'If'", "'is reached first, do'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_ID", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'End.'", "'Loop.'", "'stop'", "'full'", "'slow'", "'straight'", "'branch'", "'Reach'", "'Pass'", "'Open'", "'Close'", "'on'", "'off'", "'first'", "'second'", "'KH_ST_0'", "'KH_ST_1'", "'KH_ST_2'", "'KH_ST_3'", "'KH_ST_4'", "'KH_ST_5'", "'KH_ST_6'", "'KH_LN_0'", "'KH_LN_1'", "'KH_LN_2'", "'KH_LN_3'", "'KH_LN_4'", "'KH_LN_5'", "'KH_LN_6'", "'KH_LN_7'", "'KH_LN_8'", "'KIO_LN_0'", "'KIO_LN_1'", "'OC_ST_0'", "'OC_ST_1'", "'OC_ST_2'", "'OC_ST_3'", "'OC_ST_4'", "'OC_LN_0'", "'OC_LN_1'", "'OC_LN_2'", "'OC_LN_3'", "'OC_LN_4'", "'OC_LN_5'", "'IC_ST_0'", "'IC_ST_1'", "'IC_ST_2'", "'IC_ST_3'", "'IC_ST_4'", "'IC_LN_0'", "'IC_LN_1'", "'IC_LN_2'", "'IC_LN_3'", "'IC_LN_4'", "'IC_LN_5'", "'OC_JCT_0'", "'IC_JCT_0'", "'OI_LN_0'", "'OI_LN_1'", "'OI_LN_2'", "'IO_LN_0'", "'IO_LN_1'", "'IO_LN_2'", "'Start:'", "'Set track'", "'to'", "'.'", "','", "'reverse'", "'Set point'", "'Wait for'", "'seconds.'", "'contact of'", "'crossing.'", "'Turn light'", "'Branch:'", "'If'", "'is reached first, do'"
     };
     public static final int T__50=50;
     public static final int T__19=19;
@@ -1847,7 +1847,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( ((LA5_0>=14 && LA5_0<=15)||LA5_0==79) ) {
+            if ( ((LA5_0>=14 && LA5_0<=15)) ) {
                 alt5=1;
             }
             else if ( (LA5_0==13) ) {
@@ -1917,14 +1917,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TrackSetting__Alternatives"
 
 
-    // $ANTLR start "rule__TrackSetting__Alternatives_0_1"
-    // InternalRailSL.g:598:1: rule__TrackSetting__Alternatives_0_1 : ( ( 'go' ) | ( 'slow' ) );
-    public final void rule__TrackSetting__Alternatives_0_1() throws RecognitionException {
+    // $ANTLR start "rule__TrackSetting__Alternatives_0_0"
+    // InternalRailSL.g:598:1: rule__TrackSetting__Alternatives_0_0 : ( ( 'full' ) | ( 'slow' ) );
+    public final void rule__TrackSetting__Alternatives_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:602:1: ( ( 'go' ) | ( 'slow' ) )
+            // InternalRailSL.g:602:1: ( ( 'full' ) | ( 'slow' ) )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1942,14 +1942,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt6) {
                 case 1 :
-                    // InternalRailSL.g:603:2: ( 'go' )
+                    // InternalRailSL.g:603:2: ( 'full' )
                     {
-                    // InternalRailSL.g:603:2: ( 'go' )
-                    // InternalRailSL.g:604:3: 'go'
+                    // InternalRailSL.g:603:2: ( 'full' )
+                    // InternalRailSL.g:604:3: 'full'
                     {
-                     before(grammarAccess.getTrackSettingAccess().getGoKeyword_0_1_0()); 
+                     before(grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0()); 
                     match(input,14,FOLLOW_2); 
-                     after(grammarAccess.getTrackSettingAccess().getGoKeyword_0_1_0()); 
+                     after(grammarAccess.getTrackSettingAccess().getFullKeyword_0_0_0()); 
 
                     }
 
@@ -1962,9 +1962,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
                     // InternalRailSL.g:609:2: ( 'slow' )
                     // InternalRailSL.g:610:3: 'slow'
                     {
-                     before(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_1_1()); 
+                     before(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1()); 
                     match(input,15,FOLLOW_2); 
-                     after(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_1_1()); 
+                     after(grammarAccess.getTrackSettingAccess().getSlowKeyword_0_0_1()); 
 
                     }
 
@@ -1985,7 +1985,7 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TrackSetting__Alternatives_0_1"
+    // $ANTLR end "rule__TrackSetting__Alternatives_0_0"
 
 
     // $ANTLR start "rule__SetPointStatement__OrientationAlternatives_4_0"
@@ -4466,38 +4466,31 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TrackSetting__Group_0__0__Impl"
-    // InternalRailSL.g:1379:1: rule__TrackSetting__Group_0__0__Impl : ( ( 'reverse' )? ) ;
+    // InternalRailSL.g:1379:1: rule__TrackSetting__Group_0__0__Impl : ( ( rule__TrackSetting__Alternatives_0_0 ) ) ;
     public final void rule__TrackSetting__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1383:1: ( ( ( 'reverse' )? ) )
-            // InternalRailSL.g:1384:1: ( ( 'reverse' )? )
+            // InternalRailSL.g:1383:1: ( ( ( rule__TrackSetting__Alternatives_0_0 ) ) )
+            // InternalRailSL.g:1384:1: ( ( rule__TrackSetting__Alternatives_0_0 ) )
             {
-            // InternalRailSL.g:1384:1: ( ( 'reverse' )? )
-            // InternalRailSL.g:1385:2: ( 'reverse' )?
+            // InternalRailSL.g:1384:1: ( ( rule__TrackSetting__Alternatives_0_0 ) )
+            // InternalRailSL.g:1385:2: ( rule__TrackSetting__Alternatives_0_0 )
             {
-             before(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_0()); 
-            // InternalRailSL.g:1386:2: ( 'reverse' )?
-            int alt17=2;
-            int LA17_0 = input.LA(1);
+             before(grammarAccess.getTrackSettingAccess().getAlternatives_0_0()); 
+            // InternalRailSL.g:1386:2: ( rule__TrackSetting__Alternatives_0_0 )
+            // InternalRailSL.g:1386:3: rule__TrackSetting__Alternatives_0_0
+            {
+            pushFollow(FOLLOW_2);
+            rule__TrackSetting__Alternatives_0_0();
 
-            if ( (LA17_0==79) ) {
-                alt17=1;
-            }
-            switch (alt17) {
-                case 1 :
-                    // InternalRailSL.g:1386:3: 'reverse'
-                    {
-                    match(input,79,FOLLOW_2); 
+            state._fsp--;
 
-                    }
-                    break;
 
             }
 
-             after(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_0()); 
+             after(grammarAccess.getTrackSettingAccess().getAlternatives_0_0()); 
 
             }
 
@@ -4553,31 +4546,38 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TrackSetting__Group_0__1__Impl"
-    // InternalRailSL.g:1405:1: rule__TrackSetting__Group_0__1__Impl : ( ( rule__TrackSetting__Alternatives_0_1 ) ) ;
+    // InternalRailSL.g:1405:1: rule__TrackSetting__Group_0__1__Impl : ( ( 'reverse' )? ) ;
     public final void rule__TrackSetting__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:1409:1: ( ( ( rule__TrackSetting__Alternatives_0_1 ) ) )
-            // InternalRailSL.g:1410:1: ( ( rule__TrackSetting__Alternatives_0_1 ) )
+            // InternalRailSL.g:1409:1: ( ( ( 'reverse' )? ) )
+            // InternalRailSL.g:1410:1: ( ( 'reverse' )? )
             {
-            // InternalRailSL.g:1410:1: ( ( rule__TrackSetting__Alternatives_0_1 ) )
-            // InternalRailSL.g:1411:2: ( rule__TrackSetting__Alternatives_0_1 )
+            // InternalRailSL.g:1410:1: ( ( 'reverse' )? )
+            // InternalRailSL.g:1411:2: ( 'reverse' )?
             {
-             before(grammarAccess.getTrackSettingAccess().getAlternatives_0_1()); 
-            // InternalRailSL.g:1412:2: ( rule__TrackSetting__Alternatives_0_1 )
-            // InternalRailSL.g:1412:3: rule__TrackSetting__Alternatives_0_1
-            {
-            pushFollow(FOLLOW_2);
-            rule__TrackSetting__Alternatives_0_1();
+             before(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1()); 
+            // InternalRailSL.g:1412:2: ( 'reverse' )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            state._fsp--;
+            if ( (LA17_0==79) ) {
+                alt17=1;
+            }
+            switch (alt17) {
+                case 1 :
+                    // InternalRailSL.g:1412:3: 'reverse'
+                    {
+                    match(input,79,FOLLOW_2); 
 
+                    }
+                    break;
 
             }
 
-             after(grammarAccess.getTrackSettingAccess().getAlternatives_0_1()); 
+             after(grammarAccess.getTrackSettingAccess().getReverseKeyword_0_1()); 
 
             }
 
@@ -6854,22 +6854,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalStatement__Group__2"
-    // InternalRailSL.g:2164:1: rule__ConditionalStatement__Group__2 : rule__ConditionalStatement__Group__2__Impl rule__ConditionalStatement__Group__3 ;
+    // InternalRailSL.g:2164:1: rule__ConditionalStatement__Group__2 : rule__ConditionalStatement__Group__2__Impl ;
     public final void rule__ConditionalStatement__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2168:1: ( rule__ConditionalStatement__Group__2__Impl rule__ConditionalStatement__Group__3 )
-            // InternalRailSL.g:2169:2: rule__ConditionalStatement__Group__2__Impl rule__ConditionalStatement__Group__3
+            // InternalRailSL.g:2168:1: ( rule__ConditionalStatement__Group__2__Impl )
+            // InternalRailSL.g:2169:2: rule__ConditionalStatement__Group__2__Impl
             {
-            pushFollow(FOLLOW_23);
-            rule__ConditionalStatement__Group__2__Impl();
-
-            state._fsp--;
-
             pushFollow(FOLLOW_2);
-            rule__ConditionalStatement__Group__3();
+            rule__ConditionalStatement__Group__2__Impl();
 
             state._fsp--;
 
@@ -6892,26 +6887,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalStatement__Group__2__Impl"
-    // InternalRailSL.g:2176:1: rule__ConditionalStatement__Group__2__Impl : ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) ) ;
+    // InternalRailSL.g:2175:1: rule__ConditionalStatement__Group__2__Impl : ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) ) ;
     public final void rule__ConditionalStatement__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2180:1: ( ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) ) )
-            // InternalRailSL.g:2181:1: ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) )
+            // InternalRailSL.g:2179:1: ( ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) ) )
+            // InternalRailSL.g:2180:1: ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) )
             {
-            // InternalRailSL.g:2181:1: ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) )
-            // InternalRailSL.g:2182:2: ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* )
+            // InternalRailSL.g:2180:1: ( ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* ) )
+            // InternalRailSL.g:2181:2: ( ( rule__ConditionalStatement__LinesAssignment_2 ) ) ( ( rule__ConditionalStatement__LinesAssignment_2 )* )
             {
-            // InternalRailSL.g:2182:2: ( ( rule__ConditionalStatement__LinesAssignment_2 ) )
-            // InternalRailSL.g:2183:3: ( rule__ConditionalStatement__LinesAssignment_2 )
+            // InternalRailSL.g:2181:2: ( ( rule__ConditionalStatement__LinesAssignment_2 ) )
+            // InternalRailSL.g:2182:3: ( rule__ConditionalStatement__LinesAssignment_2 )
             {
              before(grammarAccess.getConditionalStatementAccess().getLinesAssignment_2()); 
-            // InternalRailSL.g:2184:3: ( rule__ConditionalStatement__LinesAssignment_2 )
-            // InternalRailSL.g:2184:4: rule__ConditionalStatement__LinesAssignment_2
+            // InternalRailSL.g:2183:3: ( rule__ConditionalStatement__LinesAssignment_2 )
+            // InternalRailSL.g:2183:4: rule__ConditionalStatement__LinesAssignment_2
             {
-            pushFollow(FOLLOW_24);
+            pushFollow(FOLLOW_23);
             rule__ConditionalStatement__LinesAssignment_2();
 
             state._fsp--;
@@ -6923,11 +6918,11 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalRailSL.g:2187:2: ( ( rule__ConditionalStatement__LinesAssignment_2 )* )
-            // InternalRailSL.g:2188:3: ( rule__ConditionalStatement__LinesAssignment_2 )*
+            // InternalRailSL.g:2186:2: ( ( rule__ConditionalStatement__LinesAssignment_2 )* )
+            // InternalRailSL.g:2187:3: ( rule__ConditionalStatement__LinesAssignment_2 )*
             {
              before(grammarAccess.getConditionalStatementAccess().getLinesAssignment_2()); 
-            // InternalRailSL.g:2189:3: ( rule__ConditionalStatement__LinesAssignment_2 )*
+            // InternalRailSL.g:2188:3: ( rule__ConditionalStatement__LinesAssignment_2 )*
             loop22:
             do {
                 int alt22=2;
@@ -6940,9 +6935,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt22) {
             	case 1 :
-            	    // InternalRailSL.g:2189:4: rule__ConditionalStatement__LinesAssignment_2
+            	    // InternalRailSL.g:2188:4: rule__ConditionalStatement__LinesAssignment_2
             	    {
-            	    pushFollow(FOLLOW_24);
+            	    pushFollow(FOLLOW_23);
             	    rule__ConditionalStatement__LinesAssignment_2();
 
             	    state._fsp--;
@@ -6981,85 +6976,15 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ConditionalStatement__Group__2__Impl"
 
 
-    // $ANTLR start "rule__ConditionalStatement__Group__3"
-    // InternalRailSL.g:2198:1: rule__ConditionalStatement__Group__3 : rule__ConditionalStatement__Group__3__Impl ;
-    public final void rule__ConditionalStatement__Group__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalRailSL.g:2202:1: ( rule__ConditionalStatement__Group__3__Impl )
-            // InternalRailSL.g:2203:2: rule__ConditionalStatement__Group__3__Impl
-            {
-            pushFollow(FOLLOW_2);
-            rule__ConditionalStatement__Group__3__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ConditionalStatement__Group__3"
-
-
-    // $ANTLR start "rule__ConditionalStatement__Group__3__Impl"
-    // InternalRailSL.g:2209:1: rule__ConditionalStatement__Group__3__Impl : ( 'End.' ) ;
-    public final void rule__ConditionalStatement__Group__3__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-        	
-        try {
-            // InternalRailSL.g:2213:1: ( ( 'End.' ) )
-            // InternalRailSL.g:2214:1: ( 'End.' )
-            {
-            // InternalRailSL.g:2214:1: ( 'End.' )
-            // InternalRailSL.g:2215:2: 'End.'
-            {
-             before(grammarAccess.getConditionalStatementAccess().getEndKeyword_3()); 
-            match(input,11,FOLLOW_2); 
-             after(grammarAccess.getConditionalStatementAccess().getEndKeyword_3()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ConditionalStatement__Group__3__Impl"
-
-
     // $ANTLR start "rule__ConditionalLine__Group__0"
-    // InternalRailSL.g:2225:1: rule__ConditionalLine__Group__0 : rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1 ;
+    // InternalRailSL.g:2198:1: rule__ConditionalLine__Group__0 : rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1 ;
     public final void rule__ConditionalLine__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2229:1: ( rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1 )
-            // InternalRailSL.g:2230:2: rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1
+            // InternalRailSL.g:2202:1: ( rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1 )
+            // InternalRailSL.g:2203:2: rule__ConditionalLine__Group__0__Impl rule__ConditionalLine__Group__1
             {
             pushFollow(FOLLOW_18);
             rule__ConditionalLine__Group__0__Impl();
@@ -7090,17 +7015,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__0__Impl"
-    // InternalRailSL.g:2237:1: rule__ConditionalLine__Group__0__Impl : ( 'If' ) ;
+    // InternalRailSL.g:2210:1: rule__ConditionalLine__Group__0__Impl : ( 'If' ) ;
     public final void rule__ConditionalLine__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2241:1: ( ( 'If' ) )
-            // InternalRailSL.g:2242:1: ( 'If' )
+            // InternalRailSL.g:2214:1: ( ( 'If' ) )
+            // InternalRailSL.g:2215:1: ( 'If' )
             {
-            // InternalRailSL.g:2242:1: ( 'If' )
-            // InternalRailSL.g:2243:2: 'If'
+            // InternalRailSL.g:2215:1: ( 'If' )
+            // InternalRailSL.g:2216:2: 'If'
             {
              before(grammarAccess.getConditionalLineAccess().getIfKeyword_0()); 
             match(input,87,FOLLOW_2); 
@@ -7127,14 +7052,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__1"
-    // InternalRailSL.g:2252:1: rule__ConditionalLine__Group__1 : rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2 ;
+    // InternalRailSL.g:2225:1: rule__ConditionalLine__Group__1 : rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2 ;
     public final void rule__ConditionalLine__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2256:1: ( rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2 )
-            // InternalRailSL.g:2257:2: rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2
+            // InternalRailSL.g:2229:1: ( rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2 )
+            // InternalRailSL.g:2230:2: rule__ConditionalLine__Group__1__Impl rule__ConditionalLine__Group__2
             {
             pushFollow(FOLLOW_19);
             rule__ConditionalLine__Group__1__Impl();
@@ -7165,21 +7090,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__1__Impl"
-    // InternalRailSL.g:2264:1: rule__ConditionalLine__Group__1__Impl : ( ( rule__ConditionalLine__ContactAssignment_1 ) ) ;
+    // InternalRailSL.g:2237:1: rule__ConditionalLine__Group__1__Impl : ( ( rule__ConditionalLine__ContactAssignment_1 ) ) ;
     public final void rule__ConditionalLine__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2268:1: ( ( ( rule__ConditionalLine__ContactAssignment_1 ) ) )
-            // InternalRailSL.g:2269:1: ( ( rule__ConditionalLine__ContactAssignment_1 ) )
+            // InternalRailSL.g:2241:1: ( ( ( rule__ConditionalLine__ContactAssignment_1 ) ) )
+            // InternalRailSL.g:2242:1: ( ( rule__ConditionalLine__ContactAssignment_1 ) )
             {
-            // InternalRailSL.g:2269:1: ( ( rule__ConditionalLine__ContactAssignment_1 ) )
-            // InternalRailSL.g:2270:2: ( rule__ConditionalLine__ContactAssignment_1 )
+            // InternalRailSL.g:2242:1: ( ( rule__ConditionalLine__ContactAssignment_1 ) )
+            // InternalRailSL.g:2243:2: ( rule__ConditionalLine__ContactAssignment_1 )
             {
              before(grammarAccess.getConditionalLineAccess().getContactAssignment_1()); 
-            // InternalRailSL.g:2271:2: ( rule__ConditionalLine__ContactAssignment_1 )
-            // InternalRailSL.g:2271:3: rule__ConditionalLine__ContactAssignment_1
+            // InternalRailSL.g:2244:2: ( rule__ConditionalLine__ContactAssignment_1 )
+            // InternalRailSL.g:2244:3: rule__ConditionalLine__ContactAssignment_1
             {
             pushFollow(FOLLOW_2);
             rule__ConditionalLine__ContactAssignment_1();
@@ -7212,14 +7137,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__2"
-    // InternalRailSL.g:2279:1: rule__ConditionalLine__Group__2 : rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3 ;
+    // InternalRailSL.g:2252:1: rule__ConditionalLine__Group__2 : rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3 ;
     public final void rule__ConditionalLine__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2283:1: ( rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3 )
-            // InternalRailSL.g:2284:2: rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3
+            // InternalRailSL.g:2256:1: ( rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3 )
+            // InternalRailSL.g:2257:2: rule__ConditionalLine__Group__2__Impl rule__ConditionalLine__Group__3
             {
             pushFollow(FOLLOW_7);
             rule__ConditionalLine__Group__2__Impl();
@@ -7250,26 +7175,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__2__Impl"
-    // InternalRailSL.g:2291:1: rule__ConditionalLine__Group__2__Impl : ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) ) ;
+    // InternalRailSL.g:2264:1: rule__ConditionalLine__Group__2__Impl : ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) ) ;
     public final void rule__ConditionalLine__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2295:1: ( ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) ) )
-            // InternalRailSL.g:2296:1: ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) )
+            // InternalRailSL.g:2268:1: ( ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) ) )
+            // InternalRailSL.g:2269:1: ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) )
             {
-            // InternalRailSL.g:2296:1: ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) )
-            // InternalRailSL.g:2297:2: ( ( 'contact of' ) ) ( ( 'contact of' )* )
+            // InternalRailSL.g:2269:1: ( ( ( 'contact of' ) ) ( ( 'contact of' )* ) )
+            // InternalRailSL.g:2270:2: ( ( 'contact of' ) ) ( ( 'contact of' )* )
             {
-            // InternalRailSL.g:2297:2: ( ( 'contact of' ) )
-            // InternalRailSL.g:2298:3: ( 'contact of' )
+            // InternalRailSL.g:2270:2: ( ( 'contact of' ) )
+            // InternalRailSL.g:2271:3: ( 'contact of' )
             {
              before(grammarAccess.getConditionalLineAccess().getContactOfKeyword_2()); 
-            // InternalRailSL.g:2299:3: ( 'contact of' )
-            // InternalRailSL.g:2299:4: 'contact of'
+            // InternalRailSL.g:2272:3: ( 'contact of' )
+            // InternalRailSL.g:2272:4: 'contact of'
             {
-            match(input,83,FOLLOW_25); 
+            match(input,83,FOLLOW_24); 
 
             }
 
@@ -7277,11 +7202,11 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalRailSL.g:2302:2: ( ( 'contact of' )* )
-            // InternalRailSL.g:2303:3: ( 'contact of' )*
+            // InternalRailSL.g:2275:2: ( ( 'contact of' )* )
+            // InternalRailSL.g:2276:3: ( 'contact of' )*
             {
              before(grammarAccess.getConditionalLineAccess().getContactOfKeyword_2()); 
-            // InternalRailSL.g:2304:3: ( 'contact of' )*
+            // InternalRailSL.g:2277:3: ( 'contact of' )*
             loop23:
             do {
                 int alt23=2;
@@ -7294,9 +7219,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt23) {
             	case 1 :
-            	    // InternalRailSL.g:2304:4: 'contact of'
+            	    // InternalRailSL.g:2277:4: 'contact of'
             	    {
-            	    match(input,83,FOLLOW_25); 
+            	    match(input,83,FOLLOW_24); 
 
             	    }
             	    break;
@@ -7332,16 +7257,16 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__3"
-    // InternalRailSL.g:2313:1: rule__ConditionalLine__Group__3 : rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4 ;
+    // InternalRailSL.g:2286:1: rule__ConditionalLine__Group__3 : rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4 ;
     public final void rule__ConditionalLine__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2317:1: ( rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4 )
-            // InternalRailSL.g:2318:2: rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4
+            // InternalRailSL.g:2290:1: ( rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4 )
+            // InternalRailSL.g:2291:2: rule__ConditionalLine__Group__3__Impl rule__ConditionalLine__Group__4
             {
-            pushFollow(FOLLOW_26);
+            pushFollow(FOLLOW_25);
             rule__ConditionalLine__Group__3__Impl();
 
             state._fsp--;
@@ -7370,21 +7295,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__3__Impl"
-    // InternalRailSL.g:2325:1: rule__ConditionalLine__Group__3__Impl : ( ( rule__ConditionalLine__SegNameAssignment_3 ) ) ;
+    // InternalRailSL.g:2298:1: rule__ConditionalLine__Group__3__Impl : ( ( rule__ConditionalLine__SegNameAssignment_3 ) ) ;
     public final void rule__ConditionalLine__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2329:1: ( ( ( rule__ConditionalLine__SegNameAssignment_3 ) ) )
-            // InternalRailSL.g:2330:1: ( ( rule__ConditionalLine__SegNameAssignment_3 ) )
+            // InternalRailSL.g:2302:1: ( ( ( rule__ConditionalLine__SegNameAssignment_3 ) ) )
+            // InternalRailSL.g:2303:1: ( ( rule__ConditionalLine__SegNameAssignment_3 ) )
             {
-            // InternalRailSL.g:2330:1: ( ( rule__ConditionalLine__SegNameAssignment_3 ) )
-            // InternalRailSL.g:2331:2: ( rule__ConditionalLine__SegNameAssignment_3 )
+            // InternalRailSL.g:2303:1: ( ( rule__ConditionalLine__SegNameAssignment_3 ) )
+            // InternalRailSL.g:2304:2: ( rule__ConditionalLine__SegNameAssignment_3 )
             {
              before(grammarAccess.getConditionalLineAccess().getSegNameAssignment_3()); 
-            // InternalRailSL.g:2332:2: ( rule__ConditionalLine__SegNameAssignment_3 )
-            // InternalRailSL.g:2332:3: rule__ConditionalLine__SegNameAssignment_3
+            // InternalRailSL.g:2305:2: ( rule__ConditionalLine__SegNameAssignment_3 )
+            // InternalRailSL.g:2305:3: rule__ConditionalLine__SegNameAssignment_3
             {
             pushFollow(FOLLOW_2);
             rule__ConditionalLine__SegNameAssignment_3();
@@ -7417,16 +7342,16 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__4"
-    // InternalRailSL.g:2340:1: rule__ConditionalLine__Group__4 : rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5 ;
+    // InternalRailSL.g:2313:1: rule__ConditionalLine__Group__4 : rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5 ;
     public final void rule__ConditionalLine__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2344:1: ( rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5 )
-            // InternalRailSL.g:2345:2: rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5
+            // InternalRailSL.g:2317:1: ( rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5 )
+            // InternalRailSL.g:2318:2: rule__ConditionalLine__Group__4__Impl rule__ConditionalLine__Group__5
             {
-            pushFollow(FOLLOW_27);
+            pushFollow(FOLLOW_26);
             rule__ConditionalLine__Group__4__Impl();
 
             state._fsp--;
@@ -7455,26 +7380,26 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__4__Impl"
-    // InternalRailSL.g:2352:1: rule__ConditionalLine__Group__4__Impl : ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) ) ;
+    // InternalRailSL.g:2325:1: rule__ConditionalLine__Group__4__Impl : ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) ) ;
     public final void rule__ConditionalLine__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2356:1: ( ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) ) )
-            // InternalRailSL.g:2357:1: ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) )
+            // InternalRailSL.g:2329:1: ( ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) ) )
+            // InternalRailSL.g:2330:1: ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) )
             {
-            // InternalRailSL.g:2357:1: ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) )
-            // InternalRailSL.g:2358:2: ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* )
+            // InternalRailSL.g:2330:1: ( ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* ) )
+            // InternalRailSL.g:2331:2: ( ( 'is reached first, do' ) ) ( ( 'is reached first, do' )* )
             {
-            // InternalRailSL.g:2358:2: ( ( 'is reached first, do' ) )
-            // InternalRailSL.g:2359:3: ( 'is reached first, do' )
+            // InternalRailSL.g:2331:2: ( ( 'is reached first, do' ) )
+            // InternalRailSL.g:2332:3: ( 'is reached first, do' )
             {
              before(grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4()); 
-            // InternalRailSL.g:2360:3: ( 'is reached first, do' )
-            // InternalRailSL.g:2360:4: 'is reached first, do'
+            // InternalRailSL.g:2333:3: ( 'is reached first, do' )
+            // InternalRailSL.g:2333:4: 'is reached first, do'
             {
-            match(input,88,FOLLOW_28); 
+            match(input,88,FOLLOW_27); 
 
             }
 
@@ -7482,11 +7407,11 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
             }
 
-            // InternalRailSL.g:2363:2: ( ( 'is reached first, do' )* )
-            // InternalRailSL.g:2364:3: ( 'is reached first, do' )*
+            // InternalRailSL.g:2336:2: ( ( 'is reached first, do' )* )
+            // InternalRailSL.g:2337:3: ( 'is reached first, do' )*
             {
              before(grammarAccess.getConditionalLineAccess().getIsReachedFirstDoKeyword_4()); 
-            // InternalRailSL.g:2365:3: ( 'is reached first, do' )*
+            // InternalRailSL.g:2338:3: ( 'is reached first, do' )*
             loop24:
             do {
                 int alt24=2;
@@ -7499,9 +7424,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt24) {
             	case 1 :
-            	    // InternalRailSL.g:2365:4: 'is reached first, do'
+            	    // InternalRailSL.g:2338:4: 'is reached first, do'
             	    {
-            	    match(input,88,FOLLOW_28); 
+            	    match(input,88,FOLLOW_27); 
 
             	    }
             	    break;
@@ -7537,14 +7462,14 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__5"
-    // InternalRailSL.g:2374:1: rule__ConditionalLine__Group__5 : rule__ConditionalLine__Group__5__Impl ;
+    // InternalRailSL.g:2347:1: rule__ConditionalLine__Group__5 : rule__ConditionalLine__Group__5__Impl ;
     public final void rule__ConditionalLine__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2378:1: ( rule__ConditionalLine__Group__5__Impl )
-            // InternalRailSL.g:2379:2: rule__ConditionalLine__Group__5__Impl
+            // InternalRailSL.g:2351:1: ( rule__ConditionalLine__Group__5__Impl )
+            // InternalRailSL.g:2352:2: rule__ConditionalLine__Group__5__Impl
             {
             pushFollow(FOLLOW_2);
             rule__ConditionalLine__Group__5__Impl();
@@ -7570,21 +7495,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__Group__5__Impl"
-    // InternalRailSL.g:2385:1: rule__ConditionalLine__Group__5__Impl : ( ( rule__ConditionalLine__BlockAssignment_5 ) ) ;
+    // InternalRailSL.g:2358:1: rule__ConditionalLine__Group__5__Impl : ( ( rule__ConditionalLine__BlockAssignment_5 ) ) ;
     public final void rule__ConditionalLine__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2389:1: ( ( ( rule__ConditionalLine__BlockAssignment_5 ) ) )
-            // InternalRailSL.g:2390:1: ( ( rule__ConditionalLine__BlockAssignment_5 ) )
+            // InternalRailSL.g:2362:1: ( ( ( rule__ConditionalLine__BlockAssignment_5 ) ) )
+            // InternalRailSL.g:2363:1: ( ( rule__ConditionalLine__BlockAssignment_5 ) )
             {
-            // InternalRailSL.g:2390:1: ( ( rule__ConditionalLine__BlockAssignment_5 ) )
-            // InternalRailSL.g:2391:2: ( rule__ConditionalLine__BlockAssignment_5 )
+            // InternalRailSL.g:2363:1: ( ( rule__ConditionalLine__BlockAssignment_5 ) )
+            // InternalRailSL.g:2364:2: ( rule__ConditionalLine__BlockAssignment_5 )
             {
              before(grammarAccess.getConditionalLineAccess().getBlockAssignment_5()); 
-            // InternalRailSL.g:2392:2: ( rule__ConditionalLine__BlockAssignment_5 )
-            // InternalRailSL.g:2392:3: rule__ConditionalLine__BlockAssignment_5
+            // InternalRailSL.g:2365:2: ( rule__ConditionalLine__BlockAssignment_5 )
+            // InternalRailSL.g:2365:3: rule__ConditionalLine__BlockAssignment_5
             {
             pushFollow(FOLLOW_2);
             rule__ConditionalLine__BlockAssignment_5();
@@ -7617,17 +7542,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Program__BlocksAssignment"
-    // InternalRailSL.g:2401:1: rule__Program__BlocksAssignment : ( ruleBlock ) ;
+    // InternalRailSL.g:2374:1: rule__Program__BlocksAssignment : ( ruleBlock ) ;
     public final void rule__Program__BlocksAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2405:1: ( ( ruleBlock ) )
-            // InternalRailSL.g:2406:2: ( ruleBlock )
+            // InternalRailSL.g:2378:1: ( ( ruleBlock ) )
+            // InternalRailSL.g:2379:2: ( ruleBlock )
             {
-            // InternalRailSL.g:2406:2: ( ruleBlock )
-            // InternalRailSL.g:2407:3: ruleBlock
+            // InternalRailSL.g:2379:2: ( ruleBlock )
+            // InternalRailSL.g:2380:3: ruleBlock
             {
              before(grammarAccess.getProgramAccess().getBlocksBlockParserRuleCall_0()); 
             pushFollow(FOLLOW_2);
@@ -7658,17 +7583,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Block__StatementsAssignment_1"
-    // InternalRailSL.g:2416:1: rule__Block__StatementsAssignment_1 : ( ruleStatement ) ;
+    // InternalRailSL.g:2389:1: rule__Block__StatementsAssignment_1 : ( ruleStatement ) ;
     public final void rule__Block__StatementsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2420:1: ( ( ruleStatement ) )
-            // InternalRailSL.g:2421:2: ( ruleStatement )
+            // InternalRailSL.g:2393:1: ( ( ruleStatement ) )
+            // InternalRailSL.g:2394:2: ( ruleStatement )
             {
-            // InternalRailSL.g:2421:2: ( ruleStatement )
-            // InternalRailSL.g:2422:3: ruleStatement
+            // InternalRailSL.g:2394:2: ( ruleStatement )
+            // InternalRailSL.g:2395:3: ruleStatement
             {
              before(grammarAccess.getBlockAccess().getStatementsStatementParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7699,17 +7624,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Block__EndAssignment_2"
-    // InternalRailSL.g:2431:1: rule__Block__EndAssignment_2 : ( ruleBLOCK_END ) ;
+    // InternalRailSL.g:2404:1: rule__Block__EndAssignment_2 : ( ruleBLOCK_END ) ;
     public final void rule__Block__EndAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2435:1: ( ( ruleBLOCK_END ) )
-            // InternalRailSL.g:2436:2: ( ruleBLOCK_END )
+            // InternalRailSL.g:2408:1: ( ( ruleBLOCK_END ) )
+            // InternalRailSL.g:2409:2: ( ruleBLOCK_END )
             {
-            // InternalRailSL.g:2436:2: ( ruleBLOCK_END )
-            // InternalRailSL.g:2437:3: ruleBLOCK_END
+            // InternalRailSL.g:2409:2: ( ruleBLOCK_END )
+            // InternalRailSL.g:2410:3: ruleBLOCK_END
             {
              before(grammarAccess.getBlockAccess().getEndBLOCK_ENDParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -7740,17 +7665,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_1"
-    // InternalRailSL.g:2446:1: rule__SetTrackStatement__SegmentsAssignment_1 : ( ruleSEG_NAME ) ;
+    // InternalRailSL.g:2419:1: rule__SetTrackStatement__SegmentsAssignment_1 : ( ruleSEG_NAME ) ;
     public final void rule__SetTrackStatement__SegmentsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2450:1: ( ( ruleSEG_NAME ) )
-            // InternalRailSL.g:2451:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2423:1: ( ( ruleSEG_NAME ) )
+            // InternalRailSL.g:2424:2: ( ruleSEG_NAME )
             {
-            // InternalRailSL.g:2451:2: ( ruleSEG_NAME )
-            // InternalRailSL.g:2452:3: ruleSEG_NAME
+            // InternalRailSL.g:2424:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2425:3: ruleSEG_NAME
             {
              before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7781,17 +7706,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetTrackStatement__SegmentsAssignment_2_1"
-    // InternalRailSL.g:2461:1: rule__SetTrackStatement__SegmentsAssignment_2_1 : ( ruleSEG_NAME ) ;
+    // InternalRailSL.g:2434:1: rule__SetTrackStatement__SegmentsAssignment_2_1 : ( ruleSEG_NAME ) ;
     public final void rule__SetTrackStatement__SegmentsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2465:1: ( ( ruleSEG_NAME ) )
-            // InternalRailSL.g:2466:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2438:1: ( ( ruleSEG_NAME ) )
+            // InternalRailSL.g:2439:2: ( ruleSEG_NAME )
             {
-            // InternalRailSL.g:2466:2: ( ruleSEG_NAME )
-            // InternalRailSL.g:2467:3: ruleSEG_NAME
+            // InternalRailSL.g:2439:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2440:3: ruleSEG_NAME
             {
              before(grammarAccess.getSetTrackStatementAccess().getSegmentsSEG_NAMEParserRuleCall_2_1_0()); 
             pushFollow(FOLLOW_2);
@@ -7822,17 +7747,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetTrackStatement__ModeAssignment_4"
-    // InternalRailSL.g:2476:1: rule__SetTrackStatement__ModeAssignment_4 : ( ruleTrackSetting ) ;
+    // InternalRailSL.g:2449:1: rule__SetTrackStatement__ModeAssignment_4 : ( ruleTrackSetting ) ;
     public final void rule__SetTrackStatement__ModeAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2480:1: ( ( ruleTrackSetting ) )
-            // InternalRailSL.g:2481:2: ( ruleTrackSetting )
+            // InternalRailSL.g:2453:1: ( ( ruleTrackSetting ) )
+            // InternalRailSL.g:2454:2: ( ruleTrackSetting )
             {
-            // InternalRailSL.g:2481:2: ( ruleTrackSetting )
-            // InternalRailSL.g:2482:3: ruleTrackSetting
+            // InternalRailSL.g:2454:2: ( ruleTrackSetting )
+            // InternalRailSL.g:2455:3: ruleTrackSetting
             {
              before(grammarAccess.getSetTrackStatementAccess().getModeTrackSettingParserRuleCall_4_0()); 
             pushFollow(FOLLOW_2);
@@ -7863,17 +7788,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetPointStatement__PointsAssignment_1"
-    // InternalRailSL.g:2491:1: rule__SetPointStatement__PointsAssignment_1 : ( RULE_INT ) ;
+    // InternalRailSL.g:2464:1: rule__SetPointStatement__PointsAssignment_1 : ( RULE_INT ) ;
     public final void rule__SetPointStatement__PointsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2495:1: ( ( RULE_INT ) )
-            // InternalRailSL.g:2496:2: ( RULE_INT )
+            // InternalRailSL.g:2468:1: ( ( RULE_INT ) )
+            // InternalRailSL.g:2469:2: ( RULE_INT )
             {
-            // InternalRailSL.g:2496:2: ( RULE_INT )
-            // InternalRailSL.g:2497:3: RULE_INT
+            // InternalRailSL.g:2469:2: ( RULE_INT )
+            // InternalRailSL.g:2470:3: RULE_INT
             {
              before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -7900,17 +7825,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetPointStatement__PointsAssignment_2_1"
-    // InternalRailSL.g:2506:1: rule__SetPointStatement__PointsAssignment_2_1 : ( RULE_INT ) ;
+    // InternalRailSL.g:2479:1: rule__SetPointStatement__PointsAssignment_2_1 : ( RULE_INT ) ;
     public final void rule__SetPointStatement__PointsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2510:1: ( ( RULE_INT ) )
-            // InternalRailSL.g:2511:2: ( RULE_INT )
+            // InternalRailSL.g:2483:1: ( ( RULE_INT ) )
+            // InternalRailSL.g:2484:2: ( RULE_INT )
             {
-            // InternalRailSL.g:2511:2: ( RULE_INT )
-            // InternalRailSL.g:2512:3: RULE_INT
+            // InternalRailSL.g:2484:2: ( RULE_INT )
+            // InternalRailSL.g:2485:3: RULE_INT
             {
              before(grammarAccess.getSetPointStatementAccess().getPointsINTTerminalRuleCall_2_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -7937,21 +7862,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SetPointStatement__OrientationAssignment_4"
-    // InternalRailSL.g:2521:1: rule__SetPointStatement__OrientationAssignment_4 : ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) ) ;
+    // InternalRailSL.g:2494:1: rule__SetPointStatement__OrientationAssignment_4 : ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) ) ;
     public final void rule__SetPointStatement__OrientationAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2525:1: ( ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) ) )
-            // InternalRailSL.g:2526:2: ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) )
+            // InternalRailSL.g:2498:1: ( ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) ) )
+            // InternalRailSL.g:2499:2: ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) )
             {
-            // InternalRailSL.g:2526:2: ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) )
-            // InternalRailSL.g:2527:3: ( rule__SetPointStatement__OrientationAlternatives_4_0 )
+            // InternalRailSL.g:2499:2: ( ( rule__SetPointStatement__OrientationAlternatives_4_0 ) )
+            // InternalRailSL.g:2500:3: ( rule__SetPointStatement__OrientationAlternatives_4_0 )
             {
              before(grammarAccess.getSetPointStatementAccess().getOrientationAlternatives_4_0()); 
-            // InternalRailSL.g:2528:3: ( rule__SetPointStatement__OrientationAlternatives_4_0 )
-            // InternalRailSL.g:2528:4: rule__SetPointStatement__OrientationAlternatives_4_0
+            // InternalRailSL.g:2501:3: ( rule__SetPointStatement__OrientationAlternatives_4_0 )
+            // InternalRailSL.g:2501:4: rule__SetPointStatement__OrientationAlternatives_4_0
             {
             pushFollow(FOLLOW_2);
             rule__SetPointStatement__OrientationAlternatives_4_0();
@@ -7984,17 +7909,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TimeWaitStatement__TimeAssignment_1"
-    // InternalRailSL.g:2536:1: rule__TimeWaitStatement__TimeAssignment_1 : ( RULE_INT ) ;
+    // InternalRailSL.g:2509:1: rule__TimeWaitStatement__TimeAssignment_1 : ( RULE_INT ) ;
     public final void rule__TimeWaitStatement__TimeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2540:1: ( ( RULE_INT ) )
-            // InternalRailSL.g:2541:2: ( RULE_INT )
+            // InternalRailSL.g:2513:1: ( ( RULE_INT ) )
+            // InternalRailSL.g:2514:2: ( RULE_INT )
             {
-            // InternalRailSL.g:2541:2: ( RULE_INT )
-            // InternalRailSL.g:2542:3: RULE_INT
+            // InternalRailSL.g:2514:2: ( RULE_INT )
+            // InternalRailSL.g:2515:3: RULE_INT
             {
              before(grammarAccess.getTimeWaitStatementAccess().getTimeINTTerminalRuleCall_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -8021,21 +7946,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ContactWaitStatement__EventAssignment_0"
-    // InternalRailSL.g:2551:1: rule__ContactWaitStatement__EventAssignment_0 : ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) ) ;
+    // InternalRailSL.g:2524:1: rule__ContactWaitStatement__EventAssignment_0 : ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) ) ;
     public final void rule__ContactWaitStatement__EventAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2555:1: ( ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) ) )
-            // InternalRailSL.g:2556:2: ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) )
+            // InternalRailSL.g:2528:1: ( ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) ) )
+            // InternalRailSL.g:2529:2: ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) )
             {
-            // InternalRailSL.g:2556:2: ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) )
-            // InternalRailSL.g:2557:3: ( rule__ContactWaitStatement__EventAlternatives_0_0 )
+            // InternalRailSL.g:2529:2: ( ( rule__ContactWaitStatement__EventAlternatives_0_0 ) )
+            // InternalRailSL.g:2530:3: ( rule__ContactWaitStatement__EventAlternatives_0_0 )
             {
              before(grammarAccess.getContactWaitStatementAccess().getEventAlternatives_0_0()); 
-            // InternalRailSL.g:2558:3: ( rule__ContactWaitStatement__EventAlternatives_0_0 )
-            // InternalRailSL.g:2558:4: rule__ContactWaitStatement__EventAlternatives_0_0
+            // InternalRailSL.g:2531:3: ( rule__ContactWaitStatement__EventAlternatives_0_0 )
+            // InternalRailSL.g:2531:4: rule__ContactWaitStatement__EventAlternatives_0_0
             {
             pushFollow(FOLLOW_2);
             rule__ContactWaitStatement__EventAlternatives_0_0();
@@ -8068,17 +7993,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ContactWaitStatement__ContactIndexAssignment_1"
-    // InternalRailSL.g:2566:1: rule__ContactWaitStatement__ContactIndexAssignment_1 : ( ruleContactIndex ) ;
+    // InternalRailSL.g:2539:1: rule__ContactWaitStatement__ContactIndexAssignment_1 : ( ruleContactIndex ) ;
     public final void rule__ContactWaitStatement__ContactIndexAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2570:1: ( ( ruleContactIndex ) )
-            // InternalRailSL.g:2571:2: ( ruleContactIndex )
+            // InternalRailSL.g:2543:1: ( ( ruleContactIndex ) )
+            // InternalRailSL.g:2544:2: ( ruleContactIndex )
             {
-            // InternalRailSL.g:2571:2: ( ruleContactIndex )
-            // InternalRailSL.g:2572:3: ruleContactIndex
+            // InternalRailSL.g:2544:2: ( ruleContactIndex )
+            // InternalRailSL.g:2545:3: ruleContactIndex
             {
              before(grammarAccess.getContactWaitStatementAccess().getContactIndexContactIndexParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8109,17 +8034,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ContactWaitStatement__SegNameAssignment_3"
-    // InternalRailSL.g:2581:1: rule__ContactWaitStatement__SegNameAssignment_3 : ( ruleSEG_NAME ) ;
+    // InternalRailSL.g:2554:1: rule__ContactWaitStatement__SegNameAssignment_3 : ( ruleSEG_NAME ) ;
     public final void rule__ContactWaitStatement__SegNameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2585:1: ( ( ruleSEG_NAME ) )
-            // InternalRailSL.g:2586:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2558:1: ( ( ruleSEG_NAME ) )
+            // InternalRailSL.g:2559:2: ( ruleSEG_NAME )
             {
-            // InternalRailSL.g:2586:2: ( ruleSEG_NAME )
-            // InternalRailSL.g:2587:3: ruleSEG_NAME
+            // InternalRailSL.g:2559:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2560:3: ruleSEG_NAME
             {
              before(grammarAccess.getContactWaitStatementAccess().getSegNameSEG_NAMEParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -8150,21 +8075,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CrossingStatement__ModeAssignment_0"
-    // InternalRailSL.g:2596:1: rule__CrossingStatement__ModeAssignment_0 : ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) ) ;
+    // InternalRailSL.g:2569:1: rule__CrossingStatement__ModeAssignment_0 : ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) ) ;
     public final void rule__CrossingStatement__ModeAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2600:1: ( ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) ) )
-            // InternalRailSL.g:2601:2: ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) )
+            // InternalRailSL.g:2573:1: ( ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) ) )
+            // InternalRailSL.g:2574:2: ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) )
             {
-            // InternalRailSL.g:2601:2: ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) )
-            // InternalRailSL.g:2602:3: ( rule__CrossingStatement__ModeAlternatives_0_0 )
+            // InternalRailSL.g:2574:2: ( ( rule__CrossingStatement__ModeAlternatives_0_0 ) )
+            // InternalRailSL.g:2575:3: ( rule__CrossingStatement__ModeAlternatives_0_0 )
             {
              before(grammarAccess.getCrossingStatementAccess().getModeAlternatives_0_0()); 
-            // InternalRailSL.g:2603:3: ( rule__CrossingStatement__ModeAlternatives_0_0 )
-            // InternalRailSL.g:2603:4: rule__CrossingStatement__ModeAlternatives_0_0
+            // InternalRailSL.g:2576:3: ( rule__CrossingStatement__ModeAlternatives_0_0 )
+            // InternalRailSL.g:2576:4: rule__CrossingStatement__ModeAlternatives_0_0
             {
             pushFollow(FOLLOW_2);
             rule__CrossingStatement__ModeAlternatives_0_0();
@@ -8197,17 +8122,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LightStatement__LightsAssignment_1"
-    // InternalRailSL.g:2611:1: rule__LightStatement__LightsAssignment_1 : ( RULE_INT ) ;
+    // InternalRailSL.g:2584:1: rule__LightStatement__LightsAssignment_1 : ( RULE_INT ) ;
     public final void rule__LightStatement__LightsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2615:1: ( ( RULE_INT ) )
-            // InternalRailSL.g:2616:2: ( RULE_INT )
+            // InternalRailSL.g:2588:1: ( ( RULE_INT ) )
+            // InternalRailSL.g:2589:2: ( RULE_INT )
             {
-            // InternalRailSL.g:2616:2: ( RULE_INT )
-            // InternalRailSL.g:2617:3: RULE_INT
+            // InternalRailSL.g:2589:2: ( RULE_INT )
+            // InternalRailSL.g:2590:3: RULE_INT
             {
              before(grammarAccess.getLightStatementAccess().getLightsINTTerminalRuleCall_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -8234,17 +8159,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LightStatement__LightsAssignment_2_1"
-    // InternalRailSL.g:2626:1: rule__LightStatement__LightsAssignment_2_1 : ( RULE_INT ) ;
+    // InternalRailSL.g:2599:1: rule__LightStatement__LightsAssignment_2_1 : ( RULE_INT ) ;
     public final void rule__LightStatement__LightsAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2630:1: ( ( RULE_INT ) )
-            // InternalRailSL.g:2631:2: ( RULE_INT )
+            // InternalRailSL.g:2603:1: ( ( RULE_INT ) )
+            // InternalRailSL.g:2604:2: ( RULE_INT )
             {
-            // InternalRailSL.g:2631:2: ( RULE_INT )
-            // InternalRailSL.g:2632:3: RULE_INT
+            // InternalRailSL.g:2604:2: ( RULE_INT )
+            // InternalRailSL.g:2605:3: RULE_INT
             {
              before(grammarAccess.getLightStatementAccess().getLightsINTTerminalRuleCall_2_1_0()); 
             match(input,RULE_INT,FOLLOW_2); 
@@ -8271,21 +8196,21 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LightStatement__StateAssignment_3"
-    // InternalRailSL.g:2641:1: rule__LightStatement__StateAssignment_3 : ( ( rule__LightStatement__StateAlternatives_3_0 ) ) ;
+    // InternalRailSL.g:2614:1: rule__LightStatement__StateAssignment_3 : ( ( rule__LightStatement__StateAlternatives_3_0 ) ) ;
     public final void rule__LightStatement__StateAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2645:1: ( ( ( rule__LightStatement__StateAlternatives_3_0 ) ) )
-            // InternalRailSL.g:2646:2: ( ( rule__LightStatement__StateAlternatives_3_0 ) )
+            // InternalRailSL.g:2618:1: ( ( ( rule__LightStatement__StateAlternatives_3_0 ) ) )
+            // InternalRailSL.g:2619:2: ( ( rule__LightStatement__StateAlternatives_3_0 ) )
             {
-            // InternalRailSL.g:2646:2: ( ( rule__LightStatement__StateAlternatives_3_0 ) )
-            // InternalRailSL.g:2647:3: ( rule__LightStatement__StateAlternatives_3_0 )
+            // InternalRailSL.g:2619:2: ( ( rule__LightStatement__StateAlternatives_3_0 ) )
+            // InternalRailSL.g:2620:3: ( rule__LightStatement__StateAlternatives_3_0 )
             {
              before(grammarAccess.getLightStatementAccess().getStateAlternatives_3_0()); 
-            // InternalRailSL.g:2648:3: ( rule__LightStatement__StateAlternatives_3_0 )
-            // InternalRailSL.g:2648:4: rule__LightStatement__StateAlternatives_3_0
+            // InternalRailSL.g:2621:3: ( rule__LightStatement__StateAlternatives_3_0 )
+            // InternalRailSL.g:2621:4: rule__LightStatement__StateAlternatives_3_0
             {
             pushFollow(FOLLOW_2);
             rule__LightStatement__StateAlternatives_3_0();
@@ -8318,17 +8243,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalStatement__LinesAssignment_1"
-    // InternalRailSL.g:2656:1: rule__ConditionalStatement__LinesAssignment_1 : ( ruleConditionalLine ) ;
+    // InternalRailSL.g:2629:1: rule__ConditionalStatement__LinesAssignment_1 : ( ruleConditionalLine ) ;
     public final void rule__ConditionalStatement__LinesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2660:1: ( ( ruleConditionalLine ) )
-            // InternalRailSL.g:2661:2: ( ruleConditionalLine )
+            // InternalRailSL.g:2633:1: ( ( ruleConditionalLine ) )
+            // InternalRailSL.g:2634:2: ( ruleConditionalLine )
             {
-            // InternalRailSL.g:2661:2: ( ruleConditionalLine )
-            // InternalRailSL.g:2662:3: ruleConditionalLine
+            // InternalRailSL.g:2634:2: ( ruleConditionalLine )
+            // InternalRailSL.g:2635:3: ruleConditionalLine
             {
              before(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8359,17 +8284,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalStatement__LinesAssignment_2"
-    // InternalRailSL.g:2671:1: rule__ConditionalStatement__LinesAssignment_2 : ( ruleConditionalLine ) ;
+    // InternalRailSL.g:2644:1: rule__ConditionalStatement__LinesAssignment_2 : ( ruleConditionalLine ) ;
     public final void rule__ConditionalStatement__LinesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2675:1: ( ( ruleConditionalLine ) )
-            // InternalRailSL.g:2676:2: ( ruleConditionalLine )
+            // InternalRailSL.g:2648:1: ( ( ruleConditionalLine ) )
+            // InternalRailSL.g:2649:2: ( ruleConditionalLine )
             {
-            // InternalRailSL.g:2676:2: ( ruleConditionalLine )
-            // InternalRailSL.g:2677:3: ruleConditionalLine
+            // InternalRailSL.g:2649:2: ( ruleConditionalLine )
+            // InternalRailSL.g:2650:3: ruleConditionalLine
             {
              before(grammarAccess.getConditionalStatementAccess().getLinesConditionalLineParserRuleCall_2_0()); 
             pushFollow(FOLLOW_2);
@@ -8400,17 +8325,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__ContactAssignment_1"
-    // InternalRailSL.g:2686:1: rule__ConditionalLine__ContactAssignment_1 : ( ruleContactIndex ) ;
+    // InternalRailSL.g:2659:1: rule__ConditionalLine__ContactAssignment_1 : ( ruleContactIndex ) ;
     public final void rule__ConditionalLine__ContactAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2690:1: ( ( ruleContactIndex ) )
-            // InternalRailSL.g:2691:2: ( ruleContactIndex )
+            // InternalRailSL.g:2663:1: ( ( ruleContactIndex ) )
+            // InternalRailSL.g:2664:2: ( ruleContactIndex )
             {
-            // InternalRailSL.g:2691:2: ( ruleContactIndex )
-            // InternalRailSL.g:2692:3: ruleContactIndex
+            // InternalRailSL.g:2664:2: ( ruleContactIndex )
+            // InternalRailSL.g:2665:3: ruleContactIndex
             {
              before(grammarAccess.getConditionalLineAccess().getContactContactIndexParserRuleCall_1_0()); 
             pushFollow(FOLLOW_2);
@@ -8441,17 +8366,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__SegNameAssignment_3"
-    // InternalRailSL.g:2701:1: rule__ConditionalLine__SegNameAssignment_3 : ( ruleSEG_NAME ) ;
+    // InternalRailSL.g:2674:1: rule__ConditionalLine__SegNameAssignment_3 : ( ruleSEG_NAME ) ;
     public final void rule__ConditionalLine__SegNameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2705:1: ( ( ruleSEG_NAME ) )
-            // InternalRailSL.g:2706:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2678:1: ( ( ruleSEG_NAME ) )
+            // InternalRailSL.g:2679:2: ( ruleSEG_NAME )
             {
-            // InternalRailSL.g:2706:2: ( ruleSEG_NAME )
-            // InternalRailSL.g:2707:3: ruleSEG_NAME
+            // InternalRailSL.g:2679:2: ( ruleSEG_NAME )
+            // InternalRailSL.g:2680:3: ruleSEG_NAME
             {
              before(grammarAccess.getConditionalLineAccess().getSegNameSEG_NAMEParserRuleCall_3_0()); 
             pushFollow(FOLLOW_2);
@@ -8482,17 +8407,17 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ConditionalLine__BlockAssignment_5"
-    // InternalRailSL.g:2716:1: rule__ConditionalLine__BlockAssignment_5 : ( ruleBlock ) ;
+    // InternalRailSL.g:2689:1: rule__ConditionalLine__BlockAssignment_5 : ( ruleBlock ) ;
     public final void rule__ConditionalLine__BlockAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalRailSL.g:2720:1: ( ( ruleBlock ) )
-            // InternalRailSL.g:2721:2: ( ruleBlock )
+            // InternalRailSL.g:2693:1: ( ( ruleBlock ) )
+            // InternalRailSL.g:2694:2: ( ruleBlock )
             {
-            // InternalRailSL.g:2721:2: ( ruleBlock )
-            // InternalRailSL.g:2722:3: ruleBlock
+            // InternalRailSL.g:2694:2: ( ruleBlock )
+            // InternalRailSL.g:2695:3: ruleBlock
             {
              before(grammarAccess.getConditionalLineAccess().getBlockBlockParserRuleCall_5_0()); 
             pushFollow(FOLLOW_2);
@@ -8535,9 +8460,9 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0xFFFFFFFFFC000000L,0x00000000000003FFL});
     public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000000000L,0x0000000000005000L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x000000000000E000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x000000000000E000L});
     public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x000000000000C000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
     public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000000000030000L});
     public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000000002L,0x0000000000020000L});
@@ -8548,11 +8473,10 @@ public class InternalRailSLParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
     public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000C00000L,0x0000000000004000L});
     public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
 
 }
