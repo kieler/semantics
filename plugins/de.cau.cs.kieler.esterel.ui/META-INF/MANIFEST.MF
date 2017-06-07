@@ -30,4 +30,4 @@ Export-Package: de.cau.cs.kieler.esterel.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.scest.ui.quickfix,
  de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr,
  de.cau.cs.kieler.esterel.scest.ui.contentassist.antlr.internal
-Bundle-Activator: de.cau.cs.kieler.esterel.ui.internal.EsterelActivator
+Bundle-Activator: de.cau.cs.kieler.esterel.ui.DelegateActivator
