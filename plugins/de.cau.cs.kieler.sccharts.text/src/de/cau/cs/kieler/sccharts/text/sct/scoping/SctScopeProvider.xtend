@@ -249,7 +249,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     // The following lines are a work-around for the railway project and borrowed from the new SCCharts 2.0 scope providers.
     // As the actual (old) scope provider resolves the declaration by itself (instead of using the declaration scope of
     // KEXT in the new version),  the already new kexpressions almost always 
-    // use the delegate to the resource scope provider. This is incredible slow.
+    // use the delegate to the resource scope provider. This is incredibly slow.
     // The following methods are parts of the new KEXT scope provider which resolves these references directly.  
     //
     
